@@ -13,5 +13,5 @@ assets/js/*
 !assets/js/flot
 !assets/js/jquery.prettyPhoto.js
 assets/fonts
-
 *.idea/*
+*config/*

@@ -1,0 +1,103 @@
+@import '../../bower/bootstrap/less/variables';
+@import '../../bower/bootstrap/less/mixins';
+
+.jigoshop {
+  @import '../../bower/bootstrap/less/component-animations';
+  @import '../../bower/bootstrap/less/grid';
+  @import '../../bower/bootstrap/less/tables';
+  @import '../../bower/bootstrap/less/buttons';
+  @import '../../bower/bootstrap/less/navs';
+  @import '../../bower/bootstrap/less/badges';
+  @import '../../bower/bootstrap/less/list-group';
+  @import '../../bower/bootstrap/less/tooltip';
+  @import '../../bower/bootstrap/less/utilities';
+  @import '../../bower/bootstrap/less/alerts';
+  @import '../../bower/bootstrap/less/type';
+
+  .panel-heading button {
+    margin-top: -@padding-large-horizontal/2;
+  }
+  .form-group, .nav-tabs {
+    .clearfix();
+  }
+  .nav-tabs {
+    li.hide {
+      display: none;
+    }
+    li {
+      a, &:hover a  {
+        text-decoration: none;
+      }
+    }
+  }
+  .schedule.hide {
+    display: none;
+  }
+  #attributes .form-inline {
+    margin-bottom: 2*@padding-base-vertical;
+
+    .not-active {
+      display: none;
+    }
+    .form-group {
+      width: 35%;
+      margin-right: @padding-base-horizontal;
+
+      .form-control {
+        width: 100%;
+      }
+    }
+  }
+  #product-attributes {
+    .list-group-item-text {
+      display: none;
+    }
+  }
+  #add-variation {
+    margin-bottom: 2*@padding-base-vertical;
+  }
+
+  textarea.form-control {
+    height: auto;
+  }
+
+  .form-group {
+    margin: 0;
+
+    div.checkbox-inline {
+      input[type=checkbox] {
+        position: static;
+        margin: 0;
+      }
+    }
+    .help {
+      color: @gray-light;
+      font-style: italic;
+    }
+  }
+  .tab-content {
+    background: @body-bg;
+    border: 1px solid @nav-tabs-border-color;
+    border-top: 0;
+    padding: @padding-base-vertical 0;
+
+    #attributes {
+      padding: 0 @padding-base-horizontal;
+    }
+  }
+  h3 {
+    margin: 1em 0 !important;
+  }
+  .form-table {
+    th {
+      padding: 8px 0;
+    }
+    td {
+      padding: 0;
+
+      p {
+        margin: 0;
+      }
+    }
+  }
+}

@@ -1,0 +1,43 @@
+@import '../../../../bower/bootstrap/less/variables';
+@import '../../../../bower/bootstrap/less/mixins';
+@import '../../../../bower/bootstrap/less/glyphicons';
+
+.jigoshop {
+  table, th, td {
+    border: 0;
+  }
+  @import '../../../../bower/bootstrap/less/tables';
+
+  > h1 {
+    margin-bottom: 4*@padding-large-vertical;
+  }
+  > dl dd {
+    margin-bottom: 0;
+  }
+  td {
+    vertical-align: middle;
+  }
+  .variation-data {
+    margin: @padding-large-vertical/2 0 0 0;
+
+    dt {
+      width: auto;
+    }
+    dd {
+      margin: 0 0 0 @padding-large-horizontal/2;
+      float: left;
+    }
+  }
+  #cart-collaterals {
+    .clearfix();
+
+    #cart-totals {
+      width: 50%;
+
+      th {
+        text-align: right;
+        width: 30%;
+      }
+    }
+  }
+}
