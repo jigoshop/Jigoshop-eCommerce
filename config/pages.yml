@@ -1,0 +1,111 @@
+parameters: ~
+services:
+  jigoshop.query.interceptor:
+    class: Jigoshop\Query\Interceptor
+    arguments:
+      - '@wpal'
+      - '@jigoshop.options'
+  jigoshop.frontend.page_resolver:
+    class: Jigoshop\Frontend\PageResolver
+    arguments:
+      - '@wpal'
+  jigoshop.page.product_list:
+    class: Jigoshop\Frontend\Page\ProductList
+    arguments:
+      - '@wpal'
+      - '@jigoshop.options'
+      - '@jigoshop.service.product'
+      - '@jigoshop.service.cart'
+      - '@jigoshop.messages'
+  jigoshop.page.product_category_list:
+    class: Jigoshop\Frontend\Page\ProductCategoryList
+    arguments:
+      - '@wpal'
+      - '@jigoshop.options'
+      - '@jigoshop.service.product'
+      - '@jigoshop.service.cart'
+      - '@jigoshop.messages'
+  jigoshop.page.product_tag_list:
+    class: Jigoshop\Frontend\Page\ProductTagList
+    arguments:
+      - '@wpal'
+      - '@jigoshop.options'
+      - '@jigoshop.service.product'
+      - '@jigoshop.service.cart'
+      - '@jigoshop.messages'
+  jigoshop.page.product:
+    class: Jigoshop\Frontend\Page\Product
+    arguments:
+      - '@wpal'
+      - '@jigoshop.options'
+      - '@jigoshop.service.product'
+      - '@jigoshop.service.cart'
+      - '@jigoshop.messages'
+  jigoshop.page.cart:
+    class: Jigoshop\Frontend\Page\Cart
+    arguments:
+      - '@wpal'
+      - '@jigoshop.options'
+      - '@jigoshop.messages'
+      - '@jigoshop.service.cart'
+      - '@jigoshop.service.product'
+      - '@jigoshop.service.customer'
+      - '@jigoshop.service.order'
+      - '@jigoshop.service.shipping'
+      - '@jigoshop.service.coupon'
+  jigoshop.page.checkout:
+    class: Jigoshop\Frontend\Page\Checkout
+    arguments:
+      - '@wpal'
+      - '@jigoshop.options'
+      - '@jigoshop.messages'
+      - '@jigoshop.service.cart'
+      - '@jigoshop.service.customer'
+      - '@jigoshop.service.shipping'
+      - '@jigoshop.service.payment'
+      - '@jigoshop.service.order'
+  jigoshop.page.checkout.thank_you:
+    class: Jigoshop\Frontend\Page\Checkout\ThankYou
+    arguments:
+      - '@wpal'
+      - '@jigoshop.options'
+      - '@jigoshop.messages'
+      - '@jigoshop.service.order'
+  jigoshop.page.checkout.pay:
+    class: Jigoshop\Frontend\Page\Checkout\Pay
+    arguments:
+      - '@wpal'
+      - '@jigoshop.options'
+      - '@jigoshop.messages'
+      - '@jigoshop.service.order'
+      - '@jigoshop.service.payment'
+  jigoshop.page.account:
+    class: Jigoshop\Frontend\Page\Account
+    arguments:
+      - '@wpal'
+      - '@jigoshop.options'
+      - '@jigoshop.service.customer'
+      - '@jigoshop.service.order'
+      - '@jigoshop.messages'
+  jigoshop.page.account.edit_address:
+    class: Jigoshop\Frontend\Page\Account\EditAddress
+    arguments:
+      - '@wpal'
+      - '@jigoshop.options'
+      - '@jigoshop.service.customer'
+      - '@jigoshop.messages'
+  jigoshop.page.account.change_password:
+    class: Jigoshop\Frontend\Page\Account\ChangePassword
+    arguments:
+      - '@wpal'
+      - '@jigoshop.options'
+      - '@jigoshop.service.customer'
+      - '@jigoshop.messages'
+  jigoshop.page.account.orders:
+    class: Jigoshop\Frontend\Page\Account\Orders
+    arguments:
+      - '@wpal'
+      - '@jigoshop.options'
+      - '@jigoshop.service.customer'
+      - '@jigoshop.service.order'
+      - '@jigoshop.messages'

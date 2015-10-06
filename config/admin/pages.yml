@@ -1,0 +1,63 @@
+parameters: ~
+services:
+  jigoshop.admin.page_resolver:
+    class: Jigoshop\Admin\PageResolver
+    arguments:
+      - '@wpal'
+      - '@jigoshop.admin.pages'
+  jigoshop.admin.page.orders:
+    class: Jigoshop\Admin\Page\Orders
+    arguments:
+      - '@wpal'
+      - '@jigoshop.options'
+      - '@jigoshop.service.order'
+  jigoshop.admin.page.order:
+    class: Jigoshop\Admin\Page\Order
+    arguments:
+      - '@wpal'
+      - '@jigoshop.options'
+      - '@jigoshop.service.order'
+      - '@jigoshop.service.product'
+      - '@jigoshop.service.customer'
+      - '@jigoshop.service.shipping'
+  jigoshop.admin.page.products:
+    class: Jigoshop\Admin\Page\Products
+    arguments:
+      - '@wpal'
+      - '@jigoshop.options'
+      - '@jigoshop.post_type.product'
+      - '@jigoshop.service.product'
+  jigoshop.admin.page.product:
+    class: Jigoshop\Admin\Page\Product
+    arguments:
+      - '@wpal'
+      - '@jigoshop.options'
+      - '@jigoshop.post_type.product'
+      - '@jigoshop.service.product'
+  jigoshop.admin.page.email:
+    class: Jigoshop\Admin\Page\Email
+    arguments:
+      - '@wpal'
+      - '@jigoshop.options'
+      - '@jigoshop.service.email'
+  jigoshop.admin.page.coupons:
+    class: Jigoshop\Admin\Page\Coupons
+    arguments:
+      - '@wpal'
+      - '@jigoshop.options'
+      - '@jigoshop.service.coupon'
+  jigoshop.admin.page.coupon:
+    class: Jigoshop\Admin\Page\Coupon
+    arguments:
+      - '@wpal'
+      - '@jigoshop.options'
+      - '@jigoshop.service.coupon'
+      - '@jigoshop.service.payment'
+  jigoshop.admin.page.product_categories:
+    class: Jigoshop\Admin\Page\ProductCategories
+    arguments:
+      - '@wpal'
+  jigoshop.admin.page.product_tags:
+    class: Jigoshop\Admin\Page\ProductTags
+    arguments:
+      - '@wpal'

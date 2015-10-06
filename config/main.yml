@@ -1,0 +1,209 @@
+parameters:
+  jigoshop.api.download_file: jigoshop.product_type.downloadable.download_file
+  jigoshop.widgets:
+    best_seller:
+      class: \Jigoshop\Widget\BestSellers
+      calls:
+        - ['setProductService', 'jigoshop.service.product']
+    cart:
+      class: \Jigoshop\Widget\Cart
+      calls:
+        - ['setOptions', 'jigoshop.options']
+        - ['setCart', 'jigoshop.service.cart']
+    featured_products:
+      class: \Jigoshop\Widget\FeaturedProducts
+      calls:
+        - ['setProductService', 'jigoshop.service.product']
+    layered_nav:
+      class: \Jigoshop\Widget\LayeredNav
+      calls:
+        - ['setProductService', 'jigoshop.service.product']
+    price_filter:
+      class: \Jigoshop\Widget\PriceFilter
+    product_categories:
+      class: \Jigoshop\Widget\ProductCategories
+      calls:
+        - ['setWp', 'wpal']
+        - ['setOptions', 'jigoshop.options']
+        - ['setProductService', 'jigoshop.service.product']
+    product_search:
+      class: \Jigoshop\Widget\ProductSearch
+    products_on_sale:
+      class: \Jigoshop\Widget\ProductsOnSale
+      calls:
+        - ['setProductService', 'jigoshop.service.product']
+    product_tag_cloud:
+      class: \Jigoshop\Widget\ProductTagCloud
+    random_products:
+      class: \Jigoshop\Widget\RandomProducts
+      calls:
+        - ['setProductService', 'jigoshop.service.product']
+    recently_viewed_products:
+      class: \Jigoshop\Widget\RecentlyViewedProducts
+      calls:
+        - ['setProductService', 'jigoshop.service.product']
+    recent_products:
+      class: \Jigoshop\Widget\RecentProducts
+      calls:
+        - ['setProductService', 'jigoshop.service.product']
+    recent_reviews:
+      class: \Jigoshop\Widget\RecentReviews
+      calls:
+        - ['setProductService', 'jigoshop.service.product']
+    top_rated:
+      class: \Jigoshop\Widget\TopRated
+      calls:
+        - ['setProductService', 'jigoshop.service.product']
+    user_login:
+      class: \Jigoshop\Widget\UserLogin
+      calls:
+        - ['setOptions', 'jigoshop.options']
+services:
+  wpal:
+    class: WPAL\Wordpress
+  jigoshop:
+    class: Jigoshop\Core
+    arguments:
+      - '@wpal'
+      - '@jigoshop.options'
+      - '@jigoshop.messages'
+      - '@jigoshop.template'
+      - '%jigoshop.widgets%'
+  jigoshop.installer:
+    class: Jigoshop\Core\Installer
+    arguments:
+      - '@wpal'
+      - '@jigoshop.options'
+      - '@jigoshop.cron'
+      - '@jigoshop.service.email'
+  jigoshop.options:
+    class: Jigoshop\Core\Options
+    arguments:
+      - '@wpal'
+  jigoshop.cron:
+    class: Jigoshop\Core\Cron
+    arguments:
+      - '@wpal'
+      - '@jigoshop.options'
+      - '@jigoshop.service.order'
+      - '@jigoshop.service.email'
+  jigoshop.emails:
+    class: Jigoshop\Core\Emails
+    arguments:
+      - '@wpal'
+      - '@jigoshop.options'
+      - '@jigoshop.service.email'
+  jigoshop.api:
+    class: Jigoshop\Api
+    arguments:
+      - '@wpal'
+      - '@service_container'
+  jigoshop.messages:
+    class: Jigoshop\Core\Messages
+    arguments:
+      - '@wpal'
+  jigoshop.types:
+    class: Jigoshop\Core\Types
+    arguments:
+      - '@wpal'
+  jigoshop.roles:
+    class: Jigoshop\Core\Roles
+    arguments:
+      - '@wpal'
+  jigoshop.assets:
+    class: Jigoshop\Core\Assets
+    arguments:
+      - '@wpal'
+      - '@jigoshop.options'
+  jigoshop.template:
+    class: Jigoshop\Core\Template
+    arguments:
+      - '@wpal'
+      - '@jigoshop.options'
+  jigoshop.web.optimization:
+    class: Jigoshop\Web\Optimization
+    arguments:
+      - '@wpal'
+      - '@jigoshop.options'
+#  jigoshop.cart:
+#    class: Jigoshop\Entity\Cart
+#    scope: prototype
+#    arguments:
+#      - '@wpal'
+#      - '@jigoshop.options'
+#      - '@jigoshop.service.product'
+#      - '@jigoshop.service.shipping'
+#      - '@jigoshop.service.coupon'
+#      - '@jigoshop.messages'
+  jigoshop.permalinks:
+    class: Jigoshop\Core\Permalinks
+    arguments:
+      - '@wpal'
+      - '@jigoshop.options'
+  jigoshop.post_type.product:
+    class: Jigoshop\Core\Types\Product
+    arguments:
+      - '@di'
+      - '@wpal'
+      - '@jigoshop.options'
+      - '@jigoshop.service.product'
+    tags:
+      - { name: jigoshop.type.post }
+  jigoshop.post_type.email:
+    class: Jigoshop\Core\Types\Email
+    arguments:
+      - '@wpal'
+    tags:
+      - { name: jigoshop.type.post }
+  jigoshop.post_type.coupon:
+    class: Jigoshop\Core\Types\Coupon
+    arguments:
+      - '@wpal'
+    tags:
+      - { name: jigoshop.type.post }
+  jigoshop.taxonomy.product_category:
+    class: Jigoshop\Core\Types\ProductCategory
+    arguments:
+      - '@jigoshop.options'
+    tags:
+      - { name: jigoshop.type.taxonomy }
+  jigoshop.taxonomy.product_tag:
+    class: Jigoshop\Core\Types\ProductTag
+    arguments:
+      - '@jigoshop.options'
+    tags:
+      - { name: jigoshop.type.taxonomy }
+  jigoshop.post_type.order:
+    class: Jigoshop\Core\Types\Order
+    arguments:
+      - '@wpal'
+    tags:
+      - { name: jigoshop.type.post }
+  jigoshop.product_type.simple:
+    class: Jigoshop\Core\Types\Product\Simple
+  jigoshop.product_type.variable:
+    class: Jigoshop\Core\Types\Product\Variable
+    arguments:
+      - '@wpal'
+      - '@jigoshop.service.product'
+      - '@jigoshop.service.product.variable'
+      - '@jigoshop.factory.product.variable'
+  jigoshop.product_type.variable.initializer:
+    class: Jigoshop\Core\Installer\Product\Variable
+    tags:
+      - { name: jigoshop.installer }
+  jigoshop.product_type.external:
+    class: Jigoshop\Core\Types\Product\External
+  jigoshop.product_type.downloadable:
+    class: Jigoshop\Core\Types\Product\Downloadable
+    arguments:
+      - '@wpal'
+      - '@jigoshop.options'
+      - '@jigoshop.messages'
+  jigoshop.product_type.downloadable.download_file:
+    class: Jigoshop\Api\DownloadFile
+    arguments:
+      - '@wpal'
+      - '@jigoshop.options'
+      - '@jigoshop.messages'
+      - '@jigoshop.service.order'
