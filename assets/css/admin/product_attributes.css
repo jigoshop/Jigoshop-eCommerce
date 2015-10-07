@@ -1,0 +1,2599 @@
+.jigoshop .container {
+  margin-right: auto;
+  margin-left: auto;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+@media (min-width: 768px) {
+  .jigoshop .container {
+    width: 750px;
+  }
+}
+@media (min-width: 992px) {
+  .jigoshop .container {
+    width: 970px;
+  }
+}
+@media (min-width: 1200px) {
+  .jigoshop .container {
+    width: 1170px;
+  }
+}
+.jigoshop .container-fluid {
+  margin-right: auto;
+  margin-left: auto;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+.jigoshop .row {
+  margin-left: -15px;
+  margin-right: -15px;
+}
+.jigoshop .col-xs-1, .col-sm-1, .col-md-1, .col-lg-1, .col-xs-2, .col-sm-2, .col-md-2, .col-lg-2, .col-xs-3, .col-sm-3, .col-md-3, .col-lg-3, .col-xs-4, .col-sm-4, .col-md-4, .col-lg-4, .col-xs-5, .col-sm-5, .col-md-5, .col-lg-5, .col-xs-6, .col-sm-6, .col-md-6, .col-lg-6, .col-xs-7, .col-sm-7, .col-md-7, .col-lg-7, .col-xs-8, .col-sm-8, .col-md-8, .col-lg-8, .col-xs-9, .col-sm-9, .col-md-9, .col-lg-9, .col-xs-10, .col-sm-10, .col-md-10, .col-lg-10, .col-xs-11, .col-sm-11, .col-md-11, .col-lg-11, .col-xs-12, .col-sm-12, .col-md-12, .col-lg-12 {
+  position: relative;
+  min-height: 1px;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+.jigoshop .col-xs-1, .col-xs-2, .col-xs-3, .col-xs-4, .col-xs-5, .col-xs-6, .col-xs-7, .col-xs-8, .col-xs-9, .col-xs-10, .col-xs-11, .col-xs-12 {
+  float: left;
+}
+.jigoshop .col-xs-12 {
+  width: 100%;
+}
+.jigoshop .col-xs-11 {
+  width: 91.66666667%;
+}
+.jigoshop .col-xs-10 {
+  width: 83.33333333%;
+}
+.jigoshop .col-xs-9 {
+  width: 75%;
+}
+.jigoshop .col-xs-8 {
+  width: 66.66666667%;
+}
+.jigoshop .col-xs-7 {
+  width: 58.33333333%;
+}
+.jigoshop .col-xs-6 {
+  width: 50%;
+}
+.jigoshop .col-xs-5 {
+  width: 41.66666667%;
+}
+.jigoshop .col-xs-4 {
+  width: 33.33333333%;
+}
+.jigoshop .col-xs-3 {
+  width: 25%;
+}
+.jigoshop .col-xs-2 {
+  width: 16.66666667%;
+}
+.jigoshop .col-xs-1 {
+  width: 8.33333333%;
+}
+.jigoshop .col-xs-pull-12 {
+  right: 100%;
+}
+.jigoshop .col-xs-pull-11 {
+  right: 91.66666667%;
+}
+.jigoshop .col-xs-pull-10 {
+  right: 83.33333333%;
+}
+.jigoshop .col-xs-pull-9 {
+  right: 75%;
+}
+.jigoshop .col-xs-pull-8 {
+  right: 66.66666667%;
+}
+.jigoshop .col-xs-pull-7 {
+  right: 58.33333333%;
+}
+.jigoshop .col-xs-pull-6 {
+  right: 50%;
+}
+.jigoshop .col-xs-pull-5 {
+  right: 41.66666667%;
+}
+.jigoshop .col-xs-pull-4 {
+  right: 33.33333333%;
+}
+.jigoshop .col-xs-pull-3 {
+  right: 25%;
+}
+.jigoshop .col-xs-pull-2 {
+  right: 16.66666667%;
+}
+.jigoshop .col-xs-pull-1 {
+  right: 8.33333333%;
+}
+.jigoshop .col-xs-pull-0 {
+  right: auto;
+}
+.jigoshop .col-xs-push-12 {
+  left: 100%;
+}
+.jigoshop .col-xs-push-11 {
+  left: 91.66666667%;
+}
+.jigoshop .col-xs-push-10 {
+  left: 83.33333333%;
+}
+.jigoshop .col-xs-push-9 {
+  left: 75%;
+}
+.jigoshop .col-xs-push-8 {
+  left: 66.66666667%;
+}
+.jigoshop .col-xs-push-7 {
+  left: 58.33333333%;
+}
+.jigoshop .col-xs-push-6 {
+  left: 50%;
+}
+.jigoshop .col-xs-push-5 {
+  left: 41.66666667%;
+}
+.jigoshop .col-xs-push-4 {
+  left: 33.33333333%;
+}
+.jigoshop .col-xs-push-3 {
+  left: 25%;
+}
+.jigoshop .col-xs-push-2 {
+  left: 16.66666667%;
+}
+.jigoshop .col-xs-push-1 {
+  left: 8.33333333%;
+}
+.jigoshop .col-xs-push-0 {
+  left: auto;
+}
+.jigoshop .col-xs-offset-12 {
+  margin-left: 100%;
+}
+.jigoshop .col-xs-offset-11 {
+  margin-left: 91.66666667%;
+}
+.jigoshop .col-xs-offset-10 {
+  margin-left: 83.33333333%;
+}
+.jigoshop .col-xs-offset-9 {
+  margin-left: 75%;
+}
+.jigoshop .col-xs-offset-8 {
+  margin-left: 66.66666667%;
+}
+.jigoshop .col-xs-offset-7 {
+  margin-left: 58.33333333%;
+}
+.jigoshop .col-xs-offset-6 {
+  margin-left: 50%;
+}
+.jigoshop .col-xs-offset-5 {
+  margin-left: 41.66666667%;
+}
+.jigoshop .col-xs-offset-4 {
+  margin-left: 33.33333333%;
+}
+.jigoshop .col-xs-offset-3 {
+  margin-left: 25%;
+}
+.jigoshop .col-xs-offset-2 {
+  margin-left: 16.66666667%;
+}
+.jigoshop .col-xs-offset-1 {
+  margin-left: 8.33333333%;
+}
+.jigoshop .col-xs-offset-0 {
+  margin-left: 0%;
+}
+@media (min-width: 768px) {
+  .jigoshop .col-sm-1, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-sm-10, .col-sm-11, .col-sm-12 {
+    float: left;
+  }
+  .jigoshop .col-sm-12 {
+    width: 100%;
+  }
+  .jigoshop .col-sm-11 {
+    width: 91.66666667%;
+  }
+  .jigoshop .col-sm-10 {
+    width: 83.33333333%;
+  }
+  .jigoshop .col-sm-9 {
+    width: 75%;
+  }
+  .jigoshop .col-sm-8 {
+    width: 66.66666667%;
+  }
+  .jigoshop .col-sm-7 {
+    width: 58.33333333%;
+  }
+  .jigoshop .col-sm-6 {
+    width: 50%;
+  }
+  .jigoshop .col-sm-5 {
+    width: 41.66666667%;
+  }
+  .jigoshop .col-sm-4 {
+    width: 33.33333333%;
+  }
+  .jigoshop .col-sm-3 {
+    width: 25%;
+  }
+  .jigoshop .col-sm-2 {
+    width: 16.66666667%;
+  }
+  .jigoshop .col-sm-1 {
+    width: 8.33333333%;
+  }
+  .jigoshop .col-sm-pull-12 {
+    right: 100%;
+  }
+  .jigoshop .col-sm-pull-11 {
+    right: 91.66666667%;
+  }
+  .jigoshop .col-sm-pull-10 {
+    right: 83.33333333%;
+  }
+  .jigoshop .col-sm-pull-9 {
+    right: 75%;
+  }
+  .jigoshop .col-sm-pull-8 {
+    right: 66.66666667%;
+  }
+  .jigoshop .col-sm-pull-7 {
+    right: 58.33333333%;
+  }
+  .jigoshop .col-sm-pull-6 {
+    right: 50%;
+  }
+  .jigoshop .col-sm-pull-5 {
+    right: 41.66666667%;
+  }
+  .jigoshop .col-sm-pull-4 {
+    right: 33.33333333%;
+  }
+  .jigoshop .col-sm-pull-3 {
+    right: 25%;
+  }
+  .jigoshop .col-sm-pull-2 {
+    right: 16.66666667%;
+  }
+  .jigoshop .col-sm-pull-1 {
+    right: 8.33333333%;
+  }
+  .jigoshop .col-sm-pull-0 {
+    right: auto;
+  }
+  .jigoshop .col-sm-push-12 {
+    left: 100%;
+  }
+  .jigoshop .col-sm-push-11 {
+    left: 91.66666667%;
+  }
+  .jigoshop .col-sm-push-10 {
+    left: 83.33333333%;
+  }
+  .jigoshop .col-sm-push-9 {
+    left: 75%;
+  }
+  .jigoshop .col-sm-push-8 {
+    left: 66.66666667%;
+  }
+  .jigoshop .col-sm-push-7 {
+    left: 58.33333333%;
+  }
+  .jigoshop .col-sm-push-6 {
+    left: 50%;
+  }
+  .jigoshop .col-sm-push-5 {
+    left: 41.66666667%;
+  }
+  .jigoshop .col-sm-push-4 {
+    left: 33.33333333%;
+  }
+  .jigoshop .col-sm-push-3 {
+    left: 25%;
+  }
+  .jigoshop .col-sm-push-2 {
+    left: 16.66666667%;
+  }
+  .jigoshop .col-sm-push-1 {
+    left: 8.33333333%;
+  }
+  .jigoshop .col-sm-push-0 {
+    left: auto;
+  }
+  .jigoshop .col-sm-offset-12 {
+    margin-left: 100%;
+  }
+  .jigoshop .col-sm-offset-11 {
+    margin-left: 91.66666667%;
+  }
+  .jigoshop .col-sm-offset-10 {
+    margin-left: 83.33333333%;
+  }
+  .jigoshop .col-sm-offset-9 {
+    margin-left: 75%;
+  }
+  .jigoshop .col-sm-offset-8 {
+    margin-left: 66.66666667%;
+  }
+  .jigoshop .col-sm-offset-7 {
+    margin-left: 58.33333333%;
+  }
+  .jigoshop .col-sm-offset-6 {
+    margin-left: 50%;
+  }
+  .jigoshop .col-sm-offset-5 {
+    margin-left: 41.66666667%;
+  }
+  .jigoshop .col-sm-offset-4 {
+    margin-left: 33.33333333%;
+  }
+  .jigoshop .col-sm-offset-3 {
+    margin-left: 25%;
+  }
+  .jigoshop .col-sm-offset-2 {
+    margin-left: 16.66666667%;
+  }
+  .jigoshop .col-sm-offset-1 {
+    margin-left: 8.33333333%;
+  }
+  .jigoshop .col-sm-offset-0 {
+    margin-left: 0%;
+  }
+}
+@media (min-width: 992px) {
+  .jigoshop .col-md-1, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-md-10, .col-md-11, .col-md-12 {
+    float: left;
+  }
+  .jigoshop .col-md-12 {
+    width: 100%;
+  }
+  .jigoshop .col-md-11 {
+    width: 91.66666667%;
+  }
+  .jigoshop .col-md-10 {
+    width: 83.33333333%;
+  }
+  .jigoshop .col-md-9 {
+    width: 75%;
+  }
+  .jigoshop .col-md-8 {
+    width: 66.66666667%;
+  }
+  .jigoshop .col-md-7 {
+    width: 58.33333333%;
+  }
+  .jigoshop .col-md-6 {
+    width: 50%;
+  }
+  .jigoshop .col-md-5 {
+    width: 41.66666667%;
+  }
+  .jigoshop .col-md-4 {
+    width: 33.33333333%;
+  }
+  .jigoshop .col-md-3 {
+    width: 25%;
+  }
+  .jigoshop .col-md-2 {
+    width: 16.66666667%;
+  }
+  .jigoshop .col-md-1 {
+    width: 8.33333333%;
+  }
+  .jigoshop .col-md-pull-12 {
+    right: 100%;
+  }
+  .jigoshop .col-md-pull-11 {
+    right: 91.66666667%;
+  }
+  .jigoshop .col-md-pull-10 {
+    right: 83.33333333%;
+  }
+  .jigoshop .col-md-pull-9 {
+    right: 75%;
+  }
+  .jigoshop .col-md-pull-8 {
+    right: 66.66666667%;
+  }
+  .jigoshop .col-md-pull-7 {
+    right: 58.33333333%;
+  }
+  .jigoshop .col-md-pull-6 {
+    right: 50%;
+  }
+  .jigoshop .col-md-pull-5 {
+    right: 41.66666667%;
+  }
+  .jigoshop .col-md-pull-4 {
+    right: 33.33333333%;
+  }
+  .jigoshop .col-md-pull-3 {
+    right: 25%;
+  }
+  .jigoshop .col-md-pull-2 {
+    right: 16.66666667%;
+  }
+  .jigoshop .col-md-pull-1 {
+    right: 8.33333333%;
+  }
+  .jigoshop .col-md-pull-0 {
+    right: auto;
+  }
+  .jigoshop .col-md-push-12 {
+    left: 100%;
+  }
+  .jigoshop .col-md-push-11 {
+    left: 91.66666667%;
+  }
+  .jigoshop .col-md-push-10 {
+    left: 83.33333333%;
+  }
+  .jigoshop .col-md-push-9 {
+    left: 75%;
+  }
+  .jigoshop .col-md-push-8 {
+    left: 66.66666667%;
+  }
+  .jigoshop .col-md-push-7 {
+    left: 58.33333333%;
+  }
+  .jigoshop .col-md-push-6 {
+    left: 50%;
+  }
+  .jigoshop .col-md-push-5 {
+    left: 41.66666667%;
+  }
+  .jigoshop .col-md-push-4 {
+    left: 33.33333333%;
+  }
+  .jigoshop .col-md-push-3 {
+    left: 25%;
+  }
+  .jigoshop .col-md-push-2 {
+    left: 16.66666667%;
+  }
+  .jigoshop .col-md-push-1 {
+    left: 8.33333333%;
+  }
+  .jigoshop .col-md-push-0 {
+    left: auto;
+  }
+  .jigoshop .col-md-offset-12 {
+    margin-left: 100%;
+  }
+  .jigoshop .col-md-offset-11 {
+    margin-left: 91.66666667%;
+  }
+  .jigoshop .col-md-offset-10 {
+    margin-left: 83.33333333%;
+  }
+  .jigoshop .col-md-offset-9 {
+    margin-left: 75%;
+  }
+  .jigoshop .col-md-offset-8 {
+    margin-left: 66.66666667%;
+  }
+  .jigoshop .col-md-offset-7 {
+    margin-left: 58.33333333%;
+  }
+  .jigoshop .col-md-offset-6 {
+    margin-left: 50%;
+  }
+  .jigoshop .col-md-offset-5 {
+    margin-left: 41.66666667%;
+  }
+  .jigoshop .col-md-offset-4 {
+    margin-left: 33.33333333%;
+  }
+  .jigoshop .col-md-offset-3 {
+    margin-left: 25%;
+  }
+  .jigoshop .col-md-offset-2 {
+    margin-left: 16.66666667%;
+  }
+  .jigoshop .col-md-offset-1 {
+    margin-left: 8.33333333%;
+  }
+  .jigoshop .col-md-offset-0 {
+    margin-left: 0%;
+  }
+}
+@media (min-width: 1200px) {
+  .jigoshop .col-lg-1, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9, .col-lg-10, .col-lg-11, .col-lg-12 {
+    float: left;
+  }
+  .jigoshop .col-lg-12 {
+    width: 100%;
+  }
+  .jigoshop .col-lg-11 {
+    width: 91.66666667%;
+  }
+  .jigoshop .col-lg-10 {
+    width: 83.33333333%;
+  }
+  .jigoshop .col-lg-9 {
+    width: 75%;
+  }
+  .jigoshop .col-lg-8 {
+    width: 66.66666667%;
+  }
+  .jigoshop .col-lg-7 {
+    width: 58.33333333%;
+  }
+  .jigoshop .col-lg-6 {
+    width: 50%;
+  }
+  .jigoshop .col-lg-5 {
+    width: 41.66666667%;
+  }
+  .jigoshop .col-lg-4 {
+    width: 33.33333333%;
+  }
+  .jigoshop .col-lg-3 {
+    width: 25%;
+  }
+  .jigoshop .col-lg-2 {
+    width: 16.66666667%;
+  }
+  .jigoshop .col-lg-1 {
+    width: 8.33333333%;
+  }
+  .jigoshop .col-lg-pull-12 {
+    right: 100%;
+  }
+  .jigoshop .col-lg-pull-11 {
+    right: 91.66666667%;
+  }
+  .jigoshop .col-lg-pull-10 {
+    right: 83.33333333%;
+  }
+  .jigoshop .col-lg-pull-9 {
+    right: 75%;
+  }
+  .jigoshop .col-lg-pull-8 {
+    right: 66.66666667%;
+  }
+  .jigoshop .col-lg-pull-7 {
+    right: 58.33333333%;
+  }
+  .jigoshop .col-lg-pull-6 {
+    right: 50%;
+  }
+  .jigoshop .col-lg-pull-5 {
+    right: 41.66666667%;
+  }
+  .jigoshop .col-lg-pull-4 {
+    right: 33.33333333%;
+  }
+  .jigoshop .col-lg-pull-3 {
+    right: 25%;
+  }
+  .jigoshop .col-lg-pull-2 {
+    right: 16.66666667%;
+  }
+  .jigoshop .col-lg-pull-1 {
+    right: 8.33333333%;
+  }
+  .jigoshop .col-lg-pull-0 {
+    right: auto;
+  }
+  .jigoshop .col-lg-push-12 {
+    left: 100%;
+  }
+  .jigoshop .col-lg-push-11 {
+    left: 91.66666667%;
+  }
+  .jigoshop .col-lg-push-10 {
+    left: 83.33333333%;
+  }
+  .jigoshop .col-lg-push-9 {
+    left: 75%;
+  }
+  .jigoshop .col-lg-push-8 {
+    left: 66.66666667%;
+  }
+  .jigoshop .col-lg-push-7 {
+    left: 58.33333333%;
+  }
+  .jigoshop .col-lg-push-6 {
+    left: 50%;
+  }
+  .jigoshop .col-lg-push-5 {
+    left: 41.66666667%;
+  }
+  .jigoshop .col-lg-push-4 {
+    left: 33.33333333%;
+  }
+  .jigoshop .col-lg-push-3 {
+    left: 25%;
+  }
+  .jigoshop .col-lg-push-2 {
+    left: 16.66666667%;
+  }
+  .jigoshop .col-lg-push-1 {
+    left: 8.33333333%;
+  }
+  .jigoshop .col-lg-push-0 {
+    left: auto;
+  }
+  .jigoshop .col-lg-offset-12 {
+    margin-left: 100%;
+  }
+  .jigoshop .col-lg-offset-11 {
+    margin-left: 91.66666667%;
+  }
+  .jigoshop .col-lg-offset-10 {
+    margin-left: 83.33333333%;
+  }
+  .jigoshop .col-lg-offset-9 {
+    margin-left: 75%;
+  }
+  .jigoshop .col-lg-offset-8 {
+    margin-left: 66.66666667%;
+  }
+  .jigoshop .col-lg-offset-7 {
+    margin-left: 58.33333333%;
+  }
+  .jigoshop .col-lg-offset-6 {
+    margin-left: 50%;
+  }
+  .jigoshop .col-lg-offset-5 {
+    margin-left: 41.66666667%;
+  }
+  .jigoshop .col-lg-offset-4 {
+    margin-left: 33.33333333%;
+  }
+  .jigoshop .col-lg-offset-3 {
+    margin-left: 25%;
+  }
+  .jigoshop .col-lg-offset-2 {
+    margin-left: 16.66666667%;
+  }
+  .jigoshop .col-lg-offset-1 {
+    margin-left: 8.33333333%;
+  }
+  .jigoshop .col-lg-offset-0 {
+    margin-left: 0%;
+  }
+}
+.jigoshop fieldset {
+  padding: 0;
+  margin: 0;
+  border: 0;
+  min-width: 0;
+}
+.jigoshop legend {
+  display: block;
+  width: 100%;
+  padding: 0;
+  margin-bottom: 20px;
+  font-size: 21px;
+  line-height: inherit;
+  color: #333333;
+  border: 0;
+  border-bottom: 1px solid #e5e5e5;
+}
+.jigoshop label {
+  display: inline-block;
+  max-width: 100%;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+.jigoshop input[type="search"] {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+.jigoshop input[type="radio"],
+.jigoshop input[type="checkbox"] {
+  margin: 4px 0 0;
+  margin-top: 1px \9;
+  line-height: normal;
+}
+.jigoshop input[type="file"] {
+  display: block;
+}
+.jigoshop input[type="range"] {
+  display: block;
+  width: 100%;
+}
+.jigoshop select[multiple],
+.jigoshop select[size] {
+  height: auto;
+}
+.jigoshop input[type="file"]:focus,
+.jigoshop input[type="radio"]:focus,
+.jigoshop input[type="checkbox"]:focus {
+  outline: thin dotted;
+  outline: 5px auto -webkit-focus-ring-color;
+  outline-offset: -2px;
+}
+.jigoshop output {
+  display: block;
+  padding-top: 7px;
+  font-size: 14px;
+  line-height: 1.42857143;
+  color: #555555;
+}
+.jigoshop .form-control {
+  display: block;
+  width: 100%;
+  height: 34px;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.42857143;
+  color: #555555;
+  background-color: #ffffff;
+  background-image: none;
+  border: 1px solid #cccccc;
+  border-radius: 4px;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  -webkit-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+  -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+  transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+}
+.jigoshop .form-control:focus {
+  border-color: #66afe9;
+  outline: 0;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, 0.6);
+  box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, 0.6);
+}
+.jigoshop .form-control::-moz-placeholder {
+  color: #777777;
+  opacity: 1;
+}
+.jigoshop .form-control:-ms-input-placeholder {
+  color: #777777;
+}
+.jigoshop .form-control::-webkit-input-placeholder {
+  color: #777777;
+}
+.jigoshop .form-control[disabled],
+.jigoshop .form-control[readonly],
+fieldset[disabled] .jigoshop .form-control {
+  cursor: not-allowed;
+  background-color: #eeeeee;
+  opacity: 1;
+}
+textarea.jigoshop .form-control {
+  height: auto;
+}
+.jigoshop input[type="search"] {
+  -webkit-appearance: none;
+}
+.jigoshop input[type="date"],
+.jigoshop input[type="time"],
+.jigoshop input[type="datetime-local"],
+.jigoshop input[type="month"] {
+  line-height: 34px;
+  line-height: 1.42857143 \0;
+}
+.jigoshop input[type="date"].input-sm,
+.jigoshop input[type="time"].input-sm,
+.jigoshop input[type="datetime-local"].input-sm,
+.jigoshop input[type="month"].input-sm {
+  line-height: 30px;
+}
+.jigoshop input[type="date"].input-lg,
+.jigoshop input[type="time"].input-lg,
+.jigoshop input[type="datetime-local"].input-lg,
+.jigoshop input[type="month"].input-lg {
+  line-height: 46px;
+}
+.jigoshop .form-group {
+  margin-bottom: 15px;
+}
+.jigoshop .radio,
+.jigoshop .checkbox {
+  position: relative;
+  display: block;
+  min-height: 20px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.jigoshop .radio label,
+.jigoshop .checkbox label {
+  padding-left: 20px;
+  margin-bottom: 0;
+  font-weight: normal;
+  cursor: pointer;
+}
+.jigoshop .radio input[type="radio"],
+.jigoshop .radio-inline input[type="radio"],
+.jigoshop .checkbox input[type="checkbox"],
+.jigoshop .checkbox-inline input[type="checkbox"] {
+  position: absolute;
+  margin-left: -20px;
+  margin-top: 4px \9;
+}
+.jigoshop .radio + .radio,
+.jigoshop .checkbox + .checkbox {
+  margin-top: -5px;
+}
+.jigoshop .radio-inline,
+.jigoshop .checkbox-inline {
+  display: inline-block;
+  padding-left: 20px;
+  margin-bottom: 0;
+  vertical-align: middle;
+  font-weight: normal;
+  cursor: pointer;
+}
+.jigoshop .radio-inline + .radio-inline,
+.jigoshop .checkbox-inline + .checkbox-inline {
+  margin-top: 0;
+  margin-left: 10px;
+}
+.jigoshop input[type="radio"][disabled],
+.jigoshop input[type="checkbox"][disabled],
+.jigoshop input[type="radio"].disabled,
+.jigoshop input[type="checkbox"].disabled,
+fieldset[disabled] .jigoshop input[type="radio"],
+fieldset[disabled] .jigoshop input[type="checkbox"] {
+  cursor: not-allowed;
+}
+.jigoshop .radio-inline.disabled,
+.jigoshop .checkbox-inline.disabled,
+fieldset[disabled] .jigoshop .radio-inline,
+fieldset[disabled] .jigoshop .checkbox-inline {
+  cursor: not-allowed;
+}
+.jigoshop .radio.disabled label,
+.jigoshop .checkbox.disabled label,
+fieldset[disabled] .jigoshop .radio label,
+fieldset[disabled] .jigoshop .checkbox label {
+  cursor: not-allowed;
+}
+.jigoshop .form-control-static {
+  padding-top: 7px;
+  padding-bottom: 7px;
+  margin-bottom: 0;
+}
+.jigoshop .form-control-static.input-lg,
+.jigoshop .form-control-static.input-sm {
+  padding-left: 0;
+  padding-right: 0;
+}
+.jigoshop .input-sm {
+  height: 30px;
+  padding: 5px 10px;
+  font-size: 12px;
+  line-height: 1.5;
+  border-radius: 3px;
+}
+select.jigoshop .input-sm {
+  height: 30px;
+  line-height: 30px;
+}
+textarea.jigoshop .input-sm,
+select[multiple].jigoshop .input-sm {
+  height: auto;
+}
+.jigoshop .input-lg {
+  height: 46px;
+  padding: 10px 16px;
+  font-size: 18px;
+  line-height: 1.33;
+  border-radius: 6px;
+}
+select.jigoshop .input-lg {
+  height: 46px;
+  line-height: 46px;
+}
+textarea.jigoshop .input-lg,
+select[multiple].jigoshop .input-lg {
+  height: auto;
+}
+.jigoshop .has-feedback {
+  position: relative;
+}
+.jigoshop .has-feedback .form-control {
+  padding-right: 42.5px;
+}
+.jigoshop .form-control-feedback {
+  position: absolute;
+  top: 25px;
+  right: 0;
+  z-index: 2;
+  display: block;
+  width: 34px;
+  height: 34px;
+  line-height: 34px;
+  text-align: center;
+}
+.jigoshop .input-lg + .form-control-feedback {
+  width: 46px;
+  height: 46px;
+  line-height: 46px;
+}
+.jigoshop .input-sm + .form-control-feedback {
+  width: 30px;
+  height: 30px;
+  line-height: 30px;
+}
+.jigoshop .has-success .help-block,
+.jigoshop .has-success .control-label,
+.jigoshop .has-success .radio,
+.jigoshop .has-success .checkbox,
+.jigoshop .has-success .radio-inline,
+.jigoshop .has-success .checkbox-inline {
+  color: #3c763d;
+}
+.jigoshop .has-success .form-control {
+  border-color: #3c763d;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+}
+.jigoshop .has-success .form-control:focus {
+  border-color: #2b542c;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #67b168;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #67b168;
+}
+.jigoshop .has-success .input-group-addon {
+  color: #3c763d;
+  border-color: #3c763d;
+  background-color: #dff0d8;
+}
+.jigoshop .has-success .form-control-feedback {
+  color: #3c763d;
+}
+.jigoshop .has-warning .help-block,
+.jigoshop .has-warning .control-label,
+.jigoshop .has-warning .radio,
+.jigoshop .has-warning .checkbox,
+.jigoshop .has-warning .radio-inline,
+.jigoshop .has-warning .checkbox-inline {
+  color: #8a6d3b;
+}
+.jigoshop .has-warning .form-control {
+  border-color: #8a6d3b;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+}
+.jigoshop .has-warning .form-control:focus {
+  border-color: #66512c;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #c0a16b;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #c0a16b;
+}
+.jigoshop .has-warning .input-group-addon {
+  color: #8a6d3b;
+  border-color: #8a6d3b;
+  background-color: #fcf8e3;
+}
+.jigoshop .has-warning .form-control-feedback {
+  color: #8a6d3b;
+}
+.jigoshop .has-error .help-block,
+.jigoshop .has-error .control-label,
+.jigoshop .has-error .radio,
+.jigoshop .has-error .checkbox,
+.jigoshop .has-error .radio-inline,
+.jigoshop .has-error .checkbox-inline {
+  color: #a94442;
+}
+.jigoshop .has-error .form-control {
+  border-color: #a94442;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+}
+.jigoshop .has-error .form-control:focus {
+  border-color: #843534;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #ce8483;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #ce8483;
+}
+.jigoshop .has-error .input-group-addon {
+  color: #a94442;
+  border-color: #a94442;
+  background-color: #f2dede;
+}
+.jigoshop .has-error .form-control-feedback {
+  color: #a94442;
+}
+.jigoshop .has-feedback label.sr-only ~ .form-control-feedback {
+  top: 0;
+}
+.jigoshop .help-block {
+  display: block;
+  margin-top: 5px;
+  margin-bottom: 10px;
+  color: #737373;
+}
+@media (min-width: 768px) {
+  .jigoshop .form-inline .form-group {
+    display: inline-block;
+    margin-bottom: 0;
+    vertical-align: middle;
+  }
+  .jigoshop .form-inline .form-control {
+    display: inline-block;
+    width: auto;
+    vertical-align: middle;
+  }
+  .jigoshop .form-inline .input-group {
+    display: inline-table;
+    vertical-align: middle;
+  }
+  .jigoshop .form-inline .input-group .input-group-addon,
+  .jigoshop .form-inline .input-group .input-group-btn,
+  .jigoshop .form-inline .input-group .form-control {
+    width: auto;
+  }
+  .jigoshop .form-inline .input-group > .form-control {
+    width: 100%;
+  }
+  .jigoshop .form-inline .control-label {
+    margin-bottom: 0;
+    vertical-align: middle;
+  }
+  .jigoshop .form-inline .radio,
+  .jigoshop .form-inline .checkbox {
+    display: inline-block;
+    margin-top: 0;
+    margin-bottom: 0;
+    vertical-align: middle;
+  }
+  .jigoshop .form-inline .radio label,
+  .jigoshop .form-inline .checkbox label {
+    padding-left: 0;
+  }
+  .jigoshop .form-inline .radio input[type="radio"],
+  .jigoshop .form-inline .checkbox input[type="checkbox"] {
+    position: relative;
+    margin-left: 0;
+  }
+  .jigoshop .form-inline .has-feedback .form-control-feedback {
+    top: 0;
+  }
+}
+.jigoshop .form-horizontal .radio,
+.jigoshop .form-horizontal .checkbox,
+.jigoshop .form-horizontal .radio-inline,
+.jigoshop .form-horizontal .checkbox-inline {
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-top: 7px;
+}
+.jigoshop .form-horizontal .radio,
+.jigoshop .form-horizontal .checkbox {
+  min-height: 27px;
+}
+.jigoshop .form-horizontal .form-group {
+  margin-left: -15px;
+  margin-right: -15px;
+}
+@media (min-width: 768px) {
+  .jigoshop .form-horizontal .control-label {
+    text-align: right;
+    margin-bottom: 0;
+    padding-top: 7px;
+  }
+}
+.jigoshop .form-horizontal .has-feedback .form-control-feedback {
+  top: 0;
+  right: 15px;
+}
+@media (min-width: 768px) {
+  .jigoshop .form-horizontal .form-group-lg .control-label {
+    padding-top: 14.3px;
+  }
+}
+@media (min-width: 768px) {
+  .jigoshop .form-horizontal .form-group-sm .control-label {
+    padding-top: 6px;
+  }
+}
+.jigoshop table {
+  background-color: transparent;
+}
+.jigoshop th {
+  text-align: left;
+}
+.jigoshop .table {
+  width: 100%;
+  max-width: 100%;
+  margin-bottom: 20px;
+}
+.jigoshop .table > thead > tr > th,
+.jigoshop .table > tbody > tr > th,
+.jigoshop .table > tfoot > tr > th,
+.jigoshop .table > thead > tr > td,
+.jigoshop .table > tbody > tr > td,
+.jigoshop .table > tfoot > tr > td {
+  padding: 8px;
+  line-height: 1.42857143;
+  vertical-align: top;
+  border-top: 1px solid #dddddd;
+}
+.jigoshop .table > thead > tr > th {
+  vertical-align: bottom;
+  border-bottom: 2px solid #dddddd;
+}
+.jigoshop .table > caption + thead > tr:first-child > th,
+.jigoshop .table > colgroup + thead > tr:first-child > th,
+.jigoshop .table > thead:first-child > tr:first-child > th,
+.jigoshop .table > caption + thead > tr:first-child > td,
+.jigoshop .table > colgroup + thead > tr:first-child > td,
+.jigoshop .table > thead:first-child > tr:first-child > td {
+  border-top: 0;
+}
+.jigoshop .table > tbody + tbody {
+  border-top: 2px solid #dddddd;
+}
+.jigoshop .table .table {
+  background-color: #ffffff;
+}
+.jigoshop .table-condensed > thead > tr > th,
+.jigoshop .table-condensed > tbody > tr > th,
+.jigoshop .table-condensed > tfoot > tr > th,
+.jigoshop .table-condensed > thead > tr > td,
+.jigoshop .table-condensed > tbody > tr > td,
+.jigoshop .table-condensed > tfoot > tr > td {
+  padding: 5px;
+}
+.jigoshop .table-bordered {
+  border: 1px solid #dddddd;
+}
+.jigoshop .table-bordered > thead > tr > th,
+.jigoshop .table-bordered > tbody > tr > th,
+.jigoshop .table-bordered > tfoot > tr > th,
+.jigoshop .table-bordered > thead > tr > td,
+.jigoshop .table-bordered > tbody > tr > td,
+.jigoshop .table-bordered > tfoot > tr > td {
+  border: 1px solid #dddddd;
+}
+.jigoshop .table-bordered > thead > tr > th,
+.jigoshop .table-bordered > thead > tr > td {
+  border-bottom-width: 2px;
+}
+.jigoshop .table-striped > tbody > tr:nth-child(odd) > td,
+.jigoshop .table-striped > tbody > tr:nth-child(odd) > th {
+  background-color: #f9f9f9;
+}
+.jigoshop .table-hover > tbody > tr:hover > td,
+.jigoshop .table-hover > tbody > tr:hover > th {
+  background-color: #f5f5f5;
+}
+.jigoshop table col[class*="col-"] {
+  position: static;
+  float: none;
+  display: table-column;
+}
+.jigoshop table td[class*="col-"],
+.jigoshop table th[class*="col-"] {
+  position: static;
+  float: none;
+  display: table-cell;
+}
+.jigoshop .table > thead > tr > td.active,
+.jigoshop .table > tbody > tr > td.active,
+.jigoshop .table > tfoot > tr > td.active,
+.jigoshop .table > thead > tr > th.active,
+.jigoshop .table > tbody > tr > th.active,
+.jigoshop .table > tfoot > tr > th.active,
+.jigoshop .table > thead > tr.active > td,
+.jigoshop .table > tbody > tr.active > td,
+.jigoshop .table > tfoot > tr.active > td,
+.jigoshop .table > thead > tr.active > th,
+.jigoshop .table > tbody > tr.active > th,
+.jigoshop .table > tfoot > tr.active > th {
+  background-color: #f5f5f5;
+}
+.jigoshop .table-hover > tbody > tr > td.active:hover,
+.jigoshop .table-hover > tbody > tr > th.active:hover,
+.jigoshop .table-hover > tbody > tr.active:hover > td,
+.jigoshop .table-hover > tbody > tr:hover > .active,
+.jigoshop .table-hover > tbody > tr.active:hover > th {
+  background-color: #e8e8e8;
+}
+.jigoshop .table > thead > tr > td.success,
+.jigoshop .table > tbody > tr > td.success,
+.jigoshop .table > tfoot > tr > td.success,
+.jigoshop .table > thead > tr > th.success,
+.jigoshop .table > tbody > tr > th.success,
+.jigoshop .table > tfoot > tr > th.success,
+.jigoshop .table > thead > tr.success > td,
+.jigoshop .table > tbody > tr.success > td,
+.jigoshop .table > tfoot > tr.success > td,
+.jigoshop .table > thead > tr.success > th,
+.jigoshop .table > tbody > tr.success > th,
+.jigoshop .table > tfoot > tr.success > th {
+  background-color: #dff0d8;
+}
+.jigoshop .table-hover > tbody > tr > td.success:hover,
+.jigoshop .table-hover > tbody > tr > th.success:hover,
+.jigoshop .table-hover > tbody > tr.success:hover > td,
+.jigoshop .table-hover > tbody > tr:hover > .success,
+.jigoshop .table-hover > tbody > tr.success:hover > th {
+  background-color: #d0e9c6;
+}
+.jigoshop .table > thead > tr > td.info,
+.jigoshop .table > tbody > tr > td.info,
+.jigoshop .table > tfoot > tr > td.info,
+.jigoshop .table > thead > tr > th.info,
+.jigoshop .table > tbody > tr > th.info,
+.jigoshop .table > tfoot > tr > th.info,
+.jigoshop .table > thead > tr.info > td,
+.jigoshop .table > tbody > tr.info > td,
+.jigoshop .table > tfoot > tr.info > td,
+.jigoshop .table > thead > tr.info > th,
+.jigoshop .table > tbody > tr.info > th,
+.jigoshop .table > tfoot > tr.info > th {
+  background-color: #d9edf7;
+}
+.jigoshop .table-hover > tbody > tr > td.info:hover,
+.jigoshop .table-hover > tbody > tr > th.info:hover,
+.jigoshop .table-hover > tbody > tr.info:hover > td,
+.jigoshop .table-hover > tbody > tr:hover > .info,
+.jigoshop .table-hover > tbody > tr.info:hover > th {
+  background-color: #c4e3f3;
+}
+.jigoshop .table > thead > tr > td.warning,
+.jigoshop .table > tbody > tr > td.warning,
+.jigoshop .table > tfoot > tr > td.warning,
+.jigoshop .table > thead > tr > th.warning,
+.jigoshop .table > tbody > tr > th.warning,
+.jigoshop .table > tfoot > tr > th.warning,
+.jigoshop .table > thead > tr.warning > td,
+.jigoshop .table > tbody > tr.warning > td,
+.jigoshop .table > tfoot > tr.warning > td,
+.jigoshop .table > thead > tr.warning > th,
+.jigoshop .table > tbody > tr.warning > th,
+.jigoshop .table > tfoot > tr.warning > th {
+  background-color: #fcf8e3;
+}
+.jigoshop .table-hover > tbody > tr > td.warning:hover,
+.jigoshop .table-hover > tbody > tr > th.warning:hover,
+.jigoshop .table-hover > tbody > tr.warning:hover > td,
+.jigoshop .table-hover > tbody > tr:hover > .warning,
+.jigoshop .table-hover > tbody > tr.warning:hover > th {
+  background-color: #faf2cc;
+}
+.jigoshop .table > thead > tr > td.danger,
+.jigoshop .table > tbody > tr > td.danger,
+.jigoshop .table > tfoot > tr > td.danger,
+.jigoshop .table > thead > tr > th.danger,
+.jigoshop .table > tbody > tr > th.danger,
+.jigoshop .table > tfoot > tr > th.danger,
+.jigoshop .table > thead > tr.danger > td,
+.jigoshop .table > tbody > tr.danger > td,
+.jigoshop .table > tfoot > tr.danger > td,
+.jigoshop .table > thead > tr.danger > th,
+.jigoshop .table > tbody > tr.danger > th,
+.jigoshop .table > tfoot > tr.danger > th {
+  background-color: #f2dede;
+}
+.jigoshop .table-hover > tbody > tr > td.danger:hover,
+.jigoshop .table-hover > tbody > tr > th.danger:hover,
+.jigoshop .table-hover > tbody > tr.danger:hover > td,
+.jigoshop .table-hover > tbody > tr:hover > .danger,
+.jigoshop .table-hover > tbody > tr.danger:hover > th {
+  background-color: #ebcccc;
+}
+@media screen and (max-width: 767px) {
+  .jigoshop .table-responsive {
+    width: 100%;
+    margin-bottom: 15px;
+    overflow-y: hidden;
+    overflow-x: auto;
+    -ms-overflow-style: -ms-autohiding-scrollbar;
+    border: 1px solid #dddddd;
+    -webkit-overflow-scrolling: touch;
+  }
+  .jigoshop .table-responsive > .table {
+    margin-bottom: 0;
+  }
+  .jigoshop .table-responsive > .table > thead > tr > th,
+  .jigoshop .table-responsive > .table > tbody > tr > th,
+  .jigoshop .table-responsive > .table > tfoot > tr > th,
+  .jigoshop .table-responsive > .table > thead > tr > td,
+  .jigoshop .table-responsive > .table > tbody > tr > td,
+  .jigoshop .table-responsive > .table > tfoot > tr > td {
+    white-space: nowrap;
+  }
+  .jigoshop .table-responsive > .table-bordered {
+    border: 0;
+  }
+  .jigoshop .table-responsive > .table-bordered > thead > tr > th:first-child,
+  .jigoshop .table-responsive > .table-bordered > tbody > tr > th:first-child,
+  .jigoshop .table-responsive > .table-bordered > tfoot > tr > th:first-child,
+  .jigoshop .table-responsive > .table-bordered > thead > tr > td:first-child,
+  .jigoshop .table-responsive > .table-bordered > tbody > tr > td:first-child,
+  .jigoshop .table-responsive > .table-bordered > tfoot > tr > td:first-child {
+    border-left: 0;
+  }
+  .jigoshop .table-responsive > .table-bordered > thead > tr > th:last-child,
+  .jigoshop .table-responsive > .table-bordered > tbody > tr > th:last-child,
+  .jigoshop .table-responsive > .table-bordered > tfoot > tr > th:last-child,
+  .jigoshop .table-responsive > .table-bordered > thead > tr > td:last-child,
+  .jigoshop .table-responsive > .table-bordered > tbody > tr > td:last-child,
+  .jigoshop .table-responsive > .table-bordered > tfoot > tr > td:last-child {
+    border-right: 0;
+  }
+  .jigoshop .table-responsive > .table-bordered > tbody > tr:last-child > th,
+  .jigoshop .table-responsive > .table-bordered > tfoot > tr:last-child > th,
+  .jigoshop .table-responsive > .table-bordered > tbody > tr:last-child > td,
+  .jigoshop .table-responsive > .table-bordered > tfoot > tr:last-child > td {
+    border-bottom: 0;
+  }
+}
+.jigoshop .btn {
+  display: inline-block;
+  margin-bottom: 0;
+  font-weight: normal;
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+  background-image: none;
+  border: 1px solid transparent;
+  white-space: nowrap;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.42857143;
+  border-radius: 4px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.jigoshop .btn:focus,
+.jigoshop .btn:active:focus,
+.jigoshop .btn.active:focus {
+  outline: thin dotted;
+  outline: 5px auto -webkit-focus-ring-color;
+  outline-offset: -2px;
+}
+.jigoshop .btn:hover,
+.jigoshop .btn:focus {
+  color: #333333;
+  text-decoration: none;
+}
+.jigoshop .btn:active,
+.jigoshop .btn.active {
+  outline: 0;
+  background-image: none;
+  -webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+  box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+}
+.jigoshop .btn.disabled,
+.jigoshop .btn[disabled],
+fieldset[disabled] .jigoshop .btn {
+  cursor: not-allowed;
+  pointer-events: none;
+  opacity: 0.65;
+  filter: alpha(opacity=65);
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+.jigoshop .btn-default {
+  color: #333333;
+  background-color: #ffffff;
+  border-color: #cccccc;
+}
+.jigoshop .btn-default:hover,
+.jigoshop .btn-default:focus,
+.jigoshop .btn-default:active,
+.jigoshop .btn-default.active,
+.open > .dropdown-toggle.jigoshop .btn-default {
+  color: #333333;
+  background-color: #e6e6e6;
+  border-color: #adadad;
+}
+.jigoshop .btn-default:active,
+.jigoshop .btn-default.active,
+.open > .dropdown-toggle.jigoshop .btn-default {
+  background-image: none;
+}
+.jigoshop .btn-default.disabled,
+.jigoshop .btn-default[disabled],
+fieldset[disabled] .jigoshop .btn-default,
+.jigoshop .btn-default.disabled:hover,
+.jigoshop .btn-default[disabled]:hover,
+fieldset[disabled] .jigoshop .btn-default:hover,
+.jigoshop .btn-default.disabled:focus,
+.jigoshop .btn-default[disabled]:focus,
+fieldset[disabled] .jigoshop .btn-default:focus,
+.jigoshop .btn-default.disabled:active,
+.jigoshop .btn-default[disabled]:active,
+fieldset[disabled] .jigoshop .btn-default:active,
+.jigoshop .btn-default.disabled.active,
+.jigoshop .btn-default[disabled].active,
+fieldset[disabled] .jigoshop .btn-default.active {
+  background-color: #ffffff;
+  border-color: #cccccc;
+}
+.jigoshop .btn-default .badge {
+  color: #ffffff;
+  background-color: #333333;
+}
+.jigoshop .btn-primary {
+  color: #ffffff;
+  background-color: #428bca;
+  border-color: #357ebd;
+}
+.jigoshop .btn-primary:hover,
+.jigoshop .btn-primary:focus,
+.jigoshop .btn-primary:active,
+.jigoshop .btn-primary.active,
+.open > .dropdown-toggle.jigoshop .btn-primary {
+  color: #ffffff;
+  background-color: #3071a9;
+  border-color: #285e8e;
+}
+.jigoshop .btn-primary:active,
+.jigoshop .btn-primary.active,
+.open > .dropdown-toggle.jigoshop .btn-primary {
+  background-image: none;
+}
+.jigoshop .btn-primary.disabled,
+.jigoshop .btn-primary[disabled],
+fieldset[disabled] .jigoshop .btn-primary,
+.jigoshop .btn-primary.disabled:hover,
+.jigoshop .btn-primary[disabled]:hover,
+fieldset[disabled] .jigoshop .btn-primary:hover,
+.jigoshop .btn-primary.disabled:focus,
+.jigoshop .btn-primary[disabled]:focus,
+fieldset[disabled] .jigoshop .btn-primary:focus,
+.jigoshop .btn-primary.disabled:active,
+.jigoshop .btn-primary[disabled]:active,
+fieldset[disabled] .jigoshop .btn-primary:active,
+.jigoshop .btn-primary.disabled.active,
+.jigoshop .btn-primary[disabled].active,
+fieldset[disabled] .jigoshop .btn-primary.active {
+  background-color: #428bca;
+  border-color: #357ebd;
+}
+.jigoshop .btn-primary .badge {
+  color: #428bca;
+  background-color: #ffffff;
+}
+.jigoshop .btn-success {
+  color: #ffffff;
+  background-color: #5cb85c;
+  border-color: #4cae4c;
+}
+.jigoshop .btn-success:hover,
+.jigoshop .btn-success:focus,
+.jigoshop .btn-success:active,
+.jigoshop .btn-success.active,
+.open > .dropdown-toggle.jigoshop .btn-success {
+  color: #ffffff;
+  background-color: #449d44;
+  border-color: #398439;
+}
+.jigoshop .btn-success:active,
+.jigoshop .btn-success.active,
+.open > .dropdown-toggle.jigoshop .btn-success {
+  background-image: none;
+}
+.jigoshop .btn-success.disabled,
+.jigoshop .btn-success[disabled],
+fieldset[disabled] .jigoshop .btn-success,
+.jigoshop .btn-success.disabled:hover,
+.jigoshop .btn-success[disabled]:hover,
+fieldset[disabled] .jigoshop .btn-success:hover,
+.jigoshop .btn-success.disabled:focus,
+.jigoshop .btn-success[disabled]:focus,
+fieldset[disabled] .jigoshop .btn-success:focus,
+.jigoshop .btn-success.disabled:active,
+.jigoshop .btn-success[disabled]:active,
+fieldset[disabled] .jigoshop .btn-success:active,
+.jigoshop .btn-success.disabled.active,
+.jigoshop .btn-success[disabled].active,
+fieldset[disabled] .jigoshop .btn-success.active {
+  background-color: #5cb85c;
+  border-color: #4cae4c;
+}
+.jigoshop .btn-success .badge {
+  color: #5cb85c;
+  background-color: #ffffff;
+}
+.jigoshop .btn-info {
+  color: #ffffff;
+  background-color: #5bc0de;
+  border-color: #46b8da;
+}
+.jigoshop .btn-info:hover,
+.jigoshop .btn-info:focus,
+.jigoshop .btn-info:active,
+.jigoshop .btn-info.active,
+.open > .dropdown-toggle.jigoshop .btn-info {
+  color: #ffffff;
+  background-color: #31b0d5;
+  border-color: #269abc;
+}
+.jigoshop .btn-info:active,
+.jigoshop .btn-info.active,
+.open > .dropdown-toggle.jigoshop .btn-info {
+  background-image: none;
+}
+.jigoshop .btn-info.disabled,
+.jigoshop .btn-info[disabled],
+fieldset[disabled] .jigoshop .btn-info,
+.jigoshop .btn-info.disabled:hover,
+.jigoshop .btn-info[disabled]:hover,
+fieldset[disabled] .jigoshop .btn-info:hover,
+.jigoshop .btn-info.disabled:focus,
+.jigoshop .btn-info[disabled]:focus,
+fieldset[disabled] .jigoshop .btn-info:focus,
+.jigoshop .btn-info.disabled:active,
+.jigoshop .btn-info[disabled]:active,
+fieldset[disabled] .jigoshop .btn-info:active,
+.jigoshop .btn-info.disabled.active,
+.jigoshop .btn-info[disabled].active,
+fieldset[disabled] .jigoshop .btn-info.active {
+  background-color: #5bc0de;
+  border-color: #46b8da;
+}
+.jigoshop .btn-info .badge {
+  color: #5bc0de;
+  background-color: #ffffff;
+}
+.jigoshop .btn-warning {
+  color: #ffffff;
+  background-color: #f0ad4e;
+  border-color: #eea236;
+}
+.jigoshop .btn-warning:hover,
+.jigoshop .btn-warning:focus,
+.jigoshop .btn-warning:active,
+.jigoshop .btn-warning.active,
+.open > .dropdown-toggle.jigoshop .btn-warning {
+  color: #ffffff;
+  background-color: #ec971f;
+  border-color: #d58512;
+}
+.jigoshop .btn-warning:active,
+.jigoshop .btn-warning.active,
+.open > .dropdown-toggle.jigoshop .btn-warning {
+  background-image: none;
+}
+.jigoshop .btn-warning.disabled,
+.jigoshop .btn-warning[disabled],
+fieldset[disabled] .jigoshop .btn-warning,
+.jigoshop .btn-warning.disabled:hover,
+.jigoshop .btn-warning[disabled]:hover,
+fieldset[disabled] .jigoshop .btn-warning:hover,
+.jigoshop .btn-warning.disabled:focus,
+.jigoshop .btn-warning[disabled]:focus,
+fieldset[disabled] .jigoshop .btn-warning:focus,
+.jigoshop .btn-warning.disabled:active,
+.jigoshop .btn-warning[disabled]:active,
+fieldset[disabled] .jigoshop .btn-warning:active,
+.jigoshop .btn-warning.disabled.active,
+.jigoshop .btn-warning[disabled].active,
+fieldset[disabled] .jigoshop .btn-warning.active {
+  background-color: #f0ad4e;
+  border-color: #eea236;
+}
+.jigoshop .btn-warning .badge {
+  color: #f0ad4e;
+  background-color: #ffffff;
+}
+.jigoshop .btn-danger {
+  color: #ffffff;
+  background-color: #d9534f;
+  border-color: #d43f3a;
+}
+.jigoshop .btn-danger:hover,
+.jigoshop .btn-danger:focus,
+.jigoshop .btn-danger:active,
+.jigoshop .btn-danger.active,
+.open > .dropdown-toggle.jigoshop .btn-danger {
+  color: #ffffff;
+  background-color: #c9302c;
+  border-color: #ac2925;
+}
+.jigoshop .btn-danger:active,
+.jigoshop .btn-danger.active,
+.open > .dropdown-toggle.jigoshop .btn-danger {
+  background-image: none;
+}
+.jigoshop .btn-danger.disabled,
+.jigoshop .btn-danger[disabled],
+fieldset[disabled] .jigoshop .btn-danger,
+.jigoshop .btn-danger.disabled:hover,
+.jigoshop .btn-danger[disabled]:hover,
+fieldset[disabled] .jigoshop .btn-danger:hover,
+.jigoshop .btn-danger.disabled:focus,
+.jigoshop .btn-danger[disabled]:focus,
+fieldset[disabled] .jigoshop .btn-danger:focus,
+.jigoshop .btn-danger.disabled:active,
+.jigoshop .btn-danger[disabled]:active,
+fieldset[disabled] .jigoshop .btn-danger:active,
+.jigoshop .btn-danger.disabled.active,
+.jigoshop .btn-danger[disabled].active,
+fieldset[disabled] .jigoshop .btn-danger.active {
+  background-color: #d9534f;
+  border-color: #d43f3a;
+}
+.jigoshop .btn-danger .badge {
+  color: #d9534f;
+  background-color: #ffffff;
+}
+.jigoshop .btn-link {
+  color: #428bca;
+  font-weight: normal;
+  cursor: pointer;
+  border-radius: 0;
+}
+.jigoshop .btn-link,
+.jigoshop .btn-link:active,
+.jigoshop .btn-link[disabled],
+fieldset[disabled] .jigoshop .btn-link {
+  background-color: transparent;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+.jigoshop .btn-link,
+.jigoshop .btn-link:hover,
+.jigoshop .btn-link:focus,
+.jigoshop .btn-link:active {
+  border-color: transparent;
+}
+.jigoshop .btn-link:hover,
+.jigoshop .btn-link:focus {
+  color: #2a6496;
+  text-decoration: underline;
+  background-color: transparent;
+}
+.jigoshop .btn-link[disabled]:hover,
+fieldset[disabled] .jigoshop .btn-link:hover,
+.jigoshop .btn-link[disabled]:focus,
+fieldset[disabled] .jigoshop .btn-link:focus {
+  color: #777777;
+  text-decoration: none;
+}
+.jigoshop .btn-lg {
+  padding: 10px 16px;
+  font-size: 18px;
+  line-height: 1.33;
+  border-radius: 6px;
+}
+.jigoshop .btn-sm {
+  padding: 5px 10px;
+  font-size: 12px;
+  line-height: 1.5;
+  border-radius: 3px;
+}
+.jigoshop .btn-xs {
+  padding: 1px 5px;
+  font-size: 12px;
+  line-height: 1.5;
+  border-radius: 3px;
+}
+.jigoshop .btn-block {
+  display: block;
+  width: 100%;
+}
+.jigoshop .btn-block + .btn-block {
+  margin-top: 5px;
+}
+.jigoshop input[type="submit"].btn-block,
+.jigoshop input[type="reset"].btn-block,
+.jigoshop input[type="button"].btn-block {
+  width: 100%;
+}
+.jigoshop .tooltip {
+  position: absolute;
+  z-index: 1070;
+  display: block;
+  visibility: visible;
+  font-size: 12px;
+  line-height: 1.4;
+  opacity: 0;
+  filter: alpha(opacity=0);
+}
+.jigoshop .tooltip.in {
+  opacity: 0.9;
+  filter: alpha(opacity=90);
+}
+.jigoshop .tooltip.top {
+  margin-top: -3px;
+  padding: 5px 0;
+}
+.jigoshop .tooltip.right {
+  margin-left: 3px;
+  padding: 0 5px;
+}
+.jigoshop .tooltip.bottom {
+  margin-top: 3px;
+  padding: 5px 0;
+}
+.jigoshop .tooltip.left {
+  margin-left: -3px;
+  padding: 0 5px;
+}
+.jigoshop .tooltip-inner {
+  max-width: 200px;
+  padding: 3px 8px;
+  color: #ffffff;
+  text-align: center;
+  text-decoration: none;
+  background-color: #000000;
+  border-radius: 4px;
+}
+.jigoshop .tooltip-arrow {
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+}
+.jigoshop .tooltip.top .tooltip-arrow {
+  bottom: 0;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px 5px 0;
+  border-top-color: #000000;
+}
+.jigoshop .tooltip.top-left .tooltip-arrow {
+  bottom: 0;
+  left: 5px;
+  border-width: 5px 5px 0;
+  border-top-color: #000000;
+}
+.jigoshop .tooltip.top-right .tooltip-arrow {
+  bottom: 0;
+  right: 5px;
+  border-width: 5px 5px 0;
+  border-top-color: #000000;
+}
+.jigoshop .tooltip.right .tooltip-arrow {
+  top: 50%;
+  left: 0;
+  margin-top: -5px;
+  border-width: 5px 5px 5px 0;
+  border-right-color: #000000;
+}
+.jigoshop .tooltip.left .tooltip-arrow {
+  top: 50%;
+  right: 0;
+  margin-top: -5px;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #000000;
+}
+.jigoshop .tooltip.bottom .tooltip-arrow {
+  top: 0;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 0 5px 5px;
+  border-bottom-color: #000000;
+}
+.jigoshop .tooltip.bottom-left .tooltip-arrow {
+  top: 0;
+  left: 5px;
+  border-width: 0 5px 5px;
+  border-bottom-color: #000000;
+}
+.jigoshop .tooltip.bottom-right .tooltip-arrow {
+  top: 0;
+  right: 5px;
+  border-width: 0 5px 5px;
+  border-bottom-color: #000000;
+}
+.jigoshop .clearfix:before,
+.jigoshop .clearfix:after,
+.jigoshop .jigoshop .container:before,
+.jigoshop .jigoshop .container:after,
+.jigoshop .jigoshop .container-fluid:before,
+.jigoshop .jigoshop .container-fluid:after,
+.jigoshop .jigoshop .row:before,
+.jigoshop .jigoshop .row:after,
+.jigoshop .jigoshop .form-horizontal .form-group:before,
+.jigoshop .jigoshop .form-horizontal .form-group:after,
+.jigoshop .jigoshop .dl-horizontal dd:before,
+.jigoshop .jigoshop .dl-horizontal dd:after,
+.jigoshop .jigoshop .panel-body:before,
+.jigoshop .jigoshop .panel-body:after {
+  content: " ";
+  display: table;
+}
+.jigoshop .clearfix:after,
+.jigoshop .jigoshop .container:after,
+.jigoshop .jigoshop .container-fluid:after,
+.jigoshop .jigoshop .row:after,
+.jigoshop .jigoshop .form-horizontal .form-group:after,
+.jigoshop .jigoshop .dl-horizontal dd:after,
+.jigoshop .jigoshop .panel-body:after {
+  clear: both;
+}
+.jigoshop .center-block {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+.jigoshop .pull-right {
+  float: right !important;
+}
+.jigoshop .pull-left {
+  float: left !important;
+}
+.jigoshop .hide {
+  display: none !important;
+}
+.jigoshop .show {
+  display: block !important;
+}
+.jigoshop .invisible {
+  visibility: hidden;
+}
+.jigoshop .text-hide {
+  font: 0/0 a;
+  color: transparent;
+  text-shadow: none;
+  background-color: transparent;
+  border: 0;
+}
+.jigoshop .hidden {
+  display: none !important;
+  visibility: hidden !important;
+}
+.jigoshop .affix {
+  position: fixed;
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+}
+.jigoshop .alert {
+  padding: 15px;
+  margin-bottom: 20px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+}
+.jigoshop .alert h4 {
+  margin-top: 0;
+  color: inherit;
+}
+.jigoshop .alert .alert-link {
+  font-weight: bold;
+}
+.jigoshop .alert > p,
+.jigoshop .alert > ul {
+  margin-bottom: 0;
+}
+.jigoshop .alert > p + p {
+  margin-top: 5px;
+}
+.jigoshop .alert-dismissable,
+.jigoshop .alert-dismissible {
+  padding-right: 35px;
+}
+.jigoshop .alert-dismissable .close,
+.jigoshop .alert-dismissible .close {
+  position: relative;
+  top: -2px;
+  right: -21px;
+  color: inherit;
+}
+.jigoshop .alert-success {
+  background-color: #dff0d8;
+  border-color: #d6e9c6;
+  color: #3c763d;
+}
+.jigoshop .alert-success hr {
+  border-top-color: #c9e2b3;
+}
+.jigoshop .alert-success .alert-link {
+  color: #2b542c;
+}
+.jigoshop .alert-info {
+  background-color: #d9edf7;
+  border-color: #bce8f1;
+  color: #31708f;
+}
+.jigoshop .alert-info hr {
+  border-top-color: #a6e1ec;
+}
+.jigoshop .alert-info .alert-link {
+  color: #245269;
+}
+.jigoshop .alert-warning {
+  background-color: #fcf8e3;
+  border-color: #faebcc;
+  color: #8a6d3b;
+}
+.jigoshop .alert-warning hr {
+  border-top-color: #f7e1b5;
+}
+.jigoshop .alert-warning .alert-link {
+  color: #66512c;
+}
+.jigoshop .alert-danger {
+  background-color: #f2dede;
+  border-color: #ebccd1;
+  color: #a94442;
+}
+.jigoshop .alert-danger hr {
+  border-top-color: #e4b9c0;
+}
+.jigoshop .alert-danger .alert-link {
+  color: #843534;
+}
+.jigoshop h1,
+.jigoshop h2,
+.jigoshop h3,
+.jigoshop h4,
+.jigoshop h5,
+.jigoshop h6,
+.jigoshop .h1,
+.jigoshop .h2,
+.jigoshop .h3,
+.jigoshop .h4,
+.jigoshop .h5,
+.jigoshop .h6 {
+  font-family: inherit;
+  font-weight: 500;
+  line-height: 1.1;
+  color: inherit;
+}
+.jigoshop h1 small,
+.jigoshop h2 small,
+.jigoshop h3 small,
+.jigoshop h4 small,
+.jigoshop h5 small,
+.jigoshop h6 small,
+.jigoshop .h1 small,
+.jigoshop .h2 small,
+.jigoshop .h3 small,
+.jigoshop .h4 small,
+.jigoshop .h5 small,
+.jigoshop .h6 small,
+.jigoshop h1 .small,
+.jigoshop h2 .small,
+.jigoshop h3 .small,
+.jigoshop h4 .small,
+.jigoshop h5 .small,
+.jigoshop h6 .small,
+.jigoshop .h1 .small,
+.jigoshop .h2 .small,
+.jigoshop .h3 .small,
+.jigoshop .h4 .small,
+.jigoshop .h5 .small,
+.jigoshop .h6 .small {
+  font-weight: normal;
+  line-height: 1;
+  color: #777777;
+}
+.jigoshop h1,
+.jigoshop .h1,
+.jigoshop h2,
+.jigoshop .h2,
+.jigoshop h3,
+.jigoshop .h3 {
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+.jigoshop h1 small,
+.jigoshop .h1 small,
+.jigoshop h2 small,
+.jigoshop .h2 small,
+.jigoshop h3 small,
+.jigoshop .h3 small,
+.jigoshop h1 .small,
+.jigoshop .h1 .small,
+.jigoshop h2 .small,
+.jigoshop .h2 .small,
+.jigoshop h3 .small,
+.jigoshop .h3 .small {
+  font-size: 65%;
+}
+.jigoshop h4,
+.jigoshop .h4,
+.jigoshop h5,
+.jigoshop .h5,
+.jigoshop h6,
+.jigoshop .h6 {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.jigoshop h4 small,
+.jigoshop .h4 small,
+.jigoshop h5 small,
+.jigoshop .h5 small,
+.jigoshop h6 small,
+.jigoshop .h6 small,
+.jigoshop h4 .small,
+.jigoshop .h4 .small,
+.jigoshop h5 .small,
+.jigoshop .h5 .small,
+.jigoshop h6 .small,
+.jigoshop .h6 .small {
+  font-size: 75%;
+}
+.jigoshop h1,
+.jigoshop .h1 {
+  font-size: 36px;
+}
+.jigoshop h2,
+.jigoshop .h2 {
+  font-size: 30px;
+}
+.jigoshop h3,
+.jigoshop .h3 {
+  font-size: 24px;
+}
+.jigoshop h4,
+.jigoshop .h4 {
+  font-size: 18px;
+}
+.jigoshop h5,
+.jigoshop .h5 {
+  font-size: 14px;
+}
+.jigoshop h6,
+.jigoshop .h6 {
+  font-size: 12px;
+}
+.jigoshop p {
+  margin: 0 0 10px;
+}
+.jigoshop .lead {
+  margin-bottom: 20px;
+  font-size: 16px;
+  font-weight: 300;
+  line-height: 1.4;
+}
+@media (min-width: 768px) {
+  .jigoshop .lead {
+    font-size: 21px;
+  }
+}
+.jigoshop small,
+.jigoshop .small {
+  font-size: 85%;
+}
+.jigoshop cite {
+  font-style: normal;
+}
+.jigoshop mark,
+.jigoshop .mark {
+  background-color: #fcf8e3;
+  padding: .2em;
+}
+.jigoshop .text-left {
+  text-align: left;
+}
+.jigoshop .text-right {
+  text-align: right;
+}
+.jigoshop .text-center {
+  text-align: center;
+}
+.jigoshop .text-justify {
+  text-align: justify;
+}
+.jigoshop .text-nowrap {
+  white-space: nowrap;
+}
+.jigoshop .text-lowercase {
+  text-transform: lowercase;
+}
+.jigoshop .text-uppercase {
+  text-transform: uppercase;
+}
+.jigoshop .text-capitalize {
+  text-transform: capitalize;
+}
+.jigoshop .text-muted {
+  color: #777777;
+}
+.jigoshop .text-primary {
+  color: #428bca;
+}
+a.jigoshop .text-primary:hover {
+  color: #3071a9;
+}
+.jigoshop .text-success {
+  color: #3c763d;
+}
+a.jigoshop .text-success:hover {
+  color: #2b542c;
+}
+.jigoshop .text-info {
+  color: #31708f;
+}
+a.jigoshop .text-info:hover {
+  color: #245269;
+}
+.jigoshop .text-warning {
+  color: #8a6d3b;
+}
+a.jigoshop .text-warning:hover {
+  color: #66512c;
+}
+.jigoshop .text-danger {
+  color: #a94442;
+}
+a.jigoshop .text-danger:hover {
+  color: #843534;
+}
+.jigoshop .bg-primary {
+  color: #fff;
+  background-color: #428bca;
+}
+a.jigoshop .bg-primary:hover {
+  background-color: #3071a9;
+}
+.jigoshop .bg-success {
+  background-color: #dff0d8;
+}
+a.jigoshop .bg-success:hover {
+  background-color: #c1e2b3;
+}
+.jigoshop .bg-info {
+  background-color: #d9edf7;
+}
+a.jigoshop .bg-info:hover {
+  background-color: #afd9ee;
+}
+.jigoshop .bg-warning {
+  background-color: #fcf8e3;
+}
+a.jigoshop .bg-warning:hover {
+  background-color: #f7ecb5;
+}
+.jigoshop .bg-danger {
+  background-color: #f2dede;
+}
+a.jigoshop .bg-danger:hover {
+  background-color: #e4b9b9;
+}
+.jigoshop .page-header {
+  padding-bottom: 9px;
+  margin: 40px 0 20px;
+  border-bottom: 1px solid #eeeeee;
+}
+.jigoshop ul,
+.jigoshop ol {
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+.jigoshop ul ul,
+.jigoshop ol ul,
+.jigoshop ul ol,
+.jigoshop ol ol {
+  margin-bottom: 0;
+}
+.jigoshop .list-unstyled {
+  padding-left: 0;
+  list-style: none;
+}
+.jigoshop .list-inline {
+  padding-left: 0;
+  list-style: none;
+  margin-left: -5px;
+}
+.jigoshop .list-inline > li {
+  display: inline-block;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+.jigoshop dl {
+  margin-top: 0;
+  margin-bottom: 20px;
+}
+.jigoshop dt,
+.jigoshop dd {
+  line-height: 1.42857143;
+}
+.jigoshop dt {
+  font-weight: bold;
+}
+.jigoshop dd {
+  margin-left: 0;
+}
+@media (min-width: 768px) {
+  .jigoshop .dl-horizontal dt {
+    float: left;
+    width: 160px;
+    clear: left;
+    text-align: right;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .jigoshop .dl-horizontal dd {
+    margin-left: 180px;
+  }
+}
+.jigoshop abbr[title],
+.jigoshop abbr[data-original-title] {
+  cursor: help;
+  border-bottom: 1px dotted #777777;
+}
+.jigoshop .initialism {
+  font-size: 90%;
+  text-transform: uppercase;
+}
+.jigoshop blockquote {
+  padding: 10px 20px;
+  margin: 0 0 20px;
+  font-size: 17.5px;
+  border-left: 5px solid #eeeeee;
+}
+.jigoshop blockquote p:last-child,
+.jigoshop blockquote ul:last-child,
+.jigoshop blockquote ol:last-child {
+  margin-bottom: 0;
+}
+.jigoshop blockquote footer,
+.jigoshop blockquote small,
+.jigoshop blockquote .small {
+  display: block;
+  font-size: 80%;
+  line-height: 1.42857143;
+  color: #777777;
+}
+.jigoshop blockquote footer:before,
+.jigoshop blockquote small:before,
+.jigoshop blockquote .small:before {
+  content: '\2014 \00A0';
+}
+.jigoshop .blockquote-reverse,
+.jigoshop blockquote.pull-right {
+  padding-right: 15px;
+  padding-left: 0;
+  border-right: 5px solid #eeeeee;
+  border-left: 0;
+  text-align: right;
+}
+.jigoshop .blockquote-reverse footer:before,
+.jigoshop blockquote.pull-right footer:before,
+.jigoshop .blockquote-reverse small:before,
+.jigoshop blockquote.pull-right small:before,
+.jigoshop .blockquote-reverse .small:before,
+.jigoshop blockquote.pull-right .small:before {
+  content: '';
+}
+.jigoshop .blockquote-reverse footer:after,
+.jigoshop blockquote.pull-right footer:after,
+.jigoshop .blockquote-reverse small:after,
+.jigoshop blockquote.pull-right small:after,
+.jigoshop .blockquote-reverse .small:after,
+.jigoshop blockquote.pull-right .small:after {
+  content: '\00A0 \2014';
+}
+.jigoshop blockquote:before,
+.jigoshop blockquote:after {
+  content: "";
+}
+.jigoshop address {
+  margin-bottom: 20px;
+  font-style: normal;
+  line-height: 1.42857143;
+}
+.jigoshop .panel {
+  margin-bottom: 20px;
+  background-color: #ffffff;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+}
+.jigoshop .panel-body {
+  padding: 15px;
+}
+.jigoshop .panel-heading {
+  padding: 10px 15px;
+  border-bottom: 1px solid transparent;
+  border-top-right-radius: 3px;
+  border-top-left-radius: 3px;
+}
+.jigoshop .panel-heading > .dropdown .dropdown-toggle {
+  color: inherit;
+}
+.jigoshop .panel-title {
+  margin-top: 0;
+  margin-bottom: 0;
+  font-size: 16px;
+  color: inherit;
+}
+.jigoshop .panel-title > a {
+  color: inherit;
+}
+.jigoshop .panel-footer {
+  padding: 10px 15px;
+  background-color: #f5f5f5;
+  border-top: 1px solid #dddddd;
+  border-bottom-right-radius: 3px;
+  border-bottom-left-radius: 3px;
+}
+.jigoshop .panel > .list-group {
+  margin-bottom: 0;
+}
+.jigoshop .panel > .list-group .list-group-item {
+  border-width: 1px 0;
+  border-radius: 0;
+}
+.jigoshop .panel > .list-group:first-child .list-group-item:first-child {
+  border-top: 0;
+  border-top-right-radius: 3px;
+  border-top-left-radius: 3px;
+}
+.jigoshop .panel > .list-group:last-child .list-group-item:last-child {
+  border-bottom: 0;
+  border-bottom-right-radius: 3px;
+  border-bottom-left-radius: 3px;
+}
+.jigoshop .panel-heading + .list-group .list-group-item:first-child {
+  border-top-width: 0;
+}
+.jigoshop .list-group + .panel-footer {
+  border-top-width: 0;
+}
+.jigoshop .panel > .table,
+.jigoshop .panel > .table-responsive > .table,
+.jigoshop .panel > .panel-collapse > .table {
+  margin-bottom: 0;
+}
+.jigoshop .panel > .table:first-child,
+.jigoshop .panel > .table-responsive:first-child > .table:first-child {
+  border-top-right-radius: 3px;
+  border-top-left-radius: 3px;
+}
+.jigoshop .panel > .table:first-child > thead:first-child > tr:first-child td:first-child,
+.jigoshop .panel > .table-responsive:first-child > .table:first-child > thead:first-child > tr:first-child td:first-child,
+.jigoshop .panel > .table:first-child > tbody:first-child > tr:first-child td:first-child,
+.jigoshop .panel > .table-responsive:first-child > .table:first-child > tbody:first-child > tr:first-child td:first-child,
+.jigoshop .panel > .table:first-child > thead:first-child > tr:first-child th:first-child,
+.jigoshop .panel > .table-responsive:first-child > .table:first-child > thead:first-child > tr:first-child th:first-child,
+.jigoshop .panel > .table:first-child > tbody:first-child > tr:first-child th:first-child,
+.jigoshop .panel > .table-responsive:first-child > .table:first-child > tbody:first-child > tr:first-child th:first-child {
+  border-top-left-radius: 3px;
+}
+.jigoshop .panel > .table:first-child > thead:first-child > tr:first-child td:last-child,
+.jigoshop .panel > .table-responsive:first-child > .table:first-child > thead:first-child > tr:first-child td:last-child,
+.jigoshop .panel > .table:first-child > tbody:first-child > tr:first-child td:last-child,
+.jigoshop .panel > .table-responsive:first-child > .table:first-child > tbody:first-child > tr:first-child td:last-child,
+.jigoshop .panel > .table:first-child > thead:first-child > tr:first-child th:last-child,
+.jigoshop .panel > .table-responsive:first-child > .table:first-child > thead:first-child > tr:first-child th:last-child,
+.jigoshop .panel > .table:first-child > tbody:first-child > tr:first-child th:last-child,
+.jigoshop .panel > .table-responsive:first-child > .table:first-child > tbody:first-child > tr:first-child th:last-child {
+  border-top-right-radius: 3px;
+}
+.jigoshop .panel > .table:last-child,
+.jigoshop .panel > .table-responsive:last-child > .table:last-child {
+  border-bottom-right-radius: 3px;
+  border-bottom-left-radius: 3px;
+}
+.jigoshop .panel > .table:last-child > tbody:last-child > tr:last-child td:first-child,
+.jigoshop .panel > .table-responsive:last-child > .table:last-child > tbody:last-child > tr:last-child td:first-child,
+.jigoshop .panel > .table:last-child > tfoot:last-child > tr:last-child td:first-child,
+.jigoshop .panel > .table-responsive:last-child > .table:last-child > tfoot:last-child > tr:last-child td:first-child,
+.jigoshop .panel > .table:last-child > tbody:last-child > tr:last-child th:first-child,
+.jigoshop .panel > .table-responsive:last-child > .table:last-child > tbody:last-child > tr:last-child th:first-child,
+.jigoshop .panel > .table:last-child > tfoot:last-child > tr:last-child th:first-child,
+.jigoshop .panel > .table-responsive:last-child > .table:last-child > tfoot:last-child > tr:last-child th:first-child {
+  border-bottom-left-radius: 3px;
+}
+.jigoshop .panel > .table:last-child > tbody:last-child > tr:last-child td:last-child,
+.jigoshop .panel > .table-responsive:last-child > .table:last-child > tbody:last-child > tr:last-child td:last-child,
+.jigoshop .panel > .table:last-child > tfoot:last-child > tr:last-child td:last-child,
+.jigoshop .panel > .table-responsive:last-child > .table:last-child > tfoot:last-child > tr:last-child td:last-child,
+.jigoshop .panel > .table:last-child > tbody:last-child > tr:last-child th:last-child,
+.jigoshop .panel > .table-responsive:last-child > .table:last-child > tbody:last-child > tr:last-child th:last-child,
+.jigoshop .panel > .table:last-child > tfoot:last-child > tr:last-child th:last-child,
+.jigoshop .panel > .table-responsive:last-child > .table:last-child > tfoot:last-child > tr:last-child th:last-child {
+  border-bottom-right-radius: 3px;
+}
+.jigoshop .panel > .panel-body + .table,
+.jigoshop .panel > .panel-body + .table-responsive {
+  border-top: 1px solid #dddddd;
+}
+.jigoshop .panel > .table > tbody:first-child > tr:first-child th,
+.jigoshop .panel > .table > tbody:first-child > tr:first-child td {
+  border-top: 0;
+}
+.jigoshop .panel > .table-bordered,
+.jigoshop .panel > .table-responsive > .table-bordered {
+  border: 0;
+}
+.jigoshop .panel > .table-bordered > thead > tr > th:first-child,
+.jigoshop .panel > .table-responsive > .table-bordered > thead > tr > th:first-child,
+.jigoshop .panel > .table-bordered > tbody > tr > th:first-child,
+.jigoshop .panel > .table-responsive > .table-bordered > tbody > tr > th:first-child,
+.jigoshop .panel > .table-bordered > tfoot > tr > th:first-child,
+.jigoshop .panel > .table-responsive > .table-bordered > tfoot > tr > th:first-child,
+.jigoshop .panel > .table-bordered > thead > tr > td:first-child,
+.jigoshop .panel > .table-responsive > .table-bordered > thead > tr > td:first-child,
+.jigoshop .panel > .table-bordered > tbody > tr > td:first-child,
+.jigoshop .panel > .table-responsive > .table-bordered > tbody > tr > td:first-child,
+.jigoshop .panel > .table-bordered > tfoot > tr > td:first-child,
+.jigoshop .panel > .table-responsive > .table-bordered > tfoot > tr > td:first-child {
+  border-left: 0;
+}
+.jigoshop .panel > .table-bordered > thead > tr > th:last-child,
+.jigoshop .panel > .table-responsive > .table-bordered > thead > tr > th:last-child,
+.jigoshop .panel > .table-bordered > tbody > tr > th:last-child,
+.jigoshop .panel > .table-responsive > .table-bordered > tbody > tr > th:last-child,
+.jigoshop .panel > .table-bordered > tfoot > tr > th:last-child,
+.jigoshop .panel > .table-responsive > .table-bordered > tfoot > tr > th:last-child,
+.jigoshop .panel > .table-bordered > thead > tr > td:last-child,
+.jigoshop .panel > .table-responsive > .table-bordered > thead > tr > td:last-child,
+.jigoshop .panel > .table-bordered > tbody > tr > td:last-child,
+.jigoshop .panel > .table-responsive > .table-bordered > tbody > tr > td:last-child,
+.jigoshop .panel > .table-bordered > tfoot > tr > td:last-child,
+.jigoshop .panel > .table-responsive > .table-bordered > tfoot > tr > td:last-child {
+  border-right: 0;
+}
+.jigoshop .panel > .table-bordered > thead > tr:first-child > td,
+.jigoshop .panel > .table-responsive > .table-bordered > thead > tr:first-child > td,
+.jigoshop .panel > .table-bordered > tbody > tr:first-child > td,
+.jigoshop .panel > .table-responsive > .table-bordered > tbody > tr:first-child > td,
+.jigoshop .panel > .table-bordered > thead > tr:first-child > th,
+.jigoshop .panel > .table-responsive > .table-bordered > thead > tr:first-child > th,
+.jigoshop .panel > .table-bordered > tbody > tr:first-child > th,
+.jigoshop .panel > .table-responsive > .table-bordered > tbody > tr:first-child > th {
+  border-bottom: 0;
+}
+.jigoshop .panel > .table-bordered > tbody > tr:last-child > td,
+.jigoshop .panel > .table-responsive > .table-bordered > tbody > tr:last-child > td,
+.jigoshop .panel > .table-bordered > tfoot > tr:last-child > td,
+.jigoshop .panel > .table-responsive > .table-bordered > tfoot > tr:last-child > td,
+.jigoshop .panel > .table-bordered > tbody > tr:last-child > th,
+.jigoshop .panel > .table-responsive > .table-bordered > tbody > tr:last-child > th,
+.jigoshop .panel > .table-bordered > tfoot > tr:last-child > th,
+.jigoshop .panel > .table-responsive > .table-bordered > tfoot > tr:last-child > th {
+  border-bottom: 0;
+}
+.jigoshop .panel > .table-responsive {
+  border: 0;
+  margin-bottom: 0;
+}
+.jigoshop .panel-group {
+  margin-bottom: 20px;
+}
+.jigoshop .panel-group .panel {
+  margin-bottom: 0;
+  border-radius: 4px;
+}
+.jigoshop .panel-group .panel + .panel {
+  margin-top: 5px;
+}
+.jigoshop .panel-group .panel-heading {
+  border-bottom: 0;
+}
+.jigoshop .panel-group .panel-heading + .panel-collapse > .panel-body {
+  border-top: 1px solid #dddddd;
+}
+.jigoshop .panel-group .panel-footer {
+  border-top: 0;
+}
+.jigoshop .panel-group .panel-footer + .panel-collapse .panel-body {
+  border-bottom: 1px solid #dddddd;
+}
+.jigoshop .panel-default {
+  border-color: #dddddd;
+}
+.jigoshop .panel-default > .panel-heading {
+  color: #333333;
+  background-color: #f5f5f5;
+  border-color: #dddddd;
+}
+.jigoshop .panel-default > .panel-heading + .panel-collapse > .panel-body {
+  border-top-color: #dddddd;
+}
+.jigoshop .panel-default > .panel-heading .badge {
+  color: #f5f5f5;
+  background-color: #333333;
+}
+.jigoshop .panel-default > .panel-footer + .panel-collapse > .panel-body {
+  border-bottom-color: #dddddd;
+}
+.jigoshop .panel-primary {
+  border-color: #428bca;
+}
+.jigoshop .panel-primary > .panel-heading {
+  color: #ffffff;
+  background-color: #428bca;
+  border-color: #428bca;
+}
+.jigoshop .panel-primary > .panel-heading + .panel-collapse > .panel-body {
+  border-top-color: #428bca;
+}
+.jigoshop .panel-primary > .panel-heading .badge {
+  color: #428bca;
+  background-color: #ffffff;
+}
+.jigoshop .panel-primary > .panel-footer + .panel-collapse > .panel-body {
+  border-bottom-color: #428bca;
+}
+.jigoshop .panel-success {
+  border-color: #d6e9c6;
+}
+.jigoshop .panel-success > .panel-heading {
+  color: #3c763d;
+  background-color: #dff0d8;
+  border-color: #d6e9c6;
+}
+.jigoshop .panel-success > .panel-heading + .panel-collapse > .panel-body {
+  border-top-color: #d6e9c6;
+}
+.jigoshop .panel-success > .panel-heading .badge {
+  color: #dff0d8;
+  background-color: #3c763d;
+}
+.jigoshop .panel-success > .panel-footer + .panel-collapse > .panel-body {
+  border-bottom-color: #d6e9c6;
+}
+.jigoshop .panel-info {
+  border-color: #bce8f1;
+}
+.jigoshop .panel-info > .panel-heading {
+  color: #31708f;
+  background-color: #d9edf7;
+  border-color: #bce8f1;
+}
+.jigoshop .panel-info > .panel-heading + .panel-collapse > .panel-body {
+  border-top-color: #bce8f1;
+}
+.jigoshop .panel-info > .panel-heading .badge {
+  color: #d9edf7;
+  background-color: #31708f;
+}
+.jigoshop .panel-info > .panel-footer + .panel-collapse > .panel-body {
+  border-bottom-color: #bce8f1;
+}
+.jigoshop .panel-warning {
+  border-color: #faebcc;
+}
+.jigoshop .panel-warning > .panel-heading {
+  color: #8a6d3b;
+  background-color: #fcf8e3;
+  border-color: #faebcc;
+}
+.jigoshop .panel-warning > .panel-heading + .panel-collapse > .panel-body {
+  border-top-color: #faebcc;
+}
+.jigoshop .panel-warning > .panel-heading .badge {
+  color: #fcf8e3;
+  background-color: #8a6d3b;
+}
+.jigoshop .panel-warning > .panel-footer + .panel-collapse > .panel-body {
+  border-bottom-color: #faebcc;
+}
+.jigoshop .panel-danger {
+  border-color: #ebccd1;
+}
+.jigoshop .panel-danger > .panel-heading {
+  color: #a94442;
+  background-color: #f2dede;
+  border-color: #ebccd1;
+}
+.jigoshop .panel-danger > .panel-heading + .panel-collapse > .panel-body {
+  border-top-color: #ebccd1;
+}
+.jigoshop .panel-danger > .panel-heading .badge {
+  color: #f2dede;
+  background-color: #a94442;
+}
+.jigoshop .panel-danger > .panel-footer + .panel-collapse > .panel-body {
+  border-bottom-color: #ebccd1;
+}
+.jigoshop .panel-heading button {
+  margin-top: -8px;
+}
+.jigoshop .tab-content {
+  background: #ffffff;
+  border: 1px solid #dddddd;
+  border-top: 0;
+  padding: 6px 12px;
+}
+.jigoshop table.table > tbody > tr {
+  vertical-align: middle;
+}
+.jigoshop table.table > tbody > tr > td {
+  vertical-align: middle;
+}
+.jigoshop table.table > tbody > tr > td .form-group {
+  margin: 0;
+}
