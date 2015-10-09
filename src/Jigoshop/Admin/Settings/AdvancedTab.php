@@ -68,7 +68,6 @@ class AdvancedTab implements TabInterface
 		$pages = $this->_getPages();
 		$termsPages = $pages;
 		$termsPages[0] = __('None', 'jigoshop');
-		$files = iterator_count(new \FilesystemIterator(JIGOSHOP_DIR.'/cache/assets', \FilesystemIterator::SKIP_DOTS));
 
 		return array(
 			array(
@@ -148,32 +147,6 @@ class AdvancedTab implements TabInterface
 						'display' => function (){
 							Render::output('admin/settings/create_emails', array());
 						},
-					),
-				),
-			),
-			array(
-				'title' => __('Jigoshop Web Optimization System', 'jigoshop'),
-				'id' => 'main',
-				'fields' => array(
-					array(
-						'name' => '[wos][enabled]',
-						'title' => __('Enable Jigoshop Web Optimization System', 'jigoshop'),
-						'type' => 'checkbox',
-						'checked' => $this->settings['wos']['enabled'],
-					),
-					array(
-						'name' => '[wos][files]',
-						'title' => __('Files in cache', 'jigoshop'),
-						'type' => 'constant',
-						'value' => $files,
-					),
-					array(
-						'name' => '[wos][clear_cache]',
-						'title' => __('Clear cache', 'jigoshop'),
-						'type' => 'checkbox',
-						'description' => __('This will remove all files in cache causing the plugin to recreate all data.', 'jigoshop'),
-						'tip' => __('To clear cache please check the checkbox and save settings.', 'jigoshop'),
-						'checked' => false,
 					),
 				),
 			),

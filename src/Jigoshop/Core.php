@@ -96,7 +96,6 @@ class Core
 		Tax::setService($tax);
 
 		$container->get('jigoshop.emails');
-		$container->get('jigoshop.web.optimization');
 
 		$widget = $container->get('jigoshop.widget');
 		$widget->init($container, $wp);
