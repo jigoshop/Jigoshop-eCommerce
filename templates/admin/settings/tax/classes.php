@@ -5,6 +5,7 @@ use Jigoshop\Helper\Render;
  * @var $classes array List of currently available tax classes
  */
 ?>
+<div style="padding-left: 95px; padding-right: 3%">
 <table class="table table-striped" id="tax-classes">
 	<thead>
 		<tr>
@@ -26,3 +27,4 @@ use Jigoshop\Helper\Render;
 		</tr>
 	</tfoot>
 </table>
+</div>

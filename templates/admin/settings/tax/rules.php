@@ -7,6 +7,7 @@ use Jigoshop\Helper\Render;
  * @var $countries array List of countries
  */
 ?>
+<div style="padding-left: 95px; padding-right: 3%">
 <table class="table table-striped" id="tax-rules">
 	<thead>
 		<tr>
@@ -26,6 +27,7 @@ use Jigoshop\Helper\Render;
 				<?php _e('Postcodes', 'jigoshop'); ?>
 				<a href="#" data-toggle="tooltip" class="badge" data-placement="top" title="<?php _e('Enter list of postcodes, separating with comma.', 'jigoshop'); ?>">?</a>
 			</th>
+			<?php //TODO what for empty th? ?>
 			<th scope="col"></th>
 		</tr>
 	</thead>
@@ -44,3 +46,4 @@ use Jigoshop\Helper\Render;
 		</tr>
 	</tfoot>
 </table>
+</div>

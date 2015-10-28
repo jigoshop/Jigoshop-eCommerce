@@ -16,17 +16,17 @@ $hasLabel = !empty($label);
 ?>
 <div class="form-group <?php echo $id; ?>_field <?php echo join(' ', $classes); ?><?php $hidden and print ' not-active'; ?>">
 	<?php if($hasLabel): ?>
-	<label for="<?php echo $id; ?>" class="col-sm-<?php echo 12 - $size; ?> control-label">
+	<label for="<?php echo $id; ?>" class="col-sm-<?php echo $size - 10; ?> control-label">
 		<?php echo $label; ?>
 		<?php if(!empty($tip)): ?>
-			<a href="#" data-toggle="tooltip" class="badge" data-placement="top" title="<?php echo $tip; ?>">?</a>
+			<span data-toggle="tooltip" class="badge" data-placement="top" title="<?php echo $tip; ?>">?</span>
 		<?php endif; ?>
 	</label>
-	<?php elseif(!empty($tip)): ?>
-		<a href="#" data-toggle="tooltip" class="badge" data-placement="top" title="<?php echo $tip; ?>">?</a>
+	<?php else: ?>
+		<span data-toggle="tooltip" class="badge pull-left<?php echo (empty($tip) ? ' invisible' : '' ); ?>" data-placement="top" title="<?php echo $tip; ?>">?</span>
 	<?php endif; ?>
-	<div class="<?php echo 'col-sm-'.($hasLabel ? $size - 1 : 12); ?>">
-		<select id="<?php echo $id; ?>" name="<?php echo $name; ?>" class="form-control <?php echo join(' ', $classes); ?>" placeholder="<?php echo $placeholder; ?>"<?php $multiple and print ' multiple="multiple"'; ?>>
+	<div class="<?php echo 'col-sm-'.($hasLabel ? $size - 2 : $size - 1); ?>">
+		<select id="<?php echo $id; ?>" name="<?php echo $name; ?>" class="form-control <?php echo join(' ', $classes); ?>" <?php $multiple and print ' multiple="multiple"'; ?>>
 			<?php foreach($options as $option => $item): ?>
 				<?php if(isset($item['items'])): ?>
 					<optgroup label="<?php echo $option; ?>">
