@@ -7,7 +7,7 @@ use Jigoshop\Helper\Render;
  * @var $countries array List of countries
  */
 ?>
-<div style="padding-left: 95px; padding-right: 3%">
+<div class="table-fix-padding">
 <table class="table table-striped" id="tax-rules">
 	<thead>
 		<tr>

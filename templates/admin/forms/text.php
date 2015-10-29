@@ -12,6 +12,7 @@
  * @var $description string Field description.
  * @var $hidden boolean Whether the field is hidden.
  * @var $size int Size of form widget.
+ * @var $only_field boolean Displays only field.
  */
 $hasLabel = !empty($label);
 ?>
@@ -23,7 +24,7 @@ $hasLabel = !empty($label);
 			<span data-toggle="tooltip" class="badge" data-placement="top" title="<?php echo $tip; ?>">?</span>
 		<?php endif; ?>
 	</label>
-	<?php else: ?>
+	<?php elseif(!$only_field): ?>
 		<span data-toggle="tooltip" class="badge pull-left<?php echo (empty($tip) ? ' invisible' : '' ); ?>" data-placement="top" title="<?php echo $tip; ?>">?</span>
 	<?php endif; ?>
 	<div class="<?php echo 'col-sm-'.($hasLabel ? $size - 2 : $size - 1); ?>">

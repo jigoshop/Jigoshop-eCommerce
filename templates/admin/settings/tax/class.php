@@ -13,6 +13,7 @@ use Jigoshop\Core\Options;
 		'name' => Options::NAME.'[classes][label][]',
 		'value' => $class['label'],
 		'placeholder' => __('Tax class label', 'jigoshop'),
+		'only_field' => true,
 	)); ?>
 	</td>
 	<td>
@@ -21,6 +22,7 @@ use Jigoshop\Core\Options;
 		'name' => Options::NAME.'[classes][class][]',
 		'value' => $class['class'],
 		'placeholder' => __('Tax class', 'jigoshop'),
+		'only_field' => true,
 	)); ?>
 	</td>
 	<td class="vert-align">
