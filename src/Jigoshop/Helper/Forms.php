@@ -110,7 +110,6 @@ class Forms
 	 *   * tip (false) - tip for the tag
 	 *   * hidden (false) - whether to hide element by default
 	 *   * size (12) - default size of the element (Bootstrap column size 12)
-	 *   * only_field (false) - displays only field
 	 *
 	 * Field's name is required.
 	 *
@@ -133,7 +132,6 @@ class Forms
 			'tip' => false,
 			'hidden' => false,
 			'size' => 12,
-			'only_field' => false,
 		);
 		$field = wp_parse_args($field, $defaults);
 

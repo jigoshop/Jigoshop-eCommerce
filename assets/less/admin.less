@@ -8,6 +8,13 @@
   @import '../bower/bootstrap/less/scaffolding';
   @import '../bower/bootstrap/less/forms';
 
+  h1 {
+    @media screen {
+      @media (max-width: 768px) {
+        font-size: 150% !important;
+      }
+    }
+  }
   .glyphicon-remove {
     color: @btn-danger-bg;
   }
@@ -20,27 +27,22 @@
     text-decoration: none;
     cursor: help;
     vertical-align: middle;
-    margin: 8px 30px
+    margin-top: 9px;
+    margin-bottom: 9px;
+    padding: 3px 6px;
   }
-  .margin-left-15 {
-    margin-left: 15px !important;
-  }
+
   .padding-left-0 {
     padding-left: 0 !important;
   }
-  .margin-top-bottom-8 {
-    margin-top: 8px !important;
-    margin-bottom: 8px !important;
+  .margin-9 {
+    margin: 9px !important;
   }
   .button-save-options {
     margin: 35px 12px 12px 0 !important;
   }
   .table tbody>tr>td.vert-align {
     vertical-align: middle;
-  }
-  .table-fix-padding {
-    padding-left: 95px;
-    padding-right: 3%
   }
   a.select2-search-choice-close {
     background: url("../images/select2.png") no-repeat scroll right top rgba(0, 0, 0, 0);
