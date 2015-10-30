@@ -18,24 +18,24 @@ use Jigoshop\Admin\Helper\Forms;
 $hasLabel = !empty($label);
 ?>
 <div class="form-group <?php echo $id; ?>_field <?php echo join(' ', $classes); ?><?php $hidden and print ' not-active'; ?>">
-	<?php if($hasLabel): ?>
-	<label for="<?php echo $id; ?>" class="col-sm-<?php echo 12 - $size; ?> control-label">
-		<?php echo $label; ?>
-		<?php if(!empty($tip)): ?>
-			<a href="#" data-toggle="tooltip" class="badge" data-placement="top" title="<?php echo $tip; ?>">?</a>
-		<?php endif; ?>
-	</label>
-	<?php endif; ?>
-	<div class="checkbox-inline">
-		<?php if(!$multiple): ?>
-			<input type="hidden" name="<?php echo $name; ?>" value="off" />
-		<?php endif; ?>
-		<input type="checkbox" id="<?php echo $id; ?>" name="<?php echo $name; ?>" class="<?php echo join(' ', $classes); ?>" <?php echo Forms::checked($checked, true); ?> value="<?php echo $value; ?>" />
-		<?php if(!$hasLabel && !empty($tip)): ?>
-		<a href="#" data-toggle="tooltip" class="badge" data-placement="top" title="<?php echo $tip; ?>">?</a>
-		<?php endif; ?>
-		<?php if(!empty($description)): ?>
-			<span class="help"><?php echo $description; ?></span>
-		<?php endif; ?>
+	<div class="row">
+		<div class="col-sm-<?php echo $size; ?>">
+			<div class="row">
+				<div class="col-xs-2 col-sm-1 text-right">
+					<?php if (!empty($tip)): ?>
+						<span data-toggle="tooltip" class="badge" data-placement="top" title="<?php echo $tip; ?>">?</span>
+					<?php endif; ?>
+				</div>
+				<div class="col-xs-<?php echo $size - 2 ?> col-sm-<?php echo $size - 1 ?>">
+					<?php if (!$multiple): ?>
+						<input type="hidden" name="<?php echo $name; ?>" value="off"/>
+					<?php endif; ?>
+					<input type="checkbox" id="<?php echo $id; ?>" name="<?php echo $name; ?>" class="<?php echo join(' ', $classes); ?>" <?php echo Forms::checked($checked, true); ?> value="<?php echo $value; ?>"/>
+					<?php if (!empty($description)): ?>
+						<label for="<?php echo $id; ?>"><span class="help"><?php echo $description; ?></span></label>
+					<?php endif; ?>
+				</div>
+			</div>
+		</div>
 	</div>
 </div>

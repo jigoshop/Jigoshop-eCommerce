@@ -9,16 +9,42 @@ use Jigoshop\Helper\Render;
  */
 ?>
 <div class="wrap jigoshop">
-	<h1><?php _e('Jigoshop &rang; Settings', 'jigoshop'); ?></h1>
+	<h1><?php _e('Jigoshop &raquo; Settings', 'jigoshop'); ?></h1>
 	<?php settings_errors(); ?>
-	<?php Render::output('shop/messages', array('messages' => $messages)); ?>
-	<ul class="nav nav-tabs nav-justified" role="tablist">
-		<?php foreach($tabs as $tab): /** @var $tab \Jigoshop\Admin\Settings\TabInterface */ ?>
-		<li class="<?php $tab->getSlug() == $current_tab and print 'active'; ?>">
-			<a href="?page=<?php echo Settings::NAME; ?>&tab=<?php echo $tab->getSlug(); ?>"><?php echo $tab->getTitle(); ?></a>
-		</li>
-		<?php endforeach; ?>
-	</ul>
+	<?php Render::output('shop/messages', array('messages' => $messages));
+	$menuContent = '';
+	$activeTitle = '';
+	foreach ($tabs as $tab): /** @var $tab \Jigoshop\Admin\Settings\TabInterface */
+		$active = '';
+		if($tab->getSlug() == $current_tab)
+		{
+			$active = 'active';
+			$activeTitle = $tab->getTitle();
+		}
+		$menuContent .= '<li class="' . $active . '">' .
+			'<a href="?page=' . Settings::NAME . '&amp;tab=' . $tab->getSlug() . '">' . $tab->getTitle() . '</a>' .
+		'</li>';
+	endforeach; ?>
+	<nav class="navbar navbar-default hidden-md hidden-lg hidden-sm">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle margin-9" data-toggle="collapse" data-target="#settingsBar">
+					<span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="#"><?php echo $activeTitle; ?></a>
+			</div>
+			<div class="collapse navbar-collapse" id="settingsBar">
+				<ul class="nav navbar-nav">
+					<?php echo $menuContent; ?>
+				</ul>
+			</div>
+		</div>
+	</nav>
+	<nav class="hidden-xs">
+		<ul class="nav nav-tabs nav-justified">
+			<?php echo $menuContent; ?>
+		</ul>
+	</nav>
 	<noscript>
 		<div class="alert alert-danger" role="alert"><?php _e('<strong>Warning</strong> Options panel will not work properly without JavaScript.', 'jigoshop'); ?></div>
 	</noscript>
@@ -28,7 +54,7 @@ use Jigoshop\Helper\Render;
 				<input type="hidden" name="tab" value="<?php echo $current_tab; ?>" />
 				<?php settings_fields(Settings::NAME); ?>
 				<?php do_settings_sections(Settings::NAME); ?>
-				<button type="submit" class="btn btn-primary pull-right"><?php echo __('Save changes', 'jigoshop'); ?></button>
+				<button type="submit" class="btn btn-primary pull-right button-save-options"><?php echo __('Save changes', 'jigoshop'); ?></button>
 			</form>
 		</div>
 	</div>

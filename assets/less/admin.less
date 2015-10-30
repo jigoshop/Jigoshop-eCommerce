@@ -8,10 +8,17 @@
   @import '../bower/bootstrap/less/scaffolding';
   @import '../bower/bootstrap/less/forms';
 
+  h1 {
+    @media screen {
+      @media (max-width: 768px) {
+        font-size: 150% !important;
+      }
+    }
+  }
   .glyphicon-remove {
     color: @btn-danger-bg;
   }
-  a.badge[data-toggle=tooltip] {
+  span.badge[data-toggle=tooltip] {
     &:hover {
       color: @badge-link-hover-color;
       text-decoration: none;
@@ -20,6 +27,19 @@
     text-decoration: none;
     cursor: help;
     vertical-align: middle;
+    margin-top: 9px;
+    margin-bottom: 9px;
+    padding: 3px 6px;
+  }
+
+  .padding-left-0 {
+    padding-left: 0 !important;
+  }
+  .margin-9 {
+    margin: 9px !important;
+  }
+  .button-save-options {
+    margin: 35px 12px 12px 0 !important;
   }
   .table tbody>tr>td.vert-align {
     vertical-align: middle;

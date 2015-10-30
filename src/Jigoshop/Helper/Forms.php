@@ -109,7 +109,7 @@ class Forms
 	 *   * description (false) - description of the tag
 	 *   * tip (false) - tip for the tag
 	 *   * hidden (false) - whether to hide element by default
-	 *   * size (10) - default size of the element (Bootstrap column size 10)
+	 *   * size (12) - default size of the element (Bootstrap column size 12)
 	 *
 	 * Field's name is required.
 	 *
@@ -131,7 +131,7 @@ class Forms
 			'description' => false,
 			'tip' => false,
 			'hidden' => false,
-			'size' => 10,
+			'size' => 12,
 		);
 		$field = wp_parse_args($field, $defaults);
 
@@ -180,7 +180,7 @@ class Forms
 	 *   * tip (false) - tip for the tag
 	 *   * options (array) - available options to select
 	 *   * hidden (false) - whether to hide element by default
-	 *   * size (10) - default size of the element (Bootstrap column size 10)
+	 *   * size (12) - default size of the element (Bootstrap column size 12)
 	 *
 	 * Field's name is required.
 	 *
@@ -203,7 +203,7 @@ class Forms
 			'tip' => false,
 			'options' => array(),
 			'hidden' => false,
-			'size' => 10,
+			'size' => 12,
 		);
 		$field = wp_parse_args($field, $defaults);
 
@@ -262,7 +262,7 @@ class Forms
 	 *   * description (false) - description of the tag
 	 *   * tip (false) - tip for the tag
 	 *   * hidden (false) - whether to hide element by default
-	 *   * size (10) - default size of the element (Bootstrap column size 10)
+	 *   * size (12) - default size of the element (Bootstrap column size 12)
 	 *
 	 * Field's name is required.
 	 *
@@ -285,7 +285,7 @@ class Forms
 			'description' => false,
 			'tip' => false,
 			'hidden' => false,
-			'size' => 10,
+			'size' => 12,
 		);
 		$field = wp_parse_args($field, $defaults);
 
@@ -324,7 +324,7 @@ class Forms
 	 *   * description (false) - description of the tag
 	 *   * tip (false) - tip for the tag
 	 *   * hidden (false) - whether to hide element by default
-	 *   * size (10) - default size of the element (Bootstrap column size 10)
+	 *   * size (12) - default size of the element (Bootstrap column size 12)
 	 *
 	 * Field's name is required.
 	 *
@@ -345,7 +345,7 @@ class Forms
 			'description' => false,
 			'tip' => false,
 			'hidden' => false,
-			'size' => 10,
+			'size' => 12,
 		);
 		$field = wp_parse_args($field, $defaults);
 
@@ -421,7 +421,7 @@ class Forms
 	 *   * description (false) - description of the tag
 	 *   * tip (false) - tip for the tag
 	 *   * hidden (false) - whether to hide element by default
-	 *   * size (10) - default size of the element (Bootstrap column size 10)
+	 *   * size (12) - default size of the element (Bootstrap column size 12)
 	 *
 	 * Field's name is required.
 	 *
@@ -441,7 +441,7 @@ class Forms
 			'description' => false,
 			'tip' => false,
 			'hidden' => false,
-			'size' => 10,
+			'size' => 12,
 		);
 		$field = wp_parse_args($field, $defaults);
 
