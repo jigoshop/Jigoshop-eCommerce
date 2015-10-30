@@ -1,2 +1,2 @@
 jQuery ($) ->
-  $('input[type=checkbox]').bootstrapSwitch({size:"small"})
+  $('input[type=checkbox]').bootstrapSwitch size: 'small'
