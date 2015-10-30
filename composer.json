@@ -26,7 +26,6 @@
 		"php": ">= 5.3.3",
 		"megawebmaster/wpal": "*",
 		"monolog/monolog": "~1.11@dev",
-		"kriswallsmith/assetic": "1.3.*",
 		"nitra/php-min": "dev-master"
 	},
 	"require-dev": {
