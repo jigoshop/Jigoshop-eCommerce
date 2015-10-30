@@ -15,7 +15,7 @@ use Jigoshop\Helper\Render;
  * @var $getTaxLabel \Closure Function to retrieve tax label.
  */
 ?>
-<h1><?php printf(__('My account &rang; Orders &rang; %s', 'jigoshop'), $order->getTitle()); ?></h1>
+<h1><?php printf(__('My account &raquo; Orders &raquo; %s', 'jigoshop'), $order->getTitle()); ?></h1>
 <?php Render::output('shop/messages', array('messages' => $messages)); ?>
 <dl class="dl-horizontal">
 	<dt><?php _e('Made on', 'jigoshop'); ?></dt>

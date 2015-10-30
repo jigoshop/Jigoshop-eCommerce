@@ -9,7 +9,7 @@ use Jigoshop\Helper\Render;
  */
 ?>
 <div class="wrap jigoshop">
-	<h1><?php _e('Jigoshop &rang; Product &rang; Attributes', 'jigoshop'); ?></h1>
+	<h1><?php _e('Jigoshop &raquo; Product &raquo; Attributes', 'jigoshop'); ?></h1>
 	<div class="alert alert-info"><?php _e('Every change to attributes is automatically saved.', 'jigoshop'); ?></div>
 	<div id="messages">
 		<?php Render::output('shop/messages', array('messages' => $messages)); ?>

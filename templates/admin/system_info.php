@@ -8,12 +8,12 @@ use Jigoshop\Admin\SystemInfo;
 
 ?>
 <div class="wrap jigoshop">
-	<h1><?php _e('Jigoshop &rang; System Information', 'jigoshop'); ?></h1>
+	<h1><?php _e('Jigoshop &raquo; System Information', 'jigoshop'); ?></h1>
 	<?php settings_errors(); ?>
 	<ul class="nav nav-tabs nav-justified" role="tablist">
 		<?php foreach($tabs as $tab): /** @var $tab \Jigoshop\Admin\Settings\TabInterface */ ?>
 			<li class="<?php $tab->getSlug() == $current_tab and print 'active'; ?>">
-				<a href="?page=<?php echo SystemInfo::NAME; ?>&tab=<?php echo $tab->getSlug(); ?>"><?php echo $tab->getTitle(); ?></a>
+				<a href="?page=<?php echo SystemInfo::NAME; ?>&amp;tab=<?php echo $tab->getSlug(); ?>"><?php echo $tab->getTitle(); ?></a>
 			</li>
 		<?php endforeach; ?>
 	</ul>

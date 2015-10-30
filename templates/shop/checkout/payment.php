@@ -10,7 +10,7 @@ use Jigoshop\Helper\Render;
  */
 ?>
 
-<h1><?php printf(__('Checkout &rang; Payment &rang; %s', 'jigoshop'), $order->getTitle()); ?></h1>
+<h1><?php printf(__('Checkout &raquo; Payment &raquo; %s', 'jigoshop'), $order->getTitle()); ?></h1>
 <?php Render::output('shop/messages', array('messages' => $messages)); ?>
 <div class="payment">
 	<?php echo $content; ?>

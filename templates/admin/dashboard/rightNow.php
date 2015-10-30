@@ -27,12 +27,12 @@ use Jigoshop\Entity\Order\Status;
 				<td class="t"><a href="edit.php?post_type=<?php echo Types::PRODUCT; ?>"><?php _e('Products', 'jigoshop'); ?></a></td>
 			</tr>
 			<tr>
-				<td class="first b"><a href="edit-tags.php?taxonomy=<?php echo Types::PRODUCT_CATEGORY; ?>&post_type=<?php echo Types::PRODUCT; ?>"><?php echo $categoryCount; ?></a></td>
-				<td class="t"><a href="edit-tags.php?taxonomy=<?php echo Types::PRODUCT_CATEGORY; ?>&post_type=<?php echo Types::PRODUCT; ?>"><?php _e('Product Categories', 'jigoshop'); ?></a></td>
+				<td class="first b"><a href="edit-tags.php?taxonomy=<?php echo Types::PRODUCT_CATEGORY; ?>&amp;post_type=<?php echo Types::PRODUCT; ?>"><?php echo $categoryCount; ?></a></td>
+				<td class="t"><a href="edit-tags.php?taxonomy=<?php echo Types::PRODUCT_CATEGORY; ?>&amp;post_type=<?php echo Types::PRODUCT; ?>"><?php _e('Product Categories', 'jigoshop'); ?></a></td>
 			</tr>
 			<tr>
-				<td class="first b"><a href="edit-tags.php?taxonomy=<?php echo Types::PRODUCT_TAG; ?>&post_type=<?php echo Types::PRODUCT; ?>"><?php echo $tagCount; ?></a></td>
-				<td class="t"><a href="edit-tags.php?taxonomy=<?php echo Types::PRODUCT_TAG; ?>&post_type=<?php echo Types::PRODUCT; ?>"><?php _e('Product Tag', 'jigoshop'); ?></a></td>
+				<td class="first b"><a href="edit-tags.php?taxonomy=<?php echo Types::PRODUCT_TAG; ?>&amp;post_type=<?php echo Types::PRODUCT; ?>"><?php echo $tagCount; ?></a></td>
+				<td class="t"><a href="edit-tags.php?taxonomy=<?php echo Types::PRODUCT_TAG; ?>&amp;post_type=<?php echo Types::PRODUCT; ?>"><?php _e('Product Tag', 'jigoshop'); ?></a></td>
 			</tr>
 			<tr>
 				<td class="first b"><a href="admin.php?page=<?php echo Attributes::NAME; ?>"><?php echo $attributesCount; ?></a></td>
@@ -45,21 +45,22 @@ use Jigoshop\Entity\Order\Status;
 		<p class="sub"></p>
 		<table>
 			<tbody>
+
 			<tr class="first pending-orders">
-				<td class="b"><a href="edit.php?post_type=<?php echo Types::ORDER; ?>&post_status=<?php echo Status::PENDING; ?>"><span class="total-count"><?php echo $pendingCount; ?></span></a></td>
-				<td class="last t"><a class="pending" href="edit.php?post_type=<?php echo Types::ORDER; ?>&post_status=<?php echo Status::PENDING; ?>"><?php _e('Pending', 'jigoshop'); ?></a></td>
+				<td class="b"><a href="edit.php?post_type=<?php echo Types::ORDER; ?>&amp;post_status=<?php echo Status::PENDING; ?>"><span class="total-count"><?php echo $pendingCount; ?></span></a></td>
+				<td class="last t"><a class="pending" href="edit.php?post_type=<?php echo Types::ORDER; ?>&amp;post_status=<?php echo Status::PENDING; ?>"><?php _e('Pending', 'jigoshop'); ?></a></td>
 			</tr>
 			<tr class="on-hold-orders">
-				<td class="b"><a href="edit.php?post_type=<?php echo Types::ORDER; ?>&post_status=<?php echo Status::ON_HOLD; ?>"><span class="total-count"><?php echo $onHoldCount; ?></span></a></td>
-				<td class="last t"><a class="onhold" href="edit.php?post_type=<?php echo Types::ORDER; ?>&post_status=<?php echo Status::ON_HOLD; ?>"><?php _e('On-Hold', 'jigoshop'); ?></a></td>
+				<td class="b"><a href="edit.php?post_type=<?php echo Types::ORDER; ?>&amp;post_status=<?php echo Status::ON_HOLD; ?>"><span class="total-count"><?php echo $onHoldCount; ?></span></a></td>
+				<td class="last t"><a class="onhold" href="edit.php?post_type=<?php echo Types::ORDER; ?>&amp;post_status=<?php echo Status::ON_HOLD; ?>"><?php _e('On-Hold', 'jigoshop'); ?></a></td>
 			</tr>
 			<tr class="processing-orders">
-				<td class="b"><a href="edit.php?post_type=<?php echo Types::ORDER; ?>&post_status=<?php echo Status::PROCESSING; ?>"><span class="total-count"><?php echo $processingCount; ?></span></a></td>
-				<td class="last t"><a class="processing" href="edit.php?post_type=<?php echo Types::ORDER; ?>&post_status=<?php echo Status::PROCESSING; ?>"><?php _e('Processing', 'jigoshop'); ?></a></td>
+				<td class="b"><a href="edit.php?post_type=<?php echo Types::ORDER; ?>&amp;post_status=<?php echo Status::PROCESSING; ?>"><span class="total-count"><?php echo $processingCount; ?></span></a></td>
+				<td class="last t"><a class="processing" href="edit.php?post_type=<?php echo Types::ORDER; ?>&amp;post_status=<?php echo Status::PROCESSING; ?>"><?php _e('Processing', 'jigoshop'); ?></a></td>
 			</tr>
 			<tr class="completed-orders">
-				<td class="b"><a href="edit.php?post_type=<?php echo Types::ORDER; ?>&post_status=<?php echo Status::COMPLETED; ?>"><span class="total-count"><?php echo $completedCount; ?></span></a></td>
-				<td class="last t"><a class="complete" href="edit.php?post_type=<?php echo Types::ORDER; ?>&post_status=<?php echo Status::COMPLETED; ?>"><?php _e('Completed', 'jigoshop'); ?></a></td>
+				<td class="b"><a href="edit.php?post_type=<?php echo Types::ORDER; ?>&amp;post_status=<?php echo Status::COMPLETED; ?>"><span class="total-count"><?php echo $completedCount; ?></span></a></td>
+				<td class="last t"><a class="complete" href="edit.php?post_type=<?php echo Types::ORDER; ?>&amp;post_status=<?php echo Status::COMPLETED; ?>"><?php _e('Completed', 'jigoshop'); ?></a></td>
 			</tr>
 			</tbody>
 		</table>
