@@ -31,7 +31,7 @@ gulp.task 'styles', ['styles-vendors'], ->
 gulp.task 'scripts-vendors', ->
   gulp.src [
     'assets/bower/select2/select2.js',
-    'assets/bower/bootstrap/js/{tab,transition,tooltip}.js',
+    'assets/bower/bootstrap/js/{tab,transition,tooltip,collapse}.js',
     'assets/bower/bootstrap-datepicker/js/bootstrap-datepicker.js',
     'assets/bower/jquery-colorbox/jquery.colorbox-min.js',
   ]
@@ -40,7 +40,10 @@ gulp.task 'scripts-vendors', ->
     .pipe gulp.dest('assets/js')
 
 gulp.task 'scripts', ['lint', 'scripts-vendors'], ->
-  gulp.src 'assets/coffee/**/*.coffee'
+  gulp.src [
+    'assets/coffee/**/*.coffee',
+    'assets/bower/bootstrap-switch/src/coffee/bootstrap-switch.coffee',
+  ]
     .pipe coffee({bare: true})
     .pipe check(argv.production, uglify())
     .pipe gulp.dest('assets/js')
