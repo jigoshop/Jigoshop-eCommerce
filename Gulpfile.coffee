@@ -31,7 +31,7 @@ gulp.task 'styles', ['styles-vendors'], ->
 gulp.task 'scripts-vendors', ->
   gulp.src [
     'assets/bower/select2/select2.js',
-    'assets/bower/bootstrap/js/{tab,transition,tooltip}.js',
+    'assets/bower/bootstrap/js/{tab,transition,tooltip,collapse}.js',
     'assets/bower/bootstrap-datepicker/js/bootstrap-datepicker.js',
     'assets/bower/jquery-colorbox/jquery.colorbox-min.js',
   ]
