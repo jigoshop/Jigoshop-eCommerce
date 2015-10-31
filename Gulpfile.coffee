@@ -40,16 +40,16 @@ gulp.task 'scripts-vendors', ->
     .pipe gulp.dest('assets/js')
 
 gulp.task 'scripts', ['lint', 'scripts-vendors'], ->
-  gulp.src 'assets/coffee/**/*.coffee'
+  gulp.src [
+    'assets/coffee/**/*.coffee',
+    'assets/bower/bootstrap-switch/src/coffee/bootstrap-switch.coffee',
+  ]
     .pipe coffee({bare: true})
     .pipe check(argv.production, uglify())
     .pipe gulp.dest('assets/js')
 
 gulp.task 'lint', ->
-  gulp.src [
-    'assets/coffee/**/*.coffee',
-    'assets/bower/bootstrap-switch/src/coffee/bootstrap-switch.coffee',
-  ]
+  gulp.src 'assets/coffee/**/*.coffee'
     .pipe coffeelint('coffeelint.json')
     .pipe coffeelint.reporter()
     .pipe coffeelint.reporter('fail')
