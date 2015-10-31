@@ -52,8 +52,12 @@ class Settings implements PageInterface
 
 			Styles::add('jigoshop.admin.settings', JIGOSHOP_URL.'/assets/css/admin/settings.css', array('jigoshop.admin'));
 			Scripts::add('jigoshop.admin');
+			Scripts::add('jigoshop.admin.bootstrap_switch', JIGOSHOP_URL . '/assets/js/bootstrap-switch.js', array(
+				'jquery',
+			), array('page' => 'jigoshop_page_jigoshop_settings', 'in_footer' => true));
 			Scripts::add('jigoshop.admin.settings', JIGOSHOP_URL . '/assets/js/admin/settings.js', array(
 				'jquery',
+				'jigoshop.admin.bootstrap_switch',
 			), array('page' => 'jigoshop_page_jigoshop_settings', 'in_footer' => true));
 		});
 	}
