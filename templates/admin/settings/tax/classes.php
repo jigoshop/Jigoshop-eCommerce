@@ -8,7 +8,6 @@ use Jigoshop\Helper\Render;
 <div class="form-group">
 	<div class="row">
 		<div class="col-sm-12">
-			<div class="row">
 				<div class="col-xs-2 col-sm-1 text-right"></div>
 				<div class="col-xs-10 col-sm-11">
 					<table class="table table-striped" id="tax-classes">
@@ -33,7 +32,6 @@ use Jigoshop\Helper\Render;
 						</tfoot>
 					</table>
 				</div>
-			</div>
 		</div>
 	</div>
 </div>
