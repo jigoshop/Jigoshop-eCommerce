@@ -88,6 +88,7 @@ class PayPal implements Method, Processable
 				'title' => __('Is enabled?', 'jigoshop'),
 				'type' => 'checkbox',
 				'checked' => $this->settings['enabled'],
+				'classes' => array('switch-medium'),
 			),
 			array(
 				'name' => sprintf('[%s][title]', self::ID),
@@ -115,6 +116,7 @@ class PayPal implements Method, Processable
 				'tip' => __('If your checkout page does not ask for shipping details, or if you do not want to send shipping information to PayPal, set this option to no. If you enable this option PayPal may restrict where things can be sent, and will prevent some orders going through for your protection.', 'jigoshop'),
 				'type' => 'checkbox',
 				'checked' => $this->settings['send_shipping'],
+				'classes' => array('switch-medium'),
 			),
 			array(
 				'name' => sprintf('[%s][force_payment]', self::ID),
@@ -122,12 +124,14 @@ class PayPal implements Method, Processable
 				'tip' => __('If product totals are free and shipping is also free (excluding taxes), this will force 0.01 to allow paypal to process payment. Shop owner is responsible for refunding customer.', 'jigoshop'),
 				'type' => 'checkbox',
 				'checked' => $this->settings['force_payment'],
+				'classes' => array('switch-medium'),
 			),
 			array(
 				'name' => sprintf('[%s][test_mode]', self::ID),
 				'title' => __('Enable Sandbox', 'jigoshop'),
 				'type' => 'checkbox',
 				'checked' => $this->settings['test_mode'],
+				'classes' => array('switch-medium'),
 			),
 			array(
 				'name' => sprintf('[%s][test_email]', self::ID),

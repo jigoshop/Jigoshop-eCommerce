@@ -123,6 +123,7 @@ class TaxesTab implements TabInterface
 						'title' => __('Taxes based on shipping country?', 'jigoshop'),
 						'type' => 'checkbox',
 						'checked' => $this->options['shipping'],
+						'classes' => array('switch-medium'),
 					),
 				),
 			),
@@ -160,6 +161,7 @@ class TaxesTab implements TabInterface
 						'name' => '[defaults][taxable]',
 						'type' => 'checkbox',
 						'checked' => $this->options['defaults']['taxable'],
+						'classes' => array('switch-medium'),
 					),
 					array(
 						'title' => __('Tax classes', 'jigoshop'),

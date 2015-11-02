@@ -81,6 +81,7 @@ class AdvancedTab implements TabInterface
 						'tip' => __("For orders that have been completed but the status is still set to 'processing'.  This will move them to a 'completed' status without sending an email out to all the customers.", 'jigoshop'),
 						'type' => 'checkbox',
 						'checked' => $this->settings['automatic_complete'],
+						'classes' => array('switch-medium'),
 					),
 					array(
 						'name' => '[automatic_reset]',
@@ -89,6 +90,7 @@ class AdvancedTab implements TabInterface
 						'tip' => __("For customers that have not completed the Checkout process or haven't paid for an order after a period of time, this will reset the Order to On Hold allowing the Shop owner to take action.  WARNING: For the first use on an existing Shop this setting <em>can</em> generate a <strong>lot</strong> of email!", 'jigoshop'),
 						'type' => 'checkbox',
 						'checked' => $this->settings['automatic_reset'],
+						'classes' => array('switch-medium'),
 					),
 				),
 			),
@@ -102,6 +104,7 @@ class AdvancedTab implements TabInterface
 						'description' => __('Enforces WordPress to use SSL on checkout pages.', 'jigoshop'),
 						'type' => 'checkbox',
 						'checked' => $this->settings['force_ssl'],
+						'classes' => array('switch-medium'),
 					),
 				),
 			),

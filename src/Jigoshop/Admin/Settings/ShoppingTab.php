@@ -120,6 +120,7 @@ class ShoppingTab implements TabInterface
 						'title' => __('Validate postcode', 'jigoshop'),
 						'type' => 'checkbox',
 						'checked' => $this->options['validate_zip'],
+						'classes' => array('switch-medium'),
 					),
 					array(
 						'name' => '[restrict_selling_locations]',
@@ -128,6 +129,7 @@ class ShoppingTab implements TabInterface
 						'description' => __('This option allows you to select what countries you want to sell to.', 'jigoshop'),
 						'type' => 'checkbox',
 						'checked' => $this->options['restrict_selling_locations'],
+						'classes' => array('switch-medium'),
 					),
 					array(
 						'name' => '[selling_locations]',
@@ -151,6 +153,7 @@ class ShoppingTab implements TabInterface
 						'title' => __('Allow guest purchases', 'jigoshop'),
 						'type' => 'checkbox',
 						'checked' => $this->options['guest_purchases'],
+						'classes' => array('switch-medium'),
 					),
 					array(
 						'name' => '[show_login_form]',
@@ -158,6 +161,7 @@ class ShoppingTab implements TabInterface
 						'description' => __('Add login form on checkout page.', 'jigoshop'),
 						'type' => 'checkbox',
 						'checked' => $this->options['show_login_form'],
+						'classes' => array('switch-medium'),
 					),
 					array(
 						'name' => '[allow_registration]',
@@ -165,6 +169,7 @@ class ShoppingTab implements TabInterface
 						'description' => __('Add registration form on checkout page.', 'jigoshop'),
 						'type' => 'checkbox',
 						'checked' => $this->options['allow_registration'],
+						'classes' => array('switch-medium'),
 					),
 					array(
 						'name' => '[login_for_downloads]',
@@ -172,6 +177,7 @@ class ShoppingTab implements TabInterface
 						'description' => __('Forces user to log in before they could download files.', 'jigoshop'),
 						'type' => 'checkbox',
 						'checked' => $this->options['login_for_downloads'],
+						'classes' => array('switch-medium'),
 					),
 					array(
 						'name' => '[unpaid_orders_number]',
