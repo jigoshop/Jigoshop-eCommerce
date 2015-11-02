@@ -15,21 +15,24 @@
  */
 $hasLabel = !empty($label);
 ?>
-<div class="form-group <?php echo $id; ?>_field <?php echo join(' ', $classes); ?><?php $hidden and print ' not-active'; ?>">
+<div class="form-group <?php echo $id; ?>_field <?php echo join(' ', $classes); ?><?php $hidden and print ' not-active'; ?> padding-bottom-5">
 	<div class="row">
 		<div class="col-sm-<?php echo $size; ?>">
-			<div class="row">
-				<div class="col-xs-2 col-sm-1 text-right">
-					<?php if (!empty($tip)): ?>
-						<span data-toggle="tooltip" class="badge" data-placement="top" title="<?php echo $tip; ?>">?</span>
-					<?php endif; ?>
-				</div>
-				<div class="col-xs-<?php echo $size - 2 ?> col-sm-<?php echo $size - 1 ?>">
-					<input type="<?php echo $type; ?>" id="<?php echo $id; ?>" name="<?php echo $name; ?>" class="form-control <?php echo join(' ', $classes); ?>" placeholder="<?php echo $placeholder; ?>" value="<?php echo $value; ?>"/>
-					<?php if (!empty($description)): ?>
-						<span class="help-block"><?php echo $description; ?></span>
-					<?php endif; ?>
-				</div>
+			<?php if ($hasLabel): $size -= 2; ?>
+				<label for="<?php echo $id; ?>" class="col-xs-12 col-sm-2 margin-top-bottom-9">
+					<?php echo $label; ?>
+				</label>
+			<?php endif; ?>
+			<div class="col-xs-2 col-sm-1 text-right">
+				<?php if (!empty($tip)): ?>
+					<span data-toggle="tooltip" class="badge margin-top-bottom-9" data-placement="top" title="<?php echo $tip; ?>">?</span>
+				<?php endif; ?>
+			</div>
+			<div class="col-xs-<?php echo $size - 2 ?> col-sm-<?php echo $size - 1 ?>">
+				<input type="<?php echo $type; ?>" id="<?php echo $id; ?>" name="<?php echo $name; ?>" class="form-control <?php echo join(' ', $classes); ?>" placeholder="<?php echo $placeholder; ?>" value="<?php echo $value; ?>"/>
+				<?php if (!empty($description)): ?>
+					<span class="help-block"><?php echo $description; ?></span>
+				<?php endif; ?>
 			</div>
 		</div>
 	</div>

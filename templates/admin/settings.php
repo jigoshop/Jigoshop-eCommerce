@@ -32,6 +32,7 @@ use Jigoshop\Helper\Render;
 					<span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
 				</button>
 				<a class="navbar-brand" href="#"><?php echo $activeTitle; ?></a>
+				<div class="clear"></div>
 			</div>
 			<div class="collapse navbar-collapse" id="settingsBar">
 				<ul class="nav navbar-nav">
