@@ -79,10 +79,8 @@ class SystemStatusTab implements TabInterface
 					'fields' => array(
 						array(
 							'generate_button_id' => 'generate-report',
-							'copy_button_id' => 'copy-for-support',
 							'debug_textarea_id' => 'report-for-support',
 							'generate_button_label' => __('Generate Report', 'jigoshop'),
-							'copy_button_label' => __('Copy to clipboard', 'jigoshop'),
 							'type' => 'user_defined',
 							'display' => function($field){
 								return Render::output('admin/system_info/debug_report', $field);
