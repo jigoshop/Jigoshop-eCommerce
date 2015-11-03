@@ -9,14 +9,41 @@ use Jigoshop\Admin\SystemInfo;
 ?>
 <div class="wrap jigoshop">
 	<h1><?php _e('Jigoshop &raquo; System Information', 'jigoshop'); ?></h1>
-	<?php settings_errors(); ?>
-	<ul class="nav nav-tabs nav-justified" role="tablist">
-		<?php foreach($tabs as $tab): /** @var $tab \Jigoshop\Admin\Settings\TabInterface */ ?>
-			<li class="<?php $tab->getSlug() == $current_tab and print 'active'; ?>">
-				<a href="?page=<?php echo SystemInfo::NAME; ?>&amp;tab=<?php echo $tab->getSlug(); ?>"><?php echo $tab->getTitle(); ?></a>
-			</li>
-		<?php endforeach; ?>
-	</ul>
+	<?php
+	$menuContent = '';
+	$activeTitle = '';
+	foreach ($tabs as $tab): /** @var $tab \Jigoshop\Admin\Settings\TabInterface */
+		$active = '';
+		if($tab->getSlug() == $current_tab)
+		{
+			$active = 'active';
+			$activeTitle = $tab->getTitle();
+		}
+		$menuContent .= '<li class="' . $active . '">' .
+			'<a href="?page=' . SystemInfo::NAME . '&amp;tab=' . $tab->getSlug() . '">' . $tab->getTitle() . '</a>' .
+		'</li>';
+	endforeach; ?>
+	<nav class="navbar navbar-default hidden-md hidden-lg hidden-sm">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle margin-9" data-toggle="collapse" data-target="#settingsBar">
+					<span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="#"><?php echo $activeTitle; ?></a>
+				<div class="clear"></div>
+			</div>
+			<div class="collapse navbar-collapse" id="settingsBar">
+				<ul class="nav navbar-nav">
+					<?php echo $menuContent; ?>
+				</ul>
+			</div>
+		</div>
+	</nav>
+	<nav class="hidden-xs">
+		<ul class="nav nav-tabs nav-justified">
+			<?php echo $menuContent; ?>
+		</ul>
+	</nav>
 	<noscript>
 		<div class="alert alert-danger" role="alert"><?php _e('<strong>Warning</strong> System Info panel will not work properly without JavaScript.', 'jigoshop'); ?></div>
 	</noscript>
