@@ -43,17 +43,32 @@ class LogsTab implements TabInterface
 	 */
 	public function getSections()
 	{
+
 		return array(
 			array(
 				'title' => __('Available Logs', 'jigoshop'),
-				'id' => 'available-tools',
+				'id' => 'available-logs',
 				'fields' => array(
-				)
-			),
-			array(
-				'title' => __('Available Debug Logs', 'jigoshop'),
-				'id' => 'available-debug-tools',
-				'fields' => array(
+					array(
+						'id' => 'logs',
+						'name' => 'logs',
+						'title' => __('Logs', 'jigoshop'),
+						'classes' => array('plain-text'),
+						'description' => __('If logs are empty, please make shure that log directory is writable.', 'jigoshop'),
+						'type' => 'textarea',
+						'disabled' => true,
+						'value' => $this->getLogs('jigoshop')
+					),
+					array(
+						'id' => 'debug-logs',
+						'name' => 'debug-logs',
+						'title' => __('Debug Logs', 'jigoshop'),
+						'classes' => array('plain-text'),
+						'description' => __('Debug logs requires WP_DEBUG set to true in wp-config.php.'),
+						'disabled' => true,
+						'type' => 'textarea',
+						'value' => $this->getLogs('jigoshop.debug')
+					),
 				)
 			)
 		);
@@ -70,5 +85,15 @@ class LogsTab implements TabInterface
 	public function validate($settings)
 	{
 		return $settings;
+	}
+
+	private function getLogs($filename)
+	{
+		if (@fopen(JIGOSHOP_LOG_DIR.'/'.$filename.'.log', 'a')) {
+			$logs = esc_textarea(file_get_contents(JIGOSHOP_LOG_DIR.'/'.$filename.'.log'));
+			return empty($logs) ? __('Logs are empty.', 'jigoshop') : $logs;
+		} else {
+			return __('Log file does not exists.', 'jigoshop');
+		}
 	}
 }
