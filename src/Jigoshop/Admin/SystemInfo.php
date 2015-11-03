@@ -40,7 +40,7 @@ class SystemInfo implements PageInterface
 				return;
 			}
 
-			Styles::add('jigoshop.admin.settings', JIGOSHOP_URL.'/assets/css/admin/settings.css', array('jigoshop.admin'));
+			Styles::add('jigoshop.admin.settings', JIGOSHOP_URL.'/assets/css/admin/system_info.css', array('jigoshop.admin'));
 		});
 	}
 
