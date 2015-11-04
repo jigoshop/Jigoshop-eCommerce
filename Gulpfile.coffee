@@ -10,15 +10,14 @@ uglify = require('gulp-uglify')
 rimraf = require('gulp-rimraf')
 replace = require('gulp-replace')
 
-# Deklaracja stylów
+# Deklaracja źródeł
 
+# CSS
 cssFiles =
   select2: ['assets/bower/select2/select2.css', 'assets/bower/select2/select2-bootstrap.css']
   datepicker: ['assets/bower/bootstrap-datepicker/css/datepicker3.css']
   colorbox: ['assets/bower/jquery-colorbox/example1/colorbox.css']
 
-
-# Deklaracja skryptów
 # JS
 jsFiles =
   select2: ['assets/bower/select2/select2.js']
@@ -31,6 +30,8 @@ coffeeFiles =
   bs_switch: ['assets/bower/bootstrap-switch/src/coffee/bootstrap-switch.coffee']
 
 defaultTask = ['scripts', 'styles', 'fonts']
+
+# Przetwarzanie
 
 # CSS
 cssTasks = Object.keys(cssFiles)
@@ -70,6 +71,7 @@ gulp.task 'styles', ->
   gulp.src 'assets/less/**/*.less'
     .pipe less()
     .pipe check(argv.production, cssmin())
+    .pipe cssmin()
     .pipe gulp.dest('assets/css')
 
 # other coffee scripts
