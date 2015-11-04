@@ -10,7 +10,7 @@ use Jigoshop\Helper\Render;
  * @var $myAccountUrl string URL to my account.
  */
 ?>
-<h1><?php _e('My account &rang; Edit address', 'jigoshop'); ?></h1>
+<h1><?php _e('My account &raquo; Edit address', 'jigoshop'); ?></h1>
 <?php Render::output('shop/messages', array('messages' => $messages)); ?>
 <form class="form-horizontal" role="form" method="post">
 	<?php if ($address instanceof Customer\CompanyAddress): ?>

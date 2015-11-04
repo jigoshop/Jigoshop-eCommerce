@@ -98,6 +98,7 @@ class ProductsTab implements TabInterface
 						'description' => __("You can always disable management per item, it's just default value.", 'jigoshop'),
 						'type' => 'checkbox',
 						'checked' => $this->options['manage_stock'],
+						'classes' => array('switch-medium'),
 					),
 					array(
 						'name' => '[stock_status]',
@@ -113,6 +114,7 @@ class ProductsTab implements TabInterface
 						'description' => __('This option allows you to show available amounts on product page.', 'jigoshop'),
 						'type' => 'checkbox',
 						'checked' => $this->options['show_stock'],
+						'classes' => array('switch-medium'),
 					),
 					array(
 						'name' => '[low_stock_threshold]',
@@ -140,6 +142,7 @@ class ProductsTab implements TabInterface
 						'description' => __('Notify when product reaches low stock', 'jigoshop'),
 						'type' => 'checkbox',
 						'checked' => $this->options['notify_low_stock'],
+						'classes' => array('switch-medium'),
 					),
 					array(
 						'name' => '[notify_out_of_stock]',
@@ -147,6 +150,7 @@ class ProductsTab implements TabInterface
 						'description' => __('Notify when product becomes out of stock', 'jigoshop'),
 						'type' => 'checkbox',
 						'checked' => $this->options['notify_out_of_stock'],
+						'classes' => array('switch-medium'),
 					),
 					// TODO: Backorders notifications
 //					array(
@@ -183,6 +187,7 @@ class ProductsTab implements TabInterface
 						'tip' => __('Leave disabled to scale images proportionally, enable to do real cropping.', 'jigoshop'),
 						'type' => 'checkbox',
 						'checked' => $this->options['images']['tiny']['crop'],
+						'classes' => array('switch-medium'),
 					),
 					array(
 						'name' => '[images][thumbnail][width]',
@@ -204,6 +209,7 @@ class ProductsTab implements TabInterface
 						'tip' => __('Leave disabled to scale images proportionally, enable to do real cropping.', 'jigoshop'),
 						'type' => 'checkbox',
 						'checked' => $this->options['images']['thumbnail']['crop'],
+						'classes' => array('switch-medium'),
 					),
 					array(
 						'name' => '[images][small][width]',
@@ -225,6 +231,7 @@ class ProductsTab implements TabInterface
 						'tip' => __('Leave disabled to scale images proportionally, enable to do real cropping.', 'jigoshop'),
 						'type' => 'checkbox',
 						'checked' => $this->options['images']['small']['crop'],
+						'classes' => array('switch-medium'),
 					),
 					array(
 						'name' => '[images][large][width]',
@@ -246,6 +253,7 @@ class ProductsTab implements TabInterface
 						'tip' => __('Leave disabled to scale images proportionally, enable to do real cropping.', 'jigoshop'),
 						'type' => 'checkbox',
 						'checked' => $this->options['images']['large']['crop'],
+						'classes' => array('switch-medium'),
 					),
 				),
 			),

@@ -20,7 +20,6 @@ class Simple implements CustomerServiceInterface
 	{
 		$this->service = $service;
 	}
-
 	/**
 	 * Returns currently logged in customer.
 	 *
@@ -39,7 +38,6 @@ class Simple implements CustomerServiceInterface
 	 * Finds single user with specified ID.
 	 *
 	 * @param $id int Customer ID.
-	 *
 	 * @return \Jigoshop\Entity\Customer Customer for selected ID.
 	 */
 	public function find($id)
@@ -69,7 +67,6 @@ class Simple implements CustomerServiceInterface
 	 * Saves product to database.
 	 *
 	 * @param EntityInterface $object Customer to save.
-	 *
 	 * @throws Exception
 	 */
 	public function save(EntityInterface $object)
@@ -82,7 +79,6 @@ class Simple implements CustomerServiceInterface
 	 * Finds item for specified WordPress post.
 	 *
 	 * @param $post \WP_Post WordPress post.
-	 *
 	 * @return EntityInterface Item found.
 	 */
 	public function findForPost($post)
@@ -94,7 +90,6 @@ class Simple implements CustomerServiceInterface
 	 * Finds items specified using WordPress query.
 	 *
 	 * @param $query \WP_Query WordPress query.
-	 *
 	 * @return array Collection of found items.
 	 */
 	public function findByQuery($query)
@@ -106,7 +101,6 @@ class Simple implements CustomerServiceInterface
 	 * Checks whether provided customer needs to be taxed.
 	 *
 	 * @param Customer $customer Customer to check.
-	 *
 	 * @return boolean Whether customer needs to be taxed.
 	 */
 	public function isTaxable(Customer $customer)

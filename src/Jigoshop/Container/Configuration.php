@@ -41,7 +41,8 @@ class Configuration
 			'\Jigoshop\Container\Configuration\FactoriesConfiguration',
 			'\Jigoshop\Container\Configuration\Admin\MigrationConfiguration',
 			'\Jigoshop\Container\Configuration\Admin\PagesConfiguration',
-			'\Jigoshop\Container\Configuration\Admin\SettingsConfiguration'
+			'\Jigoshop\Container\Configuration\Admin\SettingsConfiguration',
+			'\Jigoshop\Container\Configuration\Admin\SystemInfoConfiguration'
 		);
 		$configurations = apply_filters('jigoshop\container\configuration', $configurations);
 

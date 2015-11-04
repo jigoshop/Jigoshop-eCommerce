@@ -1,5 +1,5 @@
 jQuery(function($) {
-  $('a[data-toggle=tooltip]').tooltip();
+  $('span[data-toggle=tooltip]').tooltip();
   $('.not-active').closest('tr').hide();
   delay(3000, function() {
     return $('.settings-error.updated').slideUp(function() {

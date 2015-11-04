@@ -9,5 +9,4 @@ return array(
     'Jigoshop' => array($baseDir . '/src'),
     'JSMinPlus' => array($vendorDir . '/nitra/php-min/JSMinPlus'),
     'CssMin' => array($vendorDir . '/nitra/php-min/CssMin'),
-    'Assetic' => array($vendorDir . '/kriswallsmith/assetic/src'),
 );

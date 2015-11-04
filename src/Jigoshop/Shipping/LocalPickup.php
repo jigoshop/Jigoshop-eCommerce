@@ -74,6 +74,7 @@ class LocalPickup implements Method
 				'title' => __('Is enabled?', 'jigoshop'),
 				'type' => 'checkbox',
 				'checked' => $this->options['enabled'],
+				'classes' => array('switch-medium'),
 			),
 		);
 	}

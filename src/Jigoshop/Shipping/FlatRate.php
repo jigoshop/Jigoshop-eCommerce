@@ -111,6 +111,7 @@ class FlatRate implements Method
 				'title' => __('Is enabled?', 'jigoshop'),
 				'type' => 'checkbox',
 				'checked' => $this->options['enabled'],
+				'classes' => array('switch-medium'),
 			),
 			array(
 				'name' => sprintf('[%s][title]', self::NAME),
@@ -130,6 +131,7 @@ class FlatRate implements Method
 				'title' => __('Is taxable?', 'jigoshop'),
 				'type' => 'checkbox',
 				'checked' => $this->options['is_taxable'],
+				'classes' => array('switch-medium'),
 			),
 			array(
 				'name' => sprintf('[%s][cost]', self::NAME),

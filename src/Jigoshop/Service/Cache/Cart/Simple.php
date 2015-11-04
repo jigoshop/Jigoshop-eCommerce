@@ -4,6 +4,7 @@ namespace Jigoshop\Service\Cache\Cart;
 
 use Jigoshop\Entity\Cart;
 use Jigoshop\Entity\Order;
+use Jigoshop\Entity\OrderInterface;
 use Jigoshop\Service\CartServiceInterface;
 
 class Simple implements CartServiceInterface
@@ -23,7 +24,6 @@ class Simple implements CartServiceInterface
 	 * If cart is not found - returns new empty one.
 	 *
 	 * @param $id string Id of cart to fetch.
-	 *
 	 * @return Cart Prepared cart instance.
 	 */
 	public function get($id)
@@ -74,6 +74,17 @@ class Simple implements CartServiceInterface
 		$this->service->remove($cart);
 	}
 
+
+	/**
+	 * Validates whether
+	 *
+	 * @param OrderInterface $cart
+	 */
+	public function validate(OrderInterface $cart)
+	{
+		$this->service->validate($cart);
+	}
+
 	/**
 	 * Returns cart ID for current user.
 	 * If the user is logged in - returns his ID so his cart will be properly loaded.
@@ -90,8 +101,7 @@ class Simple implements CartServiceInterface
 	 * Creates cart from order ID.
 	 *
 	 * @param $cartId string Cart ID to use.
-	 * @param $order  Order Order to base cart on.
-	 *
+	 * @param $order Order Order to base cart on.
 	 * @return Cart The cart.
 	 */
 	public function createFromOrder($cartId, $order)

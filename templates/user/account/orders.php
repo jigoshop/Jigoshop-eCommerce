@@ -13,7 +13,7 @@ use Jigoshop\Helper\Render;
  * @var $myAccountUrl string URL to my account.
  */
 ?>
-<h1><?php _e('My account &rang; Orders', 'jigoshop'); ?></h1>
+<h1><?php _e('My account &raquo; Orders', 'jigoshop'); ?></h1>
 <?php Render::output('shop/messages', array('messages' => $messages)); ?>
 <div class="panel panel-default">
 	<div class="panel-heading">

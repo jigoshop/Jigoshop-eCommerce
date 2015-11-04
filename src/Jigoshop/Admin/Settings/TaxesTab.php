@@ -56,7 +56,6 @@ class TaxesTab implements TabInterface
 
 			Scripts::add('jigoshop.admin.settings.taxes', JIGOSHOP_URL.'/assets/js/admin/settings/taxes.js', array(
 				'jquery',
-				'jigoshop.vendors'
 			), array('page' => 'jigoshop_page_jigoshop_settings'));
 			Scripts::localize('jigoshop.admin.settings.taxes', 'jigoshop_admin_taxes', array(
 				'new_class' => Render::get('admin/settings/tax/class', array('class' => array('label' => '', 'class' => ''))),
@@ -123,6 +122,7 @@ class TaxesTab implements TabInterface
 						'title' => __('Taxes based on shipping country?', 'jigoshop'),
 						'type' => 'checkbox',
 						'checked' => $this->options['shipping'],
+						'classes' => array('switch-medium'),
 					),
 				),
 			),
@@ -160,6 +160,7 @@ class TaxesTab implements TabInterface
 						'name' => '[defaults][taxable]',
 						'type' => 'checkbox',
 						'checked' => $this->options['defaults']['taxable'],
+						'classes' => array('switch-medium'),
 					),
 					array(
 						'title' => __('Tax classes', 'jigoshop'),

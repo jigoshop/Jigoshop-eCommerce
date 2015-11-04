@@ -37,7 +37,7 @@ class ClassLoader
 			throw new Exception(sprintf('Path for %s is already mapped.', $key));
 		}
 
-		$this->pathMap[$key] = $path;
+		$this->paths[$key] = $path;
 	}
 
 	/**

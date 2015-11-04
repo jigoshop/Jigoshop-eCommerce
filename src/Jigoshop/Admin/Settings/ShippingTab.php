@@ -58,6 +58,7 @@ class ShippingTab implements TabInterface
 						'title' => __('Enable shipping', 'jigoshop'),
 						'type' => 'checkbox',
 						'checked' => $this->options['enabled'],
+						'classes' => array('switch-medium'),
 					),
 					array(
 						'name' => '[calculator]',
@@ -65,6 +66,7 @@ class ShippingTab implements TabInterface
 						'description' => __('This enables calculator in cart for available shipping methods.', 'jigoshop'),
 						'type' => 'checkbox',
 						'checked' => $this->options['calculator'],
+						'classes' => array('switch-medium'),
 					),
 				),
 			),
@@ -78,6 +80,7 @@ class ShippingTab implements TabInterface
 						'description' => __('This forces customer to use billing address as shipping address.', 'jigoshop'),
 						'type' => 'checkbox',
 						'checked' => $this->options['only_to_billing'],
+						'classes' => array('switch-medium'),
 					),
 					array(
 						'name' => '[always_show_shipping]',
@@ -85,6 +88,7 @@ class ShippingTab implements TabInterface
 						'description' => __('This forces shipping fields to be always visible in checkout.', 'jigoshop'),
 						'type' => 'checkbox',
 						'checked' => $this->options['always_show_shipping'],
+						'classes' => array('switch-medium'),
 					),
 				),
 			),

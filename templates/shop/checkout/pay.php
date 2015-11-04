@@ -15,7 +15,7 @@ use Jigoshop\Helper\Render;
  */
 ?>
 
-<h1><?php printf(__('Checkout &rang; Pay &rang; %s', 'jigoshop'), $order->getTitle()); ?></h1>
+<h1><?php printf(__('Checkout &raquo; Pay &raquo; %s', 'jigoshop'), $order->getTitle()); ?></h1>
 <?php Render::output('shop/messages', array('messages' => $messages)); ?>
 <form action="" role="form" method="post" id="checkout">
 	<h3><?php _e('Order details', 'jigoshop'); ?></h3>

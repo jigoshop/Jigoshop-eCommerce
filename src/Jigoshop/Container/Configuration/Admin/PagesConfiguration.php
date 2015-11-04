@@ -44,7 +44,6 @@ class PagesConfiguration implements ConfigurationInterface
 			'wpal',
 			'jigoshop.options',
 			'jigoshop.post_type.product',
-
 			'jigoshop.service.product'
 		));
 		$services->setDatails('jigoshop.admin.page.product', 'Jigoshop\Admin\Page\Product', array(

@@ -3,6 +3,9 @@
 if (!defined('JIGOSHOP_LOGGER')) {
 	define('JIGOSHOP_LOGGER', 'jigoshop');
 }
+if (!defined('JIGOSHOP_LOG_DIR')) {
+	define('JIGOSHOP_LOG_DIR', JIGOSHOP_DIR.'/log');
+}
 
 /**
  * Class initializing and loading of all required files.
@@ -24,9 +27,9 @@ class JigoshopInit
 		// Prepare logger
 		$logger = new \Monolog\Logger(JIGOSHOP_LOGGER);
 		if (WP_DEBUG) {
-			$logger->pushHandler(new \Monolog\Handler\StreamHandler(JIGOSHOP_DIR.'/log/jigoshop.debug.log', \Monolog\Logger::DEBUG));
+			$logger->pushHandler(new \Monolog\Handler\StreamHandler(JIGOSHOP_LOG_DIR.'/jigoshop.debug.log', \Monolog\Logger::DEBUG));
 		}
-		$logger->pushHandler(new \Monolog\Handler\StreamHandler(JIGOSHOP_DIR.'/log/jigoshop.log', \Monolog\Logger::WARNING));
+		$logger->pushHandler(new \Monolog\Handler\StreamHandler(JIGOSHOP_LOG_DIR.'/jigoshop.log', \Monolog\Logger::WARNING));
 		$logger->pushProcessor(new \Monolog\Processor\IntrospectionProcessor());
 		$logger->pushProcessor(new \Monolog\Processor\WebProcessor());
 		\Monolog\Registry::addLogger($logger);
@@ -44,6 +47,7 @@ class JigoshopInit
 		$this->container->compiler->add(new \Jigoshop\Admin\CompilerPass());
 		$this->container->compiler->add(new \Jigoshop\Admin\Migration\CompilerPass());
 		$this->container->compiler->add(new \Jigoshop\Admin\Settings\CompilerPass());
+		$this->container->compiler->add(new \Jigoshop\Admin\SystemInfo\CompilerPass());
 		$this->container->compiler->add(new \Jigoshop\Core\Installer\CompilerPass());
 		$this->container->compiler->add(new \Jigoshop\Core\Types\CompilerPass());
 		$this->container->compiler->add(new \Jigoshop\Payment\CompilerPass());

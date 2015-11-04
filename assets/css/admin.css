@@ -1,7 +1,7 @@
 @font-face {
   font-family: 'Glyphicons Halflings';
   src: url('../fonts/glyphicons-halflings-regular.eot');
-  src: url('../fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('../fonts/glyphicons-halflings-regular.woff') format('woff'), url('../fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('../fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
+  src: url('../fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('../fonts/glyphicons-halflings-regular.woff2') format('woff2'), url('../fonts/glyphicons-halflings-regular.woff') format('woff'), url('../fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('../fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
 }
 .glyphicon {
   position: relative;
@@ -20,7 +20,8 @@
 .glyphicon-plus:before {
   content: "\2b";
 }
-.glyphicon-euro:before {
+.glyphicon-euro:before,
+.glyphicon-eur:before {
   content: "\20ac";
 }
 .glyphicon-minus:before {
@@ -614,6 +615,192 @@
 .glyphicon-tree-deciduous:before {
   content: "\e200";
 }
+.glyphicon-cd:before {
+  content: "\e201";
+}
+.glyphicon-save-file:before {
+  content: "\e202";
+}
+.glyphicon-open-file:before {
+  content: "\e203";
+}
+.glyphicon-level-up:before {
+  content: "\e204";
+}
+.glyphicon-copy:before {
+  content: "\e205";
+}
+.glyphicon-paste:before {
+  content: "\e206";
+}
+.glyphicon-alert:before {
+  content: "\e209";
+}
+.glyphicon-equalizer:before {
+  content: "\e210";
+}
+.glyphicon-king:before {
+  content: "\e211";
+}
+.glyphicon-queen:before {
+  content: "\e212";
+}
+.glyphicon-pawn:before {
+  content: "\e213";
+}
+.glyphicon-bishop:before {
+  content: "\e214";
+}
+.glyphicon-knight:before {
+  content: "\e215";
+}
+.glyphicon-baby-formula:before {
+  content: "\e216";
+}
+.glyphicon-tent:before {
+  content: "\26fa";
+}
+.glyphicon-blackboard:before {
+  content: "\e218";
+}
+.glyphicon-bed:before {
+  content: "\e219";
+}
+.glyphicon-apple:before {
+  content: "\f8ff";
+}
+.glyphicon-erase:before {
+  content: "\e221";
+}
+.glyphicon-hourglass:before {
+  content: "\231b";
+}
+.glyphicon-lamp:before {
+  content: "\e223";
+}
+.glyphicon-duplicate:before {
+  content: "\e224";
+}
+.glyphicon-piggy-bank:before {
+  content: "\e225";
+}
+.glyphicon-scissors:before {
+  content: "\e226";
+}
+.glyphicon-bitcoin:before {
+  content: "\e227";
+}
+.glyphicon-btc:before {
+  content: "\e227";
+}
+.glyphicon-xbt:before {
+  content: "\e227";
+}
+.glyphicon-yen:before {
+  content: "\00a5";
+}
+.glyphicon-jpy:before {
+  content: "\00a5";
+}
+.glyphicon-ruble:before {
+  content: "\20bd";
+}
+.glyphicon-rub:before {
+  content: "\20bd";
+}
+.glyphicon-scale:before {
+  content: "\e230";
+}
+.glyphicon-ice-lolly:before {
+  content: "\e231";
+}
+.glyphicon-ice-lolly-tasted:before {
+  content: "\e232";
+}
+.glyphicon-education:before {
+  content: "\e233";
+}
+.glyphicon-option-horizontal:before {
+  content: "\e234";
+}
+.glyphicon-option-vertical:before {
+  content: "\e235";
+}
+.glyphicon-menu-hamburger:before {
+  content: "\e236";
+}
+.glyphicon-modal-window:before {
+  content: "\e237";
+}
+.glyphicon-oil:before {
+  content: "\e238";
+}
+.glyphicon-grain:before {
+  content: "\e239";
+}
+.glyphicon-sunglasses:before {
+  content: "\e240";
+}
+.glyphicon-text-size:before {
+  content: "\e241";
+}
+.glyphicon-text-color:before {
+  content: "\e242";
+}
+.glyphicon-text-background:before {
+  content: "\e243";
+}
+.glyphicon-object-align-top:before {
+  content: "\e244";
+}
+.glyphicon-object-align-bottom:before {
+  content: "\e245";
+}
+.glyphicon-object-align-horizontal:before {
+  content: "\e246";
+}
+.glyphicon-object-align-left:before {
+  content: "\e247";
+}
+.glyphicon-object-align-vertical:before {
+  content: "\e248";
+}
+.glyphicon-object-align-right:before {
+  content: "\e249";
+}
+.glyphicon-triangle-right:before {
+  content: "\e250";
+}
+.glyphicon-triangle-left:before {
+  content: "\e251";
+}
+.glyphicon-triangle-bottom:before {
+  content: "\e252";
+}
+.glyphicon-triangle-top:before {
+  content: "\e253";
+}
+.glyphicon-console:before {
+  content: "\e254";
+}
+.glyphicon-superscript:before {
+  content: "\e255";
+}
+.glyphicon-subscript:before {
+  content: "\e256";
+}
+.glyphicon-menu-left:before {
+  content: "\e257";
+}
+.glyphicon-menu-right:before {
+  content: "\e258";
+}
+.glyphicon-menu-down:before {
+  content: "\e259";
+}
+.glyphicon-menu-up:before {
+  content: "\e260";
+}
 #menu-posts-product .wp-menu-image {
   background-position: -35px -32px !important;
 }
@@ -671,7 +858,7 @@
   background-position: 0 -99px;
 }
 .jigoshop {
-  /*! normalize.css v3.0.1 | MIT License | git.io/normalize */
+  /*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */
 }
 .jigoshop html {
   font-family: sans-serif;
@@ -690,6 +877,7 @@
 .jigoshop header,
 .jigoshop hgroup,
 .jigoshop main,
+.jigoshop menu,
 .jigoshop nav,
 .jigoshop section,
 .jigoshop summary {
@@ -711,7 +899,7 @@
   display: none;
 }
 .jigoshop a {
-  background: transparent;
+  background-color: transparent;
 }
 .jigoshop a:active,
 .jigoshop a:hover {
@@ -761,7 +949,6 @@
   margin: 1em 40px;
 }
 .jigoshop hr {
-  -moz-box-sizing: content-box;
   box-sizing: content-box;
   height: 0;
 }
@@ -821,8 +1008,6 @@
 }
 .jigoshop input[type="search"] {
   -webkit-appearance: textfield;
-  -moz-box-sizing: content-box;
-  -webkit-box-sizing: content-box;
   box-sizing: content-box;
 }
 .jigoshop input[type="search"]::-webkit-search-cancel-button,
@@ -883,12 +1068,12 @@
   line-height: inherit;
 }
 .jigoshop a {
-  color: #428bca;
+  color: #337ab7;
   text-decoration: none;
 }
 .jigoshop a:hover,
 .jigoshop a:focus {
-  color: #2a6496;
+  color: #23527c;
   text-decoration: underline;
 }
 .jigoshop a:focus {
@@ -904,7 +1089,6 @@
 }
 .jigoshop .img-responsive {
   display: block;
-  width: 100% \9;
   max-width: 100%;
   height: auto;
 }
@@ -921,7 +1105,6 @@
   -o-transition: all 0.2s ease-in-out;
   transition: all 0.2s ease-in-out;
   display: inline-block;
-  width: 100% \9;
   max-width: 100%;
   height: auto;
 }
@@ -952,6 +1135,9 @@
   margin: 0;
   overflow: visible;
   clip: auto;
+}
+.jigoshop [role="button"] {
+  cursor: pointer;
 }
 .jigoshop fieldset {
   padding: 0;
@@ -1037,21 +1223,24 @@
   box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, 0.6);
 }
 .jigoshop .form-control::-moz-placeholder {
-  color: #777777;
+  color: #999999;
   opacity: 1;
 }
 .jigoshop .form-control:-ms-input-placeholder {
-  color: #777777;
+  color: #999999;
 }
 .jigoshop .form-control::-webkit-input-placeholder {
-  color: #777777;
+  color: #999999;
 }
 .jigoshop .form-control[disabled],
 .jigoshop .form-control[readonly],
 fieldset[disabled] .jigoshop .form-control {
-  cursor: not-allowed;
   background-color: #eeeeee;
   opacity: 1;
+}
+.jigoshop .form-control[disabled],
+fieldset[disabled] .jigoshop .form-control {
+  cursor: not-allowed;
 }
 textarea.jigoshop .form-control {
   height: auto;
@@ -1059,24 +1248,33 @@ textarea.jigoshop .form-control {
 .jigoshop input[type="search"] {
   -webkit-appearance: none;
 }
-.jigoshop input[type="date"],
-.jigoshop input[type="time"],
-.jigoshop input[type="datetime-local"],
-.jigoshop input[type="month"] {
-  line-height: 34px;
-  line-height: 1.42857143 \0;
-}
-.jigoshop input[type="date"].input-sm,
-.jigoshop input[type="time"].input-sm,
-.jigoshop input[type="datetime-local"].input-sm,
-.jigoshop input[type="month"].input-sm {
-  line-height: 30px;
-}
-.jigoshop input[type="date"].input-lg,
-.jigoshop input[type="time"].input-lg,
-.jigoshop input[type="datetime-local"].input-lg,
-.jigoshop input[type="month"].input-lg {
-  line-height: 46px;
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+  .jigoshop input[type="date"].form-control,
+  .jigoshop input[type="time"].form-control,
+  .jigoshop input[type="datetime-local"].form-control,
+  .jigoshop input[type="month"].form-control {
+    line-height: 34px;
+  }
+  .jigoshop input[type="date"].input-sm,
+  .jigoshop input[type="time"].input-sm,
+  .jigoshop input[type="datetime-local"].input-sm,
+  .jigoshop input[type="month"].input-sm,
+  .input-group-sm .jigoshop input[type="date"],
+  .input-group-sm .jigoshop input[type="time"],
+  .input-group-sm .jigoshop input[type="datetime-local"],
+  .input-group-sm .jigoshop input[type="month"] {
+    line-height: 30px;
+  }
+  .jigoshop input[type="date"].input-lg,
+  .jigoshop input[type="time"].input-lg,
+  .jigoshop input[type="datetime-local"].input-lg,
+  .jigoshop input[type="month"].input-lg,
+  .input-group-lg .jigoshop input[type="date"],
+  .input-group-lg .jigoshop input[type="time"],
+  .input-group-lg .jigoshop input[type="datetime-local"],
+  .input-group-lg .jigoshop input[type="month"] {
+    line-height: 46px;
+  }
 }
 .jigoshop .form-group {
   margin-bottom: 15px;
@@ -1085,12 +1283,12 @@ textarea.jigoshop .form-control {
 .jigoshop .checkbox {
   position: relative;
   display: block;
-  min-height: 20px;
   margin-top: 10px;
   margin-bottom: 10px;
 }
 .jigoshop .radio label,
 .jigoshop .checkbox label {
+  min-height: 20px;
   padding-left: 20px;
   margin-bottom: 0;
   font-weight: normal;
@@ -1110,6 +1308,7 @@ textarea.jigoshop .form-control {
 }
 .jigoshop .radio-inline,
 .jigoshop .checkbox-inline {
+  position: relative;
   display: inline-block;
   padding-left: 20px;
   margin-bottom: 0;
@@ -1146,6 +1345,7 @@ fieldset[disabled] .jigoshop .checkbox label {
   padding-top: 7px;
   padding-bottom: 7px;
   margin-bottom: 0;
+  min-height: 34px;
 }
 .jigoshop .form-control-static.input-lg,
 .jigoshop .form-control-static.input-sm {
@@ -1167,11 +1367,33 @@ textarea.jigoshop .input-sm,
 select[multiple].jigoshop .input-sm {
   height: auto;
 }
+.jigoshop .form-group-sm .form-control {
+  height: 30px;
+  padding: 5px 10px;
+  font-size: 12px;
+  line-height: 1.5;
+  border-radius: 3px;
+}
+.jigoshop .form-group-sm select.form-control {
+  height: 30px;
+  line-height: 30px;
+}
+.jigoshop .form-group-sm textarea.form-control,
+.jigoshop .form-group-sm select[multiple].form-control {
+  height: auto;
+}
+.jigoshop .form-group-sm .form-control-static {
+  height: 30px;
+  min-height: 32px;
+  padding: 6px 10px;
+  font-size: 12px;
+  line-height: 1.5;
+}
 .jigoshop .input-lg {
   height: 46px;
   padding: 10px 16px;
   font-size: 18px;
-  line-height: 1.33;
+  line-height: 1.3333333;
   border-radius: 6px;
 }
 select.jigoshop .input-lg {
@@ -1182,6 +1404,28 @@ textarea.jigoshop .input-lg,
 select[multiple].jigoshop .input-lg {
   height: auto;
 }
+.jigoshop .form-group-lg .form-control {
+  height: 46px;
+  padding: 10px 16px;
+  font-size: 18px;
+  line-height: 1.3333333;
+  border-radius: 6px;
+}
+.jigoshop .form-group-lg select.form-control {
+  height: 46px;
+  line-height: 46px;
+}
+.jigoshop .form-group-lg textarea.form-control,
+.jigoshop .form-group-lg select[multiple].form-control {
+  height: auto;
+}
+.jigoshop .form-group-lg .form-control-static {
+  height: 46px;
+  min-height: 38px;
+  padding: 11px 16px;
+  font-size: 18px;
+  line-height: 1.3333333;
+}
 .jigoshop .has-feedback {
   position: relative;
 }
@@ -1190,7 +1434,7 @@ select[multiple].jigoshop .input-lg {
 }
 .jigoshop .form-control-feedback {
   position: absolute;
-  top: 25px;
+  top: 0;
   right: 0;
   z-index: 2;
   display: block;
@@ -1198,13 +1442,18 @@ select[multiple].jigoshop .input-lg {
   height: 34px;
   line-height: 34px;
   text-align: center;
+  pointer-events: none;
 }
-.jigoshop .input-lg + .form-control-feedback {
+.jigoshop .input-lg + .form-control-feedback,
+.jigoshop .input-group-lg + .form-control-feedback,
+.jigoshop .form-group-lg .form-control + .form-control-feedback {
   width: 46px;
   height: 46px;
   line-height: 46px;
 }
-.jigoshop .input-sm + .form-control-feedback {
+.jigoshop .input-sm + .form-control-feedback,
+.jigoshop .input-group-sm + .form-control-feedback,
+.jigoshop .form-group-sm .form-control + .form-control-feedback {
   width: 30px;
   height: 30px;
   line-height: 30px;
@@ -1214,7 +1463,11 @@ select[multiple].jigoshop .input-lg {
 .jigoshop .has-success .radio,
 .jigoshop .has-success .checkbox,
 .jigoshop .has-success .radio-inline,
-.jigoshop .has-success .checkbox-inline {
+.jigoshop .has-success .checkbox-inline,
+.jigoshop .has-success.radio label,
+.jigoshop .has-success.checkbox label,
+.jigoshop .has-success.radio-inline label,
+.jigoshop .has-success.checkbox-inline label {
   color: #3c763d;
 }
 .jigoshop .has-success .form-control {
@@ -1240,7 +1493,11 @@ select[multiple].jigoshop .input-lg {
 .jigoshop .has-warning .radio,
 .jigoshop .has-warning .checkbox,
 .jigoshop .has-warning .radio-inline,
-.jigoshop .has-warning .checkbox-inline {
+.jigoshop .has-warning .checkbox-inline,
+.jigoshop .has-warning.radio label,
+.jigoshop .has-warning.checkbox label,
+.jigoshop .has-warning.radio-inline label,
+.jigoshop .has-warning.checkbox-inline label {
   color: #8a6d3b;
 }
 .jigoshop .has-warning .form-control {
@@ -1266,7 +1523,11 @@ select[multiple].jigoshop .input-lg {
 .jigoshop .has-error .radio,
 .jigoshop .has-error .checkbox,
 .jigoshop .has-error .radio-inline,
-.jigoshop .has-error .checkbox-inline {
+.jigoshop .has-error .checkbox-inline,
+.jigoshop .has-error.radio label,
+.jigoshop .has-error.checkbox label,
+.jigoshop .has-error.radio-inline label,
+.jigoshop .has-error.checkbox-inline label {
   color: #a94442;
 }
 .jigoshop .has-error .form-control {
@@ -1287,6 +1548,9 @@ select[multiple].jigoshop .input-lg {
 .jigoshop .has-error .form-control-feedback {
   color: #a94442;
 }
+.jigoshop .has-feedback label ~ .form-control-feedback {
+  top: 25px;
+}
 .jigoshop .has-feedback label.sr-only ~ .form-control-feedback {
   top: 0;
 }
@@ -1306,6 +1570,9 @@ select[multiple].jigoshop .input-lg {
     display: inline-block;
     width: auto;
     vertical-align: middle;
+  }
+  .jigoshop .form-inline .form-control-static {
+    display: inline-block;
   }
   .jigoshop .form-inline .input-group {
     display: inline-table;
@@ -1367,30 +1634,53 @@ select[multiple].jigoshop .input-lg {
   }
 }
 .jigoshop .form-horizontal .has-feedback .form-control-feedback {
-  top: 0;
   right: 15px;
 }
 @media (min-width: 768px) {
   .jigoshop .form-horizontal .form-group-lg .control-label {
-    padding-top: 14.3px;
+    padding-top: 14.333333px;
+    font-size: 18px;
   }
 }
 @media (min-width: 768px) {
   .jigoshop .form-horizontal .form-group-sm .control-label {
     padding-top: 6px;
+    font-size: 12px;
+  }
+}
+@media screen and (max-width: 768px) {
+  .jigoshop h1 {
+    font-size: 150% !important;
   }
 }
 .jigoshop .glyphicon-remove {
   color: #d9534f;
 }
-.jigoshop a.badge[data-toggle=tooltip] {
+.jigoshop span.badge[data-toggle=tooltip] {
   text-decoration: none;
   cursor: help;
   vertical-align: middle;
+  padding: 3px 6px;
 }
-.jigoshop a.badge[data-toggle=tooltip]:hover {
+.jigoshop span.badge[data-toggle=tooltip]:hover {
   color: #ffffff;
   text-decoration: none;
+}
+.jigoshop .padding-left-0 {
+  padding-left: 0 !important;
+}
+.jigoshop .margin-9 {
+  margin: 9px !important;
+}
+.jigoshop .margin-top-bottom-9 {
+  margin-top: 9px;
+  margin-bottom: 9px;
+}
+.jigoshop .padding-bottom-5 {
+  padding-bottom: 5px;
+}
+.jigoshop .button-save-options {
+  margin: 35px 12px 12px 0 !important;
 }
 .jigoshop .table tbody > tr > td.vert-align {
   vertical-align: middle;

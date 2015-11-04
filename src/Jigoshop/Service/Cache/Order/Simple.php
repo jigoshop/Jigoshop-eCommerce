@@ -29,7 +29,6 @@ class Simple implements OrderServiceInterface
 	 * Finds item specified by ID.
 	 *
 	 * @param $id int The ID.
-	 *
 	 * @return Order
 	 */
 	public function find($id)
@@ -45,7 +44,6 @@ class Simple implements OrderServiceInterface
 	 * Finds item for specified WordPress post.
 	 *
 	 * @param $post \WP_Post WordPress post.
-	 *
 	 * @return Order Item found.
 	 */
 	public function findForPost($post)
@@ -61,7 +59,6 @@ class Simple implements OrderServiceInterface
 	 * Finds items specified using WordPress query.
 	 *
 	 * @param $query \WP_Query WordPress query.
-	 *
 	 * @return array Collection of found items.
 	 */
 	public function findByQuery($query)
@@ -89,9 +86,10 @@ class Simple implements OrderServiceInterface
 
 	/**
 	 * Prepares order based on cart.
-	 *
-	 * @param \Jigoshop\Entity\Cart $cart Cart to fetch data from.
-	 *
+
+
+*
+*@param \Jigoshop\Entity\Cart $cart Cart to fetch data from.
 	 * @return Order Prepared order.
 	 */
 	public function createFromCart(Cart $cart)
@@ -101,8 +99,7 @@ class Simple implements OrderServiceInterface
 
 	/**
 	 * @param $month int Month to find orders from.
-	 * @param $year  int Year to find orders from.
-	 *
+	 * @param $year int Year to find orders from.
 	 * @return array List of orders from selected month.
 	 */
 	public function findFromMonth($month, $year)
@@ -130,7 +127,6 @@ class Simple implements OrderServiceInterface
 	 * Finds orders for specified user.
 	 *
 	 * @param $userId int User ID.
-	 *
 	 * @return array Orders found.
 	 */
 	public function findForUser($userId)
@@ -152,10 +148,9 @@ class Simple implements OrderServiceInterface
 	/**
 	 * Adds a note to the order.
 	 *
-	 * @param $order   \Jigoshop\Entity\Order The order.
-	 * @param $note    string Note text.
+	 * @param $order \Jigoshop\Entity\Order The order.
+	 * @param $note string Note text.
 	 * @param $private bool Is note private?
-	 *
 	 * @return int Note ID.
 	 */
 	public function addNote($order, $note, $private = true)

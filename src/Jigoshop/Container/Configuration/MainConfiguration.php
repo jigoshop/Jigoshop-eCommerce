@@ -79,10 +79,6 @@ class MainConfiguration implements ConfigurationInterface
 			'wpal',
 			'jigoshop.options'
 		));
-		$services->setDatails('jigoshop.web.optimization', 'Jigoshop\Web\Optimization', array(
-			'wpal',
-			'jigoshop.options'
-		));
 		$services->setDatails('jigoshop.permalinks', 'Jigoshop\Core\Permalinks', array(
 			'wpal',
 			'jigoshop.options'

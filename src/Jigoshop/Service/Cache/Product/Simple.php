@@ -34,9 +34,8 @@ class Simple implements ProductServiceInterface
 	/**
 	 * Adds new type to managed types.
 	 *
-	 * @param $type  string Unique type name.
+	 * @param $type string Unique type name.
 	 * @param $class string Class name.
-	 *
 	 * @throws \Jigoshop\Exception When type already exists.
 	 */
 	public function addType($type, $class)
@@ -48,7 +47,6 @@ class Simple implements ProductServiceInterface
 	 * Finds item specified by ID.
 	 *
 	 * @param $id int The ID.
-	 *
 	 * @return Product
 	 */
 	public function find($id)
@@ -64,7 +62,6 @@ class Simple implements ProductServiceInterface
 	 * Finds item for specified WordPress post.
 	 *
 	 * @param $post \WP_Post WordPress post.
-	 *
 	 * @return Product Item found.
 	 */
 	public function findForPost($post)
@@ -80,7 +77,6 @@ class Simple implements ProductServiceInterface
 	 * Finds items by trying to match their name.
 	 *
 	 * @param $name string Post name to match.
-	 *
 	 * @return array List of matched products.
 	 */
 	public function findLike($name)
@@ -92,7 +88,6 @@ class Simple implements ProductServiceInterface
 	 * Finds items specified using WordPress query.
 	 *
 	 * @param $query \WP_Query WordPress query.
-	 *
 	 * @return array Collection of found items.
 	 */
 	public function findByQuery($query)
@@ -122,7 +117,6 @@ class Simple implements ProductServiceInterface
 
 	/**
 	 * @param $number int Number of products to find.
-	 *
 	 * @return array List of products that are out of stock.
 	 */
 	public function findOutOfStock($number)
@@ -136,8 +130,7 @@ class Simple implements ProductServiceInterface
 
 	/**
 	 * @param $threshold int Threshold where to assume product is low in stock.
-	 * @param $number    int Number of products to find.
-	 *
+	 * @param $number int Number of products to find.
 	 * @return array List of products that are low in stock.
 	 */
 	public function findLowStock($threshold, $number)
@@ -151,8 +144,7 @@ class Simple implements ProductServiceInterface
 
 	/**
 	 * @param Product $product Product to find thumbnails for.
-	 * @param string  $size    Size for images.
-	 *
+	 * @param string $size Size for images.
 	 * @return array List of thumbnails attached to the product.
 	 */
 	public function getThumbnails(Product $product, $size = Options::IMAGE_THUMBNAIL)
@@ -168,7 +160,6 @@ class Simple implements ProductServiceInterface
 	 * Finds item specified by state.
 	 *
 	 * @param array $state State of the product to be found.
-	 *
 	 * @return Product|Product\Purchasable Item found.
 	 */
 	public function findForState(array $state)
@@ -200,7 +191,6 @@ class Simple implements ProductServiceInterface
 	 * Finds and returns list of attributes associated with selected product by it's ID.
 	 *
 	 * @param $productId int Product ID.
-	 *
 	 * @return array List of attributes attached to selected product.
 	 */
 	public function getAttributes($productId)
@@ -217,7 +207,6 @@ class Simple implements ProductServiceInterface
 	 * If attribute is not found - returns null.
 	 *
 	 * @param int $id Attribute ID.
-	 *
 	 * @return Product\Attribute
 	 */
 	public function getAttribute($id)
@@ -233,7 +222,6 @@ class Simple implements ProductServiceInterface
 	 * Creates new attribute for selected type.
 	 *
 	 * @param int $type Attribute type.
-	 *
 	 * @return Product\Attribute
 	 */
 	public function createAttribute($type)
@@ -245,14 +233,12 @@ class Simple implements ProductServiceInterface
 	 * Saves attribute to database.
 	 *
 	 * @param Product\Attribute $attribute Attribute to save.
-	 *
 	 * @return \Jigoshop\Entity\Product\Attribute Saved attribute.
 	 */
 	public function saveAttribute(Product\Attribute $attribute)
 	{
 		$result = $this->service->saveAttribute($attribute);
 		$this->attributes[$attribute->getId()] = $attribute;
-
 		return $result;
 	}
 
@@ -264,7 +250,6 @@ class Simple implements ProductServiceInterface
 	public function removeAttribute($id)
 	{
 		unset($this->attributes[$id]);
-
 		return $this->service->removeAttribute($id);
 	}
 
@@ -272,7 +257,6 @@ class Simple implements ProductServiceInterface
 	 * Returns unique key for product in the cart.
 	 *
 	 * @param $item Item Item to get key for.
-	 *
 	 * @return string
 	 */
 	public function generateItemKey(Item $item)

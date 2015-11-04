@@ -11,7 +11,7 @@ use Jigoshop\Helper\Render;
  */
 ?>
 <div id="jigoshop-metaboxes-reports" class="wrap jigoshop">
-	<h1><?php _e('Jigoshop &rang; Reports', 'jigoshop'); ?></h1>
+	<h1><?php _e('Jigoshop &raquo; Reports', 'jigoshop'); ?></h1>
 	<?php settings_errors(); ?>
 	<?php Render::output('shop/messages', array('messages' => $messages)); ?>
 
