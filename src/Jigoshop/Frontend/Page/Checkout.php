@@ -63,15 +63,20 @@ class Checkout implements PageInterface
 		$this->paymentService = $paymentService;
 		$this->orderService = $orderService;
 
+		Styles::add('jigoshop.vendors.select2', JIGOSHOP_URL.'/assets/css/vendors/select2.min.css');
 		Styles::add('jigoshop.checkout', JIGOSHOP_URL.'/assets/css/shop/checkout.css', array(
 			'jigoshop.shop',
-			'jigoshop.vendors'
+			'jigoshop.vendors.select2'
 		));
+
+		Scripts::add('jigoshop.vendors.select2', JIGOSHOP_URL.'/assets/js/vendors/select2.min.js', array('jquery'));
+		Scripts::add('jigoshop.vendors.bs_tab_trans_tooltip_collapse', JIGOSHOP_URL.'/assets/js/vendors/bs_tab_trans_tooltip_collapse.min.js', array('jquery'));
 		Scripts::add('jigoshop.checkout', JIGOSHOP_URL.'/assets/js/shop/checkout.js', array(
 			'jquery',
 			'jquery-blockui',
 			'jigoshop.helpers',
-			'jigoshop.vendors',
+			'jigoshop.vendors.select2',
+			'jigoshop.vendors.bs_tab_trans_tooltip_collapse',
 		));
 		Scripts::localize('jigoshop.checkout', 'jigoshop_checkout', array(
 			'ajax' => $this->wp->getAjaxUrl(),

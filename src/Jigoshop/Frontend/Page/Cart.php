@@ -66,15 +66,23 @@ class Cart implements PageInterface
 
 		Styles::add('jigoshop.shop.cart', JIGOSHOP_URL.'/assets/css/shop/cart.css', array(
 			'jigoshop.shop',
-			'jigoshop.vendors'
 		));
+		Styles::add('jigoshop.vendors.select2', JIGOSHOP_URL.'/assets/css/vendors/select2.min.css', array(
+			'jigoshop.shop',
+		));
+
+		Scripts::add('jigoshop.vendors.select2', JIGOSHOP_URL.'/assets/js/vendors/select2.min.js', array('jquery'));
+		Scripts::add('jigoshop.vendors.bs_tab_trans_tooltip_collapse', JIGOSHOP_URL.'/assets/js/vendors/bs_tab_trans_tooltip_collapse.min.js', array('jquery'));
 		Scripts::add('jigoshop.shop.cart', JIGOSHOP_URL.'/assets/js/shop/cart.js', array(
 			'jquery',
 			'jquery-blockui',
 			'jigoshop.shop',
 			'jigoshop.helpers',
-			'jigoshop.vendors'
+			'jigoshop.vendors.select2',
+			'jigoshop.vendors.bs_tab_trans_tooltip_collapse',
 		));
+
+
 		Scripts::localize('jigoshop.shop.cart', 'jigoshop', array(
 			'ajax' => $wp->getAjaxUrl(),
 			'assets' => JIGOSHOP_URL.'/assets',

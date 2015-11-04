@@ -40,11 +40,10 @@ class Admin
 		$wp->addAction('admin_menu', array($this, 'beforeMenu'), 9);
 		$wp->addAction('admin_menu', array($this, 'afterMenu'), 50);
 
-		Styles::add('jigoshop.admin', JIGOSHOP_URL.'/assets/css/admin.css', array('jigoshop.vendors'));
+		Styles::add('jigoshop.admin', JIGOSHOP_URL . '/assets/css/admin.css');
 		Scripts::add('jigoshop.admin', JIGOSHOP_URL.'/assets/js/admin.js', array(
 			'jquery',
 			'jigoshop.helpers',
-			'jigoshop.vendors'
 		));
 	}
 
