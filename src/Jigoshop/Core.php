@@ -40,11 +40,9 @@ class Core
 		// Register main Jigoshop scripts
 		$wp->wpEnqueueScript('jquery');
 		Styles::register('jigoshop.shop', JIGOSHOP_URL.'/assets/css/shop.css');
-		Styles::register('jigoshop.vendors', JIGOSHOP_URL.'/assets/css/vendors.min.css');
 		Styles::register('prettyphoto', JIGOSHOP_URL.'/assets/css/prettyPhoto.css');
 		Scripts::register('jigoshop.helpers', JIGOSHOP_URL.'/assets/js/helpers.js', array('jquery'));
 		Scripts::register('jigoshop.media', JIGOSHOP_URL.'/assets/js/media.js', array('jquery'));
-		Scripts::register('jigoshop.vendors', JIGOSHOP_URL.'/assets/js/vendors.min.js', array('jquery'));
 		Scripts::register('jigoshop.shop', JIGOSHOP_URL.'/assets/js/shop.js', array(
 			'jquery',
 			'jigoshop.helpers'

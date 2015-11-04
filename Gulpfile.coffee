@@ -10,39 +10,72 @@ uglify = require('gulp-uglify')
 rimraf = require('gulp-rimraf')
 replace = require('gulp-replace')
 
-gulp.task 'styles-vendors', ->
-  gulp.src [
-    'assets/bower/select2/{select2,select2-bootstrap}.css',
-    'assets/bower/bootstrap-datepicker/css/datepicker3.css',
-    'assets/bower/jquery-colorbox/example1/colorbox.css',
-  ]
-    .pipe replace(/images\/(.*?)\.(png|gif)/g, '../images/$1.$2')
-    .pipe replace(/select2(.*?)\.(png|gif)/g, '../images/select2$1.$2')
-    .pipe cssmin()
-    .pipe concat('vendors.min.css')
-    .pipe gulp.dest('assets/css')
+# Deklaracja stylów
 
-gulp.task 'styles', ['styles-vendors'], ->
+cssFiles =
+  select2: ['assets/bower/select2/select2.css', 'assets/bower/select2/select2-bootstrap.css']
+  datepicker: ['assets/bower/bootstrap-datepicker/css/datepicker3.css']
+  colorbox: ['assets/bower/jquery-colorbox/example1/colorbox.css']
+
+
+# Deklaracja skryptów
+# JS
+jsFiles =
+  select2: ['assets/bower/select2/select2.js']
+  bs_tab_trans_tooltip_collapse: ['assets/bower/bootstrap/js/{tab,transition,tooltip,collapse}.js']
+  datepicker: ['assets/bower/bootstrap-datepicker/js/bootstrap-datepicker.js']
+  colorbox: ['assets/bower/jquery-colorbox/jquery.colorbox-min.js']
+
+# Coffee
+coffeeFiles =
+  bs_switch: ['assets/bower/bootstrap-switch/src/coffee/bootstrap-switch.coffee']
+
+defaultTask = ['scripts', 'styles', 'fonts']
+
+# CSS
+cssTasks = Object.keys(cssFiles)
+cssTasks.forEach (taskName) ->
+  defaultTask.push(taskName + 'css')
+  gulp.task taskName + 'css', ->
+    gulp.src(cssFiles[taskName])
+    .pipe replace(/images\/(.*?)\.(png|gif)/g, '../../images/$1.$2')
+    .pipe replace(/select2(.*?)\.(png|gif)/g, '../../images/select2$1.$2')
+    .pipe cssmin()
+    .pipe concat(taskName + '.min.css')
+    .pipe gulp.dest('assets/css/vendors')
+
+# JS
+jsTasks = Object.keys(jsFiles)
+jsTasks.forEach (taskName) ->
+  defaultTask.push(taskName + 'js')
+  gulp.task taskName + 'js', ->
+    gulp.src(jsFiles[taskName])
+    .pipe uglify()
+    .pipe concat(taskName + '.min.js')
+    .pipe gulp.dest('assets/js/vendors')
+
+# Coffee
+coffeeTasks = Object.keys(coffeeFiles)
+coffeeTasks.forEach (taskName) ->
+  defaultTask.push(taskName + 'coffee')
+  gulp.task taskName + 'coffee', ->
+    gulp.src(coffeeFiles[taskName])
+    .pipe coffee({bare: true})
+    .pipe uglify()
+    .pipe concat(taskName + '.min.js')
+    .pipe gulp.dest('assets/js/vendors')
+
+# other less
+gulp.task 'styles', ->
   gulp.src 'assets/less/**/*.less'
     .pipe less()
     .pipe check(argv.production, cssmin())
     .pipe gulp.dest('assets/css')
 
-gulp.task 'scripts-vendors', ->
-  gulp.src [
-    'assets/bower/select2/select2.js',
-    'assets/bower/bootstrap/js/{tab,transition,tooltip,collapse}.js',
-    'assets/bower/bootstrap-datepicker/js/bootstrap-datepicker.js',
-    'assets/bower/jquery-colorbox/jquery.colorbox-min.js',
-  ]
-    .pipe uglify()
-    .pipe concat('vendors.min.js')
-    .pipe gulp.dest('assets/js')
-
-gulp.task 'scripts', ['lint', 'scripts-vendors'], ->
+# other coffee scripts
+gulp.task 'scripts', ['lint'], ->
   gulp.src [
     'assets/coffee/**/*.coffee',
-    'assets/bower/bootstrap-switch/src/coffee/bootstrap-switch.coffee',
   ]
     .pipe coffee({bare: true})
     .pipe check(argv.production, uglify())
@@ -78,4 +111,4 @@ gulp.task 'dist', ['clean-deploy', 'default'], ->
             './CONTRIBUTING.md', 'LICENCE.md', 'README.md', 'jigoshop.php'], {base: './'}
     .pipe gulp.dest('dist/')
 
-gulp.task 'default', ['styles', 'scripts', 'fonts']
+gulp.task 'default', defaultTask
