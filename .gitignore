@@ -8,6 +8,7 @@ node_modules
 assets/bower
 assets/css/*
 !assets/css/prettyPhoto.css
+!assets/css/vendors/bs_switch.less
 assets/js/*
 !assets/js/flot
 !assets/js/jquery.prettyPhoto.js
