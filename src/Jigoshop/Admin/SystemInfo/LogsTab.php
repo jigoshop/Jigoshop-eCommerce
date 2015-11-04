@@ -43,7 +43,6 @@ class LogsTab implements TabInterface
 	 */
 	public function getSections()
 	{
-
 		return array(
 			array(
 				'title' => __('Available Logs', 'jigoshop'),
@@ -87,13 +86,20 @@ class LogsTab implements TabInterface
 		return $settings;
 	}
 
+	/**
+	 * Gets contents from specified log file
+	 *
+	 * @param string $filename
+	 *
+	 * @return string
+	 */
 	private function getLogs($filename)
 	{
 		if (@fopen(JIGOSHOP_LOG_DIR.'/'.$filename.'.log', 'a')) {
 			$logs = esc_textarea(file_get_contents(JIGOSHOP_LOG_DIR.'/'.$filename.'.log'));
 			return empty($logs) ? __('Logs are empty.', 'jigoshop') : $logs;
-		} else {
-			return __('Log file does not exists.', 'jigoshop');
 		}
+
+		return __('Log file does not exists.', 'jigoshop');
 	}
 }
