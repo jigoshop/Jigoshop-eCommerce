@@ -40,7 +40,14 @@ class Admin
 		$wp->addAction('admin_menu', array($this, 'beforeMenu'), 9);
 		$wp->addAction('admin_menu', array($this, 'afterMenu'), 50);
 
+		//TODO do wyrzucenia, przeniesienia do osobnych widokow
+		Scripts::add('jigoshop.vendors.bs_tab_trans_tooltip_collapse', JIGOSHOP_URL.'/assets/js/vendors/bs_tab_trans_tooltip_collapse.min.js', array('jquery'));
+		Styles::add('jigoshop.vendors.select2', JIGOSHOP_URL.'/assets/css/vendors/select2.min.css');
+		Scripts::add('jigoshop.vendors.select2', JIGOSHOP_URL.'/assets/js/vendors/select2.min.js', array('jquery'));
+
+
 		Styles::add('jigoshop.admin', JIGOSHOP_URL . '/assets/css/admin.css');
+
 		Scripts::add('jigoshop.admin', JIGOSHOP_URL.'/assets/js/admin.js', array(
 			'jquery',
 			'jigoshop.helpers',
