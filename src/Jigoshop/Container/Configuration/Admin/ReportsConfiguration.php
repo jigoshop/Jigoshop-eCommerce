@@ -14,7 +14,7 @@ use Jigoshop\Container\ClassLoader;
  * @package Jigoshop\Container\Configuration
  * @author  Krzysztof Kasowski
  */
-class SystemInfoConfiguration implements ConfigurationInterface
+class ReportsConfiguration implements ConfigurationInterface
 {
 	/**
 	 * @param Services $services
@@ -23,15 +23,18 @@ class SystemInfoConfiguration implements ConfigurationInterface
 	 */
 	public function initServices(Services $services)
 	{
-		$services->setDatails('jigoshop.admin.system_info.system_status', 'Jigoshop\Admin\SystemInfo\SystemStatusTab', array(
+		$services->setDatails('jigoshop.admin.reports.sales', 'Jigoshop\Admin\Reports\SalesTab', array(
 			'wpal',
 			'jigoshop.options'
 		));
-		$services->setDatails('jigoshop.admin.system_info.tools', 'Jigoshop\Admin\SystemInfo\ToolsTab', array(
+		$services->setDatails('jigoshop.admin.reports.customers', 'Jigoshop\Admin\Reports\CustomersTab', array(
 			'wpal',
 			'jigoshop.options'
 		));
-		$services->setDatails('jigoshop.admin.system_info.logs', 'Jigoshop\Admin\SystemInfo\LogsTab', array());
+		$services->setDatails('jigoshop.admin.reports.stock', 'Jigoshop\Admin\Reports\StockTab', array(
+			'wpal',
+			'jigoshop.options'
+		));
 	}
 
 	/**
@@ -41,9 +44,9 @@ class SystemInfoConfiguration implements ConfigurationInterface
 	 */
 	public function initTags(Tags $tags)
 	{
-		$tags->add('jigoshop.admin.system_info.tab', 'jigoshop.admin.system_info.system_status');
-		$tags->add('jigoshop.admin.system_info.tab', 'jigoshop.admin.system_info.tools');
-		$tags->add('jigoshop.admin.system_info.tab', 'jigoshop.admin.system_info.logs');
+		$tags->add('jigoshop.admin.reports.tab', 'jigoshop.admin.reports.sales');
+		$tags->add('jigoshop.admin.reports.tab', 'jigoshop.admin.reports.customers');
+		$tags->add('jigoshop.admin.reports.tab', 'jigoshop.admin.reports.stock');
 	}
 
 	/**

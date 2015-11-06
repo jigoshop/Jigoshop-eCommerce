@@ -3,23 +3,13 @@ namespace Jigoshop\Admin\SystemInfo;
 
 use Jigoshop\Admin\Settings\TabInterface;
 use Jigoshop\Admin\SystemInfo;
-use Jigoshop\Core;
-use Jigoshop\Core\Options;
-use WPAL\Wordpress;
 
 class LogsTab implements TabInterface
 {
 	const SLUG = 'logs';
 
-	/** @var \WPAL\Wordpress */
-	private $wp;
-	/** @var Options */
-	private $options;
-
-	public function __construct(Wordpress $wp, Options $options)
+	public function __construct()
 	{
-		$this->wp = $wp;
-		$this->options = $options;
 	}
 
 	/**
