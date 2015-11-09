@@ -6,11 +6,12 @@ use Jigoshop\Admin\Reports\Chart;
 use Jigoshop\Core\Options;
 use Jigoshop\Helper\Currency;
 use Jigoshop\Helper\Product;
+use Jigoshop\Helper\Render;
 use WPAL\Wordpress;
 
 class ByDate extends Chart
 {
-	public $chartColours = array();
+	private $chartColours = array();
 	private $reportData;
 
 	public function __construct(Wordpress $wp, Options $options, $currentRange)
@@ -26,35 +27,35 @@ class ByDate extends Chart
 	public function getChartLegend()
 	{
 		$legend = array();
-		$data = $this->getReportData();
+		$this->getReportData();
 
 		switch ($this->chartGroupBy) {
 			case 'hour' :
 				/** @noinspection PhpUndefinedFieldInspection */
-				$average_sales_title = sprintf(__('%s average sales per hour', 'jigoshop'), '<strong>'.Product::formatPrice($data->average_sales).'</strong>');
+				$average_sales_title = sprintf(__('%s average sales per hour', 'jigoshop'), '<strong>'.Product::formatPrice($this->reportData->averageSales).'</strong>');
 				break;
 			case 'day' :
 				/** @noinspection PhpUndefinedFieldInspection */
-				$average_sales_title = sprintf(__('%s average daily sales', 'jigoshop'), '<strong>'.Product::formatPrice($data->average_sales).'</strong>');
+				$average_sales_title = sprintf(__('%s average daily sales', 'jigoshop'), '<strong>'.Product::formatPrice($this->reportData->averageSales).'</strong>');
 				break;
 			case 'month' :
 			default :
 				/** @noinspection PhpUndefinedFieldInspection */
-				$average_sales_title = sprintf(__('%s average monthly sales', 'jigoshop'), '<strong>'.Product::formatPrice($data->average_sales).'</strong>');
+				$average_sales_title = sprintf(__('%s average monthly sales', 'jigoshop'), '<strong>'.Product::formatPrice($this->reportData->averageSales).'</strong>');
 				break;
 		}
 
 		/** @noinspection PhpUndefinedFieldInspection */
 		$legend[] = array(
-			'title' => sprintf(__('%s gross sales in this period', 'jigoshop'), '<strong>'.Product::formatPrice($data->total_sales).'</strong>'),
-			'placeholder' => __('This is the sum of the order totals including shipping and taxes.', 'jigoshop'),
+			'title' => sprintf(__('%s gross sales in this period', 'jigoshop'), '<strong>'.Product::formatPrice($this->reportData->totalSales).'</strong>'),
+			'tip' => __('This is the sum of the order totals including shipping and taxes.', 'jigoshop'),
 			'color' => $this->chartColours['sales_amount'],
 			'highlight_series' => 5
 		);
 		/** @noinspection PhpUndefinedFieldInspection */
 		$legend[] = array(
-			'title' => sprintf(__('%s net sales in this period', 'jigoshop'), '<strong>'.Product::formatPrice($data->net_sales).'</strong>'),
-			'placeholder' => __('This is the sum of the order totals excluding shipping and taxes.', 'jigoshop'),
+			'title' => sprintf(__('%s net sales in this period', 'jigoshop'), '<strong>'.Product::formatPrice($this->reportData->netSales).'</strong>'),
+			'tip' => __('This is the sum of the order totals excluding shipping and taxes.', 'jigoshop'),
 			'color' => $this->chartColours['net_sales_amount'],
 			'highlight_series' => 6
 		);
@@ -65,27 +66,27 @@ class ByDate extends Chart
 		);
 		/** @noinspection PhpUndefinedFieldInspection */
 		$legend[] = array(
-			'title' => sprintf(__('%s orders placed', 'jigoshop'), '<strong>'.$data->total_orders.'</strong>'),
+			'title' => sprintf(__('%s orders placed', 'jigoshop'), '<strong>'.$this->reportData->totalOrders.'</strong>'),
 			'color' => $this->chartColours['order_count'],
 			'highlight_series' => 1
 		);
 
 		/** @noinspection PhpUndefinedFieldInspection */
 		$legend[] = array(
-			'title' => sprintf(__('%s items purchased', 'jigoshop'), '<strong>'.$data->total_items.'</strong>'),
+			'title' => sprintf(__('%s items purchased', 'jigoshop'), '<strong>'.$this->reportData->totalItems.'</strong>'),
 			'color' => $this->chartColours['item_count'],
 			'highlight_series' => 0
 		);
 
 		/** @noinspection PhpUndefinedFieldInspection */
 		$legend[] = array(
-			'title' => sprintf(__('%s charged for shipping', 'jigoshop'), '<strong>'.Product::formatPrice($data->total_shipping).'</strong>'),
+			'title' => sprintf(__('%s charged for shipping', 'jigoshop'), '<strong>'.Product::formatPrice($this->reportData->totalShipping).'</strong>'),
 			'color' => $this->chartColours['shipping_amount'],
 			'highlight_series' => 4
 		);
 		/** @noinspection PhpUndefinedFieldInspection */
 		$legend[] = array(
-			'title' => sprintf(__('%s worth of coupons used', 'jigoshop'), '<strong>'.Product::formatPrice($data->total_coupons).'</strong>'),
+			'title' => sprintf(__('%s worth of coupons used', 'jigoshop'), '<strong>'.Product::formatPrice($this->reportData->totalCoupons).'</strong>'),
 			'color' => $this->chartColours['coupon_amount'],
 			'highlight_series' => 3
 		);
@@ -131,7 +132,7 @@ class ByDate extends Chart
 			'query_type' => 'get_results',
 			'filter_range' => true,
 			'order_types' => array('shop_order'),
-			'order_status' => $this->order_status,
+			'order_status' => $this->orderStatus,
 		));
 
 		$this->reportData->orderCounts = (array)$this->getOrderReportData(array(
@@ -153,7 +154,7 @@ class ByDate extends Chart
 			'query_type' => 'get_results',
 			'filter_range' => true,
 			'order_types' => array('shop_order'),
-			'order_status' => $this->order_status
+			'order_status' => $this->orderStatus
 		));
 
 		$this->reportData->coupons = (array)$this->getOrderReportData(array(
@@ -173,7 +174,7 @@ class ByDate extends Chart
 			'query_type' => 'get_results',
 			'filter_range' => true,
 			'order_types' => array('shop_order'),
-			'order_status' => $this->order_status,
+			'order_status' => $this->orderStatus,
 		));
 
 		$this->reportData->orderItems = (array)$this->getOrderReportData(array(
@@ -193,7 +194,7 @@ class ByDate extends Chart
 			'query_type' => 'get_results',
 			'filter_range' => true,
 			'order_types' => array('shop_order'),
-			'order_status' => $this->order_status,
+			'order_status' => $this->orderStatus,
 		));
 
 		$this->reportData->totalSales = array_sum(wp_list_pluck($this->reportData->orders, 'total_sales'));
@@ -223,19 +224,21 @@ class ByDate extends Chart
 			'today' => __('Today', 'jigoshop'),
 		);
 
-		$this->chartColours = array(
-			'sales_amount' => '#b1d4ea',
-			'net_sales_amount' => '#3498db',
-			'average' => '#95a5a6',
-			'order_count' => '#dbe1e3',
-			'item_count' => '#ecf0f1',
-			'shipping_amount' => '#5cc488',
-			'coupon_amount' => '#f1c40f',
-		);
-
+		$this->getChartColors();
 		$this->calculateCurrentRange();
 		$this->getChartLegend();
 		$this->getMainChart();
+
+		Render::output('admin/reports/chart', array(
+			/** TODO This is ugly... */
+			'current_type' => 'by_date',
+			'ranges' => $ranges,
+			'current_range' => $this->currentRange,
+			'chart' => $this->getMainChart(),
+			'legends' => $this->getChartLegend(),
+			'widgets' => $this->getChartWidgets(),
+			'group_by' => $this->chartGroupBy
+		));
 	}
 
 	/**
@@ -274,8 +277,6 @@ class ByDate extends Chart
 	 */
 	public function getMainChart()
 	{
-		global $wp_locale;
-
 		// Prepare data for report
 		$orderCounts = $this->prepareChartData($this->reportData->orderCounts, 'post_date', 'count', $this->chartInterval, $this->range['start'], $this->chartGroupBy);
 		$orderItemCounts = $this->prepareChartData($this->reportData->orderItems, 'post_date', 'order_item_count', $this->chartInterval, $this->range['start'], $this->chartGroupBy);
@@ -292,27 +293,6 @@ class ByDate extends Chart
 			$netOrderAmounts[$orderAmountKey][1] = $netOrderAmounts[$orderAmountKey][1] - $shippingAmounts[$orderAmountKey][1] - $shippingTaxAmounts[$orderAmountKey][1] - $taxAmounts[$orderAmountKey][1];
 		}
 
-		// Encode in json format
-		$chartData = array(
-			'order_counts' => array_values($orderCounts),
-			'order_item_counts' => array_values($orderItemCounts),
-			'order_amounts' => array_map(array(
-				$this,
-				'roundChartTotals'
-			), array_values($orderAmounts)),
-			'net_order_amounts' => array_map(array(
-				$this,
-				'roundChartTotals'
-			), array_values($netOrderAmounts)),
-			'shipping_amounts' => array_map(array(
-				$this,
-				'roundChartTotals'
-			), array_values($shippingAmounts)),
-			'coupon_amounts' => array_map(array(
-				$this,
-				'roundChartTotals'
-			), array_values($couponAmounts)),
-		);
 		$series = array();
 		$series[] = $this->arrayToObject(array(
 			'label' => esc_js( __('Number of items sold', 'jigoshop')),
@@ -347,8 +327,8 @@ class ByDate extends Chart
 		$series[] = $this->arrayToObject(array(
 			'label' => esc_js( __('Average sales amount', 'jigoshop')),
 			'data' => array(
-				array(min(array_keys(array_map(array($this,'roundChartTotals'), array_values($orderAmounts)))), $this->reportData->average_sales),
-				array(max(array_keys(array_map(array($this,'roundChartTotals'), array_values($orderAmounts)))), $this->reportData->average_sales),
+				array(min(array_keys($orderAmounts)), $this->reportData->averageSales),
+				array(max(array_keys($orderAmounts)), $this->reportData->averageSales),
 			),
 			'yaxis' => 2,
 			'color' => $this->chartColours['average'],
@@ -393,89 +373,13 @@ class ByDate extends Chart
 			'data' => array_map(array($this,'roundChartTotals'), array_values($netOrderAmounts)),
 			'yaxis' => 2,
 			'color' => $this->chartColours['net_sales_amount'],
-			'points' => $this->arrayToObject(array('show' => true, 'radius' => 5, 'lineWidth' => 4, 'fillColor' => '#fff', 'fill' => true)),
+			'points' => $this->arrayToObject(array('show' => true, 'radius' => 6, 'lineWidth' => 4, 'fillColor' => '#fff', 'fill' => true)),
 			'lines' => $this->arrayToObject(array('show' => true, 'lineWidth' => 5, 'fill' => false)),
 			'shadowSize' => 0,
 			'append_tooltip' => Currency::symbol(),
 		));
-		echo '<script> var series = '.json_encode($series).'; console.log(series);</script>';
 
-
-				/*
-					if(highlight !== 'undefined' && series[highlight]){
-						highlight_series = series[highlight];
-						highlight_series.color = '#98c242';
-						if(highlight_series.bars)
-							highlight_series.bars.fillColor = '#98c242';
-						if(highlight_series.lines){
-							highlight_series.lines.lineWidth = 5;
-						}
-					}
-					main_chart = jQuery.plot(
-						jQuery('.chart-placeholder.main'),
-						series,
-						{
-							legend: {
-								show: false
-							},
-							grid: {
-								color: '#aaa',
-								borderColor: 'transparent',
-								borderWidth: 0,
-								hoverable: true
-							},
-							xaxes: [{
-								color: '#aaa',
-								position: "bottom",
-								tickColor: 'transparent',
-								mode: "time",
-								timeformat: "<?php if ($this->chartGroupBy == 'hour') {echo '%H';} elseif ($this->chartGroupBy == 'day') {echo '%d %b';} else {echo '%b';} ?>",
-								<?php if ($this->chartGroupBy == 'hour'): ?>
-								min: 0,
-								max: 24*3600000,
-								<?php endif; ?>
-								monthNames: <?php echo json_encode( array_values( $wp_locale->month_abbrev ) ) ?>,
-								tickLength: 1,
-								minTickSize: [1, "<?php echo $this->chartGroupBy; ?>"],
-								font: {
-									color: "#aaa"
-								}
-							}],
-							yaxes: [
-								{
-									min: 0,
-									minTickSize: 1,
-									tickDecimals: 0,
-									color: '#d4d9dc',
-									font: {color: "#aaa"}
-								},
-								{
-									position: "right",
-									min: 0,
-									tickDecimals: 2,
-									alignTicksWithAxis: 1,
-									autoscaleMargin: 0,
-									color: 'transparent',
-									font: {color: "#aaa"}
-								}
-							]
-						}
-					);
-					jQuery('.chart-placeholder').resize();
-				};
-
-				drawGraph();
-				jQuery('.highlight_series').hover(
-					function(){
-						drawGraph(jQuery(this).data('series'));
-					},
-					function(){
-						drawGraph();
-					}
-				);
-			});
-		</script>
-	*/
+		return $series;
 	}
 
 	/**
@@ -488,8 +392,23 @@ class ByDate extends Chart
 	{
 		if (is_array($amount)) {
 			return array_map(array($this, 'roundChartTotals'), $amount);
+		} else if(is_float($amount) || $amount == 0) {
+			return number_format($amount, 2, '.', '');
 		} else {
 			return $amount;
 		}
+	}
+
+	private function getChartColors()
+	{
+		$this->chartColours = $this->wp->applyFilters('jigoshop/admin/reports/by_date/chart_colors', array(
+			'sales_amount' => '#b1d4ea',
+			'net_sales_amount' => '#3498db',
+			'average' => '#95a5a6',
+			'order_count' => '#dbe1e3',
+			'item_count' => '#ecf0f1',
+			'shipping_amount' => '#5cc488',
+			'coupon_amount' => '#f1c40f',
+		));
 	}
 }

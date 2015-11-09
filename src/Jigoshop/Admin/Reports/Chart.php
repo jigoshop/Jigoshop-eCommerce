@@ -41,6 +41,7 @@ abstract class Chart
 		$this->wp = $wp;
 		$this->options = $options;
 		$this->currentRange = $currentRange;
+		$this->orderStatus = isset($_GET['order_status']) && !empty($_GET['order_status']) ? $_GET['order_status'] : array('jigoshop-completed', 'jigoshop-processing');
 	}
 
 	/**
@@ -113,7 +114,7 @@ abstract class Chart
 				}
 				break;
 			case 'all' :
-				$this->range['start'] = strtotime(date('Y-m-d', strtotime($this->get_first_order_date())));
+				$this->range['start'] = strtotime(date('Y-m-d', strtotime($this->getFirstOrderDate())));
 				$this->range['end'] = strtotime('midnight', current_time('timestamp'));;
 				$this->chartGroupBy = 'month';
 				break;
@@ -174,9 +175,6 @@ abstract class Chart
 				$this->barwidth = 60 * 60 * 24 * 7 * 4 * 1000;
 				break;
 		}
-
-		// Order Status
-		$this->orderStatus = isset($_GET['order_status']) && !empty($_GET['order_status']) ? $_GET['order_status'] : array('completed', 'processing');
 	}
 
 	/**
@@ -249,7 +247,6 @@ abstract class Chart
 	 */
 	protected function getCurrencyTooltip()
 	{
-		$currencyTooltip = '';
 		$pattern = $this->options->get('general.currency_position');
 		switch ($pattern) {
 			//right
@@ -414,7 +411,7 @@ abstract class Chart
 			'nocache' => false,
 			'debug' => false,
 			'order_types' => array('shop_order'),
-			'order_status' => $this->order_status,
+			'order_status' => $this->orderStatus,
 			'parent_order_status' => false,
 		);
 		$args = $this->wp->applyFilters('jigoshop/admin/reports/chart/report_data_args', $args);
@@ -424,8 +421,7 @@ abstract class Chart
 			return '';
 		}
 
-		$orderStatus = $this->wp->applyFilters('jigoshop_reports_order_statuses', $args['order_status']);
-
+		$orderStatus = $this->wp->applyFilters('jigoshop/admin/reports/order_statuses', $args['order_status']);
 		$query = array();
 		$select = array();
 
@@ -484,27 +480,15 @@ abstract class Chart
 			";
 
 		if (!empty($orderStatus)) {
-			$query['join'] .= " LEFT JOIN {$wpdb->term_relationships} ostr ON posts.ID = ostr.object_id";
-			$query['join'] .= " LEFT JOIN {$wpdb->term_taxonomy} ostt ON ostr.term_taxonomy_id = ostt.term_taxonomy_id";
-			$query['join'] .= " LEFT JOIN {$wpdb->terms} ost ON ostt.term_id = ost.term_id";
-			$query['where'] .= "
-				AND ost.name IN ( '".implode("','", $orderStatus)."')
-			";
-		}
-
-		if (!empty($parent_order_status)) {
-			$query['join'] .= " LEFT JOIN {$wpdb->term_relationships} postr ON parent.ID = postr.object_id";
-			$query['join'] .= " LEFT JOIN {$wpdb->term_taxonomy} postt ON postr.term_taxonomy_id = postt.term_taxonomy_id";
-			$query['join'] .= " LEFT JOIN {$wpdb->terms} post ON postt.term_id = post.term_id";
-			$query['where'] .= "
-				AND post.name IN ( '".implode("','", $parent_order_status)."')
-			";
+			/*$query['where'] .= "
+				AND posts.post_status IN ( '".implode("','", $orderStatus)."')
+			";*/
 		}
 
 		if ($args['filter_range']) {
 			$query['where'] .= "
-				AND posts.post_date >= '".date('Y-m-d', $this->start_date)."'
-				AND posts.post_date < '".date('Y-m-d', strtotime('+1 DAY', $this->end_date))."'
+				AND posts.post_date >= '".date('Y-m-d', $this->range['start'])."'
+				AND posts.post_date < '".date('Y-m-d', strtotime('+1 DAY', $this->range['end']))."'
 			";
 		}
 
@@ -589,11 +573,11 @@ abstract class Chart
 		$queryHash = md5($args['query_type'].$query);
 		$cachedResults = $this->wp->getTransient(strtolower(get_class($this)));
 
-		/*if ($args['debug']) {
+		if ($args['debug']) {
 			echo '<pre>';
 			print_r($query);
 			echo '</pre>';
-		}*/
+		}
 
 		$args['debug'] = true;
 		if ($args['debug'] || $args['nocache'] || false === $cachedResults || !isset($cachedResults[$queryHash])) {
@@ -610,7 +594,7 @@ abstract class Chart
 						$results = array();
 						foreach ($cachedResults[$queryHash] as $item) {
 							if (!isset($results[$item->post_date])) {
-								$result = new stdClass;
+								$result = new \stdClass;
 								$result->post_date = $item->post_date;
 								$result->total_sales = 0.0;
 								$result->total_shipping = 0.0;
@@ -632,7 +616,7 @@ abstract class Chart
 						$results = array();
 						foreach ($cachedResults[$queryHash] as $item) {
 							if (!isset($results[$item->post_date])) {
-								$result = new stdClass;
+								$result = new \stdClass;
 								$result->post_date = $item->post_date;
 								$result->order_item_count = 0;
 								$results[$item->post_date] = $result;
@@ -649,7 +633,7 @@ abstract class Chart
 						$results = array();
 						foreach ($cachedResults[$queryHash] as $item) {
 							if (!isset($results[$item->post_date])) {
-								$result = new stdClass;
+								$result = new \stdClass;
 								$result->post_date = $item->post_date;
 								$result->order_item_quantity = 0;
 								$results[$item->post_date] = $result;
@@ -668,7 +652,7 @@ abstract class Chart
 						$results = array();
 						foreach ($cachedResults[$queryHash] as $item) {
 							if (!isset($results[$item->post_date])) {
-								$result = new stdClass;
+								$result = new \stdClass;
 								$result->post_date = $item->post_date;
 								$result->discount_amount = 0.0;
 								$result->coupons_used = 0;
@@ -705,7 +689,7 @@ abstract class Chart
 						foreach ($cachedResults[$queryHash] as $item) {
 							if (!isset($results[$item->post_date])) {
 								$coupons[$item->post_date] = array();
-								$results[$item->post_date] = new stdClass();
+								$results[$item->post_date] = new \stdClass();
 								$results[$item->post_date]->post_date = $item->post_date;
 								$results[$item->post_date]->coupons = array();
 								$results[$item->post_date]->usage = array();
@@ -729,7 +713,7 @@ abstract class Chart
 						$results = array();
 						foreach ($cachedResults[$queryHash] as $item) {
 							if (!isset($results[$item->post_date])) {
-								$result = new stdClass;
+								$result = new \stdClass;
 								$result->post_date = $item->post_date;
 								$result->order_item_amount = 0.0;
 								$results[$item->post_date] = $result;
@@ -751,7 +735,7 @@ abstract class Chart
 							$data = $this->filterItem($data, $value);
 							foreach ($data as $product) {
 								if (!isset($results[$item->post_date][$product['id']])) {
-									$result = new stdClass;
+									$result = new \stdClass;
 									$result->product_id = $product['id'];
 									$result->order_item_qty = 0;
 									$result->order_item_total = 0;
@@ -775,7 +759,7 @@ abstract class Chart
 							$data = $this->filterItem($data, $value);
 							foreach ($data as $product) {
 								if (!isset($results[$product['id']])) {
-									$result = new stdClass;
+									$result = new \stdClass;
 									$result->product_id = $product['id'];
 									$result->order_item_qty = 0;
 									$result->order_item_total = 0;
