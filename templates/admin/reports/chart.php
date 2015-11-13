@@ -5,7 +5,7 @@
 use Jigoshop\Admin\Reports;
 
 ?>
-<div class="col-sm-12">
+<div class="col-sm-12 buttons">
 	<div class="ranges col-sm-10">
 		<div class="btn-group btn-group-justified" role="group" aria-label="Chart Ranges">
 			<?php foreach($ranges as $key => $value) : ?>
@@ -23,7 +23,7 @@ use Jigoshop\Admin\Reports;
 		</button>
 	</div>
 </div>
-<div class="col-sm-3 chart-sidebar">
+<div class="col-xs-3 chart-sidebar">
 	<ul class="chart-legend">
 		<?php foreach($legends as $legend): ?>
 		<li <?php echo isset($legend['color']) ? 'style="border-color: '.$legend['color'].'"' : ''; ?> class="highlight_series <?php echo isset($legend['tip']) ? 'help-tip' : '' ?>" data-series="<?php echo $legend['highlight_series'] ?>" <?php echo isset($legend['tip']) ? 'data-tip="'.$legend['tip'].'"' : '' ?>>
@@ -43,8 +43,8 @@ use Jigoshop\Admin\Reports;
 	//TODO: Move this to JS file
 	jQuery(function() {
 		var drawGraph = function(highlight) {
-			var series = JSON.parse('<?php echo json_encode($chart) ?>');
-			console.log(series);
+			var series = chart_data.series;
+			var options = chart_data.options;
 			if(highlight !== 'undefined' && series[highlight]){
 				var highlight_series = series[highlight];
 				highlight_series.color = '#98c242';
@@ -57,48 +57,7 @@ use Jigoshop\Admin\Reports;
 			jQuery.plot(
 				jQuery('.main-chart'),
 				series,
-				{
-					legend: {
-						show: false
-					},
-					grid: {
-						color: '#aaa',
-						borderColor: 'transparent',
-						borderWidth: 0,
-						hoverable: true
-					},
-					xaxes: [{
-						color: '#aaa',
-						position: "bottom",
-						tickColor: 'transparent',
-						mode: "time",
-						timeformat: "%d %b",
-						monthNames: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-						tickLength: 1,
-						minTickSize: [1, "day"],
-						font: {
-							color: "#aaa"
-						}
-					}],
-					yaxes: [
-						{
-							min: 0,
-							minTickSize: 1,
-							tickDecimals: 0,
-							color: '#d4d9dc',
-							font: {color: "#aaa"}
-						},
-						{
-							position: "right",
-							min: 0,
-							tickDecimals: 2,
-							alignTicksWithAxis: 1,
-							autoscaleMargin: 0,
-							color: 'transparent',
-							font: {color: "#aaa"}
-						}
-					]
-				}
+				options
 			);
 			jQuery('.main-chart').resize();
 		};

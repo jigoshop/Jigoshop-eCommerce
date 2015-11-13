@@ -44,7 +44,7 @@ class Reports implements PageInterface
 				return;
 			}
 
-			Styles::add('jigoshop.admin.settings', JIGOSHOP_URL.'/assets/css/admin/settings.css', array('jigoshop.admin'));
+			Styles::add('jigoshop.admin.reports', JIGOSHOP_URL.'/assets/css/admin/reports.css', array('jigoshop.admin'));
 			Styles::add('jigoshop.vendors.select2', JIGOSHOP_URL.'/assets/css/vendors/select2.min.css', array('jigoshop.admin'));
 			Styles::add('jigoshop.vendors.datepicker', JIGOSHOP_URL.'/assets/css/vendors/datepicker.min.css', array('jigoshop.admin'));
 			Scripts::add('jigoshop.vendors.select2', JIGOSHOP_URL . '/assets/js/vendors/select2.min.js', array(

@@ -115,7 +115,7 @@ abstract class Chart
 				break;
 			case 'all' :
 				$this->range['start'] = strtotime(date('Y-m-d', strtotime($this->getFirstOrderDate())));
-				$this->range['end'] = strtotime('midnight', current_time('timestamp'));;
+				$this->range['end'] = strtotime('midnight', current_time('timestamp'));
 				$this->chartGroupBy = 'month';
 				break;
 			case 'year' :

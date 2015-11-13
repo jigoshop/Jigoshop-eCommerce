@@ -19,7 +19,7 @@ use Jigoshop\Helper\Render;
 		$active = '';
 		if($tab->getSlug() == $current_tab)
 		{
-			$active = 'active';
+			$active = 'active darker';
 			$activeTitle = $tab->getTitle();
 		}
 		$menuContent .= '<li class="' . $active . '">' .
@@ -50,7 +50,7 @@ use Jigoshop\Helper\Render;
 	<noscript>
 		<div class="alert alert-danger" role="alert"><?php _e('<strong>Warning</strong> Reports panel will not work properly without JavaScript.', 'jigoshop'); ?></div>
 	</noscript>
-	<div class="tab-content">
+	<div class="tab-content darker">
 		<div class="tab-pane active">
 			<?php $tabs[$current_tab]->display() ?>
 		</div>

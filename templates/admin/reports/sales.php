@@ -10,7 +10,7 @@ use Jigoshop\Admin\Reports;
 ?>
 <div class="stats thumbnail main-graph">
 	<nav>
-		<ul class="nav nav-tabs nav-justified">
+		<ul class="nav nav-tabs nav-justified second-level">
 		<?php foreach ($types as $slug => $title) : ?>
 			<li <?php echo $slug == $current_type ? 'class="active"' : '' ?>>
 				<a	href="?page=<?php echo Reports::NAME; ?>&tab=<?php echo Reports\SalesTab::SLUG; ?>&type=<?php echo $slug; ?>"><?php echo $title; ?></a>

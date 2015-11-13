@@ -17,11 +17,14 @@ class SalesTab implements TabInterface
 	private $wp;
 	/** @var  options */
 	private $options;
+	/** @var  mixed */
+	private $chart;
 
 	public function __construct(Wordpress $wp, Options $options)
 	{
 		$this->wp = $wp;
 		$this->options = $options;
+		$this->chart = $this->getChart();
 		$wp->addAction('admin_enqueue_scripts', function () use ($wp){
 			// Weed out all admin pages except the Jigoshop Settings page hits
 			if (!in_array($wp->getPageNow(), array('admin.php', 'options.php'))) {
@@ -35,18 +38,9 @@ class SalesTab implements TabInterface
 			$wp->wpEnqueueScript('wp-lists');
 			$wp->wpEnqueueScript('postbox');
 			$wp->wpEnqueueScript('jquery-ui-datepicker');
-			//Styles::add('jigoshop.admin.reports', JIGOSHOP_URL.'/assets/css/admin/reports.css');
 			Styles::add('jigoshop.jquery.ui', JIGOSHOP_URL.'/assets/css/jquery-ui.css');
-			Scripts::add('jigoshop.flot', JIGOSHOP_URL.'/assets/js/flot/jquery.flot.min.js', array('jquery'));
-			Scripts::add('jigoshop.flot.time', JIGOSHOP_URL.'/assets/js/flot/jquery.flot.time.min.js', array(
-					'jquery',
-					'jigoshop.flot'
-			));
-			Scripts::add('jigoshop.flot.pie', JIGOSHOP_URL.'/assets/js/flot/jquery.flot.pie.min.js', array(
-					'jquery',
-					'jigoshop.flot'
-			));
 		});
+
 	}
 
 	/**
@@ -73,7 +67,7 @@ class SalesTab implements TabInterface
 		Render::output('admin/reports/sales', array(
 			'types' => $this->getTypes(),
 			'current_type' => $this->getCurrentType(),
-			'chart' => $this->getChart()
+			'chart' => $this->chart,
 		));
 	}
 
@@ -98,11 +92,21 @@ class SalesTab implements TabInterface
 		return $type;
 	}
 
+	private function getCurrentRange()
+	{
+		$type = '30day';
+		if(isset($_GET['range'])) {
+			$type = $_GET['range'];
+		}
+
+		return $type;
+	}
+
 	private function getChart()
 	{
 		switch($this->getCurrentType()){
 			case 'by_date':
-				return new Chart\ByDate($this->wp, $this->options, '30day');
+				return new Chart\ByDate($this->wp, $this->options, $this->getCurrentRange());
 			default:
 				$this->wp->doAction('jigoshop/admin/reports/sales/custom_chart', $this->getCurrentType(), $this->wp, $this->options);
 		}
