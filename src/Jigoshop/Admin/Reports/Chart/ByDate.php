@@ -19,6 +19,11 @@ class ByDate extends Chart
 	public function __construct(Wordpress $wp, Options $options, $currentRange)
 	{
 		parent::__construct($wp, $options, $currentRange);
+		// Prepare data for report
+		$this->calculateCurrentRange();
+		$this->getReportData();
+		$this->getChartColors();
+
 		$wp->addAction('admin_enqueue_scripts', function () use ($wp){
 			// Weed out all admin pages except the Jigoshop Settings page hits
 			if (!in_array($wp->getPageNow(), array('admin.php', 'options.php'))) {
@@ -31,14 +36,18 @@ class ByDate extends Chart
 			}
 			Scripts::add('jigoshop.flot', JIGOSHOP_URL.'/assets/js/flot/jquery.flot.min.js', array('jquery'));
 			Scripts::add('jigoshop.flot.time', JIGOSHOP_URL.'/assets/js/flot/jquery.flot.time.min.js', array(
-					'jquery',
-					'jigoshop.flot'
+				'jquery',
+				'jigoshop.flot'
 			));
 			Scripts::add('jigoshop.flot.pie', JIGOSHOP_URL.'/assets/js/flot/jquery.flot.pie.min.js', array(
-					'jquery',
-					'jigoshop.flot'
+				'jquery',
+				'jigoshop.flot'
 			));
-			Scripts::localize('jigoshop.flot', 'chart_data', $this->getMainChart());
+			Scripts::add('jigoshop.reports.chart', JIGOSHOP_URL.'/assets/js/admin/reports/chart.js', array(
+				'jquery',
+				'jigoshop.flot'
+			));
+			Scripts::localize('jigoshop.reports.chart', 'chart_data', $this->getMainChart());
 		});
 	}
 
@@ -50,8 +59,6 @@ class ByDate extends Chart
 	public function getChartLegend()
 	{
 		$legend = array();
-		$this->getReportData();
-
 		switch ($this->chartGroupBy) {
 			case 'hour' :
 				/** @noinspection PhpUndefinedFieldInspection */
@@ -73,45 +80,45 @@ class ByDate extends Chart
 			'title' => sprintf(__('%s gross sales in this period', 'jigoshop'), '<strong>'.Product::formatPrice($this->reportData->totalSales).'</strong>'),
 			'tip' => __('This is the sum of the order totals including shipping and taxes.', 'jigoshop'),
 			'color' => $this->chartColours['sales_amount'],
-			'highlight_data' => 5
+			'highlight_series' => 5
 		);
 		/** @noinspection PhpUndefinedFieldInspection */
 		$legend[] = array(
 			'title' => sprintf(__('%s net sales in this period', 'jigoshop'), '<strong>'.Product::formatPrice($this->reportData->netSales).'</strong>'),
 			'tip' => __('This is the sum of the order totals excluding shipping and taxes.', 'jigoshop'),
 			'color' => $this->chartColours['net_sales_amount'],
-			'highlight_data' => 6
+			'highlight_series' => 6
 		);
 		$legend[] = array(
 			'title' => $average_sales_title,
 			'color' => $this->chartColours['average'],
-			'highlight_data' => 2
+			'highlight_series' => 2
 		);
 		/** @noinspection PhpUndefinedFieldInspection */
 		$legend[] = array(
 			'title' => sprintf(__('%s orders placed', 'jigoshop'), '<strong>'.$this->reportData->totalOrders.'</strong>'),
 			'color' => $this->chartColours['order_count'],
-			'highlight_data' => 1
+			'highlight_series' => 1
 		);
 
 		/** @noinspection PhpUndefinedFieldInspection */
 		$legend[] = array(
 			'title' => sprintf(__('%s items purchased', 'jigoshop'), '<strong>'.$this->reportData->totalItems.'</strong>'),
 			'color' => $this->chartColours['item_count'],
-			'highlight_data' => 0
+			'highlight_series' => 0
 		);
 
 		/** @noinspection PhpUndefinedFieldInspection */
 		$legend[] = array(
 			'title' => sprintf(__('%s charged for shipping', 'jigoshop'), '<strong>'.Product::formatPrice($this->reportData->totalShipping).'</strong>'),
 			'color' => $this->chartColours['shipping_amount'],
-			'highlight_data' => 4
+			'highlight_series' => 4
 		);
 		/** @noinspection PhpUndefinedFieldInspection */
 		$legend[] = array(
 			'title' => sprintf(__('%s worth of coupons used', 'jigoshop'), '<strong>'.Product::formatPrice($this->reportData->totalCoupons).'</strong>'),
 			'color' => $this->chartColours['coupon_amount'],
-			'highlight_data' => 3
+			'highlight_series' => 3
 		);
 
 		return $legend;
@@ -247,17 +254,11 @@ class ByDate extends Chart
 			'today' => __('Today', 'jigoshop'),
 		);
 
-		$this->getChartColors();
-		$this->calculateCurrentRange();
-		$this->getChartLegend();
-		$this->getMainChart();
-
 		Render::output('admin/reports/chart', array(
 			/** TODO This is ugly... */
 			'current_type' => 'by_date',
 			'ranges' => $ranges,
 			'current_range' => $this->currentRange,
-			'chart' => $this->getMainChart(),
 			'legends' => $this->getChartLegend(),
 			'widgets' => $this->getChartWidgets(),
 			'group_by' => $this->chartGroupBy
@@ -303,7 +304,7 @@ class ByDate extends Chart
 	{
 		// TODO: Remove this...
 		global $wp_locale;
-		// Prepare data for report
+
 		$orderCounts = $this->prepareChartData($this->reportData->orderCounts, 'post_date', 'count', $this->chartInterval, $this->range['start'], $this->chartGroupBy);
 		$orderItemCounts = $this->prepareChartData($this->reportData->orderItems, 'post_date', 'order_item_count', $this->chartInterval, $this->range['start'], $this->chartGroupBy);
 		$orderAmounts = $this->prepareChartData($this->reportData->orders, 'post_date', 'total_sales', $this->chartInterval, $this->range['start'], $this->chartGroupBy);
@@ -406,7 +407,7 @@ class ByDate extends Chart
 				'fill' => false
 			)),
 			'shadowSize' => 0,
-			'prepend_tooltip' => Currency::symbol(),
+			'append_tooltip' => Currency::symbol(),
 		));
 		$data['series'][] = $this->arrayToObject(array(
 			'label' => esc_js(__('Gross Sales amount', 'jigoshop')),
@@ -449,8 +450,7 @@ class ByDate extends Chart
 			'append_tooltip' => Currency::symbol(),
 		));
 
-		$data['options'] = array();
-		$data['options'][] = $this->arrayToObject(array(
+		$data['options'] = $this->arrayToObject(array(
 			'legend' => $this->arrayToObject(array('show' => false)),
 			'grid' => $this->arrayToObject(array(
 				'color' => '#aaa',
@@ -481,7 +481,7 @@ class ByDate extends Chart
 				$this->arrayToObject(array(
 					'position' => 'right',
 					'min' => 0,
-					'tickDecimals' => 0,
+					'tickDecimals' => 2,
 					'alignTicksWithAxis' => 1,
 					'autoscaleMargin' => 0,
 					'color' => 'transparent',
@@ -489,6 +489,10 @@ class ByDate extends Chart
 				)),
 			),
 		));
+		if ($this->chartGroupBy == 'hour') {
+			$data['options']->xaxes[0]->min = 0;
+			$data['options']->xaxes[0]->max = 24 * 60 * 60 * 1000;
+		}
 
 		return $data;
 	}

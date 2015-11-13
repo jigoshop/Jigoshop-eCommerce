@@ -39,37 +39,4 @@ use Jigoshop\Admin\Reports;
 	<div class="main-chart" style="height:640px"></div>
 	<div class="clear"></div>
 </div>
-<script>
-	//TODO: Move this to JS file
-	jQuery(function() {
-		var drawGraph = function(highlight) {
-			var series = chart_data.series;
-			var options = chart_data.options;
-			if(highlight !== 'undefined' && series[highlight]){
-				var highlight_series = series[highlight];
-				highlight_series.color = '#98c242';
-				if(highlight_series.bars)
-					highlight_series.bars.fillColor = '#98c242';
-				if(highlight_series.lines){
-					highlight_series.lines.lineWidth = 5;
-				}
-			}
-			jQuery.plot(
-				jQuery('.main-chart'),
-				series,
-				options
-			);
-			jQuery('.main-chart').resize();
-		};
-		drawGraph();
-		jQuery('.highlight_series').hover(
-			function() {
-				drawGraph(jQuery(this).data('series'));
-			},
-			function() {
-				drawGraph();
-			}
-		);
-	});
-</script>
 <div class="clear"></div>

@@ -17,7 +17,6 @@ class SalesTab implements TabInterface
 	private $wp;
 	/** @var  options */
 	private $options;
-	/** @var  mixed */
 	private $chart;
 
 	public function __construct(Wordpress $wp, Options $options)
@@ -67,13 +66,12 @@ class SalesTab implements TabInterface
 		Render::output('admin/reports/sales', array(
 			'types' => $this->getTypes(),
 			'current_type' => $this->getCurrentType(),
-			'chart' => $this->chart,
+			'chart' => $this->chart
 		));
 	}
 
 	private function getTypes()
 	{
-
 		return $this->wp->applyFilters('jigoshop/admin/reports/sales/types', array(
 			'by_date' => __('By Date', 'jigoshop'),
 			'by_product' => __('By Product', 'jigoshop'),
