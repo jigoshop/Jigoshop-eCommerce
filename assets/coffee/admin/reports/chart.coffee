@@ -1,4 +1,6 @@
 jQuery ($) ->
+  main_chart = null
+  $('li[data-toggle=tooltip]').tooltip()
   drawGraph = (highlight) ->
     series = $.extend true, [], chart_data['series']
     options = $.extend true, [], chart_data['options']
@@ -9,8 +11,8 @@ jQuery ($) ->
         highlight_series.bars.fillColor = '#98c242'
       if highlight_series.lines
         highlight_series.lines.lineWidth = 5
-    $.plot $('.main-chart'), series, options
-    $ '.main-chart' .resize()
+    main_chart = $.plot $('.main-chart'), series, options
+    $('.main-chart').resize()
     return
 
   drawGraph()
@@ -37,7 +39,7 @@ jQuery ($) ->
 
   prev_data_index = null
   prev_series_index = null
-  $('.chart-placeholder').bind 'plothover', (event, pos, item) ->
+  $('.chart-container').bind 'plothover', (event, pos, item) ->
     if item
       if prev_data_index != item.dataIndex or prev_series_index != item.seriesIndex
         prev_data_index = item.dataIndex
@@ -70,9 +72,9 @@ jQuery ($) ->
 
   a = document.createElement('a')
   if typeof a.download == 'undefined'
-    $('.export_csv').hide()
+    $('.export-csv').hide()
 
-  $('.export_csv').click ->
+  $('.export-csv').click ->
     exclude_series = $(this).data('exclude_series') or ''
     exclude_series = exclude_series.toString()
     exclude_series = exclude_series.split ','
@@ -87,9 +89,9 @@ jQuery ($) ->
       .each ->
         $(this).find 'th,td'
         .each ->
-          value = $(this).text();
+          value = $(this).text()
           value = value.replace '[?]', ''
-          csv_data += '"' + value + '"' + ',' 
+          csv_data += '"' + value + '"' + ','
       csv_data = csv_data.substring  0, csv_data.length - 1
       csv_data += "\n"
 
@@ -105,16 +107,16 @@ jQuery ($) ->
             i = 1
             while i < $(this).attr('colspan')
               i++
-              csv_data += '"",';
+              csv_data += '"",'
         csv_data = csv_data.substring( 0, csv_data.length - 1 )
         csv_data += "\n"
     else
-      if !window.main_chart
+      if main_chart == null
         return false
 
-      the_series = window.main_chart.getData()
-      series = [];
-      csv_data += xaxes_label + ',' 
+      the_series = main_chart.getData()
+      series = []
+      csv_data += xaxes_label + ','
 
       $.each the_series, (index, value) ->
         if !exclude_series or $.inArray index.toString(), exclude_series  == -1
@@ -133,7 +135,7 @@ jQuery ($) ->
       xaxis = {}
       s = 0
       while s < series.length
-        series_data = series[s].data;
+        series_data = series[s].data
         d = 0
         while d < series_data.length
           xaxis[parseInt series_data[d][0]]  = new Array()
@@ -147,7 +149,7 @@ jQuery ($) ->
 
       # Add chart data
       s = 0
-      while s M series.length
+      while s < series.length
         series_data = series[s].data
         d = 0
         while d < series_data.length
@@ -161,10 +163,10 @@ jQuery ($) ->
         if groupby == 'day'
           csv_data += date.getUTCFullYear() + "-" + parseInt(date.getUTCMonth() + 1) + "-" + date.getUTCDate() + ','
         else
-          csv_data += date.getUTCFullYear() + "-" + parseInt(date.getUTCMonth() + 1) + ',';
+          csv_data += date.getUTCFullYear() + "-" + parseInt(date.getUTCMonth() + 1) + ','
         d = 0
         while d < value.length
-          val = value[d];
+          val = value[d]
           if Math.round val  != val
             val = parseFloat val
             val = val.toFixed 2

@@ -261,6 +261,7 @@ class ByDate extends Chart
 			'current_range' => $this->currentRange,
 			'legends' => $this->getChartLegend(),
 			'widgets' => $this->getChartWidgets(),
+			'export' => $this->getExportButton(),
 			'group_by' => $this->chartGroupBy
 		));
 	}
@@ -287,12 +288,11 @@ class ByDate extends Chart
 	 */
 	public function getExportButton()
 	{
-		?>
-		<a href="#" download="report-<?php echo esc_attr($this->currentRange); ?>-<?php echo date_i18n('Y-m-d', current_time('timestamp')); ?>.csv" class="export_csv"
-		   data-export="chart" data-xaxes="<?php _e('Date', 'jigoshop'); ?>" data-exclude_data="2" data-groupby="<?php echo $this->chartGroupBy; ?>">
-			<?php _e('Export CSV', 'jigoshop'); ?>
-		</a>
-		<?php
+		return array(
+			'download' => 'report-'.esc_attr($this->currentRange).'-'.date_i18n('Y-m-d', current_time('timestamp')).'.csv',
+			'xaxes' => __('Date', 'jigoshop'),
+			'groupby' => $this->chartGroupBy,
+		);
 	}
 
 	/**
