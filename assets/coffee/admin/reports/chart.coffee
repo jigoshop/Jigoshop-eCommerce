@@ -1,6 +1,7 @@
 jQuery ($) ->
   main_chart = null
-  $('li[data-toggle=tooltip]').tooltip()
+  $('li[data-toggle=tooltip]')
+  .tooltip()
   drawGraph = (highlight) ->
     series = $.extend true, [], chart_data['series']
     options = $.extend true, [], chart_data['options']
@@ -12,7 +13,8 @@ jQuery ($) ->
       if highlight_series.lines
         highlight_series.lines.lineWidth = 5
     main_chart = $.plot $('.main-chart'), series, options
-    $('.main-chart').resize()
+    $ '.main-chart'
+    .resize()
     return
 
   drawGraph()
@@ -39,7 +41,8 @@ jQuery ($) ->
 
   prev_data_index = null
   prev_series_index = null
-  $('.chart-container').bind 'plothover', (event, pos, item) ->
+  $('.main-chart')
+  .bind 'plothover', (event, pos, item) ->
     if item
       if prev_data_index != item.dataIndex or prev_series_index != item.seriesIndex
         prev_data_index = item.dataIndex
@@ -167,7 +170,7 @@ jQuery ($) ->
         d = 0
         while d < value.length
           val = value[d]
-          if Math.round val  != val
+          if Math.round(val) != val
             val = parseFloat val
             val = val.toFixed 2
           ++d

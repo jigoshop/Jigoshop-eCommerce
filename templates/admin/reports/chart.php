@@ -38,5 +38,6 @@ use Jigoshop\Admin\Reports;
 <div class="col-sm-9 chart-container">
 	<div class="main-chart" style="height:640px"></div>
 	<div class="clear"></div>
+	<script>console.log(chart_data)</script>
 </div>
 <div class="clear"></div>

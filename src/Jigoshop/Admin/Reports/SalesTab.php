@@ -6,7 +6,6 @@ use Jigoshop\Admin\Reports;
 use Jigoshop\Core\Options;
 use Jigoshop\Helper\Render;
 use Jigoshop\Helper\Styles;
-use Jigoshop\Helper\Scripts;
 use WPAL\Wordpress;
 
 class SalesTab implements TabInterface
@@ -105,6 +104,10 @@ class SalesTab implements TabInterface
 		switch($this->getCurrentType()){
 			case 'by_date':
 				return new Chart\ByDate($this->wp, $this->options, $this->getCurrentRange());
+			case 'by_product':
+				return new Chart\ByProduct($this->wp, $this->options, $this->getCurrentRange());
+			case 'by_category':
+				return new Chart\ByProduct($this->wp, $this->options, $this->getCurrentRange());
 			default:
 				$this->wp->doAction('jigoshop/admin/reports/sales/custom_chart', $this->getCurrentType(), $this->wp, $this->options);
 		}
