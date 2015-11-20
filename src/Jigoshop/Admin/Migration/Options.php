@@ -43,7 +43,7 @@ class Options implements Tool
 	/**
 	 * Migrates data from old format to new one.
 	 */
-	public function migrate()
+	public function migrate($item)
 	{
 		$options = $this->wp->getOption('jigoshop_options');
 		$transformations = \Jigoshop_Base::get_options()->__getTransformations();

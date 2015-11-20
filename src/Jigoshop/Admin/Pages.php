@@ -159,4 +159,19 @@ class Pages
 			(isset($_POST['taxonomy']) && $_POST['taxonomy'] == Types::PRODUCT_TAG)
 		);
 	}
+
+	public function isMigrationPage()
+	{
+		$screen = $this->wp->getCurrentScreen();
+
+		if (!empty($_POST) && isset($_POST['option_page']) && $_POST['option_page'] == Migration::NAME) {
+			return true;
+		}
+
+		if ($screen !== null && $screen->id == Dashboard::NAME.'_page_'.Migration::NAME) {
+			return true;
+		}
+
+		return defined('DOING_AJAX') && DOING_AJAX && isset($_POST['action']) && strpos($_POST['action'], 'admin.migration.products') !== false;
+	}
 }

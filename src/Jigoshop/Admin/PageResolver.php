@@ -78,6 +78,10 @@ class PageResolver
 			return $container->get('jigoshop.admin.page.coupon');
 		}
 
+		if ($this->pages->isMigrationPage()) {
+			return $container->get('jigoshop.admin.migration.products');
+		}
+
 		return null;
 	}
 }

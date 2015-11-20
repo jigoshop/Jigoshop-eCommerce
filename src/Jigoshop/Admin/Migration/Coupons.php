@@ -42,7 +42,7 @@ class Coupons implements Tool
 	/**
 	 * Migrates data from old format to new one.
 	 */
-	public function migrate()
+	public function migrate($item)
 	{
 		$wpdb = $this->wp->getWPDB();
 
