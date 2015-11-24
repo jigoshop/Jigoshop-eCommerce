@@ -12,7 +12,7 @@ use Jigoshop\Helper\Render;
 	<?php Render::output('shop/messages', array('messages' => $messages)); ?>
 	<p class="alert alert-info"><?php _e('This panel allows you to update your old Jigoshop plugin data to new format.', 'jigoshop'); ?></p>
 	<p class="alert alert-info"><?php _e('Migration is a lengthy process and depends on how much items you have in your store. Please keep patient until the process is finished.', 'jigoshop'); ?></p>
-	<p class="alert alert-danger"><?php printf(__('Please create a backup of database in case of any error! <a href="%s">Here you can find instruction how to do this</a>', 'jigoshop'), 'http://codex.wordpress.org/Backing_Up_Your_Database'); ?></p>
+	<p class="alert alert-danger no-remove"><?php printf(__('Please create a backup of database in case of any error! <a href="%s">Here you can find instruction how to do this</a>', 'jigoshop'), 'http://codex.wordpress.org/Backing_Up_Your_Database'); ?></p>
 <!--	<form action="" method="get">-->
 		<ul class="list-group clearfix max-width-250">
 			<?php foreach ($tools as $tool): /** @var $tool \Jigoshop\Admin\Migration\Tool */ ?>
@@ -23,14 +23,14 @@ use Jigoshop\Helper\Render;
 <!--	</form>-->
 </div>
 <div class="wrap jigoshop migration_progress hidden">
-	<h1><?php _e('Jigoshop &raquo; Migration Tool &raquo; Products', 'jigoshop'); ?></h1>
+	<h1 id="title"><?php _e('Jigoshop &raquo; Migration Tool &raquo; ', 'jigoshop'); ?></h1>
 	<br>
 
-	<div id="migration_alert" class="alert alert-info col-lg-12 col-sm-12">
+	<div id="migration_alert" class="alert alert-info col-lg-12 col-sm-12 no-remove">
 		<div class="row">
 			<div class="col-lg-1 col-sm-2 migration_icon"><span class="glyphicon glyphicon-time" aria-hidden="true"></span></div>
 			<div class="col-lg-11 col-sm-10 padding_left_40">
-				<span class="migration_header"><?php _e('Migration products status', 'jigoshop'); ?><span class="migration-id"></span></span> <br/><br/>
+				<span class="migration_header"><?php _e('Migration status', 'jigoshop'); ?><span class="migration-id"></span></span> <br/><br/>
 
 				<div class="padding_left_10 font_md">
 					<div class="row">

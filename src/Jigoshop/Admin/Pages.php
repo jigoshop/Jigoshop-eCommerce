@@ -172,6 +172,6 @@ class Pages
 			return true;
 		}
 
-		return defined('DOING_AJAX') && DOING_AJAX && isset($_POST['action']) && strpos($_POST['action'], 'admin.migration.products') !== false;
+		return defined('DOING_AJAX') && DOING_AJAX && isset($_POST['action']) && strpos($_POST['action'], 'admin.migration') !== false;
 	}
 }

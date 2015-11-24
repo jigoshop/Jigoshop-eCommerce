@@ -42,7 +42,7 @@ class Products implements Tool
 			$this->taxes = $taxService->getDefinitions($address);
 		}
 
-		$wp->addAction('wp_ajax_jigoshop.admin.migration', array($this, 'ajaxMigrationProducts'), 10, 0);
+		$wp->addAction('wp_ajax_jigoshop.admin.migration.products', array($this, 'ajaxMigrationProducts'), 10, 0);
 	}
 
 	/**
@@ -68,18 +68,13 @@ class Products implements Tool
 			array('product', 'product_variation', 'auto-draft'))));
 
 		$countRemain = 0;
-		$migrateDone = false;
 
 		if (($prodFromBase = $this->wp->getOption('jigoshop_products_migrate_id')) !== false)
 		{
 			$countRemain = count(unserialize($prodFromBase));
-			if ($countRemain == 0)
-			{
-				$migrateDone = true;
-			}
 		}
 
-		Render::output('admin/migration/products', array('countAll' => $countAll, 'countDone' => ($countAll - $countRemain), 'migrateDone' => $migrateDone));
+		Render::output('admin/migration/products', array('countAll' => $countAll, 'countDone' => ($countAll - $countRemain)));
 	}
 
 	/**
@@ -95,6 +90,8 @@ class Products implements Tool
 
 	/**
 	 * Migrates data from old format to new one.
+	 * @param array $products
+	 * @return bool migration product status: success or not
 	 */
 	public function migrate($products)
 	{
@@ -285,7 +282,7 @@ class Products implements Tool
 						SELECT t.name, t.slug FROM {$wpdb->terms} t
 							LEFT JOIN {$wpdb->term_taxonomy} tt ON tt.term_id = t.term_id
 						  WHERE tt.taxonomy = 'pa_{$slug}'
-				  	    ");
+				  	     ");
 					$this->checkSql();
 
 					$createdOptions = array();

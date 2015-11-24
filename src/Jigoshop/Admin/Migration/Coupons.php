@@ -5,7 +5,6 @@ namespace Jigoshop\Admin\Migration;
 use Jigoshop\Entity\Coupon;
 use Jigoshop\Entity\Product;
 use Jigoshop\Helper\Render;
-use Jigoshop\Service\CouponServiceInterface;
 use WPAL\Wordpress;
 
 class Coupons implements Tool
@@ -21,6 +20,7 @@ class Coupons implements Tool
 	{
 		$this->wp = $wp;
 		$this->options = $options;
+		$wp->addAction('wp_ajax_jigoshop.admin.migration.coupons', array($this, 'ajaxMigrationCoupons'), 10, 0);
 	}
 
 	/**
@@ -36,43 +36,165 @@ class Coupons implements Tool
 	 */
 	public function display()
 	{
-		Render::output('admin/migration/coupons', array());
+		$wpdb = $this->wp->getWPDB();
+
+		$countAll = count($wpdb->get_results($wpdb->prepare("
+			SELECT DISTINCT p.ID FROM {$wpdb->posts} p
+			LEFT JOIN {$wpdb->postmeta} pm ON pm.post_id = p.ID
+				WHERE p.post_type IN (%s) AND p.post_status <> %s
+				GROUP BY p.ID",
+			array('shop_coupon', 'auto-draft'))));
+
+		$countRemain = 0;
+
+		if (($prodFromBase = $this->wp->getOption('jigoshop_coupons_migrate_id')) !== false)
+		{
+			$countRemain = count(unserialize($prodFromBase));
+		}
+
+		Render::output('admin/migration/coupons', array('countAll' => $countAll, 'countDone' => ($countAll - $countRemain)));
+	}
+
+	/**
+	 * Check SQL error for rollback transaction
+	 */
+	public function checkSql()
+	{
+		if(!empty($this->wp->getWPDB()->last_error))
+		{
+			throw new Exception($this->wp->getWPDB()->last_error);
+		}
 	}
 
 	/**
 	 * Migrates data from old format to new one.
+	 * @param mixed $coupons
+	 * @return bool migration coupon status: success or not
 	 */
-	public function migrate($item)
+	public function migrate($coupons)
 	{
 		$wpdb = $this->wp->getWPDB();
 
-		$query = $wpdb->prepare("
+		// Open transaction for save migration products
+		$var_autocommit_sql = $wpdb->get_var("SELECT @@AUTOCOMMIT");
+		try
+		{
+			$wpdb->query("SET AUTOCOMMIT=0");
+			$this->checkSql();
+			$wpdb->query("START TRANSACTION");
+			$this->checkSql();
+
+			for ($i = 0, $endI = count($coupons); $i < $endI;) {
+				$coupon = $coupons[$i];
+
+				// Update columns
+				do {
+					$key = $this->_transformKey($coupons[$i]->meta_key);
+
+					if (!empty($key)) {
+						$wpdb->query($wpdb->prepare(
+							"UPDATE {$wpdb->postmeta} SET meta_value = %s, meta_key = %s WHERE meta_id = %d;",
+							array(
+								$this->_transform($coupons[$i]->meta_key, $coupons[$i]->meta_value),
+								$key,
+								$coupons[$i]->meta_id,
+							)
+						));
+						$this->checkSql();
+					}
+					$i++;
+				} while ($i < $endI && $coupons[$i]->ID == $coupon->ID);
+			}
+
+//		    commit sql transation and restore value of autocommit
+			$wpdb->query("COMMIT");
+			$wpdb->query("SET AUTOCOMMIT=" . $var_autocommit_sql);
+			return true;
+
+		} catch (Exception $e)
+		{
+//		    rollback sql transation and restore value of autocommit
+			\Monolog\Registry::getInstance(JIGOSHOP_LOGGER)->addDebug($e);
+			$wpdb->query("ROLLBACK");
+			$wpdb->query("SET AUTOCOMMIT=" . $var_autocommit_sql);
+			return false;
+		}
+	}
+
+	public function ajaxMigrationCoupons()
+	{
+		try {
+			$wpdb = $this->wp->getWPDB();
+
+			$query = $wpdb->prepare("
 			SELECT DISTINCT p.ID, pm.* FROM {$wpdb->posts} p
 			LEFT JOIN {$wpdb->postmeta} pm ON pm.post_id = p.ID
 				WHERE p.post_type IN (%s) AND p.post_status <> %s",
-			array('shop_coupon', 'auto-draft'));
-		$coupons = $wpdb->get_results($query);
+				array('shop_coupon', 'auto-draft'));
+			$coupons = $wpdb->get_results($query);
 
-		for ($i = 0, $endI = count($coupons); $i < $endI;) {
-			$coupon = $coupons[$i];
+			$joinCoupons = array();
+			$couponsIdsMigration = array();
 
-			// Update columns
-			do {
-				$key = $this->_transformKey($coupons[$i]->meta_key);
-
-				if (!empty($key)) {
-					$wpdb->query($wpdb->prepare(
-						"UPDATE {$wpdb->postmeta} SET meta_value = %s, meta_key = %s WHERE meta_id = %d;",
-						array(
-							$this->_transform($coupons[$i]->meta_key, $coupons[$i]->meta_value),
-							$key,
-							$coupons[$i]->meta_id,
-						)
-					));
+			for ($aa = 0; $aa < count($coupons); $aa++)
+			{
+				$joinCoupons[$coupons[$aa]->ID][$coupons[$aa]->meta_id] = new \stdClass();
+				foreach ($coupons[$aa] as $k => $v)
+				{
+					$joinCoupons[$coupons[$aa]->ID][$coupons[$aa]->meta_id]->$k = $v;
+					$couponsIdsMigration[] = $coupons[$aa]->ID;
 				}
-				$i++;
-			} while ($i < $endI && $coupons[$i]->ID == $coupon->ID);
+			}
+
+			$couponsIdsMigration = array_unique($couponsIdsMigration);
+			$countAll = count($couponsIdsMigration);
+
+			//TODO usunac
+			if(isset($_POST['wwee']))
+			{
+				$this->wp->updateOption('jigoshop_coupons_migrate_id', serialize($couponsIdsMigration));
+				echo json_encode(array(
+					'success' => true,
+				));
+				exit;
+			}
+
+			if (($TMP_couponsIdsMigration = $this->wp->getOption('jigoshop_coupons_migrate_id')) !== false)
+			{
+				$couponsIdsMigration = unserialize($TMP_couponsIdsMigration);
+			}
+
+			$singleCouponsId = array_shift($couponsIdsMigration);
+			$countRemain = count($couponsIdsMigration);
+
+			sort($joinCoupons[$singleCouponsId]);
+
+			if ($this->migrate($joinCoupons[$singleCouponsId]))
+			{
+				$this->wp->updateOption('jigoshop_coupons_migrate_id', serialize($couponsIdsMigration));
+				echo json_encode(array(
+					'success' => true,
+					'percent' => floor(($countAll - $countRemain) / $countAll * 100),
+					'processed' => $countAll - $countRemain,
+					'remain' => $countRemain,
+					'total' => $countAll,
+				));
+			}
+			else
+			{
+				echo json_encode(array(
+					'success' => false,
+				));
+			}
+
+		} catch (Exception $e) {
+			\Monolog\Registry::getInstance(JIGOSHOP_LOGGER)->addDebug($e);
+			echo json_encode(array(
+				'success' => false,
+			));
 		}
+
+		exit;
 	}
 
 	private function _transform($key, $value)

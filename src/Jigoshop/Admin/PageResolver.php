@@ -79,7 +79,7 @@ class PageResolver
 		}
 
 		if ($this->pages->isMigrationPage()) {
-			return $container->get('jigoshop.admin.migration.products');
+			return $container->get('jigoshop.admin.migration');
 		}
 
 		return null;
