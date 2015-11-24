@@ -31,13 +31,23 @@ use Jigoshop\Admin\Reports;
 		</li>
 		<?php endforeach; ?>
 	</ul>
-	<ul class="chart-widgets">
-		<?php //TODO implement widgets ?>
-	</ul>
+	<div class="chart-widgets">
+		<form action="admin.php" method="get">
+			<input type="hidden" name="page" value="<?php echo Reports::NAME ?>">
+			<input type="hidden" name="tab" value="sales">
+			<input type="hidden" name="type" value="<?php echo $current_type ?>">
+			<?php foreach($widgets as $widget) : ?>
+				<div class="chart-widget <?php echo $widget->getSlug(); ?>">
+					<div class="title"><?php echo $widget->getTitle(); ?></div>
+					<div class="content"><?php $widget->display(); ?></div>
+				</div>
+			<?php endforeach; ?>
+			<button type="submit" class="btn btn-primary btn-block"><?php _e('Fiter Report') ?></button>
+		</form>
+	</div>
 </div>
 <div class="col-sm-9 chart-container">
 	<div class="main-chart" style="height:640px"></div>
 	<div class="clear"></div>
-	<script>console.log(chart_data)</script>
 </div>
 <div class="clear"></div>

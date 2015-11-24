@@ -1,7 +1,5 @@
 jQuery ($) ->
   main_chart = null
-  $('li[data-toggle=tooltip]')
-  .tooltip()
   drawGraph = (highlight) ->
     series = $.extend true, [], chart_data['series']
     options = $.extend true, [], chart_data['options']
@@ -55,23 +53,6 @@ jQuery ($) ->
       $('.chart-tooltip').remove()
       prev_data_index = null
     return
-
-  dates = $('.range_datepicker').datepicker
-    changeMonth: true
-    changeYear: true
-    defaultDate: ''
-    dateFormat: 'yy-mm-dd'
-    numberOfMonths: 1
-    maxDate: '+0D'
-    showButtonPanel: true
-    showOn: 'focus'
-    buttonImageOnly: true
-    onSelect: (selectedDate) ->
-      option = if $(this).is('.from') then 'minDate' else 'maxDate'
-      instance = $(this).data('datepicker')
-      date = $.datepicker.parseDate(instance.settings.dateFormat or $.datepicker._defaults.dateFormat, selectedDate, instance.settings)
-      dates.not(this).datepicker 'option', option, date
-      return
 
   a = document.createElement('a')
   if typeof a.download == 'undefined'

@@ -2,9 +2,11 @@
 
 namespace Jigoshop\Admin\Reports\Chart;
 
+use Jigoshop\Admin\Reports;
 use Jigoshop\Admin\Reports\Chart;
-use Jigoshop\Helper\Currency;
 use Jigoshop\Core\Options;
+use Jigoshop\Helper\Currency;
+use Jigoshop\Helper\Product;
 use Jigoshop\Helper\Render;
 use Jigoshop\Helper\Scripts;
 use WPAL\Wordpress;
@@ -20,17 +22,14 @@ class ByCategory extends Chart
 	/**
 	 * @param Wordpress $wp
 	 * @param Options   $options
+	 * @param string    $currentRange
 	 */
-	public function __construct(Wordpress $wp, Options $options)
+	public function __construct(Wordpress $wp, Options $options, $currentRange)
 	{
-		parent::__construct($wp, $options);
+		parent::__construct($wp, $options, $currentRange);
 		if (isset($_GET['show_categories'])) {
 			$this->showCategories = is_array($_GET['show_categories']) ? array_map('absint', $_GET['show_categories']) : array(absint($_GET['show_categories']));
 		}
-		// Prepare data for report
-		$this->calculateCurrentRange();
-		$this->getReportData();
-		$this->getChartColors();
 
 		$wp->addAction('admin_enqueue_scripts', function () use ($wp){
 			// Weed out all admin pages except the Jigoshop Settings page hits
@@ -44,16 +43,16 @@ class ByCategory extends Chart
 			}
 			Scripts::add('jigoshop.flot', JIGOSHOP_URL.'/assets/js/flot/jquery.flot.min.js', array('jquery'));
 			Scripts::add('jigoshop.flot.time', JIGOSHOP_URL.'/assets/js/flot/jquery.flot.time.min.js', array(
-					'jquery',
-					'jigoshop.flot'
+				'jquery',
+				'jigoshop.flot'
 			));
 			Scripts::add('jigoshop.flot.pie', JIGOSHOP_URL.'/assets/js/flot/jquery.flot.pie.min.js', array(
-					'jquery',
-					'jigoshop.flot'
+				'jquery',
+				'jigoshop.flot'
 			));
 			Scripts::add('jigoshop.reports.chart', JIGOSHOP_URL.'/assets/js/admin/reports/chart.js', array(
-					'jquery',
-					'jigoshop.flot'
+				'jquery',
+				'jigoshop.flot'
 			));
 			Scripts::localize('jigoshop.reports.chart', 'chart_data', $this->getMainChart());
 		});
@@ -73,8 +72,9 @@ class ByCategory extends Chart
 		$legend = array();
 		$index = 0;
 
+
 		foreach ($this->showCategories as $category) {
-			$category = get_term($category, 'product_cat');
+			$category = get_term($category, 'product_category');
 			$total = 0;
 			$product_ids = $this->getProductsInCategory($category->term_id);
 
@@ -85,9 +85,9 @@ class ByCategory extends Chart
 			}
 
 			$legend[] = array(
-				'title' => sprintf(__('%s sales in %s', 'jigoshop'), '<strong>'.jigoshop_price($total).'</strong>', $category->name),
-				'color' => isset($this->chartColours[$index]) ? $this->chartColours[$index] : $this->chartColours[0],
-				'highlight_series' => $index
+					'title' => sprintf(__('%s sales in %s', 'jigoshop'), '<strong>'.Product::formatPrice($total).'</strong>', $category->name),
+					'color' => isset($this->chartColours[$index]) ? $this->chartColours[$index] : $this->chartColours[0],
+					'highlight_series' => $index
 			);
 
 			$index++;
@@ -164,9 +164,9 @@ class ByCategory extends Chart
 	 */
 	public function getProductsInCategory($categoryId)
 	{
-		$termIds = get_term_children($categoryId, 'product_cat');
+		$termIds = get_term_children($categoryId, 'product_category');
 		$termIds[] = $categoryId;
-		$productIds = get_objects_in_term($termIds, 'product_cat');
+		$productIds = get_objects_in_term($termIds, 'product_category');
 
 		return array_unique($this->wp->applyFilters('jigoshop/admin/reports/by_category/products_in_category', $productIds, $categoryId));
 	}
@@ -212,7 +212,7 @@ class ByCategory extends Chart
 	 */
 	public function categoryWidget()
 	{
-		$categories = get_terms('product_cat', array('orderby' => 'name'));
+		$categories = get_terms('product_category', array('orderby' => 'name'));
 		?>
 		<form method="GET">
 			<div>
@@ -274,10 +274,9 @@ class ByCategory extends Chart
 
 		$chartData = array();
 		$index = 0;
-
 		foreach ($this->showCategories as $category) {
-			$category = get_term($category, 'product_cat');
-			$productIds = $this->getProductsInCategory($category->term_id);
+			$category = get_term($category, 'product_category');
+			$productIds = $this->getProductsInCategory($category->term_id);;
 			$categoryTotal = 0;
 			$categoryChartData = array();
 			for ($i = 0; $i <= $this->chartInterval; $i++) {
@@ -294,8 +293,7 @@ class ByCategory extends Chart
 						$time = strtotime(date('Ym', strtotime("+{$i} MONTH", $this->range['start'])).'01') * 1000;
 						break;
 				}
-
-				foreach ($productIds as $id) {
+					foreach ($productIds as $id) {
 					if (isset($this->reportData->itemSalesAndTimes [$time][$id])) {
 						$intervalTotal += $this->reportData->itemSalesAndTimes [$time][$id];
 						$categoryTotal += $this->reportData->itemSalesAndTimes [$time][$id];
@@ -308,17 +306,17 @@ class ByCategory extends Chart
 			$index++;
 		}
 
-		$data = new \stdClass();
-		$data->series = array();
+		$index = 0;
+		$data = array();
+		$data['series'] = array();
 		foreach ($chartData as $singleData) {
 			$width = $this->barwidth / sizeof($chartData);
 			$offset = ($width * $index);
-			$series = $singleData['data'];
-			foreach ($series as $key => $seriesData) {
-				$series[$key][0] = $seriesData[0] + $offset;
+			foreach ($singleData['data'] as $key => $seriesData) {
+				$singleData['data'][$key][0] = $seriesData[0] + $offset;
 			}
-			$data->series[] = $this->arrayToObject(array(
-				'label' => esc_js($data['category']),
+			$data['series'][] = $this->arrayToObject(array(
+				'label' => esc_js($singleData['category']),
 				'data' => $singleData['data'],
 				'color' => isset($this->chartColours[$index]) ? $this->chartColours[$index] : $this->chartColours[0],
 				'bars' => $this->arrayToObject(array(
@@ -326,18 +324,16 @@ class ByCategory extends Chart
 					'fill' => true,
 					'show' => true,
 					'lineWidth' => 1,
-					'align' => "center",
-					'barWidth' => $this->barwidth / sizeof($chartData) * 0,
-					75,
+					'align' => 'center',
+					'barWidth' => $width * 0.75,
 					'stack' => false
 				)),
 				'append_tooltip' => Currency::symbol(),
-				'enable_tooltip' => true,
-				'prepend_label' => true
+				'enable_tooltip' => true
 			));
 			$index++;
 		}
-		$data->options = $this->arrayToObject(array(
+		$data['options'] = $this->arrayToObject(array(
 			'legend' => $this->arrayToObject(array('show' => false)),
 			'grid' => $this->arrayToObject(array(
 				'color' => '#aaa',
@@ -348,9 +344,9 @@ class ByCategory extends Chart
 			'xaxes' => array(
 				$this->arrayToObject(array(
 					'color' => '#aaa',
-					'reserveSpace' => true,
+					'reserveSpace' => false,
 					'position' => 'bottom',
-					'tickColor' => 'transparen',
+					'tickColor' => 'transparent',
 					'mode' => 'time',
 					'timeformat' => $this->chartGroupby == 'hour' ? '%H' : $this->chartGroupBy == 'day' ? '%d %b' : '%b',
 					'monthNames' => array_values($wp_locale->month_abbrev),
@@ -381,20 +377,17 @@ class ByCategory extends Chart
 	{
 		$this->chartColours = $this->wp->applyFilters('jigoshop/admin/reports/by_category/chart_colors', array(
 			'#3498db',
-			'#34495e',
-			'#1abc9c',
 			'#2ecc71',
 			'#f1c40f',
 			'#e67e22',
-			'#e74c3c',
-			'#2980b9',
 			'#8e44ad',
-			'#2c3e50',
-			'#16a085',
-			'#27ae60',
-			'#f39c12',
 			'#d35400',
-			'#c0392b'
+			'#5bc0de',
+			'#EAA6EA',
+			'#FFC8C8',
+			'#AAAAFF',
+			'#B6BA18',
+
 		));
 	}
 }

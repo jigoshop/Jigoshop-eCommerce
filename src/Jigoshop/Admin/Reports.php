@@ -45,14 +45,10 @@ class Reports implements PageInterface
 			}
 
 			Styles::add('jigoshop.admin.reports', JIGOSHOP_URL.'/assets/css/admin/reports.css', array('jigoshop.admin'));
-			Styles::add('jigoshop.vendors.select2', JIGOSHOP_URL.'/assets/css/vendors/select2.min.css', array('jigoshop.admin'));
-			Styles::add('jigoshop.vendors.datepicker', JIGOSHOP_URL.'/assets/css/vendors/datepicker.min.css', array('jigoshop.admin'));
-			Scripts::add('jigoshop.vendors.select2', JIGOSHOP_URL . '/assets/js/vendors/select2.min.js', array(
-				'jigoshop.admin.settings',
-			), array('page' => 'jigoshop_page_jigoshop_settings', 'in_footer' => true));
-			Scripts::add('jigoshop.vendors.bs_tab_trans_tooltip_collapse', JIGOSHOP_URL . '/assets/js/vendors/bs_tab_trans_tooltip_collapse.min.js', array(
-				'jigoshop.admin.settings',
-			), array('page' => 'jigoshop_page_jigoshop_settings', 'in_footer' => true));
+			Styles::add('jigoshop.vendors.datepicker', JIGOSHOP_URL.'/assets/css/vendors/datepicker.css', array('jigoshop.admin.reports'));
+			Scripts::add('jigoshop.admin.reports', JIGOSHOP_URL.'/assets/js/admin/reports.js', array('jigoshop.admin', 'jigoshop.vendors.datepicker'));
+			Scripts::add('jigoshop.vendors.datepicker', JIGOSHOP_URL.'/assets/js/vendors/datepicker.min.js', array('jquery'));
+			Scripts::add('jigoshop.vendors.bs_tab_trans_tooltip_collapse', JIGOSHOP_URL . '/assets/js/vendors/bs_tab_trans_tooltip_collapse.min.js', array('jigoshop.admin.reports'), array('in_footer' => true));
 		});
 	}
 

@@ -32,11 +32,6 @@ class SalesTab implements TabInterface
 			if ($screen->base != 'jigoshop_page_'.Reports::NAME) {
 				return;
 			}
-			$wp->wpEnqueueScript('common');
-			$wp->wpEnqueueScript('wp-lists');
-			$wp->wpEnqueueScript('postbox');
-			$wp->wpEnqueueScript('jquery-ui-datepicker');
-			Styles::add('jigoshop.jquery.ui', JIGOSHOP_URL.'/assets/css/jquery-ui.css');
 		});
 
 	}
@@ -75,7 +70,7 @@ class SalesTab implements TabInterface
 			'by_date' => __('By Date', 'jigoshop'),
 			'by_product' => __('By Product', 'jigoshop'),
 			'by_category' => __('By Category', 'jigoshop'),
-			'coupons_by_date' => __('Coupons By Date', 'jigoshop')
+			'discount_summary' => __('Discount Summary', 'jigoshop')
 		));
 	}
 
@@ -91,12 +86,15 @@ class SalesTab implements TabInterface
 
 	private function getCurrentRange()
 	{
-		$type = '30day';
-		if(isset($_GET['range'])) {
-			$type = $_GET['range'];
+		$range = '30day';
+
+		if((isset($_GET['start_date']) && !empty($_GET['start_date'])) || (isset($_GET['end_date']) && !empty($_GET['end_date']))) {
+			$range = 'custom';
+		} else if (isset($_GET['range'])) {
+			$range = $_GET['type'];
 		}
 
-		return $type;
+		return $range;
 	}
 
 	private function getChart()
@@ -107,7 +105,9 @@ class SalesTab implements TabInterface
 			case 'by_product':
 				return new Chart\ByProduct($this->wp, $this->options, $this->getCurrentRange());
 			case 'by_category':
-				return new Chart\ByProduct($this->wp, $this->options, $this->getCurrentRange());
+				return new Chart\ByCategory($this->wp, $this->options, $this->getCurrentRange());
+			case 'discount_summary':
+				return new Chart\DiscountSummary($this->wp, $this->options, $this->getCurrentRange());
 			default:
 				$this->wp->doAction('jigoshop/admin/reports/sales/custom_chart', $this->getCurrentType(), $this->wp, $this->options);
 		}

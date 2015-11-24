@@ -15,6 +15,7 @@ use Jigoshop\Helper\Currency;
 use Jigoshop\Helper\Product;
 use Jigoshop\Helper\Render;
 use Jigoshop\Helper\Scripts;
+use Jigoshop\Helper\Styles;
 use WPAL\Wordpress;
 
 class ByProduct extends Chart
@@ -30,8 +31,10 @@ class ByProduct extends Chart
 		if (isset($_GET['product_ids']) && is_array($_GET['product_ids'])) {
 			$this->productIds = array_filter(array_map('absint', $_GET['product_ids']));
 		} elseif (isset($_GET['product_ids'])) {
-			$this->productIds = array_filter(array(absint($_GET['product_ids'])));
+			$this->productIds = explode(',', $_GET['product_ids']);
+			$this->productIds = array_filter(array_map('absint', $this->productIds));
 		}
+
 		// Prepare data for report
 		$this->calculateCurrentRange();
 		$this->getReportData();
@@ -61,6 +64,15 @@ class ByProduct extends Chart
 				'jigoshop.flot'
 			));
 			Scripts::localize('jigoshop.reports.chart', 'chart_data', $this->getMainChart());
+			Styles::add('jigoshop.vendors.select2', JIGOSHOP_URL.'/assets/css/vendors/select2.min.css', array('jigoshop.admin'));
+			Scripts::add('jigoshop.vendors.select2', JIGOSHOP_URL.'/assets/js/vendors/select2.min.js', array('jigoshop.admin'), array('in_footer' => true));
+			Scripts::add('jigoshop.admin.reports.widget.product_search', JIGOSHOP_URL.'/assets/js/admin/reports/widget/product_search.js', array(
+				'jquery',
+				'jigoshop.vendors.select2'
+			), array('in_footer' => true));
+			Scripts::localize('jigoshop.admin.reports.widget.product_search', 'jigoshop_admin_reports_widget_product_search', array(
+				'ajax' => $wp->getAjaxUrl(),
+			));
 		});
 	}
 
@@ -226,40 +238,70 @@ class ByProduct extends Chart
 	{
 		$widgets = array();
 
-		if (!empty($this->productIds)) {
-			$widgets[] = array(
-				'title' => __('Showing reports for:', 'jigoshop'),
-				'callback' => array($this, 'current_filters')
-			);
+		$topSellers = $this->getOrderReportData(array(
+			'data' => array(
+				'order_items' => array(
+					'type' => 'meta',
+					'name' => 'top_products',
+					'process' => true,
+					'limit' => 12,
+					'order' => 'most_sold',
+				),
+			),
+			'order_types' => array('shop_order'),
+			'query_type' => 'get_results',
+			'filter_range' => true,
+		));
+
+		$topFreebies = $this->getOrderReportData(array(
+			'data' => array(
+				'order_items' => array(
+					'type' => 'meta',
+					'name' => 'top_products',
+					'process' => true,
+					'where' => array(
+						'type' => 'comparison',
+						'key' => 'cost',
+						'value' => '0',
+						'operator' => '0'
+					)
+				),
+			),
+			'order_types' => array('shop_order'),
+			'query_type' => 'get_results',
+			'limit' => 12,
+			'nocache' => true
+		));
+
+		$topEarners = $this->getOrderReportData(array(
+			'data' => array(
+				'order_items' => array(
+					'type' => 'meta',
+					'name' => 'top_products',
+					'process' => true,
+					'limit' => 12,
+					'order' => 'most_earned',
+				),
+			),
+			'order_types' => array('shop_order'),
+			'query_type' => 'get_results',
+			'filter_range' => true
+		));
+
+		$widgets[] = new Chart\Widget\CustomRange();
+		$widgets[] = new Chart\Widget\ProductSearch();
+		if($topSellers) {
+			$widgets[] = new Chart\Widget\TopSellers($topSellers);
+		}
+		if($topFreebies) {
+			$widgets[] = new Chart\Widget\TopFreebies($topFreebies);
+		}
+		if($topEarners) {
+			$widgets[] = new Chart\Widget\TopEarners($topEarners);
 		}
 
-		$widgets[] = array(
-			'title' => '',
-			'callback' => array($this, 'products_widget')
-		);
 
 		return $widgets;
-	}
-
-	/**
-	 * Show current filters
-	 */
-	public function current_filters()
-	{
-		$this->productTitles = array();
-		foreach ($this->productIds as $productId) {
-			$wpdb = $this->wp - getWPDB();
-			$title = $wpdb->get_row($wpdb->prepare("SELECT post_title FROM $wpdb->posts WHERE ID = %s"), $productId);
-
-			if ($title) {
-				$this->productTitles[$productId] = $title;
-			} else {
-				$this->productTitles[$productId] = '#'.$productId;
-			}
-		}
-
-		echo '<p>'.' <strong>'.implode(', ', $this->productTitles).'</strong></p>';
-		echo '<p><a class="button" href="'.esc_url(remove_query_arg('product_ids')).'">'.__('Reset', 'jigoshop').'</a></p>';
 	}
 
 	/**
@@ -268,22 +310,6 @@ class ByProduct extends Chart
 	public function products_widget()
 	{
 		?>
-		<h4 class="section_title"><span><?php _e('Product Search', 'jigoshop'); ?></span></h4>
-		<div class="section">
-			<form method="GET">
-				<div>
-					<input type="hidden" class="jigoshop-product-search" style="width:203px;" name="product_ids[]"
-					       data-placeholder="<?php _e('Search for a product&hellip;', 'jigoshop'); ?>" data-action="jigoshop_json_search_products_and_variations"/>
-					<input type="submit" class="submit button" value="<?php _e('Show', 'jigoshop'); ?>"/>
-					<input type="hidden" name="range" value="<?php if (!empty($_GET['range'])) echo esc_attr($_GET['range']) ?>"/>
-					<input type="hidden" name="start_date" value="<?php if (!empty($_GET['start_date'])) echo esc_attr($_GET['start_date']) ?>"/>
-					<input type="hidden" name="end_date" value="<?php if (!empty($_GET['end_date'])) echo esc_attr($_GET['end_date']) ?>"/>
-					<input type="hidden" name="page" value="<?php if (!empty($_GET['page'])) echo esc_attr($_GET['page']) ?>"/>
-					<input type="hidden" name="tab" value="<?php if (!empty($_GET['tab'])) echo esc_attr($_GET['tab']) ?>"/>
-					<input type="hidden" name="report" value="<?php if (!empty($_GET['report'])) echo esc_attr($_GET['report']) ?>"/>
-				</div>
-			</form>
-		</div>
 		<h4 class="section_title"><span><?php _e('Top Sellers', 'jigoshop'); ?></span></h4>
 		<div class="section">
 			<table cellspacing="0">
@@ -359,20 +385,6 @@ class ByProduct extends Chart
 		<div class="section">
 			<table cellspacing="0">
 				<?php
-				$top_earners = $this->getOrderReportData(array(
-					'data' => array(
-						'order_items' => array(
-							'type' => 'meta',
-							'name' => 'top_products',
-							'process' => true,
-							'limit' => 12,
-							'order' => 'most_earned',
-						),
-					),
-					'order_types' => array('shop_order'),
-					'query_type' => 'get_results',
-					'filter_range' => true
-				));
 
 				if ($top_earners) {
 					foreach ($top_earners as $product) {

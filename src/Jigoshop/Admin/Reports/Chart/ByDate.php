@@ -9,6 +9,7 @@ use Jigoshop\Helper\Currency;
 use Jigoshop\Helper\Product;
 use Jigoshop\Helper\Render;
 use Jigoshop\Helper\Scripts;
+use Jigoshop\Helper\Styles;
 use WPAL\Wordpress;
 
 class ByDate extends Chart
@@ -47,6 +48,9 @@ class ByDate extends Chart
 				'jquery',
 				'jigoshop.flot'
 			));
+
+			Styles::add('jigoshop.vendors.select2', JIGOSHOP_URL.'/assets/css/vendors/select2.min.css', array('jigoshop.admin.reports'));
+			Scripts::add('jigoshop.vendors.select2', JIGOSHOP_URL . '/assets/js/vendors/select2.min.js', array('jigoshop.admin.reports'), array('in_footer' => true));
 			Scripts::localize('jigoshop.reports.chart', 'chart_data', $this->getMainChart());
 		});
 	}
@@ -275,10 +279,8 @@ class ByDate extends Chart
 	{
 		$widgets = array();
 
-		$widgets[] = array(
-			'title' => __('Order status filter', 'jigoshop'),
-			'callback' => 'order_status_widget'
-		);
+		$widgets[] = new Chart\Widget\CustomRange();
+		$widgets[] = new Chart\Widget\OrderStatusFilter($this->orderStatus);
 
 		return $widgets;
 	}
