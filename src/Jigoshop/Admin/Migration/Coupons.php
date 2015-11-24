@@ -121,6 +121,51 @@ class Coupons implements Tool
 		}
 	}
 
+	private function _transform($key, $value)
+	{
+		switch ($key) {
+			case 'type':
+				switch ($value) {
+					case 'fixed_product':
+						return Coupon::FIXED_PRODUCT;
+					case 'percent_product':
+						return Coupon::PERCENT_PRODUCT;
+					case 'percent':
+						return Coupon::PERCENT_CART;
+					default:
+						return Coupon::FIXED_CART;
+				}
+			default:
+				return $value;
+		}
+	}
+
+	private function _transformKey($key)
+	{
+		switch ($key) {
+			case 'date_from':
+				return 'from';
+			case 'date_to':
+				return 'to';
+			case 'order_total_min':
+				return 'order_total_minimum';
+			case 'order_total_max':
+				return 'order_total_maximum';
+			case 'include_products':
+				return 'products';
+			case 'exclude_products':
+				return 'excluded_products';
+			case 'include_categories':
+				return 'categories';
+			case 'exclude_categories':
+				return 'excluded_categories';
+			case 'pay_methods':
+				return 'payment_methods';
+			default:
+				return $key;
+		}
+	}
+
 	public function ajaxMigrationCoupons()
 	{
 		try {
@@ -195,50 +240,5 @@ class Coupons implements Tool
 		}
 
 		exit;
-	}
-
-	private function _transform($key, $value)
-	{
-		switch ($key) {
-			case 'type':
-				switch ($value) {
-					case 'fixed_product':
-						return Coupon::FIXED_PRODUCT;
-					case 'percent_product':
-						return Coupon::PERCENT_PRODUCT;
-					case 'percent':
-						return Coupon::PERCENT_CART;
-					default:
-						return Coupon::FIXED_CART;
-				}
-			default:
-				return $value;
-		}
-	}
-
-	private function _transformKey($key)
-	{
-		switch ($key) {
-			case 'date_from':
-				return 'from';
-			case 'date_to':
-				return 'to';
-			case 'order_total_min':
-				return 'order_total_minimum';
-			case 'order_total_max':
-				return 'order_total_maximum';
-			case 'include_products':
-				return 'products';
-			case 'exclude_products':
-				return 'excluded_products';
-			case 'include_categories':
-				return 'categories';
-			case 'exclude_categories':
-				return 'excluded_categories';
-			case 'pay_methods':
-				return 'payment_methods';
-			default:
-				return $key;
-		}
 	}
 }
