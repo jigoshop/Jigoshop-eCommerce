@@ -282,7 +282,7 @@ class ByDate extends Chart
 		$widgets[] = new Chart\Widget\CustomRange();
 		$widgets[] = new Chart\Widget\OrderStatusFilter($this->orderStatus);
 
-		return $widgets;
+		return $this->wp->applyFilters('jigoshop/admin/reports/by_date/widgets', $widgets);
 	}
 
 	/**

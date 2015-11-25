@@ -22,7 +22,6 @@ class ByProduct extends Chart
 {
 	private $chartColours = array();
 	private $productIds = array();
-	private $productTitles = array();
 	private $reportData;
 
 	public function __construct(Wordpress $wp, Options $options, $currentRange)
@@ -301,7 +300,7 @@ class ByProduct extends Chart
 		}
 
 
-		return $widgets;
+		return $this->wp->applyFilters('jigoshop/admin/reports/by_product/widgets', $widgets);
 	}
 
 	/**

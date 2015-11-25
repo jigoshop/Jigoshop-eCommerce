@@ -27,7 +27,7 @@ class OrderStatusFilter implements WidgetInterface
 
 	public function getArgs()
 	{
-		$args = array(
+		return array(
 			'id' => 'order_status',
 			'name' => 'order_status',
 			'value' => $this->orderStatus,
@@ -36,8 +36,6 @@ class OrderStatusFilter implements WidgetInterface
 			'options' => Status::getStatuses(),
 			'size' => 14,
 		);
-
-		return $args;
 	}
 
 	public function display()

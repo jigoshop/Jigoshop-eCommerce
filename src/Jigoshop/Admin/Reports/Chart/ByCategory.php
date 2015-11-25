@@ -199,64 +199,13 @@ class ByCategory extends Chart
 
 	public function getChartWidgets()
 	{
-		return array(
-			array(
-				'title' => __('Categories', 'jigoshop'),
-				'callback' => array($this, 'category_widget')
-			)
-		);
-	}
-
-	/**
-	 * Category selection
-	 */
-	public function categoryWidget()
-	{
+		$widgets = array();
 		$categories = get_terms('product_category', array('orderby' => 'name'));
-		?>
-		<form method="GET">
-			<div>
-				<select multiple="multiple" data-placeholder="<?php _e('Select categories&hellip;', 'jigoshop'); ?>" class="jigoshop-enhanced-select" id="show_categories"
-				        name="show_categories[]" style="width: 205px;">
-					<?php
-					$r = array();
-					$r['pad_counts'] = 1;
-					$r['hierarchical'] = 1;
-					$r['hide_empty'] = 1;
-					$r['value'] = 'id';
-					$r['selected'] = $this->showCategories;
 
-					echo jigoshop_walk_category_dropdown_tree($categories, 0, $r);
-					?>
-				</select>
-				<a href="#" class="select_none"><?php _e('None', 'jigoshop'); ?></a>
-				<a href="#" class="select_all"><?php _e('All', 'jigoshop'); ?></a>
-				<input type="submit" class="submit button" value="<?php _e('Show', 'jigoshop'); ?>"/>
-				<input type="hidden" name="range" value="<?php if (!empty($_GET['range'])) echo esc_attr($_GET['range']) ?>"/>
-				<input type="hidden" name="start_date" value="<?php if (!empty($_GET['start_date'])) echo esc_attr($_GET['start_date']) ?>"/>
-				<input type="hidden" name="end_date" value="<?php if (!empty($_GET['end_date'])) echo esc_attr($_GET['end_date']) ?>"/>
-				<input type="hidden" name="page" value="<?php if (!empty($_GET['page'])) echo esc_attr($_GET['page']) ?>"/>
-				<input type="hidden" name="tab" value="<?php if (!empty($_GET['tab'])) echo esc_attr($_GET['tab']) ?>"/>
-				<input type="hidden" name="report" value="<?php if (!empty($_GET['report'])) echo esc_attr($_GET['report']) ?>"/>
-			</div>
-			<script type="text/javascript">
-				jQuery(function($) {
-					// Select all/none
-					$('.chart-widget')
-						.on('click', '.select_all', function() {
-							$(this).closest('div').find('select option').attr("selected", "selected");
-							$(this).closest('div').find('select').change();
-							return false;
-						})
-						.on('click', '.select_none', function() {
-							$(this).closest('div').find('select option').removeAttr("selected");
-							$(this).closest('div').find('select').change();
-							return false;
-						});
-				});
-			</script>
-		</form>
-		<?php
+		$widgets[] = new Chart\Widget\CustomRange();
+		$widgets[] = new Chart\Widget\SelectCategories($this->showCategories, $categories);
+
+		return $this->wp->applyFilters('jigoshop/admin/reports/by_category/widgets', $widgets);
 	}
 
 	public function getExportButton()
