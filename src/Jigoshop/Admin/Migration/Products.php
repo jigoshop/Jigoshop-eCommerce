@@ -64,14 +64,14 @@ class Products implements Tool
 			SELECT DISTINCT p.ID FROM {$wpdb->posts} p
 			LEFT JOIN {$wpdb->postmeta} pm ON pm.post_id = p.ID
 				WHERE p.post_type IN (%s, %s) AND p.post_status <> %s
-				GROUP BY p.ID",
+			GROUP BY p.ID",
 			array('product', 'product_variation', 'auto-draft'))));
 
 		$countRemain = 0;
 
-		if (($prodFromBase = $this->wp->getOption('jigoshop_products_migrate_id')) !== false)
+		if (($itemsFromBase = $this->wp->getOption('jigoshop_products_migrate_id')) !== false)
 		{
-			$countRemain = count(unserialize($prodFromBase));
+			$countRemain = count(unserialize($itemsFromBase));
 		}
 
 		Render::output('admin/migration/products', array('countAll' => $countAll, 'countDone' => ($countAll - $countRemain)));
@@ -410,7 +410,10 @@ class Products implements Tool
 		} catch (Exception $e)
 		{
 //		    rollback sql transation and restore value of autocommit
-			\Monolog\Registry::getInstance(JIGOSHOP_LOGGER)->addDebug($e);
+			if(WP_DEBUG)
+			{
+				\Monolog\Registry::getInstance(JIGOSHOP_LOGGER)->addDebug($e);
+			}
 			$wpdb->query("ROLLBACK");
 			$wpdb->query("SET AUTOCOMMIT=" . $var_autocommit_sql);
 			return false;
@@ -606,7 +609,10 @@ class Products implements Tool
 			}
 
 		} catch (Exception $e) {
-			\Monolog\Registry::getInstance(JIGOSHOP_LOGGER)->addDebug($e);
+			if(WP_DEBUG)
+			{
+				\Monolog\Registry::getInstance(JIGOSHOP_LOGGER)->addDebug($e);
+			}
 			echo json_encode(array(
 				'success' => false,
 			));

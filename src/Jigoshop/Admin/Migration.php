@@ -60,7 +60,7 @@ class Migration implements PageInterface
 					'alert_msg' => __('Wystąpił błąd komunikacji, proszę przeładować stronę i koontynuować proces.', 'jigoshop'),
 					'jigoshop.admin.migration.products' => $migration_title . __('Products', 'jigoshop'),
 					'jigoshop.admin.migration.coupons' => $migration_title . __('Coupons', 'jigoshop'),
-					'jigoshop.admin.migration.xxxxxx' => $migration_title . __('Products', 'jigoshop'),
+					'jigoshop.admin.migration.emails' => $migration_title . __('Emails', 'jigoshop'),
 					'jigoshop.admin.migration.xxxxxx' => $migration_title . __('Products', 'jigoshop'),
 					'jigoshop.admin.migration.xxxxxx' => $migration_title . __('Products', 'jigoshop'),
 				),

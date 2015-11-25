@@ -42,14 +42,14 @@ class Coupons implements Tool
 			SELECT DISTINCT p.ID FROM {$wpdb->posts} p
 			LEFT JOIN {$wpdb->postmeta} pm ON pm.post_id = p.ID
 				WHERE p.post_type IN (%s) AND p.post_status <> %s
-				GROUP BY p.ID",
+			GROUP BY p.ID",
 			array('shop_coupon', 'auto-draft'))));
 
 		$countRemain = 0;
 
-		if (($prodFromBase = $this->wp->getOption('jigoshop_coupons_migrate_id')) !== false)
+		if (($itemsFromBase = $this->wp->getOption('jigoshop_coupons_migrate_id')) !== false)
 		{
-			$countRemain = count(unserialize($prodFromBase));
+			$countRemain = count(unserialize($itemsFromBase));
 		}
 
 		Render::output('admin/migration/coupons', array('countAll' => $countAll, 'countDone' => ($countAll - $countRemain)));
@@ -75,7 +75,7 @@ class Coupons implements Tool
 	{
 		$wpdb = $this->wp->getWPDB();
 
-		// Open transaction for save migration products
+		// Open transaction for save migration coupons
 		$var_autocommit_sql = $wpdb->get_var("SELECT @@AUTOCOMMIT");
 		try
 		{
@@ -114,7 +114,10 @@ class Coupons implements Tool
 		} catch (Exception $e)
 		{
 //		    rollback sql transation and restore value of autocommit
-			\Monolog\Registry::getInstance(JIGOSHOP_LOGGER)->addDebug($e);
+			if(WP_DEBUG)
+			{
+				\Monolog\Registry::getInstance(JIGOSHOP_LOGGER)->addDebug($e);
+			}
 			$wpdb->query("ROLLBACK");
 			$wpdb->query("SET AUTOCOMMIT=" . $var_autocommit_sql);
 			return false;
@@ -233,7 +236,10 @@ class Coupons implements Tool
 			}
 
 		} catch (Exception $e) {
-			\Monolog\Registry::getInstance(JIGOSHOP_LOGGER)->addDebug($e);
+			if(WP_DEBUG)
+			{
+				\Monolog\Registry::getInstance(JIGOSHOP_LOGGER)->addDebug($e);
+			}
 			echo json_encode(array(
 				'success' => false,
 			));
