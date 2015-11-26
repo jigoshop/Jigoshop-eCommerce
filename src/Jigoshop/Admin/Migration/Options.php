@@ -22,6 +22,8 @@ class Options implements Tool
 		$this->wp = $wp;
 		$this->options = $options;
 		$this->taxService = $taxService;
+
+		$wp->addAction('wp_ajax_jigoshop.admin.migration.options', array($this, 'ajaxMigrationOptions'), 10, 0);
 	}
 
 	/**
@@ -37,58 +39,116 @@ class Options implements Tool
 	 */
 	public function display()
 	{
-		Render::output('admin/migration/options', array());
+		$countAll = 93;
+		$countRemain = 93;
+
+		if (($itemsFromBase = $this->wp->getOption('jigoshop_options_migrate_id')) !== false)
+		{
+			if($itemsFromBase === '1')
+			{
+				$countRemain = 0;
+			}
+		}
+
+		Render::output('admin/migration/options', array('countAll' => $countAll, 'countDone' => ($countAll - $countRemain)));
+	}
+
+	/**
+	 * Check SQL error for rollback transaction
+	 */
+	public function checkSql()
+	{
+		if(!empty($this->wp->getWPDB()->last_error))
+		{
+			throw new Exception($this->wp->getWPDB()->last_error);
+		}
 	}
 
 	/**
 	 * Migrates data from old format to new one.
+	 * @param mixed $options
+	 * @return bool migration options status: success or not
 	 */
-	public function migrate($item)
+	public function migrate($options = null)
 	{
-		$options = $this->wp->getOption('jigoshop_options');
-		$transformations = \Jigoshop_Base::get_options()->__getTransformations();
-		$transformations = $this->_addShippingTransformations($transformations);
-		$transformations = $this->_addPaymentTransformations($transformations);
+		$wpdb = $this->wp->getWPDB();
 
-		foreach ($transformations as $old => $new) {
-			$value = $this->_transform($old, $options[$old]);
+		try
+		{
+//		    Open transaction for save migration emails
+			$var_autocommit_sql = $wpdb->get_var("SELECT @@AUTOCOMMIT");
+			$this->checkSql();
+			$wpdb->query("SET AUTOCOMMIT=0");
+			$this->checkSql();
+			$wpdb->query("START TRANSACTION");
+			$this->checkSql();
+			$options = $this->wp->getOption('jigoshop_options');
+			$this->checkSql();
+			$transformations = $this->_getTransformations();
+			$transformations = $this->_addShippingTransformations($transformations);
+			$transformations = $this->_addPaymentTransformations($transformations);
 
-			if ($value !== null) {
-				$this->options->update($new, $value);
-			}
-		}
-
-		// Migrate tax rates
-		if (!is_array($options['jigoshop_tax_rates'])) {
-			$options['jigoshop_tax_rates'] = array();
-		}
-
-		$options['jigoshop_tax_rates'] = array_values($options['jigoshop_tax_rates']);
-		for ($i = 0, $endI = count($options['jigoshop_tax_rates']); $i < $endI;) {
-			$rateDate = array(
-				'id' => '0',
-				'rate' => $options['jigoshop_tax_rates'][$i]['rate'],
-				'label' => empty($options['jigoshop_tax_rates'][$i]['label']) ? __('Tax', 'jigoshop') : $options['jigoshop_tax_rates'][$i]['label'],
-				'class' => $options['jigoshop_tax_rates'][$i]['class'] == '*' ? 'standard' : $options['jigoshop_tax_rates'][$i]['class'], // TODO: Check how other classes are used
-				'country' => $options['jigoshop_tax_rates'][$i]['country'],
-				'states' => $options['jigoshop_tax_rates'][$i]['state'],
-				'postcodes' => '',
-			);
-			$i++;
-
-			while ($i < $endI && $options['jigoshop_tax_rates'][$i]['rate'] == $rateDate['rate'] && $options['jigoshop_tax_rates'][$i]['country'] == $rateDate['country']) {
-				if (!empty($options['jigoshop_tax_rates'][$i]['state'])) {
-					$rateDate['states'] .= ','.$options['jigoshop_tax_rates'][$i]['state'];
+			foreach ($transformations as $old => $new) {
+				if(array_key_exists($old,$options))
+				{
+					$value = $this->_transform($old, $options[$old]);
 				}
 
-				$i++;
+				if ($value !== null) {
+					$this->options->update($new, $value);
+					$this->checkSql();
+				}
 			}
 
-			$this->taxService->save($rateDate);
-		}
+			// Migrate tax rates
+			if (!is_array($options['jigoshop_tax_rates'])) {
+				$options['jigoshop_tax_rates'] = array();
+			}
 
-		// TODO: How to migrate plugin options?
-		$this->options->saveOptions();
+			$options['jigoshop_tax_rates'] = array_values($options['jigoshop_tax_rates']);
+			for ($i = 0, $endI = count($options['jigoshop_tax_rates']); $i < $endI;) {
+				$rateDate = array(
+					'id' => '0',
+					'rate' => $options['jigoshop_tax_rates'][$i]['rate'],
+					'label' => empty($options['jigoshop_tax_rates'][$i]['label']) ? __('Tax', 'jigoshop') : $options['jigoshop_tax_rates'][$i]['label'],
+					'class' => $options['jigoshop_tax_rates'][$i]['class'] == '*' ? 'standard' : $options['jigoshop_tax_rates'][$i]['class'], // TODO: Check how other classes are used
+					'country' => $options['jigoshop_tax_rates'][$i]['country'],
+					'states' => $options['jigoshop_tax_rates'][$i]['state'],
+					'postcodes' => '',
+				);
+				$i++;
+
+				while ($i < $endI && $options['jigoshop_tax_rates'][$i]['rate'] == $rateDate['rate'] && $options['jigoshop_tax_rates'][$i]['country'] == $rateDate['country']) {
+					if (!empty($options['jigoshop_tax_rates'][$i]['state'])) {
+						$rateDate['states'] .= ','.$options['jigoshop_tax_rates'][$i]['state'];
+					}
+
+					$i++;
+				}
+
+				$this->taxService->save($rateDate);
+				$this->checkSql();
+			}
+
+			$this->options->saveOptions();
+			$this->checkSql();
+
+//			commit sql transation and restore value of autocommit
+			$wpdb->query("COMMIT");
+			$wpdb->query("SET AUTOCOMMIT=" . $var_autocommit_sql);
+			return true;
+
+		} catch (Exception $e)
+		{
+//          rollback sql transation and restore value of autocommit
+			if(WP_DEBUG)
+			{
+				\Monolog\Registry::getInstance(JIGOSHOP_LOGGER)->addDebug($e);
+			}
+			$wpdb->query("ROLLBACK");
+			$wpdb->query("SET AUTOCOMMIT=" . $var_autocommit_sql);
+			return false;
+		}
 	}
 
 	private function _transform($key, $value)
@@ -219,5 +279,143 @@ class Options implements Tool
 			'jigoshop_sandbox_email' => 'payment.paypal.test_email',
 			'jigoshop_paypal_send_shipping' => 'payment.paypal.send_shipping',
 		));
+	}
+
+	private function _getTransformations()
+	{
+		return array(
+			'jigoshop_default_country'               => 'general.country',
+			'jigoshop_currency'                      => 'general.currency',
+			'jigoshop_allowed_countries'             => 'shopping.restrict_selling_locations',
+			'jigoshop_specific_allowed_countries'    => 'shopping.selling_locations',
+			'jigoshop_demo_store'                    => 'general.show_message',
+			'jigoshop_company_name'                  => 'general.company_name',
+			'jigoshop_tax_number'                    => 'general.company_tax_number',
+			'jigoshop_address_1'                     => 'general.company_address_1',
+			'jigoshop_address_2'                     => 'general.company_address_2',
+			'jigoshop_company_phone'                 => 'general.company_phone',
+			'jigoshop_company_email'                 => 'general.company_email',
+			'jigoshop_product_category_slug'         => 'permalinks.category',
+			'jigoshop_product_tag_slug'              => 'permalinks.tag',
+			'jigoshop_email'                         => 'general.email',
+//			'jigoshop_cart_shows_shop_button' => 'yes',
+			'jigoshop_redirect_add_to_cart'          => 'shopping.redirect_add_to_cart',
+			'jigoshop_reset_pending_orders'          => 'advanced.automatic_reset',
+			'jigoshop_complete_processing_orders'    => 'advanced.automatic_complete',
+			'jigoshop_downloads_require_login'       => 'shopping.login_for_downloads',
+//			'jigoshop_disable_css' => 'no',
+//			'jigoshop_frontend_with_theme_css' => 'no',
+//			'jigoshop_disable_fancybox' => 'no',
+			'jigoshop_enable_postcode_validating'    => 'shopping.validate_zip',
+//			'jigoshop_verify_checkout_info_message' => 'yes',
+//			'jigoshop_eu_vat_reduction_message' => 'yes',
+			'jigoshop_enable_guest_checkout'         => 'shopping.guest_purchases',
+			'jigoshop_enable_guest_login'            => 'shopping.show_login_form',
+			'jigoshop_enable_signup_form'            => 'shopping.allow_registration',
+			'jigoshop_force_ssl_checkout'            => 'advanced.force_ssl',
+			'jigoshop_sharethis'                     => 'advanced.integration.share_this',
+			'jigoshop_ga_id'                         => 'advanced.integration.google_analytics',
+//			'jigoshop_ga_ecommerce_tracking_enabled' => 'no',
+//			'jigoshop_catalog_product_button' => 'add',
+			'jigoshop_catalog_sort_orderby'          => 'shopping.catalog_order_by',
+			'jigoshop_catalog_sort_direction'        => 'shopping.catalog_order',
+			'jigoshop_catalog_per_page'              => 'shopping.catalog_per_page',
+			'jigoshop_currency_pos'                  => 'general.currency_position',
+			'jigoshop_price_thousand_sep'            => 'general.currency_thousand_separator',
+			'jigoshop_price_decimal_sep'             => 'general.currency_decimal_separator',
+			'jigoshop_price_num_decimals'            => 'general.currency_decimals',
+			'jigoshop_use_wordpress_tiny_crop'       => 'products.images.tiny.crop',
+			'jigoshop_use_wordpress_thumbnail_crop'  => 'products.images.thumbnail.crop',
+			'jigoshop_use_wordpress_catalog_crop'    => 'products.images.small.crop',
+			'jigoshop_use_wordpress_featured_crop'   => 'products.images.large.crop',
+			'jigoshop_shop_tiny_w'                   => 'products.images.tiny.width',
+			'jigoshop_shop_tiny_h'                   => 'products.images.tiny.height',
+			'jigoshop_shop_thumbnail_w'              => 'products.images.thumbnail.width',
+			'jigoshop_shop_thumbnail_h'              => 'products.images.thumbnail.height',
+			'jigoshop_shop_small_w'                  => 'products.images.small.width',
+			'jigoshop_shop_small_h'                  => 'products.images.small.height',
+			'jigoshop_shop_large_w'                  => 'products.images.large.width',
+			'jigoshop_shop_large_h'                  => 'products.images.large.height',
+			'jigoshop_weight_unit'                   => 'products.weight_unit',
+			'jigoshop_dimension_unit'                => 'products.dimensions_unit',
+//			'jigoshop_product_thumbnail_columns' => '3',
+//			'jigoshop_enable_related_products' => 'yes',
+			'jigoshop_manage_stock'                  => 'products.manage_stock',
+			'jigoshop_show_stock'                    => 'products.show_stock',
+			'jigoshop_notify_low_stock'              => 'products.notify_low_stock',
+			'jigoshop_notify_low_stock_amount'       => 'products.low_stock_threshold',
+			'jigoshop_notify_no_stock'               => 'products.notify_out_of_stock',
+			'jigoshop_hide_no_stock_product'         => 'products.hide_out_of_stock',
+			'jigoshop_prices_include_tax'            => 'tax.included',
+			'jigoshop_tax_classes'                   => 'tax.classes',
+			'jigoshop_tax_rates'                     => '',
+			'jigoshop_calc_shipping'                 => 'shipping.enabled',
+			'jigoshop_enable_shipping_calc'          => 'shipping.calculator',
+			'jigoshop_ship_to_billing_address_only'  => 'shipping.only_to_billing',
+			'jigoshop_show_checkout_shipping_fields' => 'shipping.always_show_shipping',
+//			'jigoshop_default_gateway' => 'cheque',
+//			'jigoshop_error_disappear_time' => 8000,
+//			'jigoshop_message_disappear_time' => 4000,
+			'jigoshop_shop_page_id'                  => 'advanced.pages.shop',
+			'jigoshop_cart_page_id'                  => 'advanced.pages.cart',
+			'jigoshop_checkout_page_id'              => 'advanced.pages.checkout',
+			'jigoshop_myaccount_page_id'             => 'advanced.pages.account',
+			'jigoshop_thanks_page_id'                => 'advanced.pages.checkout_thank_you',
+			'jigoshop_terms_page_id'                 => 'advanced.pages.terms',
+		);
+	}
+
+	public function ajaxMigrationOptions()
+	{
+		try {
+			//TODO usunac
+			if(isset($_POST['wwee']))
+			{
+				$this->wp->updateOption('jigoshop_options_migrate_id', '0');
+				echo json_encode(array(
+					'success' => true,
+				));
+				exit;
+			}
+
+			$countAll = 93;
+			$countRemain = 93;
+
+			if (($itemsFromBase = $this->wp->getOption('jigoshop_options_migrate_id')) !== false)
+			{
+				if($itemsFromBase === '1')
+				{
+					$countRemain = 0;
+				}
+			}
+			if ($this->migrate())
+			{
+				$this->wp->updateOption('jigoshop_options_migrate_id', '1');
+				echo json_encode(array(
+					'success' => true,
+					'percent' => floor(($countAll - $countRemain) / $countAll * 100),
+					'processed' => $countAll - $countRemain,
+					'remain' => $countRemain,
+					'total' => $countAll,
+				));
+			}
+			else
+			{
+				echo json_encode(array(
+					'success' => false,
+				));
+			}
+
+		} catch (Exception $e) {
+			if(WP_DEBUG)
+			{
+				\Monolog\Registry::getInstance(JIGOSHOP_LOGGER)->addDebug($e);
+			}
+			echo json_encode(array(
+				'success' => false,
+			));
+		}
+
+		exit;
 	}
 }

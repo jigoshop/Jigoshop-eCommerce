@@ -56,6 +56,17 @@ class Emails implements Tool
 	}
 
 	/**
+	 * Check SQL error for rollback transaction
+	 */
+	public function checkSql()
+	{
+		if(!empty($this->wp->getWPDB()->last_error))
+		{
+			throw new Exception($this->wp->getWPDB()->last_error);
+		}
+	}
+
+	/**
 	 * Migrates data from old format to new one.
 	 * @param mixed $emails
 	 * @return bool migration email status: success or not
@@ -64,10 +75,11 @@ class Emails implements Tool
 	{
 		$wpdb = $this->wp->getWPDB();
 
-//		Open transaction for save migration emails
-		$var_autocommit_sql = $wpdb->get_var("SELECT @@AUTOCOMMIT");
 		try
 		{
+//		    Open transaction for save migration emails
+			$var_autocommit_sql = $wpdb->get_var("SELECT @@AUTOCOMMIT");
+			$this->checkSql();
 			$wpdb->query("SET AUTOCOMMIT=0");
 			$this->checkSql();
 			$wpdb->query("START TRANSACTION");

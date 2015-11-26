@@ -75,10 +75,11 @@ class Coupons implements Tool
 	{
 		$wpdb = $this->wp->getWPDB();
 
-		// Open transaction for save migration coupons
-		$var_autocommit_sql = $wpdb->get_var("SELECT @@AUTOCOMMIT");
 		try
 		{
+//			Open transaction for save migration coupons
+			$var_autocommit_sql = $wpdb->get_var("SELECT @@AUTOCOMMIT");
+			$this->checkSql();
 			$wpdb->query("SET AUTOCOMMIT=0");
 			$this->checkSql();
 			$wpdb->query("START TRANSACTION");
