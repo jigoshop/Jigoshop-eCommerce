@@ -54,18 +54,10 @@ abstract class Chart
 			if ($screen->base != 'jigoshop_page_'.Reports::NAME) {
 				return;
 			}
-			Scripts::add('jigoshop.flot', JIGOSHOP_URL.'/assets/js/flot/jquery.flot.min.js', array('jquery'));
-			Scripts::add('jigoshop.flot.time', JIGOSHOP_URL.'/assets/js/flot/jquery.flot.time.min.js', array(
-					'jquery',
-					'jigoshop.flot'
-			));
-			Scripts::add('jigoshop.flot.pie', JIGOSHOP_URL.'/assets/js/flot/jquery.flot.pie.min.js', array(
-					'jquery',
-					'jigoshop.flot'
-			));
+			Scripts::add('jigoshop.vendors.flot', JIGOSHOP_URL.'/assets/js/vendors/flot.min.js', array('jquery'));
 			Scripts::add('jigoshop.reports.chart', JIGOSHOP_URL.'/assets/js/admin/reports/chart.js', array(
 					'jquery',
-					'jigoshop.flot'
+					'jigoshop.vendors.flot'
 			));
 		});
 	}

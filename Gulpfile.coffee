@@ -24,6 +24,7 @@ jsFiles =
   bs_tab_trans_tooltip_collapse: ['assets/bower/bootstrap/js/{tab,transition,tooltip,collapse}.js']
   datepicker: ['assets/bower/bootstrap-datepicker/js/bootstrap-datepicker.js']
   colorbox: ['assets/bower/jquery-colorbox/jquery.colorbox-min.js']
+  flot: ['node_modules/flot/{jquery.flot,jquery.flot.time,jquery.flot.pie}.js']
 
 # Coffee
 coffeeFiles =
