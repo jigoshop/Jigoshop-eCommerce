@@ -10,7 +10,7 @@ use Jigoshop\Admin\Reports;
 		<div class="btn-group btn-group-justified" role="group" aria-label="Chart Ranges">
 			<?php foreach($ranges as $key => $value) : ?>
 				<div class="btn-group" role="group">
-		            <a href="?page=<?php echo Reports::NAME ?>&tab=<?php echo $current_tab ?>&type=<?php echo $current_type ?>&range=<?php echo $key; ?>" class="btn btn-default <?php echo $key == $current_range ? 'active' : ''; ?>">
+		            <a href="<?php echo esc_url(add_query_arg('range', $key, $url)); ?>" class="btn btn-default <?php echo $key == $current_range ? 'active' : ''; ?>">
 			            <?php echo $value ?>
 		            </a>
 		        </div>

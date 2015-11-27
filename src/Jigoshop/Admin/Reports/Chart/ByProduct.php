@@ -203,6 +203,7 @@ class ByProduct extends Chart
 			'current_tab' => Reports\SalesTab::SLUG,
 			'current_type' => 'by_product',
 			'ranges' => $ranges,
+			'url' => remove_query_arg(array('start_date', 'end_date')),
 			'current_range' => $this->currentRange,
 			'legends' => $this->getChartLegend(),
 			'widgets' => $this->getChartWidgets(),

@@ -131,6 +131,7 @@ class DiscountSummary extends Chart
 			'current_tab' => Reports\SalesTab::SLUG,
 			'current_type' => 'discount_summary',
 			'ranges' => $ranges,
+			'url' => remove_query_arg(array('start_date', 'end_date')),
 			'current_range' => $this->currentRange,
 			'legends' => $this->getChartLegend(),
 			'widgets' => $this->getChartWidgets(),
@@ -153,47 +154,6 @@ class DiscountSummary extends Chart
 		?>
 		<h4 class="section_title"><span><?php _e('Filter by coupon', 'jigoshop'); ?></span></h4>
 		<div class="section">
-			<form method="GET">
-				<div>
-					<?php
-					$data = $this->getReportData();
-					$used_coupons = array();
-					foreach ($data as $coupons) {
-						foreach ($coupons->coupons as $coupon) {
-							if(!empty($coupon)){
-								if (!isset($used_coupons[$coupon['code']])) {
-									$used_coupons[$coupon['code']] = $coupon;
-									$used_coupons[$coupon['code']]['usage'] = 0;
-								}
-
-								$used_coupons[$coupon['code']]['usage'] += $coupons->usage[$coupon['code']];
-							}
-						}
-					}
-
-					if ($used_coupons) :
-						?>
-						<select id="coupon_codes" name="coupon_codes" class="wc-enhanced-select" data-placeholder="<?php _e('Choose coupons&hellip;', 'jigoshop'); ?>" style="width:100%;">
-							<option value=""><?php _e('All coupons', 'jigoshop'); ?></option>
-							<?php
-							foreach ($used_coupons as $coupon) {
-								echo '<option value="'.esc_attr($coupon['code']).'" '.selected(in_array($coupon['code'], $this->couponCodes), true, false).'>'.$coupon['code'].'</option>';
-							}
-							?>
-						</select>
-						<input type="submit" class="submit button" value="<?php _e('Show', 'jigoshop'); ?>" />
-						<input type="hidden" name="range" value="<?php if (!empty($_GET['range'])) echo esc_attr($_GET['range']) ?>" />
-						<input type="hidden" name="start_date" value="<?php if (!empty($_GET['start_date'])) echo esc_attr($_GET['start_date']) ?>" />
-						<input type="hidden" name="end_date" value="<?php if (!empty($_GET['end_date'])) echo esc_attr($_GET['end_date']) ?>" />
-						<input type="hidden" name="page" value="<?php if (!empty($_GET['page'])) echo esc_attr($_GET['page']) ?>" />
-						<input type="hidden" name="tab" value="<?php if (!empty($_GET['tab'])) echo esc_attr($_GET['tab']) ?>" />
-						<input type="hidden" name="report" value="<?php if (!empty($_GET['report'])) echo esc_attr($_GET['report']) ?>" />
-					<?php else : ?>
-						<span><?php _e('No used coupons found', 'jigoshop'); ?></span>
-					<?php endif; ?>
-				</div>
-			</form>
-		</div>
 		<h4 class="section_title"><span><?php _e('Most Popular', 'jigoshop'); ?></span></h4>
 		<div class="section">
 			<table cellspacing="0">

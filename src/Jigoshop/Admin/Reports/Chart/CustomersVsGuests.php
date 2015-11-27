@@ -183,6 +183,7 @@ class CustomersVsGuests extends Chart
 			'current_tab' => Reports\CustomersTab::SLUG,
 			'current_type' => 'customers_vs_guests',
 			'ranges' => $ranges,
+			'url' => remove_query_arg(array('start_date', 'end_date')),
 			'current_range' => $this->currentRange,
 			'legends' => $this->getChartLegend(),
 			'widgets' => $this->getChartWidgets(),
@@ -309,46 +310,5 @@ class CustomersVsGuests extends Chart
 			'customers' => '#1abc9c',
 			'guests' => '#8fdece'
 		);
-	}
-
-	private function getWidgetChart()
-	{
-		$customerOrderCount = $this->getOrderReportData(array(
-			'data' => array(
-				'ID' => array(
-					'type' => 'post_data',
-					'function' => 'COUNT',
-					'name' => 'total_orders'
-				)
-			),
-			'where_meta' => array(
-				array(
-					'meta_key' => 'customer_user',
-					'meta_value' => '0',
-					'operator' => '>'
-				)
-			),
-			'filter_range' => true,
-			'order_types' => array('shop_order'),
-		));
-
-		$guestOrderCount = $this->getOrderReportData(array(
-			'data' => array(
-				'ID' => array(
-					'type' => 'post_data',
-					'function' => 'COUNT',
-					'name' => 'total_orders'
-				)
-			),
-			'where_meta' => array(
-				array(
-					'meta_key' => 'customer_user',
-					'meta_value' => '0',
-					'operator' => '='
-				)
-			),
-			'filter_range' => true,
-			'order_types' => array('shop_order'),
-		));
 	}
 }
