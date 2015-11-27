@@ -31,8 +31,8 @@ class SelectCategories implements WidgetInterface
     public function getArgs()
     {
         return array(
-            'id' => 'order_status',
-            'name' => 'order_status',
+            'id' => 'select_categories',
+            'name' => 'show_categories',
             'value' => $this->selectedCategories,
             'multiple' => true,
             'classes' => array(),

@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Borbis Media
- * Date: 2015-11-23
- * Time: 09:00
- */
 
 namespace Jigoshop\Admin\Reports\Chart\Widget;
 

@@ -2,7 +2,7 @@
 /**
  * @var $types          array List of all sales report types.
  * @var $current_type   current selected type.
- * @var $chart          \Jigoshop\Admin\Reports\Chart
+ * @var $content
  */
 use Jigoshop\Admin\Reports;
 
@@ -12,13 +12,13 @@ use Jigoshop\Admin\Reports;
 		<ul class="nav nav-tabs nav-justified second-level">
 		<?php foreach ($types as $slug => $title) : ?>
 			<li <?php echo $slug == $current_type ? 'class="active"' : '' ?>>
-				<a	href="?page=<?php echo Reports::NAME; ?>&tab=<?php echo Reports\SalesTab::SLUG; ?>&type=<?php echo $slug; ?>"><?php echo $title; ?></a>
+				<a	href="?page=<?php echo Reports::NAME; ?>&tab=<?php echo Reports\CustomersTab::SLUG; ?>&type=<?php echo $slug; ?>"><?php echo $title; ?></a>
 			</li>
 		<?php endforeach; ?>
 		</ul>
 	</nav>
 	<div class="tab-content">
-		<?php $chart->display(); ?>
+		<?php $content->display(); ?>
 	</div>
 </div>
 

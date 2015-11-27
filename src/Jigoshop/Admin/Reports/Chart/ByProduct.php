@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Borbis Media
- * Date: 2015-11-17
- * Time: 11:57
- */
 
 namespace Jigoshop\Admin\Reports\Chart;
 
@@ -37,7 +31,7 @@ class ByProduct extends Chart
 		// Prepare data for report
 		$this->calculateCurrentRange();
 		$this->getReportData();
-		$this->getChartColors();
+		$this->getChartColours();
 
 		$wp->addAction('admin_enqueue_scripts', function () use ($wp){
 			// Weed out all admin pages except the Jigoshop Settings page hits
@@ -49,26 +43,13 @@ class ByProduct extends Chart
 			if ($screen->base != 'jigoshop_page_'.Reports::NAME) {
 				return;
 			}
-			Scripts::add('jigoshop.flot', JIGOSHOP_URL.'/assets/js/flot/jquery.flot.min.js', array('jquery'));
-			Scripts::add('jigoshop.flot.time', JIGOSHOP_URL.'/assets/js/flot/jquery.flot.time.min.js', array(
-				'jquery',
-				'jigoshop.flot'
-			));
-			Scripts::add('jigoshop.flot.pie', JIGOSHOP_URL.'/assets/js/flot/jquery.flot.pie.min.js', array(
-				'jquery',
-				'jigoshop.flot'
-			));
-			Scripts::add('jigoshop.reports.chart', JIGOSHOP_URL.'/assets/js/admin/reports/chart.js', array(
-				'jquery',
-				'jigoshop.flot'
-			));
-			Scripts::localize('jigoshop.reports.chart', 'chart_data', $this->getMainChart());
 			Styles::add('jigoshop.vendors.select2', JIGOSHOP_URL.'/assets/css/vendors/select2.min.css', array('jigoshop.admin'));
 			Scripts::add('jigoshop.vendors.select2', JIGOSHOP_URL.'/assets/js/vendors/select2.min.js', array('jigoshop.admin'), array('in_footer' => true));
 			Scripts::add('jigoshop.admin.reports.widget.product_search', JIGOSHOP_URL.'/assets/js/admin/reports/widget/product_search.js', array(
 				'jquery',
 				'jigoshop.vendors.select2'
 			), array('in_footer' => true));
+			Scripts::localize('jigoshop.reports.chart', 'chart_data', $this->getMainChart());
 			Scripts::localize('jigoshop.admin.reports.widget.product_search', 'jigoshop_admin_reports_widget_product_search', array(
 				'ajax' => $wp->getAjaxUrl(),
 			));
@@ -219,6 +200,7 @@ class ByProduct extends Chart
 
 		Render::output('admin/reports/chart', array(
 			/** TODO This is ugly... */
+			'current_tab' => Reports\SalesTab::SLUG,
 			'current_type' => 'by_product',
 			'ranges' => $ranges,
 			'current_range' => $this->currentRange,
@@ -288,7 +270,7 @@ class ByProduct extends Chart
 		));
 
 		$widgets[] = new Chart\Widget\CustomRange();
-		$widgets[] = new Chart\Widget\ProductSearch();
+		$widgets[] = new Chart\Widget\ProductSearch($this->productIds);
 		if($topSellers) {
 			$widgets[] = new Chart\Widget\TopSellers($topSellers);
 		}
@@ -301,123 +283,6 @@ class ByProduct extends Chart
 
 
 		return $this->wp->applyFilters('jigoshop/admin/reports/by_product/widgets', $widgets);
-	}
-
-	/**
-	 * Product selection
-	 */
-	public function products_widget()
-	{
-		?>
-		<h4 class="section_title"><span><?php _e('Top Sellers', 'jigoshop'); ?></span></h4>
-		<div class="section">
-			<table cellspacing="0">
-				<?php
-				$top_sellers = $this->getOrderReportData(array(
-					'data' => array(
-						'order_items' => array(
-							'type' => 'meta',
-							'name' => 'top_products',
-							'process' => true,
-							'limit' => 12,
-							'order' => 'most_sold',
-						),
-					),
-					'order_types' => array('shop_order'),
-					'query_type' => 'get_results',
-					'filter_range' => true,
-				));
-
-				if ($top_sellers) {
-					foreach ($top_sellers as $product) {
-						echo '<tr class="'.(in_array($product->product_id, $this->productIds) ? 'active' : '').'">
-							<td class="count">'.$product->order_item_qty.'</td>
-							<td class="name"><a href="'.esc_url(add_query_arg('product_ids', $product->product_id)).'">'.get_the_title($product->product_id).'</a></td>
-							<td class="sparkline">'.$this->sales_sparkline($product->product_id, 7, 'count').'</td>
-						</tr>';
-					}
-				} else {
-					echo '<tr><td colspan="3">'.__('No products found in range', 'jigoshop').'</td></tr>';
-				}
-				?>
-			</table>
-		</div>
-		<h4 class="section_title"><span><?php _e('Top Freebies', 'jigoshop'); ?></span></h4>
-		<div class="section">
-			<table cellspacing="0">
-				<?php
-				$top_freebies = $this->getOrderReportData(array(
-					'data' => array(
-						'order_items' => array(
-							'type' => 'meta',
-							'name' => 'top_products',
-							'process' => true,
-							'where' => array(
-								'type' => 'comparison',
-								'key' => 'cost',
-								'value' => '0',
-								'operator' => '0'
-							)
-						),
-					),
-					'order_types' => array('shop_order'),
-					'query_type' => 'get_results',
-					'limit' => 12,
-					'nocache' => true
-				));
-
-				if ($top_freebies) {
-					foreach ($top_freebies as $product) {
-						echo '<tr class="'.(in_array($product->product_id, $this->productIds) ? 'active' : '').'">
-							<td class="count">'.$product->order_item_qty.'</td>
-							<td class="name"><a href="'.esc_url(add_query_arg('product_ids', $product->product_id)).'">'.get_the_title($product->product_id).'</a></td>
-							<td class="sparkline">'.$this->sales_sparkline($product->product_id, 7, 'count').'</td>
-						</tr>';
-					}
-				} else {
-					echo '<tr><td colspan="3">'.__('No products found in range', 'jigoshop').'</td></tr>';
-				}
-				?>
-			</table>
-		</div>
-		<h4 class="section_title"><span><?php _e('Top Earners', 'jigoshop'); ?></span></h4>
-		<div class="section">
-			<table cellspacing="0">
-				<?php
-
-				if ($top_earners) {
-					foreach ($top_earners as $product) {
-						echo '<tr class="'.(in_array($product->product_id, $this->productIds) ? 'active' : '').'">
-							<td class="count">'.jigoshop_price($product->order_item_total).'</td>
-							<td class="name"><a href="'.esc_url(add_query_arg('product_ids', $product->product_id)).'">'.get_the_title($product->product_id).'</a></td>
-							<td class="sparkline">'.$this->salesSparkline($product->product_id, 7, 'sales').'</td>
-						</tr>';
-					}
-				} else {
-					echo '<tr><td colspan="3">'.__('No products found in range', 'jigoshop').'</td></tr>';
-				}
-				?>
-			</table>
-		</div>
-		<script type="text/javascript">
-			jQuery(function($) {
-				$('.section_title').click(function() {
-					var next_section = $(this).next('.section');
-					if ($(next_section).is(':visible'))
-						return false;
-					$('.section:visible').slideUp();
-					$('.section_title').removeClass('open');
-					$(this).addClass('open').next('.section').slideDown();
-					return false;
-				});
-				$('.section').slideUp(100, function() {
-					<?php if (empty($this->productIds)): ?>
-					$('.section_title:eq(1)').click();
-					<?php endif; ?>
-				});
-			});
-		</script>
-		<?php
 	}
 
 	public function getExportButton()
@@ -449,7 +314,7 @@ class ByProduct extends Chart
 				'show' => true,
 				'lineWidth' => 0,
 				'align' => 'left',
-				'barWidth' => $this->barwidth * 0.25,
+				'barWidth' => $this->barwidth * 0.4,
 			)),
 			'shadowSize' => 0,
 			'hoverable' => false
@@ -464,7 +329,7 @@ class ByProduct extends Chart
 				'show' => true,
 				'lineWidth' => 0,
 				'align' => 'right',
-				'barWidth' => $this->barwidth * 0.25,
+				'barWidth' => $this->barwidth * 0.4,
 			)),
 			'shadowSize' => 0,
 			'hoverable' => false
@@ -536,9 +401,9 @@ class ByProduct extends Chart
 		return $data;
 	}
 
-	private function getChartColors()
+	private function getChartColours()
 	{
-		$this->chartColours = $this->wp->applyFilters('jigoshop/admin/reports/by_product/chart_colors', array(
+		$this->chartColours = $this->wp->applyFilters('jigoshop/admin/reports/by_product/chart_colours', array(
 			'sales_amount' => '#3498db',
 			'item_count' => '#d4d9dc',
 			'item_quantity' => '#ecf0f1'

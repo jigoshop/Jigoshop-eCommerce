@@ -9,6 +9,7 @@ use Jigoshop\Helper\Currency;
 use Jigoshop\Helper\Product;
 use Jigoshop\Helper\Render;
 use Jigoshop\Helper\Scripts;
+use Jigoshop\Helper\Styles;
 use WPAL\Wordpress;
 
 class ByCategory extends Chart
@@ -29,7 +30,13 @@ class ByCategory extends Chart
 		parent::__construct($wp, $options, $currentRange);
 		if (isset($_GET['show_categories'])) {
 			$this->showCategories = is_array($_GET['show_categories']) ? array_map('absint', $_GET['show_categories']) : array(absint($_GET['show_categories']));
+		} else {
+			$this->showCategories = $this->getLastCategoryID();
 		}
+
+		$this->calculateCurrentRange();
+		$this->getReportData();
+		$this->getChartColours();
 
 		$wp->addAction('admin_enqueue_scripts', function () use ($wp){
 			// Weed out all admin pages except the Jigoshop Settings page hits
@@ -41,19 +48,8 @@ class ByCategory extends Chart
 			if ($screen->base != 'jigoshop_page_'.Reports::NAME) {
 				return;
 			}
-			Scripts::add('jigoshop.flot', JIGOSHOP_URL.'/assets/js/flot/jquery.flot.min.js', array('jquery'));
-			Scripts::add('jigoshop.flot.time', JIGOSHOP_URL.'/assets/js/flot/jquery.flot.time.min.js', array(
-				'jquery',
-				'jigoshop.flot'
-			));
-			Scripts::add('jigoshop.flot.pie', JIGOSHOP_URL.'/assets/js/flot/jquery.flot.pie.min.js', array(
-				'jquery',
-				'jigoshop.flot'
-			));
-			Scripts::add('jigoshop.reports.chart', JIGOSHOP_URL.'/assets/js/admin/reports/chart.js', array(
-				'jquery',
-				'jigoshop.flot'
-			));
+			Styles::add('jigoshop.vendors.select2', JIGOSHOP_URL.'/assets/css/vendors/select2.min.css', array('jigoshop.admin.reports'));
+			Scripts::add('jigoshop.vendors.select2', JIGOSHOP_URL . '/assets/js/vendors/select2.min.js', array('jigoshop.admin.reports'), array('in_footer' => true));
 			Scripts::localize('jigoshop.reports.chart', 'chart_data', $this->getMainChart());
 		});
 	}
@@ -188,6 +184,7 @@ class ByCategory extends Chart
 
 		Render::output('admin/reports/chart', array(
 			/** TODO This is ugly... */
+			'current_tab' => Reports\SalesTab::SLUG,
 			'current_type' => 'by_category',
 			'ranges' => $ranges,
 			'current_range' => $this->currentRange,
@@ -200,10 +197,14 @@ class ByCategory extends Chart
 	public function getChartWidgets()
 	{
 		$widgets = array();
-		$categories = get_terms('product_category', array('orderby' => 'name'));
+		$categories = get_terms('product_category', array('orderby' => 'name', 'hide_empty' => false));
+		$allCategories = array();
+		foreach($categories as $category){
+			$allCategories[$category->term_id] = $category->name;
+		}
 
 		$widgets[] = new Chart\Widget\CustomRange();
-		$widgets[] = new Chart\Widget\SelectCategories($this->showCategories, $categories);
+		$widgets[] = new Chart\Widget\SelectCategories($this->showCategories, $allCategories);
 
 		return $this->wp->applyFilters('jigoshop/admin/reports/by_category/widgets', $widgets);
 	}
@@ -274,7 +275,7 @@ class ByCategory extends Chart
 					'show' => true,
 					'lineWidth' => 1,
 					'align' => 'center',
-					'barWidth' => $width * 0.75,
+					'barWidth' => $width * 0.8,
 					'stack' => false
 				)),
 				'append_tooltip' => Currency::symbol(),
@@ -322,9 +323,9 @@ class ByCategory extends Chart
 		return $data;
 	}
 
-	private function getChartColors()
+	private function getChartColours()
 	{
-		$this->chartColours = $this->wp->applyFilters('jigoshop/admin/reports/by_category/chart_colors', array(
+		$this->chartColours = $this->wp->applyFilters('jigoshop/admin/reports/by_category/chart_colours', array(
 			'#3498db',
 			'#2ecc71',
 			'#f1c40f',
@@ -338,5 +339,13 @@ class ByCategory extends Chart
 			'#B6BA18',
 
 		));
+	}
+
+	private function getLastCategoryID()
+	{
+		$wpdb = $this->wp->getWPDB();
+		$productID = $wpdb->get_var($wpdb->prepare("SELECT term_id FROM $wpdb->term_taxonomy WHERE taxonomy = %s ORDER BY term_taxonomy_id DESC LIMIT 1", 'product_category'));
+
+		return $productID ? array($productID) : array();
 	}
 }

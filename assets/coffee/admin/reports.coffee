@@ -4,8 +4,13 @@ jQuery ($) ->
 
   $('.input-daterange').datepicker
     autoclose: true
+    todayHighlight: true
     container: '#datepicker'
-    orientation: 'top left',
+    orientation: 'top left'
+    todayBtn: 'linked'
 
-  #jQuery return
+  all_widgets = $('.chart-widget').click ->
+    $(this).find('.content').slideDown 500
+    all_widgets.not(this).find('.content').slideUp 500
+  ###jQuery return###
   return

@@ -10,7 +10,7 @@ use Jigoshop\Admin\Reports;
 		<div class="btn-group btn-group-justified" role="group" aria-label="Chart Ranges">
 			<?php foreach($ranges as $key => $value) : ?>
 				<div class="btn-group" role="group">
-		            <a href="?page=<?php echo Reports::NAME ?>&tab=sales&type=<?php echo $current_type ?>&range=<?php echo $key; ?>" class="btn btn-default <?php echo $key == $current_range ? 'active' : ''; ?>">
+		            <a href="?page=<?php echo Reports::NAME ?>&tab=<?php echo $current_tab ?>&type=<?php echo $current_type ?>&range=<?php echo $key; ?>" class="btn btn-default <?php echo $key == $current_range ? 'active' : ''; ?>">
 			            <?php echo $value ?>
 		            </a>
 		        </div>
@@ -34,8 +34,9 @@ use Jigoshop\Admin\Reports;
 	<div class="chart-widgets">
 		<form action="admin.php" method="get">
 			<input type="hidden" name="page" value="<?php echo Reports::NAME ?>">
-			<input type="hidden" name="tab" value="sales">
+			<input type="hidden" name="tab" value="<?php echo $current_tab ?>">
 			<input type="hidden" name="type" value="<?php echo $current_type ?>">
+			<input type="hidden" name="range" value="<?php echo $current_range ?>">
 			<?php foreach($widgets as $widget) : ?>
 				<div class="chart-widget <?php echo $widget->getSlug(); ?>">
 					<div class="title"><?php echo $widget->getTitle(); ?></div>

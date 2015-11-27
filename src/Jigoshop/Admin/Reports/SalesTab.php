@@ -5,7 +5,6 @@ namespace Jigoshop\Admin\Reports;
 use Jigoshop\Admin\Reports;
 use Jigoshop\Core\Options;
 use Jigoshop\Helper\Render;
-use Jigoshop\Helper\Styles;
 use WPAL\Wordpress;
 
 class SalesTab implements TabInterface
@@ -23,17 +22,6 @@ class SalesTab implements TabInterface
 		$this->wp = $wp;
 		$this->options = $options;
 		$this->chart = $this->getChart();
-		$wp->addAction('admin_enqueue_scripts', function () use ($wp){
-			// Weed out all admin pages except the Jigoshop Settings page hits
-			if (!in_array($wp->getPageNow(), array('admin.php', 'options.php'))) {
-				return;
-			}
-			$screen = $wp->getCurrentScreen();
-			if ($screen->base != 'jigoshop_page_'.Reports::NAME) {
-				return;
-			}
-		});
-
 	}
 
 	/**
@@ -91,7 +79,7 @@ class SalesTab implements TabInterface
 		if((isset($_GET['start_date']) && !empty($_GET['start_date'])) || (isset($_GET['end_date']) && !empty($_GET['end_date']))) {
 			$range = 'custom';
 		} else if (isset($_GET['range'])) {
-			$range = $_GET['type'];
+			$range = $_GET['range'];
 		}
 
 		return $range;
@@ -99,6 +87,18 @@ class SalesTab implements TabInterface
 
 	private function getChart()
 	{
+		if (!in_array($this->wp->getPageNow(), array('admin.php', 'options.php'))) {
+			return null;
+		}
+
+		if (!isset($_GET['page']) || $_GET['page'] != Reports::NAME) {
+			return null;
+		}
+
+		if(isset($_GET['tab']) && $_GET['tab'] != self::SLUG) {
+			return null;
+		}
+
 		switch($this->getCurrentType()){
 			case 'by_date':
 				return new Chart\ByDate($this->wp, $this->options, $this->getCurrentRange());

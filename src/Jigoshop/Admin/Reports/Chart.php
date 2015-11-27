@@ -2,8 +2,10 @@
 
 namespace Jigoshop\Admin\Reports;
 
+use Jigoshop\Admin\Reports;
 use Jigoshop\Core\Options;
 use Jigoshop\Helper\Currency;
+use Jigoshop\Helper\Scripts;
 use WPAL\Wordpress;
 
 /**
@@ -42,6 +44,30 @@ abstract class Chart
 		$this->options = $options;
 		$this->currentRange = $currentRange;
 		$this->orderStatus = isset($_GET['order_status']) && !empty($_GET['order_status']) ? $_GET['order_status'] : array('jigoshop-completed', 'jigoshop-processing');
+		$wp->addAction('admin_enqueue_scripts', function () use ($wp){
+			// Weed out all admin pages except the Jigoshop Settings page hits
+			if (!in_array($wp->getPageNow(), array('admin.php', 'options.php'))) {
+				return;
+			}
+
+			$screen = $wp->getCurrentScreen();
+			if ($screen->base != 'jigoshop_page_'.Reports::NAME) {
+				return;
+			}
+			Scripts::add('jigoshop.flot', JIGOSHOP_URL.'/assets/js/flot/jquery.flot.min.js', array('jquery'));
+			Scripts::add('jigoshop.flot.time', JIGOSHOP_URL.'/assets/js/flot/jquery.flot.time.min.js', array(
+					'jquery',
+					'jigoshop.flot'
+			));
+			Scripts::add('jigoshop.flot.pie', JIGOSHOP_URL.'/assets/js/flot/jquery.flot.pie.min.js', array(
+					'jquery',
+					'jigoshop.flot'
+			));
+			Scripts::add('jigoshop.reports.chart', JIGOSHOP_URL.'/assets/js/admin/reports/chart.js', array(
+					'jquery',
+					'jigoshop.flot'
+			));
+		});
 	}
 
 	/**
@@ -366,14 +392,16 @@ abstract class Chart
 							}
 						case 'intersection':
 							$source = $item[$value['where']['key']];
-							if (isset($value['where']['map'])) {
-								$source = array_map($value['where']['map'], $source);
-							}
+							if(is_array($source)) {
+								if (isset($value['where']['map'])) {
+									$source = array_map($value['where']['map'], $source);
+								}
 
-							$intersection = array_intersect($source, $value['where']['value']);
-							if (!empty($intersection)) {
-								return $item;
-							};
+								$intersection = array_intersect($source, $value['where']['value']);
+								if (!empty($intersection)) {
+									return $item;
+								};
+							}
 					}
 
 					return false;
@@ -568,7 +596,7 @@ abstract class Chart
 			$query['limit'] = "LIMIT {$args['limit']}";
 		}
 
-		$query = $this->wp->applyFilters('jigoshop_reports_get_order_report_query', $query);
+		$query = $this->wp->applyFilters('jigoshop/admin/reports/get_order_report_query', $query);
 		$query = implode(' ', $query);
 		$queryHash = md5($args['query_type'].$query);
 		$cachedResults = $this->wp->getTransient(strtolower(get_class($this)));
@@ -659,9 +687,10 @@ abstract class Chart
 								$results[$item->post_date] = $result;
 							}
 
+
 							$data = maybe_unserialize($item->discount_amount);
 							$data = $this->filterItem($data, $value);
-							if (!empty($data)) {
+							if (!empty($data) && isset($data['order_discount_coupons'])) {
 								if(!empty($this->coupon_codes[0])){
 									$coupon_code = $this->coupon_codes[0];
 									$results[$item->post_date]->coupons_used += array_sum(array_map(function($coupon) use ($coupon_code){
@@ -675,7 +704,9 @@ abstract class Chart
 									$results[$item->post_date]->coupons_used += count($data['order_discount_coupons']);
 
 									foreach ($data['order_discount_coupons'] as $coupon) {
-										$results[$item->post_date]->discount_amount += $coupon['amount'];
+										if(isset($coupon['amount'])){
+											$results[$item->post_date]->discount_amount += $coupon['amount'];
+										}
 									}
 								}
 							}
@@ -696,13 +727,17 @@ abstract class Chart
 							}
 
 							$data = maybe_unserialize($item->order_coupons);
-							foreach ($data['order_discount_coupons'] as $coupon) {
-								if (!in_array($coupon['code'], $coupons[$item->post_date])) {
-									$results[$item->post_date]->coupons[] = $coupon;
-									$results[$item->post_date]->usage[$coupon['code']] = 1;
-									$coupons[$item->post_date][] = $coupon['code'];
-								} else {
-									$results[$item->post_date]->usage[$coupon['code']] += 1;
+							if(isset($data['order_discount_coupons']) && !empty($data['order_discount_coupons'])) {
+								foreach ($data['order_discount_coupons'] as $coupon) {
+									if(isset($coupon['code'])) {
+										if (!in_array($coupon['code'], $coupons[$item->post_date])) {
+											$results[$item->post_date]->coupons[] = $coupon;
+											$results[$item->post_date]->usage[$coupon['code']] = 1;
+											$coupons[$item->post_date][] = $coupon['code'];
+										} else {
+											$results[$item->post_date]->usage[$coupon['code']] += 1;
+										}
+									}
 								}
 							}
 						}

@@ -137,6 +137,12 @@
       }
       .content {
         padding-top: 5px;
+        display: none;
+      }
+      &:first-of-type {
+        .content{
+          display:block;
+        }
       }
     }
     .order_statuses {
@@ -163,6 +169,9 @@
           }
         }
       }
+    }
+    .row .count, .row .total {
+      text-align: right;
     }
   }
 }

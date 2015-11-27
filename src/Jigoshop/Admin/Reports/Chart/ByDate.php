@@ -23,7 +23,7 @@ class ByDate extends Chart
 		// Prepare data for report
 		$this->calculateCurrentRange();
 		$this->getReportData();
-		$this->getChartColors();
+		$this->getChartColours();
 
 		$wp->addAction('admin_enqueue_scripts', function () use ($wp){
 			// Weed out all admin pages except the Jigoshop Settings page hits
@@ -35,22 +35,8 @@ class ByDate extends Chart
 			if ($screen->base != 'jigoshop_page_'.Reports::NAME) {
 				return;
 			}
-			Scripts::add('jigoshop.flot', JIGOSHOP_URL.'/assets/js/flot/jquery.flot.min.js', array('jquery'));
-			Scripts::add('jigoshop.flot.time', JIGOSHOP_URL.'/assets/js/flot/jquery.flot.time.min.js', array(
-				'jquery',
-				'jigoshop.flot'
-			));
-			Scripts::add('jigoshop.flot.pie', JIGOSHOP_URL.'/assets/js/flot/jquery.flot.pie.min.js', array(
-				'jquery',
-				'jigoshop.flot'
-			));
-			Scripts::add('jigoshop.reports.chart', JIGOSHOP_URL.'/assets/js/admin/reports/chart.js', array(
-				'jquery',
-				'jigoshop.flot'
-			));
-
 			Styles::add('jigoshop.vendors.select2', JIGOSHOP_URL.'/assets/css/vendors/select2.min.css', array('jigoshop.admin.reports'));
-			Scripts::add('jigoshop.vendors.select2', JIGOSHOP_URL . '/assets/js/vendors/select2.min.js', array('jigoshop.admin.reports'), array('in_footer' => true));
+			Scripts::add('jigoshop.vendors.select2', JIGOSHOP_URL.'/assets/js/vendors/select2.min.js', array('jigoshop.admin.reports'), array('in_footer' => true));
 			Scripts::localize('jigoshop.reports.chart', 'chart_data', $this->getMainChart());
 		});
 	}
@@ -260,6 +246,7 @@ class ByDate extends Chart
 
 		Render::output('admin/reports/chart', array(
 			/** TODO This is ugly... */
+			'current_tab' => Reports\SalesTab::SLUG,
 			'current_type' => 'by_date',
 			'ranges' => $ranges,
 			'current_range' => $this->currentRange,
@@ -334,7 +321,7 @@ class ByDate extends Chart
 				'show' => true,
 				'lineWidth' => 0,
 				'align' => 'left',
-				'barWidth' => $this->barwidth * 0.25,
+				'barWidth' => $this->barwidth * 0.4,
 			),
 			'shadowSize' => 0,
 			'hoverable' => false
@@ -349,7 +336,7 @@ class ByDate extends Chart
 				'show' => true,
 				'lineWidth' => 0,
 				'align' => 'right',
-				'barWidth' => $this->barwidth * 0.25,
+				'barWidth' => $this->barwidth * 0.4,
 			),
 			'shadowSize' => 0,
 			'hoverable' => false
@@ -517,9 +504,9 @@ class ByDate extends Chart
 		}
 	}
 
-	private function getChartColors()
+	private function getChartColours()
 	{
-		$this->chartColours = $this->wp->applyFilters('jigoshop/admin/reports/by_date/chart_colors', array(
+		$this->chartColours = $this->wp->applyFilters('jigoshop/admin/reports/by_date/chart_colours', array(
 			'sales_amount' => '#b1d4ea',
 			'net_sales_amount' => '#3498db',
 			'average' => '#95a5a6',

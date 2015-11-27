@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Borbis Media
- * Date: 2015-08-07
- * Time: 09:19
- */
 
 namespace Jigoshop\Container;
 

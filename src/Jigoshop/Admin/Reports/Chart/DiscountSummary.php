@@ -9,6 +9,7 @@ use Jigoshop\Helper\Currency;
 use Jigoshop\Helper\Product;
 use Jigoshop\Helper\Render;
 use Jigoshop\Helper\Scripts;
+use Jigoshop\Helper\Styles;
 use WPAL\Wordpress;
 
 class DiscountSummary extends Chart
@@ -30,10 +31,11 @@ class DiscountSummary extends Chart
 		} elseif (isset($_GET['coupon_codes'])) {
 			$this->couponCodes = array_filter(array(sanitize_text_field($_GET['coupon_codes'])));
 		}
+
 		// Prepare data for report
 		$this->calculateCurrentRange();
 		$this->getReportData();
-		$this->getChartColors();
+		$this->getChartColours();
 
 		$wp->addAction('admin_enqueue_scripts', function () use ($wp){
 			// Weed out all admin pages except the Jigoshop Settings page hits
@@ -45,19 +47,8 @@ class DiscountSummary extends Chart
 			if ($screen->base != 'jigoshop_page_'.Reports::NAME) {
 				return;
 			}
-			Scripts::add('jigoshop.flot', JIGOSHOP_URL.'/assets/js/flot/jquery.flot.min.js', array('jquery'));
-			Scripts::add('jigoshop.flot.time', JIGOSHOP_URL.'/assets/js/flot/jquery.flot.time.min.js', array(
-				'jquery',
-				'jigoshop.flot'
-			));
-			Scripts::add('jigoshop.flot.pie', JIGOSHOP_URL.'/assets/js/flot/jquery.flot.pie.min.js', array(
-				'jquery',
-				'jigoshop.flot'
-			));
-			Scripts::add('jigoshop.reports.chart', JIGOSHOP_URL.'/assets/js/admin/reports/chart.js', array(
-				'jquery',
-				'jigoshop.flot'
-			));
+			Styles::add('jigoshop.vendors.select2', JIGOSHOP_URL.'/assets/css/vendors/select2.min.css', array('jigoshop.admin'));
+			Scripts::add('jigoshop.vendors.select2', JIGOSHOP_URL.'/assets/js/vendors/select2.min.js', array('jigoshop.admin'), array('in_footer' => true));
 			Scripts::localize('jigoshop.reports.chart', 'chart_data', $this->getMainChart());
 		});
 	}
@@ -91,6 +82,9 @@ class DiscountSummary extends Chart
 				'value' => $this->couponCodes,
 				'operator' => 'intersection',
 				'map' => function($item){
+					if(!isset($item['code'])){
+						return false;
+					}
 					return $item['code'];
 				},
 			);
@@ -132,10 +126,9 @@ class DiscountSummary extends Chart
 			'today' => __('Today', 'jigoshop'),
 		);
 
-		$this->calculateCurrentRange();
-
 		Render::output('admin/reports/chart', array(
 			/** TODO This is ugly... */
+			'current_tab' => Reports\SalesTab::SLUG,
 			'current_type' => 'discount_summary',
 			'ranges' => $ranges,
 			'current_range' => $this->currentRange,
@@ -148,11 +141,9 @@ class DiscountSummary extends Chart
 	public function getChartWidgets()
 	{
 		$widgets = array();
+		$usedCoupons = $this->getUsedCoupons();
 
-		$widgets[] = array(
-			'title' => '',
-			'callback' => array($this, 'coupons_widget')
-		);
+		$widgets[] = new Chart\Widget\SelectCoupons($this->couponCodes, $usedCoupons);
 
 		return $widgets;
 	}
@@ -165,7 +156,7 @@ class DiscountSummary extends Chart
 			<form method="GET">
 				<div>
 					<?php
-					$data = $this->get_report_data();
+					$data = $this->getReportData();
 					$used_coupons = array();
 					foreach ($data as $coupons) {
 						foreach ($coupons->coupons as $coupon) {
@@ -293,7 +284,7 @@ class DiscountSummary extends Chart
 	private function queryReportData()
 	{
 		$this->reportData = new \stdClass();
-		$this->reportData->orderCoupons = $this->getOrderReportData(array(
+		$this->reportData->usedCoupons = $this->getOrderReportData(array(
 			'data' => array(
 				'order_data' => array(
 					'type' => 'meta',
@@ -311,20 +302,30 @@ class DiscountSummary extends Chart
 			'order_types' => array('shop_order'),
 		));
 
-
 		$couponCodes = $this->couponCodes;
-		if(!empty($couponCcodes[0])){
-			$this->reportData->orderCoupons = array_filter($this->reportData->orderCoupons, function($item) use ($couponCodes)	{
-				return isset($item->usage[$couponCodes[0]]);
+		if(!empty($couponCodes[0])){
+			$this->reportData->orderCoupons = array_filter($this->reportData->usedCoupons, function($item) use ($couponCodes)	{
+				foreach($couponCodes as $couponCode){
+					if(isset($item->usage[$couponCode])){
+						return true;
+					}
+				}
+				return false;
 			});
-		};
+		} else {
+			$this->reportData->orderCoupons = $this->reportData->usedCoupons;
+		}
 
 		$this->reportData->orderCouponCounts = array_map(function($item) use ($couponCodes){
 			$time = new \stdClass();
 			$time->post_date = $item->post_date;
 			if(!empty($couponCodes))
 			{
-				$time->order_coupon_count = $item->usage[$couponCodes[0]];
+				foreach($couponCodes as $couponCode){
+					if(isset($item->usage[$couponCode])){
+						$time->order_coupon_count = $item->usage[$couponCode];
+					}
+				}
 			} else {
 				$time->order_coupon_count = count($item->coupons);
 			}
@@ -340,8 +341,13 @@ class DiscountSummary extends Chart
 					if(empty($innerItem)){
 						return 0;
 					}
-					if(!empty($coupon_codes[0])) {
-						return $coupon_codes[0] == $innerItem['code'] ? $item->usage[$innerItem['code']] * $innerItem['amount'] : 0;
+					if(!empty($couponCodes)) {
+						foreach($couponCodes as $couponCode) {
+							if($couponCode == $innerItem['code']){
+								return $item->usage[$innerItem['code']] * $innerItem['amount'];
+							}
+						}
+						return 0;
 					} else {
 						return $item->usage[$innerItem['code']] * $innerItem['amount'];
 					}
@@ -391,7 +397,7 @@ class DiscountSummary extends Chart
 				'show' => true,
 				'lineWidth' => 0,
 				'align' => 'center',
-				'barWidth' => $this->barwidth * 0.5
+				'barWidth' => $this->barwidth * 0.8
 			)),
 			'shadowSize' => 0,
 			'hoverable' => false
@@ -467,12 +473,32 @@ class DiscountSummary extends Chart
 		return $data;
 	}
 
-	private function getChartColors()
+	private function getChartColours()
 	{
-		$this->chartColours = $this->wp->applyFilters('jigoshop/admin/reports/discount_summary/chart_colors', array(
+		$this->chartColours = $this->wp->applyFilters('jigoshop/admin/reports/discount_summary/chart_colours', array(
 
 				'discount_amount' => '#3498db',
 				'coupon_count' => '#d4d9dc',
 		));
+	}
+
+	private function getUsedCoupons()
+	{
+		$data = $this->getReportData();
+		$usedCoupons = array();
+
+		foreach ($data->usedCoupons as $coupons) {
+			foreach ($coupons->coupons as $coupon) {
+				if(!empty($coupon)){
+					if (!isset($usedCoupons[$coupon['code']])) {
+						$usedCoupons[$coupon['code']] = $coupon;
+						$usedCoupons[$coupon['code']]['usage'] = 0;
+					}
+					$usedCoupons[$coupon['code']]['usage'] += $coupons->usage[$coupon['code']];
+				}
+			}
+		}
+
+		return $usedCoupons;
 	}
 }

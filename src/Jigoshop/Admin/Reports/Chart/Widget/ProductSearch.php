@@ -8,9 +8,11 @@ use Jigoshop\Admin\Helper\Forms;
 class ProductSearch implements WidgetInterface
 {
 	const SLUG = 'product_search';
+	private $productIds = array();
 
-	public function __construct()
+	public function __construct($productIds)
 	{
+		$this->productIds = $productIds;
 	}
 
 	public function getSlug()
@@ -25,17 +27,10 @@ class ProductSearch implements WidgetInterface
 
 	public function getArgs()
 	{
-		$productIds = array();
-		if (isset($_GET['product_ids']) && is_array($_GET['product_ids'])) {
-			$productIds = array_filter(array_map('absint', $_GET['product_ids']));
-		} elseif (isset($_GET['product_ids'])) {
-			$productIds = array($_GET['product_ids']);
-		}
-
 		return array(
 			'id' => 'jigoshop_find_products',
 			'name' => 'product_ids',
-			'value' => join(',', $productIds),
+			'value' => join(',', $this->productIds),
 			'size' => 14,
 		);
 	}
