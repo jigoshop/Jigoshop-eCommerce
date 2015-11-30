@@ -29,7 +29,8 @@ class ReportsConfiguration implements ConfigurationInterface
 		));
 		$services->setDatails('jigoshop.admin.reports.customers', 'Jigoshop\Admin\Reports\CustomersTab', array(
 			'wpal',
-			'jigoshop.options'
+			'jigoshop.options',
+			'jigoshop.service.order',
 		));
 		$services->setDatails('jigoshop.admin.reports.stock', 'Jigoshop\Admin\Reports\StockTab', array(
 			'wpal',

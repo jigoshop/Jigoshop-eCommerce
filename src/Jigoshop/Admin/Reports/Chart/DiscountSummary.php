@@ -143,8 +143,26 @@ class DiscountSummary extends Chart
 	{
 		$widgets = array();
 		$usedCoupons = $this->getUsedCoupons();
+		$mostDiscount = $usedCoupons;
+		$mostPopular = $usedCoupons;
+		usort($mostDiscount, function($a, $b){
+			return $b['amount'] * $b['usage'] - $a['amount'] * $a['usage'];
+		});
+		$mostDiscount = array_slice($mostDiscount, 0, 12);
+		usort($mostPopular, function($a, $b){
+			return $b['usage'] - $a['usage'];
+		});
+		$mostPopular = array_slice($mostPopular, 0, 12);
 
 		$widgets[] = new Chart\Widget\SelectCoupons($this->couponCodes, $usedCoupons);
+		$widgets[] = new Chart\Widget\CustomRange();
+		if(!empty($mostPopular)) {
+			$widgets[] = new Chart\Widget\MostPopular($mostPopular);
+		}
+		if(!empty($mostDiscount)) {
+			$widgets[] = new Chart\Widget\MostDiscount($mostDiscount);
+		}
+
 
 		return $widgets;
 	}
@@ -152,36 +170,12 @@ class DiscountSummary extends Chart
 	public function coupons_widget()
 	{
 		?>
-		<h4 class="section_title"><span><?php _e('Filter by coupon', 'jigoshop'); ?></span></h4>
-		<div class="section">
-		<h4 class="section_title"><span><?php _e('Most Popular', 'jigoshop'); ?></span></h4>
-		<div class="section">
-			<table cellspacing="0">
-				<?php
-				$most_popular = $used_coupons;
-				usort($most_popular, function($a, $b){
-					return $b['usage'] - $a['usage'];
-				});
-				$most_popular = array_slice($most_popular, 0, 12);
 
-				if ($most_popular) {
-					foreach ($most_popular as $coupon) {
-						echo '<tr class="'.(in_array($coupon['code'], $this->couponCodes) ? 'active' : '').'">
-							<td class="count" width="1%">'.$coupon['usage'].'</td>
-							<td class="name"><a href="'.esc_url(add_query_arg('coupon_codes', $coupon['code'])).'">'.$coupon['code'].'</a></td>
-						</tr>';
-					}
-				} else {
-					echo '<tr><td colspan="2">'.__('No coupons found in range', 'jigoshop').'</td></tr>';
-				}
-				?>
-			</table>
-		</div>
 		<h4 class="section_title"><span><?php _e('Most Discount', 'jigoshop'); ?></span></h4>
 		<div class="section">
 			<table cellspacing="0">
 				<?php
-				$most_discount = $used_coupons;
+				$most_discount = $usedCoupons;
 				usort($most_discount, function($a, $b){
 					return $b['amount'] * $b['usage'] - $a['amount'] * $a['usage'];
 				});

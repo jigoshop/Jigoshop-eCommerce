@@ -5,6 +5,7 @@ namespace Jigoshop\Admin\Reports;
 use Jigoshop\Admin\Reports;
 use Jigoshop\Core\Options;
 use Jigoshop\Helper\Render;
+use Jigoshop\Service\OrderServiceInterface;
 use WPAL\Wordpress;
 
 class CustomersTab implements TabInterface
@@ -13,14 +14,17 @@ class CustomersTab implements TabInterface
 
 	/** @var  Wordpress */
 	private $wp;
-	/** @var  options */
+	/** @var  Options */
 	private $options;
+	/** @var  OrderServiceInterface */
+	private $orderService;
 	private $content;
 
-	public function __construct(Wordpress $wp, Options $options)
+	public function __construct(Wordpress $wp, Options $options, OrderServiceInterface $orderService)
 	{
 		$this->wp = $wp;
 		$this->options = $options;
+		$this->orderService = $orderService;
 		$this->content = $this->getContent();
 	}
 
@@ -100,7 +104,7 @@ class CustomersTab implements TabInterface
 			case 'customers_vs_guests':
 				return new Chart\CustomersVsGuests($this->wp, $this->options, $this->getCurrentRange());
 			case 'customer_list':
-				return new Chart\ByProduct($this->wp, $this->options);
+				return new Table\CustomerList($this->wp, $this->options, $this->orderService);
 			default:
 				$this->wp->doAction('jigoshop/admin/reports/customers/custom_content', $this->getCurrentType(), $this->wp, $this->options);
 		}
