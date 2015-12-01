@@ -5,6 +5,7 @@ namespace Jigoshop\Admin\Reports\Table;
 use Jigoshop\Admin\Reports\TableInterface;
 use Jigoshop\Core\Options;
 use Jigoshop\Helper\Country;
+use Jigoshop\Helper\Product;
 use Jigoshop\Helper\Render;
 use Jigoshop\Service\OrderServiceInterface;
 use WPAL\Wordpress;
@@ -15,6 +16,9 @@ class CustomerList implements TableInterface
 	private $wp;
 	private $options;
 	private $orderService;
+	private $totalItems;
+	private $activePageNumber;
+	private $totalPages;
 	private $items = array();
 	private $columns = array();
 
@@ -37,18 +41,42 @@ class CustomerList implements TableInterface
 
 	public function getColumns()
 	{
-		if(!empty($this->columns)){
+		if (!empty($this->columns)) {
 			return $this->columns;
 		}
 		$this->columns = array(
-			'customer_name' => __('Name (Last, First)', 'jigoshop'),
-			'username' => __('Username', 'jigoshop'),
-			'email' => __('Email', 'jigoshop'),
-			'location' => __('Location', 'jigoshop'),
-			'orders' => __('Orders', 'jigoshop'),
-			'spent' => __('Money Spent', 'jigoshop'),
-			'last_order' => __('Last order', 'jigoshop'),
-			//'user_actions' => __('Actions', 'jigoshop')
+			'customer_name' => array(
+				'name' => __('Name (Last, First)', 'jigoshop'),
+				'size' => 2
+			),
+			'username' => array(
+				'name' => __('Username', 'jigoshop'),
+				'size' => 1
+			),
+			'email' => array(
+				'name' => __('Email', 'jigoshop'),
+				'size' => 1
+			),
+			'location' => array(
+				'name' => __('Location', 'jigoshop'),
+				'size' => 2
+			),
+			'orders' => array(
+				'name' => __('Orders', 'jigoshop'),
+				'size' => 1
+			),
+			'spent' => array(
+				'name' => __('Money Spent', 'jigoshop'),
+				'size' => 1
+			),
+			'last_order' => array(
+				'name' => __('Last order', 'jigoshop'),
+				'size' => 2
+			),
+			'user_actions' => array(
+				'name' => __('Actions', 'jigoshop'),
+				'size' => 2
+			)
 		);
 
 		return $this->wp->applyFilters('jigoshop/admin/reports/table/customer_list/columns', $this->columns);
@@ -61,21 +89,15 @@ class CustomerList implements TableInterface
 
 	public function getItems()
 	{
-		//$currentPage = absint($this->getPagenum());
-		//$perPage = 20;
-
-
-		//$this->wp->addAction('pre_user_query', array($this, 'order_by_last_name'));
 		$users = $this->getUsers();
-		foreach($users as $user){
+		foreach ($users as $user) {
 			$item = array();
-			foreach($this->getColumns() as $columnKey => $columnName){
+			foreach ($this->getColumns() as $columnKey => $columnName) {
 				$item[$columnKey] = $this->getRow($user, $columnKey);
 			}
 			$this->items[] = $item;
 		}
 
-		//remove_action('pre_user_query', array($this, 'order_by_last_name'));
 		return $this->items;
 	}
 
@@ -88,7 +110,11 @@ class CustomerList implements TableInterface
 	{
 		Render::output('admin/reports/table', array(
 			'columns' => $this->getColumns(),
-			'items' => $this->getItems()
+			'items' => $this->getItems(),
+			'no_items' => $this->noItems(),
+			'total_items' => $this->totalItems,
+			'total_pages' => $this->totalPages,
+			'active_page' => $this->activePageNumber
 		));
 	}
 
@@ -111,8 +137,11 @@ class CustomerList implements TableInterface
 		$query = new \WP_User_Query(array(
 			'exclude' => array_merge($adminUsers->get_results(), $managerUsers->get_results()),
 			'number' => 20,
-			//'offset' => ($current_page - 1) * $per_page
+			'offset' => ($this->getCurrentPage() - 1) * 20,
 		));
+
+		$this->totalItems = $query->get_total();
+		$this->totalPages = ceil($query->get_total() / 20);
 
 		return $query->get_results();
 	}
@@ -147,10 +176,10 @@ class CustomerList implements TableInterface
 				return '<a href="mailto:'.$user->user_email.'">'.$user->user_email.'</a>';
 			case 'spent' :
 				//return Product::formatPrice($this->getCustomerTotalSpent($user->ID));
-				return '-';
+				return Product::formatPrice(0);
 			case 'orders' :
 				//return $this->getCustomerOrderCount($user->ID);
-				return '-';
+				return '0';
 			case 'last_order' :
 				//TODO czekaj na migracje
 				return '-';
@@ -168,6 +197,7 @@ class CustomerList implements TableInterface
 					'action' => 'edit'
 				);
 				$actions = $this->wp->applyFilters('jigoshop/admin/reports/table/customer_list/user_actions', $actions, $user);
+
 				return $actions;
 			default:
 				return $this->wp->applyFilters('jigoshop/admin/reports/table/customer_list/row', '', $user, $columnKey);
@@ -199,6 +229,7 @@ class CustomerList implements TableInterface
 	 * Get total orders by customer
 	 *
 	 * @param  int $userId
+	 *
 	 * @return int
 	 */
 	private function getCustomerOrderCount($userId)
@@ -229,5 +260,15 @@ class CustomerList implements TableInterface
 		}
 
 		return $count;
+	}
+
+	private function getCurrentPage($query = null)
+	{
+		$this->activePageNumber = 1;
+		if(isset($_GET['paged']) && !empty($_GET['paged'])) {
+			$this->activePageNumber = $_GET['paged'];
+		}
+
+		return $this->activePageNumber;
 	}
 }
