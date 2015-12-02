@@ -6,7 +6,7 @@ interface TableInterface
 {
 	public function getSlug();
 	public function getTite();
-	public function getActions();
+	public function getSearch();
 	public function getColumns();
 	public function getItems();
 	public function noItems();

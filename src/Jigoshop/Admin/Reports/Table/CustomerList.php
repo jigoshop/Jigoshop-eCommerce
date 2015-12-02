@@ -82,9 +82,9 @@ class CustomerList implements TableInterface
 		return $this->wp->applyFilters('jigoshop/admin/reports/table/customer_list/columns', $this->columns);
 	}
 
-	public function getActions()
+	public function getSearch()
 	{
-		// TODO: Implement getActions() method.
+		return isset($_GET['search']) ? $_GET['search'] : '';
 	}
 
 	public function getItems()
@@ -114,7 +114,9 @@ class CustomerList implements TableInterface
 			'no_items' => $this->noItems(),
 			'total_items' => $this->totalItems,
 			'total_pages' => $this->totalPages,
-			'active_page' => $this->activePageNumber
+			'active_page' => $this->activePageNumber,
+			'search_title' => __('Search Customers'),
+			'search' => $this->getSearch(),
 		));
 	}
 
@@ -138,6 +140,7 @@ class CustomerList implements TableInterface
 			'exclude' => array_merge($adminUsers->get_results(), $managerUsers->get_results()),
 			'number' => 20,
 			'offset' => ($this->getCurrentPage() - 1) * 20,
+			'search' => '*'.$this->getSearch().'*'
 		));
 
 		$this->totalItems = $query->get_total();

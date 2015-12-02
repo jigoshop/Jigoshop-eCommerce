@@ -5,12 +5,21 @@
 ?>
 <div class="row">
 	<div class="col-sm-6">
-
+		<div class="search form-group">
+			<form action="#" method="GET">
+				<?php foreach($_GET as $key => $value) : ?>
+					<input type="hidden" name="<?php echo $key; ?>" value="<?php echo $value; ?>">
+				<?php endforeach; ?>
+				<div class="row">
+					<div class="col-xs-8"><input class="form-control" type="text" name="search" value="<?php echo $search; ?>" placeholder="<?php echo __('Search', 'jigoshop'); ?>"></div>
+					<div class="col-xs-4"><button class="btn btn-default" type="submit"><?php echo $search_title; ?></button></div>
+				</div>
+			</form>
+		</div>
 	</div>
-	<div class="col-sm-6" style="text-align:right">
-		<div class="row">
-			<div class="col-xs-5 item-count"><?php printf('%s: %d', __('Items', 'jigoshop'), $total_items); ?></div>
-			<div class="col-xs-7"">
+	<div class="col-sm-6">
+		<div class="text-right row">
+			<div class="col-xs-9"">
 				<?php if(isset($total_pages) && $total_pages > 1) : ?>
 					<nav>
 						<ul class="pagination">
@@ -37,6 +46,7 @@
 					</nav>
 				<?php endif; ?>
 			</div>
+			<div class="col-xs-3 item-count"><?php printf('%s: %d', __('Items', 'jigoshop'), $total_items); ?></div>
 		</div>
 	</div>
 	<div class="clear"></div>
@@ -106,4 +116,3 @@
 	</div>
 	<div class="clear"></div>
 </div>
-
