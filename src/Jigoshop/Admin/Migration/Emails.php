@@ -46,13 +46,15 @@ class Emails implements Tool
 			array('shop_email', 'auto-draft'))));
 
 		$countRemain = 0;
+		$countDone = 0;
 
 		if (($itemsFromBase = $this->wp->getOption('jigoshop_emails_migrate_id')) !== false)
 		{
 			$countRemain = count(unserialize($itemsFromBase));
+			$countDone = $countAll - $countRemain;
 		}
 
-		Render::output('admin/migration/emails', array('countAll' => $countAll, 'countDone' => ($countAll - $countRemain)));
+		Render::output('admin/migration/emails', array('countAll' => $countAll, 'countDone' => $countDone));
 	}
 
 	/**

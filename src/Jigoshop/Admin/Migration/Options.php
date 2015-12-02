@@ -108,12 +108,13 @@ class Options implements Tool
 			$options['jigoshop_tax_rates'] = array_values($options['jigoshop_tax_rates']);
 			for ($i = 0, $endI = count($options['jigoshop_tax_rates']); $i < $endI;) {
 				$rateDate = array(
-					'id' => '0',
+					'id' => '',
 					'rate' => $options['jigoshop_tax_rates'][$i]['rate'],
 					'label' => empty($options['jigoshop_tax_rates'][$i]['label']) ? __('Tax', 'jigoshop') : $options['jigoshop_tax_rates'][$i]['label'],
 					'class' => $options['jigoshop_tax_rates'][$i]['class'] == '*' ? 'standard' : $options['jigoshop_tax_rates'][$i]['class'], // TODO: Check how other classes are used
 					'country' => $options['jigoshop_tax_rates'][$i]['country'],
 					'states' => $options['jigoshop_tax_rates'][$i]['state'],
+					'is_compound' => ($options['jigoshop_tax_rates'][$i]['compound'] == 'yes' ? 1 : 0),
 					'postcodes' => '',
 				);
 				$i++;

@@ -46,13 +46,15 @@ class Coupons implements Tool
 			array('shop_coupon', 'auto-draft'))));
 
 		$countRemain = 0;
+		$countDone = 0;
 
 		if (($itemsFromBase = $this->wp->getOption('jigoshop_coupons_migrate_id')) !== false)
 		{
 			$countRemain = count(unserialize($itemsFromBase));
+			$countDone = $countAll - $countRemain;
 		}
 
-		Render::output('admin/migration/coupons', array('countAll' => $countAll, 'countDone' => ($countAll - $countRemain)));
+		Render::output('admin/migration/coupons', array('countAll' => $countAll, 'countDone' => $countDone));
 	}
 
 	/**

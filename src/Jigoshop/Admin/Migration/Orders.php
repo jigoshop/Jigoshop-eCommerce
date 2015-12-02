@@ -44,6 +44,8 @@ class Orders implements Tool
 		$this->shippingService = $shippingService;
 		$this->paymentService = $paymentService;
 		$this->productService = $productService;
+
+		$wp->addAction('wp_ajax_jigoshop.admin.migration.orders', array($this, 'ajaxMigrationOrders'), 10, 0);
 	}
 
 	/**
@@ -59,239 +61,311 @@ class Orders implements Tool
 	 */
 	public function display()
 	{
-		Render::output('admin/migration/orders', array());
+		$wpdb = $this->wp->getWPDB();
+
+		$countAll = count($wpdb->get_results($wpdb->prepare("
+				SELECT DISTINCT p.ID FROM {$wpdb->posts} p
+				LEFT JOIN {$wpdb->postmeta} pm ON pm.post_id = p.ID
+					WHERE p.post_type = %s AND p.post_status <> %s
+				ORDER BY p.ID",
+			array('shop_order', 'auto-draft'))));
+
+		$countRemain = 0;
+		$countDone = 0;
+
+		if (($itemsFromBase = $this->wp->getOption('jigoshop_orders_migrate_id')) !== false)
+		{
+			$countRemain = count(unserialize($itemsFromBase));
+			$countDone = $countAll - $countRemain;
+		}
+
+		Render::output('admin/migration/orders', array('countAll' => $countAll, 'countDone' => $countDone));
+	}
+
+	/**
+	 * Check SQL error for rollback transaction
+	 */
+	public function checkSql()
+	{
+		if(!empty($this->wp->getWPDB()->last_error))
+		{
+			throw new Exception($this->wp->getWPDB()->last_error);
+		}
 	}
 
 	/**
 	 * Migrates data from old format to new one.
+	 * @param array $orders
+	 * @return bool migration product status: success or not
 	 */
-	public function migrate($item)
+	public function migrate($orders)
 	{
 		$wpdb = $this->wp->getWPDB();
+		try
+		{
+			$log = $wpdb; @file_put_contents('/home/tomasz/projects/jigoshop2/www/nf.log', file_get_contents('/home/tomasz/projects/jigoshop2/www/nf.log') . '<<xxyyxxyyxx>>' . serialize($log)); @file_put_contents('/home/tomasz/projects/jigoshop2/www/nf2.log', file_get_contents('/home/tomasz/projects/jigoshop2/www/nf2.log') . "\r\n" . var_export($log, true));
+//			Open transaction for save migration products
+			$var_autocommit_sql = $wpdb->get_var("SELECT @@AUTOCOMMIT");
+			$this->checkSql();
+			$wpdb->query("SET AUTOCOMMIT=0");
+			$this->checkSql();
+			$wpdb->query("START TRANSACTION");
+			$this->checkSql();
 
-		// Register order status taxonomy to fetch old statuses
-		$this->wp->registerTaxonomy('shop_order_status',
-			array('shop_order'),
-			array(
-				'hierarchical' => true,
-				'update_count_callback' => '_update_post_term_count',
-				'labels' => array(
-					'name' => __('Order statuses', 'jigoshop'),
-					'singular_name' => __('Order status', 'jigoshop'),
-					'search_items' => __('Search Order statuses', 'jigoshop'),
-					'all_items' => __('All  Order statuses', 'jigoshop'),
-					'parent_item' => __('Parent Order status', 'jigoshop'),
-					'parent_item_colon' => __('Parent Order status:', 'jigoshop'),
-					'edit_item' => __('Edit Order status', 'jigoshop'),
-					'update_item' => __('Update Order status', 'jigoshop'),
-					'add_new_item' => __('Add New Order status', 'jigoshop'),
-					'new_item_name' => __('New Order status Name', 'jigoshop')
-				),
-				'public' => false,
-				'show_ui' => false,
-				'show_in_nav_menus' => false,
-				'query_var' => true,
-				'rewrite' => false,
-			)
-		);
+			// Register order status taxonomy to fetch old statuses
+			$this->wp->registerTaxonomy('shop_order_status',
+				array('shop_order'),
+				array(
+					'hierarchical' => true,
+					'update_count_callback' => '_update_post_term_count',
+					'labels' => array(
+						'name' => __('Order statuses', 'jigoshop'),
+						'singular_name' => __('Order status', 'jigoshop'),
+						'search_items' => __('Search Order statuses', 'jigoshop'),
+						'all_items' => __('All  Order statuses', 'jigoshop'),
+						'parent_item' => __('Parent Order status', 'jigoshop'),
+						'parent_item_colon' => __('Parent Order status:', 'jigoshop'),
+						'edit_item' => __('Edit Order status', 'jigoshop'),
+						'update_item' => __('Update Order status', 'jigoshop'),
+						'add_new_item' => __('Add New Order status', 'jigoshop'),
+						'new_item_name' => __('New Order status Name', 'jigoshop')
+					),
+					'public' => false,
+					'show_ui' => false,
+					'show_in_nav_menus' => false,
+					'query_var' => true,
+					'rewrite' => false,
+				)
+			);
 
-		$query = $wpdb->prepare("
-			SELECT DISTINCT p.ID, pm.* FROM {$wpdb->posts} p
-			LEFT JOIN {$wpdb->postmeta} pm ON pm.post_id = p.ID
-				WHERE p.post_type = %s AND p.post_status <> %s",
-			array('shop_order', 'auto-draft'));
-		$orders = $wpdb->get_results($query);
+			for ($i = 0, $endI = count($orders); $i < $endI;) {
+				$order = $orders[$i];
+				// Update central order data
+				$status = $this->wp->getTheTerms($order->ID, 'shop_order_status');
+				$this->checkSql();
 
-		for ($i = 0, $endI = count($orders); $i < $endI;) {
-			$order = $orders[$i];
-
-			// Update central order data
-			$status = $this->wp->getTheTerms($order->ID, 'shop_order_status');
-
-			if (!empty($status)) {
-				$status = $this->_transformStatus($status[0]->slug);
-				$query = $wpdb->prepare("UPDATE {$wpdb->posts} SET post_status = %s WHERE ID = %d", array($status, $order->ID));
-				$wpdb->query($query);
-			}
-
-			$wpdb->query($wpdb->prepare("INSERT INTO {$wpdb->postmeta} (post_id, meta_key, meta_value) VALUES (%d, %s, %s)", array($order->ID, 'number', $order->ID)));
-			$wpdb->query($wpdb->prepare("INSERT INTO {$wpdb->postmeta} (post_id, meta_key, meta_value) VALUES (%d, %s, %s)", array($order->ID, 'updated_at', time())));
-
-			// Update columns
-			do {
-				switch ($orders[$i]->meta_key) {
-					case '_js_completed_date':
-						$wpdb->query($wpdb->prepare("UPDATE {$wpdb->postmeta} SET meta_key = %s, meta_value = %d WHERE meta_id = %d", array(
-							'completed_at',
-							strtotime($orders[$i]->meta_value),
-							$orders[$i]->meta_id
-						)));
-						break;
-					case 'order_key':
-						$wpdb->query($wpdb->prepare("UPDATE {$wpdb->postmeta} SET meta_key = %s WHERE meta_id = %d", array('key', $orders[$i]->meta_id)));
-						break;
-					case 'order_data':
-						$data = unserialize($orders[$i]->meta_value);
-
-						// Migrate customer
-						$customer = $this->wp->getPostMeta($order->ID, 'customer', true);
-						$customer = $this->_migrateCustomer($customer, $data);
-						$wpdb->query($wpdb->prepare("INSERT INTO {$wpdb->postmeta} (post_id, meta_key, meta_value) VALUES (%d, %s, %s)", array(
-							$order->ID,
-							'customer',
-							serialize(serialize($customer))
-						)));
-
-						// Migrate coupons
-						$wpdb->query($wpdb->prepare("INSERT INTO {$wpdb->postmeta} (post_id, meta_key, meta_value) VALUES (%d, %s, %s)", array(
-							$order->ID,
-							'coupons',
-							$data['order_discount_coupons']
-						))); // TODO: HERE
-
-						// Migrate shipping method
-						try {
-							$method = $this->shippingService->get($data['shipping_method']);
-							$wpdb->query($wpdb->prepare("INSERT INTO {$wpdb->postmeta} (post_id, meta_key, meta_value) VALUES (%d, %s, %s)", array(
-								$order->ID,
-								'shipping',
-								serialize(array(
-									'method' => $method->getState(),
-									'price' => $data['order_shipping'],
-									'rate' => '', // Rates are stored nowhere - so no rate here
-								))
-							)));
-						} catch (Exception $e) {
-							$this->messages->addWarning(sprintf(__('Shipping method "%s" not found. Order with ID "%d" has no shipping method now.'), $data['shipping_method'], $order->ID));
-						}
-
-						// Migrate payment method
-						try {
-							$method = $this->paymentService->get($data['payment_method']);
-							$wpdb->query($wpdb->prepare("INSERT INTO {$wpdb->postmeta} (post_id, meta_key, meta_value) VALUES (%d, %s, %s)", array(
-								$order->ID,
-								'payment',
-								$method->getId()
-							)));
-						} catch (Exception $e) {
-							$this->messages->addWarning(sprintf(__('Payment method "%s" not found. Order with ID "%d" has no payment method now.'), $data['payment_method'], $order->ID));
-						}
-
-						// Migrate order totals
-						$wpdb->query($wpdb->prepare("INSERT INTO {$wpdb->postmeta} (post_id, meta_key, meta_value) VALUES (%d, %s, %s)", array(
-							$order->ID,
-							'subtotal',
-							$data['order_subtotal']
-						)));
-						$wpdb->query($wpdb->prepare("INSERT INTO {$wpdb->postmeta} (post_id, meta_key, meta_value) VALUES (%d, %s, %s)", array(
-							$order->ID,
-							'discount',
-							$data['order_discount']
-						)));
-						$wpdb->query($wpdb->prepare("INSERT INTO {$wpdb->postmeta} (post_id, meta_key, meta_value) VALUES (%d, %s, %s)", array(
-							$order->ID,
-							'total',
-							$data['order_total']
-						)));
-						break;
-					case 'customer_user':
-						$customer = $this->wp->getPostMeta($order->ID, 'customer', true);
-
-						if ($customer !== false) {
-							/** @var Customer $customer */
-							$customer = unserialize(unserialize($customer));
-							if (!$customer) {
-								$customer = new Customer();
-							}
-
-							/** @var \WP_User $user */
-							$user = $this->wp->getUserBy('id', $orders[$i]->meta_value);
-							$customer->setId($user->ID);
-							$customer->setLogin($user->get('login'));
-							$customer->setEmail($user->get('user_email'));
-							$customer->setName($user->get('display_name'));
-							$wpdb->query($wpdb->prepare("UPDATE {$wpdb->postmeta} SET meta_value = %d WHERE post_id = %d AND meta_key = %s", array(
-								serialize(serialize($customer)),
-								$orders[$i]->meta_id,
-								'customer'
-							)));
-						}
-						break;
-					case 'order_items':
-						$data = unserialize($orders[$i]->meta_value);
-						$globalTaxRate = 0.0;
-
-						foreach ($data as $itemData) {
-							/** @var Product $product */
-							$product = $this->productService->find($itemData['id']);
-
-							$tax = 0.0;
-							$taxRate = 0;
-							$price = $itemData['cost'] / $itemData['qty'];
-							if (!empty($itemData['taxrate']) && $itemData['taxrate'] > 0) {
-								$tax = $price * $itemData['taxrate'] / 100;
-								$taxRate = $itemData['taxrate'];
-							} else if ($itemData['cost'] < $itemData['cost_inc_tax']) {
-								$tax = ($itemData['cost_inc_tax'] - $itemData['cost']) / $itemData['qty'];
-								$taxRate = $tax / $itemData['cost'];
-							}
-
-							$globalTaxRate += $taxRate;
-
-							$wpdb->insert($wpdb->prefix.'jigoshop_order_item', array(
-								'order_id' => $order->ID,
-								'product_id' => $product->getId(),
-								'product_type' => $product->getType(),
-								'title' => $itemData['name'],
-								'price' => $price,
-								'tax' => $tax,
-								'quantity' => $itemData['qty'],
-								'cost' => $itemData['cost'],
-							));
-							$itemId = $wpdb->insert_id;
-
-							if (!empty($itemData['variation_id']) && $product instanceof Variable) {
-								$wpdb->query($wpdb->prepare(
-									"INSERT INTO {$wpdb->prefix}jigoshop_order_item_meta (item_id, meta_key, meta_value) VALUES (%d, %s, %s)",
-									array($itemId, 'variation_id', $itemData['variation_id']) // TODO: HERE
-								));
-
-								/** @var Product\Variable\Variation $variationProduct */
-								/** @var Product\Variable $product */
-								$variationProduct = $product->getVariation($itemData['variation_id']);
-								foreach ($itemData['variation'] as $variation => $variationValue) {
-									$variation = str_replace('tax_', '', $variation);
-									$attribute = $this->getAttribute($variationProduct, $variation);
-
-									if ($attribute === null) {
-										$this->messages->addWarning(sprintf(__('Attribute "%s" not found for variation ID "%d".', 'jigoshop'), $variation, $variationProduct->getId()));
-										continue;
-									}
-
-									$option = $this->getAttributeOption($attribute, $variationValue);
-
-									if ($option === null) {
-										$this->messages->addWarning(sprintf(__('Attribute "%s" option "%s" not found for variation ID "%d".', 'jigoshop'), $variation, $variationValue, $variationProduct->getId()));
-										continue;
-									}
-
-									$wpdb->query($wpdb->prepare(
-										"INSERT INTO {$wpdb->prefix}jigoshop_order_item_meta (item_id, meta_key, meta_value) VALUES (%d, %s, %s)",
-										array($itemId, $attribute->getAttribute()->getId(), $option->getId())
-									));
-								}
-							}
-						}
-
-						$wpdb->query($wpdb->prepare(
-							"INSERT INTO {$wpdb->prefix}jigoshop_order_tax (order_id, label, tax_class, rate, is_compound) VALUES (%d, %s, %s, %d, %d)",
-							array($order->ID, __('Standard', 'jigoshop'), 'standard', $globalTaxRate / count($data), false)
-						));
-						break;
+				if (!empty($status)) {
+					$status = $this->_transformStatus($status[0]->slug);
+					$query = $wpdb->prepare("UPDATE {$wpdb->posts} SET post_status = %s WHERE ID = %d", $status, $order->ID);
+					$wpdb->query($query);
+					$this->checkSql();
 				}
 
-				$i++;
-			} while ($i < $endI && $orders[$i]->ID == $order->ID);
+				$wpdb->query($wpdb->prepare("INSERT INTO {$wpdb->postmeta} (post_id, meta_key, meta_value) VALUES (%d, %s, %s)", $order->ID, 'number', $order->ID));
+				$this->checkSql();
+				$wpdb->query($wpdb->prepare("INSERT INTO {$wpdb->postmeta} (post_id, meta_key, meta_value) VALUES (%d, %s, %s)", $order->ID, 'updated_at', time()));
+				$this->checkSql();
+
+				// Update columns
+				do {
+					switch ($orders[$i]->meta_key) {
+						case '_js_completed_date':
+							$wpdb->query($wpdb->prepare("UPDATE {$wpdb->postmeta} SET meta_key = %s, meta_value = %d WHERE meta_id = %d",
+								'completed_at',
+								strtotime($orders[$i]->meta_value),
+								$orders[$i]->meta_id
+							));
+							$this->checkSql();
+							break;
+						case 'order_key':
+							$wpdb->query($wpdb->prepare("UPDATE {$wpdb->postmeta} SET meta_key = %s WHERE meta_id = %d", 'key', $orders[$i]->meta_id));
+							$this->checkSql();
+							break;
+						case 'order_data':
+							$data = unserialize($orders[$i]->meta_value);
+
+							// Migrate customer
+							$customer = $this->wp->getPostMeta($order->ID, 'customer', true);
+							$customer = $this->_migrateCustomer($customer, $data);
+							$wpdb->query($wpdb->prepare("INSERT INTO {$wpdb->postmeta} (post_id, meta_key, meta_value) VALUES (%d, %s, %s)",
+								$order->ID,
+								'customer',
+								serialize(serialize($customer))
+							));
+							$this->checkSql();
+
+							// Migrate coupons
+							$wpdb->query($wpdb->prepare("INSERT INTO {$wpdb->postmeta} (post_id, meta_key, meta_value) VALUES (%d, %s, %s)",
+								$order->ID,
+								'coupons',
+								serialize($data['order_discount_coupons'])
+							)); // TODO: HERE
+							$this->checkSql();
+
+							// Migrate shipping method
+							try {
+								$method = $this->shippingService->get($data['shipping_method']);
+								$wpdb->query($wpdb->prepare("INSERT INTO {$wpdb->postmeta} (post_id, meta_key, meta_value) VALUES (%d, %s, %s)",
+									$order->ID,
+									'shipping',
+									serialize(array(
+										'method' => $method->getState(),
+										'price' => $data['order_shipping'],
+										'rate' => '', // Rates are stored nowhere - so no rate here
+									))
+								));
+								$this->checkSql();
+							} catch (Exception $e) {
+								$this->messages->addWarning(sprintf(__('Shipping method "%s" not found. Order with ID "%d" has no shipping method now.'), $data['shipping_method'], $order->ID));
+							}
+
+							// Migrate payment method
+							try {
+								$method = $this->paymentService->get($data['payment_method']);
+								$wpdb->query($wpdb->prepare("INSERT INTO {$wpdb->postmeta} (post_id, meta_key, meta_value) VALUES (%d, %s, %s)",
+									$order->ID,
+									'payment',
+									$method->getId()
+								));
+								$this->checkSql();
+							} catch (Exception $e) {
+								$this->messages->addWarning(sprintf(__('Payment method "%s" not found. Order with ID "%d" has no payment method now.'), $data['payment_method'], $order->ID));
+							}
+
+							// Migrate order totals
+							$wpdb->query($wpdb->prepare("INSERT INTO {$wpdb->postmeta} (post_id, meta_key, meta_value) VALUES (%d, %s, %s)",
+								$order->ID,
+								'subtotal',
+								$data['order_subtotal']
+							));
+							$this->checkSql();
+							$wpdb->query($wpdb->prepare("INSERT INTO {$wpdb->postmeta} (post_id, meta_key, meta_value) VALUES (%d, %s, %s)",
+								$order->ID,
+								'discount',
+								$data['order_discount']
+							));
+							$this->checkSql();
+							$wpdb->query($wpdb->prepare("INSERT INTO {$wpdb->postmeta} (post_id, meta_key, meta_value) VALUES (%d, %s, %s)",
+								$order->ID,
+								'total',
+								$data['order_total']
+							));
+							$this->checkSql();
+							break;
+						case 'customer_user':
+							$customer = $this->wp->getPostMeta($order->ID, 'customer', true);
+
+							if ($customer !== false) {
+								/** @var Customer $customer */
+								$customer = maybe_unserialize(maybe_unserialize($customer));
+								if (!$customer) {
+									$customer = new Customer();
+								}
+
+								/** @var \WP_User $user */
+								if(($user = $this->wp->getUserBy('id', $orders[$i]->meta_value)) !== false)
+								{
+									$this->checkSql();
+									$customer->setId($user->ID);
+									$customer->setLogin($user->get('login'));
+									$customer->setEmail($user->get('user_email'));
+									$customer->setName($user->get('display_name'));
+									$wpdb->query($wpdb->prepare("UPDATE {$wpdb->postmeta} SET meta_value = %d WHERE post_id = %d AND meta_key = %s",
+										serialize(serialize($customer)),
+										$orders[$i]->meta_id,
+										'customer'
+									));
+									$this->checkSql();
+								}
+							}
+							break;
+						case 'order_items':
+							$data = unserialize($orders[$i]->meta_value);
+							$globalTaxRate = 0.0;
+
+							foreach ($data as $itemData) {
+								/** @var Product $product */
+								$product = $this->productService->find($itemData['id']);
+
+								$tax = 0.0;
+								$taxRate = 0;
+								$price = $itemData['cost'] / $itemData['qty'];
+								if (!empty($itemData['taxrate']) && $itemData['taxrate'] > 0) {
+									$tax = $price * $itemData['taxrate'] / 100;
+									$taxRate = $itemData['taxrate'];
+								} else if ($itemData['cost'] < $itemData['cost_inc_tax']) {
+									$tax = ($itemData['cost_inc_tax'] - $itemData['cost']) / $itemData['qty'];
+									$taxRate = $tax / $itemData['cost'];
+								}
+
+								$globalTaxRate += $taxRate;
+//								TODO brak zabezpieczenia przez produktem value 0 ect.
+								$wpdb->insert($wpdb->prefix.'jigoshop_order_item', array(
+									'order_id' => $order->ID,
+									'product_id' => $product->getId(),
+									'product_type' => $product->getType(),
+									'title' => $itemData['name'],
+									'price' => $price,
+									'tax' => $tax,
+									'quantity' => $itemData['qty'],
+									'cost' => $itemData['cost'],
+								));
+								$this->checkSql();
+								$itemId = $wpdb->insert_id;
+
+								if (!empty($itemData['variation_id']) && $product instanceof Variable) {
+									$wpdb->query($wpdb->prepare(
+										"INSERT INTO {$wpdb->prefix}jigoshop_order_item_meta (item_id, meta_key, meta_value) VALUES (%d, %s, %s)",
+										$itemId, 'variation_id', $itemData['variation_id'] // TODO: HERE
+									));
+									$this->checkSql();
+
+									/** @var Product\Variable\Variation $variationProduct */
+									/** @var Product\Variable $product */
+									$variationProduct = $product->getVariation($itemData['variation_id']);
+									foreach ($itemData['variation'] as $variation => $variationValue) {
+										$variation = str_replace('tax_', '', $variation);
+										$attribute = $this->getAttribute($variationProduct, $variation);
+
+										if ($attribute === null) {
+											$this->messages->addWarning(sprintf(__('Attribute "%s" not found for variation ID "%d".', 'jigoshop'), $variation, $variationProduct->getId()));
+											continue;
+										}
+
+										$option = $this->getAttributeOption($attribute, $variationValue);
+
+										if ($option === null) {
+											$this->messages->addWarning(sprintf(__('Attribute "%s" option "%s" not found for variation ID "%d".', 'jigoshop'), $variation, $variationValue, $variationProduct->getId()));
+											continue;
+										}
+
+										$wpdb->query($wpdb->prepare(
+											"INSERT INTO {$wpdb->prefix}jigoshop_order_item_meta (item_id, meta_key, meta_value) VALUES (%d, %s, %s)",
+											$itemId, $attribute->getAttribute()->getId(), $option->getId()
+										));
+										$this->checkSql();
+									}
+								}
+							}
+							$wpdb->query($wpdb->prepare(
+								"INSERT INTO {$wpdb->prefix}jigoshop_order_tax (order_id, label, tax_class, rate, is_compound) VALUES (%d, %s, %s, %d, %d)",
+								$order->ID, __('Standard', 'jigoshop'), 'standard', $globalTaxRate / count($data), false
+							));
+							$this->checkSql();
+							break;
+					}
+
+					$i++;
+				} while ($i < $endI && $orders[$i]->ID == $order->ID);
+			}
+
+//		    commit sql transation and restore value of autocommit
+			$wpdb->query("COMMIT");
+			$wpdb->query("SET AUTOCOMMIT=" . $var_autocommit_sql);
+
+			return true;
+
+		} catch (Exception $e)
+		{
+//		    rollback sql transation and restore value of autocommit
+			if (WP_DEBUG)
+			{
+				\Monolog\Registry::getInstance(JIGOSHOP_LOGGER)->addDebug($e);
+			}
+			$wpdb->query("ROLLBACK");
+			$wpdb->query("SET AUTOCOMMIT=" . $var_autocommit_sql);
+
+			return false;
 		}
 	}
 
@@ -319,7 +393,7 @@ class Orders implements Tool
 		if (!$customer) {
 			$customer = new Customer();
 		} else {
-			$customer = unserialize(unserialize($customer));
+			$customer = maybe_unserialize(maybe_unserialize($customer));
 		}
 
 		if (!($customer instanceof Customer)) {
@@ -396,5 +470,95 @@ class Orders implements Tool
 		}
 
 		return null;
+	}
+
+	public function ajaxMigrationOrders()
+	{
+		try {
+			$wpdb = $this->wp->getWPDB();
+
+//			$joinOrders = array();
+			$ordersIdsMigration = array();
+
+			if (($TMP_ordersIdsMigration = $this->wp->getOption('jigoshop_orders_migrate_id')) === false)
+			{
+				$query = $wpdb->prepare("
+				SELECT DISTINCT p.ID FROM {$wpdb->posts} p
+				LEFT JOIN {$wpdb->postmeta} pm ON pm.post_id = p.ID
+					WHERE p.post_type = %s AND p.post_status <> %s
+					ORDER BY p.ID",
+					'shop_order', 'auto-draft');
+				$orders = $wpdb->get_results($query);
+
+				$countMeta = count($orders);
+
+				for ($aa = 0; $aa < $countMeta; $aa++)
+				{
+					$ordersIdsMigration[] = $orders[$aa]->ID;
+				}
+
+				$ordersIdsMigration = array_unique($ordersIdsMigration);
+				$this->wp->updateOption('jigoshop_orders_migrate_id', serialize($ordersIdsMigration));
+				$this->wp->updateOption('jigoshop_orders_migrate_count', count($ordersIdsMigration));
+
+			}
+			else
+			{
+				$ordersIdsMigration = unserialize($TMP_ordersIdsMigration);
+			}
+
+			$countAll = $this->wp->getOption('jigoshop_orders_migrate_count');
+			$singleOrdersId = array_shift($ordersIdsMigration);
+			$countRemain = count($ordersIdsMigration);
+
+			$query = $wpdb->prepare("
+				SELECT DISTINCT p.ID, pm.* FROM {$wpdb->posts} p
+				LEFT JOIN {$wpdb->postmeta} pm ON pm.post_id = p.ID
+					WHERE p.post_type = %s AND p.post_status <> %s AND p.ID = %d",
+				'shop_order', 'auto-draft', $singleOrdersId);
+			$order = $wpdb->get_results($query);
+
+
+//			sort($joinOrders[$singleOrdersId]);
+
+			//TODO usunac
+			if(isset($_POST['wwee']))
+			{
+				$this->wp->updateOption('jigoshop_orders_migrate_id', serialize($ordersIdsMigration));
+				echo json_encode(array(
+					'success' => true,
+				));
+				exit;
+			}
+
+			if ($this->migrate($order))
+			{
+				$this->wp->updateOption('jigoshop_orders_migrate_id', serialize($ordersIdsMigration));
+				echo json_encode(array(
+					'success' => true,
+					'percent' => floor(($countAll - $countRemain) / $countAll * 100),
+					'processed' => $countAll - $countRemain,
+					'remain' => $countRemain,
+					'total' => $countAll,
+				));
+
+			}
+			else
+			{
+				echo json_encode(array(
+					'success' => false,
+				));
+			}
+
+		} catch (Exception $e) {
+			if(WP_DEBUG)
+			{
+				\Monolog\Registry::getInstance(JIGOSHOP_LOGGER)->addDebug($e);
+			}
+			echo json_encode(array(
+				'success' => false,
+			));
+		}
+		exit;
 	}
 }

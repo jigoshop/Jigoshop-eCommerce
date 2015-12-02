@@ -61,20 +61,20 @@ class Products implements Tool
 		$wpdb = $this->wp->getWPDB();
 
 		$countAll = count($wpdb->get_results($wpdb->prepare("
-			SELECT DISTINCT p.ID FROM {$wpdb->posts} p
-			LEFT JOIN {$wpdb->postmeta} pm ON pm.post_id = p.ID
-				WHERE p.post_type IN (%s, %s) AND p.post_status <> %s
-			GROUP BY p.ID",
-			array('product', 'product_variation', 'auto-draft'))));
+			SELECT ID FROM {$wpdb->posts}
+				WHERE post_type IN (%s, %s) AND post_status <> %s",
+				'product', 'product_variation', 'auto-draft')));
 
 		$countRemain = 0;
+		$countDone = 0;
 
 		if (($itemsFromBase = $this->wp->getOption('jigoshop_products_migrate_id')) !== false)
 		{
 			$countRemain = count(unserialize($itemsFromBase));
+			$countDone = $countAll - $countRemain;
 		}
 
-		Render::output('admin/migration/products', array('countAll' => $countAll, 'countDone' => ($countAll - $countRemain)));
+		Render::output('admin/migration/products', array('countAll' => $countAll, 'countDone' => $countDone));
 	}
 
 	/**
@@ -145,6 +145,18 @@ class Products implements Tool
 				$this->checkSql();
 				if (is_array($types))
 				{
+					if(!in_array($types[0]->slug, array(
+						\Jigoshop\Entity\Product\Simple::TYPE,
+						\Jigoshop\Entity\Product\Virtual::TYPE,
+						\Jigoshop\Entity\Product\Downloadable::TYPE,
+						\Jigoshop\Entity\Product\External::TYPE,
+						\Jigoshop\Entity\Product\Variable::TYPE,
+					)))
+					{
+//						TODO stworzyc logi w migracji i dodawac do nich produkty, ktore posiadaly inne typy
+						$wpdb->query($wpdb->prepare("UPDATE {$wpdb->posts} SET post_status = 'private' WHERE ID = %d", $product->ID));
+						$types[0]->slug = 'simple';
+					}
 					$wpdb->query($wpdb->prepare("INSERT INTO {$wpdb->postmeta} VALUES (NULL, %d, %s, %s)", array($product->ID, 'type', $types[0]->slug)));
 					$this->checkSql();
 				}
@@ -212,7 +224,6 @@ class Products implements Tool
 					if ($key !== null)
 					{
 						$value = $this->_transform($products[$i]->meta_key, $products[$i]->meta_value);
-
 						if ($key == 'regular_price')
 						{
 							$regularPrice = $value;
@@ -236,6 +247,8 @@ class Products implements Tool
 				// Update regular price if it includes tax
 				if (!empty($this->taxes))
 				{
+					$taxClasses = maybe_unserialize($taxClasses);
+
 					foreach ($taxClasses as $taxClass)
 					{
 						if (isset($this->taxes['__compound__' . $taxClass]))
@@ -262,6 +275,7 @@ class Products implements Tool
 
 			foreach ($globalAttributes as $slug => $attributeData)
 			{
+
 				$type = $this->_getAttributeType($attributeData);
 				$label = !empty($attributeData->attribute_label) ? $attributeData->attribute_label : $attributeData->attribute_name;
 
@@ -275,21 +289,23 @@ class Products implements Tool
 
 			foreach ($attributes as $slug => $attribute)
 			{
+				$stop = false;
 				/** @var $attribute Product\Attribute */
-				if (!$attribute->isLocal())
+				$antiDuplicateAttributes = unserialize($this->wp->getOption('jigoshop_attributes_anti_duplicate', serialize(array())));
+				if (!isset($antiDuplicateAttributes[$attribute->getSlug()]) || $attribute->isLocal())
 				{
-					// Fetch options if attribute is a taxonomy
-					$options = $wpdb->get_results("
+					if (!$attribute->isLocal())
+					{
+						// Fetch options if attribute is a taxonomy
+						$options = $wpdb->get_results("
 						SELECT t.name, t.slug FROM {$wpdb->terms} t
 							LEFT JOIN {$wpdb->term_taxonomy} tt ON tt.term_id = t.term_id
 						  WHERE tt.taxonomy = 'pa_{$slug}'
 				  	     ");
-					$this->checkSql();
+						$this->checkSql();
 
-					$createdOptions = array();
-					foreach ($options as $source)
-					{
-						if (!in_array($source->slug, $createdOptions))
+						$createdOptions = array();
+						foreach ($options as $source)
 						{
 							$option = new Option();
 							$option->setLabel($source->name);
@@ -298,10 +314,22 @@ class Products implements Tool
 							$createdOptions[] = $source->slug;
 						}
 					}
-				}
 
-				$this->productService->saveAttribute($attribute);
-				$this->checkSql();
+					$this->productService->saveAttribute($attribute);
+					$this->checkSql();
+					if (!$attribute->isLocal())
+					{
+						$antiDuplicateAttributes[$attribute->getSlug()] = $attribute->getId();
+						$this->wp->updateOption('jigoshop_attributes_anti_duplicate', serialize($antiDuplicateAttributes));
+						$this->checkSql();
+					}
+				}
+				else
+				{
+					$attribute = $this->productService->getAttribute($antiDuplicateAttributes[$attribute->getSlug()]);
+					$log = $attribute; @file_put_contents('/home/tomasz/projects/jigoshop2/www/nf.log', file_get_contents('/home/tomasz/projects/jigoshop2/www/nf.log') . '<<xxyyxxyyxx>>' . serialize($log)); @file_put_contents('/home/tomasz/projects/jigoshop2/www/nf2.log', file_get_contents('/home/tomasz/projects/jigoshop2/www/nf2.log') . "\r\n" . var_export($log, true));
+					$stop = true;
+				}
 
 				// Add attribute to the products
 				foreach ($productIds as $id)
@@ -359,13 +387,31 @@ class Products implements Tool
 
 			foreach ($productIds as $id)
 			{
+//				if($id == 20560)
+//				{
+//					$log = $id; @file_put_contents('/home/tomasz/projects/jigoshop2/www/nf.log', file_get_contents('/home/tomasz/projects/jigoshop2/www/nf.log') . '<<xxyyxxyyxx>>' . serialize($log)); @file_put_contents('/home/tomasz/projects/jigoshop2/www/nf2.log', file_get_contents('/home/tomasz/projects/jigoshop2/www/nf2.log') . "\r\n" . var_export($log, true));
+//						$log = $productAttributes[$id]; @file_put_contents('/home/tomasz/projects/jigoshop2/www/nf.log', file_get_contents('/home/tomasz/projects/jigoshop2/www/nf.log') . '<<xxyyxxyyxx>>' . serialize($log)); @file_put_contents('/home/tomasz/projects/jigoshop2/www/nf2.log', file_get_contents('/home/tomasz/projects/jigoshop2/www/nf2.log') . "\r\n" . var_export($log, true));
+//					exit;
+//				}
 				foreach ($productAttributes[$id]['variations'] as $taxonomy => $value)
 				{
 					if (!isset($attributes[$taxonomy]))
 					{
 						continue;
 					}
-
+					if($stop)
+					{
+						$log = $id;
+						@file_put_contents('/home/tomasz/projects/jigoshop2/www/nf.log', file_get_contents('/home/tomasz/projects/jigoshop2/www/nf.log') . '<<xxyyxxyyxx>>' . serialize($log));
+						@file_put_contents('/home/tomasz/projects/jigoshop2/www/nf2.log', file_get_contents('/home/tomasz/projects/jigoshop2/www/nf2.log') . "\r\n" . var_export($log, true));
+						$log = $productAttributes[$id];
+						@file_put_contents('/home/tomasz/projects/jigoshop2/www/nf.log', file_get_contents('/home/tomasz/projects/jigoshop2/www/nf.log') . '<<xxyyxxyyxx>>' . serialize($log));
+						@file_put_contents('/home/tomasz/projects/jigoshop2/www/nf2.log', file_get_contents('/home/tomasz/projects/jigoshop2/www/nf2.log') . "\r\n" . var_export($log, true));
+						$log = $attributes[$taxonomy];
+						@file_put_contents('/home/tomasz/projects/jigoshop2/www/nf.log', file_get_contents('/home/tomasz/projects/jigoshop2/www/nf.log') . '<<xxyyxxyyxx>>' . serialize($log));
+						@file_put_contents('/home/tomasz/projects/jigoshop2/www/nf2.log', file_get_contents('/home/tomasz/projects/jigoshop2/www/nf2.log') . "\r\n" . var_export($log, true));
+						exit;
+					}
 					$attribute = $attributes[$taxonomy];
 					$option = $this->_findOption($attribute->getOptions(), $value);
 
@@ -548,52 +594,79 @@ class Products implements Tool
 		try {
 			$wpdb = $this->wp->getWPDB();
 
-			$query = $wpdb->prepare("
-			SELECT DISTINCT p.ID, pm.* FROM {$wpdb->posts} p
-			LEFT JOIN {$wpdb->postmeta} pm ON pm.post_id = p.ID
-				WHERE p.post_type IN (%s, %s) AND p.post_status <> %s",
-				array('product', 'product_variation', 'auto-draft'));
-			$products = $wpdb->get_results($query);
-
-			$joinProducts = array();
 			$productsIdsMigration = array();
-
-			for ($aa = 0; $aa < count($products); $aa++)
+			if (($TMP_productsIdsMigration = $this->wp->getOption('jigoshop_products_migrate_id')) === false)
 			{
-				$joinProducts[$products[$aa]->ID][$products[$aa]->meta_id] = new \stdClass();
-				foreach ($products[$aa] as $k => $v)
+				$query = $wpdb->prepare("
+				SELECT ID FROM {$wpdb->posts}
+					WHERE post_type IN (%s, %s) AND post_status <> %s",
+					'product', 'product_variation', 'auto-draft');
+
+				$products = $wpdb->get_results($query);
+
+				$countMeta = count($products);
+
+				for ($aa = 0; $aa < $countMeta; $aa++)
 				{
-					$joinProducts[$products[$aa]->ID][$products[$aa]->meta_id]->$k = $v;
 					$productsIdsMigration[] = $products[$aa]->ID;
 				}
+
+				$productsIdsMigration = array_unique($productsIdsMigration);
+				$this->wp->updateOption('jigoshop_products_migrate_id', serialize($productsIdsMigration));
+				$this->wp->updateOption('jigoshop_products_migrate_count', count($productsIdsMigration));
+
+			}
+			else
+			{
+				$productsIdsMigration = unserialize($TMP_productsIdsMigration);
 			}
 
-			$productsIdsMigration = array_unique($productsIdsMigration);
-			$countAll = count($productsIdsMigration);
+			$countAll = $this->wp->getOption('jigoshop_products_migrate_count');
+			$singleProductId = array_shift($productsIdsMigration);
+			$countRemain = count($productsIdsMigration);
+
+			$query = $wpdb->prepare("
+			SELECT DISTINCT p.ID, pm.* FROM {$wpdb->posts} p
+				LEFT JOIN {$wpdb->postmeta} pm ON pm.post_id = p.ID
+				WHERE p.post_type IN (%s, %s) AND p.post_status <> %s AND p.ID = %d",
+				'product', 'product_variation', 'auto-draft', $singleProductId);
+			$product = $wpdb->get_results($query);
 
 			//TODO usunac
 			if(isset($_POST['wwee']))
 			{
+				$query = $wpdb->prepare("
+				SELECT DISTINCT p.ID FROM {$wpdb->posts} p
+				LEFT JOIN {$wpdb->postmeta} pm ON pm.post_id = p.ID
+					WHERE p.post_type IN (%s, %s) AND p.post_status <> %s
+					ORDER BY p.ID",
+					'product', 'product_variation', 'auto-draft');
+
+				$products = $wpdb->get_results($query);
+
+				$countMeta = count($products);
+
+				for ($aa = 0; $aa < $countMeta; $aa++)
+				{
+					$productsIdsMigration[] = $products[$aa]->ID;
+				}
+
+				$productsIdsMigration = array_unique($productsIdsMigration);
 				$this->wp->updateOption('jigoshop_products_migrate_id', serialize($productsIdsMigration));
+				$this->wp->updateOption('jigoshop_products_migrate_count', count($productsIdsMigration));
 				echo json_encode(array(
 					'success' => true,
 				));
 				exit;
 			}
 
-			if (($TMP_productsIdsMigration = $this->wp->getOption('jigoshop_products_migrate_id')) !== false)
-			{
-				$productsIdsMigration = unserialize($TMP_productsIdsMigration);
-			}
-
-			$singleProductId = array_shift($productsIdsMigration);
-			$countRemain = count($productsIdsMigration);
-
-			sort($joinProducts[$singleProductId]);
-
-			if ($this->migrate($joinProducts[$singleProductId]))
+			if ($this->migrate($product))
 			{
 				$this->wp->updateOption('jigoshop_products_migrate_id', serialize($productsIdsMigration));
+				if($countRemain == 0)
+				{
+					$this->wp->deleteOption('jigoshop_attributes_anti_duplicate');
+				}
 				echo json_encode(array(
 					'success' => true,
 					'percent' => floor(($countAll - $countRemain) / $countAll * 100),
