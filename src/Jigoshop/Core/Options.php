@@ -381,6 +381,7 @@ class Options
 		// TODO: Add product types to extensions tab
 		return $this->wp->applyFilters('jigoshop\product\types', $this->get('enabled_product_types', array(
 			'jigoshop.product_type.simple',
+			'jigoshop.product_type.virtual',
 			'jigoshop.product_type.variable',
 			'jigoshop.product_type.external',
 			'jigoshop.product_type.downloadable',
