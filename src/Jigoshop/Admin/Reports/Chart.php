@@ -258,45 +258,6 @@ abstract class Chart
 		return $preparedData;
 	}
 
-	/**
-	 * Return currency tooltip JS based on jigoshop currency position settings.
-	 *
-	 * @return string
-	 */
-	protected function getCurrencyTooltip()
-	{
-		$pattern = $this->options->get('general.currency_position');
-		switch ($pattern) {
-			//right
-			case '%3$s%1$s':
-			case '%3$s%2$s':
-			case '%2$s%3$s%1$s':
-				$currencyTooltip = 'append_tooltip: "'.Currency::symbol().'"';
-				break;
-			//right space
-			case '%3$s %1$s':
-			case '%3$s %2$s':
-			case '%2$s %3$s %1$s':
-				$currencyTooltip = 'append_tooltip: "&nbsp;'.Currency::symbol().'"';
-				break;
-			//left
-			case '%1$s%3$s':
-			case '2$s%3$s':
-			case '%1$s%3$s%2$s':
-				$currencyTooltip = 'prepend_tooltip: "'.Currency::symbol().'"';
-				break;
-			//left space
-			case '%1$s 0%2$s00':
-			case '2$s %3$s':
-			case '%1$s %3$s %2$s':
-			default:
-				$currencyTooltip = 'prepend_tooltip: "'.Currency::symbol().'&nbsp;"';
-				break;
-		}
-
-		return $currencyTooltip;
-	}
-
 	protected function getFirstOrderDate()
 	{
 		$args = array(

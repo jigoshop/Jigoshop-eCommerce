@@ -55,7 +55,7 @@ class CustomerList implements TableInterface
 			),
 			'email' => array(
 				'name' => __('Email', 'jigoshop'),
-				'size' => 1
+				'size' => 2
 			),
 			'location' => array(
 				'name' => __('Location', 'jigoshop'),
@@ -75,7 +75,7 @@ class CustomerList implements TableInterface
 			),
 			'user_actions' => array(
 				'name' => __('Actions', 'jigoshop'),
-				'size' => 2
+				'size' => 1
 			)
 		);
 
@@ -189,11 +189,11 @@ class CustomerList implements TableInterface
 			case 'user_actions' :
 				$actions = array();
 
-				$actions['refresh'] = array(
+				/*$actions['refresh'] = array(
 					'url' => wp_nonce_url(add_query_arg('refresh', $user->ID), 'refresh'),
 					'name' => __('Refresh stats', 'jigoshop'),
 					'action' => 'refresh'
-				);
+				);*/
 				$actions['edit'] = array(
 					'url' => admin_url('user-edit.php?user_id='.$user->ID),
 					'name' => __('Edit', 'jigoshop'),
@@ -207,65 +207,7 @@ class CustomerList implements TableInterface
 		}
 	}
 
-	public function getCustomerTotalSpent($userId)
-	{
-		$spent = $this->wp->getUserMeta($userId, 'money_spent', true);
-		if (!$spent) {
-			/** @var $wpdb \wpdb */
-			$wpdb = $this->wp->getWPDB();
-
-			//TODO Zmień po skończeniu migracji!!!
-			$orders = $this->orderService->findForUser($userId);
-
-			/*$spent = array_sum(array_map(function($order){
-				$order = maybe_unserialize($order->meta_value);
-				return $order['order_total'];
-			}, $orders));*/
-
-			$this->wp->updateUserMeta($userId, 'money_spent', $spent);
-		}
-
-		return $spent;
-	}
-
-	/**
-	 * Get total orders by customer
-	 *
-	 * @param  int $userId
-	 *
-	 * @return int
-	 */
-	private function getCustomerOrderCount($userId)
-	{
-		$count = $this->wp->getUserMeta($userId, 'money_count', true);
-		if (!$count) {
-			/** @var $wpdb \wpdb */
-			$wpdb = $this->wp->getWPDB();
-
-			//TODO Zmień po skończeniu migracji!!!
-			$count = $wpdb->get_var("SELECT COUNT(*)
-				FROM $wpdb->posts as posts
-
-				LEFT JOIN {$wpdb->postmeta} AS meta ON posts.ID = meta.post_id
-				LEFT JOIN {$wpdb->term_relationships} AS tr ON posts.ID = tr.object_id
-				LEFT JOIN {$wpdb->term_taxonomy} AS tt ON tr.term_taxonomy_id = tt.term_taxonomy_id
-				LEFT JOIN {$wpdb->terms} AS t ON tt.term_id = t.term_id
-
-				WHERE   meta.meta_key       = 'customer_user'
-				AND     posts.post_type     IN ('".implode("','", array('shop_order'))."')
-				AND     posts.post_status   IN ('publish')
-				AND     meta_value          = $userId
-				AND     tt.taxonomy         = 'shop_order_status'
-				AND     t.name              IN ( 'processing', 'completed' )
-			");
-
-			$this->wp->updateUserMeta($userId, 'money_count', $count);
-		}
-
-		return $count;
-	}
-
-	private function getCurrentPage($query = null)
+	private function getCurrentPage()
 	{
 		$this->activePageNumber = 1;
 		if(isset($_GET['paged']) && !empty($_GET['paged'])) {
