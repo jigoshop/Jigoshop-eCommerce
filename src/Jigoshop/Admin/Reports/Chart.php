@@ -367,11 +367,18 @@ abstract class Chart
 	/**
 	 * Get report totals such as order totals and discount amounts.
 	 * Data example:
-	 * '_order_total' => array(
-	 *     'type'     => 'meta',
-	 *     'function' => 'SUM',
-	 *     'name'     => 'total_sales'
+	 * 'select' => array(
+	 *     'table' => array(
+	 *			array(
+	 * 				'field' => '*'
+	 * 			)
+	 * 		),
+	 * ),
+	 * 'from' => array(
+	 * 		'table' => 'table_name'
 	 * )
+	 * Return example:
+	 * "SELECT table.* FROM table_name AS table"
 	 *
 	 * @param  array $args
 	 * @return array|string depending on query_type
@@ -381,417 +388,32 @@ abstract class Chart
 		$wpdb = $this->wp->getWPDB();
 
 		$defaultArgs = array(
-			'data' => array(),
+			'select' => array(),
+			'from' => array(),
+			'join' => array(),
 			'where' => array(),
-			'where_meta' => array(),
-			'query_type' => 'get_row',
 			'group_by' => '',
 			'order_by' => '',
-			'limit' => '',
 			'filter_range' => false,
-			'nocache' => false,
-			'debug' => false,
-			'order_types' => array('shop_order'),
-			'order_status' => $this->orderStatus,
-			'parent_order_status' => false,
 		);
-		$args = $this->wp->applyFilters('jigoshop/admin/reports/chart/report_data_args', $args);
+		$args = $this->wp->applyFilters('jigoshop/admin/reports/chart/report_query_args', $args);
 		$args = wp_parse_args($args, $defaultArgs);
 
-		if (empty($args['data'])) {
+		if (empty($args['select'])) {
 			return '';
 		}
 
-		$orderStatus = $this->wp->applyFilters('jigoshop/admin/reports/order_statuses', $args['order_status']);
-		$query = array();
-		$select = array();
+		$query = implode(' ', array(
+			$this->prepareQuerySelect($args['select']),
+			$this->prepareQueryFrom($args['from']),
+			$this->prepareQueryJoin($args['join']),
+			$this->prepareQueryWhere($args['where'], $args['filter_range']),
+			$this->prepareQueryGroupBy($args['group_by']),
+			$this->prepareQueryOrderBy($args['order_by']),
+			';'
+		));
 
-		foreach ($args['data'] as $key => $value) {
-			$distinct = '';
-
-			if (isset($value['distinct'])) {
-				$distinct = 'DISTINCT';
-			}
-
-			if ($value['type'] == 'meta') {
-				$getKey = "meta_{$key}.meta_value";
-			} elseif ($value['type'] == 'post_data') {
-				$getKey = "posts.{$key}";
-			} else {
-				continue;
-			}
-
-			if (isset($value['function'])) {
-				$get = "{$value['function']}({$distinct} {$getKey})";
-			} else {
-				$get = "{$distinct} {$getKey}";
-			}
-
-			$select[] = "{$get} as {$value['name']}";
-		}
-
-		$query['select'] = "SELECT ".implode(',', $select);
-		$query['from'] = "FROM {$wpdb->posts} AS posts";
-
-		// Joins
-		$joins = array();
-
-		foreach ($args['data'] as $key => $value) {
-			if ($value['type'] == 'meta') {
-				$joins["meta_{$key}"] = "LEFT JOIN {$wpdb->postmeta} AS meta_{$key} ON posts.ID = meta_{$key}.post_id";
-			}
-		}
-
-		foreach ($args['where_meta'] as $value) {
-			if (!is_array($value)) {
-				continue;
-			}
-
-			$key = is_array($value['meta_key']) ? $value['meta_key'][0].'_array' : $value['meta_key'];
-			$joins["meta_{$key}"] = "LEFT JOIN {$wpdb->postmeta} AS meta_{$key} ON posts.ID = meta_{$key}.post_id";
-		}
-
-		if (!empty($args['parent_order_status'])) {
-			$joins["parent"] = "LEFT JOIN {$wpdb->posts} AS parent ON posts.post_parent = parent.ID";
-		}
-
-		$query['join'] = implode(' ', $joins);
-		$query['where'] = "
-			WHERE posts.post_type IN ('".implode("','", $args['order_types'])."')
-			";
-
-		if (!empty($orderStatus)) {
-			/*$query['where'] .= "
-				AND posts.post_status IN ( '".implode("','", $orderStatus)."')
-			";*/
-		}
-
-		if ($args['filter_range']) {
-			$query['where'] .= "
-				AND posts.post_date >= '".date('Y-m-d', $this->range['start'])."'
-				AND posts.post_date < '".date('Y-m-d', strtotime('+1 DAY', $this->range['end']))."'
-			";
-		}
-
-		foreach ($args['data'] as $key => $value) {
-			if ($value['type'] == 'meta') {
-				$query['where'] .= " AND meta_{$key}.meta_key = '{$key}'";
-			}
-		}
-
-		if (!empty($args['where_meta'])) {
-			$relation = isset($where_meta['relation']) ? $where_meta['relation'] : 'AND';
-			$query['where'] .= " AND (";
-
-			foreach ($args['where_meta'] as $index => $value) {
-				if (!is_array($value)) {
-					continue;
-				}
-
-				$key = is_array($value['meta_key']) ? $value['meta_key'][0].'_array' : $value['meta_key'];
-				if (strtolower($value['operator']) == 'in') {
-					if (is_array($value['meta_value'])) {
-						$value['meta_value'] = implode("','", $value['meta_value']);
-					}
-
-					if (!empty($value['meta_value'])) {
-						$where_value = "IN ('{$value['meta_value']}')";
-					}
-				} else {
-					$where_value = "{$value['operator']} '{$value['meta_value']}'";
-				}
-
-				if (!empty($where_value)) {
-					if ($index > 0) {
-						$query['where'] .= ' '.$relation;
-					}
-
-					if (is_array($value['meta_key'])) {
-						$query['where'] .= " ( meta_{$key}.meta_key IN ('".implode("','", $value['meta_key'])."')";
-					} else {
-						$query['where'] .= " ( meta_{$key}.meta_key = '{$value['meta_key']}'";
-					}
-
-					$query['where'] .= " AND meta_{$key}.meta_value {$where_value} )";
-				}
-			}
-
-			$query['where'] .= ")";
-		}
-
-		foreach ($args['where'] as $value) {
-			if (strtolower($value['operator']) == 'in') {
-				if (is_array($value['value'])) {
-					$value['value'] = implode("','", $value['value']);
-				}
-
-				if (!empty($value['value'])) {
-					$where_value = "IN ('{$value['value']}')";
-				}
-			} else {
-				$where_value = "{$value['operator']} '{$value['value']}'";
-			}
-
-			if (!empty($where_value)) {
-				$query['where'] .= " AND {$value['key']} {$where_value}";
-			}
-		}
-
-		if ($args['group_by']) {
-			$query['group_by'] = "GROUP BY {$args['group_by']}";
-		}
-
-		if ($args['order_by']) {
-			$query['order_by'] = "ORDER BY {$args['order_by']}";
-		}
-
-		if ($args['limit']) {
-			$query['limit'] = "LIMIT {$args['limit']}";
-		}
-
-		$query = $this->wp->applyFilters('jigoshop/admin/reports/get_order_report_query', $query);
-		$query = implode(' ', $query);
-		$queryHash = md5($args['query_type'].$query);
-		$cachedResults = $this->wp->getTransient(strtolower(get_class($this)));
-
-		if ($args['debug']) {
-			echo '<pre>';
-			print_r($query);
-			echo '</pre>';
-		}
-
-		$args['debug'] = true;
-		if ($args['debug'] || $args['nocache'] || false === $cachedResults || !isset($cachedResults[$queryHash])) {
-			$cachedResults[$queryHash] = apply_filters('jigoshop_reports_get_order_report_data', $wpdb->{$args['query_type']}($query), $args['data']);
-
-			// Process results
-			foreach ($args['data'] as $key => $value) {
-				if (!isset($value['process']) || $value['process'] !== true) {
-					continue;
-				}
-
-				switch ($value['name']) {
-					case 'order_data':
-						$results = array();
-						foreach ($cachedResults[$queryHash] as $item) {
-							if (!isset($results[$item->post_date])) {
-								$result = new \stdClass;
-								$result->post_date = $item->post_date;
-								$result->total_sales = 0.0;
-								$result->total_shipping = 0.0;
-								$result->total_tax = 0.0;
-								$result->total_shipping_tax = 0.0;
-								$results[$item->post_date] = $result;
-							}
-
-							$data = maybe_unserialize($item->order_data);
-							$results[$item->post_date]->total_sales += $data['order_total'];
-							$results[$item->post_date]->total_shipping += $data['order_shipping'];
-							$results[$item->post_date]->total_tax += $data['order_tax_no_shipping_tax'];
-							$results[$item->post_date]->total_shipping_tax += $data['order_shipping_tax'];
-						}
-
-						$cachedResults[$queryHash] = $results;
-						break;
-					case 'order_item_count':
-						$results = array();
-						foreach ($cachedResults[$queryHash] as $item) {
-							if (!isset($results[$item->post_date])) {
-								$result = new \stdClass;
-								$result->post_date = $item->post_date;
-								$result->order_item_count = 0;
-								$results[$item->post_date] = $result;
-							}
-
-							$data = maybe_unserialize($item->order_item_count);
-							$data = $this->filterItem($data, $value);
-							$results[$item->post_date]->order_item_count += count($data);
-						}
-
-						$cachedResults[$queryHash] = $results;
-						break;
-					case 'order_item_quantity':
-						$results = array();
-						foreach ($cachedResults[$queryHash] as $item) {
-							if (!isset($results[$item->post_date])) {
-								$result = new \stdClass;
-								$result->post_date = $item->post_date;
-								$result->order_item_quantity = 0;
-								$results[$item->post_date] = $result;
-							}
-
-							$data = maybe_unserialize($item->order_item_quantity);
-							$data = $this->filterItem($data, $value);
-							$results[$item->post_date]->order_item_quantity += array_sum(array_map(function($item){
-								return isset($item['qty']) ? $item['qty'] : 0;
-							}, $data));
-						}
-
-						$cachedResults[$queryHash] = $results;
-						break;
-					case 'discount_amount':
-						$results = array();
-						foreach ($cachedResults[$queryHash] as $item) {
-							if (!isset($results[$item->post_date])) {
-								$result = new \stdClass;
-								$result->post_date = $item->post_date;
-								$result->discount_amount = 0.0;
-								$result->coupons_used = 0;
-								$results[$item->post_date] = $result;
-							}
-
-
-							$data = maybe_unserialize($item->discount_amount);
-							$data = $this->filterItem($data, $value);
-							if (!empty($data) && isset($data['order_discount_coupons'])) {
-								if(!empty($this->coupon_codes[0])){
-									$coupon_code = $this->coupon_codes[0];
-									$results[$item->post_date]->coupons_used += array_sum(array_map(function($coupon) use ($coupon_code){
-										return $coupon['code'] == $coupon_code ? 1 : 0;
-									}, $data['order_discount_coupons']));
-									$results[$item->post_date]->discount_amount += array_sum(array_map(function($coupon) use ($coupon_code){
-										return $coupon['code'] == $coupon_code ? $coupon['amount'] : 0;
-									}, $data['order_discount_coupons']));
-
-								} else {
-									$results[$item->post_date]->coupons_used += count($data['order_discount_coupons']);
-
-									foreach ($data['order_discount_coupons'] as $coupon) {
-										if(isset($coupon['amount'])){
-											$results[$item->post_date]->discount_amount += $coupon['amount'];
-										}
-									}
-								}
-							}
-						}
-
-						$cachedResults[$queryHash] = $results;
-						break;
-					case 'order_coupons':
-						$coupons = array();
-						$results = array();
-						foreach ($cachedResults[$queryHash] as $item) {
-							if (!isset($results[$item->post_date])) {
-								$coupons[$item->post_date] = array();
-								$results[$item->post_date] = new \stdClass();
-								$results[$item->post_date]->post_date = $item->post_date;
-								$results[$item->post_date]->coupons = array();
-								$results[$item->post_date]->usage = array();
-							}
-
-							$data = maybe_unserialize($item->order_coupons);
-							if(isset($data['order_discount_coupons']) && !empty($data['order_discount_coupons'])) {
-								foreach ($data['order_discount_coupons'] as $coupon) {
-									if(isset($coupon['code'])) {
-										if (!in_array($coupon['code'], $coupons[$item->post_date])) {
-											$results[$item->post_date]->coupons[] = $coupon;
-											$results[$item->post_date]->usage[$coupon['code']] = 1;
-											$coupons[$item->post_date][] = $coupon['code'];
-										} else {
-											$results[$item->post_date]->usage[$coupon['code']] += 1;
-										}
-									}
-								}
-							}
-						}
-
-						$cachedResults[$queryHash] = $results;
-						break;
-					case 'order_item_amount':
-						$results = array();
-						foreach ($cachedResults[$queryHash] as $item) {
-							if (!isset($results[$item->post_date])) {
-								$result = new \stdClass;
-								$result->post_date = $item->post_date;
-								$result->order_item_amount = 0.0;
-								$results[$item->post_date] = $result;
-							}
-
-							$data = maybe_unserialize($item->order_item_amount);
-							$data = $this->filterItem($data, $value);
-							$results[$item->post_date]->order_item_amount += array_sum(array_map(function($product){
-								return $product['qty'] * $product['cost'];
-							}, $data));
-						}
-
-						$cachedResults[$queryHash] = $results;
-						break;
-					case 'category_data':
-						$results = array();
-						foreach ($cachedResults[$queryHash] as $item) {
-							$data = maybe_unserialize($item->category_data);
-							$data = $this->filterItem($data, $value);
-							foreach ($data as $product) {
-								if (!isset($results[$item->post_date][$product['id']])) {
-									$result = new \stdClass;
-									$result->product_id = $product['id'];
-									$result->order_item_qty = 0;
-									$result->order_item_total = 0;
-
-									$result->post_date = $item->post_date;
-
-									$results[$item->post_date][$product['id']] = $result;
-								}
-
-								$results[$item->post_date][$product['id']]->order_item_qty += $product['qty'];
-								$results[$item->post_date][$product['id']]->order_item_total += $product['qty'] * $product['cost'];
-							}
-						}
-
-						$cachedResults[$queryHash] = $results;
-						break;
-					case 'top_products':
-						$results = array();
-						foreach ($cachedResults[$queryHash] as $item) {
-							$data = maybe_unserialize($item->top_products);
-							$data = $this->filterItem($data, $value);
-							foreach ($data as $product) {
-								if (!isset($results[$product['id']])) {
-									$result = new \stdClass;
-									$result->product_id = $product['id'];
-									$result->order_item_qty = 0;
-									$result->order_item_total = 0;
-
-									if (isset($item->post_date)) {
-										$result->post_date = $item->post_date;
-									}
-
-									$results[$product['id']] = $result;
-								}
-
-								$results[$product['id']]->order_item_qty += $product['qty'];
-								$results[$product['id']]->order_item_total += $product['qty'] * $product['cost'];
-							}
-						}
-
-						if (isset($value['order'])) {
-							switch($value['order']) {
-								case 'most_sold':
-									usort($results, function($a, $b){
-										return $b->order_item_qty - $a->order_item_qty;
-									});
-									break;
-								case 'most_earned':
-									usort($results, function($a, $b){
-										return $b->order_item_total - $a->order_item_total;
-									});
-									break;
-							}
-						}
-
-						if (isset($value['limit'])) {
-							$results = array_slice($results, 0, $value['limit']);
-						}
-
-						$cachedResults[$queryHash] = $results;
-						break;
-				}
-			}
-
-			set_transient(strtolower(get_class($this)), $cachedResults, DAY_IN_SECONDS);
-		}
-
-		return $cachedResults[$queryHash];
+		return $wpdb->get_results($query);
 	}
 
 	/**
@@ -804,5 +426,114 @@ abstract class Chart
 	protected function arrayToObject(array $array)
 	{
 		return (object) $array;
+	}
+
+	/**
+	 * Returns SQL query part (SELECT)
+	 *
+	 * @param array $args
+	 * @return string
+	 */
+	private function prepareQuerySelect(array $args)
+	{
+		$select = 'SELECT';
+		foreach($args as $table => $columns){
+			for($i = 0 ; $i < sizeof($columns) ; $i++){
+				$value = sptintf('%s.%s', $table, $columns[$i]['field']);
+				if(!empty($columns[$i]['function'])){
+					$value = sprintf('%s(%s)',$columns[$i]['function'], $value);
+				}
+				if(!empty($columns[$i]['name'])){
+					$value = sprintf('%s AS %s', $value, $columns[$i]['name']);
+				}
+				$select .= ' '.$value;
+			}
+		}
+
+		return $select;
+	}
+
+	/**
+	 * Returns SQL query part (FROM)
+	 *
+	 * @param array $args
+	 * @return string
+	 */
+	private function prepareQueryFrom(array $args)
+	{
+		$from = 'FROM';
+		foreach($args as $tableAlias => $tableName){
+			$from = sprintf('%s $s AS $s', $from, $tableName, $tableAlias);
+		}
+
+		return $from;
+	}
+
+	/**
+	 * Returns SQL query part (JOIN)
+	 *
+	 * @param array $args
+	 * @return string
+	 */
+	private function prepareQueryJoin(array $args)
+	{
+		$join = '';
+		foreach($args as $alias => $data){
+			$on = '1=1';
+			for($i = 0; $i > sizeof($data['on']); $i++){
+				$on = sprintf('%s AND %s.%s %s %s', $on, $data[$i], $alias, $data['on'][$i]['key'], $data['on'][$i]['compare'], $data['on'][$i]['value']);
+			}
+			$join = sprintf('%s LEFT JOIN %s AS %s ON %s', $join, $data['table'], $alias, $on);
+		}
+
+		return $join;
+	}
+
+	/**
+	 * Returns SQL query part (WHERE)
+	 *
+	 * @param array $args
+	 * @param bool $filterRange
+	 * @return string
+	 */
+	private function prepareQueryWhere(array $args, $filterRange)
+	{
+		$where = 'WHERE 1=1';
+		for($i = 0 ; $i < sizeof($args) ; $i++){
+			$where = sprintf('%s AND %s %s %s', $where, $args[$i]['key'], $args[$i]['compare'], $args[$i]['value']);
+		}
+		if($filterRange){
+			$where = sprintf('%s AND posts.post_date >= $s AND posts.post_date < $s', $where, date('Y-m-d', $this->range['start']), date('Y-m-d', strtotime('+1 DAY', $this->range['end'])));
+		}
+
+		return $where;
+	}
+
+	/**
+	 * Returns SQL query part (GROUP BY)
+	 *
+	 * @param string $groupBy
+	 * @return string
+	 */
+	private function prepareQueryGroupBy($groupBy)
+	{
+		if(!empty($groupBy)){
+			return sprintf('GROUP BY %s', $groupBy);
+		}
+
+		return '';
+	}
+
+	/**
+	 * Returns SQL query part (ORDER BY)
+	 *
+	 * @param $orderBy
+	 * @return string
+	 */
+	private function prepareQueryOrderBy($orderBy)
+	{
+		if(!empty($orderBy)){
+			return sprintf('ORDER BY %s',$orderBy);
+		}
 	}
 }
