@@ -146,14 +146,14 @@ class Products implements Tool
 				if (is_array($types))
 				{
 					if(!in_array($types[0]->slug, array(
-						\Jigoshop\Entity\Product\Simple::TYPE,
-						\Jigoshop\Entity\Product\Virtual::TYPE,
-						\Jigoshop\Entity\Product\Downloadable::TYPE,
-						\Jigoshop\Entity\Product\External::TYPE,
-						\Jigoshop\Entity\Product\Variable::TYPE,
+						Product\Simple::TYPE,
+						Product\Virtual::TYPE,
+						Product\Downloadable::TYPE,
+						Product\External::TYPE,
+						Product\Variable::TYPE,
 					)))
 					{
-//						TODO stworzyc logi w migracji i dodawac do nich produkty, ktore posiadaly inne typy
+//						TODO stworzyc logi w migracji i dodawac info o prowadzonej migracji, do nich tez produkty, ktore posiadaly inne typy
 						$wpdb->query($wpdb->prepare("UPDATE {$wpdb->posts} SET post_status = 'private' WHERE ID = %d", $product->ID));
 						$types[0]->slug = 'simple';
 					}
@@ -289,7 +289,6 @@ class Products implements Tool
 
 			foreach ($attributes as $slug => $attribute)
 			{
-				$stop = false;
 				/** @var $attribute Product\Attribute */
 				$antiDuplicateAttributes = unserialize($this->wp->getOption('jigoshop_attributes_anti_duplicate', serialize(array())));
 				if (!isset($antiDuplicateAttributes[$attribute->getSlug()]) || $attribute->isLocal())
@@ -327,8 +326,7 @@ class Products implements Tool
 				else
 				{
 					$attribute = $this->productService->getAttribute($antiDuplicateAttributes[$attribute->getSlug()]);
-					$log = $attribute; @file_put_contents('/home/tomasz/projects/jigoshop2/www/nf.log', file_get_contents('/home/tomasz/projects/jigoshop2/www/nf.log') . '<<xxyyxxyyxx>>' . serialize($log)); @file_put_contents('/home/tomasz/projects/jigoshop2/www/nf2.log', file_get_contents('/home/tomasz/projects/jigoshop2/www/nf2.log') . "\r\n" . var_export($log, true));
-					$stop = true;
+					$attributes[$slug] = $attribute;
 				}
 
 				// Add attribute to the products
@@ -387,34 +385,15 @@ class Products implements Tool
 
 			foreach ($productIds as $id)
 			{
-//				if($id == 20560)
-//				{
-//					$log = $id; @file_put_contents('/home/tomasz/projects/jigoshop2/www/nf.log', file_get_contents('/home/tomasz/projects/jigoshop2/www/nf.log') . '<<xxyyxxyyxx>>' . serialize($log)); @file_put_contents('/home/tomasz/projects/jigoshop2/www/nf2.log', file_get_contents('/home/tomasz/projects/jigoshop2/www/nf2.log') . "\r\n" . var_export($log, true));
-//						$log = $productAttributes[$id]; @file_put_contents('/home/tomasz/projects/jigoshop2/www/nf.log', file_get_contents('/home/tomasz/projects/jigoshop2/www/nf.log') . '<<xxyyxxyyxx>>' . serialize($log)); @file_put_contents('/home/tomasz/projects/jigoshop2/www/nf2.log', file_get_contents('/home/tomasz/projects/jigoshop2/www/nf2.log') . "\r\n" . var_export($log, true));
-//					exit;
-//				}
 				foreach ($productAttributes[$id]['variations'] as $taxonomy => $value)
 				{
 					if (!isset($attributes[$taxonomy]))
 					{
 						continue;
 					}
-					if($stop)
-					{
-						$log = $id;
-						@file_put_contents('/home/tomasz/projects/jigoshop2/www/nf.log', file_get_contents('/home/tomasz/projects/jigoshop2/www/nf.log') . '<<xxyyxxyyxx>>' . serialize($log));
-						@file_put_contents('/home/tomasz/projects/jigoshop2/www/nf2.log', file_get_contents('/home/tomasz/projects/jigoshop2/www/nf2.log') . "\r\n" . var_export($log, true));
-						$log = $productAttributes[$id];
-						@file_put_contents('/home/tomasz/projects/jigoshop2/www/nf.log', file_get_contents('/home/tomasz/projects/jigoshop2/www/nf.log') . '<<xxyyxxyyxx>>' . serialize($log));
-						@file_put_contents('/home/tomasz/projects/jigoshop2/www/nf2.log', file_get_contents('/home/tomasz/projects/jigoshop2/www/nf2.log') . "\r\n" . var_export($log, true));
-						$log = $attributes[$taxonomy];
-						@file_put_contents('/home/tomasz/projects/jigoshop2/www/nf.log', file_get_contents('/home/tomasz/projects/jigoshop2/www/nf.log') . '<<xxyyxxyyxx>>' . serialize($log));
-						@file_put_contents('/home/tomasz/projects/jigoshop2/www/nf2.log', file_get_contents('/home/tomasz/projects/jigoshop2/www/nf2.log') . "\r\n" . var_export($log, true));
-						exit;
-					}
+
 					$attribute = $attributes[$taxonomy];
 					$option = $this->_findOption($attribute->getOptions(), $value);
-
 					if ($option !== null)
 					{
 						$query = array(

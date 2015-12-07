@@ -7,7 +7,6 @@ use Jigoshop\Entity\Customer;
 use Jigoshop\Entity\Order\Status;
 use Jigoshop\Entity\Product;
 use Jigoshop\Exception;
-use Jigoshop\Factory\Product\Variable;
 use Jigoshop\Helper\Render;
 use Jigoshop\Service\OrderServiceInterface;
 use Jigoshop\Service\PaymentServiceInterface;
@@ -103,7 +102,6 @@ class Orders implements Tool
 		$wpdb = $this->wp->getWPDB();
 		try
 		{
-			$log = $wpdb; @file_put_contents('/home/tomasz/projects/jigoshop2/www/nf.log', file_get_contents('/home/tomasz/projects/jigoshop2/www/nf.log') . '<<xxyyxxyyxx>>' . serialize($log)); @file_put_contents('/home/tomasz/projects/jigoshop2/www/nf2.log', file_get_contents('/home/tomasz/projects/jigoshop2/www/nf2.log') . "\r\n" . var_export($log, true));
 //			Open transaction for save migration products
 			$var_autocommit_sql = $wpdb->get_var("SELECT @@AUTOCOMMIT");
 			$this->checkSql();
@@ -173,6 +171,7 @@ class Orders implements Tool
 							break;
 						case 'order_data':
 							$data = unserialize($orders[$i]->meta_value);
+							$data = $this->_fetchOrderData($data);
 
 							// Migrate customer
 							$customer = $this->wp->getPostMeta($order->ID, 'customer', true);
@@ -197,10 +196,10 @@ class Orders implements Tool
 								$method = $this->shippingService->get($data['shipping_method']);
 								$wpdb->query($wpdb->prepare("INSERT INTO {$wpdb->postmeta} (post_id, meta_key, meta_value) VALUES (%d, %s, %s)",
 									$order->ID,
-									'shipping',
+									'shipping_data',
 									serialize(array(
 										'method' => $method->getState(),
-										'price' => $data['order_shipping'],
+										'price' => $data['order_shipping'], // TODO do usuniecia, gdyz jest na dole w osobnej mecie
 										'rate' => '', // Rates are stored nowhere - so no rate here
 									))
 								));
@@ -241,6 +240,12 @@ class Orders implements Tool
 								$data['order_total']
 							));
 							$this->checkSql();
+							$wpdb->query($wpdb->prepare("INSERT INTO {$wpdb->postmeta} (post_id, meta_key, meta_value) VALUES (%d, %s, %s)",
+								$order->ID,
+								'shipping',
+								$data['order_shipping']
+							));
+							$this->checkSql();
 							break;
 						case 'customer_user':
 							$customer = $this->wp->getPostMeta($order->ID, 'customer', true);
@@ -275,71 +280,116 @@ class Orders implements Tool
 
 							foreach ($data as $itemData) {
 								/** @var Product $product */
-								$product = $this->productService->find($itemData['id']);
+								$itemData = $this->_fetchItemData($itemData);
+								$product = null;
+								$productGetId = null;
+
+								if($wpdb->get_var($wpdb->prepare("SELECT COUNT(*) FROM {$wpdb->posts} WHERE ID = %d", $itemData['id'])) > 0)
+								{
+									$product = $this->productService->find($itemData['id']);
+									$productGetId = $product->getId();
+								}
+
 
 								$tax = 0.0;
 								$taxRate = 0;
+
+								if($itemData['qty'] == 0)
+								{
+									$itemData['qty'] = 1;
+								}
+
 								$price = $itemData['cost'] / $itemData['qty'];
 								if (!empty($itemData['taxrate']) && $itemData['taxrate'] > 0) {
 									$tax = $price * $itemData['taxrate'] / 100;
 									$taxRate = $itemData['taxrate'];
-								} else if ($itemData['cost'] < $itemData['cost_inc_tax']) {
+								} else if (isset($itemData['cost_inc_tax']) && $itemData['cost'] < $itemData['cost_inc_tax']) {
 									$tax = ($itemData['cost_inc_tax'] - $itemData['cost']) / $itemData['qty'];
 									$taxRate = $tax / $itemData['cost'];
 								}
 
 								$globalTaxRate += $taxRate;
-//								TODO brak zabezpieczenia przez produktem value 0 ect.
-								$wpdb->insert($wpdb->prefix.'jigoshop_order_item', array(
+
+								$productGetType = false;
+								if ($productGetId == null)
+								{
+									if (isset($itemData['variation_id']) && !empty($itemData['variation_id']))
+									{
+										$productGetType = Product\Variable::TYPE;
+									}
+									else
+									{
+										$productGetType = Product\Simple::TYPE;
+									}
+								}
+								else
+								{
+									$productGetType = $product->getType();
+								}
+
+								$insertOrderData = array(
 									'order_id' => $order->ID,
-									'product_id' => $product->getId(),
-									'product_type' => $product->getType(),
+									'product_type' => $productGetType,
 									'title' => $itemData['name'],
 									'price' => $price,
 									'tax' => $tax,
 									'quantity' => $itemData['qty'],
 									'cost' => $itemData['cost'],
-								));
+								);
+
+								if($productGetId != null)
+								{
+									$insertOrderData['product_id'] = $productGetId;
+								}
+
+								$wpdb->insert($wpdb->prefix.'jigoshop_order_item', $insertOrderData);
 								$this->checkSql();
 								$itemId = $wpdb->insert_id;
 
-								if (!empty($itemData['variation_id']) && $product instanceof Variable) {
+								if (isset($itemData['variation_id']) && !empty($itemData['variation_id']) && ($productGetId == null || $product instanceof Product\Variable))
+								{
 									$wpdb->query($wpdb->prepare(
 										"INSERT INTO {$wpdb->prefix}jigoshop_order_item_meta (item_id, meta_key, meta_value) VALUES (%d, %s, %s)",
 										$itemId, 'variation_id', $itemData['variation_id'] // TODO: HERE
 									));
 									$this->checkSql();
 
-									/** @var Product\Variable\Variation $variationProduct */
-									/** @var Product\Variable $product */
-									$variationProduct = $product->getVariation($itemData['variation_id']);
-									foreach ($itemData['variation'] as $variation => $variationValue) {
-										$variation = str_replace('tax_', '', $variation);
-										$attribute = $this->getAttribute($variationProduct, $variation);
+									if($productGetId !== null)
+									{
+										/** @var Product\Variable\Variation $variationProduct */
+										/** @var Product\Variable $product */
+										$variationProduct = $product->getVariation($itemData['variation_id']);
+										if(is_array($itemData['variation']))
+										{
+											foreach ($itemData['variation'] as $variation => $variationValue) {
+												$variation = str_replace('tax_', '', $variation);
+												$attribute = $this->getAttribute($variationProduct, $variation);
 
-										if ($attribute === null) {
-											$this->messages->addWarning(sprintf(__('Attribute "%s" not found for variation ID "%d".', 'jigoshop'), $variation, $variationProduct->getId()));
-											continue;
+												if ($attribute === null) {
+													$this->messages->addWarning(sprintf(__('Attribute "%s" not found for variation ID "%d".', 'jigoshop'), $variation, $variationProduct->getId()));
+													continue;
+												}
+
+												$option = $this->getAttributeOption($attribute, $variationValue);
+
+												if ($option === null) {
+													$this->messages->addWarning(sprintf(__('Attribute "%s" option "%s" not found for variation ID "%d".', 'jigoshop'), $variation, $variationValue, $variationProduct->getId()));
+													continue;
+												}
+
+												$wpdb->query($wpdb->prepare(
+													"INSERT INTO {$wpdb->prefix}jigoshop_order_item_meta (item_id, meta_key, meta_value) VALUES (%d, %s, %s)",
+													$itemId, $attribute->getAttribute()->getId(), $option->getId()
+												));
+												$this->checkSql();
+											}
 										}
-
-										$option = $this->getAttributeOption($attribute, $variationValue);
-
-										if ($option === null) {
-											$this->messages->addWarning(sprintf(__('Attribute "%s" option "%s" not found for variation ID "%d".', 'jigoshop'), $variation, $variationValue, $variationProduct->getId()));
-											continue;
-										}
-
-										$wpdb->query($wpdb->prepare(
-											"INSERT INTO {$wpdb->prefix}jigoshop_order_item_meta (item_id, meta_key, meta_value) VALUES (%d, %s, %s)",
-											$itemId, $attribute->getAttribute()->getId(), $option->getId()
-										));
-										$this->checkSql();
 									}
 								}
 							}
 							$wpdb->query($wpdb->prepare(
 								"INSERT INTO {$wpdb->prefix}jigoshop_order_tax (order_id, label, tax_class, rate, is_compound) VALUES (%d, %s, %s, %d, %d)",
-								$order->ID, __('Standard', 'jigoshop'), 'standard', $globalTaxRate / count($data), false
+								$order->ID, __('Standard', 'jigoshop'), 'standard', $globalTaxRate / (count($data) == 0 ? 1 : count($data)), false
 							));
 							$this->checkSql();
 							break;
@@ -390,6 +440,7 @@ class Orders implements Tool
 
 	private function _migrateCustomer($customer, $data)
 	{
+		$data = $this->_fetchCustomerData($data);
 		if (!$customer) {
 			$customer = new Customer();
 		} else {
@@ -400,7 +451,7 @@ class Orders implements Tool
 			$customer = new Customer();
 		}
 
-		if (!empty($data['billing_company'])) {
+		if (!empty($data['billing_company'] && !empty($data['billing_euvatno']))) {
 			$address = new Customer\CompanyAddress();
 			$address->setCompany($data['billing_company']);
 			$address->setVatNumber($data['billing_euvatno']);
@@ -477,7 +528,6 @@ class Orders implements Tool
 		try {
 			$wpdb = $this->wp->getWPDB();
 
-//			$joinOrders = array();
 			$ordersIdsMigration = array();
 
 			if (($TMP_ordersIdsMigration = $this->wp->getOption('jigoshop_orders_migrate_id')) === false)
@@ -518,9 +568,6 @@ class Orders implements Tool
 				'shop_order', 'auto-draft', $singleOrdersId);
 			$order = $wpdb->get_results($query);
 
-
-//			sort($joinOrders[$singleOrdersId]);
-
 			//TODO usunac
 			if(isset($_POST['wwee']))
 			{
@@ -540,6 +587,7 @@ class Orders implements Tool
 					'processed' => $countAll - $countRemain,
 					'remain' => $countRemain,
 					'total' => $countAll,
+					'debuuuuuuuug' => $order,
 				));
 
 			}
@@ -547,6 +595,7 @@ class Orders implements Tool
 			{
 				echo json_encode(array(
 					'success' => false,
+					'debuuuuuuuug' => $order,
 				));
 			}
 
@@ -560,5 +609,76 @@ class Orders implements Tool
 			));
 		}
 		exit;
+	}
+
+	protected function _fetchData($defaults, $args)
+	{
+		return array_merge($defaults, $args);
+	}
+
+	protected function _fetchCustomerData($args)
+	{
+		$defaults = array(
+			'billing_company'     => '',
+			'billing_euvatno'     => '',
+			'billing_first_name'  => '',
+			'billing_last_name'   => '',
+			'billing_address_1'   => '',
+			'billing_address_2'   => '',
+			'billing_country'     => '',
+			'billing_state'       => '',
+			'billing_postcode'    => '',
+			'billing_phone'       => '',
+			'billing_email'       => '',
+			'shipping_company'    => '',
+			'shipping_first_name' => '',
+			'shipping_last_name'  => '',
+			'shipping_address_1'  => '',
+			'shipping_address_2'  => '',
+			'shipping_country'    => '',
+			'shipping_state'      => '',
+			'shipping_postcode'   => '',
+		);
+
+		return $this->_fetchData($defaults, $args);
+	}
+
+	protected function _fetchOrderData($args)
+	{
+		$defaults = array(
+			'shipping_method'                         => '',
+			'shipping_service'                        => '',
+			'payment_method'                          => '',
+			'payment_method_title'                    => '',
+			'order_subtotal'                          => 0,
+			'order_discount_subtotal'                 => 0,
+			'order_shipping'                          => 0,
+			'order_discount'                          => 0,
+			'order_tax'                               => '',
+			'order_tax_no_shipping_tax'               => 0,
+			'order_tax_divisor'                       => 0,
+			'order_shipping_tax'                      => 0,
+			'order_total'                             => 0,
+			'order_total_prices_per_tax_class_ex_tax' => array(),
+			'order_discount_coupons'                  => array(),
+		);
+
+		return $this->_fetchData($defaults, $args);
+	}
+
+	protected function _fetchItemData($args)
+	{
+		$defaults = array(
+			'id'           => 0,
+			'variation_id' => 0,
+			'variation'    => array(),
+			'cost_inc_tax' => 0,
+			'name'         => '',
+			'qty'          => 1,
+			'cost'         => 0,
+			'taxrate'      => 0,
+		);
+
+		return $this->_fetchData($defaults, $args);
 	}
 }
