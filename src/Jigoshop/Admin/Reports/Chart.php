@@ -4,7 +4,6 @@ namespace Jigoshop\Admin\Reports;
 
 use Jigoshop\Admin\Reports;
 use Jigoshop\Core\Options;
-use Jigoshop\Helper\Currency;
 use Jigoshop\Helper\Scripts;
 use WPAL\Wordpress;
 
@@ -40,6 +39,8 @@ abstract class Chart
 
 	public function __construct(Wordpress $wp, Options $options, $currentRange)
 	{
+		//DEBUG
+		\WpDebugBar\Debugger::init($wp);
 		$this->wp = $wp;
 		$this->options = $options;
 		$this->currentRange = $currentRange;
@@ -229,7 +230,7 @@ abstract class Chart
 				$preparedData[$time] = array(esc_js($time), 0);
 			}
 		}
-
+		\WpDebugBar\Debugger::getInstance()->getDebugBar()['messages']->addMessage($data, 'chart_dara');
 		foreach ($data as $d) {
 			switch ($groupBy) {
 				case 'hour' :
@@ -383,10 +384,8 @@ abstract class Chart
 	 * @param  array $args
 	 * @return array|string depending on query_type
 	 */
-	public function getOrderReportData($args = array())
+	public function prepareQuery($args = array())
 	{
-		$wpdb = $this->wp->getWPDB();
-
 		$defaultArgs = array(
 			'select' => array(),
 			'from' => array(),
@@ -409,11 +408,14 @@ abstract class Chart
 			$this->prepareQueryJoin($args['join']),
 			$this->prepareQueryWhere($args['where'], $args['filter_range']),
 			$this->prepareQueryGroupBy($args['group_by']),
-			$this->prepareQueryOrderBy($args['order_by']),
-			';'
+			$this->prepareQueryOrderBy($args['order_by'])
 		));
+		return $query;
+	}
 
-		return $wpdb->get_results($query);
+	public function getOrderReportData($query)
+	{
+		return $this->wp->getWPDB()->get_results($query);
 	}
 
 	/**
@@ -439,18 +441,21 @@ abstract class Chart
 		$select = 'SELECT';
 		foreach($args as $table => $columns){
 			for($i = 0 ; $i < sizeof($columns) ; $i++){
-				$value = sptintf('%s.%s', $table, $columns[$i]['field']);
+				$value = sprintf('%s.%s', $table, $columns[$i]['field']);
+				if(isset($columns[$i]['distinct']) && $columns[$i]['distinct']){
+					$value = sprintf('DISTINCT %s', $value);
+				}
 				if(!empty($columns[$i]['function'])){
 					$value = sprintf('%s(%s)',$columns[$i]['function'], $value);
 				}
 				if(!empty($columns[$i]['name'])){
 					$value = sprintf('%s AS %s', $value, $columns[$i]['name']);
 				}
-				$select .= ' '.$value;
+				$select = sprintf('%s %s,',$select, $value);
 			}
 		}
 
-		return $select;
+		return rtrim($select, ',');
 	}
 
 	/**
@@ -463,7 +468,7 @@ abstract class Chart
 	{
 		$from = 'FROM';
 		foreach($args as $tableAlias => $tableName){
-			$from = sprintf('%s $s AS $s', $from, $tableName, $tableAlias);
+			$from = sprintf('%s %s AS %s', $from, $tableName, $tableAlias);
 		}
 
 		return $from;
@@ -480,8 +485,8 @@ abstract class Chart
 		$join = '';
 		foreach($args as $alias => $data){
 			$on = '1=1';
-			for($i = 0; $i > sizeof($data['on']); $i++){
-				$on = sprintf('%s AND %s.%s %s %s', $on, $data[$i], $alias, $data['on'][$i]['key'], $data['on'][$i]['compare'], $data['on'][$i]['value']);
+			for($i = 0; $i < sizeof($data['on']); $i++){
+				$on = sprintf('%s AND %s.%s %s %s', $on, $alias, $data['on'][$i]['key'], $data['on'][$i]['compare'], $data['on'][$i]['value']);
 			}
 			$join = sprintf('%s LEFT JOIN %s AS %s ON %s', $join, $data['table'], $alias, $on);
 		}
@@ -503,7 +508,7 @@ abstract class Chart
 			$where = sprintf('%s AND %s %s %s', $where, $args[$i]['key'], $args[$i]['compare'], $args[$i]['value']);
 		}
 		if($filterRange){
-			$where = sprintf('%s AND posts.post_date >= $s AND posts.post_date < $s', $where, date('Y-m-d', $this->range['start']), date('Y-m-d', strtotime('+1 DAY', $this->range['end'])));
+			$where = sprintf('%s AND posts.post_date >= "%s" AND posts.post_date < "%s"', $where, date('Y-m-d', $this->range['start']), date('Y-m-d', strtotime('+1 DAY', $this->range['end'])));
 		}
 
 		return $where;
@@ -535,5 +540,7 @@ abstract class Chart
 		if(!empty($orderBy)){
 			return sprintf('ORDER BY %s',$orderBy);
 		}
+
+		return '';
 	}
 }
