@@ -438,7 +438,7 @@ class Orders implements Tool
 		}
 	}
 
-	private function _migrateCustomer($customer, $data)
+	private function _migrateCustomer(  $customer, $data)
 	{
 		$data = $this->_fetchCustomerData($data);
 		if (!$customer) {
@@ -568,16 +568,6 @@ class Orders implements Tool
 				'shop_order', 'auto-draft', $singleOrdersId);
 			$order = $wpdb->get_results($query);
 
-			//TODO usunac
-			if(isset($_POST['wwee']))
-			{
-				$this->wp->updateOption('jigoshop_orders_migrate_id', serialize($ordersIdsMigration));
-				echo json_encode(array(
-					'success' => true,
-				));
-				exit;
-			}
-
 			if ($this->migrate($order))
 			{
 				$this->wp->updateOption('jigoshop_orders_migrate_id', serialize($ordersIdsMigration));
@@ -587,7 +577,6 @@ class Orders implements Tool
 					'processed' => $countAll - $countRemain,
 					'remain' => $countRemain,
 					'total' => $countAll,
-					'debuuuuuuuug' => $order,
 				));
 
 			}
@@ -595,7 +584,6 @@ class Orders implements Tool
 			{
 				echo json_encode(array(
 					'success' => false,
-					'debuuuuuuuug' => $order,
 				));
 			}
 

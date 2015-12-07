@@ -49,7 +49,7 @@ class Migration implements PageInterface
 
 			Styles::add('jigoshop.admin.migration', JIGOSHOP_URL.'/assets/css/admin/migration.css');
 
-			Scripts::add('jigoshop.admin.migration', JIGOSHOP_URL.'/assets/js/migration.js');
+			Scripts::add('jigoshop.admin.migration', JIGOSHOP_URL.'/assets/js/admin/migration.js');
 
 			$migration_title = __('Jigoshop &raquo; Migration Tool &raquo; ', 'jigoshop');
 			Scripts::localize('jigoshop.admin.migration', 'jigoshop_admin_migration', array(
@@ -58,6 +58,7 @@ class Migration implements PageInterface
 					'migration_complete' => __('migration complete', 'jigoshop'),
 					'migration_error' => __('migration error', 'jigoshop'),
 					'alert_msg' => __('Wystąpił błąd komunikacji, proszę przeładować stronę i koontynuować proces.', 'jigoshop'),
+					'processing' => __('Processing...', 'jigoshop'),
 					'jigoshop.admin.migration.products' => $migration_title . __('Products', 'jigoshop'),
 					'jigoshop.admin.migration.coupons' => $migration_title . __('Coupons', 'jigoshop'),
 					'jigoshop.admin.migration.emails' => $migration_title . __('Emails', 'jigoshop'),

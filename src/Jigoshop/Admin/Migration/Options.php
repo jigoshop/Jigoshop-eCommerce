@@ -369,16 +369,6 @@ class Options implements Tool
 	public function ajaxMigrationOptions()
 	{
 		try {
-			//TODO usunac
-			if(isset($_POST['wwee']))
-			{
-				$this->wp->updateOption('jigoshop_options_migrate_id', '0');
-				echo json_encode(array(
-					'success' => true,
-				));
-				exit;
-			}
-
 			$countAll = 93;
 			$countRemain = 93;
 

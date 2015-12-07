@@ -611,34 +611,6 @@ class Products implements Tool
 				'product', 'product_variation', 'auto-draft', $singleProductId);
 			$product = $wpdb->get_results($query);
 
-			//TODO usunac
-			if(isset($_POST['wwee']))
-			{
-				$query = $wpdb->prepare("
-				SELECT DISTINCT p.ID FROM {$wpdb->posts} p
-				LEFT JOIN {$wpdb->postmeta} pm ON pm.post_id = p.ID
-					WHERE p.post_type IN (%s, %s) AND p.post_status <> %s
-					ORDER BY p.ID",
-					'product', 'product_variation', 'auto-draft');
-
-				$products = $wpdb->get_results($query);
-
-				$countMeta = count($products);
-
-				for ($aa = 0; $aa < $countMeta; $aa++)
-				{
-					$productsIdsMigration[] = $products[$aa]->ID;
-				}
-
-				$productsIdsMigration = array_unique($productsIdsMigration);
-				$this->wp->updateOption('jigoshop_products_migrate_id', serialize($productsIdsMigration));
-				$this->wp->updateOption('jigoshop_products_migrate_count', count($productsIdsMigration));
-				echo json_encode(array(
-					'success' => true,
-				));
-				exit;
-			}
-
 			if ($this->migrate($product))
 			{
 				$this->wp->updateOption('jigoshop_products_migrate_id', serialize($productsIdsMigration));

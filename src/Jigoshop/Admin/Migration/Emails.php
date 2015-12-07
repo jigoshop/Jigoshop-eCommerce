@@ -192,16 +192,6 @@ class Emails implements Tool
 			$emailsIdsMigration = array_unique($emailsIdsMigration);
 			$countAll = count($emailsIdsMigration);
 
-			//TODO usunac
-			if(isset($_POST['wwee']))
-			{
-				$this->wp->updateOption('jigoshop_emails_migrate_id', serialize($emailsIdsMigration));
-				echo json_encode(array(
-					'success' => true,
-				));
-				exit;
-			}
-
 			if (($TMP_emailsIdsMigration = $this->wp->getOption('jigoshop_emails_migrate_id')) !== false)
 			{
 				$emailsIdsMigration = unserialize($TMP_emailsIdsMigration);

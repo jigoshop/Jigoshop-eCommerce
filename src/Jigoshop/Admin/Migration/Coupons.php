@@ -200,16 +200,6 @@ class Coupons implements Tool
 			$couponsIdsMigration = array_unique($couponsIdsMigration);
 			$countAll = count($couponsIdsMigration);
 
-			//TODO usunac
-			if(isset($_POST['wwee']))
-			{
-				$this->wp->updateOption('jigoshop_coupons_migrate_id', serialize($couponsIdsMigration));
-				echo json_encode(array(
-					'success' => true,
-				));
-				exit;
-			}
-
 			if (($TMP_couponsIdsMigration = $this->wp->getOption('jigoshop_coupons_migrate_id')) !== false)
 			{
 				$couponsIdsMigration = unserialize($TMP_couponsIdsMigration);
