@@ -167,56 +167,6 @@ class DiscountSummary extends Chart
 		return $widgets;
 	}
 
-	public function coupons_widget()
-	{
-		?>
-
-		<h4 class="section_title"><span><?php _e('Most Discount', 'jigoshop'); ?></span></h4>
-		<div class="section">
-			<table cellspacing="0">
-				<?php
-				$most_discount = $usedCoupons;
-				usort($most_discount, function($a, $b){
-					return $b['amount'] * $b['usage'] - $a['amount'] * $a['usage'];
-				});
-				$most_discount = array_slice($most_discount, 0, 12);
-
-				if ($most_discount) {
-
-					foreach ($most_discount as $coupon) {
-						echo '<tr class="'.(in_array($coupon['code'], $this->couponCodes) ? 'active' : '').'">
-							<td class="count" width="1%">'.jigoshop_price($coupon['amount'] * $coupon['usage']).'</td>
-							<td class="name"><a href="'.esc_url(add_query_arg('coupon_codes', $coupon['code'])).'">'.$coupon['code'].'</a></td>
-						</tr>';
-					}
-				} else {
-					echo '<tr><td colspan="3">'.__('No coupons found in range', 'jigoshop').'</td></tr>';
-				}
-				?>
-			</table>
-		</div>
-		<script type="text/javascript">
-			jQuery(function($){
-				$('.section_title').click(function(){
-					var next_section = $(this).next('.section');
-					if($(next_section).is(':visible'))
-						return false;
-					$('.section:visible').slideUp();
-					$('.section_title').removeClass('open');
-					$(this).addClass('open').next('.section').slideDown();
-					return false;
-				});
-				$('.section').slideUp(100, function(){
-					<?php if ( empty( $this->couponCodes ) ) : ?>
-					$('.section_title:eq(1)').click();
-					<?php else : ?>
-					$('.section_title:eq(0)').click();
-					<?php endif; ?>
-				});
-			});
-		</script>
-		<?php
-	}
 
 	/**
 	 * Get report data
