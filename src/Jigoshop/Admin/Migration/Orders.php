@@ -250,29 +250,43 @@ class Orders implements Tool
 						case 'customer_user':
 							$customer = $this->wp->getPostMeta($order->ID, 'customer', true);
 
-							if ($customer !== false) {
+							if ($customer !== false)
+							{
 								/** @var Customer $customer */
 								$customer = maybe_unserialize(maybe_unserialize($customer));
-								if (!$customer) {
+								if (!$customer)
+								{
 									$customer = new Customer();
 								}
-
-								/** @var \WP_User $user */
-								if(($user = $this->wp->getUserBy('id', $orders[$i]->meta_value)) !== false)
-								{
-									$this->checkSql();
-									$customer->setId($user->ID);
-									$customer->setLogin($user->get('login'));
-									$customer->setEmail($user->get('user_email'));
-									$customer->setName($user->get('display_name'));
-									$wpdb->query($wpdb->prepare("UPDATE {$wpdb->postmeta} SET meta_value = %d WHERE post_id = %d AND meta_key = %s",
-										serialize(serialize($customer)),
-										$orders[$i]->meta_id,
-										'customer'
-									));
-									$this->checkSql();
-								}
 							}
+							else
+							{
+								$customer = new Customer();
+							}
+
+							/** @var \WP_User $user */
+							if (($user = $this->wp->getUserBy('id', $orders[$i]->meta_value)) !== false)
+							{
+								$this->checkSql();
+								$customer->setId($user->ID);
+								$customer->setLogin($user->get('login'));
+								$customer->setEmail($user->get('user_email'));
+								$customer->setName($user->get('display_name'));
+								$wpdb->query($wpdb->prepare("UPDATE {$wpdb->postmeta} SET meta_value = %d WHERE post_id = %d AND meta_key = %s", serialize(serialize($customer)), $orders[$i]->meta_id, 'customer'));
+								$this->checkSql();
+								$userId = $orders[$i]->meta_value;
+							}
+							else
+							{
+								$userId = 0;
+							}
+
+							$wpdb->query($wpdb->prepare("INSERT INTO {$wpdb->postmeta} (post_id, meta_key, meta_value) VALUES (%d, %s, %d)",
+								$order->ID,
+								'customer_id',
+								$userId
+							));
+
 							break;
 						case 'order_items':
 							$data = unserialize($orders[$i]->meta_value);
