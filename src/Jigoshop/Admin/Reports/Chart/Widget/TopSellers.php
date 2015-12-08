@@ -30,10 +30,10 @@ class TopSellers implements WidgetInterface
 		$args = array();
 		foreach($this->topSelers as $product){
 			$args[] = array(
-				'count' => $product->order_item_qty,
-				'id' => $product->product_id,
-				'url' => esc_url(add_query_arg('product_ids', $product->product_id)),
-				'title' => get_the_title($product->product_id)
+				'count' => $product->count,
+				'id' => $product->id,
+				'url' => esc_url(add_query_arg('product_ids', $product->id)),
+				'title' => $product->title
 			);
 		}
 

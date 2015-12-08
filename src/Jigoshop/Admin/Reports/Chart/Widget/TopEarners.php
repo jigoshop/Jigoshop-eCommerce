@@ -31,10 +31,10 @@ class TopEarners implements WidgetInterface
 		$args = array();
 		foreach($this->topEarners as $product){
 			$args[] = array(
-				'total' => Product::formatPrice($product->order_item_total),
-				'id' => $product->product_id,
-				'url' => esc_url(add_query_arg('product_ids', $product->product_id)),
-				'title' => get_the_title($product->product_id)
+				'total' => Product::formatPrice($product->price),
+				'id' => $product->id,
+				'url' => esc_url(add_query_arg('product_ids', $product->id)),
+				'title' => $product->title
 			);
 		}
 

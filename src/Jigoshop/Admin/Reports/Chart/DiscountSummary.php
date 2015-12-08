@@ -14,8 +14,11 @@ use WPAL\Wordpress;
 
 class DiscountSummary extends Chart
 {
+	/** @var array */
 	public $chartColours = array();
+	/** @var array */
 	public $couponCodes = array();
+	/** @var */
 	private $reportData;
 
 	/**
@@ -53,50 +56,24 @@ class DiscountSummary extends Chart
 		});
 	}
 
+	/**
+	 * @return array
+	 */
 	public function getChartLegend()
 	{
 		$legend = array();
 
-		$query = array(
-			'data' => array(
-				'order_data' => array(
-					'type' => 'meta',
-					'name' => 'discount_amount',
-					'process' => true,
-				),
-				'post_date' => array(
-					'type' => 'post_data',
-					'function' => '',
-					'name' => 'post_date'
-				),
-			),
-			'query_type' => 'get_results',
-			'filter_range' => true,
-			'order_types' => array('shop_order'),
-		);
-
-		if ($this->couponCodes) {
-			$query['data']['order_data']['where'] = array(
-				'type' => 'object_comparison',
-				'key' => 'order_discount_coupons',
-				'value' => $this->couponCodes,
-				'operator' => 'intersection',
-				'map' => function($item){
-					if(!isset($item['code'])){
-						return false;
-					}
-					return $item['code'];
-				},
-			);
+		$this->getReportData();
+		$totalDiscount = 0;
+		$totalCoupons = 0;
+		foreach ($this->reportData->orderCoupons as $order) {
+			$totalDiscount += array_sum(array_map(function ($coupon){
+				return $coupon['amount'];
+			}, $order->coupons));
+			$totalCoupons += array_sum(array_map(function ($coupon){
+				return $coupon['usage'];
+			}, $order->coupons));
 		}
-
-		$items = $this->getOrderReportData($query);
-		$totalDiscount = array_sum(array_map(function($item){
-			return $item->discount_amount;
-		}, $items));
-		$totalCoupons = absint(array_sum(array_map(function($item){
-			return $item->coupons_used;
-		}, $items)));
 
 		$legend[] = array(
 			'title' => sprintf(__('%s discounts in total', 'jigoshop'), '<strong>'.Product::formatPrice($totalDiscount).'</strong>'),
@@ -113,6 +90,9 @@ class DiscountSummary extends Chart
 		return $legend;
 	}
 
+	/**
+	 *
+	 */
 	public function display()
 	{
 		/** @noinspection PhpUnusedLocalVariableInspection */
@@ -139,34 +119,37 @@ class DiscountSummary extends Chart
 		));
 	}
 
+	/**
+	 * @return array
+	 */
 	public function getChartWidgets()
 	{
 		$widgets = array();
 		$usedCoupons = $this->getUsedCoupons();
+		\WpDebugBar\Debugger::getInstance()->getDebugBar()['messages']->addMessage($usedCoupons);
+
 		$mostDiscount = $usedCoupons;
 		$mostPopular = $usedCoupons;
-		usort($mostDiscount, function($a, $b){
-			return $b['amount'] * $b['usage'] - $a['amount'] * $a['usage'];
+		usort($mostDiscount, function ($a, $b){
+			return $b['amount'] - $a['amount'];
 		});
 		$mostDiscount = array_slice($mostDiscount, 0, 12);
-		usort($mostPopular, function($a, $b){
+		usort($mostPopular, function ($a, $b){
 			return $b['usage'] - $a['usage'];
 		});
 		$mostPopular = array_slice($mostPopular, 0, 12);
 
 		$widgets[] = new Chart\Widget\SelectCoupons($this->couponCodes, $usedCoupons);
 		$widgets[] = new Chart\Widget\CustomRange();
-		if(!empty($mostPopular)) {
+		if (!empty($mostPopular)) {
 			$widgets[] = new Chart\Widget\MostPopular($mostPopular);
 		}
-		if(!empty($mostDiscount)) {
+		if (!empty($mostDiscount)) {
 			$widgets[] = new Chart\Widget\MostDiscount($mostDiscount);
 		}
 
-
 		return $widgets;
 	}
-
 
 	/**
 	 * Get report data
@@ -188,83 +171,163 @@ class DiscountSummary extends Chart
 	private function queryReportData()
 	{
 		$this->reportData = new \stdClass();
-		$this->reportData->usedCoupons = $this->getOrderReportData(array(
-			'data' => array(
-				'order_data' => array(
-					'type' => 'meta',
-					'name' => 'order_coupons',
-					'process' => true,
+		$wpdb = $this->wp->getWPDB();
+
+		$query = $this->prepareQuery(array(
+			'select' => array(
+				'discount' => array(
+					array(
+						'field' => 'meta_value',
+						'function' => '',
+						'name' => 'discount'
+					),
+					array(
+						'field' => 'post_id',
+						'function' => '',
+						'name' => 'order_id'
+					),
 				),
-				'post_date' => array(
-					'type' => 'post_data',
-					'function' => '',
-					'name' => 'post_date'
+				'coupons' => array(
+					array(
+						'field' => 'meta_value',
+						'function' => '',
+						'name' => 'coupons'
+					)
+				),
+				'posts' => array(
+					array(
+						'field' => 'post_date',
+						'function' => '',
+						'name' => 'post_date'
+					)
 				),
 			),
-			'query_type' => 'get_results',
+			'from' => array(
+				'discount' => $wpdb->postmeta,
+			),
+			'join' => array(
+				'coupons' => array(
+					'table' => $wpdb->postmeta,
+					'on' => array(
+						array(
+							'key' => 'post_id',
+							'value' => 'discount.post_id',
+							'compare' => '=',
+						),
+						array(
+							'key' => 'meta_key',
+							'value' => '"coupons"',
+							'compare' => '=',
+						)
+					),
+				),
+				'posts' => array(
+					'table' => $wpdb->posts,
+					'on' => array(
+						array(
+							'key' => 'ID',
+							'value' => 'discount.post_id',
+							'compare' => '=',
+						)
+					),
+				)
+			),
+			'where' => array(
+				array(
+					'key' => 'discount.meta_key',
+					'value' => '"discount"',
+					'compare' => '='
+				),
+				array(
+					'key' => 'discount.meta_value',
+					'value' => '0',
+					'compare' => '>'
+				),
+			),
 			'filter_range' => true,
-			'order_types' => array('shop_order'),
 		));
+		$coupons = $this->getOrderReportData($query);
+		$this->reportData->orders = $this->parseReportData($coupons);
+
+		$this->reportData->usedCoupons = array();
+		foreach ($this->reportData->orders as $order) {
+			$this->reportData->usedCoupons[$order->post_date] = new \stdClass();
+			$this->reportData->usedCoupons[$order->post_date]->post_date = $order->post_date;
+			$this->reportData->usedCoupons[$order->post_date]->coupons > array();
+			$this->reportData->usedCoupons[$order->post_date]->usage = array();
+
+			foreach ($order->coupons as $code => $coupon) {
+				$this->reportData->usedCoupons[$order->post_date]->coupons[] = array(
+					'code' => $code,
+					'amount' => $coupon['amount'],
+					'usage' => $coupon['usage'],
+				);
+				$this->reportData->usedCoupons[$order->post_date]->usage[$code] = $coupon['usage'];
+			}
+		}
 
 		$couponCodes = $this->couponCodes;
-		if(!empty($couponCodes[0])){
-			$this->reportData->orderCoupons = array_filter($this->reportData->usedCoupons, function($item) use ($couponCodes)	{
-				foreach($couponCodes as $couponCode){
-					if(isset($item->usage[$couponCode])){
+		if (!empty($couponCodes[0])) {
+			$this->reportData->orderCoupons = array_filter($this->reportData->usedCoupons, function ($item) use ($couponCodes){
+				foreach ($couponCodes as $couponCode) {
+					if (isset($item->usage[$couponCode])) {
 						return true;
 					}
 				}
+
 				return false;
 			});
 		} else {
 			$this->reportData->orderCoupons = $this->reportData->usedCoupons;
 		}
 
-		$this->reportData->orderCouponCounts = array_map(function($item) use ($couponCodes){
+		$this->reportData->orderCouponCounts = array_map(function ($item) use ($couponCodes){
 			$time = new \stdClass();
 			$time->post_date = $item->post_date;
-			if(!empty($couponCodes))
-			{
-				foreach($couponCodes as $couponCode){
-					if(isset($item->usage[$couponCode])){
+			if (!empty($couponCodes)) {
+				foreach ($couponCodes as $couponCode) {
+					if (isset($item->usage[$couponCode])) {
 						$time->order_coupon_count = $item->usage[$couponCode];
 					}
 				}
 			} else {
-				$time->order_coupon_count = count($item->coupons);
+				$time->order_coupon_count = array_sum($item->usage);
 			}
 
 			return $time;
 		}, $this->reportData->orderCoupons);
 
-		$this->reportData->orderDiscountAmounts = array_map(function($item) use ($couponCodes){
+		$this->reportData->orderDiscountAmounts = array_map(function ($item) use ($couponCodes){
 			$time = new \stdClass();
 			$time->post_date = $item->post_date;
-			if(!empty($item->coupons)){
-				$time->discount_amount = array_sum(array_map(function($innerItem) use ($item, $couponCodes){
-					if(empty($innerItem)){
+			if (!empty($item->coupons)) {
+				$time->discount_amount = array_sum(array_map(function ($innerItem) use ($item, $couponCodes){
+					if (empty($innerItem)) {
 						return 0;
 					}
-					if(!empty($couponCodes)) {
-						foreach($couponCodes as $couponCode) {
-							if($couponCode == $innerItem['code']){
-								return $item->usage[$innerItem['code']] * $innerItem['amount'];
+					if (!empty($couponCodes)) {
+						foreach ($couponCodes as $couponCode) {
+							if ($couponCode == $innerItem['code']) {
+								return $innerItem['amount'];
 							}
 						}
+
 						return 0;
 					} else {
-						return $item->usage[$innerItem['code']] * $innerItem['amount'];
+						return $innerItem['amount'];
 					}
 				}, $item->coupons));
 			} else {
 				$time->discount_amount = 0;
 			}
 
-
 			return $time;
 		}, $this->reportData->orderCoupons);
 	}
 
+	/**
+	 * @return array
+	 */
 	public function getExportButton()
 	{
 		return array(
@@ -274,14 +337,18 @@ class DiscountSummary extends Chart
 		);
 	}
 
+	/**
+	 * @return array
+	 */
 	public function getMainChart()
 	{
 		global $wp_locale;
 
 		$startTime = $this->range['start'];
 		$endTime = $this->range['end'];
-		$filterTimes = function($item) use ($startTime, $endTime){
+		$filterTimes = function ($item) use ($startTime, $endTime){
 			$time = strtotime($item->post_date);
+
 			return $time >= $startTime && $time < $endTime;
 		};
 
@@ -294,7 +361,7 @@ class DiscountSummary extends Chart
 		$data['series'][] = $this->arrayToObject(array(
 			'label' => esc_js(__('Number of coupons used', 'jigoshop')),
 			'data' => array_values($orderCouponCounts),
-			'color' => $this->chartColours['coupon_count' ],
+			'color' => $this->chartColours['coupon_count'],
 			'bars' => $this->arrayToObject(array(
 				'fillColor' => $this->chartColours['coupon_count'],
 				'fill' => true,
@@ -377,15 +444,21 @@ class DiscountSummary extends Chart
 		return $data;
 	}
 
+	/**
+	 *
+	 */
 	private function getChartColours()
 	{
 		$this->chartColours = $this->wp->applyFilters('jigoshop/admin/reports/discount_summary/chart_colours', array(
 
-				'discount_amount' => '#3498db',
-				'coupon_count' => '#d4d9dc',
+			'discount_amount' => '#3498db',
+			'coupon_count' => '#d4d9dc',
 		));
 	}
 
+	/**
+	 * @return array
+	 */
 	private function getUsedCoupons()
 	{
 		$data = $this->getReportData();
@@ -393,7 +466,7 @@ class DiscountSummary extends Chart
 
 		foreach ($data->usedCoupons as $coupons) {
 			foreach ($coupons->coupons as $coupon) {
-				if(!empty($coupon)){
+				if (!empty($coupon)) {
 					if (!isset($usedCoupons[$coupon['code']])) {
 						$usedCoupons[$coupon['code']] = $coupon;
 						$usedCoupons[$coupon['code']]['usage'] = 0;
@@ -404,5 +477,107 @@ class DiscountSummary extends Chart
 		}
 
 		return $usedCoupons;
+	}
+
+	/**
+	 * @param $orders
+	 *
+	 * @return mixed
+	 */
+	private function parseReportData($orders)
+	{
+		foreach ($orders as $order) {
+			$discounts = $this->calculateDiscounts($order);
+			$order->coupons = $discounts;
+		}
+
+		return $orders;
+	}
+
+	/**
+	 * @param $order
+	 *
+	 * @return array
+	 */
+	private function calculateDiscounts($order)
+	{
+		$order->coupons = unserialize($order->coupons);
+		$flatDiscount = array();
+		if (sizeof($order->coupons) > 1) {
+			$percentageDiscount = array();
+			foreach ($order->coupons as $coupon) {
+
+				$flatDiscount[$coupon['code']] = array(
+					'amount' => '',
+					'usage' => 0
+				);
+				$percentageDiscount[$coupon['code']] = array(
+					'amount' => '',
+					'usage' => 0
+				);
+				if ($coupon['type'] == 'percent') {
+					$percentageDiscount[$coupon['code']]['amount'] = $coupon['amount'];
+					$percentageDiscount[$coupon['code']]['usage'] += $coupon['individual_use'] ? 1 : $coupon['usage'];
+				} else if ($coupon['type'] == 'percent_product') {
+					$includedProducts = array();
+					foreach ($coupon['include_products'] as $productId) {
+						$parent = $this->getParent($productId);
+						if ($parent) {
+							$includedProducts[] = $parent;
+						} else {
+							$includedProducts[] = $productId;
+						}
+					}
+					$orderProducts = $this->getOrderProducts($order->order_id);
+					foreach ($orderProducts as $orderProduct) {
+						if (in_array($orderProduct->product_id, $includedProducts)) {
+							$flatDiscount[$coupon['code']]['amount'] += $orderProduct->cost * $coupon['amount'] / 100;
+						}
+						$flatDiscount[$coupon['code']]['usage'] += $coupon['individual_use'] ? 1 : $coupon['usage'];
+					}
+				} else {
+					$flatDiscount[$coupon['code']] = $coupon['amount'];
+					$flatDiscount[$coupon['code']]['usage'] += $coupon['individual_use'] ? 1 : $coupon['usage'];
+				}
+			}
+
+			$totalDiscountByPercentageCoupons = $order->discount - array_sum(array_map(function ($coupon){
+					return $coupon['amount'];
+				}, $flatDiscount));
+			foreach ($percentageDiscount as $code => $data) {
+				$flatDiscount[$code]['amount'] = $data['amount'] * $totalDiscountByPercentageCoupons / array_sum(array_map(function ($coupon){
+						return $coupon['amount'];
+					}, $percentageDiscount));
+			}
+		} else {
+			$flatDiscount[$order->coupons[0]['code']]['amount'] = $order->discount;
+			$flatDiscount[$order->coupons[0]['code']]['usage'] += $order->coupons[0]['individual_use'] ? 1 : $order->coupons[0]['usage'] == '' ? 1 : $order->coupons[0]['usage'];
+		}
+
+		return $flatDiscount;
+	}
+
+	/**
+	 * @param $orderId
+	 *
+	 * @return mixed
+	 */
+	private function getOrderProducts($orderId)
+	{
+		$wpdb = $this->wp->getWPDB();
+
+		return $wpdb->get_results($wpdb->prepare('SELECT * FROM '.$wpdb->prefix.'jigoshop_order_item WHERE order_id = %s', $orderId));
+	}
+
+	/**
+	 * @param $productId
+	 *
+	 * @return null|string
+	 */
+	private function getParent($productId)
+	{
+		$wpdb = $this->wp->getWPDB();
+
+		return $wpdb->get_var($wpdb->prepare("SELECT post_parent FROM {$wpdb->posts} WHERE ID = %d", $productId));
 	}
 }

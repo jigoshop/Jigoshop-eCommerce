@@ -31,7 +31,7 @@ class MostDiscount implements WidgetInterface
 		$args = array();
 		foreach($this->mostDiscount as $coupon){
 			$args[] = array(
-				'total' => Product::formatPrice($coupon['amount'] * $coupon['usage']),
+				'total' => Product::formatPrice($coupon['amount']),
 				'url' => esc_url(add_query_arg('coupon_codes', $coupon['code'])),
 				'title' => $coupon['code']
 			);

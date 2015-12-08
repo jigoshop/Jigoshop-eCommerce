@@ -230,7 +230,7 @@ abstract class Chart
 				$preparedData[$time] = array(esc_js($time), 0);
 			}
 		}
-		\WpDebugBar\Debugger::getInstance()->getDebugBar()['messages']->addMessage($data, 'chart_dara');
+
 		foreach ($data as $d) {
 			switch ($groupBy) {
 				case 'hour' :
@@ -271,98 +271,6 @@ abstract class Chart
 		$postsArray = get_posts( $args );
 
 		return $postsArray[0]->post_date;
-	}
-
-	protected function filterItem($item, $value)
-	{
-		if (isset($value['where'])) {
-			switch($value['where']['type']) {
-				case 'item_id':
-					$item = array_filter($item, function($product) use ($value){
-						$result = false;
-						foreach ($value['where']['keys'] as $key) {
-							$result |= in_array($product[$key], $value['where']['value']);
-						}
-
-						return $result;
-					});
-					break;
-				case 'comparison':
-					$item = array_filter($item, function($product) use ($value){
-						switch ($value['where']['operator']) {
-							case '<>':
-							case '!=':
-								return $product[$value['where']['key']] != $value['where']['value'];
-							case '=':
-								return $product[$value['where']['key']] == $value['where']['value'];
-							case '<':
-								return $product[$value['where']['key']] < $value['where']['value'];
-							case '>':
-								return $product[$value['where']['key']] > $value['where']['value'];
-							case '<=':
-								return $product[$value['where']['key']] <= $value['where']['value'];
-							case '>=':
-								return $product[$value['where']['key']] >= $value['where']['value'];
-							case 'in':
-								return in_array($product[$value['where']['key']], $value['where']['value']);
-							case 'intersection':
-								$intersection = array_intersect($product[$value['where']['key']], $value['where']['value']);
-								return !empty($intersection);
-						}
-
-						return false;
-					});
-					break;
-				case 'object_comparison':
-					switch ($value['where']['operator']) {
-						case '<>':
-						case '!=':
-							if ($item[$value['where']['key']] != $value['where']['value']) {
-								return $item;
-							}
-						case '=':
-							if ($item[$value['where']['key']] == $value['where']['value']) {
-								return $item;
-							}
-						case '<':
-							if ($item[$value['where']['key']] < $value['where']['value']) {
-								return $item;
-							}
-						case '>':
-							if ($item[$value['where']['key']] > $value['where']['value']) {
-								return $item;
-							}
-						case '<=':
-							if ($item[$value['where']['key']] <= $value['where']['value']) {
-								return $item;
-							}
-						case '>=':
-							if ($item[$value['where']['key']] >= $value['where']['value']) {
-								return $item;
-							}
-						case 'in':
-							if (in_array($item[$value['where']['key']], $value['where']['value'])) {
-								return $item;
-							}
-						case 'intersection':
-							$source = $item[$value['where']['key']];
-							if(is_array($source)) {
-								if (isset($value['where']['map'])) {
-									$source = array_map($value['where']['map'], $source);
-								}
-
-								$intersection = array_intersect($source, $value['where']['value']);
-								if (!empty($intersection)) {
-									return $item;
-								};
-							}
-					}
-
-					return false;
-			}
-		}
-
-		return $item;
 	}
 
 	/**

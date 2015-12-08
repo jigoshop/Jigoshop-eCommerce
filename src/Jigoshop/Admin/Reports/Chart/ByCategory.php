@@ -49,7 +49,7 @@ class ByCategory extends Chart
 				return;
 			}
 			Styles::add('jigoshop.vendors.select2', JIGOSHOP_URL.'/assets/css/vendors/select2.min.css', array('jigoshop.admin.reports'));
-			Scripts::add('jigoshop.vendors.select2', JIGOSHOP_URL . '/assets/js/vendors/select2.min.js', array('jigoshop.admin.reports'), array('in_footer' => true));
+			Scripts::add('jigoshop.vendors.select2', JIGOSHOP_URL.'/assets/js/vendors/select2.min.js', array('jigoshop.admin.reports'), array('in_footer' => true));
 			Scripts::localize('jigoshop.reports.chart', 'chart_data', $this->getMainChart());
 		});
 	}
@@ -68,7 +68,6 @@ class ByCategory extends Chart
 		$legend = array();
 		$index = 0;
 
-
 		foreach ($this->showCategories as $category) {
 			$category = get_term($category, 'product_category');
 			$total = 0;
@@ -81,9 +80,9 @@ class ByCategory extends Chart
 			}
 
 			$legend[] = array(
-					'title' => sprintf(__('%s sales in %s', 'jigoshop'), '<strong>'.Product::formatPrice($total).'</strong>', $category->name),
-					'color' => isset($this->chartColours[$index]) ? $this->chartColours[$index] : $this->chartColours[0],
-					'highlight_series' => $index
+				'title' => sprintf(__('%s sales in %s', 'jigoshop'), '<strong>'.Product::formatPrice($total).'</strong>', $category->name),
+				'color' => $this->chartColours[$index % sizeof($this->chartColours)],
+				'highlight_series' => $index
 			);
 
 			$index++;
@@ -104,48 +103,70 @@ class ByCategory extends Chart
 	private function queryReportData()
 	{
 		$this->reportData = new \stdClass();
+		$wpdb = $this->wp->getWPDB();
 		// Get item sales data
 		if ($this->showCategories) {
-			$orders = $this->getOrderReportData(array(
-				'data' => array(
-					'order_items' => array(
-						'type' => 'meta',
-						'name' => 'category_data',
-						'process' => true,
+			$query = $this->prepareQuery(array(
+				'select' => array(
+					'order_item' => array(
+						array(
+							'field' => 'cost',
+							'function' => '',
+							'name' => 'price',
+						),
+						array(
+							'field' => 'product_id',
+							'function' => '',
+							'name' => 'id',
+						)
 					),
-					'post_date' => array(
-						'type' => 'post_data',
-						'function' => '',
-						'name' => 'post_date'
+					'posts' => array(
+						array(
+							'field' => 'post_date',
+							'function' => '',
+							'name' => 'post_date'
+						)
 					),
 				),
-				'order_types' => array('shop_order'),
-				'query_type' => 'get_results',
+				'from' => array(
+					'order_item' => $wpdb->prefix.'jigoshop_order_item',
+				),
+				'join' => array(
+					'posts' => array(
+						'table' => $wpdb->posts,
+						'on' => array(
+							array(
+								'key' => 'ID',
+								'value' => 'order_item.order_id',
+								'compare' => '=',
+							)
+						),
+					),
+				),
 				'filter_range' => true,
 			));
+			$orders = $this->getOrderReportData($query);
 
 			$this->reportData->itemSales = array();
 			$this->reportData->itemSalesAndTimes = array();
 
 			if (is_array($orders)) {
-				foreach ($orders as $orderItems) {
-					foreach ($orderItems as $orderItem) {
-						switch ($this->chartGroupBy) {
-							case 'hour' :
-								$time = (date('H', strtotime($orderItem->post_date)) * 3600).'000';
-								break;
-							case 'day' :
-								$time = strtotime(date('Ymd', strtotime($orderItem->post_date))) * 1000;
-								break;
-							case 'month' :
-							default :
-								$time = strtotime(date('Ym', strtotime($orderItem->post_date)).'01') * 1000;
-								break;
-						}
-
-						$this->reportData->itemSalesAndTimes [$time][$orderItem->product_id] = isset($this->reportData->itemSalesAndTimes [$time][$orderItem->product_id]) ? $this->reportData->itemSalesAndTimes [$time][$orderItem->product_id] + $orderItem->order_item_total : $orderItem->order_item_total;
-						$this->reportData->itemSales[$orderItem->product_id] = isset($this->reportData->itemSales[$orderItem->product_id]) ? $this->reportData->itemSales[$orderItem->product_id] + $orderItem->order_item_total : $orderItem->order_item_total;
+				foreach ($orders as $orderItem) {
+					switch ($this->chartGroupBy) {
+						case 'hour' :
+							$time = (date('H', strtotime($orderItem->post_date)) * 3600).'000';
+							break;
+						case 'day' :
+							$time = strtotime(date('Ymd', strtotime($orderItem->post_date))) * 1000;
+							break;
+						case 'month' :
+						default :
+							$time = strtotime(date('Ym', strtotime($orderItem->post_date)).'01') * 1000;
+							break;
 					}
+
+					$this->reportData->itemSalesAndTimes[$time][$orderItem->id] = isset($this->reportData->itemSalesAndTimes[$time][$orderItem->id]) ? $this->reportData->itemSalesAndTimes[$time][$orderItem->id] + $orderItem->price : $orderItem->price;
+					$this->reportData->itemSales[$orderItem->id] = isset($this->reportData->itemSales[$orderItem->id]) ? $this->reportData->itemSales[$orderItem->id] + $orderItem->price : $orderItem->price;
 				}
 			}
 		}
@@ -200,7 +221,7 @@ class ByCategory extends Chart
 		$widgets = array();
 		$categories = get_terms('product_category', array('orderby' => 'name', 'hide_empty' => false));
 		$allCategories = array();
-		foreach($categories as $category){
+		foreach ($categories as $category) {
 			$allCategories[$category->term_id] = $category->name;
 		}
 
@@ -244,10 +265,10 @@ class ByCategory extends Chart
 						$time = strtotime(date('Ym', strtotime("+{$i} MONTH", $this->range['start'])).'01') * 1000;
 						break;
 				}
-					foreach ($productIds as $id) {
-					if (isset($this->reportData->itemSalesAndTimes [$time][$id])) {
-						$intervalTotal += $this->reportData->itemSalesAndTimes [$time][$id];
-						$categoryTotal += $this->reportData->itemSalesAndTimes [$time][$id];
+				foreach ($productIds as $id) {
+					if (isset($this->reportData->itemSalesAndTimes[$time][$id])) {
+						$intervalTotal += $this->reportData->itemSalesAndTimes[$time][$id];
+						$categoryTotal += $this->reportData->itemSalesAndTimes[$time][$id];
 					}
 				}
 				$categoryChartData[] = array($time, $intervalTotal);
@@ -269,9 +290,9 @@ class ByCategory extends Chart
 			$data['series'][] = $this->arrayToObject(array(
 				'label' => esc_js($singleData['category']),
 				'data' => $singleData['data'],
-				'color' => isset($this->chartColours[$index]) ? $this->chartColours[$index] : $this->chartColours[0],
+				'color' => $this->chartColours[$index % sizeof($this->chartColours)],
 				'bars' => $this->arrayToObject(array(
-					'fillColor' => isset($this->chartColours[$index]) ? $this->chartColours[$index] : $this->chartColours[0],
+					'fillColor' => $this->chartColours[$index % sizeof($this->chartColours)],
 					'fill' => true,
 					'show' => true,
 					'lineWidth' => 1,
