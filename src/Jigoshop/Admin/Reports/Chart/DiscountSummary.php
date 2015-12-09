@@ -126,7 +126,6 @@ class DiscountSummary extends Chart
 	{
 		$widgets = array();
 		$usedCoupons = $this->getUsedCoupons();
-		\WpDebugBar\Debugger::getInstance()->getDebugBar()['messages']->addMessage($usedCoupons);
 
 		$mostDiscount = $usedCoupons;
 		$mostPopular = $usedCoupons;

@@ -39,8 +39,6 @@ abstract class Chart
 
 	public function __construct(Wordpress $wp, Options $options, $currentRange)
 	{
-		//DEBUG
-		\WpDebugBar\Debugger::init($wp);
 		$this->wp = $wp;
 		$this->options = $options;
 		$this->currentRange = $currentRange;

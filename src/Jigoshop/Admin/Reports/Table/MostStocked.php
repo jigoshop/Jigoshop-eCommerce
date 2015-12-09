@@ -21,8 +21,6 @@ class MostStocked implements TableInterface
 	{
 		$this->wp = $wp;
 		$this->options = $options;
-		//DEBUG
-		\WpDebugBar\Debugger::init($wp);
 	}
 
 	public function getSlug()
@@ -121,8 +119,6 @@ class MostStocked implements TableInterface
 													WHERE stock_manage.meta_value = %d AND stock_stock.meta_value > %d
 													ORDER BY stock_stock.meta_value DESC
 													LIMIT 20 OFFSET %d", 1, 0, ($this->getCurrentPage() - 1) * 20));
-
-		\WpDebugBar\Debugger::getInstance()->getDebugBar()['messages']->addMessage($products);
 
 		return $products;
 	}
