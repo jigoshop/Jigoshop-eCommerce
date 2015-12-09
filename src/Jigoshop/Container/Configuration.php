@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Borbis Media
- * Date: 2015-08-07
- * Time: 09:19
- */
 
 namespace Jigoshop\Container;
 
@@ -41,6 +35,7 @@ class Configuration
 			'\Jigoshop\Container\Configuration\FactoriesConfiguration',
 			'\Jigoshop\Container\Configuration\Admin\MigrationConfiguration',
 			'\Jigoshop\Container\Configuration\Admin\PagesConfiguration',
+			'\Jigoshop\Container\Configuration\Admin\ReportsConfiguration',
 			'\Jigoshop\Container\Configuration\Admin\SettingsConfiguration',
 			'\Jigoshop\Container\Configuration\Admin\SystemInfoConfiguration'
 		);

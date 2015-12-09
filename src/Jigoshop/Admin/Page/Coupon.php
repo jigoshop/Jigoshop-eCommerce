@@ -51,6 +51,9 @@ class Coupon
 					'jigoshop.admin',
 					'jigoshop.helpers',
 				));
+				Styles::add('jigoshop.vendors.select2', JIGOSHOP_URL.'/assets/css/vendors/select2.min.css', array('jigoshop.admin.coupon'));
+				Scripts::add('jigoshop.vendors.select2', JIGOSHOP_URL . '/assets/js/vendors/select2.min.js', array('jigoshop.admin.coupon'), array('in_footer' => true));
+
 				Scripts::localize('jigoshop.admin.coupon', 'jigoshop_admin_coupon', array(
 					'ajax' => $wp->getAjaxUrl(),
 				));
@@ -98,6 +101,7 @@ class Coupon
 			);
 		}
 
+		print_r($result);
 		echo json_encode($result);
 		exit;
 	}

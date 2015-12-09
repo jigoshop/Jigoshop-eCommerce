@@ -1,48 +1,58 @@
 <?php
-use Jigoshop\Admin\Settings;
+use Jigoshop\Admin\Reports;
 use Jigoshop\Helper\Render;
 
 /**
+ * @var $tabs array List of tabs to display.
+ * @var $current_tab string Current tab slug.
  * @var $messages \Jigoshop\Core\Messages Messages container.
- * @var $orders array List of orders to display.
- * @var $boxes array List of closures that displays each fragment of report page.
- * @var $start_date int Timestamp of report beginning.
- * @var $end_date int Timestamp of report ending.
  */
 ?>
-<div id="jigoshop-metaboxes-reports" class="wrap jigoshop">
+<div class="wrap jigoshop">
 	<h1><?php _e('Jigoshop &raquo; Reports', 'jigoshop'); ?></h1>
 	<?php settings_errors(); ?>
 	<?php Render::output('shop/messages', array('messages' => $messages)); ?>
-
-	<?php wp_nonce_field('jigoshop-metaboxes-reports'); ?>
-	<?php wp_nonce_field('closedpostboxes', 'closedpostboxesnonce', false); ?>
-	<?php wp_nonce_field('meta-box-order', 'meta-box-order-nonce', false); ?>
-
-	<div class="tab-content">
-		<form method="get" action="admin.php">
-			<input type="hidden" name="page" value="jigoshop_reports" />
-			<p>
-				<label for="from"><?php _e('From:', 'jigoshop'); ?></label>
-				<input class="date-pick" type="date" name="start_date" id="from" value="<?php echo esc_attr(date('Y-m-d', $start_date)); ?>" />
-				<label for="to"><?php _e('To:', 'jigoshop'); ?></label>
-				<input type="date" class="date-pick" name="end_date" id="to" value="<?php echo esc_attr(date('Y-m-d', $end_date)); ?>" />
-				<?php do_action('jigoshop\admin\report\form'); ?>
-				<input type="submit" class="button" value="<?php _e('Show', 'jigoshop'); ?>" />
-			</p>
-		</form>
-		<div id="report-widgets" class="metabox-holder">
-			<?php foreach ($boxes as $box){ $box(); } ?>
-			<?php do_action('jigoshop\admin\reports\widgets', $orders); ?>
+	<?php
+	$menuContent = '';
+	$activeTitle = '';
+	foreach ($tabs as $tab): /** @var $tab \Jigoshop\Admin\Reports\TabInterface */
+		$active = '';
+		if($tab->getSlug() == $current_tab)
+		{
+			$active = 'active darker';
+			$activeTitle = $tab->getTitle();
+		}
+		$menuContent .= '<li class="' . $active . '">' .
+			'<a href="?page=' . Reports::NAME . '&amp;tab=' . $tab->getSlug() . '">' . $tab->getTitle() . '</a>' .
+		'</li>';
+	endforeach; ?>
+	<nav class="navbar navbar-default hidden-md hidden-lg hidden-sm">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle margin-9" data-toggle="collapse" data-target="#settingsBar">
+					<span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="#"><?php echo $activeTitle; ?></a>
+				<div class="clear"></div>
+			</div>
+			<div class="collapse navbar-collapse" id="settingsBar">
+				<ul class="nav navbar-nav">
+					<?php echo $menuContent; ?>
+				</ul>
+			</div>
+		</div>
+	</nav>
+	<nav class="hidden-xs">
+		<ul class="nav nav-tabs nav-justified">
+			<?php echo $menuContent; ?>
+		</ul>
+	</nav>
+	<noscript>
+		<div class="alert alert-danger" role="alert"><?php _e('<strong>Warning</strong> Reports panel will not work properly without JavaScript.', 'jigoshop'); ?></div>
+	</noscript>
+	<div class="tab-content darker">
+		<div class="tab-pane active">
+			<?php $tabs[$current_tab]->display() ?>
 		</div>
 	</div>
 </div>
-<!-- TODO: Move to JS file -->
-<script type="text/javascript">
-	jQuery(function($){
-		$('.date-pick').datepicker({
-			dateFormat: 'yy-mm-dd',
-			gotoCurrent: true
-		});
-	});
-</script>

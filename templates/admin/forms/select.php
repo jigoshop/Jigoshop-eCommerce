@@ -13,6 +13,7 @@ use Jigoshop\Helper\Render;
  * @var $description string Field description.
  */
 $hasLabel = !empty($label);
+
 ?>
 <div class="form-group <?php echo $id; ?>_field <?php echo join(' ', $classes); ?><?php $hidden and print ' not-active'; ?>">
 	<div class="row">

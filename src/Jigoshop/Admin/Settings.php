@@ -55,9 +55,7 @@ class Settings implements PageInterface
 			Styles::add('jigoshop.vendors.datepicker', JIGOSHOP_URL.'/assets/css/vendors/datepicker.min.css', array('jigoshop.admin'));
 			Styles::add('jigoshop.vendors.bs_switch', JIGOSHOP_URL.'/assets/css/vendors/bs_switch.min.css', array('jigoshop.admin'));
 
-			Scripts::add('jigoshop.admin.settings', JIGOSHOP_URL . '/assets/js/admin/settings.js', array(
-				'jigoshop.admin',
-			), array('page' => 'jigoshop_page_jigoshop_settings', 'in_footer' => true));
+			Scripts::add('jigoshop.admin.settings', JIGOSHOP_URL . '/assets/js/admin/settings.js', array('jigoshop.admin'), array('page' => 'jigoshop_page_jigoshop_settings', 'in_footer' => true));
 			Scripts::add('jigoshop.vendors.select2', JIGOSHOP_URL . '/assets/js/vendors/select2.min.js', array(
 				'jigoshop.admin.settings',
 			), array('page' => 'jigoshop_page_jigoshop_settings', 'in_footer' => true));

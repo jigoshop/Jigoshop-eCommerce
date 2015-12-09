@@ -51,7 +51,11 @@ class Admin
 		Scripts::add('jigoshop.admin', JIGOSHOP_URL.'/assets/js/admin.js', array(
 			'jquery',
 			'jigoshop.helpers',
+			'jigoshop.vendors.bs_tab_trans_tooltip_collapse'
 		));
+		Scripts::add('jigoshop.vendors.bs_tab_trans_tooltip_collapse', JIGOSHOP_URL . '/assets/js/vendors/bs_tab_trans_tooltip_collapse.min.js', array(
+			'jquery',
+		), array('in_footer' => true));
 	}
 
 	/**

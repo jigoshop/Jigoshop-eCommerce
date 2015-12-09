@@ -281,13 +281,13 @@ class Product
 
 			$result = array(
 				'success' => true,
-				'results' => array_map(function ($item){
+				'results' => array_values(array_map(function ($item){
 					/** @var $item \Jigoshop\Entity\Product */
 					return array(
 						'id' => $item->getId(),
 						'text' => $item->getName(),
 					);
-				}, $products),
+				}, $products)),
 			);
 		} catch (Exception $e) {
 			$result = array(

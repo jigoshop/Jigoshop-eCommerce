@@ -7,6 +7,7 @@ use Jigoshop\Admin\Helper\Forms;
 use Jigoshop\Admin\Settings\TabInterface;
 use Jigoshop\Helper\Render;
 use Jigoshop\Helper\Styles;
+use Jigoshop\Helper\Scripts;
 use WPAL\Wordpress;
 
 /**
@@ -40,7 +41,7 @@ class SystemInfo implements PageInterface
 				return;
 			}
 
-			Styles::add('jigoshop.admin.settings', JIGOSHOP_URL.'/assets/css/admin/system_info.css', array('jigoshop.admin'));
+			Styles::add('jigoshop.admin.system_info', JIGOSHOP_URL.'/assets/css/admin/system_info.css', array('jigoshop.admin'));
 		});
 	}
 
@@ -136,10 +137,11 @@ class SystemInfo implements PageInterface
 	public function displaySection(TabInterface $tab, array $section)
 	{
 		Render::output('admin/system_info/section', array(
-			'tab' => $tab,
-			'section' => $section,
+				'tab' => $tab,
+				'section' => $section,
 		));
 	}
+
 
 	/**
 	 * Displays field according to definition.
