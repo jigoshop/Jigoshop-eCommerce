@@ -20,6 +20,7 @@ interface Tool
 
 	/**
 	 * Migrates data from old format to new one.
+	 * @param mixed $item
 	 */
-	public function migrate();
+	public function migrate($item);
 }

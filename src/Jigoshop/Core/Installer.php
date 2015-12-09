@@ -92,6 +92,15 @@ class Installer
 		}
 
 		$query = "
+			ALTER TABLE {$wpdb->posts} ENGINE = InnoDB {$collate};
+		";
+		if (!$wpdb->query($query)) {
+			Registry::getInstance(JIGOSHOP_LOGGER)->addCritical(sprintf('Unable change table "%s" to InnoDB. Error: "%s".', 'wp_posts', $wpdb->last_error));
+			echo __('We haven\'t been able to change the engine of the table "posts" to InnoDB. This is a required option. Ask your server provider if this is possible.', 'jigoshop');
+			exit;
+		}
+
+		$query = "
 			CREATE TABLE IF NOT EXISTS {$wpdb->prefix}jigoshop_tax (
 				id INT NOT NULL AUTO_INCREMENT,
 				class VARCHAR(255) NOT NULL,
