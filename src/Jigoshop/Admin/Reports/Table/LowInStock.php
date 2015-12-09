@@ -49,11 +49,7 @@ class LowInStock implements TableInterface
 			),
 			'units_in_stock' => array(
 				'name' => __('Units in stock', 'jigoshop'),
-				'size' => 1
-			),
-			'stock_status' => array(
-				'name' => __('Stock status', 'jigoshop'),
-				'size' => 1
+				'size' => 2
 			),
 			'user_actions' => array(
 				'name' => __('Actions', 'jigoshop'),
@@ -104,15 +100,29 @@ class LowInStock implements TableInterface
 
 	private function getProducts()
 	{
-		//TODO add this
-		return array();
+		$wpdb = $this->wp->getWPDB();
+		$lowStockThreshold = $this->options->get('products.low_stock_threshold');
+
+		$this->totalItems = $wpdb->get_var($wpdb->prepare("SELECT COUNT(posts.ID) FROM {$wpdb->posts} AS posts
+													LEFT JOIN {$wpdb->postmeta} AS stock_manage ON posts.ID = stock_manage.post_id AND stock_manage.meta_key = 'stock_manage'
+													LEFT JOIN {$wpdb->postmeta} AS stock_stock ON posts.ID = stock_stock.post_id AND stock_stock.meta_key = 'stock_stock'
+													WHERE stock_manage.meta_value = 1 AND stock_stock.meta_value > 0 AND stock_stock.meta_value <= %d", $lowStockThreshold));
+
+		$this->totalPages = ceil($this->totalItems/20);
+
+		$products = $wpdb->get_results($wpdb->prepare("SELECT posts.ID AS id, posts.post_parent AS parent, stock_stock.meta_value AS stock FROM {$wpdb->posts} AS posts
+													LEFT JOIN {$wpdb->postmeta} AS stock_manage ON posts.ID = stock_manage.post_id AND stock_manage.meta_key = 'stock_manage'
+													LEFT JOIN {$wpdb->postmeta} AS stock_stock ON posts.ID = stock_stock.post_id AND stock_stock.meta_key = 'stock_stock'
+													WHERE stock_manage.meta_value = 1 AND stock_stock.meta_value > 0 AND stock_stock.meta_value <= %d LIMIT 20 OFFSET %d", $lowStockThreshold, ($this->getCurrentPage() - 1) * 20));
+
+		return $products;
 	}
 
 	private function getRow($item, $columnKey)
 	{
 		switch ($columnKey) {
 			case 'product' :
-				$this->getPostTitle($item->id);
+				return $this->getPostTitle($item->id);
 			case 'parent' :
 				if ($item->parent > 0) {
 					return $this->getPostTitle($item->parent);
@@ -120,26 +130,24 @@ class LowInStock implements TableInterface
 					return '-';
 				}
 			case 'units_in_stock' :
-				return '-';
-			case 'stock_status' :
-				return '-';
+				return $item->stock;
 			case 'user_actions' :
 				$actions = array();
 				$action_id = $item->parent != 0 ? $item->parent : $item->id;
 
 				$actions['edit'] = array(
-						'url' => admin_url('post.php?post='.$action_id.'&action=edit'),
-						'name' => __('Edit', 'jigoshop'),
-						'action' => "edit"
+					'url' => admin_url('post.php?post='.$action_id.'&action=edit'),
+					'name' => __('Edit', 'jigoshop'),
+					'action' => "edit"
 				);
 
-				/*if ($product->is_visible()) {
+				if (!$this->isProductHidden($action_id)) {
 					$actions['view'] = array(
-							'url' => get_permalink($action_id),
-							'name' => __('View', 'jigoshop'),
-							'action' => "view"
+						'url' => get_permalink($action_id),
+						'name' => __('View', 'jigoshop'),
+						'action' => "view"
 					);
-				}*/
+				}
 				$actions = $this->wp->applyFilters('jigoshop/admin/reports/table/low_in_stock/user_actions', $actions, $item);
 
 				return $actions;
@@ -158,8 +166,17 @@ class LowInStock implements TableInterface
 		return $this->activePageNumber;
 	}
 
-	private function getPostTitle()
+	private function getPostTitle($postId)
 	{
-		return '-';
+		$wpdb = $this->wp->getWPDB();
+
+		return $wpdb->get_var($wpdb->prepare("SELECT post_title FROM {$wpdb->posts} WHERE ID = %d", $postId));
+	}
+
+	private function isProductHidden($productId)
+	{
+		$wpdb = $this->wp->getWPDB();
+
+		return $wpdb->get_var($wpdb->prepare("SELECT COUNT(*) FROM {$wpdb->postmeta} WHERE post_id = %d AND meta_key = 'visibility' AND meta_value = 0", $productId));
 	}
 }

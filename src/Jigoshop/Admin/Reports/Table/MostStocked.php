@@ -21,6 +21,8 @@ class MostStocked implements TableInterface
 	{
 		$this->wp = $wp;
 		$this->options = $options;
+		//DEBUG
+		\WpDebugBar\Debugger::init($wp);
 	}
 
 	public function getSlug()
@@ -104,15 +106,32 @@ class MostStocked implements TableInterface
 
 	private function getProducts()
 	{
-		//TODO add this
-		return array();
+		$wpdb = $this->wp->getWPDB();
+
+		$this->totalItems = $wpdb->get_var($wpdb->prepare("SELECT COUNT(posts.ID) FROM {$wpdb->posts} AS posts
+													LEFT JOIN {$wpdb->postmeta} AS stock_manage ON posts.ID = stock_manage.post_id AND stock_manage.meta_key = 'stock_manage'
+													LEFT JOIN {$wpdb->postmeta} AS stock_stock ON posts.ID = stock_stock.post_id AND stock_stock.meta_key = 'stock_stock'
+													WHERE stock_manage.meta_value = %d AND stock_stock.meta_value > %d", 1, 0));
+
+		$this->totalPages = ceil($this->totalItems / 20);
+
+		$products = $wpdb->get_results($wpdb->prepare("SELECT posts.ID AS id, posts.post_parent AS parent, stock_stock.meta_value AS stock FROM {$wpdb->posts} AS posts
+													LEFT JOIN {$wpdb->postmeta} AS stock_manage ON posts.ID = stock_manage.post_id AND stock_manage.meta_key = 'stock_manage'
+													LEFT JOIN {$wpdb->postmeta} AS stock_stock ON posts.ID = stock_stock.post_id AND stock_stock.meta_key = 'stock_stock'
+													WHERE stock_manage.meta_value = %d AND stock_stock.meta_value > %d
+													ORDER BY stock_stock.meta_value DESC
+													LIMIT 20 OFFSET %d", 1, 0, ($this->getCurrentPage() - 1) * 20));
+
+		\WpDebugBar\Debugger::getInstance()->getDebugBar()['messages']->addMessage($products);
+
+		return $products;
 	}
 
 	private function getRow($item, $columnKey)
 	{
 		switch ($columnKey) {
 			case 'product' :
-				$this->getPostTitle($item->id);
+				return $this->getPostTitle($item->id);
 			case 'parent' :
 				if ($item->parent > 0) {
 					return $this->getPostTitle($item->parent);
@@ -120,9 +139,7 @@ class MostStocked implements TableInterface
 					return '-';
 				}
 			case 'units_in_stock' :
-				return '-';
-			case 'stock_status' :
-				return '-';
+				return $item->stock;
 			case 'user_actions' :
 				$actions = array();
 				$action_id = $item->parent != 0 ? $item->parent : $item->id;
@@ -133,13 +150,13 @@ class MostStocked implements TableInterface
 					'action' => "edit"
 				);
 
-				/*if ($product->is_visible()) {
+				if (!$this->isProductHidden($action_id)) {
 					$actions['view'] = array(
 							'url' => get_permalink($action_id),
 							'name' => __('View', 'jigoshop'),
 							'action' => "view"
 					);
-				}*/
+				}
 				$actions = $this->wp->applyFilters('jigoshop/admin/reports/table/most_stocked/user_actions', $actions, $item);
 
 				return $actions;
@@ -158,9 +175,17 @@ class MostStocked implements TableInterface
 		return $this->activePageNumber;
 	}
 
-	private function getPostTitle()
+	private function getPostTitle($postId)
 	{
-		return '-';
+		$wpdb = $this->wp->getWPDB();
+
+		return $wpdb->get_var($wpdb->prepare("SELECT post_title FROM {$wpdb->posts} WHERE ID = %d", $postId));
 	}
 
+	private function isProductHidden($productId)
+	{
+		$wpdb = $this->wp->getWPDB();
+
+		return $wpdb->get_var($wpdb->prepare("SELECT COUNT(*) FROM {$wpdb->postmeta} WHERE post_id = %d AND meta_key = 'visibility' AND meta_value = 0", $productId));
+	}
 }

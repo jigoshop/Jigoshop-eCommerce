@@ -470,8 +470,10 @@ class DiscountSummary extends Chart
 					if (!isset($usedCoupons[$coupon['code']])) {
 						$usedCoupons[$coupon['code']] = $coupon;
 						$usedCoupons[$coupon['code']]['usage'] = 0;
+						$usedCoupons[$coupon['code']]['amount'] = 0;
 					}
 					$usedCoupons[$coupon['code']]['usage'] += $coupons->usage[$coupon['code']];
+					$usedCoupons[$coupon['code']]['amount'] += $coupon['amount'];
 				}
 			}
 		}

@@ -41,19 +41,11 @@ class OutOfStock implements TableInterface
 		$this->columns = array(
 			'product' => array(
 				'name' => __('Product', 'jigoshop'),
-				'size' => 4
+				'size' => 5
 			),
 			'parent' => array(
 				'name' => __('Parent', 'jigoshop'),
-				'size' => 4
-			),
-			'units_in_stock' => array(
-				'name' => __('Units in stock', 'jigoshop'),
-				'size' => 1
-			),
-			'stock_status' => array(
-				'name' => __('Stock status', 'jigoshop'),
-				'size' => 1
+				'size' => 5
 			),
 			'user_actions' => array(
 				'name' => __('Actions', 'jigoshop'),
@@ -104,25 +96,37 @@ class OutOfStock implements TableInterface
 
 	private function getProducts()
 	{
-		//TODO add this
-		return array();
+		$wpdb = $this->wp->getWPDB();
+
+		$this->totalItems = $wpdb->get_var($wpdb->prepare("SELECT COUNT(posts.ID) FROM {$wpdb->posts} AS posts
+													LEFT JOIN {$wpdb->postmeta} AS stock_manage ON posts.ID = stock_manage.post_id AND stock_manage.meta_key = 'stock_manage'
+													LEFT JOIN {$wpdb->postmeta} AS stock_stock ON posts.ID = stock_stock.post_id AND stock_stock.meta_key = 'stock_stock'
+													LEFT JOIN {$wpdb->postmeta} AS stock_status ON posts.ID = stock_status.post_id AND stock_status.meta_key = 'stock_status'
+													WHERE (stock_manage.meta_value = %d AND stock_stock.meta_value = %d) OR (stock_manage.meta_value = %d AND stock_status.meta_value = %d)", 1, 0, 0, 0));
+
+		$this->totalPages = ceil($this->totalItems / 20);
+
+		$products = $wpdb->get_results($wpdb->prepare("SELECT posts.ID AS id, posts.post_parent AS parent FROM {$wpdb->posts} AS posts
+													LEFT JOIN {$wpdb->postmeta} AS stock_manage ON posts.ID = stock_manage.post_id AND stock_manage.meta_key = 'stock_manage'
+													LEFT JOIN {$wpdb->postmeta} AS stock_stock ON posts.ID = stock_stock.post_id AND stock_stock.meta_key = 'stock_stock'
+													LEFT JOIN {$wpdb->postmeta} AS stock_status ON posts.ID = stock_status.post_id AND stock_status.meta_key = 'stock_status'
+													WHERE (stock_manage.meta_value = %d AND stock_stock.meta_value = %d) OR (stock_manage.meta_value = %d AND stock_status.meta_value = %d)
+													LIMIT 20 OFFSET %d", 1, 0, 0, 0, ($this->getCurrentPage() - 1) * 20));
+
+		return $products;
 	}
 
 	private function getRow($item, $columnKey)
 	{
 		switch ($columnKey) {
 			case 'product' :
-				$this->getPostTitle($item->id);
+				return $this->getPostTitle($item->id);
 			case 'parent' :
 				if ($item->parent > 0) {
 					return $this->getPostTitle($item->parent);
 				} else {
 					return '-';
 				}
-			case 'units_in_stock' :
-				return '-';
-			case 'stock_status' :
-				return '-';
 			case 'user_actions' :
 				$actions = array();
 				$action_id = $item->parent != 0 ? $item->parent : $item->id;
@@ -133,13 +137,13 @@ class OutOfStock implements TableInterface
 					'action' => "edit"
 				);
 
-				/*if ($product->is_visible()) {
+				if (!$this->isProductHidden($action_id)) {
 					$actions['view'] = array(
-							'url' => get_permalink($action_id),
-							'name' => __('View', 'jigoshop'),
-							'action' => "view"
+						'url' => get_permalink($action_id),
+						'name' => __('View', 'jigoshop'),
+						'action' => "view"
 					);
-				}*/
+				}
 				$actions = $this->wp->applyFilters('jigoshop/admin/reports/table/out_of_stock/user_actions', $actions, $item);
 
 				return $actions;
@@ -151,15 +155,24 @@ class OutOfStock implements TableInterface
 	private function getCurrentPage()
 	{
 		$this->activePageNumber = 1;
-		if(isset($_GET['paged']) && !empty($_GET['paged'])) {
+		if (isset($_GET['paged']) && !empty($_GET['paged'])) {
 			$this->activePageNumber = $_GET['paged'];
 		}
 
 		return $this->activePageNumber;
 	}
 
-	private function getPostTitle()
+	private function getPostTitle($postId)
 	{
-		return '-';
+		$wpdb = $this->wp->getWPDB();
+
+		return $wpdb->get_var($wpdb->prepare("SELECT post_title FROM {$wpdb->posts} WHERE ID = %d", $postId));
+	}
+
+	private function isProductHidden($productId)
+	{
+		$wpdb = $this->wp->getWPDB();
+
+		return $wpdb->get_var($wpdb->prepare("SELECT COUNT(*) FROM {$wpdb->postmeta} WHERE post_id = %d AND meta_key = 'visibility' AND meta_value = 0", $productId));
 	}
 }

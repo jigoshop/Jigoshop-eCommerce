@@ -178,22 +178,19 @@ class CustomerList implements TableInterface
 			case 'email' :
 				return '<a href="mailto:'.$user->user_email.'">'.$user->user_email.'</a>';
 			case 'spent' :
-				//return Product::formatPrice($this->getCustomerTotalSpent($user->ID));
-				return Product::formatPrice(0);
+				return Product::formatPrice($this->getCustomerTotalSpent($user->ID));
 			case 'orders' :
-				//return $this->getCustomerOrderCount($user->ID);
-				return '0';
+				return $this->getCustomerOrderCount($user->ID);
 			case 'last_order' :
-				//TODO czekaj na migracje
+				$lastOrder = $this->getCustomerLastOrder($user->ID);
+				if($lastOrder){
+					/** @var \Jigoshop\Entity\Order $order */
+					$order = $this->orderService->find($lastOrder->order_id);
+					return '<a href="'.admin_url('post.php?post='.$lastOrder_id.'&action=edit').'">#'.$order->getNumber().'</a> &ndash; '.date_i18n(get_option('date_format'), strtotime($lastOrder->order_date));
+				}
 				return '-';
 			case 'user_actions' :
 				$actions = array();
-
-				/*$actions['refresh'] = array(
-					'url' => wp_nonce_url(add_query_arg('refresh', $user->ID), 'refresh'),
-					'name' => __('Refresh stats', 'jigoshop'),
-					'action' => 'refresh'
-				);*/
 				$actions['edit'] = array(
 					'url' => admin_url('user-edit.php?user_id='.$user->ID),
 					'name' => __('Edit', 'jigoshop'),
@@ -210,10 +207,31 @@ class CustomerList implements TableInterface
 	private function getCurrentPage()
 	{
 		$this->activePageNumber = 1;
-		if(isset($_GET['paged']) && !empty($_GET['paged'])) {
+		if (isset($_GET['paged']) && !empty($_GET['paged'])) {
 			$this->activePageNumber = $_GET['paged'];
 		}
 
 		return $this->activePageNumber;
+	}
+
+	private function getCustomerTotalSpent($customerId)
+	{
+		$wpdb = $this->wp->getWPDB();
+
+		return $wpdb->get_var($wpdb->prepare("SELECT SUM(meta_value) FROM {$wpdb->postmeta} WHERE meta_key = %s AND post_id IN (SELECT post_id FROM {$wpdb->postmeta} WHERE meta_key = %s AND meta_value = %d)", 'total', 'customer_id', $customerId));
+	}
+
+	private function getCustomerOrderCount($customerId)
+	{
+		$wpdb = $this->wp->getWPDB();
+
+		return $wpdb->get_var($wpdb->prepare("SELECT COUNT(meta_value) FROM {$wpdb->postmeta} WHERE meta_key = %s AND meta_value = %d", 'customer_id', $customerId));
+	}
+
+	private function getCustomerLastOrder($customerId)
+	{
+		$wpdb = $this->wp->getWPDB();
+
+		return $wpdb->get_row($wpdb->prepare("SELECT posts.ID AS order_id, posts.post_date AS order_date FROM {$wpdb->posts} AS posts LEFT JOIN {$wpdb->postmeta} AS meta ON meta.post_id = posts.ID AND meta.meta_key = %s WHERE meta.meta_value = %d ORDER BY posts.post_date DESC LIMIT 1", 'customer_id', $customerId));
 	}
 }
