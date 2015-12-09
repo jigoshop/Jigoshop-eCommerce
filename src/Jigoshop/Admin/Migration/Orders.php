@@ -196,7 +196,7 @@ class Orders implements Tool
 								$method = $this->shippingService->get($data['shipping_method']);
 								$wpdb->query($wpdb->prepare("INSERT INTO {$wpdb->postmeta} (post_id, meta_key, meta_value) VALUES (%d, %s, %s)",
 									$order->ID,
-									'shipping_data',
+									'shipping',
 									serialize(array(
 										'method' => $method->getState(),
 										'price' => $data['order_shipping'], // TODO do usuniecia, gdyz jest na dole w osobnej mecie
@@ -240,12 +240,13 @@ class Orders implements Tool
 								$data['order_total']
 							));
 							$this->checkSql();
-							$wpdb->query($wpdb->prepare("INSERT INTO {$wpdb->postmeta} (post_id, meta_key, meta_value) VALUES (%d, %s, %s)",
+							// TODO: Add new meta for shipping total price
+							/*$wpdb->query($wpdb->prepare("INSERT INTO {$wpdb->postmeta} (post_id, meta_key, meta_value) VALUES (%d, %s, %s)",
 								$order->ID,
 								'shipping',
 								$data['order_shipping']
 							));
-							$this->checkSql();
+							$this->checkSql();*/
 							break;
 						case 'customer_user':
 							$customer = $this->wp->getPostMeta($order->ID, 'customer', true);
