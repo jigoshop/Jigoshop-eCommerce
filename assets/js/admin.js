@@ -7,17 +7,22 @@ jQuery(function($) {
     });
   });
   delay(3000, function() {
-    return $('.alert-success').slideUp(function() {
+    return $('.alert-success').not('.no-remove').slideUp(function() {
       return $(this).remove();
     });
   });
   delay(4000, function() {
-    return $('.alert-warning').slideUp(function() {
+    return $('.alert-warning').not('.no-remove').slideUp(function() {
+      return $(this).remove();
+    });
+  });
+  delay(8000, function() {
+    return $('.alert-error').not('.no-remove').slideUp(function() {
       return $(this).remove();
     });
   });
   return delay(8000, function() {
-    return $('.alert-error').slideUp(function() {
+    return $('.alert-danger').not('.no-remove').slideUp(function() {
       return $(this).remove();
     });
   });

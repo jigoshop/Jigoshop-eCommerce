@@ -49,7 +49,12 @@ class LocalPickup implements Method
 			$customer = $cart->getCustomer();
 		} else {
 			// TODO: Get rid of this hack for customer fetching
-			$customer = unserialize($this->wp->getPostMeta($post->ID, 'customer', true));
+			$customer = maybe_unserialize($this->wp->getPostMeta($post->ID, 'customer', true));
+		}
+
+		if(empty($customer))
+		{
+			return $this->options['enabled'];
 		}
 
 		return $this->options['enabled'] && $customer->getShippingAddress()->getCountry() == $this->baseCountry;

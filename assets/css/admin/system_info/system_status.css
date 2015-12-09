@@ -1,0 +1,12 @@
+teaxarea {
+	border-radius: 0;
+	font-family: monospace;
+	font-size: 12px;
+	height: 300px;
+	line-height: 20px;
+	margin: 0;
+	outline: 0 none;
+	padding: 20px;
+	resize: none;
+	width: 100%;
+}

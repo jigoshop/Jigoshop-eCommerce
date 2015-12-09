@@ -8,6 +8,7 @@ use Jigoshop\Core\Options;
 use Jigoshop\Entity\Order;
 use Jigoshop\Entity\Product;
 use Jigoshop\Helper\Render;
+use Jigoshop\Helper\Scripts;
 use Jigoshop\Helper\Styles;
 use WPAL\Wordpress;
 
@@ -46,8 +47,25 @@ class Migration implements PageInterface
 				return;
 			}
 
-			// TODO: Migration styles
-			Styles::add('jigoshop.admin.migration', JIGOSHOP_URL.'/assets/css/admin/settings.css');
+			Styles::add('jigoshop.admin.migration', JIGOSHOP_URL.'/assets/css/admin/migration.css');
+
+			Scripts::add('jigoshop.admin.migration', JIGOSHOP_URL.'/assets/js/admin/migration.js');
+
+			$migration_title = __('Jigoshop &raquo; Migration Tool &raquo; ', 'jigoshop');
+			Scripts::localize('jigoshop.admin.migration', 'jigoshop_admin_migration', array(
+				'ajax' => $wp->getAjaxUrl(),
+				'i18n' => array(
+					'migration_complete' => __('migration complete', 'jigoshop'),
+					'migration_error' => __('migration error', 'jigoshop'),
+					'alert_msg' => __('Wystąpił błąd komunikacji, proszę przeładować stronę i koontynuować proces.', 'jigoshop'),
+					'processing' => __('Processing...', 'jigoshop'),
+					'jigoshop.admin.migration.products' => $migration_title . __('Products', 'jigoshop'),
+					'jigoshop.admin.migration.coupons' => $migration_title . __('Coupons', 'jigoshop'),
+					'jigoshop.admin.migration.emails' => $migration_title . __('Emails', 'jigoshop'),
+					'jigoshop.admin.migration.options' => $migration_title . __('Options', 'jigoshop'),
+					'jigoshop.admin.migration.orders' => $migration_title . __('Orders', 'jigoshop'),
+				),
+			));
 		});
 	}
 
@@ -99,7 +117,7 @@ class Migration implements PageInterface
 			/** @var Tool $tool */
 			$tool = $this->tools[$id];
 			$this->wp->doAction('jigoshop\migration\before', $tool);
-			$tool->migrate();
+			$tool->migrate(null);
 			$this->messages->addNotice(__('Migration complete', 'jigoshop'));
 			$this->wp->wpRedirect($this->wp->adminUrl('admin.php?page='.self::NAME));
 		}

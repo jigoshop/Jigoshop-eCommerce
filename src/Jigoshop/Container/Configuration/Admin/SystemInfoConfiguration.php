@@ -31,10 +31,7 @@ class SystemInfoConfiguration implements ConfigurationInterface
 			'wpal',
 			'jigoshop.options'
 		));
-		$services->setDatails('jigoshop.admin.system_info.logs', 'Jigoshop\Admin\SystemInfo\LogsTab', array(
-			'wpal',
-			'jigoshop.options'
-		));
+		$services->setDatails('jigoshop.admin.system_info.logs', 'Jigoshop\Admin\SystemInfo\LogsTab', array());
 	}
 
 	/**

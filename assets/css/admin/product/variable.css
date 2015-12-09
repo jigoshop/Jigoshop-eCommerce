@@ -1,11 +1,1 @@
-.jigoshop #product-variations h4 > .form-group {
-  width: 16.66666667%;
-  display: inline-block;
-  margin-right: 3px;
-}
-.jigoshop #product-variations .list-group-item-text {
-  display: none;
-}
-.jigoshop #variations {
-  padding: 0 12px;
-}
+.jigoshop #product-variations h4>.form-group{width:16.66666667%;display:inline-block;margin-right:3px}.jigoshop #product-variations .list-group-item-text{display:none}.jigoshop #variations{padding:0 12px}

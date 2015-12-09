@@ -46,6 +46,7 @@ class JigoshopInit
 
 		$this->container->compiler->add(new \Jigoshop\Admin\CompilerPass());
 		$this->container->compiler->add(new \Jigoshop\Admin\Migration\CompilerPass());
+		$this->container->compiler->add(new \Jigoshop\Admin\Reports\CompilerPass());
 		$this->container->compiler->add(new \Jigoshop\Admin\Settings\CompilerPass());
 		$this->container->compiler->add(new \Jigoshop\Admin\SystemInfo\CompilerPass());
 		$this->container->compiler->add(new \Jigoshop\Core\Installer\CompilerPass());
