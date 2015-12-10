@@ -259,16 +259,10 @@ abstract class Chart
 
 	protected function getFirstOrderDate()
 	{
-		$args = array(
-			'posts_per_page'   => 1,
-			'offset'           => 0,
-			'orderby'          => 'post_date',
-			'order'            => 'ASC',
-			'post_type'        => 'shop_order',
-		);
-		$postsArray = get_posts( $args );
+		$wpdb = $this->wp->getWPDB();
+		$date = $wpdb->get_var($wpdb->prepare("SELECT post_date FROM {$wpdb->posts} WHERE post_type = %s ORDER BY post_date ASC LIMIT 1", 'shop_order'));
 
-		return $postsArray[0]->post_date;
+		return $date ? $date : date('Y-n-j', strtotime("01/01/11"));
 	}
 
 	/**

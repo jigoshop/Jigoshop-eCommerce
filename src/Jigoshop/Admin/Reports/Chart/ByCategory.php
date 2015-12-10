@@ -320,7 +320,7 @@ class ByCategory extends Chart
 					'position' => 'bottom',
 					'tickColor' => 'transparent',
 					'mode' => 'time',
-					'timeformat' => $this->chartGroupby == 'hour' ? '%H' : $this->chartGroupBy == 'day' ? '%d %b' : '%b',
+					'timeformat' => $this->chartGroupBy == 'hour' ? '%H' : $this->chartGroupBy == 'day' ? '%d %b' : '%b',
 					'monthNames' => array_values($wp_locale->month_abbrev),
 					'tickLength' => 1,
 					'minTickSize' => array(1, $this->chartGroupBy),

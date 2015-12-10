@@ -252,7 +252,7 @@ class DiscountSummary extends Chart
 		foreach ($this->reportData->orders as $order) {
 			$this->reportData->usedCoupons[$order->post_date] = new \stdClass();
 			$this->reportData->usedCoupons[$order->post_date]->post_date = $order->post_date;
-			$this->reportData->usedCoupons[$order->post_date]->coupons > array();
+			$this->reportData->usedCoupons[$order->post_date]->coupons = array();
 			$this->reportData->usedCoupons[$order->post_date]->usage = array();
 
 			foreach ($order->coupons as $code => $coupon) {
@@ -409,7 +409,7 @@ class DiscountSummary extends Chart
 					'position' => 'bottom',
 					'tickColor' => 'transparent',
 					'mode' => 'time',
-					'timeformat' => $this->chartGroupby == 'hour' ? '%H' : $this->chartGroupBy == 'day' ? '%d %b' : '%b',
+					'timeformat' => $this->chartGroupBy == 'hour' ? '%H' : $this->chartGroupBy == 'day' ? '%d %b' : '%b',
 					'monthNames' => array_values($wp_locale->month_abbrev),
 					'tickLength' => 1,
 					'minTickSize' => array(1, $this->chartGroupBy),
@@ -551,6 +551,10 @@ class DiscountSummary extends Chart
 					}, $percentageDiscount));
 			}
 		} else {
+			$flatDiscount[$order->coupons[0]['code']] = array(
+				'amount' => '',
+				'usage' => 0
+			);
 			$flatDiscount[$order->coupons[0]['code']]['amount'] = $order->discount;
 			$flatDiscount[$order->coupons[0]['code']]['usage'] += $order->coupons[0]['individual_use'] ? 1 : $order->coupons[0]['usage'] == '' ? 1 : $order->coupons[0]['usage'];
 		}
