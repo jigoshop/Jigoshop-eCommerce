@@ -2,6 +2,7 @@
 
 namespace Jigoshop\Admin\Migration;
 
+use Jigoshop\Admin\Helper\Migration;
 use Jigoshop\Entity\Customer;
 use Jigoshop\Entity\Product;
 use Jigoshop\Entity\Product\Attribute\Multiselect;
@@ -63,7 +64,7 @@ class Products implements Tool
 		$countAll = count($wpdb->get_results($wpdb->prepare("
 			SELECT ID FROM {$wpdb->posts}
 				WHERE post_type IN (%s, %s) AND post_status <> %s",
-				'product', 'product_variation', 'auto-draft')));
+			'product', 'product_variation', 'auto-draft')));
 
 		$countRemain = 0;
 		$countDone = 0;
@@ -97,10 +98,11 @@ class Products implements Tool
 	{
 		$wpdb = $this->wp->getWPDB();
 
+//		Open transaction for save migration products
+		$var_autocommit_sql = $wpdb->get_var("SELECT @@AUTOCOMMIT");
+
 		try
 		{
-//			Open transaction for save migration products
-			$var_autocommit_sql = $wpdb->get_var("SELECT @@AUTOCOMMIT");
 			$this->checkSql();
 			$wpdb->query("SET AUTOCOMMIT=0");
 			$this->checkSql();
@@ -153,10 +155,12 @@ class Products implements Tool
 						Product\Variable::TYPE,
 					)))
 					{
-//						TODO stworzyc logi w migracji i dodawac info o prowadzonej migracji, do nich tez produkty, ktore posiadaly inne typy
+						Migration::saveLog(sprintf(__('We detected a product <a href="%s" target="_blank">(#%d) %s </a> of type "subscription" - this type is not supported by Jigoshop without an additional plugin. We changed its type to "simple" and set it as private.', 'jigoshop'), get_permalink($product->ID), $product->ID, get_the_title($product->ID), $types[0]->slug));
+
 						$wpdb->query($wpdb->prepare("UPDATE {$wpdb->posts} SET post_status = 'private' WHERE ID = %d", $product->ID));
 						$types[0]->slug = 'simple';
 					}
+
 					$wpdb->query($wpdb->prepare("INSERT INTO {$wpdb->postmeta} VALUES (NULL, %d, %s, %s)", array($product->ID, 'type', $types[0]->slug)));
 					$this->checkSql();
 				}
@@ -442,6 +446,9 @@ class Products implements Tool
 			}
 			$wpdb->query("ROLLBACK");
 			$wpdb->query("SET AUTOCOMMIT=" . $var_autocommit_sql);
+
+			Migration::saveLog(__('Migration products end with error: ', 'jigoshop') . $e);
+
 			return false;
 		}
 	}
@@ -571,8 +578,13 @@ class Products implements Tool
 	public function ajaxMigrationProducts()
 	{
 		try {
-			$wpdb = $this->wp->getWPDB();
+//			1 - if first time ajax request
+			if($_POST['msgLog'] == 1)
+			{
+				Migration::saveLog(__('Migration products START.', 'jigoshop'), true);
+			}
 
+			$wpdb = $this->wp->getWPDB();
 			$productsIdsMigration = array();
 			if (($TMP_productsIdsMigration = $this->wp->getOption('jigoshop_products_migrate_id')) === false)
 			{
@@ -611,27 +623,33 @@ class Products implements Tool
 				'product', 'product_variation', 'auto-draft', $singleProductId);
 			$product = $wpdb->get_results($query);
 
-			if ($this->migrate($product))
+			$ajax_response = array(
+				'success' => true,
+				'percent' => floor(($countAll - $countRemain) / $countAll * 100),
+				'processed' => $countAll - $countRemain,
+				'remain' => $countRemain,
+				'total' => $countAll,
+			);
+
+			if($countRemain > 0)
 			{
-				$this->wp->updateOption('jigoshop_products_migrate_id', serialize($productsIdsMigration));
-				if($countRemain == 0)
+				if ($this->migrate($product))
 				{
-					$this->wp->deleteOption('jigoshop_attributes_anti_duplicate');
+					$this->wp->updateOption('jigoshop_products_migrate_id', serialize($productsIdsMigration));
 				}
-				echo json_encode(array(
-					'success' => true,
-					'percent' => floor(($countAll - $countRemain) / $countAll * 100),
-					'processed' => $countAll - $countRemain,
-					'remain' => $countRemain,
-					'total' => $countAll,
-				));
+				else
+				{
+					$ajax_response['success'] = false;
+					Migration::saveLog(__('Migration products end with error.', 'jigoshop'));
+				}
 			}
-			else
+			elseif($countRemain == 0)
 			{
-				echo json_encode(array(
-					'success' => false,
-				));
+				$this->wp->deleteOption('jigoshop_attributes_anti_duplicate');
+				Migration::saveLog(__('Migration products END.', 'jigoshop'));
 			}
+
+			echo json_encode($ajax_response);
 
 		} catch (Exception $e) {
 			if(WP_DEBUG)
@@ -641,6 +659,8 @@ class Products implements Tool
 			echo json_encode(array(
 				'success' => false,
 			));
+
+			Migration::saveLog(__('Migration products end with error: ', 'jigoshop') . $e);
 		}
 
 		exit;
