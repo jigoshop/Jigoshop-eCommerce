@@ -2,6 +2,7 @@
 
 namespace Jigoshop\Admin\Migration;
 
+use Jigoshop\Admin\Helper\Migration;
 use Jigoshop\Core\Messages;
 use Jigoshop\Entity\Customer;
 use Jigoshop\Entity\Order\Status;
@@ -100,10 +101,11 @@ class Orders implements Tool
 	public function migrate($orders)
 	{
 		$wpdb = $this->wp->getWPDB();
+//		Open transaction for save migration products
+		$var_autocommit_sql = $wpdb->get_var("SELECT @@AUTOCOMMIT");
+
 		try
 		{
-//			Open transaction for save migration products
-			$var_autocommit_sql = $wpdb->get_var("SELECT @@AUTOCOMMIT");
 			$this->checkSql();
 			$wpdb->query("SET AUTOCOMMIT=0");
 			$this->checkSql();
@@ -430,6 +432,8 @@ class Orders implements Tool
 			$wpdb->query("ROLLBACK");
 			$wpdb->query("SET AUTOCOMMIT=" . $var_autocommit_sql);
 
+			Migration::saveLog(__('Migration orders end with error: ', 'jigoshop') . $e);
+
 			return false;
 		}
 	}
@@ -541,6 +545,12 @@ class Orders implements Tool
 	public function ajaxMigrationOrders()
 	{
 		try {
+//			1 - if first time ajax request
+			if($_POST['msgLog'] == 1)
+			{
+				Migration::saveLog(__('Migration orders START.', 'jigoshop'), true);
+			}
+
 			$wpdb = $this->wp->getWPDB();
 
 			$ordersIdsMigration = array();
@@ -565,7 +575,6 @@ class Orders implements Tool
 				$ordersIdsMigration = array_unique($ordersIdsMigration);
 				$this->wp->updateOption('jigoshop_orders_migrate_id', serialize($ordersIdsMigration));
 				$this->wp->updateOption('jigoshop_orders_migrate_count', count($ordersIdsMigration));
-
 			}
 			else
 			{
@@ -583,24 +592,32 @@ class Orders implements Tool
 				'shop_order', 'auto-draft', $singleOrdersId);
 			$order = $wpdb->get_results($query);
 
-			if ($this->migrate($order))
-			{
-				$this->wp->updateOption('jigoshop_orders_migrate_id', serialize($ordersIdsMigration));
-				echo json_encode(array(
-					'success' => true,
-					'percent' => floor(($countAll - $countRemain) / $countAll * 100),
-					'processed' => $countAll - $countRemain,
-					'remain' => $countRemain,
-					'total' => $countAll,
-				));
+			$ajax_response = array(
+				'success' => true,
+				'percent' => floor(($countAll - $countRemain) / $countAll * 100),
+				'processed' => $countAll - $countRemain,
+				'remain' => $countRemain,
+				'total' => $countAll,
+			);
 
-			}
-			else
+			if($countRemain > 0)
 			{
-				echo json_encode(array(
-					'success' => false,
-				));
+				if ($this->migrate($order))
+				{
+					$this->wp->updateOption('jigoshop_orders_migrate_id', serialize($ordersIdsMigration));
+				}
+				else
+				{
+					$ajax_response['success'] = false;
+					Migration::saveLog(__('Migration orders end with error.', 'jigoshop'));
+				}
 			}
+			elseif($countRemain == 0)
+			{
+				Migration::saveLog(__('Migration orders END.', 'jigoshop'));
+			}
+
+			echo json_encode($ajax_response);
 
 		} catch (Exception $e) {
 			if(WP_DEBUG)
@@ -610,6 +627,8 @@ class Orders implements Tool
 			echo json_encode(array(
 				'success' => false,
 			));
+
+			Migration::saveLog(__('Migration orders end with error: ', 'jigoshop') . $e);
 		}
 		exit;
 	}

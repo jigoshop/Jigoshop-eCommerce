@@ -2,6 +2,7 @@
 
 namespace Jigoshop\Admin\Migration;
 
+use Jigoshop\Admin\Helper\Migration;
 use Jigoshop\Helper\Render;
 use Jigoshop\Service\TaxServiceInterface;
 use WPAL\Wordpress;
@@ -73,10 +74,11 @@ class Options implements Tool
 	{
 		$wpdb = $this->wp->getWPDB();
 
+//		Open transaction for save migration emails
+		$var_autocommit_sql = $wpdb->get_var("SELECT @@AUTOCOMMIT");
+
 		try
 		{
-//		    Open transaction for save migration emails
-			$var_autocommit_sql = $wpdb->get_var("SELECT @@AUTOCOMMIT");
 			$this->checkSql();
 			$wpdb->query("SET AUTOCOMMIT=0");
 			$this->checkSql();
@@ -148,6 +150,9 @@ class Options implements Tool
 			}
 			$wpdb->query("ROLLBACK");
 			$wpdb->query("SET AUTOCOMMIT=" . $var_autocommit_sql);
+
+			Migration::saveLog(__('Migration options end with error: ', 'jigoshop') . $e);
+
 			return false;
 		}
 	}
@@ -369,6 +374,12 @@ class Options implements Tool
 	public function ajaxMigrationOptions()
 	{
 		try {
+//			1 - if first time ajax request
+			if($_POST['msgLog'] == 1)
+			{
+				Migration::saveLog(__('Migration options START.', 'jigoshop'), true);
+			}
+
 			$countAll = 93;
 			$countRemain = 93;
 
@@ -379,23 +390,33 @@ class Options implements Tool
 					$countRemain = 0;
 				}
 			}
-			if ($this->migrate())
+
+			$ajax_response = array(
+				'success' => true,
+				'percent' => floor(($countAll - $countRemain) / $countAll * 100),
+				'processed' => $countAll - $countRemain,
+				'remain' => $countRemain,
+				'total' => $countAll,
+			);
+
+			if($countRemain > 0)
 			{
-				$this->wp->updateOption('jigoshop_options_migrate_id', '1');
-				echo json_encode(array(
-					'success' => true,
-					'percent' => floor(($countAll - $countRemain) / $countAll * 100),
-					'processed' => $countAll - $countRemain,
-					'remain' => $countRemain,
-					'total' => $countAll,
-				));
+				if ($this->migrate())
+				{
+					$this->wp->updateOption('jigoshop_options_migrate_id', '1');
+				}
+				else
+				{
+					$ajax_response['success'] = false;
+					Migration::saveLog(__('Migration coupons end with error.', 'jigoshop'));
+				}
 			}
-			else
+			elseif($countRemain == 0)
 			{
-				echo json_encode(array(
-					'success' => false,
-				));
+				Migration::saveLog(__('Migration coupons END.', 'jigoshop'));
 			}
+
+			echo json_encode($ajax_response);
 
 		} catch (Exception $e) {
 			if(WP_DEBUG)
@@ -405,6 +426,8 @@ class Options implements Tool
 			echo json_encode(array(
 				'success' => false,
 			));
+
+			Migration::saveLog(__('Migration options end with error: ', 'jigoshop') . $e);
 		}
 
 		exit;

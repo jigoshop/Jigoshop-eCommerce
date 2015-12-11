@@ -1,4 +1,5 @@
 jQuery(document).ready ($) ->
+  $('#msgLog').val('1')
   dotCount = 0
   maxError = 3
 
@@ -14,16 +15,18 @@ jQuery(document).ready ($) ->
 
   migrateItems = (ajaxModule) ->
     params = jigoshop_admin_migration
+    msgLog = $('#msgLog').val()
     $.ajax(
       url: params['ajax']
       type: 'post'
       dataType: 'json'
-      data: action: ajaxModule).done((data) ->
+      data: action: ajaxModule, msgLog: msgLog).done((data) ->
         if data.success == true
           $('.migration_processed').html data.processed
           $('.migration_remain').html data.remain
           $('.migration_total').html data.total
           $('.migration-id').html '.'.repeat(dotCount)
+          $('#msgLog').val('2')
           dotCount++
           if dotCount > 3
             dotCount = 0
@@ -35,9 +38,9 @@ jQuery(document).ready ($) ->
         else if data.success == false
           if maxError <= 0
             doSummary params['i18n']['migration_error'], 'danger'
+            console.log data
             alert params['i18n']['alert_msg']
             return false
-          console.log data
           setTimeout (->
             migrateItems ajaxModule
           ), 2000

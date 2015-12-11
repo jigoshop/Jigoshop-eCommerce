@@ -129,6 +129,23 @@ class Migration implements PageInterface
 		Render::output('admin/migration', array(
 			'messages' => $this->messages,
 			'tools' => $this->tools,
+			'logMessages' => $this->getLogs(),
 		));
+	}
+
+	private function getLogs()
+	{
+		$log_dir = JIGOSHOP_LOG_DIR . Helper\Migration::getLogsFile();
+		if(file_exists($log_dir) && !empty($logs = file_get_contents($log_dir)))
+		{
+			$logs = nl2br(substr(trim($logs), 6));
+		}
+		else
+		{
+			file_put_contents($log_dir, '');
+			$logs = __('Just start migration from "Migrate options"', 'jigoshop');
+		}
+
+		return $logs;
 	}
 }
