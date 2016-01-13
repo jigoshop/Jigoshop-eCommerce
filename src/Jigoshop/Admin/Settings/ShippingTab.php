@@ -3,7 +3,6 @@
 namespace Jigoshop\Admin\Settings;
 
 use Jigoshop\Core\Options;
-use Jigoshop\Integration;
 use Jigoshop\Service\ShippingServiceInterface;
 use Jigoshop\Shipping\Method;
 

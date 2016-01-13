@@ -18,7 +18,6 @@ use Jigoshop\Helper\Scripts;
 use Jigoshop\Helper\Styles;
 use Jigoshop\Helper\Tax;
 use Jigoshop\Helper\Validation;
-use Jigoshop\Integration;
 use Jigoshop\Service\CartServiceInterface;
 use Jigoshop\Service\CouponServiceInterface;
 use Jigoshop\Service\CustomerServiceInterface;

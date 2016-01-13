@@ -65,7 +65,6 @@ class JigoshopInit
 	 * Loads Jigoshop.
 	 * Prepares Jigoshop to start, then sets up external plugins.
 	 * Calls `jigoshop\init` action with \Jigoshop\Container object as parameter - you need to add your extension configuration to the container there.
-	 * Also loads Jigoshop 1.x integration layer if necessary.
 	 */
 	public function load()
 	{
