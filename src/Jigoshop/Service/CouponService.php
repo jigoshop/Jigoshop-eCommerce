@@ -164,6 +164,7 @@ class CouponService implements CouponServiceInterface
 	 */
 	public function findByCode($code)
 	{
+		print_r($code);
 		$query = new \WP_Query(array(
 			'post_type' => Types::COUPON,
 			'name' => $code,
