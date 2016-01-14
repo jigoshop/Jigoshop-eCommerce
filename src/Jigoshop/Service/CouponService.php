@@ -131,7 +131,6 @@ class CouponService implements CouponServiceInterface
 	public function getByCodes(array $codes)
 	{
 		$coupons = array();
-
 		foreach ($codes as $code) {
 			$coupons[] = $this->findByCode($code);
 		}
@@ -164,7 +163,6 @@ class CouponService implements CouponServiceInterface
 	 */
 	public function findByCode($code)
 	{
-		print_r($code);
 		$query = new \WP_Query(array(
 			'post_type' => Types::COUPON,
 			'name' => $code,
