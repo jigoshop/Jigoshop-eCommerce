@@ -99,9 +99,6 @@ class JigoshopInit
 		add_filter('start_post_rel_link', $disable);
 		add_filter('previous_post_rel_link', $disable);
 		add_filter('next_post_rel_link', $disable);
-
-		// Configure container before initializing Jigoshop
-		do_action('jigoshop\init', $this->container);
 	}
 
 	/**
@@ -148,7 +145,8 @@ class JigoshopInit
 		$this->container->get('jigoshop.roles');
 		// Initialize Cron
 		$this->container->get('jigoshop.cron');
-
+		// Initialize Integration for plugins
+		$this->container->get('jigoshop.integration');
 		if (is_admin()) {
 			/** @var \Jigoshop\Admin\PageResolver $resolver */
 			$resolver = $this->container->get('jigoshop.admin.page_resolver');

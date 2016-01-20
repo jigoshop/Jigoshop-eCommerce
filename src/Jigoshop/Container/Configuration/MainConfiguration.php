@@ -35,6 +35,9 @@ class MainConfiguration implements ConfigurationInterface
 			'jigoshop.template',
 			'jigoshop.widget'
 		));
+		$services->setDatails('jigoshop.integration', 'Jigoshop\Integration', array(
+			'di'
+		));
 		$services->setDatails('jigoshop.widget', 'Jigoshop\Widget', array(
 			'di',
 			'wpal'
