@@ -9,10 +9,13 @@ use Jigoshop\Container;
  */
 class Integration
 {
-
     /** @var Container  */
     private static $di;
 
+    /**
+     * Integration constructor.
+     * @param \Jigoshop\Container $di
+     */
     public function __construct(Container $di)
     {
         self::$di = $di;
@@ -27,6 +30,9 @@ class Integration
         });
     }
 
+    /**
+     * Get settings tabs from plugins.
+     */
     public static function initializeSettings()
     {
         $service = self::getAdminSettings();
@@ -37,6 +43,9 @@ class Integration
         }
     }
 
+    /**
+     * Get gateways from plugins
+     */
     public static function initializeGateways()
     {
         $service = self::getPaymentService();
@@ -47,6 +56,9 @@ class Integration
         }
     }
 
+    /**
+     * Get shippings methods from plugins.
+     */
     public static function initializeShipping()
     {
         $service = self::getShippingService();
