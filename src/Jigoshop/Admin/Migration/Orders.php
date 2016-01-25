@@ -470,7 +470,7 @@ class Orders implements Tool
 			$customer = new Customer();
 		}
 
-		if (!empty($data['billing_company'] && !empty($data['billing_euvatno']))) {
+		if (!empty($data['billing_company']) && !empty($data['billing_euvatno'])) {
 			$address = new Customer\CompanyAddress();
 			$address->setCompany($data['billing_company']);
 			$address->setVatNumber($data['billing_euvatno']);

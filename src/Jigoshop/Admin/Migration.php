@@ -136,7 +136,7 @@ class Migration implements PageInterface
 	private function getLogs()
 	{
 		$log_dir = JIGOSHOP_LOG_DIR . Helper\Migration::getLogsFile();
-		if(file_exists($log_dir) && !empty($logs = file_get_contents($log_dir)))
+		if(file_exists($log_dir) && $logs = file_get_contents($log_dir) && !empty($logs))
 		{
 			$logs = nl2br(substr(trim($logs), 6));
 		}
