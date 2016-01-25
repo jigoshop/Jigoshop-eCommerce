@@ -200,7 +200,6 @@ class Order implements EntityFactoryInterface
 		if (!empty($data['customer']) && is_numeric($data['customer'])) {
 			$data['customer'] = $this->customerService->find($data['customer']);
 		}
-
 		if (isset($data['customer'])) {
 			$data['customer'] = $this->wp->getHelpers()->maybeUnserialize($data['customer']);
 
@@ -225,7 +224,10 @@ class Order implements EntityFactoryInterface
 
 		if (isset($data['coupons'])) {
 			$coupons = $this->wp->getHelpers()->maybeUnserialize($data['coupons']);
-			$coupons = $this->couponService->getByCodes($coupons);
+			$codes = array_map(function($coupon){
+				return $coupon['code'];
+			}, $coupons);
+			$coupons = $this->couponService->getByCodes($codes);
 			foreach ($coupons as $coupon) {
 				/** @var Coupon $coupon */
 				try {
