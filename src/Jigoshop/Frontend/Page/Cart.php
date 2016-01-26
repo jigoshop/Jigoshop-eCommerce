@@ -519,6 +519,7 @@ class Cart implements PageInterface
 	{
 		$cart = $this->cartService->getCurrent();
 		$content = $this->wp->getPostField('post_content', $this->options->getPageId(Pages::CART));
+		$content = do_shortcode($content);
 
 		$termsUrl = '';
 		$termsPage = $this->options->get('advanced.pages.terms');
