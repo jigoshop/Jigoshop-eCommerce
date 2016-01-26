@@ -115,9 +115,10 @@ abstract class AbstractProductList implements PageInterface
 	{
 		$query = $this->wp->getQuery();
 		$products = $this->productService->findByQuery($query);
+		$content = do_shortcode($this->getContent());
 
 		return Render::get('shop', array(
-			'content' => $this->getContent(),
+			'content' => $content,
 			'products' => $products,
 			'product_count' => $query->max_num_pages,
 			'messages' => $this->messages,
