@@ -525,6 +525,7 @@ class Checkout implements PageInterface
 	public function render()
 	{
 		$content = $this->wp->getPostField('post_content', $this->options->getPageId(Pages::CHECKOUT));
+		$content = do_shortcode($content);
 		$cart = $this->cartService->getCurrent();
 
 		$billingFields = $this->getBillingFields($cart->getCustomer()->getBillingAddress());
