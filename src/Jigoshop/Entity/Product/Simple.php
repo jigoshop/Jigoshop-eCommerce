@@ -160,8 +160,13 @@ class Simple extends Product implements Purchasable, Shippable, Saleable
 		$toSave['stock_manage'] = $this->stock->getManage();
 		$toSave['stock_stock'] = $this->stock->getStock();
 		$toSave['stock_allow_backorders'] = $this->stock->getAllowBackorders();
-		$toSave['stock_status'] = $this->stock->getStatus();
 		$toSave['stock_sold'] = $this->stock->getSoldQuantity();
+
+		if($toSave['stock_manage']) {
+			$toSave['stock_status'] = (int)(0 < $toSave['stock_stock']);
+		} else {
+			$toSave['stock_status'] = $this->stock->getStatus();
+		}
 
 		return $toSave;
 	}
@@ -201,7 +206,11 @@ class Simple extends Product implements Purchasable, Shippable, Saleable
 			$this->stock->setAllowBackorders($state['stock_allow_backorders']);
 		}
 		if (isset($state['stock_status'])) {
-			$this->stock->setStatus((int)$state['stock_status']);
+			if(isset($state['stock_manage']) && isset($state['stock_stock']) && $state['stock_manage']){
+				$this->stock->setStatus((int)(0 < $state['stock_stock']));
+			} else {
+				$this->stock->setStatus((int)$state['stock_status']);
+			}
 		}
 		if (isset($state['stock_sold'])) {
 			$this->stock->setSoldQuantity((int)$state['stock_sold']);
