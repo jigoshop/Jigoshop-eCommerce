@@ -109,6 +109,13 @@ class ShoppingTab implements TabInterface
 						'value' => $this->options['catalog_order'],
 						'options' => $this->catalogOrder,
 					),
+					array(
+						'name' => '[hide_out_of_stock]',
+						'title' => __('Hide out of stock items', 'jigoshop'),
+						'type' => 'checkbox',
+						'checked' => $this->options['hide_out_of_stock'],
+						'classes' => array('switch-medium'),
+					),
 				),
 			),
 			array(
