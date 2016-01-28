@@ -558,7 +558,7 @@ class Checkout implements PageInterface
 
 	private function getBillingFields(Address $address)
 	{
-		$fields = $this->wp->applyFilters('jigoshop\checkout\billing_fields', self::getDefaultBillingFields($address));
+		$fields = $this->wp->applyFilters('jigoshop\checkout\billing_fields', $this->getDefaultBillingFields($address));
 
 		if (!Country::isEU($this->options->get('general.country'))) {
 			unset($fields['vat_number']);
@@ -568,13 +568,33 @@ class Checkout implements PageInterface
 	}
 
 	/**
+	 * Selects which address is to be used as tax address.
+	 *
+	 * @param $address string Name of address to be used as tax address.
+	 */
+	public function selectAddress($address)
+	{
+		if (!in_array($address, array('billing', 'shipping'))) {
+			if (WP_DEBUG) {
+				throw new Exception(sprintf(__('Unknown address type: "%s".', 'jigoshop'), $address));
+			}
+
+			Registry::getInstance(JIGOSHOP_LOGGER)->addCritical(sprintf('Unknown address type: "%s".', $address));
+
+			return;
+		}
+
+		$this->taxAddress = $address;
+	}
+
+	/**
 	 * Returns list of default fields for billing section.
 	 *
 	 * @param Address $address Address to fill values.
 	 *
 	 * @return array Default fields.
 	 */
-	public static function getDefaultBillingFields(Address $address)
+	public function getDefaultBillingFields(Address $address)
 	{
 		return array(
 			'first_name' => array(
@@ -622,7 +642,7 @@ class Checkout implements PageInterface
 				'label' => __('Country', 'jigoshop'),
 				'name' => 'jigoshop_order[billing_address][country]',
 				'options' => Country::getAllowed(),
-				'value' => $address->getCountry(),
+				'value' => ($address->getCountry() == null ? $this->options->get('general.country') : $address->getCountry()),
 				'size' => 9,
 				'columnSize' => 6,
 			),
@@ -672,7 +692,7 @@ class Checkout implements PageInterface
 
 	private function getShippingFields(Address $address)
 	{
-		return $this->wp->applyFilters('jigoshop\checkout\shipping_fields', self::getDefaultShippingFields($address));
+		return $this->wp->applyFilters('jigoshop\checkout\shipping_fields', $this->getDefaultShippingFields($address));
 	}
 
 	/**
@@ -682,7 +702,7 @@ class Checkout implements PageInterface
 	 *
 	 * @return array Default fields.
 	 */
-	public static function getDefaultShippingFields(Address $address)
+	public function getDefaultShippingFields(Address $address)
 	{
 		return array(
 			'first_name' => array(
@@ -722,7 +742,7 @@ class Checkout implements PageInterface
 				'label' => __('Country', 'jigoshop'),
 				'name' => 'jigoshop_order[shipping_address][country]',
 				'options' => Country::getAllowed(),
-				'value' => $address->getCountry(),
+				'value' => ($address->getCountry() == null ? $this->options->get('general.country') : $address->getCountry()),
 				'size' => 9,
 				'columnSize' => 6,
 			),
@@ -752,5 +772,18 @@ class Checkout implements PageInterface
 				'columnSize' => 6,
 			),
 		);
+	}
+
+	/**
+	 * Checks whether billing and shipping addresses have the same country, state and postcode
+	 * .
+	 *
+	 * @return bool Shipping and billing address matches?
+	 */
+	public function hasMatchingAddresses()
+	{
+		return $this->billingAddress->getCountry() == $this->shippingAddress->getCountry() &&
+		       $this->billingAddress->getState() == $this->shippingAddress->getState() &&
+		       $this->billingAddress->getPostcode() == $this->shippingAddress->getPostcode();
 	}
 }

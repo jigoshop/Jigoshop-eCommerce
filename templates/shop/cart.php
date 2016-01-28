@@ -15,6 +15,7 @@ use Jigoshop\Helper\Tax;
  * @var $showWithTax bool Whether to show product price with or without tax.
  * @var $showShippingCalculator bool Whether to show shipping calculator.
  * @var $termsUrl string Url to terms and conditions page.
+ * @var $defaultCountry string default country for Cart.
  */
 ?>
 <h1><?php _e('Cart', 'jigoshop'); ?></h1>
@@ -105,6 +106,9 @@ use Jigoshop\Helper\Tax;
 										</h3>
 									</div>
 									<div class="panel-body">
+										<?php
+											$customer->getShippingAddress()->setCountry($defaultCountry);
+										?>
 										<?php \Jigoshop\Helper\Forms::select(array(
 											'name' => 'country',
 											'value' => $customer->getShippingAddress()->getCountry(),
