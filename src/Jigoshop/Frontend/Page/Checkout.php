@@ -553,6 +553,7 @@ class Checkout implements PageInterface
 			'differentShipping' => isset($_POST['jigoshop_order']) ? $_POST['jigoshop_order']['different_shipping_address'] == 'on' : false,
 			// TODO: Fetch whether user want different shipping by default
 			'termsUrl' => $termsUrl,
+			'defaultGateway' => $this->options->get('payment.default_gateway'),
 		));
 	}
 
