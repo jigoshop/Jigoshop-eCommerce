@@ -194,7 +194,9 @@ class OrderService implements OrderServiceInterface
 			if ($object->getStatus() == $reduceStatus) {
 				foreach ($object->getItems() as $item) {
 					/** @var \Jigoshop\Entity\Order\Item $item */
-					$this->wp->doAction('jigoshop\product\sold', $item->getProduct(), $item->getQuantity(), $item);
+					if($item->getProduct()->getStock()->getManage()) {
+						$this->wp->doAction('jigoshop\product\sold', $item->getProduct(), $item->getQuantity(), $item);
+					}
 				}
 			}
 
