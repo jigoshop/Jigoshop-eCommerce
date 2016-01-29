@@ -97,7 +97,7 @@ use Jigoshop\Admin\Helper\Forms;
 		<?php Forms::text(array(
 			'name' => 'jigoshop_coupon[products]',
 			'label' => __('Include products', 'jigoshop'),
-			'description' => __('Control which products this coupon can apply to.','jigoshop'),
+			'description' => __('Control which products this coupon can apply to. If this is left blank it will have effect on all of the products.','jigoshop'),
 			'value' => join(',', $coupon->getProducts()),
 		)); ?>
 		<?php Forms::text(array(
@@ -111,7 +111,7 @@ use Jigoshop\Admin\Helper\Forms;
 		<?php Forms::text(array(
 			'name' => 'jigoshop_coupon[categories]',
 			'label' => __('Include categories', 'jigoshop'),
-			'description' => __('Control which categories this coupon can apply to.','jigoshop'),
+			'description' => __('Control which categories this coupon can apply to. If this is left blank it will have effect on all of the products.','jigoshop'),
 			'value' => join(',', $coupon->getCategories()),
 		)); ?>
 		<?php Forms::text(array(
