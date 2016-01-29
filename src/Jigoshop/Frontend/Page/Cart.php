@@ -10,6 +10,7 @@ use Jigoshop\Entity\Customer;
 use Jigoshop\Entity\Order;
 use Jigoshop\Entity\Order\Status;
 use Jigoshop\Exception;
+use Jigoshop\Frontend\NotEnoughStockException;
 use Jigoshop\Frontend\Pages;
 use Jigoshop\Helper\Country;
 use Jigoshop\Helper\Product;
@@ -382,6 +383,11 @@ class Cart implements PageInterface
 			$response['item_subtotal'] = $price * $item->getQuantity();
 			$response['html']['item_price'] = Product::formatPrice($price);
 			$response['html']['item_subtotal'] = Product::formatPrice($price * $item->getQuantity());
+		} catch (NotEnoughStockException $e) {
+			$response = array(
+				'success' => false,
+				'error' => sprintf(__('Sorry, we do not have enough units in stock. We have got only %s in stock', 'jigoshop'), $e->getStock())
+			);
 		} catch (Exception $e) {
 			if ($cart->isEmpty()) {
 				$response = array(
@@ -519,6 +525,7 @@ class Cart implements PageInterface
 	{
 		$cart = $this->cartService->getCurrent();
 		$content = $this->wp->getPostField('post_content', $this->options->getPageId(Pages::CART));
+		$content = do_shortcode($content);
 
 		$termsUrl = '';
 		$termsPage = $this->options->get('advanced.pages.terms');

@@ -53,6 +53,7 @@ class Account implements PageInterface
 		}
 
 		$content = $this->wp->getPostField('post_content', $this->options->getPageId(Pages::ACCOUNT));
+		$content = do_shortcode($content);
 		$customer = $this->customerService->getCurrent();
 		$query = new \WP_Query(array(
 			'post_type' => Types::ORDER,

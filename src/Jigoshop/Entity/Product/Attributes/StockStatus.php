@@ -59,6 +59,9 @@ class StockStatus implements \Serializable
 	{
 		$this->soldQuantity += (int)$soldQuantity;
 		$this->stock -= (int)$soldQuantity;
+		if($this->stock <= 0) {
+			$this->setStatus(self::OUT_STOCK);
+		}
 	}
 
 	/**
@@ -80,6 +83,11 @@ class StockStatus implements \Serializable
 	public function setStock($stock)
 	{
 		$this->stock = $stock;
+		if($this->getManage() && $this->stock > 0){
+			$this->setStatus(self::IN_STOCK);
+		} else {
+			$this->setStatus(self::OUT_STOCK);
+		}
 	}
 
 	/**
@@ -88,6 +96,11 @@ class StockStatus implements \Serializable
 	public function modifyStock($stock)
 	{
 		$this->stock += $stock;
+		if($this->getManage() && $this->stock > 0){
+			$this->setStatus(self::IN_STOCK);
+		} else {
+			$this->setStatus(self::OUT_STOCK);
+		}
 	}
 
 	/**
@@ -119,14 +132,6 @@ class StockStatus implements \Serializable
 	 */
 	public function getStatus()
 	{
-		if ($this->manage) {
-			if ($this->stock > 0) {
-				return self::IN_STOCK;
-			}
-
-			return self::OUT_STOCK;
-		}
-
 		return $this->status;
 	}
 
