@@ -39,7 +39,6 @@ class Configuration
 			'\Jigoshop\Container\Configuration\Admin\SettingsConfiguration',
 			'\Jigoshop\Container\Configuration\Admin\SystemInfoConfiguration'
 		);
-		$configurations = apply_filters('jigoshop\container\configuration', $configurations);
 
 		$this->configurations = $configurations;
 	}
