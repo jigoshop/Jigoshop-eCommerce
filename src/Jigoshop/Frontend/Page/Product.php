@@ -84,12 +84,17 @@ class Product implements PageInterface
 			$product = $this->productService->findForPost($post);
 
 			try {
+				/** @var Item $item */
 				$item = $this->wp->applyFilters('jigoshop\cart\add', null, $product);
 
 				if ($item === null) {
 					throw new Exception(__('Unable to add product to the cart.', 'jigoshop'));
 				}
 
+				if (isset($_POST['quantity'])) {
+					$item->setQuantity($_POST['quantity']);
+				}
+				/** @var Cart $cart */
 				$cart = $this->cartService->get($this->cartService->getCartIdForCurrentUser());
 				$cart->addItem($item);
 				$this->cartService->save($cart);
