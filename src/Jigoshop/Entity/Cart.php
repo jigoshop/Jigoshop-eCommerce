@@ -189,8 +189,8 @@ class Cart extends Order
 		$coupon = $this->couponData[$id];
 		/** @var Coupon $object */
 		$object = $coupon['object'];
-		parent::removeCoupon($object->getCode());
 		$this->removeDiscount($coupon['discount']);
+		parent::removeCoupon($object->getCode());
 		unset($this->couponData[$id]);
 	}
 
