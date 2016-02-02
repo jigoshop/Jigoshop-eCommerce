@@ -536,6 +536,7 @@ class Checkout implements PageInterface
 		if ($termsPage > 0) {
 			$termsUrl = $this->wp->getPageLink($termsPage);
 		}
+		$verificationMessage = $this->options->get('shopping.enable_verification_message') ? $this->options->get('shopping.verification_message') : '';
 
 		return Render::get('shop/checkout', array(
 			'cartUrl' => $this->wp->getPermalink($this->options->getPageId(Pages::CART)),
@@ -551,6 +552,7 @@ class Checkout implements PageInterface
 			'allowRegistration' => $this->options->get('shopping.allow_registration') && !$this->wp->isUserLoggedIn(),
 			'showRegistrationForm' => $this->options->get('shopping.allow_registration') && !$this->options->get('shopping.guest_purchases') && !$this->wp->isUserLoggedIn(),
 			'alwaysShowShipping' => $this->options->get('shipping.always_show_shipping'),
+			'verificationMessage' => $verificationMessage,
 			'differentShipping' => isset($_POST['jigoshop_order']) ? $_POST['jigoshop_order']['different_shipping_address'] == 'on' : false,
 			// TODO: Fetch whether user want different shipping by default
 			'termsUrl' => $termsUrl,
