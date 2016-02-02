@@ -3,7 +3,7 @@ class GeneralSettings
     states: {}
 
   constructor: (@params) ->
-    jQuery('#show_message').on 'change', -> jQuery('#custom_message').closest('tr').toggle()
+    jQuery('#show_message').on 'switchChange.bootstrapSwitch', @toggleCustomMessage
     jQuery('#custom_message').show().closest('div.form-group').show()
 
     jQuery('select#country').on 'change', @updateStateField
@@ -17,6 +17,9 @@ class GeneralSettings
       @_attachSelectField($states, @params.states[country])
     else
       @_attachTextField($states)
+
+  toggleCustomMessage: ->
+    jQuery('#custom_message').closest('tr').toggle()
 
   updateFields: ->
     jQuery('select#country').change()
