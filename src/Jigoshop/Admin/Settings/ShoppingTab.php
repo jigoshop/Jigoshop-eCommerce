@@ -29,6 +29,8 @@ class ShoppingTab implements TabInterface
 	private $catalogOrderBy;
 	/** @var array */
 	private $catalogOrder;
+	/** @var  array */
+	private $productButtonType;
 
 	public function __construct(Wordpress $wp, Options $options, Messages $messages)
 	{
@@ -54,6 +56,11 @@ class ShoppingTab implements TabInterface
 		$this->catalogOrder = $wp->applyFilters('jigoshop\admin\settings\shopping\catalog_order', array(
 			'ASC' => __('Ascending', 'jigoshop'),
 			'DESC' => __('Descending', 'jigoshop'),
+		));
+		$this->productButtonType = $wp->applyFilters('jigoshop\admin\settings\shopping\catalog_product_button_type', array(
+			'add_to_cart' => __('Add to cart', 'jigoshop'),
+			'view_product' => __('View Product', 'jigoshop'),
+			'no_button' => __('No button', 'jigoshop'),
 		));
 
 		$wp->addAction('admin_enqueue_scripts', function (){
@@ -108,6 +115,13 @@ class ShoppingTab implements TabInterface
 						'type' => 'select',
 						'value' => $this->options['catalog_order'],
 						'options' => $this->catalogOrder,
+					),
+					array(
+						'name' => '[catalog_product_button_type]',
+						'title' => __('Product button type', 'jigoshop'),
+						'type' => 'select',
+						'value' => $this->options['catalog_product_button_type'],
+						'options' => $this->productButtonType,
 					),
 					array(
 						'name' => '[hide_out_of_stock]',
