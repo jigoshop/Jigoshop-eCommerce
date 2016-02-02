@@ -106,6 +106,15 @@ class GeneralTab implements TabInterface
 						'value' => $this->options['message'],
 						'classes' => array($this->options['show_message'] ? '' : 'not-active'),
 					),
+					array(
+						'name' => '[demo_store]',
+						'id' => 'demo_store',
+						'title' => __('Demo store', 'jigoshop'),
+						'type' => 'checkbox',
+						'checked' => $this->options['demo_store'],
+						'tip' => __('Enable this option to show a banner at the top of every page stating this shop is currently in testing mode.', 'jigoshop'),
+						'classes' => array('switch-medium'),
+					),
 				),
 			),
 			array(
