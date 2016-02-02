@@ -1,7 +1,8 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: krzysztof
- * Date: 01.02.16
- * Time: 16:01
+ * @var $product \Jigoshop\Entity\Product Product to view.
  */
+?>
+<form action="<?php echo $product->getLink(); ?>" method="get" class="form-inline cart" role="form">
+    <button class="btn btn-primary btn-block" type="submit"><?php _e('View Product', 'jigoshop'); ?></button>
+</form>

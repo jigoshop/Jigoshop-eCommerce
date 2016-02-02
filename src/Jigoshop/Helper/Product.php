@@ -29,6 +29,11 @@ class Product
 		return self::$options->get('products.weight_unit');
 	}
 
+	public static function getButtonType()
+	{
+		return self::$options->get('shopping.catalog_product_button_type');
+	}
+
 	/**
 	 * Returns options array for select form element based on provided options list.
 	 *
@@ -285,6 +290,18 @@ class Product
 		do_action('jigoshop\helper\product\cart_form\before', $product, $template);
 		$type = apply_filters('jigoshop\helper\product\cart_form\type', $product->getType(), $product, $template);
 
+		$buttonType = $template == 'list' ? self::getButtonType() : 'add_to_cart';
+		if($buttonType == 'add_to_cart') {
+			self::renderAddToCartForm($type, $product, $template);
+		} else if($buttonType == 'view_product') {
+			self::renderViewProductButton($product);
+		}
+
+		do_action('jigoshop\helper\product\cart_form\after', $product, $template);
+	}
+
+	private static function renderAddToCartForm($type, $product, $template)
+	{
 		switch ($type) {
 			case Entity\Product\Simple::TYPE:
 				Render::output("shop/{$template}/cart/simple", array('product' => $product));
@@ -307,7 +324,11 @@ class Product
 			default:
 				do_action('jigoshop\helper\product\print_cart_form', $product->getType(), $product, $template);
 		}
-		do_action('jigoshop\helper\product\cart_form\after', $product, $template);
+	}
+
+	private static function renderViewProductButton( $product)
+	{
+		Render::output("shop/list/cart/default", array('product' => $product));
 	}
 
 	/**
