@@ -63,6 +63,7 @@ class Orders
 			'shipping_address' => _x('Shipping address', 'order', 'jigoshop'),
 			'shipping_payment' => _x('Shipping &amp; Payment', 'order', 'jigoshop'),
 			'total' => _x('Total', 'order', 'jigoshop'),
+			'products' => _x('Products', 'order', 'jigoshop'),
 		);
 
 		return $columns;
@@ -107,6 +108,16 @@ class Orders
 					},
 				));
 				break;
+			case 'products':
+
+				$wpdb = $this->wp->getWPDB();
+				$products = $wpdb->get_results("SELECT product_id, title FROM " . $wpdb->prefix . "jigoshop_order_item WHERE order_id = " . $order->getId());
+
+				Render::output('admin/orders/products', array(
+					'products' => $products,
+				));
+
+			break;
 		}
 	}
 
