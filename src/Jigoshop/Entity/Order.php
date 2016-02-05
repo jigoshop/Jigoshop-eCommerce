@@ -288,7 +288,8 @@ class Order implements OrderInterface
 	 */
 	public function setTaxDefinitions($taxDefinitions)
 	{
-		$this->taxDefinitions = $taxDefinitions;
+		//@TODO sprawdzić dlaczego key są czasami null'em
+		$this->taxDefinitions = array_filter($taxDefinitions);
 	}
 
 	/**

@@ -20,16 +20,57 @@ class Order
 		self::$options = $options;
 	}
 
-	public static function getStatus(\Jigoshop\Entity\Order $order)
+	/**
+	 * Get status slug and name
+	 *
+	 * @param \Jigoshop\Entity\Order $order
+	 *
+	 * @return array
+	 */
+	public static function checkGetStatus(\Jigoshop\Entity\Order $order)
 	{
 		$statuses = Status::getStatuses();
 		$status = $order->getStatus();
 		if (!isset($statuses[$status])) {
 			$status = Status::PENDING;
 		}
-		$text = $statuses[$status];
 
-		return sprintf('<mark class="%s" title="%s">%s</mark>', $status, $text, $text);
+		return array('status' => $status, 'text' => $statuses[$status]);
+	}
+
+	/**
+	 * @param \Jigoshop\Entity\Order $order
+	 *
+	 * @return string
+	 */
+	public static function getStatus(\Jigoshop\Entity\Order $order)
+	{
+		$status = static::checkGetStatus($order);
+
+		return sprintf('<mark class="%s" title="%s">%s</mark>', $status['status'], $status['text'], $status['text']);
+	}
+
+	/**
+	 * It shows the status of orders and possible options for change.
+	 *
+	 * @param \Jigoshop\Entity\Order $order
+	 */
+	public static function renderStatus(\Jigoshop\Entity\Order $order)
+	{
+		$status = static::checkGetStatus($order);
+
+		Render::output('admin/orders/status', array(
+			'currentStatusText' => static::getStatus($order),
+			'pendingTo'         => $status['status'] == Status::PENDING ? Status::PENDING : '',
+			'processingTo'      => $status['status'] == Status::PROCESSING ? Status::PROCESSING : '',
+			'hideCancel'      => $status['status'] == Status::COMPLETED ? true : ($status['status'] == Status::CANCELLED ? true : false),
+			'orderId'           => $order->getId(),
+			'statuses'          => array(
+				'processing' => Status::PROCESSING,
+				'completed'  => Status::COMPLETED,
+				'cancelled'  => Status::CANCELLED,
+			),
+		));
 	}
 
 	public static function getUserLink($customer)

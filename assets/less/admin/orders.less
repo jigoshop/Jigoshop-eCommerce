@@ -14,15 +14,17 @@
 .column-customer {
   width: 140px;
 }
+
 .column-status {
   width: 80px;
   text-align: center;
 
   @import 'order_statuses.less';
-  mark:hover {
+  mark {
     text-indent: 0;
     width: auto;
     text-align: center;
+    line-height: 16px;
   }
 }
 
@@ -53,6 +55,31 @@ ul.subsubsub {
 .font-bold {
   font-weight: bold;
 }
+
 .pull-left {
   float: left;
+}
+
+.btn-status {
+  font-size: 18px;
+  border: 1px solid #CECECE;
+  padding: 4px;
+  border-radius: 5px;
+  background-color: #E0E0E0;
+  cursor: pointer;
+}
+
+.glyphicon-arrow-right {
+  color: @order-processing-color;
+  text-shadow: 1px -1px darken(@order-processing-color, 15%);
+}
+
+.glyphicon-remove {
+  color: @order-on-hold-color;
+  text-shadow: 1px -1px darken(@order-on-hold-color, 15%);
+}
+
+.glyphicon-ok {
+  color: @order-completed-color;
+  text-shadow: 1px -1px darken(@order-completed-color, 15%);
 }
