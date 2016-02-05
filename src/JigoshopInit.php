@@ -134,6 +134,7 @@ class JigoshopInit
 		Jigoshop\Helper\Currency::setOptions($options);
 		Jigoshop\Helper\Product::setOptions($options);
 		Jigoshop\Helper\Order::setOptions($options);
+		Jigoshop\Helper\Address::setOptions($options);
 		Jigoshop\Entity\Order\Status::setWordpress($wp);
 		Jigoshop\Frontend\Pages::setOptions($options);
 

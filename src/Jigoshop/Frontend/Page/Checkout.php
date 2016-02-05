@@ -572,26 +572,6 @@ class Checkout implements PageInterface
 	}
 
 	/**
-	 * Selects which address is to be used as tax address.
-	 *
-	 * @param $address string Name of address to be used as tax address.
-	 */
-	public function selectAddress($address)
-	{
-		if (!in_array($address, array('billing', 'shipping'))) {
-			if (WP_DEBUG) {
-				throw new Exception(sprintf(__('Unknown address type: "%s".', 'jigoshop'), $address));
-			}
-
-			Registry::getInstance(JIGOSHOP_LOGGER)->addCritical(sprintf('Unknown address type: "%s".', $address));
-
-			return;
-		}
-
-		$this->taxAddress = $address;
-	}
-
-	/**
 	 * Returns list of default fields for billing section.
 	 *
 	 * @param Address $address Address to fill values.
@@ -646,7 +626,7 @@ class Checkout implements PageInterface
 				'label' => __('Country', 'jigoshop'),
 				'name' => 'jigoshop_order[billing_address][country]',
 				'options' => Country::getAllowed(),
-				'value' => ($address->getCountry() == null ? $this->options->get('general.country') : $address->getCountry()),
+				'value' => $address->getCountry(),
 				'size' => 9,
 				'columnSize' => 6,
 			),
@@ -746,7 +726,7 @@ class Checkout implements PageInterface
 				'label' => __('Country', 'jigoshop'),
 				'name' => 'jigoshop_order[shipping_address][country]',
 				'options' => Country::getAllowed(),
-				'value' => ($address->getCountry() == null ? $this->options->get('general.country') : $address->getCountry()),
+				'value' => $address->getCountry(),
 				'size' => 9,
 				'columnSize' => 6,
 			),
@@ -776,18 +756,5 @@ class Checkout implements PageInterface
 				'columnSize' => 6,
 			),
 		);
-	}
-
-	/**
-	 * Checks whether billing and shipping addresses have the same country, state and postcode
-	 * .
-	 *
-	 * @return bool Shipping and billing address matches?
-	 */
-	public function hasMatchingAddresses()
-	{
-		return $this->billingAddress->getCountry() == $this->shippingAddress->getCountry() &&
-		       $this->billingAddress->getState() == $this->shippingAddress->getState() &&
-		       $this->billingAddress->getPostcode() == $this->shippingAddress->getPostcode();
 	}
 }

@@ -3,6 +3,7 @@
 namespace Jigoshop\Entity\Customer;
 
 use Jigoshop\Helper\Country;
+use Jigoshop\Helper\Address as HelperAddress;
 
 /**
  * Address of the customer.
@@ -21,6 +22,11 @@ class Address implements \Serializable
 	private $state;
 	private $email;
 	private $phone;
+
+	public function __construct()
+	{
+		$this->country = HelperAddress::getDefaultCountry();
+	}
 
 	/**
 	 * @return string Formatted address for Google Maps.
