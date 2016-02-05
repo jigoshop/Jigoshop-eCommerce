@@ -7,8 +7,10 @@ use Jigoshop\Core\Types;
 use Jigoshop\Entity\Order as Entity;
 use Jigoshop\Helper\Order as OrderHelper;
 use Jigoshop\Helper\Render;
+use Jigoshop\Helper\Scripts;
 use Jigoshop\Helper\Styles;
 use Jigoshop\Helper\Tax;
+use Jigoshop\Entity\Order\Status;
 use Jigoshop\Service\OrderServiceInterface;
 use WPAL\Wordpress;
 
@@ -39,6 +41,14 @@ class Orders
 				Styles::add('jigoshop.admin.orders', JIGOSHOP_URL.'/assets/css/admin/orders.css');
 			}
 		});
+
+		Scripts::add('jigoshop.admin.page.orders_list', JIGOSHOP_URL.'/assets/js/admin/orders.js');
+		Scripts::localize('jigoshop.admin.page.orders_list', 'jigoshop_admin_orders_list', array(
+			'ajax' => $wp->getAjaxUrl(),
+			'module' => 'jigoshop.admin.orders',
+			'ajax_error' => __('Ajax Error', 'jigoshop'),
+		));
+		$wp->addAction('wp_ajax_jigoshop.admin.orders', array($this, 'ajaxChangeStatus'), 10, 0);
 	}
 
 	public function request($vars)
@@ -80,7 +90,7 @@ class Orders
 		$order = $this->orderService->findForPost($post);
 		switch ($column) {
 			case 'status':
-				echo OrderHelper::getStatus($order);
+				OrderHelper::renderStatus($order);
 				break;
 			case 'customer':
 				echo OrderHelper::getUserLink($order->getCustomer());
@@ -109,14 +119,12 @@ class Orders
 				));
 				break;
 			case 'products':
-
 				$wpdb = $this->wp->getWPDB();
 				$products = $wpdb->get_results("SELECT product_id, title FROM " . $wpdb->prefix . "jigoshop_order_item WHERE order_id = " . $order->getId());
 
 				Render::output('admin/orders/products', array(
 					'products' => $products,
 				));
-
 			break;
 		}
 	}
@@ -146,7 +154,7 @@ class Orders
 		return $actions;
 	}
 
-	function statusFilters($views)
+	public function statusFilters($views)
 	{
 		$current = (isset($_GET['post_status']) && Entity\Status::exists($_GET['post_status'])) ? $_GET['post_status'] : '';
 		$statuses = Entity\Status::getStatuses();
@@ -172,5 +180,74 @@ class Orders
 		}
 
 		return $views;
+	}
+
+	/**
+	 * Ajax zmieniający status zamówienia ze strony: lista zamówień
+	 */
+	public function ajaxChangeStatus()
+	{
+		try
+		{
+			$status = trim($_POST['status']);
+			if (empty($status))
+			{
+				throw new \Exception('Empty status');
+			}
+
+			$orderId = (int)$_POST['orderId'];
+
+			if ($orderId < 1)
+			{
+				throw new \Exception('Bad order id');
+			}
+
+			/** @var Entity $order */
+			$order = $this->orderService->find($orderId);
+
+			if($this->isAvailbleChange($order->getStatus(), $status))
+			{
+				$order->setStatus($status);
+				$this->orderService->save($order);
+				echo json_encode(array('success' => true));
+			}
+			else
+			{
+				throw new \Exception('Not possible');
+			}
+		} catch (\Exception $e)
+		{
+			echo json_encode(array('status' => false, 'msg' => $e->getMessage()));
+		}
+		exit;
+	}
+
+	/**
+	 * Is the current status may be changed to the selected status
+	 *
+	 * @param string $from Status to change from
+	 * @param string $to Status to change to
+	 *
+	 * @return bool
+	 */
+	public function isAvailbleChange($from, $to)
+	{
+		$possibilities = array(
+			Status::PENDING    => array(
+				Status::PROCESSING => '',
+				Status::CANCELLED  => '',
+			),
+			Status::PROCESSING => array(
+				Status::COMPLETED => '',
+				Status::CANCELLED => '',
+			)
+		);
+
+		if (isset($possibilities[$from][$to]))
+		{
+			return true;
+		}
+
+		return false;
 	}
 }
