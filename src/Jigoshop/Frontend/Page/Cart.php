@@ -544,7 +544,6 @@ class Cart implements PageInterface
 			'showWithTax' => $this->options->get('tax.price_tax') == 'with_tax',
 			'showShippingCalculator' => $this->options->get('shipping.calculator'),
 			'termsUrl' => $termsUrl,
-			'defaultCountry' => $this->options->get('general.country'),
 		));
 	}
 }
