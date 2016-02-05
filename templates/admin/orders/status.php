@@ -5,7 +5,7 @@
  * @var bool $processingTo Is it possible to change the status to processing
  * @var int $orderId Order id
  * @var array $statuses List of availble status to change to
- * @var bool $hideCancel List of availble status to change to
+ * @var bool $hideCancel Hide cancelled button when status is completed or cancelled
  */
 ?>
 
