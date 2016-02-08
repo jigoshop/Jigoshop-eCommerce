@@ -4,7 +4,7 @@ Tags: ecommerce, wordpress ecommerce, store, shop, shopping, cart, checkout, wid
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=paypal@jigowatt.co.uk&item_name=Donation+for+Jigoshop
 
 Requires at least: 3.8
-Tested up to: 3.9
+Tested up to: 4.4.2
 Stable tag: 2.0
 
 A feature-packed eCommerce plugin built upon WordPress core functionality ensuring excellent performance and customizability.
