@@ -121,6 +121,7 @@ class TaxesTab implements TabInterface
 						'name' => '[shipping]',
 						'title' => __('Taxes based on shipping country?', 'jigoshop'),
 						'type' => 'checkbox',
+						'description' => __('By default, taxes based on billing country.', 'jigoshop'),
 						'checked' => $this->options['shipping'],
 						'classes' => array('switch-medium'),
 					),
