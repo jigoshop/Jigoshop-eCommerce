@@ -81,6 +81,12 @@ class LocalPickup implements Method
 				'checked' => $this->options['enabled'],
 				'classes' => array('switch-medium'),
 			),
+			array(
+				'name' => sprintf('[%s][fee]', self::NAME),
+				'title' => __('Handling Fee', 'jigoshop'),
+				'type' => 'number',
+				'value' => $this->options['fee'],
+			),
 		);
 	}
 
@@ -105,7 +111,7 @@ class LocalPickup implements Method
 	 */
 	public function calculate(OrderInterface $order)
 	{
-		return 0.0;
+		return(float)$this->options['fee'];
 	}
 
 	/**
