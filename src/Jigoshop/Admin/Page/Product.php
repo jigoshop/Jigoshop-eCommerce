@@ -41,7 +41,6 @@ class Product
 		$that = $this;
 		$wp->addAction('add_meta_boxes_'.Types::PRODUCT, function () use ($wp, $that){
 			$wp->addMetaBox('jigoshop-product-data', __('Product Data', 'jigoshop'), array($that, 'box'), Types::PRODUCT, 'normal', 'high');
-			$wp->addMetaBox('jigoshop-product-images', __('Product Images', 'jigoshop'), array($that, 'images'), Types::PRODUCT, 'side', 'low');
 			$wp->removeMetaBox('commentstatusdiv', null, 'normal');
 		});
 
@@ -144,17 +143,6 @@ class Product
 			'menu' => $this->menu,
 			'tabs' => $tabs,
 			'current_tab' => 'general',
-		));
-	}
-
-	public function images()
-	{
-		$post = $this->wp->getGlobalPost();
-		/** @var \Jigoshop\Entity\Product $product */
-		$product = $this->productService->findForPost($post);
-
-		Render::output('admin/product/images', array(
-			'title' => __('Set images to product gallery', 'jigoshop'),
 		));
 	}
 
