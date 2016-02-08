@@ -83,18 +83,18 @@
         "source": {
             "type": "git",
             "url": "https://github.com/php-fig/log.git",
-            "reference": "9e45edca52cc9c954680072c93e621f8b71fab26"
+            "reference": "d8e60a5619fff77f9669da8997697443ef1a1d7e"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/php-fig/log/zipball/9e45edca52cc9c954680072c93e621f8b71fab26",
-            "reference": "9e45edca52cc9c954680072c93e621f8b71fab26",
+            "url": "https://api.github.com/repos/php-fig/log/zipball/d8e60a5619fff77f9669da8997697443ef1a1d7e",
+            "reference": "d8e60a5619fff77f9669da8997697443ef1a1d7e",
             "shasum": ""
         },
         "require": {
             "php": ">=5.3.0"
         },
-        "time": "2015-06-02 13:48:41",
+        "time": "2016-01-06 21:40:42",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -118,6 +118,7 @@
             }
         ],
         "description": "Common interface for logging libraries",
+        "homepage": "https://github.com/php-fig/log",
         "keywords": [
             "log",
             "psr",
@@ -126,17 +127,17 @@
     },
     {
         "name": "monolog/monolog",
-        "version": "dev-master",
-        "version_normalized": "9999999-dev",
+        "version": "1.x-dev",
+        "version_normalized": "1.9999999.9999999.9999999-dev",
         "source": {
             "type": "git",
             "url": "https://github.com/Seldaek/monolog.git",
-            "reference": "cab3ff71ffc802af272928ff71341cfc51e8ee98"
+            "reference": "79817af0de141a2278e54acd01fb2532a7548516"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/Seldaek/monolog/zipball/cab3ff71ffc802af272928ff71341cfc51e8ee98",
-            "reference": "cab3ff71ffc802af272928ff71341cfc51e8ee98",
+            "url": "https://api.github.com/repos/Seldaek/monolog/zipball/79817af0de141a2278e54acd01fb2532a7548516",
+            "reference": "79817af0de141a2278e54acd01fb2532a7548516",
             "shasum": ""
         },
         "require": {
@@ -172,11 +173,11 @@
             "ruflin/elastica": "Allow sending log messages to an Elastic Search server",
             "videlalvaro/php-amqplib": "Allow sending log messages to an AMQP server using php-amqplib"
         },
-        "time": "2015-11-26 23:48:42",
+        "time": "2016-01-22 18:13:50",
         "type": "library",
         "extra": {
             "branch-alias": {
-                "dev-master": "1.18.x-dev"
+                "dev-master": "2.0.x-dev"
             }
         },
         "installation-source": "source",

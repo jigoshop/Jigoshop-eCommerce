@@ -21,7 +21,6 @@ use Jigoshop\Helper\Scripts;
 use Jigoshop\Helper\Styles;
 use Jigoshop\Helper\Tax;
 use Jigoshop\Helper\Validation;
-use Jigoshop\Integration;
 use Jigoshop\Service\CartServiceInterface;
 use Jigoshop\Service\CustomerServiceInterface;
 use Jigoshop\Service\OrderServiceInterface;
@@ -526,6 +525,7 @@ class Checkout implements PageInterface
 	public function render()
 	{
 		$content = $this->wp->getPostField('post_content', $this->options->getPageId(Pages::CHECKOUT));
+		$content = do_shortcode($content);
 		$cart = $this->cartService->getCurrent();
 
 		$billingFields = $this->getBillingFields($cart->getCustomer()->getBillingAddress());
@@ -536,6 +536,7 @@ class Checkout implements PageInterface
 		if ($termsPage > 0) {
 			$termsUrl = $this->wp->getPageLink($termsPage);
 		}
+		$verificationMessage = $this->options->get('shopping.enable_verification_message') ? $this->options->get('shopping.verification_message') : '';
 
 		return Render::get('shop/checkout', array(
 			'cartUrl' => $this->wp->getPermalink($this->options->getPageId(Pages::CART)),
@@ -551,15 +552,17 @@ class Checkout implements PageInterface
 			'allowRegistration' => $this->options->get('shopping.allow_registration') && !$this->wp->isUserLoggedIn(),
 			'showRegistrationForm' => $this->options->get('shopping.allow_registration') && !$this->options->get('shopping.guest_purchases') && !$this->wp->isUserLoggedIn(),
 			'alwaysShowShipping' => $this->options->get('shipping.always_show_shipping'),
+			'verificationMessage' => $verificationMessage,
 			'differentShipping' => isset($_POST['jigoshop_order']) ? $_POST['jigoshop_order']['different_shipping_address'] == 'on' : false,
 			// TODO: Fetch whether user want different shipping by default
 			'termsUrl' => $termsUrl,
+			'defaultGateway' => $this->options->get('payment.default_gateway'),
 		));
 	}
 
 	private function getBillingFields(Address $address)
 	{
-		$fields = $this->wp->applyFilters('jigoshop\checkout\billing_fields', self::getDefaultBillingFields($address));
+		$fields = $this->wp->applyFilters('jigoshop\checkout\billing_fields', $this->getDefaultBillingFields($address));
 
 		if (!Country::isEU($this->options->get('general.country'))) {
 			unset($fields['vat_number']);
@@ -575,7 +578,7 @@ class Checkout implements PageInterface
 	 *
 	 * @return array Default fields.
 	 */
-	public static function getDefaultBillingFields(Address $address)
+	public function getDefaultBillingFields(Address $address)
 	{
 		return array(
 			'first_name' => array(
@@ -673,7 +676,7 @@ class Checkout implements PageInterface
 
 	private function getShippingFields(Address $address)
 	{
-		return $this->wp->applyFilters('jigoshop\checkout\shipping_fields', self::getDefaultShippingFields($address));
+		return $this->wp->applyFilters('jigoshop\checkout\shipping_fields', $this->getDefaultShippingFields($address));
 	}
 
 	/**
@@ -683,7 +686,7 @@ class Checkout implements PageInterface
 	 *
 	 * @return array Default fields.
 	 */
-	public static function getDefaultShippingFields(Address $address)
+	public function getDefaultShippingFields(Address $address)
 	{
 		return array(
 			'first_name' => array(

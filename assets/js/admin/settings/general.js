@@ -9,9 +9,7 @@ GeneralSettings = (function() {
   function GeneralSettings(params) {
     this.params = params;
     this.updateStateField = bind(this.updateStateField, this);
-    jQuery('#show_message').on('change', function() {
-      return jQuery('#custom_message').closest('tr').toggle();
-    });
+    jQuery('#show_message').on('switchChange.bootstrapSwitch', this.toggleCustomMessage);
     jQuery('#custom_message').show().closest('div.form-group').show();
     jQuery('select#country').on('change', this.updateStateField);
     this.updateFields();
@@ -27,6 +25,10 @@ GeneralSettings = (function() {
     } else {
       return this._attachTextField($states);
     }
+  };
+
+  GeneralSettings.prototype.toggleCustomMessage = function() {
+    return jQuery('#custom_message').closest('tr').toggle();
   };
 
   GeneralSettings.prototype.updateFields = function() {

@@ -3,7 +3,6 @@
 namespace Jigoshop\Admin\Settings;
 
 use Jigoshop\Core\Options;
-use Jigoshop\Integration;
 use Jigoshop\Payment\Method;
 use Jigoshop\Service\PaymentServiceInterface;
 
@@ -44,22 +43,98 @@ class PaymentTab implements TabInterface
 	}
 
 	/**
-	 * @return array List of items to display.
+	 * Extract title and id from all availble gateway
+	 *
+	 * @param array $options all gateway
+	 *
+	 * @return array
 	 */
-	public function getSections()
+	protected function getTitles($options)
+	{
+		if(!is_array($options))
+		{
+			return array();
+		}
+
+		$opt = array();
+
+		foreach ($options as $k => $v)
+		{
+			if($v['enabled'] == false)
+			{
+				continue;
+			}
+
+			$opt[$v['id']] = trim(strip_tags($v['title']));
+		}
+
+		$noDefGateway = array('no_default_gateway' => __('All gateways are disabled. Please turn on a gateway.', 'jigoshop'));
+
+		if(count($opt) == 0)
+		{
+			return $noDefGateway;
+		}
+
+		return array_merge($noDefGateway, $opt);
+	}
+
+	/**
+	 * Add section with defaults gateway
+	 *
+	 * @param array $options all gateway
+	 *
+	 * @return array
+	 */
+	protected function getSectionGateway($options)
+	{
+		return array(
+			array(
+				'title'  => __('Default Gateway', 'jigoshop'),
+				'id'     => 'default_gateway',
+				'fields' => array(
+					array(
+						'name'    => "[default_gateway]",
+						'title'   => __('Set default gataway', 'jigoshop'),
+						'type'    => "select",
+						'value'   => $this->options['default_gateway'],
+						'options' => $this->getTitles($options),
+						'classes' => array(),
+					)
+				),
+			)
+		);
+	}
+
+	/**
+	 * Get avaible gateway from the system
+	 *
+	 * @return array
+	 */
+	protected function getAvaibleGateway()
 	{
 		$options = array();
 
-		foreach ($this->paymentService->getAvailable() as $method) {
+		foreach ($this->paymentService->getAvailable() as $method)
+		{
 			/** @var $method Method */
 			$options[] = array(
-				'title' => $method->getName(),
-				'id' => $method->getId(),
+				'title'  => $method->getName(),
+				'id'     => $method->getId(),
 				'fields' => $method->getOptions(),
+				'enabled' => $method->isEnabled(),
 			);
 		}
 
 		return $options;
+	}
+
+	/**
+	 * @return array List of items to display.
+	 */
+	public function getSections()
+	{
+		$options = $this->getAvaibleGateway();
+		return array_merge($this->getSectionGateway($options), $options);
 	}
 
 	/**
@@ -72,9 +147,32 @@ class PaymentTab implements TabInterface
 	 */
 	public function validate($settings)
 	{
-		foreach ($this->paymentService->getAvailable() as $method) {
+		$activeGatewayFromPost = array();
+
+		foreach ($this->paymentService->getAvailable() as $method)
+		{
 			/** @var $method Method */
-			$settings[$method->getId()] = $method->validateOptions($settings[$method->getId()]);
+			$methodId = $method->getId();
+			$settings[$methodId] = $method->validateOptions($settings[$methodId]);
+
+//			$_POST 'enabled' need be used by all as payment gateways
+			if ($_POST['jigoshop'][$methodId]['enabled'] == 'on')
+			{
+				$activeGatewayFromPost[] = $methodId;
+			}
+		}
+
+		if (count($activeGatewayFromPost) == 0)
+		{
+			$settings['default_gateway'] = 'no_default_gateway';
+
+			return $settings;
+		}
+
+		if ($_POST['jigoshop'][$this->options['default_gateway']]['enabled'] == 'off')
+		{
+			$settings['default_gateway'] = $activeGatewayFromPost[0];
+
 		}
 
 		return $settings;

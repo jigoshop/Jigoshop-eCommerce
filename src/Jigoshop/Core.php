@@ -14,7 +14,7 @@ use WPAL\Wordpress;
 
 class Core
 {
-	const VERSION = '2.0-beta13';
+	const VERSION = '2.0-beta15';
 	const WIDGET_CACHE = 'jigoshop_widget_cache';
 	const TERMS = 'jigoshop_term';
 
@@ -155,6 +155,12 @@ class Core
 		if ($this->options->get('general.show_message') && Frontend\Pages::isJigoshop()) {
 			Render::output('shop/custom_message', array(
 				'message' => $this->options->get('general.message'),
+			));
+		}
+
+		if ($this->options->get('general.demo_store') && Frontend\Pages::isJigoshop()) {
+			Render::output('shop/custom_message', array(
+				'message' => __('This is a demo store for testing purposes &mdash; no orders shall be fulfilled.', 'jigoshop'),
 			));
 		}
 	}

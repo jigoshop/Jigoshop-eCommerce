@@ -6,7 +6,6 @@ use Jigoshop\Core\Options;
 use Jigoshop\Core\Types;
 use Jigoshop\Entity\Product;
 use Jigoshop\Frontend\Pages;
-use Jigoshop\Integration;
 use WPAL\Wordpress;
 
 class Interceptor
@@ -145,9 +144,18 @@ class Interceptor
 					'key' => 'visibility',
 					'value' => array(Product::VISIBILITY_CATALOG, Product::VISIBILITY_PUBLIC),
 					'compare' => 'IN'
-				),
+				)
 			),
 		);
+		if($options['hide_out_of_stock'] == 'on'){
+			$result['meta_query'][] = array(
+				array(
+					'key' => 'stock_status',
+					'value' => 1,
+					'compare' => '='
+				),
+			);
+		}
 
 		// Support for search queries
 		if (isset($request['s'])) {

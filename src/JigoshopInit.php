@@ -65,7 +65,6 @@ class JigoshopInit
 	 * Loads Jigoshop.
 	 * Prepares Jigoshop to start, then sets up external plugins.
 	 * Calls `jigoshop\init` action with \Jigoshop\Container object as parameter - you need to add your extension configuration to the container there.
-	 * Also loads Jigoshop 1.x integration layer if necessary.
 	 */
 	public function load()
 	{
@@ -100,9 +99,6 @@ class JigoshopInit
 		add_filter('start_post_rel_link', $disable);
 		add_filter('previous_post_rel_link', $disable);
 		add_filter('next_post_rel_link', $disable);
-
-		// Configure container before initializing Jigoshop
-		do_action('jigoshop\init', $this->container);
 	}
 
 	/**
@@ -138,6 +134,7 @@ class JigoshopInit
 		Jigoshop\Helper\Currency::setOptions($options);
 		Jigoshop\Helper\Product::setOptions($options);
 		Jigoshop\Helper\Order::setOptions($options);
+		Jigoshop\Helper\Address::setOptions($options);
 		Jigoshop\Entity\Order\Status::setWordpress($wp);
 		Jigoshop\Frontend\Pages::setOptions($options);
 
@@ -149,7 +146,8 @@ class JigoshopInit
 		$this->container->get('jigoshop.roles');
 		// Initialize Cron
 		$this->container->get('jigoshop.cron');
-
+		// Initialize Integration for plugins
+		$this->container->get('jigoshop.integration');
 		if (is_admin()) {
 			/** @var \Jigoshop\Admin\PageResolver $resolver */
 			$resolver = $this->container->get('jigoshop.admin.page_resolver');

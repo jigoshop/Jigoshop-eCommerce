@@ -39,18 +39,23 @@ class Cart extends Order
 			throw new Exception(__('Quantity has to be numeric value', 'jigoshop'));
 		}
 
-		$item = $this->removeItem($key);
-
-		if ($item === null) {
-			throw new Exception(__('Item not found.', 'jigoshop'));
-		}
-
 		if ($quantity <= 0) {
+			$this->removeItem($key);
 			return;
 		}
 
+		$item = $this->getItem($key);
+		$product = $item->getProduct();
+
+		if ($product === null || $product->getId() === 0) {
+			throw new Exception(__('Product not found', 'jigoshop'));
+		}
+
+		if ($product instanceof Product\Purchasable && !$this->checkStock($product, $quantity)) {
+			throw new NotEnoughStockException($product->getStock()->getStock());
+		}
+
 		$item->setQuantity($quantity);
-		$this->addItem($item);
 	}
 
 	/**
@@ -75,6 +80,18 @@ class Cart extends Order
 			throw new Exception(__('Quantity has to be positive number', 'jigoshop'));
 		}
 
+		if ($this->hasItem($item->getKey())) {
+			/** @var Item $itemInCart */
+			$itemInCart = $this->getItem($item->getKey());
+			if ($product instanceof Product\Purchasable && !$this->checkStock($product, $itemInCart->getQuantity() + $item->getQuantity())) {
+				throw new NotEnoughStockException($product->getStock()->getStock());
+			}
+
+			$itemInCart->setQuantity($itemInCart->getQuantity() + $item->getQuantity());
+
+			return;
+		}
+
 		if ($product instanceof Product\Purchasable && !$this->checkStock($product, $quantity)) {
 			throw new NotEnoughStockException($product->getStock()->getStock());
 		}
@@ -84,14 +101,8 @@ class Cart extends Order
 			throw new Exception(__('Could not add to cart.', 'jigoshop'));
 		}
 
-		if ($this->hasItem($item->getKey())) {
-			/** @var Item $itemInCart */
-			$itemInCart = $this->getItem($item->getKey());
-			$itemInCart->setQuantity($itemInCart->getQuantity() + $item->getQuantity());
-		} else {
-			$item = $this->wp->applyFilters('jigoshop\cart\new_item', $item);
-			parent::addItem($item);
-		}
+		$item = $this->wp->applyFilters('jigoshop\cart\new_item', $item);
+		parent::addItem($item);
 	}
 
 	/**
@@ -106,7 +117,7 @@ class Cart extends Order
 			return $product->getStock()->getStatus() == StockStatus::IN_STOCK;
 		}
 
-		if ($quantity >= $product->getStock()->getStock()) {
+		if ($quantity > $product->getStock()->getStock()) {
 			if (in_array($product->getStock()->getAllowBackorders(), array(
 				StockStatus::BACKORDERS_ALLOW,
 				StockStatus::BACKORDERS_NOTIFY
@@ -178,8 +189,8 @@ class Cart extends Order
 		$coupon = $this->couponData[$id];
 		/** @var Coupon $object */
 		$object = $coupon['object'];
-		parent::removeCoupon($object->getCode());
 		$this->removeDiscount($coupon['discount']);
+		parent::removeCoupon($object->getCode());
 		unset($this->couponData[$id]);
 	}
 

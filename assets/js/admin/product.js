@@ -16,6 +16,8 @@ AdminProduct = (function() {
     menu: {}
   };
 
+  AdminProduct.prototype.productGalleryFrame = '';
+
   function AdminProduct(params) {
     this.params = params;
     this.removeAttribute = bind(this.removeAttribute, this);
@@ -80,6 +82,7 @@ AdminProduct = (function() {
       todayBtn: 'linked',
       autoclose: true
     });
+    jQuery('.set-product-images').on('click', 'a', this.updateProductImages);
   }
 
   AdminProduct.prototype.changeProductType = function(event) {
@@ -215,6 +218,41 @@ AdminProduct = (function() {
         };
       })(this));
     }
+  };
+
+  AdminProduct.prototype.updateProductImages = function(event) {
+    var element, imageGallery, productGalleryFrame, productImages;
+    event.preventDefault();
+    imageGallery = jQuery('#product-image-gallery');
+    productImages = imageGallery.find('ul.product-images');
+    element = jQuery(this);
+    productGalleryFrame = wp.media.frames.product_gallery = wp.media({
+      title: element.data('choose'),
+      button: {
+        text: element.data('update')
+      },
+      states: [
+        new wp.media.controller.Library({
+          title: element.data('choose'),
+          filterable: 'all',
+          multiple: true
+        })
+      ]
+    });
+    productGalleryFrame.on('select', function() {
+      var attachmentIds, selection;
+      selection = productGalleryFrame.state().get('selection');
+      attachmentIds = imageGallery.val();
+      return selection.map(function(attachment) {
+        attachment = attachment.toJSON();
+        if (attachment.id != null) {
+          if (jQuery('input[name="product_images[' + attachment.id + ']"]').length === 0) {
+            return productImages.append('<input type="hidden" value="' + attachment.id + '" name="product_images[' + attachment.id + ']"/>');
+          }
+        }
+      });
+    });
+    return productGalleryFrame.open();
   };
 
   return AdminProduct;

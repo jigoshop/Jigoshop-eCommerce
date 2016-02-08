@@ -7,23 +7,26 @@ use Jigoshop\Helper\Product;
  */
 ?>
 <div class="jigoshop">
-	<dl class="dl-horizontal">
+	<div>
 		<?php if ($order->getProductSubtotal() != $order->getTotal()): ?>
-			<dt scope="row"><?php _e('Product subtotal', 'jigoshop'); ?></dt>
-			<dd><?php echo Product::formatPrice($order->getProductSubtotal()); ?></dd>
+			<div class="font-bold pull-left" scope="row"><?php printf(__('Product subtotal%s', 'jigoshop'), ':&nbsp;'); ?></div>
+			<div class="pull-left"><?php echo Product::formatPrice($order->getProductSubtotal()); ?></div>
+			<div class="clear"></div>
 		<?php endif; ?>
 		<?php if ($order->getShippingPrice() > 0): ?>
-			<dt scope="row"><?php _e('Shipping', 'jigoshop'); ?></dt>
-			<dd><?php echo Product::formatPrice($order->getShippingPrice()); ?></dd>
-		<?php	endif; ?>
+			<div class="font-bold pull-left" scope="row"><?php printf(__('Shipping%s', 'jigoshop'), ':&nbsp;'); ?></div>
+			<div class="pull-left"><?php echo Product::formatPrice($order->getShippingPrice()); ?></div>
+			<div class="clear"></div>
+		<?php endif; ?>
 		<?php do_action('jigoshop\admin\orders\totals\after_shipping'); ?>
 		<?php foreach ($order->getCombinedTax() as $taxClass => $tax): ?>
 			<?php if ($tax > 0): ?>
-				<dt scope="row"><?php echo $getTaxLabel($taxClass); ?></dt>
-				<dd><?php echo Product::formatPrice($tax); ?></dd>
+				<div class="font-bold pull-left" scope="row"><?php echo $getTaxLabel($taxClass) . ':&nbsp;'; ?></div>
+				<div class="pull-left"><?php echo Product::formatPrice($tax); ?></div>
+				<div class="clear"></div>
 			<?php endif; ?>
-		<?php	endforeach; ?>
-		<dt scope="row"><?php _e('Total', 'jigoshop'); ?></dt>
-		<dd><?php echo Product::formatPrice($order->getTotal()); ?></dd>
-	</dl>
+		<?php endforeach; ?>
+		<div class="font-bold pull-left" scope="row"><?php printf(__('Total%s', 'jigoshop'), ':&nbsp;'); ?></div>
+		<div class="pull-left"><?php echo Product::formatPrice($order->getTotal()); ?></div>
+	</div>
 </div>

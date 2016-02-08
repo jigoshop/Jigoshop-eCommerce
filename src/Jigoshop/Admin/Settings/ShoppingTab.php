@@ -29,6 +29,8 @@ class ShoppingTab implements TabInterface
 	private $catalogOrderBy;
 	/** @var array */
 	private $catalogOrder;
+	/** @var  array */
+	private $productButtonType;
 
 	public function __construct(Wordpress $wp, Options $options, Messages $messages)
 	{
@@ -54,6 +56,11 @@ class ShoppingTab implements TabInterface
 		$this->catalogOrder = $wp->applyFilters('jigoshop\admin\settings\shopping\catalog_order', array(
 			'ASC' => __('Ascending', 'jigoshop'),
 			'DESC' => __('Descending', 'jigoshop'),
+		));
+		$this->productButtonType = $wp->applyFilters('jigoshop\admin\settings\shopping\catalog_product_button_type', array(
+			'add_to_cart' => __('Add to cart', 'jigoshop'),
+			'view_product' => __('View Product', 'jigoshop'),
+			'no_button' => __('No button', 'jigoshop'),
 		));
 
 		$wp->addAction('admin_enqueue_scripts', function (){
@@ -109,6 +116,20 @@ class ShoppingTab implements TabInterface
 						'value' => $this->options['catalog_order'],
 						'options' => $this->catalogOrder,
 					),
+					array(
+						'name' => '[catalog_product_button_type]',
+						'title' => __('Product button type', 'jigoshop'),
+						'type' => 'select',
+						'value' => $this->options['catalog_product_button_type'],
+						'options' => $this->productButtonType,
+					),
+					array(
+						'name' => '[hide_out_of_stock]',
+						'title' => __('Hide out of stock items', 'jigoshop'),
+						'type' => 'checkbox',
+						'checked' => $this->options['hide_out_of_stock'],
+						'classes' => array('switch-medium'),
+					),
 				),
 			),
 			array(
@@ -140,6 +161,24 @@ class ShoppingTab implements TabInterface
 						'value' => $this->options['selling_locations'],
 						'options' => Country::getAll(),
 						'classes' => array($this->options['restrict_selling_locations'] ? '' : 'not-active'),
+					),
+					array(
+						'name' => '[enable_verification_message]',
+						'id' => 'enable_verification_message',
+						'title' => __('Enable verification message', 'jigoshop'),
+						'tip' => __('Enabling this setting will display a message at the bottom of the Checkout asking customers to verify all their informatioin is correctly entered before placing their Order.  This is useful in particular for Countries that have states to ensure the correct shipping state is selected.', 'jigoshop'),
+						'type' => 'checkbox',
+						'checked' => $this->options['enable_verification_message'],
+						'classes' => array('switch-medium'),
+					),
+					array(
+						'name' => '[verification_message]',
+						'id' => 'verification_message',
+						'title' => __('Verification message', 'jigoshop'),
+						'description' => __('For example: "Please verify that all your information is correctly entered before placing your Order".'),
+						'type' => 'textarea',
+						'value' => $this->options['verification_message'],
+						'classes' => array($this->options['enable_verification_message'] ? '' : 'not-active'),
 					),
 				),
 			),

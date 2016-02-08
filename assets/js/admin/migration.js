@@ -1,5 +1,6 @@
 jQuery(document).ready(function($) {
   var doSummary, dotCount, maxError, migrateItems, showUI;
+  $('#msgLog').val('1');
   dotCount = 0;
   maxError = 3;
   doSummary = function(msg, status) {
@@ -14,14 +15,16 @@ jQuery(document).ready(function($) {
     return $('#migration_progress_bar').addClass('progress-bar-' + status);
   };
   migrateItems = function(ajaxModule) {
-    var params;
+    var msgLog, params;
     params = jigoshop_admin_migration;
+    msgLog = $('#msgLog').val();
     return $.ajax({
       url: params['ajax'],
       type: 'post',
       dataType: 'json',
       data: {
-        action: ajaxModule
+        action: ajaxModule,
+        msgLog: msgLog
       }
     }).done(function(data) {
       if (data.success === true) {
@@ -29,6 +32,7 @@ jQuery(document).ready(function($) {
         $('.migration_remain').html(data.remain);
         $('.migration_total').html(data.total);
         $('.migration-id').html('.'.repeat(dotCount));
+        $('#msgLog').val('2');
         dotCount++;
         if (dotCount > 3) {
           dotCount = 0;
@@ -42,10 +46,10 @@ jQuery(document).ready(function($) {
       } else if (data.success === false) {
         if (maxError <= 0) {
           doSummary(params['i18n']['migration_error'], 'danger');
+          console.log(data);
           alert(params['i18n']['alert_msg']);
           return false;
         }
-        console.log(data);
         setTimeout((function() {
           return migrateItems(ajaxModule);
         }), 2000);

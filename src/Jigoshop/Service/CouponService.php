@@ -131,7 +131,6 @@ class CouponService implements CouponServiceInterface
 	public function getByCodes(array $codes)
 	{
 		$coupons = array();
-
 		foreach ($codes as $code) {
 			$coupons[] = $this->findByCode($code);
 		}

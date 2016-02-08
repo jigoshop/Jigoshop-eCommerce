@@ -11,6 +11,7 @@ use Jigoshop\Helper\Tax;
  * @var $customer \Jigoshop\Entity\Customer Current customer.
  * @var $shippingMethods array List of available shipping methods.
  * @var $paymentMethods array List of available payment methods.
+ * @var $defaultGateway string Default gateway.
  * @var $allowRegistration bool Whether to allow registering.
  * @var $showRegistrationForm bool Whether to show registration form.
  * @var $showLoginForm bool Whether to show login form.
@@ -175,7 +176,7 @@ use Jigoshop\Helper\Tax;
 			<?php foreach($paymentMethods as $method): /** @var $method \Jigoshop\Payment\Method */ ?>
 				<li class="list-group-item" id="payment-<?php echo $method->getId(); ?>">
 					<label>
-						<input type="radio" name="jigoshop_order[payment_method]" value="<?php echo $method->getId(); ?>" />
+						<input type="radio" name="jigoshop_order[payment_method]" value="<?php echo $method->getId(); ?>"<?php echo $method->getId() == $defaultGateway ? ' checked' : ''; ?>/>
 						<?php echo $method->getName(); ?>
 					</label>
 					<div class="well well-sm">
@@ -198,6 +199,11 @@ use Jigoshop\Helper\Tax;
 			'name' => 'terms',
 			'label' => sprintf(__('I accept the <a href="%s">Terms &amp; Conditions</a>'), $termsUrl),
 			'checked' => false,
+		)); ?>
+	<?php endif; ?>
+	<?php if(!empty($verificationMessage)) : ?>
+		<?php Render::output('shop/checkout/verification_message', array(
+			'message' => $verificationMessage
 		)); ?>
 	<?php endif; ?>
 	<a class="btn btn-default" href="<?php echo $cartUrl; ?>"><?php _e('Back to cart', 'jigoshop'); ?></a>

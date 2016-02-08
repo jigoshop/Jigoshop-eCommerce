@@ -2,6 +2,7 @@
 
 namespace Jigoshop\Admin\Migration;
 
+use Jigoshop\Admin\Helper\Migration;
 use Jigoshop\Entity\Coupon;
 use Jigoshop\Entity\Product;
 use Jigoshop\Helper\Render;
@@ -77,10 +78,11 @@ class Coupons implements Tool
 	{
 		$wpdb = $this->wp->getWPDB();
 
+//		Open transaction for save migration coupons
+		$var_autocommit_sql = $wpdb->get_var("SELECT @@AUTOCOMMIT");
+
 		try
 		{
-//			Open transaction for save migration coupons
-			$var_autocommit_sql = $wpdb->get_var("SELECT @@AUTOCOMMIT");
 			$this->checkSql();
 			$wpdb->query("SET AUTOCOMMIT=0");
 			$this->checkSql();
@@ -123,6 +125,9 @@ class Coupons implements Tool
 			}
 			$wpdb->query("ROLLBACK");
 			$wpdb->query("SET AUTOCOMMIT=" . $var_autocommit_sql);
+
+			Migration::saveLog(__('Migration coupons end with error: ', 'jigoshop') . $e);
+
 			return false;
 		}
 	}
@@ -175,6 +180,12 @@ class Coupons implements Tool
 	public function ajaxMigrationCoupons()
 	{
 		try {
+//			1 - if first time ajax request
+			if($_POST['msgLog'] == 1)
+			{
+				Migration::saveLog(__('Migration coupons START.', 'jigoshop'), true);
+			}
+
 			$wpdb = $this->wp->getWPDB();
 
 			$query = $wpdb->prepare("
@@ -210,23 +221,32 @@ class Coupons implements Tool
 
 			sort($joinCoupons[$singleCouponsId]);
 
-			if ($this->migrate($joinCoupons[$singleCouponsId]))
+			$ajax_response = array(
+				'success' => true,
+				'percent' => floor(($countAll - $countRemain) / $countAll * 100),
+				'processed' => $countAll - $countRemain,
+				'remain' => $countRemain,
+				'total' => $countAll,
+			);
+
+			if($countRemain > 0)
 			{
-				$this->wp->updateOption('jigoshop_coupons_migrate_id', serialize($couponsIdsMigration));
-				echo json_encode(array(
-					'success' => true,
-					'percent' => floor(($countAll - $countRemain) / $countAll * 100),
-					'processed' => $countAll - $countRemain,
-					'remain' => $countRemain,
-					'total' => $countAll,
-				));
+				if ($this->migrate($joinCoupons[$singleCouponsId]))
+				{
+					$this->wp->updateOption('jigoshop_coupons_migrate_id', serialize($couponsIdsMigration));
+				}
+				else
+				{
+					$ajax_response['success'] = false;
+					Migration::saveLog(__('Migration coupons end with error.', 'jigoshop'));
+				}
 			}
-			else
+			elseif($countRemain == 0)
 			{
-				echo json_encode(array(
-					'success' => false,
-				));
+				Migration::saveLog(__('Migration coupons END.', 'jigoshop'));
 			}
+
+			echo json_encode($ajax_response);
 
 		} catch (Exception $e) {
 			if(WP_DEBUG)
@@ -236,6 +256,8 @@ class Coupons implements Tool
 			echo json_encode(array(
 				'success' => false,
 			));
+
+			Migration::saveLog(__('Migration coupons end with error: ', 'jigoshop') . $e);
 		}
 
 		exit;

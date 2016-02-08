@@ -16,7 +16,6 @@ use Jigoshop\Helper\Render;
 use Jigoshop\Helper\Scripts;
 use Jigoshop\Helper\Styles;
 use Jigoshop\Helper\Tax;
-use Jigoshop\Integration;
 use Jigoshop\Service\OrderServiceInterface;
 use Jigoshop\Service\PaymentServiceInterface;
 use WPAL\Wordpress;

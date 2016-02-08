@@ -200,7 +200,6 @@ class Order implements EntityFactoryInterface
 		if (!empty($data['customer']) && is_numeric($data['customer'])) {
 			$data['customer'] = $this->customerService->find($data['customer']);
 		}
-
 		if (isset($data['customer'])) {
 			$data['customer'] = $this->wp->getHelpers()->maybeUnserialize($data['customer']);
 
@@ -223,9 +222,23 @@ class Order implements EntityFactoryInterface
 			$order->removeItems();
 		}
 
+		//We do not want to add coupons and from directly, without validation.
+		$coupons = $data['coupons'];
+		unset($data['coupons']);
+		unset($data['discount']);
+
+		$order->restoreState($data);
+
 		if (isset($data['coupons'])) {
-			$coupons = $this->wp->getHelpers()->maybeUnserialize($data['coupons']);
-			$coupons = $this->couponService->getByCodes($coupons);
+			$coupons = $this->wp->getHelpers()->maybeUnserialize($coupons);
+			if(isset($coupons[0]) && is_array($coupons[0])) {
+				$codes = array_map(function ($coupon) {
+					return $coupon['code'];
+				}, $coupons);
+			} else {
+				$codes = $coupons;
+			}
+			$coupons = $this->couponService->getByCodes($codes);
 			foreach ($coupons as $coupon) {
 				/** @var Coupon $coupon */
 				try {

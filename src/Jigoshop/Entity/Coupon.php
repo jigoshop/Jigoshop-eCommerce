@@ -537,6 +537,8 @@ class Coupon implements EntityInterface
 			return true;
 		} else if (!empty($this->excludedCategories) && !in_array($product->getCategories(), $this->excludedCategories)) {
 			return true;
+		} else if (empty($this->products)) {
+			return true;
 		}
 
 		return false;

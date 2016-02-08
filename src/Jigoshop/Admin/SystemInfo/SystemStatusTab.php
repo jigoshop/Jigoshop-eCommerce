@@ -77,6 +77,8 @@ class SystemStatusTab implements TabInterface
 					'description' => __('Please copy and paste this information in your ticket when contacting support', 'jigoshop'),
 					'fields' => array(
 						array(
+							'id' => 'debug_report',
+							'title' => '',
 							'generate_button_id' => 'generate-report',
 							'debug_textarea_id' => 'report-for-support',
 							'generate_button_label' => __('Generate Report', 'jigoshop'),
@@ -184,7 +186,7 @@ class SystemStatusTab implements TabInterface
 							'title' => __('Server Info', 'jigoshop'),
 							'tip' => __('Information about the web server that is currently hosting your site.', 'jigoshop'),
 							'type' => 'constant',
-							'value' => esc_html($_SERVER['SERVER-SOFTWARE']),
+							'value' => esc_html($_SERVER['SERVER_SOFTWARE']),
 						),
 						array(
 							'id' => 'php-version',
