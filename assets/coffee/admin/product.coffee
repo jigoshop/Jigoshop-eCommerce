@@ -8,6 +8,7 @@ class AdminProduct
       invalid_attribute: ''
       attribute_without_label: ''
     menu: {}
+  productGalleryFrame: ''
 
   constructor: (@params) ->
     jQuery('#add-attribute').on 'click', @addAttribute
@@ -59,6 +60,8 @@ class AdminProduct
     jQuery('#sales-to').datepicker
       todayBtn: 'linked'
       autoclose: true
+
+    jQuery('.set-product-images').on 'click', 'a', @updateProductImages
 
   changeProductType: (event) =>
     type = jQuery(event.target).val()
@@ -160,6 +163,38 @@ class AdminProduct
           addMessage('success', @params.i18n.attribute_removed, 2000)
         else
           addMessage('danger', data.error, 6000)
+
+  updateProductImages: (event) ->
+    event.preventDefault()
+    imageGallery = jQuery '#product-image-gallery'
+    productImages = imageGallery.find 'ul.product-images'
+    element = jQuery this
+
+    productGalleryFrame = wp.media.frames.product_gallery = wp.media {
+      title: element.data 'choose'
+      button: {
+        text: element.data 'update'
+      }
+      states: [
+        new wp.media.controller.Library {
+          title: element.data 'choose'
+          filterable: 'all'
+          multiple: true
+        }
+      ]
+    }
+
+    productGalleryFrame.on 'select', ->
+      selection = productGalleryFrame.state().get 'selection'
+      attachmentIds = imageGallery.val()
+
+      selection.map (attachment) ->
+        attachment = attachment.toJSON()
+        if attachment.id?
+          if jQuery('input[name="product_images[' + attachment.id + ']"]').length == 0
+            productImages.append '<input type="hidden" value="' + attachment.id + '" name="product_images[' + attachment.id + ']"/>'
+
+    productGalleryFrame.open()
 
 jQuery ->
   new AdminProduct(jigoshop_admin_product)
