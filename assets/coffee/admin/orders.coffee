@@ -1,8 +1,5 @@
 jQuery(document).ready ($) ->
-  changeStatus = undefined
-
   changeStatus = (order_id, status) ->
-    params = undefined
     params = jigoshop_admin_orders_list
     $.ajax(
       url: params['ajax']

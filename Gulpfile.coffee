@@ -4,7 +4,7 @@ coffeelint = require('gulp-coffeelint')
 concat = require('gulp-concat')
 less = require('gulp-less')
 cssmin = require('gulp-cssmin')
-argv = require('yargs')
+argv = require('yargs').argv
 check = require('gulp-if')
 uglify = require('gulp-uglify')
 rimraf = require('gulp-rimraf')
@@ -71,8 +71,7 @@ coffeeTasks.forEach (taskName) ->
 gulp.task 'styles', ->
   gulp.src 'assets/less/**/*.less'
     .pipe less()
-    .pipe check(argv.production, cssmin())
-    .pipe cssmin()
+    .pipe check(!argv.development, cssmin())
     .pipe gulp.dest('assets/css')
 
 # other coffee scripts
@@ -81,7 +80,7 @@ gulp.task 'scripts', ['lint'], ->
     'assets/coffee/**/*.coffee',
   ]
     .pipe coffee({bare: true})
-    .pipe check(argv.production, uglify())
+    .pipe check(!argv.development, uglify())
     .pipe gulp.dest('assets/js')
 
 gulp.task 'lint', ->
