@@ -56,6 +56,8 @@ class JigoshopInit
 
 		do_action('jigoshop\plugins\configure', $this->container);
 		$this->container->compiler->compile($this->container);
+		// Initialize Integration for plugins
+		$this->container->get('jigoshop.integration');
 
 		add_filter('admin_footer_text', array($this, 'footer'));
 		add_action('admin_bar_menu', array($this, 'toolbar'), 35);
@@ -146,8 +148,6 @@ class JigoshopInit
 		$this->container->get('jigoshop.roles');
 		// Initialize Cron
 		$this->container->get('jigoshop.cron');
-		// Initialize Integration for plugins
-		$this->container->get('jigoshop.integration');
 		if (is_admin()) {
 			/** @var \Jigoshop\Admin\PageResolver $resolver */
 			$resolver = $this->container->get('jigoshop.admin.page_resolver');
