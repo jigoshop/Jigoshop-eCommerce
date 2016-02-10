@@ -249,8 +249,6 @@ class Order implements EntityFactoryInterface
 			}
 		}
 
-		$order->restoreState($data);
-
 		return $this->wp->applyFilters('jigoshop\factory\order\fill', $order);
 	}
 
