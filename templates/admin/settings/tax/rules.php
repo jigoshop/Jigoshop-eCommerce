@@ -43,8 +43,8 @@ use Jigoshop\Helper\Render;
 						</tbody>
 						<tfoot>
 						<tr>
-							<td colspan="6">
-								<button type="button" class="btn btn-default" id="add-tax-rule"><span class="glyphicon glyphicon-plus"></span> <?php _e('Add', 'jigoshop'); ?></button>
+							<td colspan="6" class="pull-text-left">
+								<button type="button" class="btn btn-default text-left" id="add-tax-rule"><span class="glyphicon glyphicon-plus"></span> <?php _e('Add', 'jigoshop'); ?></button>
 							</td>
 						</tr>
 						</tfoot>
