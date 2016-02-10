@@ -95,20 +95,6 @@ class AdvancedTab implements TabInterface
 				),
 			),
 			array(
-				'title' => __('Enforcing', 'jigoshop'),
-				'id' => 'enforcing',
-				'fields' => array(
-					array(
-						'name' => '[force_ssl]',
-						'title' => __('Force SSL on checkout', 'jigoshop'),
-						'description' => __('Enforces WordPress to use SSL on checkout pages.', 'jigoshop'),
-						'type' => 'checkbox',
-						'checked' => $this->settings['force_ssl'],
-						'classes' => array('switch-medium'),
-					),
-				),
-			),
-			array(
 				'title' => __('Integration', 'jigoshop'),
 				'id' => 'integration',
 				'fields' => array(
@@ -233,7 +219,6 @@ class AdvancedTab implements TabInterface
 
 		$settings['automatic_complete'] = $settings['automatic_complete'] == 'on';
 		$settings['automatic_reset'] = $settings['automatic_reset'] == 'on';
-		$settings['force_ssl'] = $settings['force_ssl'] == 'on';
 
 		if (!in_array($settings['cache'], array_keys($this->caches))) {
 			$this->messages->addWarning(sprintf(__('Invalid cache mechanism: "%s". Value set to %s.', 'jigoshop'), $settings['cache'], $this->caches['simple']));

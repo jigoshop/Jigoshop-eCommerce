@@ -239,6 +239,14 @@ class ShoppingTab implements TabInterface
 						'type' => 'number',
 						'value' => $this->options['unpaid_orders_number'],
 					),
+					array(
+						'name'        => '[force_ssl]',
+						'title'       => __('Force SSL on checkout', 'jigoshop'),
+						'description' => __('Enforces WordPress to use SSL on checkout pages.', 'jigoshop'),
+						'type'        => 'checkbox',
+						'checked'     => $this->options['force_ssl'],
+						'classes'     => array('switch-medium'),
+					),
 				),
 			),
 		);
