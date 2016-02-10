@@ -226,27 +226,6 @@ class ShoppingTab implements TabInterface
 					),
 				),
 			),
-			array(
-				'title' => __('Redirection', 'jigoshop'),
-				'id' => 'redirection',
-				'fields' => array(
-					array(
-						'name' => '[redirect_add_to_cart]',
-						'title' => __('After adding to cart', 'jigoshop'),
-						'type' => 'select',
-						'value' => $this->options['redirect_add_to_cart'],
-						'options' => $this->addToCartRedirectionOptions,
-					),
-					array(
-						'name' => '[redirect_continue_shopping]',
-						'title' => __('Coming back to shop', 'jigoshop'),
-						'description' => __("This will point users to the page you set for buttons like 'Return to shop' or 'Continue Shopping'.", 'jigoshop'),
-						'type' => 'select',
-						'value' => $this->options['redirect_continue_shopping'],
-						'options' => $this->backToShopRedirectionOptions,
-					),
-				),
-			),
 		);
 	}
 
