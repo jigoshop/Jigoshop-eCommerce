@@ -38,11 +38,11 @@ class ShoppingTab implements TabInterface
 		$this->messages = $messages;
 
 		$this->addToCartRedirectionOptions = $wp->applyFilters('jigoshop\admin\settings\shopping\add_to_cart_redirect', array(
-			'same_page' => __('The same page', 'jigoshop'),
-			'product' => __('Product page', 'jigoshop'),
-			'cart' => __('Cart', 'jigoshop'),
-			'checkout' => __('Checkout', 'jigoshop'),
-			'product_list' => __('Product list', 'jigoshop'),
+			'same_page' => __('Stay on the same page', 'jigoshop'),
+			'product' => __('Redirect to product page', 'jigoshop'),
+			'cart' => __('Redirect to cart', 'jigoshop'),
+			'checkout' => __('Redirect to checkout', 'jigoshop'),
+			'product_list' => __('Redirect to product list', 'jigoshop'),
 		));
 		$this->backToShopRedirectionOptions = $wp->applyFilters('jigoshop\admin\settings\shopping\continue_shopping_redirect', array(
 			'product_list' => __('Product list', 'jigoshop'),
