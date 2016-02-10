@@ -133,8 +133,30 @@ class ShoppingTab implements TabInterface
 				),
 			),
 			array(
-				'title' => __('Validation', 'jigoshop'),
-				'id' => 'validation',
+				'title' => __('Cart', 'jigoshop'),
+				'id' => 'redirection',
+				'fields' => array(
+					array(
+						'name' => '[redirect_add_to_cart]',
+						'title' => __('After adding to cart', 'jigoshop'),
+						'type' => 'select',
+						'value' => $this->options['redirect_add_to_cart'],
+						'options' => $this->addToCartRedirectionOptions,
+					),
+					array(
+						'name' => '[redirect_continue_shopping]',
+						'title' => __('Coming back to shop', 'jigoshop'),
+						'description' => __("This will point users to the page you set for buttons like 'Return to shop' or 'Continue Shopping'.", 'jigoshop'),
+						'type' => 'select',
+						'value' => $this->options['redirect_continue_shopping'],
+						'options' => $this->backToShopRedirectionOptions,
+					),
+				),
+			),
+			array(
+				'title' => __('Checkout', 'jigoshop'),
+				'id' => 'checkout',
+				'description' => __('This section allows you to modify checkout requirements for being signed in.', 'jigoshop'),
 				'fields' => array(
 					array(
 						'name' => '[validate_zip]',
@@ -180,13 +202,6 @@ class ShoppingTab implements TabInterface
 						'value' => $this->options['verification_message'],
 						'classes' => array($this->options['enable_verification_message'] ? '' : 'not-active'),
 					),
-				),
-			),
-			array(
-				'title' => __('Accounts', 'jigoshop'),
-				'id' => 'accounts',
-				'description' => __('This section allows you to modify checkout requirements for being signed in.', 'jigoshop'),
-				'fields' => array(
 					array(
 						'name' => '[guest_purchases]',
 						'title' => __('Allow guest purchases', 'jigoshop'),
