@@ -199,14 +199,6 @@ class Integration
     }
 
     /**
-     * @return \Jigoshop\Frontend\Pages
-     */
-    public static function getPages()
-    {
-        return self::$di->get('jigoshop.pages');
-    }
-
-    /**
      * @return \Jigoshop\Admin\Settings
      */
     public static function getAdminSettings()
