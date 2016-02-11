@@ -94,6 +94,21 @@ class AdvancedTab implements TabInterface
 					),
 				),
 			),
+//			Tak na przyszłość, jak będziemy chcieli wrócić, coś dorobić
+//			array(
+//				'title' => __('Enforcing', 'jigoshop'),
+//				'id' => 'enforcing',
+//				'fields' => array(
+//					array(
+//						'name' => '[force_ssl]',
+//						'title' => __('Force SSL on checkout', 'jigoshop'),
+//						'description' => __('Enforces WordPress to use SSL on checkout pages.', 'jigoshop'),
+//						'type' => 'checkbox',
+//						'checked' => $this->settings['force_ssl'],
+//						'classes' => array('switch-medium'),
+//					),
+//				),
+//			),
 			array(
 				'title' => __('Integration', 'jigoshop'),
 				'id' => 'integration',
