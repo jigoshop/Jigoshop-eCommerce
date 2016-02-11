@@ -45,7 +45,6 @@ class LogsTab implements TabInterface
 						'classes' => array('plain-text'),
 						'description' => __('If logs are empty, please make shure that log directory is writable.', 'jigoshop'),
 						'type' => 'textarea',
-						'disabled' => true,
 						'value' => $this->getLogs('jigoshop')
 					),
 					array(
@@ -54,7 +53,6 @@ class LogsTab implements TabInterface
 						'title' => __('Debug Logs', 'jigoshop'),
 						'classes' => array('plain-text'),
 						'description' => __('Debug logs requires WP_DEBUG set to true in wp-config.php.'),
-						'disabled' => true,
 						'type' => 'textarea',
 						'value' => $this->getLogs('jigoshop.debug')
 					),
