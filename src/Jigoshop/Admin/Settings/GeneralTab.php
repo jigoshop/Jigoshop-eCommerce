@@ -235,6 +235,7 @@ class GeneralTab implements TabInterface
 	public function validate($settings)
 	{
 		$settings['show_message'] = $settings['show_message'] == 'on';
+		$settings['demo_store'] = $settings['demo_store'] == 'on';
 
 		return $settings;
 	}

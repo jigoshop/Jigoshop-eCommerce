@@ -498,7 +498,7 @@ class SystemStatusTab implements TabInterface
 							'title' => __('Thank You', 'jigoshop'),
 							'tip' => __('The ID of your Jigoshop shop\'s thank you page.', 'jigoshop'),
 							'type' => 'constant',
-							'value' => $this->options->get('advanced.pages.checkout_thank_you') ? '#'.$this->options->get('advanced.pages.checkout-thank-you') : '&#10005;',
+							'value' => $this->options->get('advanced.pages.checkout_thank_you') ? '#'.$this->options->get('advanced.pages.checkout_thank_you') : '&#10005;',
 						),
 						array(
 							'id' => 'my-account',
@@ -528,7 +528,7 @@ class SystemStatusTab implements TabInterface
 							'title' => __('Name', 'jigoshop'),
 							'tip' => __('The name of the current active theme.', 'jigoshop'),
 							'type' => 'constant',
-							'value' => $this->wp->wpGetTheme()->Name
+							'value' => $this->wp->wpGetTheme()->display('Name'),
 						),
 						array(
 							'id' => 'version',
@@ -536,7 +536,7 @@ class SystemStatusTab implements TabInterface
 							'title' => __('Version', 'jigoshop'),
 							'tip' => __('The installed version of the current active theme.', 'jigoshop'),
 							'type' => 'constant',
-							'value' => $this->wp->wpGetTheme()->Name
+							'value' => $this->wp->wpGetTheme()->display('Version')
 						),
 						array(
 							'id' => 'author-url',
@@ -544,14 +544,14 @@ class SystemStatusTab implements TabInterface
 							'title' => __('Author URL', 'jigoshop'),
 							'tip' => __('The theme developers URL.', 'jigoshop'),
 							'type' => 'constant',
-							'value' => $this->wp->wpGetTheme()->{'Author URI'}
+							'value' => $this->wp->wpGetTheme()->display('AuthorURI')
 						),
 						array(
 							'id' => 'child-theme',
 							'name' => 'child-theme',
 							'title' => __('Child Theme', 'jigoshop'),
 							'tip' => __('Displays whether or not the current theme is a child theme', 'jigoshop'),
-							'description' => sprintf(__('If you\'re modifying Jigoshop or a parent theme you didn\'t build personally we recommend using a child theme. See: <a href="%s" target="-blank">How to create a child theme</a>', 'jigoshop'), 'http://codex.wordpress.org/Child-Themes'),
+							'description' => sprintf(__('If you\'re modifying Jigoshop or a parent theme you didn\'t build personally we recommend using a child theme. See: <a href="%s" target="-blank">How to create a child theme</a>', 'jigoshop'), 'https://codex.wordpress.org/Child_Themes'),
 							'type' => 'constant',
 							'value' => is_child_theme() ? '&#10004;' : '&#10005;'
 						),
@@ -561,7 +561,7 @@ class SystemStatusTab implements TabInterface
 							'title' => __('Parent Theme Name', 'jigoshop'),
 							'tip' => __('The name of the parent theme.', 'jigoshop'),
 							'type' => 'constant',
-							'value' => is_child_theme() ? wp_get_theme($this->wp->wpGetTheme()->Template)->Name : '&#10005;'
+							'value' => is_child_theme() ? wp_get_theme($this->wp->wpGetTheme()->display('Template'))->display('Name') : '&#10005;'
 						),
 						array(
 							'id' => 'parent-theme-version',
@@ -569,7 +569,7 @@ class SystemStatusTab implements TabInterface
 							'title' => __('Parent Theme Version', 'jigoshop'),
 							'tip' => __('The installed version of the parent theme.', 'jigoshop'),
 							'type' => 'constant',
-							'value' => is_child_theme() ? wp_get_theme($this->wp->wpGetTheme()->Template)->Version : '&#10005;'
+							'value' => is_child_theme() ? wp_get_theme($this->wp->wpGetTheme()->display('Template'))->display('Version') : '&#10005;'
 						),
 						array(
 							'id' => 'parent-theme-author-url',
@@ -577,23 +577,7 @@ class SystemStatusTab implements TabInterface
 							'title' => __('Parent Theme Author URL', 'jigoshop'),
 							'tip' => __('The installed version of the parent theme.', 'jigoshop'),
 							'type' => 'constant',
-							'value' => is_child_theme() ? wp_get_theme($this->wp->wpGetTheme()->Template)->{'Author URI'} : '&#10005;'
-						),
-						array(
-							'id' => 'jigoshop-support',
-							'name' => 'jigoshop-support',
-							'title' => __('Jigoshop Support', 'jigoshop'),
-							'tip' => __('Displays whether or not the current active theme declares Jigoshop support.', 'jigoshop'),
-							'type' => 'constant',
-							'value' => $this->isSupportedTheme($this->wp->wpGetTheme()->template) ? '&#10004;' : '&#10005;'
-						),
-						array(
-							'id' => 'jigoshop-support',
-							'name' => 'jigoshop-support',
-							'title' => __('Jigoshop Support', 'jigoshop'),
-							'tip' => __('Displays whether or not the current active theme declares Jigoshop support.', 'jigoshop'),
-							'type' => 'constant',
-							'value' => $this->isSupportedTheme($this->wp->wpGetTheme()->template) ? '&#10004;' : '&#10005;'
+							'value' => is_child_theme() ? wp_get_theme($this->wp->wpGetTheme()->display('Template'))->display('AuthorURI') : '&#10005;'
 						),
 					)
 				),
@@ -830,25 +814,6 @@ class SystemStatusTab implements TabInterface
 		$positions = Currency::positions();
 
 		return $positions[$pattern];
-	}
-
-	/**
-	 * Checks if theme is supported by Jigoshop
-	 *
-	 * @param string $themeName
-	 *
-	 * @return bool
-	 */
-	private function isSupportedTheme($themeName)
-	{
-		return in_array($themeName, array(
-			'twentyfifteen',
-			'twentyfourteen',
-			'twentythirteen',
-			'twentyeleven',
-			'twentytwelve',
-			'twentyten'
-		));
 	}
 
 	/**
