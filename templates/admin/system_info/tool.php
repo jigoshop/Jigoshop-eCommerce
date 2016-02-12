@@ -11,7 +11,7 @@ use Jigoshop\Admin\SystemInfo;
 use Jigoshop\Admin\SystemInfo\ToolsTab;
 
 ?>
-<div class="form-group <?php echo $id; ?>_field <?php echo join(' ', $classes); ?><?php $hidden and print ' not-active'; ?>">
+<div class="form-group <?php echo $id; ?>_field <?php echo join(' ', $classes); ?>">
 	<div class="row">
 		<div class="col-sm-<?php echo $size; ?>">
 			<div class="col-xs-2 col-sm-1 text-right">

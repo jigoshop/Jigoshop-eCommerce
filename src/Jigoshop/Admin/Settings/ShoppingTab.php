@@ -38,11 +38,11 @@ class ShoppingTab implements TabInterface
 		$this->messages = $messages;
 
 		$this->addToCartRedirectionOptions = $wp->applyFilters('jigoshop\admin\settings\shopping\add_to_cart_redirect', array(
-			'same_page' => __('The same page', 'jigoshop'),
-			'product' => __('Product page', 'jigoshop'),
-			'cart' => __('Cart', 'jigoshop'),
-			'checkout' => __('Checkout', 'jigoshop'),
-			'product_list' => __('Product list', 'jigoshop'),
+			'same_page' => __('Stay on the same page', 'jigoshop'),
+			'product' => __('Redirect to product page', 'jigoshop'),
+			'cart' => __('Redirect to cart', 'jigoshop'),
+			'checkout' => __('Redirect to checkout', 'jigoshop'),
+			'product_list' => __('Redirect to product list', 'jigoshop'),
 		));
 		$this->backToShopRedirectionOptions = $wp->applyFilters('jigoshop\admin\settings\shopping\continue_shopping_redirect', array(
 			'product_list' => __('Product list', 'jigoshop'),
@@ -133,8 +133,30 @@ class ShoppingTab implements TabInterface
 				),
 			),
 			array(
-				'title' => __('Validation', 'jigoshop'),
-				'id' => 'validation',
+				'title' => __('Cart', 'jigoshop'),
+				'id' => 'redirection',
+				'fields' => array(
+					array(
+						'name' => '[redirect_add_to_cart]',
+						'title' => __('After adding to cart', 'jigoshop'),
+						'type' => 'select',
+						'value' => $this->options['redirect_add_to_cart'],
+						'options' => $this->addToCartRedirectionOptions,
+					),
+					array(
+						'name' => '[redirect_continue_shopping]',
+						'title' => __('Coming back to shop', 'jigoshop'),
+						'description' => __("This will point users to the page you set for buttons like 'Return to shop' or 'Continue Shopping'.", 'jigoshop'),
+						'type' => 'select',
+						'value' => $this->options['redirect_continue_shopping'],
+						'options' => $this->backToShopRedirectionOptions,
+					),
+				),
+			),
+			array(
+				'title' => __('Checkout', 'jigoshop'),
+				'id' => 'checkout',
+				'description' => __('This section allows you to modify checkout requirements for being signed in.', 'jigoshop'),
 				'fields' => array(
 					array(
 						'name' => '[validate_zip]',
@@ -180,13 +202,6 @@ class ShoppingTab implements TabInterface
 						'value' => $this->options['verification_message'],
 						'classes' => array($this->options['enable_verification_message'] ? '' : 'not-active'),
 					),
-				),
-			),
-			array(
-				'title' => __('Accounts', 'jigoshop'),
-				'id' => 'accounts',
-				'description' => __('This section allows you to modify checkout requirements for being signed in.', 'jigoshop'),
-				'fields' => array(
 					array(
 						'name' => '[guest_purchases]',
 						'title' => __('Allow guest purchases', 'jigoshop'),
@@ -224,26 +239,13 @@ class ShoppingTab implements TabInterface
 						'type' => 'number',
 						'value' => $this->options['unpaid_orders_number'],
 					),
-				),
-			),
-			array(
-				'title' => __('Redirection', 'jigoshop'),
-				'id' => 'redirection',
-				'fields' => array(
 					array(
-						'name' => '[redirect_add_to_cart]',
-						'title' => __('After adding to cart', 'jigoshop'),
-						'type' => 'select',
-						'value' => $this->options['redirect_add_to_cart'],
-						'options' => $this->addToCartRedirectionOptions,
-					),
-					array(
-						'name' => '[redirect_continue_shopping]',
-						'title' => __('Coming back to shop', 'jigoshop'),
-						'description' => __("This will point users to the page you set for buttons like 'Return to shop' or 'Continue Shopping'.", 'jigoshop'),
-						'type' => 'select',
-						'value' => $this->options['redirect_continue_shopping'],
-						'options' => $this->backToShopRedirectionOptions,
+						'name'        => '[force_ssl]',
+						'title'       => __('Force SSL on checkout', 'jigoshop'),
+						'description' => __('Enforces WordPress to use SSL on checkout pages.', 'jigoshop'),
+						'type'        => 'checkbox',
+						'checked'     => $this->options['force_ssl'],
+						'classes'     => array('switch-medium'),
 					),
 				),
 			),
@@ -278,6 +280,7 @@ class ShoppingTab implements TabInterface
 		$settings['show_login_form'] = $settings['show_login_form'] == 'on';
 		$settings['allow_registration'] = $settings['allow_registration'] == 'on';
 		$settings['login_for_downloads'] = $settings['login_for_downloads'] == 'on';
+		$settings['force_ssl'] = $settings['force_ssl'] == 'on';
 
 		$settings['validate_zip'] = $settings['validate_zip'] == 'on';
 		$settings['restrict_selling_locations'] = $settings['restrict_selling_locations'] == 'on';

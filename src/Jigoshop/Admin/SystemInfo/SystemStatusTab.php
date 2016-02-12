@@ -412,7 +412,7 @@ class SystemStatusTab implements TabInterface
 							'title' => __('Force SSL', 'jigoshop'),
 							'tip' => __('Does your site force a SSL Certificate for transactions?', 'jigoshop'),
 							'type' => 'constant',
-							'value' => $this->options->get('advanced.force_ssl') ? '&#10004;' : '&#10005;',
+							'value' => $this->options->get('shopping.force_ssl') ? '&#10004;' : '&#10005;',
 						),
 						array(
 							'id' => 'shipping-enabled',

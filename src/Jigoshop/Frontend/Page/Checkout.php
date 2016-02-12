@@ -85,7 +85,7 @@ class Checkout implements PageInterface
 			),
 		));
 
-		if (!$wp->isSsl() && $options->get('advanced.force_ssl')) {
+		if (!$wp->isSsl() && $options->get('shopping.force_ssl')) {
 			$wp->addAction('template_redirect', array($this, 'redirectToSsl'), 100, 0);
 		}
 

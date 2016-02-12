@@ -87,6 +87,7 @@ class GeneralTab implements TabInterface
 						'name' => '[email]',
 						'title' => __('Administrator e-mail', 'jigoshop'),
 						'type' => 'text',
+						'tip' => __('This is used to send system notifications, orders, etc.', 'jigoshop'),
 						'value' => $this->options['email'],
 					),
 					array(
@@ -157,7 +158,7 @@ class GeneralTab implements TabInterface
 			),
 			array(
 				'title' => __('Company details', 'jigoshop'),
-				'description' => __('These details with shop location are used for invoicing and sent to customer via emails.', 'jigoshop'),
+				'description' => __('These details, alongside with shop location, will be used for invoicing and emails.', 'jigoshop'),
 				'id' => 'company',
 				'fields' => array(
 					array(
@@ -195,6 +196,7 @@ class GeneralTab implements TabInterface
 						'name' => '[company_email]',
 						'title' => __('Email', 'jigoshop'),
 						'type' => 'text',
+						'tip' => __('A representative e-mail company - department of orders, customer service, contact.', 'jigoshop'),
 						'value' => $this->options['company_email'],
 					),
 				),

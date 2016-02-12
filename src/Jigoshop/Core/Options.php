@@ -61,6 +61,7 @@ class Options
 			'validate_zip' => true,
 			'restrict_selling_locations' => false,
 			'selling_locations' => array(),
+			'force_ssl' => false,
 		),
 		'products' => array(
 			'weight_unit' => 'kg',
@@ -158,7 +159,6 @@ class Options
 		'advanced' => array(
 			'automatic_complete' => false,
 			'automatic_reset' => false,
-			'force_ssl' => false,
 			'integration' => array(
 				'share_this' => '',
 				'google_analytics' => '',
