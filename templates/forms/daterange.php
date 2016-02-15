@@ -50,6 +50,8 @@ $hasLabel = !empty($label);
         todayHighlight: true,
         container: '#<?php echo $id; ?>',
         orientation: 'top left',
-        todayBtn: 'linked'
+        todayBtn: 'linked',
+        <?php echo $startDate ? 'startDate: "'. $startDate .'",' : ''; ?>
+        <?php echo $endDate ? 'endDate: "'. $endDate .'",' : ''; ?>
     });
 </script>

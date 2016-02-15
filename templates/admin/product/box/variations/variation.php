@@ -110,6 +110,8 @@ $product = $variation->getProduct();
 					'to' => $product->getSales()->getTo()->format('m/d/Y'),
 				),
 				'size' => 11,
+				'startDate' => $product->getSales()->getFrom()->format('m/d/Y'),
+				'endDate' => $product->getSales()->getTo()->format('m/d/Y'),
 			));
 			?>
 			</fieldset>
