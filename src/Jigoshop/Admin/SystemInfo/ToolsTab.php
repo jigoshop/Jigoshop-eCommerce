@@ -84,7 +84,7 @@ class ToolsTab implements TabInterface
 						'classes' => array(),
 						'type' => 'user_defined',
 						'display' => function($field){
-							return Render::output('admin/system_info/tools', $field);
+							return Render::output('admin/system_info/tool', $field);
 						}
 					),
 				)

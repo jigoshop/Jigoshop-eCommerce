@@ -75,14 +75,12 @@ class BankTransfer implements Method
 			array(
 				'name'  => sprintf('[%s][bank_name]', self::ID),
 				'title' => __('Bank Name', 'jigoshop'),
-				'tip'   => __('Your bank name for reference. e.g. HSBC', 'jigoshop'),
 				'type'  => 'text',
 				'value' => $this->options['bank_name'],
 			),
 			array(
 				'name'  => sprintf('[%s][account_number]', self::ID),
 				'title' => __('Account Number', 'jigoshop'),
-				'tip'   => __('Your Bank Account number.', 'jigoshop'),
 				'type'  => 'text',
 				'value' => $this->options['account_number'],
 			),
