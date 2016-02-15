@@ -56,7 +56,7 @@ class Product
 			if ($wp->getPostType() == Types::PRODUCT) {
 
 				Styles::add('jigoshop.vendors.select2', JIGOSHOP_URL.'/assets/css/vendors/select2.min.css', array('jigoshop.admin.product'));
-				Styles::add('jigoshop.vendors.datepicker', JIGOSHOP_URL.'/assets/css/vendors/datepicker.min.css', array('jigoshop.admin.product'));
+				Styles::add('jigoshop.vendors.datepicker', JIGOSHOP_URL.'/assets/css/vendors/datepicker.css', array('jigoshop.admin.product'));
 				Styles::add('jigoshop.admin.product', JIGOSHOP_URL.'/assets/css/admin/product.css');
 
 				Scripts::add('jigoshop.vendors.select2', JIGOSHOP_URL . '/assets/js/vendors/select2.min.js', array('jquery', 'jigoshop.admin.product'));

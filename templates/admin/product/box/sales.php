@@ -37,17 +37,18 @@ if ($product instanceof Product\Saleable) {
 		'value' => $price,
 		'placeholder' => __('15% or 19.99', 'jigoshop'),
 	));
-	Forms::text(array(
-		'name' => 'product[sales_from]',
-		'id' => 'sales-from',
-		'label' => __('From', 'jigoshop'),
-		'value' => $from,
-	));
-	Forms::text(array(
-		'name' => 'product[sales_to]',
-		'id' => 'sales-to',
-		'label' => __('To', 'jigoshop'),
-		'value' => $to,
+	Forms::daterange(array(
+		'id' => 'product_sales_date',
+		'name' => array(
+			'from' => 'product[sales_from]',
+			'to' => 'product[sales_to]',
+		),
+		'id' => 'sales-range',
+		'label' => __('Sale date', 'jigoshop'),
+		'value' => array(
+			'from' => $from,
+			'to' => $to,
+		),
 	));
 	?>
 </fieldset>

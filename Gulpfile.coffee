@@ -15,7 +15,6 @@ replace = require('gulp-replace')
 # CSS
 cssFiles =
   select2: ['assets/bower/select2/select2.css', 'assets/bower/select2/select2-bootstrap.css']
-  datepicker: ['assets/bower/bootstrap-datepicker/css/datepicker3.css']
   colorbox: ['assets/bower/jquery-colorbox/example1/colorbox.css']
 
 # JS
