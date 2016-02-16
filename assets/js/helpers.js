@@ -1,17 +1,1 @@
-var addMessage, delay;
-
-delay = function(time, callback) {
-  return setTimeout(callback, time);
-};
-
-addMessage = function(type, message, ms) {
-  var $alert;
-  $alert = jQuery(document.createElement('div')).attr('class', "alert alert-" + type).html(message).hide();
-  $alert.appendTo(jQuery('#messages'));
-  $alert.slideDown();
-  return delay(ms, function() {
-    return $alert.slideUp(function() {
-      return $alert.remove();
-    });
-  });
-};
+var addMessage,delay;delay=function(e,t){return setTimeout(t,e)},addMessage=function(e,t,r){var a;return a=jQuery(document.createElement("div")).attr("class","alert alert-"+e).html(t).hide(),a.appendTo(jQuery("#messages")),a.slideDown(),delay(r,function(){return a.slideUp(function(){return a.remove()})})};

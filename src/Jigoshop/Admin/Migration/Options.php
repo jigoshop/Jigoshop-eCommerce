@@ -318,7 +318,7 @@ class Options implements Tool
 			'jigoshop_enable_guest_checkout'         => 'shopping.guest_purchases',
 			'jigoshop_enable_guest_login'            => 'shopping.show_login_form',
 			'jigoshop_enable_signup_form'            => 'shopping.allow_registration',
-			'jigoshop_force_ssl_checkout'            => 'advanced.force_ssl',
+			'jigoshop_force_ssl_checkout'            => 'shopping.force_ssl',
 			'jigoshop_sharethis'                     => 'advanced.integration.share_this',
 			'jigoshop_ga_id'                         => 'advanced.integration.google_analytics',
 //			'jigoshop_ga_ecommerce_tracking_enabled' => 'no',

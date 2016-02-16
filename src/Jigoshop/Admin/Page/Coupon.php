@@ -73,6 +73,7 @@ class Coupon
 					$categories = $this->wp->getCategories(array(
 						'taxonomy' => Types\ProductCategory::NAME,
 						'name__like' => $query,
+						'hide_empty' => 0,
 					));
 				}
 			} else if (isset($_POST['value'])) {
@@ -101,7 +102,6 @@ class Coupon
 			);
 		}
 
-		print_r($result);
 		echo json_encode($result);
 		exit;
 	}

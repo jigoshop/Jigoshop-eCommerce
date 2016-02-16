@@ -24,6 +24,9 @@ class SystemStatusTab implements TabInterface
 	/** @var  @var array  */
 	private $sections = array();
 
+	private $yes = '&#10004;';
+	private $no = '&#10005;';
+
 	public function __construct(Wordpress $wp, Options $options)
 	{
 		$this->wp = $wp;
@@ -132,7 +135,7 @@ class SystemStatusTab implements TabInterface
 							'tip' => __('Several Jigoshop extensions can write logs which makes debugging problems easier. The directory must be writable for this to happen.', 'jigoshop'),
 							'description' => sprintf(__('To allow logging, make <code>%s</code> writable or define a custom <code>JIGOSHOP_LOG_DIR</code>.', 'jigoshop'), JIGOSHOP_LOG_DIR),
 							'type' => 'constant',
-							'value' => $this->checkLogDirectory() ? '&#10004;' : '&#10005;',
+							'value' => $this->checkLogDirectory() ? $this->yes : $this->no,
 						),
 						array(
 							'id' => 'wp-version',
@@ -148,7 +151,7 @@ class SystemStatusTab implements TabInterface
 							'title' => __('WP Multisite', 'jigoshop'),
 							'tip' => __('The maximum amount of memory (RAM) that your site can use at one time.', 'jigoshop'),
 							'type' => 'constant',
-							'value' => is_multisite() ? '&#10004;' : '&#10005;',
+							'value' => is_multisite() ? $this->yes : $this->no,
 						),
 						array(
 							'id' => 'wp-memory-limit',
@@ -164,7 +167,7 @@ class SystemStatusTab implements TabInterface
 							'title' => __('WP Debug Mode', 'jigoshop'),
 							'tip' => __('Displays whether or not WordPress is in Debug Mode.', 'jigoshop'),
 							'type' => 'constant',
-							'value' => defined('WP_DEBUG') && WP_DEBUG ? '&#10004;' : '&#10005;',
+							'value' => defined('WP_DEBUG') && WP_DEBUG ? $this->yes : $this->no,
 						),
 						array(
 							'id' => 'language',
@@ -226,7 +229,7 @@ class SystemStatusTab implements TabInterface
 							'title' => __('SUHOSIN Installed', 'jigoshop'),
 							'tip' => __('Suhosin is an advanced protection system for PHP installations. It was designed to protect your servers on the one hand against a number of well known problems in PHP applications and on the other hand against potential unknown vulnerabilities within these applications or the PHP core itself. If enabled on your server, Suhosin may need to be configured to increase its data submission limits.', 'jigoshop'),
 							'type' => 'constant',
-							'value' => extension_loaded('suhosin') ? '&#10004;' : '&#10005;',
+							'value' => extension_loaded('suhosin') ? $this->yes : $this->no,
 						),
 						array(
 							'id' => 'eaccelerator',
@@ -235,7 +238,7 @@ class SystemStatusTab implements TabInterface
 							'classes' => array('system-data'),
 							'tip' => __('eAccelerator is deprecated and causes problems with Jigoshop.', 'jigoshop'),
 							'type' => 'constant',
-							'value' => $this->iniGet('eaccelerator.enable') == 1 ? '&#10004;' : '&#10005;',
+							'value' => $this->iniGet('eaccelerator.enable') == 1 ? $this->yes : $this->no,
 						),
 						array(
 							'id' => 'apc',
@@ -243,7 +246,7 @@ class SystemStatusTab implements TabInterface
 							'title' => __('APC', 'jigoshop'),
 							'tip' => __('APC is deprecated and causes problems with Jigoshop.', 'jigoshop'),
 							'type' => 'constant',
-							'value' => $this->iniGet('apc.enable') == 1 ? '&#10004;' : '&#10005;',
+							'value' => $this->iniGet('apc.enable') == 1 ? $this->yes : $this->no,
 						),
 						array(
 							'id' => 'apc',
@@ -251,7 +254,7 @@ class SystemStatusTab implements TabInterface
 							'title' => __('OpCache', 'jigoshop'),
 							'tip' => __('OpCache is new PHP optimizer and it is recommended to use with Jigoshop.', 'jigoshop'),
 							'type' => 'constant',
-							'value' => $this->iniGet('opcache.enable') == 1 ? '&#10004;' : '&#10005;',
+							'value' => $this->iniGet('opcache.enable') == 1 ? $this->yes : $this->no,
 						),
 						array(
 							'id' => 'short-open-tag',
@@ -259,7 +262,7 @@ class SystemStatusTab implements TabInterface
 							'title' => __('Short Open Tag', 'jigoshop'),
 							'tip' => __('Whether short tags are enabled, they are used by some older extensions.', 'jigoshop'),
 							'type' => 'constant',
-							'value' => $this->iniGet('short-open-tag') != '' ? '&#10004;' : '&#10005;',
+							'value' => $this->iniGet('short-open-tag') != '' ? $this->yes : $this->no,
 						),
 						array(
 							'id' => 'allow-url-fopen',
@@ -267,7 +270,7 @@ class SystemStatusTab implements TabInterface
 							'title' => __('Allow URL fopen', 'jigoshop'),
 							'tip' => __('Whether fetching remote files is allowed. This option is used by many Jigoshop extensions.', 'jigoshop'),
 							'type' => 'constant',
-							'value' => $this->iniGet('allow_url_fopen') != '' ? '&#10004;' : '&#10005;',
+							'value' => $this->iniGet('allow_url_fopen') != '' ? $this->yes : $this->no,
 						),
 						array(
 							'id' => 'session',
@@ -275,7 +278,7 @@ class SystemStatusTab implements TabInterface
 							'title' => __('Session', 'jigoshop'),
 							'tip' => __('Whether fetching remote files is allowed. This option is used by many Jigoshop extensions.', 'jigoshop'),
 							'type' => 'constant',
-							'value' => (session_id() != null && isset($_SESSION)) ? '&#10004;' : '&#10005;',
+							'value' => (session_id() != null && isset($_SESSION)) ? $this->yes : $this->no,
 						),
 						array(
 							'id' => 'cookie-path',
@@ -299,7 +302,7 @@ class SystemStatusTab implements TabInterface
 							'title' => __('Use Cookies', 'jigoshop'),
 							'tip' => __('Whether cookies are used to store PHP session on user\'s computer. Recommended.', 'jigoshop'),
 							'type' => 'constant',
-							'value' => $this->iniGet('session.use_cookies') != '' ? '&#10004;' : '&#10005;',
+							'value' => $this->iniGet('session.use_cookies') != '' ? $this->yes : $this->no,
 						),
 						array(
 							'id' => 'use-only-cookies',
@@ -307,7 +310,7 @@ class SystemStatusTab implements TabInterface
 							'title' => __('Use Only Cookies', 'jigoshop'),
 							'tip' => __('Whether PHP uses only cookies to handle user sessions. This is important for security reasons.', 'jigoshop'),
 							'type' => 'constant',
-							'value' => $this->iniGet('session.use_only_cookies') != '' ? '&#10004;' : '&#10005;',
+							'value' => $this->iniGet('session.use_only_cookies') != '' ? $this->yes : $this->no,
 						),
 						array(
 							'id' => 'max-upload-size',
@@ -331,7 +334,7 @@ class SystemStatusTab implements TabInterface
 							'title' => __('fsockopen/cURL', 'jigoshop'),
 							'tip' => __('Payment gateways can use cURL to communicate with remote servers to authorize payments, other plugins may also use it when communicating with remote services.', 'jigoshop'),
 							'type' => 'constant',
-							'value' => function_exists('fsockopen') || function_exists('curl_init') ? '&#10004;' : '&#10005;',
+							'value' => function_exists('fsockopen') || function_exists('curl_init') ? $this->yes : $this->no,
 						),
 						array(
 							'id' => 'soap-client',
@@ -339,7 +342,7 @@ class SystemStatusTab implements TabInterface
 							'title' => __('SoapClient', 'jigoshop'),
 							'tip' => __('Some webservices like shipping use SOAP to get information from remote servers, for example, live shipping quotes from FedEx require SOAP to be installed.', 'jigoshop'),
 							'type' => 'constant',
-							'value' => class_exists('SoapClient') ? '&#10004;' : '&#10005;',
+							'value' => class_exists('SoapClient') ? $this->yes : $this->no,
 						),
 						array(
 							'id' => 'wp-remote-post',
@@ -347,7 +350,7 @@ class SystemStatusTab implements TabInterface
 							'title' => __('Remote Post', 'jigoshop'),
 							'tip' => __('PayPal uses this method of communicating when sending back transaction information.', 'jigoshop'),
 							'type' => 'constant',
-							'value' => $this->checkRemoteRequest('post') ? '&#10004;' : '&#10005;',
+							'value' => $this->checkRemoteRequest('post') ? $this->yes : $this->no,
 						),
 						array(
 							'id' => 'wp-remote-get',
@@ -355,7 +358,7 @@ class SystemStatusTab implements TabInterface
 							'title' => __('Remote Get', 'jigoshop'),
 							'tip' => __('PayJigoshop plugins may use this method of communication when checking for plugin updates.', 'jigoshop'),
 							'type' => 'constant',
-							'value' => $this->checkRemoteRequest('get') ? '&#10004;' : '&#10005;',
+							'value' => $this->checkRemoteRequest('get') ? $this->yes : $this->no,
 						),
 					),
 				),
@@ -369,7 +372,7 @@ class SystemStatusTab implements TabInterface
 							'title' => __('Decimal Point', 'jigoshop'),
 							'tip' => __('The character used for decimal points.', 'jigoshop'),
 							'type' => 'constant',
-							'value' => $this->getServerLocale('decimal_point') ? $this->getServerLocale('decimal_point') : '&#10005;',
+							'value' => $this->getServerLocale('decimal_point') ? $this->getServerLocale('decimal_point') : $this->no,
 						),
 						array(
 							'id' => 'thousands-sep',
@@ -377,7 +380,7 @@ class SystemStatusTab implements TabInterface
 							'title' => __('Thousands Separator', 'jigoshop'),
 							'tip' => __('The character used for a thousands separator.', 'jigoshop'),
 							'type' => 'constant',
-							'value' => $this->getServerLocale('thousands_sep') ? $this->getServerLocale('thousands_sep') : '&#10005;',
+							'value' => $this->getServerLocale('thousands_sep') ? $this->getServerLocale('thousands_sep') : $this->no,
 						),
 						array(
 							'id' => 'mon-decimal-point',
@@ -385,7 +388,7 @@ class SystemStatusTab implements TabInterface
 							'title' => __('Monetary Decimal Point', 'jigoshop'),
 							'tip' => __('The character used for decimal points in monetary values.', 'jigoshop'),
 							'type' => 'constant',
-							'value' => $this->getServerLocale('mon_decimal_point') ? $this->getServerLocale('mon_decimal_point') : '&#10005;',
+							'value' => $this->getServerLocale('mon_decimal_point') ? $this->getServerLocale('mon_decimal_point') : $this->no,
 						),
 						array(
 							'id' => 'mon-thousands-sep',
@@ -393,7 +396,7 @@ class SystemStatusTab implements TabInterface
 							'title' => __('Monetary Thousands Separator', 'jigoshop'),
 							'tip' => __('The character used for a thousands separator in monetary values.', 'jigoshop'),
 							'type' => 'constant',
-							'value' => $this->getServerLocale('mon_thousands_sep') ? $this->getServerLocale('mon_thousands_sep') : '&#10005;',
+							'value' => $this->getServerLocale('mon_thousands_sep') ? $this->getServerLocale('mon_thousands_sep') : $this->no,
 						),
 					),
 				),
@@ -412,7 +415,7 @@ class SystemStatusTab implements TabInterface
 							'title' => __('Force SSL', 'jigoshop'),
 							'tip' => __('Does your site force a SSL Certificate for transactions?', 'jigoshop'),
 							'type' => 'constant',
-							'value' => $this->options->get('advanced.force_ssl') ? '&#10004;' : '&#10005;',
+							'value' => $this->options->get('shopping.force_ssl') ? $this->yes : $this->no,
 						),
 						array(
 							'id' => 'shipping-enabled',
@@ -420,7 +423,7 @@ class SystemStatusTab implements TabInterface
 							'title' => __('Shipping Enabled', 'jigoshop'),
 							'tip' => __('Does your site have shipping enabled?', 'jigoshop'),
 							'type' => 'constant',
-							'value' => $this->options->get('shipping.enabled') ? '&#10004;' : '&#10005;',
+							'value' => $this->options->get('shipping.enabled') ? $this->yes : $this->no,
 						),
 						array(
 							'id' => 'currency',
@@ -474,7 +477,7 @@ class SystemStatusTab implements TabInterface
 							'title' => __('Shop Base', 'jigoshop'),
 							'tip' => __('The ID of your Jigoshop shop\'s homepage.', 'jigoshop'),
 							'type' => 'constant',
-							'value' => $this->options->get('advanced.pages.shop') ? '#'.$this->options->get('advanced.pages.shop') : '&#10005;',
+							'value' => $this->options->get('advanced.pages.shop') ? '#'.$this->options->get('advanced.pages.shop') : $this->no,
 						),
 						array(
 							'id' => 'cart',
@@ -482,7 +485,7 @@ class SystemStatusTab implements TabInterface
 							'title' => __('Cart', 'jigoshop'),
 							'tip' => __('The ID of your Jigoshop shop\'s cart page.', 'jigoshop'),
 							'type' => 'constant',
-							'value' => $this->options->get('advanced.pages.cart') ? '#'.$this->options->get('advanced.pages.cart') : '&#10005;',
+							'value' => $this->options->get('advanced.pages.cart') ? '#'.$this->options->get('advanced.pages.cart') : $this->no,
 						),
 						array(
 							'id' => 'checkout',
@@ -490,7 +493,7 @@ class SystemStatusTab implements TabInterface
 							'title' => __('Checkout', 'jigoshop'),
 							'tip' => __('The ID of your Jigoshop shop\'s checkout page.', 'jigoshop'),
 							'type' => 'constant',
-							'value' => $this->options->get('advanced.pages.checkout') ? '#'.$this->options->get('advanced.pages.checkout') : '&#10005;',
+							'value' => $this->options->get('advanced.pages.checkout') ? '#'.$this->options->get('advanced.pages.checkout') : $this->no,
 						),
 						array(
 							'id' => 'thank-you',
@@ -498,7 +501,7 @@ class SystemStatusTab implements TabInterface
 							'title' => __('Thank You', 'jigoshop'),
 							'tip' => __('The ID of your Jigoshop shop\'s thank you page.', 'jigoshop'),
 							'type' => 'constant',
-							'value' => $this->options->get('advanced.pages.checkout_thank_you') ? '#'.$this->options->get('advanced.pages.checkout-thank-you') : '&#10005;',
+							'value' => $this->options->get('advanced.pages.checkout_thank_you') ? '#'.$this->options->get('advanced.pages.checkout_thank_you') : $this->no,
 						),
 						array(
 							'id' => 'my-account',
@@ -506,7 +509,7 @@ class SystemStatusTab implements TabInterface
 							'title' => __('My account', 'jigoshop'),
 							'tip' => __('The ID of your Jigoshop shop\'s my account page.', 'jigoshop'),
 							'type' => 'constant',
-							'value' => $this->options->get('advanced.pages.account') ? '#'.$this->options->get('advanced.pages.account') : '&#10005;',
+							'value' => $this->options->get('advanced.pages.account') ? '#'.$this->options->get('advanced.pages.account') : $this->no,
 						),
 						array(
 							'id' => 'terms',
@@ -514,7 +517,7 @@ class SystemStatusTab implements TabInterface
 							'title' => __('Terms', 'jigoshop'),
 							'tip' => __('The ID of your Jigoshop shop\'s terms page.', 'jigoshop'),
 							'type' => 'constant',
-							'value' => $this->options->get('advanced.pages.terms') ? '#'.$this->options->get('advanced.pages.terms') : '&#10005;',
+							'value' => $this->options->get('advanced.pages.terms') ? '#'.$this->options->get('advanced.pages.terms') : $this->no,
 						),
 					)
 				),
@@ -528,7 +531,7 @@ class SystemStatusTab implements TabInterface
 							'title' => __('Name', 'jigoshop'),
 							'tip' => __('The name of the current active theme.', 'jigoshop'),
 							'type' => 'constant',
-							'value' => $this->wp->wpGetTheme()->Name
+							'value' => $this->wp->wpGetTheme()->display('Name'),
 						),
 						array(
 							'id' => 'version',
@@ -536,7 +539,7 @@ class SystemStatusTab implements TabInterface
 							'title' => __('Version', 'jigoshop'),
 							'tip' => __('The installed version of the current active theme.', 'jigoshop'),
 							'type' => 'constant',
-							'value' => $this->wp->wpGetTheme()->Name
+							'value' => $this->wp->wpGetTheme()->display('Version')
 						),
 						array(
 							'id' => 'author-url',
@@ -544,16 +547,16 @@ class SystemStatusTab implements TabInterface
 							'title' => __('Author URL', 'jigoshop'),
 							'tip' => __('The theme developers URL.', 'jigoshop'),
 							'type' => 'constant',
-							'value' => $this->wp->wpGetTheme()->{'Author URI'}
+							'value' => $this->wp->wpGetTheme()->display('AuthorURI')
 						),
 						array(
 							'id' => 'child-theme',
 							'name' => 'child-theme',
 							'title' => __('Child Theme', 'jigoshop'),
 							'tip' => __('Displays whether or not the current theme is a child theme', 'jigoshop'),
-							'description' => sprintf(__('If you\'re modifying Jigoshop or a parent theme you didn\'t build personally we recommend using a child theme. See: <a href="%s" target="-blank">How to create a child theme</a>', 'jigoshop'), 'http://codex.wordpress.org/Child-Themes'),
+							'description' => sprintf(__('If you\'re modifying Jigoshop or a parent theme you didn\'t build personally we recommend using a child theme. See: <a href="%s" target="-blank">How to create a child theme</a>', 'jigoshop'), 'https://codex.wordpress.org/Child_Themes'),
 							'type' => 'constant',
-							'value' => is_child_theme() ? '&#10004;' : '&#10005;'
+							'value' => is_child_theme() ? $this->yes : $this->no
 						),
 						array(
 							'id' => 'parent-theme-name',
@@ -561,7 +564,7 @@ class SystemStatusTab implements TabInterface
 							'title' => __('Parent Theme Name', 'jigoshop'),
 							'tip' => __('The name of the parent theme.', 'jigoshop'),
 							'type' => 'constant',
-							'value' => is_child_theme() ? wp_get_theme($this->wp->wpGetTheme()->Template)->Name : '&#10005;'
+							'value' => is_child_theme() ? wp_get_theme($this->wp->wpGetTheme()->display('Template'))->display('Name') : $this->no
 						),
 						array(
 							'id' => 'parent-theme-version',
@@ -569,7 +572,7 @@ class SystemStatusTab implements TabInterface
 							'title' => __('Parent Theme Version', 'jigoshop'),
 							'tip' => __('The installed version of the parent theme.', 'jigoshop'),
 							'type' => 'constant',
-							'value' => is_child_theme() ? wp_get_theme($this->wp->wpGetTheme()->Template)->Version : '&#10005;'
+							'value' => is_child_theme() ? wp_get_theme($this->wp->wpGetTheme()->display('Template'))->display('Version') : $this->no
 						),
 						array(
 							'id' => 'parent-theme-author-url',
@@ -577,23 +580,7 @@ class SystemStatusTab implements TabInterface
 							'title' => __('Parent Theme Author URL', 'jigoshop'),
 							'tip' => __('The installed version of the parent theme.', 'jigoshop'),
 							'type' => 'constant',
-							'value' => is_child_theme() ? wp_get_theme($this->wp->wpGetTheme()->Template)->{'Author URI'} : '&#10005;'
-						),
-						array(
-							'id' => 'jigoshop-support',
-							'name' => 'jigoshop-support',
-							'title' => __('Jigoshop Support', 'jigoshop'),
-							'tip' => __('Displays whether or not the current active theme declares Jigoshop support.', 'jigoshop'),
-							'type' => 'constant',
-							'value' => $this->isSupportedTheme($this->wp->wpGetTheme()->template) ? '&#10004;' : '&#10005;'
-						),
-						array(
-							'id' => 'jigoshop-support',
-							'name' => 'jigoshop-support',
-							'title' => __('Jigoshop Support', 'jigoshop'),
-							'tip' => __('Displays whether or not the current active theme declares Jigoshop support.', 'jigoshop'),
-							'type' => 'constant',
-							'value' => $this->isSupportedTheme($this->wp->wpGetTheme()->template) ? '&#10004;' : '&#10005;'
+							'value' => is_child_theme() ? wp_get_theme($this->wp->wpGetTheme()->display('Template'))->display('AuthorURI') : $this->no
 						),
 					)
 				),
@@ -631,7 +618,7 @@ class SystemStatusTab implements TabInterface
 			if(!in_array($section['id'], $ignoredSections)){
 				$data[] = PHP_EOL.'### '.$section['title'].' ###'.PHP_EOL;
 				foreach($section['fields'] as $field){
-					$data[] = strip_tags($field['title'] .': '.str_replace(array('&#10004;', '&#10005;'), array('Yes', 'No'), $field['value']));
+					$data[] = strip_tags($field['title'] .': '.str_replace(array($this->yes, $this->no), array('Yes', 'No'), $field['value']));
 				}
 			}
 		}
@@ -830,25 +817,6 @@ class SystemStatusTab implements TabInterface
 		$positions = Currency::positions();
 
 		return $positions[$pattern];
-	}
-
-	/**
-	 * Checks if theme is supported by Jigoshop
-	 *
-	 * @param string $themeName
-	 *
-	 * @return bool
-	 */
-	private function isSupportedTheme($themeName)
-	{
-		return in_array($themeName, array(
-			'twentyfifteen',
-			'twentyfourteen',
-			'twentythirteen',
-			'twentyeleven',
-			'twentytwelve',
-			'twentyten'
-		));
 	}
 
 	/**

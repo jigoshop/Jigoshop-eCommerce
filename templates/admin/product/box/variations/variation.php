@@ -98,6 +98,21 @@ $product = $variation->getProduct();
 				'placeholder' => ProductHelper::formatNumericPrice(0),
 				'size' => 11,
 			));
+			Forms::daterange(array(
+				'id' => 'product_variation_'.$variation->getId().'_product_sales_date',
+				'name' => array(
+					'from' => 'product[variation]['.$variation->getId().'][product][sales_from]',
+					'to' => 'product[variation]['.$variation->getId().'][product][sales_to]',
+				),
+				'label' => __('Sale date', 'jigoshop'),
+				'value' => array(
+					'from' => $product->getSales()->getFrom()->format('m/d/Y'),
+					'to' => $product->getSales()->getTo()->format('m/d/Y'),
+				),
+				'size' => 11,
+				'startDate' => $product->getSales()->getFrom()->format('m/d/Y'),
+				'endDate' => $product->getSales()->getTo()->format('m/d/Y'),
+			));
 			?>
 			</fieldset>
 			<?php do_action('jigoshop\admin\variation', $variation, $product); ?>

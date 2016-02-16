@@ -38,18 +38,22 @@ class Product implements PageInterface
 		$this->cartService = $cartService;
 		$this->messages = $messages;
 
+		Styles::add('jigoshop.vendors.colorbox', JIGOSHOP_URL.'/assets/css/vendors/colorbox.min.css');
 		Styles::add('jigoshop.vendors.select2', JIGOSHOP_URL.'/assets/css/vendors/select2.min.css');
 		Styles::add('jigoshop.shop.product', JIGOSHOP_URL.'/assets/css/shop/product.css', array(
 			'jigoshop.shop',
 			'jigoshop.vendors.select2',
+			'jigoshop.vendors.colorbox',
 		));
 
 		Scripts::add('jigoshop.vendors.select2', JIGOSHOP_URL.'/assets/js/vendors/select2.min.js', array('jquery'));
+		Scripts::add('jigoshop.vendors.colorbox', JIGOSHOP_URL.'/assets/js/vendors/colorbox.min.js', array('jquery'));
 		Scripts::add('jigoshop.vendors.bs_tab_trans_tooltip_collapse', JIGOSHOP_URL.'/assets/js/vendors/bs_tab_trans_tooltip_collapse.min.js', array('jquery'));
 		Scripts::add('jigoshop.shop.product', JIGOSHOP_URL.'/assets/js/shop/product.js', array(
 			'jquery',
 			'jigoshop.shop',
 			'jigoshop.vendors.select2',
+			'jigoshop.vendors.colorbox',
 			'jigoshop.vendors.bs_tab_trans_tooltip_collapse',
 		));
 

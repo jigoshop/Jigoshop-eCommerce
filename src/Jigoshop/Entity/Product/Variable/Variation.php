@@ -78,7 +78,7 @@ class Variation
 	}
 
 	/**
-	 * @return Product|Product\Purchasable
+	 * @return Product|Product\Purchasable|Product\Saleable
 	 */
 	public function getProduct()
 	{
@@ -86,7 +86,7 @@ class Variation
 	}
 
 	/**
-	 * @param Product|Product\Purchasable $product
+	 * @param Product|Product\Purchasable|Product\Saleable $product
 	 */
 	public function setProduct($product)
 	{
