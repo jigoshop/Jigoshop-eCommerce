@@ -64,6 +64,7 @@ class Options
 			'force_ssl' => false,
 		),
 		'products' => array(
+			'related' => false,
 			'weight_unit' => 'kg',
 			'dimensions_unit' => 'cm',
 			'manage_stock' => false,
