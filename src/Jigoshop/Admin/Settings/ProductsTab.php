@@ -299,7 +299,6 @@ class ProductsTab implements TabInterface
 
 		$settings['manage_stock'] = $settings['manage_stock'] == 'on';
 		$settings['show_stock'] = $settings['show_stock'] == 'on';
-		$settings['hide_out_of_stock'] = $settings['hide_out_of_stock'] == 'on';
 		$settings['related'] = $settings['related'] == 'on';
 
 		$settings['low_stock_threshold'] = (int)$settings['low_stock_threshold'];
