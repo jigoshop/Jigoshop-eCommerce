@@ -351,7 +351,7 @@ class Options implements Tool
 			'jigoshop_notify_low_stock'              => 'products.notify_low_stock',
 			'jigoshop_notify_low_stock_amount'       => 'products.low_stock_threshold',
 			'jigoshop_notify_no_stock'               => 'products.notify_out_of_stock',
-			'jigoshop_hide_no_stock_product'         => 'products.hide_out_of_stock',
+			'jigoshop_hide_no_stock_product'         => 'shopping.hide_out_of_stock',
 			'jigoshop_prices_include_tax'            => 'tax.included',
 			'jigoshop_tax_classes'                   => 'tax.classes',
 			'jigoshop_tax_rates'                     => '',
