@@ -131,6 +131,7 @@ class Cart implements PageInterface
 		$this->customerService->save($customer);
 		$cart = $this->cartService->getCurrent();
 		$cart->setCustomer($customer);
+		$this->cartService->save($cart);
 
 		$response = $this->getAjaxLocationResponse($customer, $cart);
 
@@ -246,6 +247,7 @@ class Cart implements PageInterface
 		$this->customerService->save($customer);
 		$cart = $this->cartService->getCurrent();
 		$cart->setCustomer($customer);
+		$this->cartService->save($cart);
 
 		$response = $this->getAjaxLocationResponse($customer, $cart);
 
@@ -276,6 +278,7 @@ class Cart implements PageInterface
 		$this->customerService->save($customer);
 		$cart = $this->cartService->getCurrent();
 		$cart->setCustomer($customer);
+		$this->cartService->save($cart);
 
 		$response = $this->getAjaxLocationResponse($customer, $cart);
 

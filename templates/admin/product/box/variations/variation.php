@@ -50,8 +50,6 @@ $product = $variation->getProduct();
 				'value' => $product->getPrice(),
 				'size' => 11,
 			));
-			\WpDebugBar\Debugger::addMessage($taxClasses, 'aaa');
-			\WpDebugBar\Debugger::addMessage($variation->getProduct()->getTaxClasses(), 'aaa');
 			Forms::select(array(
 				'name' => 'product[variation]['.$variation->getId().'][product][tax_classes]',
 				'label' => __('Tax classes', 'jigoshop'),

@@ -208,6 +208,17 @@ class Item implements Product\Purchasable, Product\Taxable, \Serializable
 	}
 
 	/**
+	 * Allows to override tax classes added by setProduct().
+	 * @see Jigoshop\Core\Types\Product\Variable::addToCart() Used to set tax classes for single variable
+	 *
+	 * @param array $taxClasses.
+	 */
+	public function setTaxClasses($taxClasses)
+	{
+		$this->taxClasses = $taxClasses;
+	}
+
+	/**
 	 * Adds meta value to the item.
 	 *
 	 * @param Item\Meta $meta Meta value to add.

@@ -149,6 +149,10 @@ class Forms
 			return;
 		}
 
+		if (empty($field['id'])) {
+			$field['id'] = self::prepareIdFromName($field['name']);
+		}
+
 		Render::output(static::$textTemplate, $field);
 	}
 
@@ -412,10 +416,6 @@ class Forms
 			Registry::getInstance(JIGOSHOP_LOGGER)->addCritical('Field must have a name!', array('field' => $field));
 
 			return;
-		}
-
-		if (empty($field['id'])) {
-			$field['id'] = self::prepareIdFromName($field['name']);
 		}
 
 		Render::output(static::$daterangeTemplate, $field);
