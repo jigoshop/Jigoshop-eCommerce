@@ -40,42 +40,43 @@ class VariableService implements VariableServiceInterface
 
 	public function save(EntityInterface $object)
 	{
-		if ($object instanceof Product\Variable) {
-			$wpdb = $this->wp->getWPDB();
-			$this->removeAllVariationsExcept($object->getId(), array_map(function ($item){
-				/** @var Product\Variable\Variation $item */
-				return $item->getId();
-			}, $object->getVariations()));
-
-			foreach ($object->getVariations() as $variation) {
-				/** @var Product\Variable\Variation $variation */
-				if ($variation->getProduct() === null) {
-					$variation->setProduct($this->_createVariableProduct($variation, $object));
-					$variation->setId($variation->getProduct()->getId());
-				}
-
-				$this->productService->save($variation->getProduct());
-
-				foreach ($variation->getAttributes() as $attribute) {
-					/** @var Product\Variable\Attribute $attribute */
-					$data = array(
-						'variation_id' => $variation->getId(),
-						'attribute_id' => $attribute->getAttribute()->getId(),
-						'value' => $attribute->getValue(),
-					);
-
-					if ($attribute->exists()) {
-						$wpdb->update($wpdb->prefix.'jigoshop_product_variation_attribute', $data, array(
-							'variation_id' => $variation->getId(),
-							'attribute_id' => $attribute->getAttribute()->getId(),
-						));
-					} else {
-						$wpdb->insert($wpdb->prefix.'jigoshop_product_variation_attribute', $data);
-						$attribute->setExists(Product\Variable\Attribute::VARIATION_ATTRIBUTE_EXISTS);
-					}
-				}
-			}
-		}
+		/* // TODO: Do we want to save variations via update button?
+//		if ($object instanceof Product\Variable) {
+//			$wpdb = $this->wp->getWPDB();
+//			$this->removeAllVariationsExcept($object->getId(), array_map(function ($item){
+//				/** @var Product\Variable\Variation $item */
+//				return $item->getId();
+//			}, $object->getVariations()));
+//
+//			foreach ($object->getVariations() as $variation) {
+//				/** @var Product\Variable\Variation $variation */
+//				if ($variation->getProduct() === null) {
+//					$variation->setProduct($this->_createVariableProduct($variation, $object));
+//					$variation->setId($variation->getProduct()->getId());
+//				}
+//
+//				$this->productService->save($variation->getProduct());
+//
+//				foreach ($variation->getAttributes() as $attribute) {
+//					/** @var Product\Variable\Attribute $attribute */
+//					$data = array(
+//						'variation_id' => $variation->getId(),
+//						'attribute_id' => $attribute->getAttribute()->getId(),
+//						'value' => $attribute->getValue(),
+//					);
+//
+//					if ($attribute->exists()) {
+//						$wpdb->update($wpdb->prefix.'jigoshop_product_variation_attribute', $data, array(
+//							'variation_id' => $variation->getId(),
+//							'attribute_id' => $attribute->getAttribute()->getId(),
+//						));
+//					} else {
+//						$wpdb->insert($wpdb->prefix.'jigoshop_product_variation_attribute', $data);
+//						$attribute->setExists(Product\Variable\Attribute::VARIATION_ATTRIBUTE_EXISTS);
+//					}
+//				}
+//			}
+//		}
 	}
 
 	/**
