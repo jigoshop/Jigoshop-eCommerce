@@ -111,6 +111,7 @@ class MainConfiguration implements ConfigurationInterface
 		));
 		$services->setDatails('jigoshop.product_type.variable', 'Jigoshop\Core\Types\Product\Variable', array(
 			'wpal',
+			'jigoshop.options',
 			'jigoshop.service.product',
 			'jigoshop.service.product.variable',
 			'jigoshop.factory.product.variable'
@@ -126,7 +127,6 @@ class MainConfiguration implements ConfigurationInterface
 			'jigoshop.messages',
 			'jigoshop.service.order'
 		));
-
 	}
 
 	/**

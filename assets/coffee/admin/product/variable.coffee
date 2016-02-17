@@ -46,6 +46,8 @@ class AdminProductVariable
     getOptionValue = (current) ->
       if current.type == 'checkbox' or current.type == 'radio'
         return current.checked
+      if current.type == 'select-multiple'
+        return jQuery(current).val()
       return current.value
 
     attributes = {}
@@ -55,7 +57,7 @@ class AdminProductVariable
       attributes[results[1]] = getOptionValue(option)
 
     product = {}
-    productData = jQuery('.list-group-item-text input.form-control', $parent).toArray()
+    productData = jQuery('.list-group-item-text input.form-control, .list-group-item-text select.form-control', $parent).toArray()
     for option in productData
       results = /(?:^|\s)product\[variation]\[\d+]\[product]\[(.*?)](\[(.*?)])?(?:\s|$)/g.exec(option.name)
       if results[3]?

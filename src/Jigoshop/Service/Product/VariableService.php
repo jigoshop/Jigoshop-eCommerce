@@ -109,7 +109,7 @@ class VariableService implements VariableServiceInterface
 		$variableProduct = $this->productService->find($variableId);
 		$variableProduct->setVisibility(Product::VISIBILITY_NONE);
 		$variableProduct->setTaxable($product->isTaxable());
-		$variableProduct->setTaxClasses(array());
+		$variableProduct->setTaxClasses($product->getTaxClasses());
 		$variableProduct->getStock()->setManage(true);
 		if($variableProduct instanceof Product\Saleable) {
 			$variableProduct->getSales()->unserialize($product->getSales()->serialize());
