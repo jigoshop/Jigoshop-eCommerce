@@ -276,6 +276,8 @@ class ShoppingTab implements TabInterface
 			$settings['catalog_order'] = 'DESC';
 		}
 
+		$settings['hide_out_of_stock'] = $settings['hide_out_of_stock'] == 'on';
+		$settings['enable_verification_message'] = $settings['enable_verification_message'] == 'on';
 		$settings['guest_purchases'] = $settings['guest_purchases'] == 'on';
 		$settings['show_login_form'] = $settings['show_login_form'] == 'on';
 		$settings['allow_registration'] = $settings['allow_registration'] == 'on';

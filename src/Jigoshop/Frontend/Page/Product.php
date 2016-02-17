@@ -46,6 +46,13 @@ class Product implements PageInterface
 			'jigoshop.vendors.colorbox',
 		));
 
+		if($this->options->get('products.related'))
+		{
+			Styles::add('jigoshop.shop.related_products', JIGOSHOP_URL . '/assets/css/shop/related_products.css', array(
+				'jigoshop.shop',
+			));
+		}
+
 		Scripts::add('jigoshop.vendors.select2', JIGOSHOP_URL.'/assets/js/vendors/select2.min.js', array('jquery'));
 		Scripts::add('jigoshop.vendors.colorbox', JIGOSHOP_URL.'/assets/js/vendors/colorbox.min.js', array('jquery'));
 		Scripts::add('jigoshop.vendors.bs_tab_trans_tooltip_collapse', JIGOSHOP_URL.'/assets/js/vendors/bs_tab_trans_tooltip_collapse.min.js', array('jquery'));
@@ -150,7 +157,36 @@ class Product implements PageInterface
 		return Render::get('shop/product', array(
 			'product' => $product,
 			'messages' => $this->messages,
+			'related' => $this->getRelated(),
 		));
+	}
+
+	/**
+	 * Get related products based on the same parent product category.
+	 *
+	 * @return array
+	 */
+	protected function getRelated()
+	{
+		if (!$this->options->get('products.related'))
+		{
+			return array();
+		}
+
+		$related = new \WP_Query(array(
+			'post_type'      => 'product',
+			'orderby'        => 'rand',
+			'posts_per_page' => $this->wp->applyFilters('jigoshop/frontend/page/product/render/related_products_count', 3),
+			'tax_query'      => array(
+				array(
+					'taxonomy' => 'product_category',
+					'field'    => 'term_id',
+					'terms'    => 19,
+				),
+			)
+		));
+
+		return $this->productService->findByQuery($related);
 	}
 
 	/**
