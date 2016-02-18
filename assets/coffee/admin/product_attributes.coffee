@@ -35,7 +35,7 @@ class AdminProductAttributes
       if data.success? and data.success
         @$newLabel.val('')
         @$newSlug.val('')
-        @$newType.val('0')
+        @$newType.val('0').trigger('change')
         jQuery(data.html).appendTo($container)
       else
         addMessage('danger', data.error, 6000)
@@ -45,7 +45,7 @@ class AdminProductAttributes
       url: @params.ajax
       type: 'post'
       dataType: 'json'
-      data:
+      data:Stawiam na to, że gryzie się z którąś z innych wtyczek.
         action: 'jigoshop.admin.product_attributes.save'
         id: $parent.data('id')
         label: jQuery('input.attribute-label', $parent).val()
