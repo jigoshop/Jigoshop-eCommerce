@@ -112,8 +112,15 @@ class Product implements EntityFactoryInterface
 			}
 
 			unset($_POST['product']['attributes']);
-			$_POST['product']['stock_manage'] = $_POST['product']['stock_manage'] == 'on';
-			$_POST['product']['sales_enabled'] = $_POST['product']['sales_enabled'] == 'on';
+
+			if(isset($_POST['product']['stock_manage']))
+			{
+				$_POST['product']['stock_manage'] = $_POST['product']['stock_manage'] == 'on';
+			}
+			if(isset($_POST['product']['sales_enabled']))
+			{
+				$_POST['product']['sales_enabled'] = $_POST['product']['sales_enabled'] == 'on';
+			}
 
 			$product->restoreState($_POST['product']);
 			$product->markAsDirty($_POST['product']);
