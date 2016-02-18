@@ -119,7 +119,7 @@ class FreeShipping implements Method
 			array(
 				'name' => sprintf('[%s][minimum]', self::NAME),
 				'title' => __('Minimum cart value', 'jigoshop'),
-				'description' => __('Minimum cart value from Free Shipping option should be available.', 'jigoshop'),
+				'description' => __('Minimum cart value above which the Free Shipping method should be available.', 'jigoshop'),
 				'type' => 'text',
 				'value' => $this->options['minimum'],
 			),
