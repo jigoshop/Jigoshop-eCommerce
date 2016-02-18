@@ -10,6 +10,7 @@ class Forms
 	protected static $checkboxTemplate = 'forms/checkbox';
 	protected static $selectTemplate = 'forms/select';
 	protected static $textTemplate = 'forms/text';
+	protected static $numberTemplate = 'forms/number';
 	protected static $constantTemplate = 'forms/constant';
 	protected static $hiddenTemplate = 'forms/hidden';
 	protected static $textareaTemplate = 'forms/textarea';
@@ -154,6 +155,69 @@ class Forms
 		}
 
 		Render::output(static::$textTemplate, $field);
+	}
+
+	/**
+	 * Outputs simple number field.
+	 *
+	 * Available parameters (with defaults):
+	 *   * id (null) - HTML id for the tag
+	 *   * name (null) - HTML name for the tag
+	 *   * type ('number') - HTML type for the tag
+	 *   * label (null) - label for the tag
+	 *   * value (false) - HTML value of the tag
+	 *   * placeholder ('') - placeholder of the tag
+	 *   * disabled (false) - whether checkbox is disabled
+	 *   * classes (array()) - list of HTML classes for the tag
+	 *   * description (false) - description of the tag
+	 *   * tip (false) - tip for the tag
+	 *   * hidden (false) - whether to hide element by default
+	 *   * size (12) - default size of the element (Bootstrap column size 12)
+	 *   * min (false) - minimal value of number input
+	 *   * max (false) - maximal value of number input
+	 *
+	 * Field's name is required.
+	 *
+	 * @param $field array Field parameters.
+	 *
+	 * @throws \Jigoshop\Exception
+	 */
+	public static function number($field)
+	{
+		$defaults = array(
+			'id' => null,
+			'name' => null,
+			'type' => 'number',
+			'label' => null,
+			'value' => false,
+			'placeholder' => '',
+			'disabled' => false,
+			'classes' => array(),
+			'description' => false,
+			'tip' => false,
+			'hidden' => false,
+			'size' => 12,
+			'min' => false,
+			'max' => false,
+		);
+
+		$field = wp_parse_args($field, $defaults);
+
+		if (empty($field['name'])) {
+			if (WP_DEBUG) {
+				throw new Exception(sprintf('Field "%s" must have a name!', serialize($field)));
+			}
+
+			Registry::getInstance(JIGOSHOP_LOGGER)->addCritical('Field must have a name!', array('field' => $field));
+
+			return;
+		}
+
+		if (empty($field['id'])) {
+			$field['id'] = self::prepareIdFromName($field['name']);
+		}
+
+		Render::output(static::$numberTemplate, $field);
 	}
 
 	/**
