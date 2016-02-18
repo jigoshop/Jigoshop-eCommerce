@@ -158,7 +158,7 @@ class GeneralTab implements TabInterface
 			),
 			array(
 				'title' => __('Company details', 'jigoshop'),
-				'description' => __('These details, alongside with shop location, will be used for invoicing and emails.', 'jigoshop'),
+				'description' => __('These details, alongside shop location, will be used for invoicing and emails.', 'jigoshop'),
 				'id' => 'company',
 				'fields' => array(
 					array(
