@@ -30,17 +30,19 @@ class LocalPickup implements Method
 	}
 
 	/**
-	 * @return string Human readable name of method.
+	 * @return string Name of method.
 	 */
 	public function getName()
 	{
 		return __('Local pickup', 'jigoshop');
 	}
 
+	/**
+	 * @return string Human readable (customizable) title of method.
+	 */
 	public function getTitle()
 	{
-
-		return 'Local pickup';
+		return $this->options['title'];
 	}
 
 	/**
@@ -86,6 +88,12 @@ class LocalPickup implements Method
 				'type' => 'checkbox',
 				'checked' => $this->options['enabled'],
 				'classes' => array('switch-medium'),
+			),
+			array(
+				'name' => sprintf('[%s][title]', self::NAME),
+				'title' => __('Method title', 'jigoshop'),
+				'type' => 'text',
+				'value' => $this->options['title'],
 			),
 			array(
 				'name' => sprintf('[%s][fee]', self::NAME),
