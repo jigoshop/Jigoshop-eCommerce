@@ -5,6 +5,7 @@ namespace Jigoshop\Admin\Settings;
 use Jigoshop\Container;
 use Jigoshop\Core\Messages;
 use Jigoshop\Core\Options;
+use Jigoshop\Core\Types;
 use Jigoshop\Frontend\Pages;
 use Jigoshop\Helper\Render;
 use WPAL\Wordpress;
@@ -228,6 +229,8 @@ class AdvancedTab implements TabInterface
 	{
 		if (isset($settings['install_emails'])) {
 			unset($settings['install_emails']);
+			// TODO add this to WPAL
+			remove_all_actions('save_post_'.Types\Email::NAME);
 			$this->di->get('jigoshop.installer')->installEmails();
 			$this->messages->addNotice(__('Emails created.', 'jigoshop'));
 		}
