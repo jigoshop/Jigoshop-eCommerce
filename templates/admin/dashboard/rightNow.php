@@ -35,8 +35,8 @@ use Jigoshop\Entity\Order\Status;
 				<td class="t"><a href="edit-tags.php?taxonomy=<?php echo Types::PRODUCT_TAG; ?>&amp;post_type=<?php echo Types::PRODUCT; ?>"><?php _e('Product Tag', 'jigoshop'); ?></a></td>
 			</tr>
 			<tr>
-				<td class="first b"><a href="admin.php?page=<?php echo Attributes::NAME; ?>"><?php echo $attributesCount; ?></a></td>
-				<td class="t"><a href="admin.php?page=<?php echo Attributes::NAME; ?>"><?php _e('Product attributes', 'jigoshop'); ?></a></td>
+				<td class="first b"><a href="edit.php?post_type=<?php echo Types::PRODUCT; ?>&page=<?php echo Attributes::NAME; ?>"><?php echo $attributesCount; ?></a></td>
+				<td class="t"><a href="edit.php?post_type=<?php echo Types::PRODUCT; ?>&page=<?php echo Attributes::NAME; ?>"><?php _e('Product attributes', 'jigoshop'); ?></a></td>
 			</tr>
 			</tbody>
 		</table>
