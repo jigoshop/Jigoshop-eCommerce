@@ -138,6 +138,7 @@ class Options
 			),
 			'local_pickup' => array(
 				'enabled' => false,
+				'title' => 'Local pickup',
 				'fee' => 0,
 			),
 		),
