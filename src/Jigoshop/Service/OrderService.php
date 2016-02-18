@@ -107,7 +107,7 @@ class OrderService implements OrderServiceInterface
 			$dateGmt = $this->wp->getHelpers()->currentTime('mysql', true);
 
 			$wpdb->insert($wpdb->posts, array(
-				'post_author' => $object->getCustomer()->getId(),
+				'post_author' => $object->getCustomer()->getId() ?  $object->getCustomer()->getId() : 0,
 				'post_date' => $date,
 				'post_date_gmt' => $dateGmt,
 				'post_modified' => $date,
