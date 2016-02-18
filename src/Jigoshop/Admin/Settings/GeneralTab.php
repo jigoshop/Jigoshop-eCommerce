@@ -87,7 +87,7 @@ class GeneralTab implements TabInterface
 						'name' => '[email]',
 						'title' => __('Administrator e-mail', 'jigoshop'),
 						'type' => 'text',
-						'tip' => __('This is used to send system notifications, orders, etc.', 'jigoshop'),
+						'tip' => __('The email address used to send all Jigoshop related emails, such as order confirmations and notices.', 'jigoshop'),
 						'value' => $this->options['email'],
 					),
 					array(
