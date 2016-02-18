@@ -137,6 +137,7 @@ class Options
 			),
 			'local_pickup' => array(
 				'enabled' => false,
+				'fee' => 0,
 			),
 		),
 		'payment' => array(
