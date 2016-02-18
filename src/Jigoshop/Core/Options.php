@@ -131,6 +131,7 @@ class Options
 			),
 			'free_shipping' => array(
 				'enabled' => false,
+				'title' => 'Free',
 				'minimum' => 0,
 				'available_for' => 'all',
 				'countries' => array(),

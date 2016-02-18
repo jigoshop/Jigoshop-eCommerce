@@ -37,6 +37,12 @@ class LocalPickup implements Method
 		return __('Local pickup', 'jigoshop');
 	}
 
+	public function getTitle()
+	{
+
+		return 'Local pickup';
+	}
+
 	/**
 	 * @return bool Whether current method is enabled and able to work.
 	 */
