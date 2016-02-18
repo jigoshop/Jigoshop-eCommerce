@@ -35,7 +35,7 @@ class AdminProductAttributes
       if data.success? and data.success
         @$newLabel.val('')
         @$newSlug.val('')
-        @$newType.val('0')
+        @$newType.val('0').trigger('change')
         jQuery(data.html).appendTo($container)
       else
         addMessage('danger', data.error, 6000)
