@@ -67,11 +67,19 @@ class FlatRate implements Method
 	}
 
 	/**
-	 * @return string Human readable name of method.
+	 * @return string Name of method.
 	 */
 	public function getName()
 	{
 		return __('Flat rate', 'jigoshop');
+	}
+
+	/**
+	 * @return string Human readable (customizable) title of method.
+	 */
+	public function getTitle()
+	{
+		return $this->options['title'];
 	}
 
 	/**
@@ -117,7 +125,7 @@ class FlatRate implements Method
 				'name' => sprintf('[%s][title]', self::NAME),
 				'title' => __('Method title', 'jigoshop'),
 				'type' => 'text',
-				'value' => $this->options['title'],
+				'value' => $this->getTitle(),
 			),
 			array(
 				'name' => sprintf('[%s][type]', self::NAME),

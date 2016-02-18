@@ -17,9 +17,14 @@ interface Method
 	public function getId();
 
 	/**
-	 * @return string Human readable name of method.
+	 * @return string Name of method.
 	 */
 	public function getName();
+
+	/**
+	 * @return string Customizable title of method.
+	 */
+	public function getTitle();
 
 	/**
 	 * @return bool Whether current method is enabled and able to work.
