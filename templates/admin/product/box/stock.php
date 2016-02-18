@@ -31,10 +31,11 @@ $stock = $product instanceof Product\Purchasable ? $product->getStock() : new St
 </fieldset>
 <fieldset class="stock-status" style="<?php !$stock->getManage() and print 'display: none;'; ?>">
 	<?php
-	Forms::text(array(
+	Forms::number(array(
 		'name' => 'product[stock_stock]',
 		'label' => __('Items in stock', 'jigoshop'),
 		'value' => $stock->getStock(),
+		'min' => 0,
 	));
 	?>
 	<?php

@@ -84,7 +84,7 @@ class LocalPickup implements Method
 			array(
 				'name' => sprintf('[%s][fee]', self::NAME),
 				'title' => __('Handling Fee', 'jigoshop'),
-				'type' => 'number',
+				'type' => 'text',
 				'value' => $this->options['fee'],
 			),
 		);
