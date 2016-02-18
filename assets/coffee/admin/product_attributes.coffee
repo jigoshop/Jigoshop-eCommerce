@@ -45,7 +45,7 @@ class AdminProductAttributes
       url: @params.ajax
       type: 'post'
       dataType: 'json'
-      data:Stawiam na to, że gryzie się z którąś z innych wtyczek.
+      data:
         action: 'jigoshop.admin.product_attributes.save'
         id: $parent.data('id')
         label: jQuery('input.attribute-label', $parent).val()
