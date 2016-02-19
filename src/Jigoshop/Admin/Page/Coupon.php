@@ -53,7 +53,8 @@ class Coupon
 				));
 				Styles::add('jigoshop.vendors.select2', JIGOSHOP_URL.'/assets/css/vendors/select2.min.css', array('jigoshop.admin.coupon'));
 				Scripts::add('jigoshop.vendors.select2', JIGOSHOP_URL . '/assets/js/vendors/select2.min.js', array('jigoshop.admin.coupon'), array('in_footer' => true));
-
+				Styles::add('jigoshop.vendors.datepicker', JIGOSHOP_URL.'/assets/css/vendors/datepicker.css', array('jigoshop.admin.coupon'));
+				Scripts::add('jigoshop.vendors.datepicker', JIGOSHOP_URL . '/assets/js/vendors/datepicker.min.js', array('jquery', 'jigoshop.admin.coupon'));
 				Scripts::localize('jigoshop.admin.coupon', 'jigoshop_admin_coupon', array(
 					'ajax' => $wp->getAjaxUrl(),
 				));

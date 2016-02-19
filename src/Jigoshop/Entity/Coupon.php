@@ -445,11 +445,11 @@ class Coupon implements EntityInterface
 		if (isset($state['amount'])) {
 			$this->amount = $state['amount'];
 		}
-		if (isset($state['from']) && $state['from'] > 0) {
+		if (isset($state['from']) && $state['from']) {
 			$this->from = new \DateTime();
 			$this->from->setTimestamp($state['from']);
 		}
-		if (isset($state['to']) && $state['to'] > 0) {
+		if (isset($state['to']) && $state['to']){
 			$this->to = new \DateTime();
 			$this->to->setTimestamp($state['to']);
 		}
