@@ -42,6 +42,16 @@ class Coupon implements EntityFactoryInterface
 			$_POST['jigoshop_coupon']['excluded_products'] = array_filter(explode(',', $_POST['jigoshop_coupon']['excluded_products']));
 			$_POST['jigoshop_coupon']['categories'] = array_filter(explode(',', $_POST['jigoshop_coupon']['categories']));
 			$_POST['jigoshop_coupon']['excluded_categories'] = array_filter(explode(',', $_POST['jigoshop_coupon']['excluded_categories']));
+			if(!empty($_POST['jigoshop_coupon']['from'])) {
+				$_POST['jigoshop_coupon']['from'] = strtotime($_POST['jigoshop_coupon']['from']);
+			} else {
+				$_POST['jigoshop_coupon']['from'] = false;
+			}
+			if(!empty($_POST['jigoshop_coupon']['to'])) {
+				$_POST['jigoshop_coupon']['to'] = strtotime($_POST['jigoshop_coupon']['to']);
+			} else {
+				$_POST['jigoshop_coupon']['to'] = false;
+			}
 
 			$coupon->restoreState($_POST['jigoshop_coupon']);
 		}

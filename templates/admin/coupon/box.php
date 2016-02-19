@@ -35,22 +35,21 @@ use Jigoshop\Admin\Helper\Forms;
 		)); ?>
 	</fieldset>
 	<fieldset>
-		<?php Forms::text(array(
-			'name' => 'jigoshop_coupon[from]',
-			'label' => __('Date from', 'jigoshop'),
-			'type' => 'date',
-			'description' => __('Choose between which dates this coupon is enabled.  Leave empty for any date.','jigoshop'),
+		<?php Forms::daterange(array(
+			'id' => 'coupon_date',
+			'name' => array(
+				'from' => 'jigoshop_coupon[from]',
+				'to' => 'jigoshop_coupon[to]',
+			),
+			'label' => __('Coupon date', 'jigoshop'),
+			'tip' => __('Choose between which dates this coupon is enabled.  Leave empty for any date.','jigoshop'),
 			'placeholder' => __('Any date', 'jigoshop'),
-			'value' => $coupon->getFrom() ? $coupon->getFrom()->format('Y-m-d H:i') : '', // TODO: Local date formatting
-		)); ?>
-		<?php Forms::text(array(
-			'name' => 'jigoshop_coupon[to]',
-			'label' => __('Date to', 'jigoshop'),
-			'type' => 'date',
-			'description' => __('Choose between which dates this coupon is enabled.  Leave empty for any date.','jigoshop'),
-			'placeholder' => __('Any date', 'jigoshop'),
-			'value' => $coupon->getTo() ? $coupon->getTo()->format('Y-m-d H:i') : '', // TODO: Local date formatting
-		)); ?>
+			'value' => array(
+				'from' => $coupon->getFrom() ? $coupon->getFrom()->format('m/d/Y') : '',
+				'to' =>  $coupon->getTo() ? $coupon->getTo()->format('m/d/Y') : '',
+			),
+		));
+		?>
 	</fieldset>
 	<fieldset>
 		<?php Forms::text(array(
