@@ -23,7 +23,7 @@ class Checkout
     jQuery('#payment-methods').on 'change', 'li input[type=radio]', ->
       jQuery('#payment-methods li > div').slideUp()
       jQuery('div', jQuery(this).closest('li')).slideDown()
-    jQuery('#shipping_address-calculator')
+    jQuery('#shipping-calculator')
       .on 'click', 'input[type=radio]', @selectShipping
     jQuery('#jigoshop_order_billing_address_country').on 'change', (event) =>
       @updateCountry('billing_address', event)
@@ -81,13 +81,13 @@ class Checkout
       data: data
 
   selectShipping: =>
-    $method = jQuery('#shipping_address-calculator input[type=radio]:checked')
-    $rate = jQuery('.shipping_address-method-rate', $method.closest('li'))
+    $method = jQuery('#shipping-calculator input[type=radio]:checked')
+    $rate = jQuery('.shipping-method-rate', $method.closest('li'))
     jQuery.ajax(@params.ajax,
       type: 'post'
       dataType: 'json'
       data:
-        action: 'jigoshop_cart_select_shipping_address'
+        action: 'jigoshop_cart_select_shipping'
         method: $method.val()
         rate: $rate.val()
     )
