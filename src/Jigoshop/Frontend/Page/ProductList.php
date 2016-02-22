@@ -34,6 +34,6 @@ class ProductList extends AbstractProductList
 
 	public function getContent()
 	{
-		return $this->wp->getPostField('post_content', $this->options->getPageId(Pages::SHOP));
+		return do_shortcode($this->wp->getPostField('post_content', $this->options->getPageId(Pages::SHOP)));
 	}
 }
