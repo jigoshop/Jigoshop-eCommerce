@@ -179,10 +179,14 @@ class Order implements EntityFactoryInterface
 			$item->setTax($results[$i]['tax']);
 
 			while ($i < $endI && $results[$i]['id'] == $id) {
-				$meta = new Entity\Item\Meta();
-				$meta->setKey($results[$i]['meta_key']);
-				$meta->setValue($results[$i]['meta_value']);
-				$item->addMeta($meta);
+//				zabezpieczamy się przed pustymi metami, choć nadal żaden kawałek kodu nie dodaje tych meta
+				if ($results[$i]['meta_key'])
+				{
+					$meta = new Entity\Item\Meta();
+					$meta->setKey($results[$i]['meta_key']);
+					$meta->setValue($results[$i]['meta_value']);
+					$item->addMeta($meta);
+				}
 				$i++;
 			}
 
