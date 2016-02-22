@@ -645,6 +645,7 @@ class Products implements Tool
 			}
 			elseif($countRemain == 0)
 			{
+				$this->wp->updateOption('jigoshop_products_migrate_id', serialize($productsIdsMigration));
 				$this->wp->deleteOption('jigoshop_attributes_anti_duplicate');
 				Migration::saveLog(__('Migration products END.', 'jigoshop'));
 			}

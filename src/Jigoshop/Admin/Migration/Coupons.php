@@ -243,6 +243,7 @@ class Coupons implements Tool
 			}
 			elseif($countRemain == 0)
 			{
+				$this->wp->updateOption('jigoshop_coupons_migrate_id', serialize($couponsIdsMigration));
 				Migration::saveLog(__('Migration coupons END.', 'jigoshop'));
 			}
 
