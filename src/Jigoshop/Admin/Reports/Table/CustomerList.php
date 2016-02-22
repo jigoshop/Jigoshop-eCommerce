@@ -186,7 +186,7 @@ class CustomerList implements TableInterface
 				if($lastOrder){
 					/** @var \Jigoshop\Entity\Order $order */
 					$order = $this->orderService->find($lastOrder->order_id);
-					return '<a href="'.admin_url('post.php?post='.$lastOrder_id.'&action=edit').'">#'.$order->getNumber().'</a> &ndash; '.date_i18n(get_option('date_format'), strtotime($lastOrder->order_date));
+					return '<a href="'.admin_url('post.php?post='.$lastOrder->order_id.'&action=edit').'">#'.$order->getNumber().'</a> &ndash; '.date_i18n(get_option('date_format'), strtotime($lastOrder->order_date));
 				}
 				return '-';
 			case 'user_actions' :
