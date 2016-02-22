@@ -227,13 +227,19 @@ class Order implements EntityFactoryInterface
 		}
 
 		//We do not want to add coupons and from directly, without validation.
-		$coupons = $data['coupons'];
-		unset($data['coupons']);
-		unset($data['discount']);
+        $coupons = null;
+		if(isset($data['coupons'])) {
+			$coupons = $data['coupons'];
+			unset($data['coupons']);
+		}
+
+		if(isset($data)) {
+			unset($data['discount']);
+		}
 
 		$order->restoreState($data);
 
-		if (isset($data['coupons'])) {
+		if ($coupons) {
 			$coupons = $this->wp->getHelpers()->maybeUnserialize($coupons);
 			if(isset($coupons[0]) && is_array($coupons[0])) {
 				$codes = array_map(function ($coupon) {
