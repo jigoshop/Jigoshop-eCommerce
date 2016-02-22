@@ -102,7 +102,7 @@ class OutOfStock implements TableInterface
 													LEFT JOIN {$wpdb->postmeta} AS stock_manage ON posts.ID = stock_manage.post_id AND stock_manage.meta_key = 'stock_manage'
 													LEFT JOIN {$wpdb->postmeta} AS stock_stock ON posts.ID = stock_stock.post_id AND stock_stock.meta_key = 'stock_stock'
 													LEFT JOIN {$wpdb->postmeta} AS stock_status ON posts.ID = stock_status.post_id AND stock_status.meta_key = 'stock_status'
-													WHERE (stock_manage.meta_value = %d AND stock_stock.meta_value = %d) OR (stock_manage.meta_value = %d AND stock_status.meta_value = %d)", 1, 0, 0, 0));
+													WHERE posts.post_type IN ('product', 'product_variation') AND posts.post_status = 'publish' AND ((stock_manage.meta_value = %d AND stock_stock.meta_value = %d) OR (stock_manage.meta_value = %d AND stock_status.meta_value = %d))", 1, 0, 0, 0));
 
 		$this->totalPages = ceil($this->totalItems / 20);
 
@@ -110,7 +110,7 @@ class OutOfStock implements TableInterface
 													LEFT JOIN {$wpdb->postmeta} AS stock_manage ON posts.ID = stock_manage.post_id AND stock_manage.meta_key = 'stock_manage'
 													LEFT JOIN {$wpdb->postmeta} AS stock_stock ON posts.ID = stock_stock.post_id AND stock_stock.meta_key = 'stock_stock'
 													LEFT JOIN {$wpdb->postmeta} AS stock_status ON posts.ID = stock_status.post_id AND stock_status.meta_key = 'stock_status'
-													WHERE (stock_manage.meta_value = %d AND stock_stock.meta_value = %d) OR (stock_manage.meta_value = %d AND stock_status.meta_value = %d)
+													WHERE posts.post_type IN ('product', 'product_variation') AND posts.post_status = 'publish' AND ((stock_manage.meta_value = %d AND stock_stock.meta_value = %d) OR (stock_manage.meta_value = %d AND stock_status.meta_value = %d))
 													LIMIT 20 OFFSET %d", 1, 0, 0, 0, ($this->getCurrentPage() - 1) * 20));
 
 		return $products;

@@ -109,14 +109,14 @@ class MostStocked implements TableInterface
 		$this->totalItems = $wpdb->get_var($wpdb->prepare("SELECT COUNT(posts.ID) FROM {$wpdb->posts} AS posts
 													LEFT JOIN {$wpdb->postmeta} AS stock_manage ON posts.ID = stock_manage.post_id AND stock_manage.meta_key = 'stock_manage'
 													LEFT JOIN {$wpdb->postmeta} AS stock_stock ON posts.ID = stock_stock.post_id AND stock_stock.meta_key = 'stock_stock'
-													WHERE stock_manage.meta_value = %d AND stock_stock.meta_value > %d", 1, 0));
+													WHERE posts.post_type IN ('product', 'product_variation') AND posts.post_status = 'publish' AND stock_manage.meta_value = %d AND stock_stock.meta_value > %d", 1, 0));
 
 		$this->totalPages = ceil($this->totalItems / 20);
 
 		$products = $wpdb->get_results($wpdb->prepare("SELECT posts.ID AS id, posts.post_parent AS parent, stock_stock.meta_value AS stock FROM {$wpdb->posts} AS posts
 													LEFT JOIN {$wpdb->postmeta} AS stock_manage ON posts.ID = stock_manage.post_id AND stock_manage.meta_key = 'stock_manage'
 													LEFT JOIN {$wpdb->postmeta} AS stock_stock ON posts.ID = stock_stock.post_id AND stock_stock.meta_key = 'stock_stock'
-													WHERE stock_manage.meta_value = %d AND stock_stock.meta_value > %d
+													WHERE posts.post_type IN ('product', 'product_variation') AND posts.post_status = 'publish' AND stock_manage.meta_value = %d AND stock_stock.meta_value > %d
 													ORDER BY stock_stock.meta_value DESC
 													LIMIT 20 OFFSET %d", 1, 0, ($this->getCurrentPage() - 1) * 20));
 
