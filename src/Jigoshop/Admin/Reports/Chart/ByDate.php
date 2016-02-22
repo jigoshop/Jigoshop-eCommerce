@@ -315,8 +315,8 @@ class ByDate extends Chart
         $this->reportData->orders = $this->getOrderReportData($query);
         $this->reportData->totalSales = array_sum(wp_list_pluck($this->reportData->orders, 'total_sales'));
         $this->reportData->totalTax = array_sum(wp_list_pluck($this->reportData->orders, 'total_tax'));
-        $this->reportData->totalShipping = array_sum(wp_list_pluck($this->reportData->orders, 'total_shipping'));
-        $this->reportData->totalShippingTax = array_sum(wp_list_pluck($this->reportData->orders, 'total_shipping_tax'));
+        $this->reportData->totalShipping = 0;//array_sum(wp_list_pluck($this->reportData->orders, 'total_shipping'));
+        $this->reportData->totalShippingTax = 0;//array_sum(wp_list_pluck($this->reportData->orders, 'total_shipping_tax'));
         $this->reportData->totalCoupons = array_sum(wp_list_pluck($this->reportData->orders, 'discount_amount'));
         $this->reportData->totalOrders = absint(array_sum(wp_list_pluck($this->reportData->orders, 'count')));
         $this->reportData->totalItems = absint(array_sum(wp_list_pluck($this->reportData->orders, 'order_item_count')));
@@ -405,7 +405,7 @@ class ByDate extends Chart
 
         foreach ($orderAmounts as $orderAmountKey => $orderAmountValue) {
             $netOrderAmounts[$orderAmountKey] = $orderAmountValue;
-            $netOrderAmounts[$orderAmountKey][1] = $netOrderAmounts[$orderAmountKey][1] - $shippingAmounts[$orderAmountKey][1] - $shippingTaxAmounts[$orderAmountKey][1] - $taxAmounts[$orderAmountKey][1];
+            $netOrderAmounts[$orderAmountKey][1] = $netOrderAmounts[$orderAmountKey][1] /*- $shippingAmounts[$orderAmountKey][1] - $shippingTaxAmounts[$orderAmountKey][1]*/ - $taxAmounts[$orderAmountKey][1];
         }
 
         $data = array();
