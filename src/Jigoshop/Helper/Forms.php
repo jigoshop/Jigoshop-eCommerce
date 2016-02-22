@@ -469,6 +469,8 @@ class Forms
 			'description' => false,
 			'tip' => false,
 			'size' => 12,
+			'startDate' => false,
+			'endDate' => false,
 		);
 		$field = wp_parse_args($field, $defaults);
 

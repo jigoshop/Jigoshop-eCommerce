@@ -16,9 +16,16 @@
   @import '../../bower/bootstrap/less/utilities';
   @import '../../bower/bootstrap/less/tooltip';
   @import '../../bower/bootstrap/less/type';
+  @import '../../bower/bootstrap/less/dropdowns';
+  @import '../../bower/bootstrap/less/input-groups';
 
   a:focus {
     box-shadow: none;
+  }
+
+  .input-group[class*="col-"] {
+    padding-left: 15px;
+    padding-right: 15px;
   }
 
   fieldset {
