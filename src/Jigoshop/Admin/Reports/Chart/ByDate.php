@@ -395,8 +395,10 @@ class ByDate extends Chart
         $orderItemCounts = $this->prepareChartData($this->reportData->orders, 'post_date', 'order_item_count', $this->chartInterval, $this->range['start'], $this->chartGroupBy);
         $orderAmounts = $this->prepareChartData($this->reportData->orders, 'post_date', 'total_sales', $this->chartInterval, $this->range['start'], $this->chartGroupBy);
         $couponAmounts = $this->prepareChartData($this->reportData->orders, 'post_date', 'discount_amount', $this->chartInterval, $this->range['start'], $this->chartGroupBy);
-        $shippingAmounts = $this->prepareChartData($this->reportData->orders, 'post_date', 'total_shipping', $this->chartInterval, $this->range['start'], $this->chartGroupBy);
-        $shippingTaxAmounts = $this->prepareChartData($this->reportData->orders, 'post_date', 'total_shipping_tax', $this->chartInterval, $this->range['start'], $this->chartGroupBy);
+        //$shippingAmounts = $this->prepareChartData($this->reportData->orders, 'post_date', 'total_shipping', $this->chartInterval, $this->range['start'], $this->chartGroupBy);
+        //$shippingTaxAmounts = $this->prepareChartData($this->reportData->orders, 'post_date', 'total_shipping_tax', $this->chartInterval, $this->range['start'], $this->chartGroupBy);
+        $shippingAmounts = array();
+        $shippingTaxAmounts = array();
         $taxAmounts = $this->prepareChartData($this->reportData->orders, 'post_date', 'total_tax', $this->chartInterval, $this->range['start'], $this->chartGroupBy);
 
         $netOrderAmounts = array();
