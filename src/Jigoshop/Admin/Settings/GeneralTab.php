@@ -2,6 +2,7 @@
 
 namespace Jigoshop\Admin\Settings;
 
+use Jigoshop\Core\Messages;
 use Jigoshop\Core\Options;
 use Jigoshop\Helper\Country;
 use Jigoshop\Helper\Currency;
@@ -19,10 +20,13 @@ class GeneralTab implements TabInterface
 
 	/** @var array */
 	private $options;
+	/** @var  Messages */
+	private $messages;
 
-	public function __construct(Wordpress $wp, Options $options)
+	public function __construct(Wordpress $wp, Options $options, Messages $messages)
 	{
 		$this->options = $options->get(self::SLUG);
+		$this->messages = $messages;
 		$wp->addAction('admin_enqueue_scripts', function (){
 			if (!isset($_GET['tab']) || $_GET['tab'] != GeneralTab::SLUG) {
 				return;
@@ -236,6 +240,11 @@ class GeneralTab implements TabInterface
 	{
 		$settings['show_message'] = $settings['show_message'] == 'on';
 		$settings['demo_store'] = $settings['demo_store'] == 'on';
+
+		if(!in_array($settings['country'], array_keys(Country::getAll()))) {
+			$this->messages->addError(__('Invalid shop location (country), please select again.', 'jigoshop'));
+			$settings['country'] = '';
+		}
 
 		return $settings;
 	}

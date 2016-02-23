@@ -243,18 +243,6 @@ class AdvancedTab implements TabInterface
 			$settings['cache'] = 'simple';
 		}
 
-		$settings['wos']['enabled'] = $settings['wos']['enabled'] == 'on';
-		unset($settings['wos']['files']);
-		if (isset($settings['wos']['clear_cache']) && $settings['wos']['clear_cache'] == 'on') {
-			foreach (new \DirectoryIterator(JIGOSHOP_DIR.'/cache/assets') as $file) {
-				/** @var $file \DirectoryIterator */
-				if (!$file->isDot() && $file->getFilename() != '.ignore') {
-					unlink($file->getPathname());
-				}
-			}
-		}
-		unset($settings['wos']['clear_cache']);
-
 		$pages = $this->_getPages();
 
 		if (!in_array($settings['pages']['shop'], array_keys($pages))) {

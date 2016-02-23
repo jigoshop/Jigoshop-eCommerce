@@ -25,7 +25,8 @@ class SettingsConfiguration implements ConfigurationInterface
 	{
 		$services->setDatails('jigoshop.admin.settings.general', 'Jigoshop\Admin\Settings\GeneralTab', array(
 			'wpal',
-			'jigoshop.options'
+			'jigoshop.options',
+			'jigoshop.messages'
 		));
 		$services->setDatails('jigoshop.admin.settings.shopping', 'Jigoshop\Admin\Settings\ShoppingTab', array(
 			'wpal',
@@ -40,7 +41,8 @@ class SettingsConfiguration implements ConfigurationInterface
 		$services->setDatails('jigoshop.admin.settings.taxes', 'Jigoshop\Admin\Settings\TaxesTab', array(
 			'wpal',
 			'jigoshop.options',
-			'jigoshop.service.tax'
+			'jigoshop.service.tax',
+			'jigoshop.messages'
 		));
 		$services->setDatails('jigoshop.admin.settings.shipping', 'Jigoshop\Admin\Settings\ShippingTab', array(
             'jigoshop.options',

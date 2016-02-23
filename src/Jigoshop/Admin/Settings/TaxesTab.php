@@ -3,6 +3,7 @@
 namespace Jigoshop\Admin\Settings;
 
 use Jigoshop\Core\Options;
+use Jigoshop\Core\Messages;
 use Jigoshop\Helper\Country;
 use Jigoshop\Helper\Render;
 use Jigoshop\Helper\Scripts;
@@ -23,7 +24,7 @@ class TaxesTab implements TabInterface
 	/** @var TaxServiceInterface */
 	private $taxService;
 
-	public function __construct(Wordpress $wp, Options $options, TaxServiceInterface $taxService)
+	public function __construct(Wordpress $wp, Options $options, TaxServiceInterface $taxService, Messages $messages)
 	{
 		$this->options = $options->get(self::SLUG);
 		$this->taxService = $taxService;
@@ -251,6 +252,11 @@ class TaxesTab implements TabInterface
 			));
 		}
 		unset($settings['rules']);
+
+		if (!in_array($settings['price_tax'], array('with_tax', 'without_tax'))) {
+			$this->messages->addWarning(sprintf(__('Invalid prices option: "%s". Value set to %s.', 'jigoshop'), $settings['price_tax'], __('Without tax', 'jigoshop')));
+			$settings['price_tax'] = 'without_tax';
+		}
 
 		return $settings;
 	}
