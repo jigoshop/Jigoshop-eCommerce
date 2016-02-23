@@ -68,7 +68,7 @@ class Order implements EntityFactoryInterface
 
 		// Support for our own post types and "Publish" button.
 		if (isset($_POST['original_post_status'])) {
-			$post->post_status = $_POST['original_post_status'];
+			$post->post_status = $_POST['order']['status'];
 		}
 
 		$order = $this->fetch($post);
@@ -100,7 +100,8 @@ class Order implements EntityFactoryInterface
 			$data['shipping']['method'] = $method;
 		}
 
-		return $order = $this->wp->applyFilters('jigoshop\factory\order\create', $this->fill($order, $data));
+//		return $order = $this->wp->applyFilters('jigoshop\factory\order\create', $this->fill($order, $data));
+		return $this->wp->applyFilters('jigoshop\factory\order\create', $order);
 	}
 
 	/**
@@ -233,7 +234,7 @@ class Order implements EntityFactoryInterface
 			unset($data['coupons']);
 		}
 
-		if(isset($data)) {
+		if(isset($data['discount'])) {
 			unset($data['discount']);
 		}
 
