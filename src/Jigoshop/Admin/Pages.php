@@ -37,7 +37,8 @@ class Pages
 			return $screen->post_type === Types::PRODUCT && $screen->id === 'edit-'.Types::PRODUCT;
 		}
 
-		return DOING_AJAX && isset($_POST['action']) && strpos($_POST['action'], 'admin.products') !== false;
+		return DOING_AJAX && isset($_POST['action']) && (strpos($_POST['action'], 'admin.products') !== false ||
+            ($_POST['action'] == 'inline-save' && $_POST['screen'] == 'edit-'.Types::PRODUCT));
 	}
 
 	public function isProduct()
@@ -81,7 +82,8 @@ class Pages
 			return $screen->post_type === Types::EMAIL && $screen->id === Types::EMAIL;
 		}
 
-		return DOING_AJAX && isset($_POST['action']) && strpos($_POST['action'], 'admin.email') !== false;
+		return DOING_AJAX && isset($_POST['action']) && (strpos($_POST['action'], 'admin.email') !== false ||
+            ($_POST['action'] == 'inline-save' && $_POST['screen'] == 'edit-'.Types::EMAIL));
 	}
 
 	public function isCouponList()
@@ -92,7 +94,8 @@ class Pages
 			return $screen->post_type === Types::COUPON && $screen->id === 'edit-'.Types::COUPON;
 		}
 
-		return DOING_AJAX && isset($_POST['action']) && strpos($_POST['action'], 'admin.coupons') !== false;
+		return DOING_AJAX && isset($_POST['action']) && (strpos($_POST['action'], 'admin.coupons') !== false ||
+            ($_POST['action'] == 'inline-save' && $_POST['screen'] == 'edit-'.Types::COUPON));
 	}
 
 	public function isCoupon()
