@@ -191,6 +191,11 @@ class Products implements Tool
 						{
 							foreach ($attributeData as $slug => $source)
 							{
+								if(empty($source['value']))
+								{
+									continue;
+								}
+
 								$productAttributes[$product->ID]['attributes'][$slug] = array(
 									'is_visible'  => $source['visible'],
 									'is_variable' => isset($source['variation']) && $source['variation'] == true,
