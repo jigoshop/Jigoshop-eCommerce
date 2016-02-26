@@ -10,6 +10,7 @@ use Jigoshop\Helper\Formatter;
 use Jigoshop\Helper\Product as ProductHelper;
 use Jigoshop\Helper\Render;
 use Jigoshop\Helper\Scripts;
+use Jigoshop\Helper\Styles;
 use Jigoshop\Service\ProductServiceInterface;
 use WPAL\Wordpress;
 
@@ -48,6 +49,8 @@ class Products
 					'ajax' => $wp->getAjaxUrl(),
 				));
 
+				Styles::add('jigoshop.admin.products_list', JIGOSHOP_URL.'/assets/css/admin/products_list.css', array('jigoshop.admin'));
+
 				$wp->doAction('jigoshop\admin\products\assets', $wp);
 			}
 		});
@@ -72,21 +75,21 @@ class Products
 			'cb' => '<input type="checkbox" />',
 			'thumbnail' => null,
 			'title' => _x('Name', 'product', 'jigoshop'),
-			'sku' => _x('SKU', 'product', 'jigoshop'),
 			'featured' => sprintf(
 				'<span class="glyphicon glyphicon-star" aria-hidden="true"></span> <span class="sr-only">%s</span>',
 				_x('Is featured?', 'product', 'jigoshop')
 			),
 			'type' => _x('Type', 'product', 'jigoshop'),
+			'sku' => _x('SKU', 'product', 'jigoshop'),
 			'stock' => _x('Stock', 'product', 'jigoshop'),
 			'price' => _x('Price', 'product', 'jigoshop'),
 			'creation' => _x('Created at', 'product', 'jigoshop'),
 		);
 
-		if ($this->options->get('enable_sku', 'yes') !== 'yes') {
+		if ($this->options->get('products.enable_sku', 'yes') !== 'yes') {
 			unset($columns['sku']);
 		}
-		if ($this->options->get('manage_stock', 'yes') !== 'yes') {
+		if ($this->options->get('products.manage_stock', 'yes') !== 'yes') {
 			unset($columns['stock']);
 		}
 
@@ -100,7 +103,7 @@ class Products
 			return;
 		}
 
-		/** @var Product $product */
+		/** @var Product | \Jigoshop\Entity\Product\Variable $product $v*/
 		$product = $this->productService->find($post->ID);
 		switch ($column) {
 			case 'thumbnail':
@@ -112,15 +115,29 @@ class Products
 			case 'featured':
 				echo ProductHelper::isFeatured($product);
 				break;
-			case 'stock':
-				echo ProductHelper::getStock($product);
-				break;
 			case 'type':
 				echo $this->type->getType($product->getType())->getName();
 				break;
 			case 'sku':
-				echo $product->getSku();
-				break;
+				if ($product->getType() == Product\Variable::TYPE && $this->options->get('advanced.products_list.variations_sku_stock'))
+				{
+					$this->getVariableAdditionalInfo($product, 'sku');
+				}
+				else
+				{
+					echo $product->getSku();
+				}
+			break;
+			case 'stock':
+				if ($product->getType() == Product\Variable::TYPE && $this->options->get('advanced.products_list.variations_sku_stock'))
+				{
+					$this->getVariableAdditionalInfo($product, 'stock');
+				}
+				else
+				{
+					echo ProductHelper::getStock($product);
+				}
+			break;
 			case 'creation':
 				$timestamp = strtotime($post->post_date);
 				echo Formatter::date($timestamp);
@@ -235,6 +252,42 @@ class Products
 				'value' => $_GET['product_type'],
 			);
 			$query->set('meta_query', $meta);
+		}
+	}
+
+	/**
+	 * Get additional information about the products of variables.
+	 *
+	 * @param \Jigoshop\Entity\Product\Variable $product - Product
+	 * @param string $type - chose to display sku or stock information
+	 *
+	 * @return string
+	 */
+	public function getVariableAdditionalInfo($product, $type)
+	{
+		/** @var Product\Variable $variation */
+		foreach ($product->getVariations() as $variation)
+		{
+			if ($type == 'sku')
+			{
+				echo $variation->getProduct()
+				               ->getSku() . '<br />';;
+			}
+			elseif ($type == 'stock')
+			{
+				$variation_name = array();
+				/** @var Product\Attribute $attribute */
+				$attributes = $product->getVariableAttributes();
+				foreach ($attributes as $attribute)
+				{
+					$variation_name[] = ProductHelper::getSelectOption($attribute->getOptions())[$variation->getAttribute($attribute->getId())
+					                                                                                       ->getValue()];
+				}
+
+				echo join(' - ', $variation_name) . ' (' . $variation->getProduct()
+				                                                     ->getStock()
+				                                                     ->getStock() . ')<br />';
+			}
 		}
 	}
 }

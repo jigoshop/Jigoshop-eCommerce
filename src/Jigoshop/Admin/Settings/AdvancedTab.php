@@ -133,6 +133,21 @@ class AdvancedTab implements TabInterface
 				),
 			),
 			array(
+				'title' => __('Products list', 'jigoshop'),
+				'id' => 'products_list',
+				'fields' => array(
+					array(
+						'name' => '[products_list][variations_sku_stock]',
+						'title' => __('Show variation\'s SKU and stock', 'jigoshop'),
+						'description' => __("Show all variation's SKU and stock on products list page.", 'jigoshop'),
+						'tip' => __("For orders that have been completed but the status is still set to 'processing'.  This will move them to a 'completed' status without sending an email out to all the customers.", 'jigoshop'),
+						'type' => 'checkbox',
+						'checked' => $this->settings['products_list']['variations_sku_stock'],
+						'classes' => array('switch-medium'),
+					),
+				),
+			),
+			array(
 				'title' => __('Others', 'jigoshop'),
 				'id' => 'others',
 				'fields' => array(
@@ -237,6 +252,7 @@ class AdvancedTab implements TabInterface
 
 		$settings['automatic_complete'] = $settings['automatic_complete'] == 'on';
 		$settings['automatic_reset'] = $settings['automatic_reset'] == 'on';
+		$settings['products_list']['variations_sku_stock'] = $settings['products_list']['variations_sku_stock'] == 'on';
 
 		if (!in_array($settings['cache'], array_keys($this->caches))) {
 			$this->messages->addWarning(sprintf(__('Invalid cache mechanism: "%s". Value set to %s.', 'jigoshop'), $settings['cache'], $this->caches['simple']));
