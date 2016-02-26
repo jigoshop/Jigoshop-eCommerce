@@ -172,6 +172,9 @@ class Options
 				'share_this' => '',
 				'google_analytics' => '',
 			),
+			'products_list' => array(
+				'variations_sku_stock' => false,
+			),
 			'cache' => 'simple',
 			'wos' => array(
 				'enabled' => true,
