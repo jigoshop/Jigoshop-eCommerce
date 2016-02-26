@@ -140,7 +140,7 @@ class AdvancedTab implements TabInterface
 						'name' => '[products_list][variations_sku_stock]',
 						'title' => __('Show variation\'s SKU and stock', 'jigoshop'),
 						'description' => __("Show all variation's SKU and stock on products list page.", 'jigoshop'),
-						'tip' => __("For orders that have been completed but the status is still set to 'processing'.  This will move them to a 'completed' status without sending an email out to all the customers.", 'jigoshop'),
+						'tip' => __("Show all variation's SKU and stock on products list page.", 'jigoshop'),
 						'type' => 'checkbox',
 						'checked' => $this->settings['products_list']['variations_sku_stock'],
 						'classes' => array('switch-medium'),

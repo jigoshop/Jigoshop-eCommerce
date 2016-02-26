@@ -103,7 +103,7 @@ class Products
 			return;
 		}
 
-		/** @var Product | \Jigoshop\Entity\Product\Variable $product $v*/
+		/** @var Product | Product\Variable $product */
 		$product = $this->productService->find($post->ID);
 		switch ($column) {
 			case 'thumbnail':
@@ -119,24 +119,10 @@ class Products
 				echo $this->type->getType($product->getType())->getName();
 				break;
 			case 'sku':
-				if ($product->getType() == Product\Variable::TYPE && $this->options->get('advanced.products_list.variations_sku_stock'))
-				{
-					$this->getVariableAdditionalInfo($product, 'sku');
-				}
-				else
-				{
-					echo $product->getSku();
-				}
+				echo $this->getVariableAdditionalInfo($product, 'sku');
 			break;
 			case 'stock':
-				if ($product->getType() == Product\Variable::TYPE && $this->options->get('advanced.products_list.variations_sku_stock'))
-				{
-					$this->getVariableAdditionalInfo($product, 'stock');
-				}
-				else
-				{
-					echo ProductHelper::getStock($product);
-				}
+				echo $this->getVariableAdditionalInfo($product, 'stock');
 			break;
 			case 'creation':
 				$timestamp = strtotime($post->post_date);
@@ -265,29 +251,47 @@ class Products
 	 */
 	public function getVariableAdditionalInfo($product, $type)
 	{
-		/** @var Product\Variable $variation */
-		foreach ($product->getVariations() as $variation)
+		if ($product->getType() == Product\Variable::TYPE && $this->options->get('advanced.products_list.variations_sku_stock'))
+		{
+			$additionalInfo = '';
+			/** @var Product\Variable $variation */
+			foreach ($product->getVariations() as $variation)
+			{
+				if ($type == 'sku')
+				{
+					$additionalInfo .= $variation->getProduct()
+					                             ->getSku() . '<br />';;
+				}
+				elseif ($type == 'stock')
+				{
+					$variation_name = array();
+					/** @var Product\Attribute $attribute */
+					$attributes = $product->getVariableAttributes();
+					foreach ($attributes as $attribute)
+					{
+						$variation_name[] = ProductHelper::getSelectOption($attribute->getOptions())[$variation->getAttribute($attribute->getId())
+						                                                                                       ->getValue()];
+					}
+
+					$additionalInfo .= join(' - ', $variation_name) . ' (' . $variation->getProduct()
+					                                                                   ->getStock()
+					                                                                   ->getStock() . ')<br />';
+				}
+			}
+
+			return $additionalInfo;
+		}
+		else
 		{
 			if ($type == 'sku')
 			{
-				echo $variation->getProduct()
-				               ->getSku() . '<br />';;
+				return $product->getSku();
 			}
 			elseif ($type == 'stock')
 			{
-				$variation_name = array();
-				/** @var Product\Attribute $attribute */
-				$attributes = $product->getVariableAttributes();
-				foreach ($attributes as $attribute)
-				{
-					$variation_name[] = ProductHelper::getSelectOption($attribute->getOptions())[$variation->getAttribute($attribute->getId())
-					                                                                                       ->getValue()];
-				}
-
-				echo join(' - ', $variation_name) . ' (' . $variation->getProduct()
-				                                                     ->getStock()
-				                                                     ->getStock() . ')<br />';
+				return ProductHelper::getStock($product);
 			}
 		}
+
 	}
 }
