@@ -26,18 +26,18 @@ class Cart
         formatNoMatches: ''
 
   block: =>
-    jQuery('#cart > button').block
+    jQuery('#cart').block
       message: '<img src="' + @params.assets + '/images/loading.gif" alt="' + @params.i18n.loading + '" width="15" height="15" />'
       css:
         padding: '5px'
         width: 'auto'
         height: 'auto'
         border: '1px solid #83AC31'
-      overlayCss:
-        opacity: 0.01
+      overlayCSS:
+        backgroundColor: 'rgba(255, 255, 255, .8)'
 
   unblock: ->
-    jQuery('#cart > button').unblock()
+    jQuery('#cart').unblock()
 
   changeDestination: (e) ->
     e.preventDefault()

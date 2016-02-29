@@ -5,7 +5,7 @@
 get_header('shop');
 ?>
 <div id="primary" class="site-content">
-	<div id="content" role="main" class="jigoshop">
+	<div id="jigoshop_content" role="main" class="jigoshop">
 		<?php do_action('jigoshop\shop\content\before'); ?>
 		<?php echo $content; ?>
 		<?php do_action('jigoshop\shop\content\after'); ?>
