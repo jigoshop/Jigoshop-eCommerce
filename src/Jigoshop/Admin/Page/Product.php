@@ -182,6 +182,7 @@ class Product
 				}
 
 				$attribute->setLabel($label);
+				print_r($attribute);exit;
 				$this->productService->saveAttribute($attribute);
 				$attributeExists = false;
 			} else {
@@ -197,6 +198,8 @@ class Product
 				$attribute->setValue(trim(htmlspecialchars(strip_tags($_POST['value']))));
 			} else if ($attributeExists) {
 				throw new Exception(sprintf(__('Attribute "%s" already exists.', 'jigoshop'), $attribute->getLabel()));
+			} else {
+				$attribute->setValue('');
 			}
 
 			if (isset($_POST['options']) && isset($_POST['options']['display'])) {
