@@ -42,7 +42,7 @@ cssTasks.forEach (taskName) ->
     .pipe replace(/images\/(.*?)\.(png|gif)/g, '../../images/$1.$2')
     .pipe replace(/select2(.*?)\.(png|gif)/g, '../../images/select2$1.$2')
     .pipe cssmin()
-    .pipe concat(taskName + '.min.css')
+    .pipe concat(taskName + '.css')
     .pipe gulp.dest('assets/css/vendors')
 
 # JS
@@ -52,7 +52,7 @@ jsTasks.forEach (taskName) ->
   gulp.task taskName + 'js', ->
     gulp.src(jsFiles[taskName])
     .pipe uglify()
-    .pipe concat(taskName + '.min.js')
+    .pipe concat(taskName + '.js')
     .pipe gulp.dest('assets/js/vendors')
 
 # Coffee
@@ -63,7 +63,7 @@ coffeeTasks.forEach (taskName) ->
     gulp.src(coffeeFiles[taskName])
     .pipe coffee({bare: true})
     .pipe uglify()
-    .pipe concat(taskName + '.min.js')
+    .pipe concat(taskName + '.js')
     .pipe gulp.dest('assets/js/vendors')
 
 # other less

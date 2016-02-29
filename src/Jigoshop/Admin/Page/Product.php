@@ -55,13 +55,13 @@ class Product
 		$wp->addAction('admin_enqueue_scripts', function () use ($wp, $menu){
 			if ($wp->getPostType() == Types::PRODUCT) {
 
-				Styles::add('jigoshop.vendors.select2', JIGOSHOP_URL.'/assets/css/vendors/select2.min.css', array('jigoshop.admin.product'));
+				Styles::add('jigoshop.vendors.select2', JIGOSHOP_URL.'/assets/css/vendors/select2.css', array('jigoshop.admin.product'));
 				Styles::add('jigoshop.vendors.datepicker', JIGOSHOP_URL.'/assets/css/vendors/datepicker.css', array('jigoshop.admin.product'));
 				Styles::add('jigoshop.admin.product', JIGOSHOP_URL.'/assets/css/admin/product.css');
 
-				Scripts::add('jigoshop.vendors.select2', JIGOSHOP_URL . '/assets/js/vendors/select2.min.js', array('jquery', 'jigoshop.admin.product'));
-				Scripts::add('jigoshop.vendors.bs_tab_trans_tooltip_collapse', JIGOSHOP_URL . '/assets/js/vendors/bs_tab_trans_tooltip_collapse.min.js', array('jquery', 'jigoshop.admin.product'));
-				Scripts::add('jigoshop.vendors.datepicker', JIGOSHOP_URL . '/assets/js/vendors/datepicker.min.js', array('jquery', 'jigoshop.admin.product'));
+				Scripts::add('jigoshop.vendors.select2', JIGOSHOP_URL . '/assets/js/vendors/select2.js', array('jquery', 'jigoshop.admin.product'));
+				Scripts::add('jigoshop.vendors.bs_tab_trans_tooltip_collapse', JIGOSHOP_URL . '/assets/js/vendors/bs_tab_trans_tooltip_collapse.js', array('jquery', 'jigoshop.admin.product'));
+				Scripts::add('jigoshop.vendors.datepicker', JIGOSHOP_URL . '/assets/js/vendors/datepicker.js', array('jquery', 'jigoshop.admin.product'));
 				Scripts::add('jigoshop.admin.product', JIGOSHOP_URL . '/assets/js/admin/product.js', array(
 					'jquery',
 					'jigoshop.helpers'

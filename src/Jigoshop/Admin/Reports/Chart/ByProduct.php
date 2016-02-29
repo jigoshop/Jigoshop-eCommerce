@@ -43,8 +43,8 @@ class ByProduct extends Chart
 			if ($screen->base != 'jigoshop_page_'.Reports::NAME) {
 				return;
 			}
-			Styles::add('jigoshop.vendors.select2', JIGOSHOP_URL.'/assets/css/vendors/select2.min.css', array('jigoshop.admin'));
-			Scripts::add('jigoshop.vendors.select2', JIGOSHOP_URL.'/assets/js/vendors/select2.min.js', array('jigoshop.admin'), array('in_footer' => true));
+			Styles::add('jigoshop.vendors.select2', JIGOSHOP_URL.'/assets/css/vendors/select2.css', array('jigoshop.admin'));
+			Scripts::add('jigoshop.vendors.select2', JIGOSHOP_URL.'/assets/js/vendors/select2.js', array('jigoshop.admin'), array('in_footer' => true));
 			Scripts::add('jigoshop.admin.reports.widget.product_search', JIGOSHOP_URL.'/assets/js/admin/reports/widget/product_search.js', array(
 				'jquery',
 				'jigoshop.vendors.select2'
