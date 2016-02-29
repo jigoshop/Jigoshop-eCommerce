@@ -48,7 +48,7 @@ abstract class AbstractProductList implements PageInterface
 		Styles::add('jigoshop.shop.list', JIGOSHOP_URL.'/assets/css/shop/list.css', array(
 			'jigoshop.shop',
 		));
-		Styles::add('jigoshop.vendors.select2', JIGOSHOP_URL.'/assets/css/vendors/select2.min.css', array(
+		Styles::add('jigoshop.vendors.select2', JIGOSHOP_URL.'/assets/css/vendors/select2.css', array(
 			'jigoshop.shop',
 		));
 

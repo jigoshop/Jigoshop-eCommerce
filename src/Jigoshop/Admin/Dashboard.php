@@ -208,7 +208,7 @@ class Dashboard implements PageInterface
 		} else {
 			$days = range($currentTime, strtotime($nextYear.'-'.$nextMonth.'-1'), 24 * 3600);
 		}
-		
+
 		$orderAmountsData = $orderCountsData = array_fill_keys($days, 0);
 		$orderAmounts = $orderCounts = array();
 
