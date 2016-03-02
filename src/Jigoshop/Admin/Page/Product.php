@@ -182,7 +182,6 @@ class Product
 				}
 
 				$attribute->setLabel($label);
-				print_r($attribute);exit;
 				$this->productService->saveAttribute($attribute);
 				$attributeExists = false;
 			} else {
