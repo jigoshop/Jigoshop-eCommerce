@@ -4,20 +4,25 @@
  */
 ?>
 <div class="row">
-	<div class="col-sm-6">
+	<div class="col-sm-8">
 		<div class="search form-group">
 			<form action="#" method="GET">
 				<?php foreach($_GET as $key => $value) : ?>
 					<input type="hidden" name="<?php echo $key; ?>" value="<?php echo $value; ?>">
 				<?php endforeach; ?>
 				<div class="row">
-					<div class="col-xs-8"><input class="form-control" type="text" name="search" value="<?php echo $search; ?>" placeholder="<?php echo __('Search', 'jigoshop'); ?>"></div>
-					<div class="col-xs-4"><button class="btn btn-default" type="submit"><?php echo $search_title; ?></button></div>
+					<div class="col-xs-6"><input class="form-control" type="text" name="search" value="<?php echo $search; ?>" placeholder="<?php echo __('Search', 'jigoshop'); ?>"></div>
+					<div class="col-xs-3"><button class="btn btn-default" type="submit"><?php echo $search_title; ?></button></div>
+					<?php if(!empty($csv_download_link)): ?>
+						<a href="<?php echo $csv_download_link; ?>" class="btn btn-default export-csv" aria-label="Left Align">
+							<span class="glyphicon glyphicon-export" aria-hidden="true"></span><?php _e('Export CSV', 'jigoshop'); ?>
+						</a>
+					<?php endif; ?>
 				</div>
 			</form>
 		</div>
 	</div>
-	<div class="col-sm-6">
+	<div class="col-sm-4">
 		<div class="text-right row">
 			<div class="col-xs-9"">
 				<?php if(isset($total_pages) && $total_pages > 1) : ?>

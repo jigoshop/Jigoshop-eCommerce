@@ -28,7 +28,7 @@ class MostStocked implements TableInterface
 		return self::SLUG;
 	}
 
-	public function getTite()
+	public function getTitle()
 	{
 		return __('Most Stocked', 'jigoshop');
 	}
@@ -69,12 +69,12 @@ class MostStocked implements TableInterface
 		return isset($_GET['search']) ? $_GET['search'] : '';
 	}
 
-	public function getItems()
+	public function getItems($columns)
 	{
 		$products = $this->getProducts();
 		foreach ($products as $product) {
 			$item = array();
-			foreach ($this->getColumns() as $columnKey => $columnName) {
+			foreach ($columns as $columnKey => $columnName) {
 				$item[$columnKey] = $this->getRow($product, $columnKey);
 			}
 			$this->items[] = $item;
@@ -92,7 +92,7 @@ class MostStocked implements TableInterface
 	{
 		Render::output('admin/reports/table', array(
 			'columns' => $this->getColumns(),
-			'items' => $this->getItems(),
+			'items' => $this->getItems($this->getColumns()),
 			'no_items' => $this->noItems(),
 			'total_items' => $this->totalItems,
 			'total_pages' => $this->totalPages,
