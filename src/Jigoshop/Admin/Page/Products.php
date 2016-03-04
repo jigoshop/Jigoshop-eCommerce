@@ -254,7 +254,8 @@ class Products
 		if ($product->getType() == Product\Variable::TYPE && $this->options->get('advanced.products_list.variations_sku_stock'))
 		{
 			$additionalInfo = '';
-			/** @var Product\Variable $variation */
+			/** @var \Jigoshop\Entity\Product\Variable\Variation $variation */
+			/** @var Product\Attribute $attribute */
 			foreach ($product->getVariations() as $variation)
 			{
 				if ($type == 'sku')
@@ -265,8 +266,8 @@ class Products
 				elseif ($type == 'stock')
 				{
 					$variation_name = array();
-					/** @var Product\Attribute $attribute */
 					$attributes = $product->getVariableAttributes();
+
 					foreach ($attributes as $attribute)
 					{
 						$variation_name[] = ProductHelper::getSelectOption($attribute->getOptions())[$variation->getAttribute($attribute->getId())
