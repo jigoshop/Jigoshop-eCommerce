@@ -283,13 +283,7 @@ class Product
 
 			$result = array(
 				'success' => true,
-				'results' => array_values(array_map(function ($item){
-					/** @var $item \Jigoshop\Entity\Product */
-					return array(
-						'id' => $item->getId(),
-						'text' => $item->getName(),
-					);
-				}, $products)),
+				'results' => $this->prepareResults($products),
 			);
 		} catch (Exception $e) {
 			$result = array(
@@ -300,5 +294,43 @@ class Product
 
 		echo json_encode($result);
 		exit;
+	}
+
+	/**
+	 * Get id and name product from different products types
+	 *
+	 * @param array $products Products list
+	 *
+	 * @return array
+	 */
+	public function prepareResults($products)
+	{
+		$preparedProducts = array();
+		if (count($products) > 0)
+		{
+			/** @var \Jigoshop\Entity\Product | \Jigoshop\Entity\Product\Variable $product */
+			/** @var \Jigoshop\Entity\Product\Variable\Variation $variation */
+			foreach ($products as $product)
+			{
+				if ($product->getType() == 'variable')
+				{
+					foreach ($product->getVariations() as $variation)
+					{
+						$preparedProducts[] = array(
+							'id'   => $variation->getProduct()
+							                    ->getId(),
+							'text' => $variation->getProduct()
+							                    ->getName()
+						);
+					}
+				}
+				else
+				{
+					$preparedProducts[] = array('id' => $product->getId(), 'text' => $product->getName());
+				}
+			}
+		}
+
+		return $preparedProducts;
 	}
 }
