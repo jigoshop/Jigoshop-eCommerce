@@ -41,6 +41,7 @@ class Product
 		$that = $this;
 		$wp->addAction('add_meta_boxes_'.Types::PRODUCT, function () use ($wp, $that){
 			$wp->addMetaBox('jigoshop-product-data', __('Product Data', 'jigoshop'), array($that, 'box'), Types::PRODUCT, 'normal', 'high');
+			$wp->addMetaBox('jigoshop-product-attachments', __('Attachments', 'jigoshop'), array($that, 'attachmentsBox'), Types::PRODUCT, 'side', 'low');
 			$wp->removeMetaBox('commentstatusdiv', null, 'normal');
 		});
 
@@ -78,6 +79,10 @@ class Product
 					'menu' => array_map(function ($item){
 						return $item['visible'];
 					}, $menu),
+					'attachments' => array(
+						'gallery' => array(),
+						'downloadable' => array(),
+					)
 				));
 
 				$wp->doAction('jigoshop\admin\product\assets', $wp);
@@ -143,6 +148,27 @@ class Product
 			'menu' => $this->menu,
 			'tabs' => $tabs,
 			'current_tab' => 'general',
+		));
+	}
+
+	public function attachmentsBox()
+	{
+		$menu = array(
+			'gallery' => __('Gallery', 'jigoshop'),
+			'downloadable' => __('Downloadable', 'jigoshop'),
+		);
+
+		$tabs = array(
+			'gallery' => array(
+				'images' => array(),
+			),
+			'downloadable' => array(
+				'files' => array(),
+			)
+		);
+		Render::output('admin/product/attachments', array(
+			'menu' => $menu,
+			'tabs' => $tabs
 		));
 	}
 

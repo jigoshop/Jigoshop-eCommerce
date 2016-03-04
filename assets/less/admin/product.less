@@ -124,4 +124,106 @@
     width: 60%;
     margin: 10px 20%;
   }
+  #gallery {
+    .gallery-image {
+      padding:5px!important;
+      position: relative;
+
+      img {
+        width:100%;
+      }
+
+      &:nth-of-type(3n + 4){
+        clear: both;
+      }
+    }
+    .delete {
+      background: #ce0404;
+      border-radius: 1em;
+      display: none;
+      height: 16px;
+      position: absolute;
+      width: 16px;
+      top: 0px;
+      right: 0px;
+
+      &:hover {
+        background: #e60404;
+      }
+      &::before {
+        background: #ffffff;
+        content: "";
+        display: block;
+        height: 2px;
+        right: 3px;
+        position: absolute;
+        top: 7px;
+        transform: rotateZ(45deg);
+        width: 10px;
+      }
+      &:after {
+        background: #ffffff;
+        content: "";
+        display: block;
+        height: 2px;
+        right: 3px;
+        position: absolute;
+        top: 7px;
+        transform: rotateZ(-45deg);
+        width: 10px;
+      }
+    }
+    .gallery-image ~ .empty-gallery {
+      display: none;
+    }
+  }
+  #downloadable {
+    .downloadable-file {
+      position: relative;
+      padding: 5px 15px;
+
+      &:nth-of-type(even) {
+        background: #f3f3f3;
+      }
+    }
+    .delete {
+      background: #ce0404;
+      border-radius: 1em;
+      display: none;
+      height: 16px;
+      position: absolute;
+      width: 16px;
+      top: 5px;
+      right: 0px;
+
+      &:hover {
+        background: #e60404;
+      }
+      &:before {
+        background: #ffffff;
+        content: "";
+        display: block;
+        height: 2px;
+        right: 3px;
+        position: absolute;
+        top: 7px;
+        transform: rotateZ(45deg);
+        width: 10px;
+      }
+      &:after {
+        background: #ffffff;
+        content: "";
+        display: block;
+        height: 2px;
+        right: 3px;
+        position: absolute;
+        top: 7px;
+        transform: rotateZ(-45deg);
+        width: 10px;
+      }
+    }
+    .downloadable-file ~ .empty-downloadable {
+      display: none;
+    }
+  }
 }
