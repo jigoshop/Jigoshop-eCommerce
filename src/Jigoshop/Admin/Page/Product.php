@@ -53,7 +53,7 @@ class Product
 			'sales' => array('label' => __('Sales', 'jigoshop'), 'visible' => array(Simple::TYPE)),
 		));
 
-		$wp->addAction('admin_enqueue_scripts', function () use ($wp, $menu){
+		$wp->addAction('admin_enqueue_scripts', function () use ($wp, $menu, $that){
 			if ($wp->getPostType() == Types::PRODUCT) {
 
 				Styles::add('jigoshop.vendors.select2', JIGOSHOP_URL.'/assets/css/vendors/select2.css', array('jigoshop.admin.product'));
@@ -79,10 +79,7 @@ class Product
 					'menu' => array_map(function ($item){
 						return $item['visible'];
 					}, $menu),
-					'attachments' => array(
-						'gallery' => array(),
-						'downloadable' => array(),
-					)
+					'attachments' => $that->getProductAttachments()
 				));
 
 				$wp->doAction('jigoshop\admin\product\assets', $wp);
@@ -170,6 +167,23 @@ class Product
 			'menu' => $menu,
 			'tabs' => $tabs
 		));
+	}
+
+	public function getProductAttachments()
+	{
+		$post = $this->wp->getGlobalPost();
+		/** @var \Jigoshop\Entity\Product $product */
+		$product = $this->productService->findForPost($post);
+		$attachments = array();
+		foreach($product->getAttachments() as $attachment) {
+			$attachments[$attachment['type']][] = array(
+				'id' => $attachment['id'],
+				'url' => wp_get_attachment_thumb_url($attachment['id']),
+				'name' => 'screen',
+			);
+		}
+
+		return $attachments;
 	}
 
 	public function ajaxSaveAttribute()

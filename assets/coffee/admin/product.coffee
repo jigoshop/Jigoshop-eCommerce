@@ -186,7 +186,7 @@ class AdminProduct
     wpMedia = @wpMedia
     @wpMedia.on 'select', =>
       selection = wpMedia.state().get 'selection'
-      attachmentIds = jQuery.map jQuery('input[name="product[' + element + '][]"]'), (attachment) ->
+      attachmentIds = jQuery.map jQuery('input[name="product[attachments][' + element + '][]"]'), (attachment) ->
         return parseInt jQuery(attachment).val()
 
       selection.map (attachment) =>
@@ -209,13 +209,14 @@ class AdminProduct
     wpMedia.open()
 
   initAttachments: =>
-    if @params.attachments.gallery.length > 0
+    console.log(@params.attachments)
+    if @params.attachments.gallery?
       template = wp.template 'product-gallery'
       for attachment in @params.attachments.gallery
         jQuery('.empty-gallery').before template(attachment)
         @addHooks '', jQuery('.gallery-image').last()
 
-    if @params.attachments.gallery.downloadable > 0
+    if @params.attachments.downloadable?
       template = wp.template 'product-downloadable'
       for attachment in @params.attachments.downloadable
         jQuery('.empty-downloadable').before template(attachment)

@@ -174,6 +174,15 @@ class ProductService implements ProductServiceInterface
 			unset($fields['attributes']);
 		}
 
+		if (isset($fields['attachments'])) {
+			$this->_removeAllProductAttachments($object->getId());
+
+			foreach ($fields['attachments'] as $attachment) {
+				$this->_saveProductAttachment($object->getId(), $attachment);
+			}
+
+		}
+
 		foreach ($fields as $field => $value) {
 			$this->wp->updatePostMeta($object->getId(), $field, $value);
 		}
@@ -246,6 +255,31 @@ class ProductService implements ProductServiceInterface
 			}
 		}
 	}
+
+	/**
+	 * @param $productId int Product ID.
+	 */
+	private function _removeAllProductAttachments($productId)
+	{
+		$wpdb = $this->wp->getWPDB();
+		$query = $wpdb->prepare("DELETE FROM {$wpdb->prefix}jigoshop_product_attachment WHERE product_id = %d", array($productId));
+		$wpdb->query($query);
+	}
+
+	/**
+	 * @param $productId int Product ID.
+	 * @param $attachment array atachment data.
+	 */
+	private function _saveProductAttachment($productId, $attachment)
+	{
+		$wpdb = $this->wp->getWPDB();
+		$wpdb->insert($wpdb->prefix.'jigoshop_product_attachment', array(
+			'product_id' => $productId,
+			'attachment_id' => $attachment['id'],
+			'type' => $attachment['type'],
+		));
+	}
+
 
 	/**
 	 * @param $number int Number of products to find.

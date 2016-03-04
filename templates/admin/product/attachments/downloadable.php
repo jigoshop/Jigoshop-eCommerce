@@ -6,7 +6,7 @@
             <div class="downloadable-file col-xs-12">
                 <div data-id="{{{ data.id }}}">{{{ data.name }}}</div>
                 <span class="delete"></span>
-                <input type="hidden" name="product[downloadable][]" value="{{{ data.id }}}">
+                <input type="hidden" name="product[attachments][downloadable][]" value="{{{ data.id }}}">
             </div>
         </script>
         <p class="empty-downloadable"><?php _e( 'Nie ma pobieralnych załączników, dodaj plizzzzz', 'jigoshop' ); ?></p>

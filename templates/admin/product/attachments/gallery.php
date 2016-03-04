@@ -11,7 +11,7 @@
             <div class="gallery-image col-xs-4">
                 <span class="delete"></span>
                 <img data-id="{{{ data.id }}}" src="{{{ data.url }}}" alt="{{{ data.name }}}"/>
-                <input type="hidden" name="product[gallery][]" value="{{{ data.id }}}">
+                <input type="hidden" name="product[attachments][gallery][]" value="{{{ data.id }}}">
             </div>
         </script>
         <p class="empty-gallery"><?php _e( 'Nie ma galerii, dodaj plizzzzz', 'jigoshop' ); ?></p>
