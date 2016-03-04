@@ -8,6 +8,8 @@
  * @var $value mixed Current value.
  * @var $tip string Tip to show to the user.
  * @var $size int Size of form widget.
+ * @var string $startDate Date of sale (start).
+ * @var string $endDate Date of sale (end).
  */
 $hasLabel = !empty($label);
 ?>
@@ -47,7 +49,7 @@ $hasLabel = !empty($label);
         container: '#<?php echo $id; ?>',
         orientation: 'top left',
         todayBtn: 'linked',
-        startDate: <?php echo $startDate ? $startDate : 'false'; ?>,
-        endDate: <?php echo $endDate ? $endDate : 'false'; ?>,
+        startDate: <?php echo $startDate ? "'" . $startDate . "'" : 'false'; ?>,
+        endDate: <?php echo $endDate ? "'" . $endDate . "'" : 'false'; ?>,
     });
 </script>
