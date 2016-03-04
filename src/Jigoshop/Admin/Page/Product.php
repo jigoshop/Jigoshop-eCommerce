@@ -312,7 +312,7 @@ class Product
 			/** @var \Jigoshop\Entity\Product\Variable\Variation $variation */
 			foreach ($products as $product)
 			{
-				if ($product->getType() == 'variable')
+				if ($product->getType() == Variable::TYPE)
 				{
 					foreach ($product->getVariations() as $variation)
 					{
