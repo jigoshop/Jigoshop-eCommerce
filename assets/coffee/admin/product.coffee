@@ -198,11 +198,11 @@ class AdminProduct
               insert_before: '.empty-gallery'
               attachment_class: '.gallery-image'
             }
-          else if element == 'downloadable'
+          else if element == 'downloads'
             options = {
-              template_name: 'product-downloadable'
-              insert_before: '.empty-downloadable'
-              attachment_class: '.downloadable-file'
+              template_name: 'product-downloads'
+              insert_before: '.empty-downloads'
+              attachment_class: '.downloads-file'
             }
           @addAttachment attachment, attachmentIds, options
 
@@ -216,11 +216,11 @@ class AdminProduct
         jQuery('.empty-gallery').before template(attachment)
         @addHooks '', jQuery('.gallery-image').last()
 
-    if @params.attachments.downloadable?
-      template = wp.template 'product-downloadable'
-      for attachment in @params.attachments.downloadable
-        jQuery('.empty-downloadable').before template(attachment)
-        @addHooks '', jQuery('.downloadable-file').last()
+    if @params.attachments.downloads?
+      template = wp.template 'product-downloads'
+      for attachment in @params.attachments.downloads
+        jQuery('.empty-downloads').before template(attachment)
+        @addHooks '', jQuery('.downloads-file').last()
 
   addHooks: (index, element) ->
     $delete = jQuery(element).find '.delete'
@@ -237,7 +237,7 @@ class AdminProduct
       html = template {
         id: attachment.id
         url: if attachment.sizes and attachment.sizes.thumbnail then attachment.sizes.thumbnail.url else attachment.url
-        name: attachment.name
+        title: attachment.title
       }
       jQuery(options.insert_before).before html
       @addHooks '', jQuery(options.attachment_class).last()

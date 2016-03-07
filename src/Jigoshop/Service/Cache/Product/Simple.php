@@ -18,7 +18,7 @@ class Simple implements ProductServiceInterface
 	private $objects = array();
 	private $queries = array();
 	private $states = array();
-	private $thumbnails = array();
+	private $attachments = array();
 	private $attributes;
 	private $productAttributes = array();
 	private $attributesCount;
@@ -143,17 +143,17 @@ class Simple implements ProductServiceInterface
 	}
 
 	/**
-	 * @param Product $product Product to find thumbnails for.
+	 * @param Product $product Product to find attachments for.
 	 * @param string $size Size for images.
-	 * @return array List of thumbnails attached to the product.
+	 * @return array List of attachments attached to the product.
 	 */
-	public function getThumbnails(Product $product, $size = Options::IMAGE_THUMBNAIL)
+	public function getAttachments(Product $product, $size = Options::IMAGE_THUMBNAIL)
 	{
-		if (!isset($this->thumbnails[$product->getId()])) {
-			$this->thumbnails[$product->getId()] = $this->service->getThumbnails($product);
+		if (!isset($this->attachments[$product->getId()])) {
+			$this->attachments[$product->getId()] = $this->service->getAttachments($product, $size);
 		}
 
-		return $this->thumbnails[$product->getId()];
+		return $this->attachments[$product->getId()];
 	}
 
 	/**

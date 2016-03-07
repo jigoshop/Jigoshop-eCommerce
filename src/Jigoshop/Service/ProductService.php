@@ -6,6 +6,7 @@ use Jigoshop\Core\Options;
 use Jigoshop\Core\Types;
 use Jigoshop\Entity\EntityInterface;
 use Jigoshop\Entity\Order\Item;
+use Jigoshop\Entity\Product;
 use Jigoshop\Entity\Product\Attribute;
 use Jigoshop\Entity\Product\Purchasable;
 use Jigoshop\Exception;
@@ -350,36 +351,46 @@ class ProductService implements ProductServiceInterface
 	}
 
 	/**
-	 * @param \Jigoshop\Entity\Product $product Product to find thumbnails for.
-	 * @param string                   $size    Size for images.
+	 * @param \Jigoshop\Entity\Product $product Product to find attachments for.
+	 * @param string $size Size for images.
 	 *
-	 * @return array List of thumbnails attached to the product.
+	 * @return array List of Attachments attached to the product.
 	 */
-	public function getThumbnails(\Jigoshop\Entity\Product $product, $size = Options::IMAGE_THUMBNAIL)
+	public function getAttachments(Product $product, $size = Options::IMAGE_THUMBNAIL)
 	{
-		$query = new \WP_Query();
-		$args = array(
-			'post_type' => 'attachment',
-			'post_mime_type' => 'image',
-			'orderby' => 'menu_order',
-			'order' => 'asc',
-			'numberposts' => -1,
-			'post_status' => 'inherit',
-			'post_parent' => $product->getId(),
-			'suppress_filters' => true,
-			'post__not_in' => array($this->wp->getPostThumbnailId($product->getId())),
-		);
+		$this->wp->wpUploadDir();
+		$uploadUrl = $this->wp->wpUploadDir()['baseurl'];
+		$wpdb = $this->wp->getWPDB();
 
-		$thumbnails = array();
-		foreach ($query->query($args) as $thumbnail) {
-			$thumbnails[$thumbnail->ID] = array(
-				'title' => $thumbnail->post_title,
-				'url' => $this->wp->wpGetAttachmentUrl($thumbnail->ID),
-				'image' => $this->wp->wpGetAttachmentImage($thumbnail->ID, $size),
+		$query = $wpdb->prepare("SELECT post.ID as id, post.post_title as title, post.guid as url, meta.meta_value as meta, attachment.type
+				FROM {$wpdb->prefix}jigoshop_product_attachment as attachment
+				LEFT JOIN {$wpdb->posts} as post ON (attachment.attachment_id = post.ID)
+				LEFT JOIN {$wpdb->postmeta} as meta ON (meta.meta_key = '_wp_attachment_metadata' AND meta.post_id = post.ID)
+				WHERE product_id = %d", $product->getId());
+		$attachments = $wpdb->get_results($query, ARRAY_A);
+
+		foreach($attachments as $attachment) {
+			$attachment['meta'] = unserialize($attachment['meta']);
+			if (isset($attachment['meta']['sizes']) && isset($attachment['meta']['sizes'][$size])) {
+				$thumbUrl = $uploadUrl . '/' . str_replace(
+					basename($attachment['meta']['file']),
+					basename($attachment['meta']['sizes'][$size]['file']),
+					$attachment['meta']['file']
+				);
+			} else {
+				$thumbUrl = $uploadUrl . '/' . $attachment['meta']['file'];
+			}
+
+			$attachments[$attachment['type']][] = array(
+				'id' => $attachment['id'],
+				'title' => $attachment['title'],
+				'url' => isset($attachment['meta']['file']) ? $uploadUrl . '/' . $attachment['meta']['file'] : $attachment['url'],
+				'thumbnail' => $thumbUrl,
+				'image' => $this->wp->wpGetAttachmentImage($attachment['id'], $size),
 			);
 		}
 
-		return $thumbnails;
+		return $attachments;
 	}
 
 	/**

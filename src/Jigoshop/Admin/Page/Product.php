@@ -79,7 +79,7 @@ class Product
 					'menu' => array_map(function ($item){
 						return $item['visible'];
 					}, $menu),
-					'attachments' => $that->getProductAttachments()
+					'attachments' => $that->getAttachments()
 				));
 
 				$wp->doAction('jigoshop\admin\product\assets', $wp);
@@ -152,52 +152,20 @@ class Product
 	{
 		$menu = array(
 			'gallery' => __('Gallery', 'jigoshop'),
-			'downloadable' => __('Downloadable', 'jigoshop'),
+			'downloads' => __('Downloads', 'jigoshop'),
 		);
 
-		$tabs = array(
-			'gallery' => array(
-				'images' => array(),
-			),
-			'downloadable' => array(
-				'files' => array(),
-			)
-		);
 		Render::output('admin/product/attachments', array(
 			'menu' => $menu,
-			'tabs' => $tabs
 		));
 	}
 
-	public function getProductAttachments()
+	public function getAttachments()
 	{
 		$post = $this->wp->getGlobalPost();
 		/** @var \Jigoshop\Entity\Product $product */
 		$product = $this->productService->findForPost($post);
-		$attachments = array();
-		$this->wp->wpUploadDir();
-		$uploadUrl = $this->wp->wpUploadDir()['baseurl'];
-		foreach($product->getAttachments() as $attachment) {
-			$attachmentMetaData = wp_get_attachment_metadata($attachment['id']);
-
-			if(isset($attachmentMetaData['sizes']) && isset($attachmentMetaData['sizes']['thumbnail'])){
-				$url = $uploadUrl.'/'.str_replace(
-						basename($attachmentMetaData['file']),
-						basename($attachmentMetaData['sizes']['thumbnail']['file']),
-						$attachmentMetaData['file']
-					);
-			} else {
-				$url = $uploadUrl.'/'.$attachmentMetaData['file'];
-			}
-
-			$attachments[$attachment['type']][] = array(
-				'id' => $attachment['id'],
-				'url' => $url,
-				'name' => basename($attachmentMetaData['file']),
-			);
-		}
-
-		return $attachments;
+		return $this->productService->getAttachments($product);
 	}
 
 	public function ajaxSaveAttribute()
