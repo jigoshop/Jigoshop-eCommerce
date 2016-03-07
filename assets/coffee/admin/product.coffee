@@ -232,7 +232,7 @@ class AdminProduct
       jQuery(element).remove()
 
   addAttachment: (attachment, attachmentIds, options) =>
-    if attachment.id and jQuery.inArray attachment.id, attachmentIds == -1
+    if attachment.id and jQuery.inArray(attachment.id, attachmentIds) == -1
       template = wp.template options.template_name
       html = template {
         id: attachment.id

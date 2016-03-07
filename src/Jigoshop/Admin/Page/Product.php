@@ -175,11 +175,25 @@ class Product
 		/** @var \Jigoshop\Entity\Product $product */
 		$product = $this->productService->findForPost($post);
 		$attachments = array();
+		$this->wp->wpUploadDir();
+		$uploadUrl = $this->wp->wpUploadDir()['baseurl'];
 		foreach($product->getAttachments() as $attachment) {
+			$attachmentMetaData = wp_get_attachment_metadata($attachment['id']);
+
+			if(isset($attachmentMetaData['sizes']) && isset($attachmentMetaData['sizes']['thumbnail'])){
+				$url = $uploadUrl.'/'.str_replace(
+						basename($attachmentMetaData['file']),
+						basename($attachmentMetaData['sizes']['thumbnail']['file']),
+						$attachmentMetaData['file']
+					);
+			} else {
+				$url = $uploadUrl.'/'.$attachmentMetaData['file'];
+			}
+
 			$attachments[$attachment['type']][] = array(
 				'id' => $attachment['id'],
-				'url' => wp_get_attachment_thumb_url($attachment['id']),
-				'name' => 'screen',
+				'url' => $url,
+				'name' => basename($attachmentMetaData['file']),
 			);
 		}
 
