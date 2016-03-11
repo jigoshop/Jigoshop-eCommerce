@@ -32,7 +32,10 @@ class PageResolver
 		} else {
 			$that = $this;
 			$this->wp->addAction('current_screen', function () use ($container, $that){
-				$page = $that->getPage($container);
+				$page = $that->wp->applyFilters('jigoshop.frontend.page_resolver.page', null);
+				if($page == null || !($page instanceof PageInterface)) {
+					$page = $that->getPage($container);
+				}
 				$container->services->set('jigoshop.page.current', $page);
 			}, 1);
 		}
