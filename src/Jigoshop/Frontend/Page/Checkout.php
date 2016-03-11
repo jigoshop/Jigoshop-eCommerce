@@ -127,13 +127,13 @@ class Checkout implements PageInterface
 		}
 
 		switch ($_POST['field']) {
-			case 'shipping':
+			case 'shipping_address':
 				$customer->getShippingAddress()->setCountry($_POST['value']);
 				if ($customer->getBillingAddress()->getCountry() == null) {
 					$customer->getBillingAddress()->setCountry($_POST['value']);
 				}
 				break;
-			case 'billing':
+			case 'billing_address':
 				$customer->getBillingAddress()->setCountry($_POST['value']);
 				if ($_POST['differentShipping'] === 'false') {
 					$customer->getShippingAddress()->setCountry($_POST['value']);
