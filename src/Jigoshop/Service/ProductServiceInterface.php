@@ -59,12 +59,12 @@ interface ProductServiceInterface extends ServiceInterface
 	public function findLowStock($threshold, $number);
 
 	/**
-	 * @param Product $product Product to find thumbnails for.
-	 * @param string  $size    Size for images.
+	 * @param \Jigoshop\Entity\Product $product Product to find attachments for.
+	 * @param string $size Size for images.
 	 *
-	 * @return array List of thumbnails attached to the product.
+	 * @return array List of Attachments attached to the product.
 	 */
-	public function getThumbnails(Product $product, $size = Options::IMAGE_THUMBNAIL);
+	public function getAttachments(Product $product, $size = Options::IMAGE_THUMBNAIL);
 
 	/**
 	 * Finds and returns list of available attributes.

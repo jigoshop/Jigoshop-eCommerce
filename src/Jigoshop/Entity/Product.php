@@ -34,6 +34,7 @@ abstract class Product implements EntityInterface, Product\Taxable
 	private $visibility = self::VISIBILITY_PUBLIC;
 	private $featured;
 	private $attributes;
+	private $attachments;
 
 	protected $dirtyFields = array();
 
@@ -413,6 +414,22 @@ abstract class Product implements EntityInterface, Product\Taxable
 	}
 
 	/**
+	 * @return mixed
+	 */
+	public function getAttachments()
+	{
+		return $this->attachments;
+	}
+
+	/**
+	 * @param mixed $attachments
+	 */
+	public function setAttachments($attachments)
+	{
+		$this->attachments = $attachments;
+	}
+
+	/**
 	 * @param string $attribute Attribute name to find.
 	 *
 	 * @return int Key in attributes array.
@@ -470,6 +487,7 @@ abstract class Product implements EntityInterface, Product\Taxable
 		$toSave['size_length'] = $this->size->getLength();
 
 		$toSave['attributes'] = $this->attributes;
+		$toSave['attachments'] = $this->attachments;
 
 		return $toSave;
 	}
@@ -532,9 +550,11 @@ abstract class Product implements EntityInterface, Product\Taxable
 		if (isset($state['size_length'])) {
 			$this->size->setLength($state['size_length']);
 		}
-
 		if (isset($state['attributes'])) {
 			$this->attributes = $state['attributes'];
+		}
+		if (isset($state['attachments'])) {
+			$this->attachments = $state['attachments'];
 		}
 	}
 

@@ -41,6 +41,7 @@ class Product
 		$that = $this;
 		$wp->addAction('add_meta_boxes_'.Types::PRODUCT, function () use ($wp, $that){
 			$wp->addMetaBox('jigoshop-product-data', __('Product Data', 'jigoshop'), array($that, 'box'), Types::PRODUCT, 'normal', 'high');
+			$wp->addMetaBox('jigoshop-product-attachments', __('Attachments', 'jigoshop'), array($that, 'attachmentsBox'), Types::PRODUCT, 'side', 'low');
 			$wp->removeMetaBox('commentstatusdiv', null, 'normal');
 		});
 
@@ -52,7 +53,7 @@ class Product
 			'sales' => array('label' => __('Sales', 'jigoshop'), 'visible' => array(Simple::TYPE)),
 		));
 
-		$wp->addAction('admin_enqueue_scripts', function () use ($wp, $menu){
+		$wp->addAction('admin_enqueue_scripts', function () use ($wp, $menu, $that){
 			if ($wp->getPostType() == Types::PRODUCT) {
 
 				Styles::add('jigoshop.vendors.select2', JIGOSHOP_URL.'/assets/css/vendors/select2.css', array('jigoshop.admin.product'));
@@ -78,6 +79,7 @@ class Product
 					'menu' => array_map(function ($item){
 						return $item['visible'];
 					}, $menu),
+					'attachments' => $that->getAttachments()
 				));
 
 				$wp->doAction('jigoshop\admin\product\assets', $wp);
@@ -144,6 +146,26 @@ class Product
 			'tabs' => $tabs,
 			'current_tab' => 'general',
 		));
+	}
+
+	public function attachmentsBox()
+	{
+		$menu = array(
+			'gallery' => __('Gallery', 'jigoshop'),
+			'downloads' => __('Downloads', 'jigoshop'),
+		);
+
+		Render::output('admin/product/attachments', array(
+			'menu' => $menu,
+		));
+	}
+
+	public function getAttachments()
+	{
+		$post = $this->wp->getGlobalPost();
+		/** @var \Jigoshop\Entity\Product $product */
+		$product = $this->productService->findForPost($post);
+		return $this->productService->getAttachments($product);
 	}
 
 	public function ajaxSaveAttribute()

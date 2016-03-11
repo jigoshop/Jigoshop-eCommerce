@@ -8,7 +8,8 @@ class AdminProduct
       invalid_attribute: ''
       attribute_without_label: ''
     menu: {}
-  productGalleryFrame: ''
+    attachments: {}
+  wpMedia: false
 
   constructor: (@params) ->
     jQuery('#add-attribute').on 'click', @addAttribute
@@ -60,8 +61,10 @@ class AdminProduct
     jQuery('#sales-to').datepicker
       todayBtn: 'linked'
       autoclose: true
-
-    jQuery('.set-product-images').on 'click', 'a', @updateProductImages
+    jQuery('.add-product-attachments')
+      .on 'click', @updateAttachments
+    jQuery(document)
+      .ready @initAttachments
 
   changeProductType: (event) =>
     type = jQuery(event.target).val()
@@ -164,37 +167,80 @@ class AdminProduct
         else
           addMessage('danger', data.error, 6000)
 
-  updateProductImages: (event) ->
+  updateAttachments: (event) =>
     event.preventDefault()
-    imageGallery = jQuery '#product-image-gallery'
-    productImages = imageGallery.find 'ul.product-images'
-    element = jQuery this
+    element = jQuery(event.target).data 'type'
 
-    productGalleryFrame = wp.media.frames.product_gallery = wp.media {
-      title: element.data 'choose'
-      button: {
-        text: element.data 'update'
-      }
+    if(wpMedia)
+      @wpMedia.open()
+      return
+    @wpMedia = wp.media {
       states: [
         new wp.media.controller.Library {
-          title: element.data 'choose'
           filterable: 'all'
           multiple: true
         }
       ]
     }
 
-    productGalleryFrame.on 'select', ->
-      selection = productGalleryFrame.state().get 'selection'
-      attachmentIds = imageGallery.val()
+    wpMedia = @wpMedia
+    @wpMedia.on 'select', =>
+      selection = wpMedia.state().get 'selection'
+      attachmentIds = jQuery.map jQuery('input[name="product[attachments][' + element + '][]"]'), (attachment) ->
+        return parseInt jQuery(attachment).val()
 
-      selection.map (attachment) ->
+      selection.map (attachment) =>
         attachment = attachment.toJSON()
         if attachment.id?
-          if jQuery('input[name="product_images[' + attachment.id + ']"]').length == 0
-            productImages.append '<input type="hidden" value="' + attachment.id + '" name="product_images[' + attachment.id + ']"/>'
+          if element == 'gallery'
+            options = {
+              template_name: 'product-gallery'
+              insert_before: '.empty-gallery'
+              attachment_class: '.gallery-image'
+            }
+          else if element == 'downloads'
+            options = {
+              template_name: 'product-downloads'
+              insert_before: '.empty-downloads'
+              attachment_class: '.downloads-file'
+            }
+          @addAttachment attachment, attachmentIds, options
 
-    productGalleryFrame.open()
+    wpMedia.open()
+
+  initAttachments: =>
+    console.log(@params.attachments)
+    if @params.attachments.gallery?
+      template = wp.template 'product-gallery'
+      for attachment in @params.attachments.gallery
+        jQuery('.empty-gallery').before template(attachment)
+        @addHooks '', jQuery('.gallery-image').last()
+
+    if @params.attachments.downloads?
+      template = wp.template 'product-downloads'
+      for attachment in @params.attachments.downloads
+        jQuery('.empty-downloads').before template(attachment)
+        @addHooks '', jQuery('.downloads-file').last()
+
+  addHooks: (index, element) ->
+    $delete = jQuery(element).find '.delete'
+    jQuery(element). hover ->
+      $delete.show()
+    , ->
+      $delete.hide()
+    $delete.click ->
+      jQuery(element).remove()
+
+  addAttachment: (attachment, attachmentIds, options) =>
+    if attachment.id and jQuery.inArray(attachment.id, attachmentIds) == -1
+      template = wp.template options.template_name
+      html = template {
+        id: attachment.id
+        url: if attachment.sizes and attachment.sizes.thumbnail then attachment.sizes.thumbnail.url else attachment.url
+        title: attachment.title
+      }
+      jQuery(options.insert_before).before html
+      @addHooks '', jQuery(options.attachment_class).last()
 
 jQuery ->
   new AdminProduct(jigoshop_admin_product)

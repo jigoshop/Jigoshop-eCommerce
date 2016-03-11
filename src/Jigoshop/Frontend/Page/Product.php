@@ -84,6 +84,10 @@ class Product implements PageInterface
 			$this,
 			'productDescription'
 		), 10, 2);
+		$wp->addAction('jigoshop\template\product\tab_panels', array(
+			$this,
+			'productDownloads'
+		), 10, 2);
 		$wp->doAction('jigoshop\product\assets', $wp);
 	}
 
@@ -199,7 +203,7 @@ class Product implements PageInterface
 		$imageClasses = apply_filters('jigoshop\product\image_classes', array(), $product);
 		$featured = ProductHelper::getFeaturedImage($product, Options::IMAGE_LARGE);
 		$featuredUrl = ProductHelper::hasFeaturedImage($product) ? $this->wp->wpGetAttachmentUrl($this->wp->getPostThumbnailId($product->getId())) : '';
-		$thumbnails = $this->productService->getThumbnails($product, Options::IMAGE_THUMBNAIL);
+		$thumbnails = $this->productService->getAttachments($product, Options::IMAGE_THUMBNAIL)['gallery'];
 
 		Render::output('shop/product/images', array(
 			'product' => $product,
@@ -221,6 +225,9 @@ class Product implements PageInterface
 		}
 		if ($product->getDescription()) {
 			$tabs['description'] = __('Description', 'jigoshop');
+		}
+		if ($product->getAttachments()) {
+			$tabs['downloads'] = __('Files to download', 'jigoshop');
 		}
 
 		$tabs = $this->wp->applyFilters('jigoshop\product\tabs', $tabs);
@@ -254,6 +261,19 @@ class Product implements PageInterface
 		Render::output('shop/product/description', array(
 			'product' => $product,
 			'currentTab' => $currentTab,
+		));
+	}
+
+	/**
+	 * @param $currentTab string Current tab name.
+	 * @param $product    \Jigoshop\Entity\Product Shown product.
+	 */
+	public function productDownloads($currentTab, $product)
+	{
+		Render::output('shop/product/downloads', array(
+			'product' => $product,
+			'currentTab' => $currentTab,
+			'attachments' => $this->productService->getAttachments($product)['downloads'],
 		));
 	}
 }
