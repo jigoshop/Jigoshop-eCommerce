@@ -209,7 +209,8 @@ class Product implements PageInterface
 			'product' => $product,
 			'featured' => $featured,
 			'featuredUrl' => $featuredUrl,
-			'thumbnails' => $thumbnails,
+//			@TODO $thumbnails powinien zawsze zwracać array, przerobić tak metodę by się przed tym zabezpieczyć
+			'thumbnails' => is_array($thumbnails) ? $thumbnails : array(),
 			'imageClasses' => $imageClasses,
 		));
 	}
