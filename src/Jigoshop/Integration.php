@@ -73,6 +73,16 @@ class Integration
     }
 
     /**
+     * @param $service
+     *
+     * @return object
+     */
+    public static function getService($service)
+    {
+        return self::$di->get($service);
+    }
+
+    /**
      * @return \Jigoshop\Service\PaymentServiceInterface
      */
     public static function getPaymentService()
