@@ -18,7 +18,7 @@ class Render
      * @param $key
      * @param $path
      */
-    public function addLocation($key, $path)
+    public static function addLocation($key, $path)
     {
         if(!isset(self::$locations[$key])) {
             self::$locations[$key] = $path;
@@ -39,7 +39,7 @@ class Render
     public static function get($key, $template, array $environment)
     {
         ob_start();
-        self::output($template, $environment);
+        self::output($key, $template, $environment);
 
         return ob_get_clean();
     }
@@ -69,8 +69,12 @@ class Render
      */
     public static function locateTemplate($key, $template)
     {
-        $file = locate_template(array('jigoshop/'.$key.'/'.$template.'.php'), false, false);
+        $file = locate_template(array('jigoshop/'.strtolower($key).'/'.$template.'.php'), false, false);
         if (empty($file)) {
+            if(!isset(self::$locations[$key])) {
+                throw new Exception(sprintf(__('The key [%s] does not exist.', 'jigoshop'), $key));
+            }
+            
             $file = self::$locations[$key].'/templates/'.$template.'.php';
         }
 
