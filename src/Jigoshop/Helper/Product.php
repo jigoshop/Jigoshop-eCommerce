@@ -322,7 +322,7 @@ class Product
 				Render::output("shop/{$template}/cart/variable", array('product' => $product));
 				break;
 			default:
-				do_action('jigoshop\helper\product\print_cart_form', $product->getType(), $product, $template);
+				do_action('jigoshop\helper\product\print_cart_form', $type, $product, $template);
 		}
 	}
 
