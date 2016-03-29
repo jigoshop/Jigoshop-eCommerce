@@ -2,7 +2,7 @@ class AdminProduct
   params:
     ajax: ''
     i18n:
-      saved: ''
+      saved: ''x=
       confirm_remove: ''
       attribute_removed: ''
       invalid_attribute: ''
