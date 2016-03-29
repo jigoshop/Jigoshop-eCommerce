@@ -54,7 +54,7 @@ class Settings implements PageInterface
 			Styles::add('jigoshop.admin.settings', JIGOSHOP_URL.'/assets/css/admin/settings.css', array('jigoshop.admin'));
 			Styles::add('jigoshop.vendors.select2', JIGOSHOP_URL.'/assets/css/vendors/select2.css', array('jigoshop.admin'));
 			Styles::add('jigoshop.vendors.datepicker', JIGOSHOP_URL.'/assets/css/vendors/datepicker.css', array('jigoshop.admin'));
-			Styles::add('jigoshop.vendors.bs_switch', JIGOSHOP_URL.'/assets/css/vendors/bs_switch.min.css', array('jigoshop.admin'));
+			Styles::add('jigoshop.vendors.bs_switch', JIGOSHOP_URL.'/assets/css/vendors/bs_switch.css', array('jigoshop.admin'));
 
 			Scripts::add('jigoshop.admin.settings', JIGOSHOP_URL . '/assets/js/admin/settings.js', array('jigoshop.admin'), array('page' => 'jigoshop_page_jigoshop_settings', 'in_footer' => true));
 			Scripts::add('jigoshop.vendors.select2', JIGOSHOP_URL . '/assets/js/vendors/select2.js', array(
@@ -63,7 +63,7 @@ class Settings implements PageInterface
 			Scripts::add('jigoshop.vendors.bs_tab_trans_tooltip_collapse', JIGOSHOP_URL . '/assets/js/vendors/bs_tab_trans_tooltip_collapse.js', array(
 				'jigoshop.admin.settings',
 			), array('page' => 'jigoshop_page_jigoshop_settings', 'in_footer' => true));
-			Scripts::add('jigoshop.vendors.bs_switch', JIGOSHOP_URL . '/assets/js/vendors/bs_switch.min.js', array(
+			Scripts::add('jigoshop.vendors.bs_switch', JIGOSHOP_URL . '/assets/js/vendors/bs_switch.js', array(
 				'jigoshop.admin.settings',
 			), array('page' => 'jigoshop_page_jigoshop_settings', 'in_footer' => true));
 		});
