@@ -2,13 +2,13 @@
 namespace Jigoshop\Admin\SystemInfo;
 
 use Jigoshop\Admin\Settings\TabInterface;
+use Jigoshop\Admin\Settings\ValidationException;
 use Jigoshop\Admin\SystemInfo;
 use Jigoshop\Core;
 use Jigoshop\Core\Options;
 use Jigoshop\Helper\Currency;
 use Jigoshop\Helper\Render;
 use Jigoshop\Helper\Scripts;
-use Jigoshop\Helper\Styles;
 use WPAL\Wordpress;
 
 class SystemStatusTab implements TabInterface
