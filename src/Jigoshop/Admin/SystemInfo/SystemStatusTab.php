@@ -633,7 +633,7 @@ class SystemStatusTab implements TabInterface
 	 */
 	private function checkLogDirectory()
 	{
-		if (@fopen(JIGOSHOP_LOG_DIR.'/jigoshop.log', 'a')) {
+		if (@fopen(JIGOSHOP_LOG_DIR.'/jigoshop.debug.log', 'a')) {
 			return true;
 		}
 		return false;

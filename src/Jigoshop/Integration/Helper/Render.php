@@ -47,7 +47,7 @@ class Render
     /**
      * Outputs HTML template.
      *
-     * @param strign $key         Location of template files.
+     * @param string $key         Location of template files.
      * @param string $template    Template to render.
      * @param array  $environment Variables to make available to the template
      */
@@ -74,7 +74,7 @@ class Render
             if(!isset(self::$locations[$key])) {
                 throw new Exception(sprintf(__('The key [%s] does not exist.', 'jigoshop'), $key));
             }
-            
+
             $file = self::$locations[$key].'/templates/'.$template.'.php';
         }
 
