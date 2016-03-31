@@ -89,6 +89,7 @@ class Dashboard implements PageInterface
 		$this->wp->wpEnqueueScript('common');
 		$this->wp->wpEnqueueScript('wp-lists');
 		$this->wp->wpEnqueueScript('postbox');
+		Styles::add('wp-jquery-ui');
 
 		$this->wp->addMetaBox('jigoshop_dashboard_right_now', __('<span>Shop</span> Content', 'jigoshop'), array($this, 'rightNow'), 'jigoshop', 'side', 'core');
 		$this->wp->addMetaBox('jigoshop_dashboard_recent_orders', __('<span>Recent</span> Orders', 'jigoshop'), array($this, 'recentOrders'), 'jigoshop', 'side', 'core');

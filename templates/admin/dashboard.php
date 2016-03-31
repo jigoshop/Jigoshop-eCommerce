@@ -5,7 +5,7 @@
 ?>
 <div id="jigoshop-metaboxes-main" class="wrap">
 	<form action="admin-post.php" method="post">
-		<h2><?php _e('Jigoshop Dashboard', 'jigoshop'); ?></h2>
+		<h3><?php _e('Jigoshop Dashboard', 'jigoshop'); ?></h3>
 
 		<p id="wp-version-message"><?php _e('You are using', 'jigoshop'); ?>
 			<strong>Jigoshop <?php echo \Jigoshop\Core::VERSION; ?></strong>
