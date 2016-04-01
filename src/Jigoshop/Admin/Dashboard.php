@@ -89,6 +89,7 @@ class Dashboard implements PageInterface
 		$this->wp->wpEnqueueScript('common');
 		$this->wp->wpEnqueueScript('wp-lists');
 		$this->wp->wpEnqueueScript('postbox');
+		Styles::add('wp-jquery-ui');
 
 		$this->wp->addMetaBox('jigoshop_dashboard_right_now', __('<span>Shop</span> Content', 'jigoshop'), array($this, 'rightNow'), 'jigoshop', 'side', 'core');
 		$this->wp->addMetaBox('jigoshop_dashboard_recent_orders', __('<span>Recent</span> Orders', 'jigoshop'), array($this, 'recentOrders'), 'jigoshop', 'side', 'core');
@@ -190,6 +191,7 @@ class Dashboard implements PageInterface
 	{
 		$currentMonth = intval(date('m'));
 		$currentYear = intval(date('Y'));
+		$currentDay = intval(date('d'));
 		$selectedMonth = isset($_GET['month']) ? intval($_GET['month']) : $currentMonth;
 		$selectedYear = isset($_GET['year']) ? intval($_GET['year']) : $currentYear;
 
@@ -200,13 +202,12 @@ class Dashboard implements PageInterface
 
 		$orders = $this->orderService->findFromMonth($selectedMonth, $selectedYear);
 
-		$currentTime = strtotime($selectedYear.'-'.$selectedMonth.'-01');
-		$time = time();
+		$currentTime = strtotime($selectedYear.'-'.$selectedMonth.'-1');
 
-		if ($currentTime > $time + 24 * 3600) {
-			$days = range($currentTime, $time, 24 * 3600);
+		if ($currentTime >= strtotime($currentYear.'-'.$currentMonth.'-1')) {
+			$days = range($currentTime, strtotime($currentYear.'-'.$currentMonth.'-'.$currentDay + 1), 24 * 3600);
 		} else {
-			$days = array($currentTime);
+			$days = range($currentTime, strtotime($nextYear.'-'.$nextMonth.'-1'), 24 * 3600);
 		}
 
 		$orderAmountsData = $orderCountsData = array_fill_keys($days, 0);
@@ -214,6 +215,9 @@ class Dashboard implements PageInterface
 
 		foreach ($orders as $order) {
 			/** @var $order Order */
+			$debug = $order->getStateToSave();
+			unset($debug['items']);
+
 			$day = strtotime($order->getCreatedAt()->format('Y-m-d'));
 			$orderCountsData[$day] += 1;
 			$orderAmountsData[$day] += $order->getSubtotal() + $order->getShippingPrice();

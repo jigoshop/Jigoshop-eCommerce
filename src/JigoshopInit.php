@@ -20,7 +20,7 @@ class JigoshopInit
 
 	public function __construct()
 	{
-		require_once(JIGOSHOP_DIR.'/vendor/autoload.php');
+		$classLoader = require_once(JIGOSHOP_DIR.'/vendor/autoload.php');
 		require_once(JIGOSHOP_DIR.'/src/functions.php');
 		require_once(JIGOSHOP_DIR.'/src/Jigoshop/Container.php');
 
@@ -58,6 +58,7 @@ class JigoshopInit
 		$this->container->compiler->compile($this->container);
 		// Initialize Integration for plugins
 		$this->container->get('jigoshop.integration');
+		\Jigoshop\Integration::setClassLoader($classLoader);
 
 		add_filter('admin_footer_text', array($this, 'footer'));
 		add_action('admin_bar_menu', array($this, 'toolbar'), 35);

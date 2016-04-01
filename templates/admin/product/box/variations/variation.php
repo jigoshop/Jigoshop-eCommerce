@@ -50,6 +50,15 @@ $product = $variation->getProduct();
 				'value' => $product->getPrice(),
 				'size' => 11,
 			));
+			Forms::select(array(
+				'name' => 'product[variation]['.$variation->getId().'][product][tax_classes]',
+				'label' => __('Tax classes', 'jigoshop'),
+				'multiple' => true,
+				'value' => $variation->getProduct()->getTaxClasses(),
+				'options' => $taxClasses,
+				'classes' => array($product->isTaxable() ? '' : 'not-active'),
+				'size' => 11,
+			));
 			?>
 			</fieldset>
 			<fieldset>

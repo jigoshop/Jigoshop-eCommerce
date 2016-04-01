@@ -146,7 +146,10 @@ class Order
 		$shippingTax = $order->getShippingTax();
 
 		foreach ($order->getTax() as $class => $value) {
-			$tax[$class] = $value + $shippingTax[$class];
+			if(isset($shippingTax[$class]))
+			{
+				$tax[$class] = $value + $shippingTax[$class];
+			}
 		}
 
 		$shipping = array();

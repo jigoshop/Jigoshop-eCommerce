@@ -41,6 +41,7 @@ class Product
 		$that = $this;
 		$wp->addAction('add_meta_boxes_'.Types::PRODUCT, function () use ($wp, $that){
 			$wp->addMetaBox('jigoshop-product-data', __('Product Data', 'jigoshop'), array($that, 'box'), Types::PRODUCT, 'normal', 'high');
+			$wp->addMetaBox('jigoshop-product-attachments', __('Attachments', 'jigoshop'), array($that, 'attachmentsBox'), Types::PRODUCT, 'side', 'low');
 			$wp->removeMetaBox('commentstatusdiv', null, 'normal');
 		});
 
@@ -52,16 +53,16 @@ class Product
 			'sales' => array('label' => __('Sales', 'jigoshop'), 'visible' => array(Simple::TYPE)),
 		));
 
-		$wp->addAction('admin_enqueue_scripts', function () use ($wp, $menu){
+		$wp->addAction('admin_enqueue_scripts', function () use ($wp, $menu, $that){
 			if ($wp->getPostType() == Types::PRODUCT) {
 
-				Styles::add('jigoshop.vendors.select2', JIGOSHOP_URL.'/assets/css/vendors/select2.min.css', array('jigoshop.admin.product'));
+				Styles::add('jigoshop.vendors.select2', JIGOSHOP_URL.'/assets/css/vendors/select2.css', array('jigoshop.admin.product'));
 				Styles::add('jigoshop.vendors.datepicker', JIGOSHOP_URL.'/assets/css/vendors/datepicker.css', array('jigoshop.admin.product'));
 				Styles::add('jigoshop.admin.product', JIGOSHOP_URL.'/assets/css/admin/product.css');
 
-				Scripts::add('jigoshop.vendors.select2', JIGOSHOP_URL . '/assets/js/vendors/select2.min.js', array('jquery', 'jigoshop.admin.product'));
-				Scripts::add('jigoshop.vendors.bs_tab_trans_tooltip_collapse', JIGOSHOP_URL . '/assets/js/vendors/bs_tab_trans_tooltip_collapse.min.js', array('jquery', 'jigoshop.admin.product'));
-				Scripts::add('jigoshop.vendors.datepicker', JIGOSHOP_URL . '/assets/js/vendors/datepicker.min.js', array('jquery', 'jigoshop.admin.product'));
+				Scripts::add('jigoshop.vendors.select2', JIGOSHOP_URL . '/assets/js/vendors/select2.js', array('jquery', 'jigoshop.admin.product'));
+				Scripts::add('jigoshop.vendors.bs_tab_trans_tooltip_collapse', JIGOSHOP_URL . '/assets/js/vendors/bs_tab_trans_tooltip_collapse.js', array('jquery', 'jigoshop.admin.product'));
+				Scripts::add('jigoshop.vendors.datepicker', JIGOSHOP_URL . '/assets/js/vendors/datepicker.js', array('jquery', 'jigoshop.admin.product'));
 				Scripts::add('jigoshop.admin.product', JIGOSHOP_URL . '/assets/js/admin/product.js', array(
 					'jquery',
 					'jigoshop.helpers'
@@ -78,6 +79,7 @@ class Product
 					'menu' => array_map(function ($item){
 						return $item['visible'];
 					}, $menu),
+					'attachments' => $that->getAttachments()
 				));
 
 				$wp->doAction('jigoshop\admin\product\assets', $wp);
@@ -146,6 +148,26 @@ class Product
 		));
 	}
 
+	public function attachmentsBox()
+	{
+		$menu = array(
+			'gallery' => __('Gallery', 'jigoshop'),
+			'downloads' => __('Downloads', 'jigoshop'),
+		);
+
+		Render::output('admin/product/attachments', array(
+			'menu' => $menu,
+		));
+	}
+
+	public function getAttachments()
+	{
+		$post = $this->wp->getGlobalPost();
+		/** @var \Jigoshop\Entity\Product $product */
+		$product = $this->productService->findForPost($post);
+		return $this->productService->getAttachments($product);
+	}
+
 	public function ajaxSaveAttribute()
 	{
 		try {
@@ -197,6 +219,8 @@ class Product
 				$attribute->setValue(trim(htmlspecialchars(strip_tags($_POST['value']))));
 			} else if ($attributeExists) {
 				throw new Exception(sprintf(__('Attribute "%s" already exists.', 'jigoshop'), $attribute->getLabel()));
+			} else {
+				$attribute->setValue('');
 			}
 
 			if (isset($_POST['options']) && isset($_POST['options']['display'])) {
@@ -281,13 +305,7 @@ class Product
 
 			$result = array(
 				'success' => true,
-				'results' => array_values(array_map(function ($item){
-					/** @var $item \Jigoshop\Entity\Product */
-					return array(
-						'id' => $item->getId(),
-						'text' => $item->getName(),
-					);
-				}, $products)),
+				'results' => $this->prepareResults($products),
 			);
 		} catch (Exception $e) {
 			$result = array(
@@ -298,5 +316,43 @@ class Product
 
 		echo json_encode($result);
 		exit;
+	}
+
+	/**
+	 * Get id and name product from different products types
+	 *
+	 * @param array $products Products list
+	 *
+	 * @return array
+	 */
+	public function prepareResults($products)
+	{
+		$preparedProducts = array();
+		if (count($products) > 0)
+		{
+			/** @var \Jigoshop\Entity\Product | \Jigoshop\Entity\Product\Variable $product */
+			/** @var \Jigoshop\Entity\Product\Variable\Variation $variation */
+			foreach ($products as $product)
+			{
+				if ($product->getType() == Variable::TYPE)
+				{
+					foreach ($product->getVariations() as $variation)
+					{
+						$preparedProducts[] = array(
+							'id'   => $variation->getProduct()
+							                    ->getId(),
+							'text' => $variation->getProduct()
+							                    ->getName()
+						);
+					}
+				}
+				else
+				{
+					$preparedProducts[] = array('id' => $product->getId(), 'text' => $product->getName());
+				}
+			}
+		}
+
+		return $preparedProducts;
 	}
 }

@@ -5,6 +5,7 @@ namespace Jigoshop\Admin\Settings;
 use Jigoshop\Container;
 use Jigoshop\Core\Messages;
 use Jigoshop\Core\Options;
+use Jigoshop\Core\Types;
 use Jigoshop\Frontend\Pages;
 use Jigoshop\Helper\Render;
 use WPAL\Wordpress;
@@ -132,6 +133,21 @@ class AdvancedTab implements TabInterface
 				),
 			),
 			array(
+				'title' => __('Products list', 'jigoshop'),
+				'id' => 'products_list',
+				'fields' => array(
+					array(
+						'name' => '[products_list][variations_sku_stock]',
+						'title' => __('Show variation\'s SKU and stock', 'jigoshop'),
+						'description' => __("Show all variation's SKU and stock on products list page.", 'jigoshop'),
+						'tip' => __("Show all variation's SKU and stock on products list page.", 'jigoshop'),
+						'type' => 'checkbox',
+						'checked' => $this->settings['products_list']['variations_sku_stock'],
+						'classes' => array('switch-medium'),
+					),
+				),
+			),
+			array(
 				'title' => __('Others', 'jigoshop'),
 				'id' => 'others',
 				'fields' => array(
@@ -228,29 +244,20 @@ class AdvancedTab implements TabInterface
 	{
 		if (isset($settings['install_emails'])) {
 			unset($settings['install_emails']);
+			// TODO add this to WPAL
+			remove_all_actions('save_post_'.Types\Email::NAME);
 			$this->di->get('jigoshop.installer')->installEmails();
 			$this->messages->addNotice(__('Emails created.', 'jigoshop'));
 		}
 
 		$settings['automatic_complete'] = $settings['automatic_complete'] == 'on';
 		$settings['automatic_reset'] = $settings['automatic_reset'] == 'on';
+		$settings['products_list']['variations_sku_stock'] = $settings['products_list']['variations_sku_stock'] == 'on';
 
 		if (!in_array($settings['cache'], array_keys($this->caches))) {
 			$this->messages->addWarning(sprintf(__('Invalid cache mechanism: "%s". Value set to %s.', 'jigoshop'), $settings['cache'], $this->caches['simple']));
 			$settings['cache'] = 'simple';
 		}
-
-		$settings['wos']['enabled'] = $settings['wos']['enabled'] == 'on';
-		unset($settings['wos']['files']);
-		if (isset($settings['wos']['clear_cache']) && $settings['wos']['clear_cache'] == 'on') {
-			foreach (new \DirectoryIterator(JIGOSHOP_DIR.'/cache/assets') as $file) {
-				/** @var $file \DirectoryIterator */
-				if (!$file->isDot() && $file->getFilename() != '.ignore') {
-					unlink($file->getPathname());
-				}
-			}
-		}
-		unset($settings['wos']['clear_cache']);
 
 		$pages = $this->_getPages();
 

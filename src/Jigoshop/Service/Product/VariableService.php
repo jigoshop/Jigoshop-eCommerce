@@ -22,7 +22,9 @@ class VariableService implements VariableServiceInterface
 		$this->wp = $wp;
 		$this->factory = $factory;
 		$this->productService = $productService;
-		$wp->addAction('jigoshop\service\product\save', array($this, 'save'));
+		if(defined('DOING_AJAX') && DOING_AJAX) {
+			$wp->addAction('jigoshop\service\product\save', array($this, 'save'));
+		}
 	}
 
 	/**
@@ -40,6 +42,7 @@ class VariableService implements VariableServiceInterface
 
 	public function save(EntityInterface $object)
 	{
+		// TODO: Do we want to save variations via update button?
 		if ($object instanceof Product\Variable) {
 			$wpdb = $this->wp->getWPDB();
 			$this->removeAllVariationsExcept($object->getId(), array_map(function ($item){
@@ -109,7 +112,7 @@ class VariableService implements VariableServiceInterface
 		$variableProduct = $this->productService->find($variableId);
 		$variableProduct->setVisibility(Product::VISIBILITY_NONE);
 		$variableProduct->setTaxable($product->isTaxable());
-		$variableProduct->setTaxClasses(array());
+		$variableProduct->setTaxClasses($product->getTaxClasses());
 		$variableProduct->getStock()->setManage(true);
 		if($variableProduct instanceof Product\Saleable) {
 			$variableProduct->getSales()->unserialize($product->getSales()->serialize());

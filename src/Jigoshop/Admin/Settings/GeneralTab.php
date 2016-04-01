@@ -2,6 +2,7 @@
 
 namespace Jigoshop\Admin\Settings;
 
+use Jigoshop\Core\Messages;
 use Jigoshop\Core\Options;
 use Jigoshop\Helper\Country;
 use Jigoshop\Helper\Currency;
@@ -19,10 +20,13 @@ class GeneralTab implements TabInterface
 
 	/** @var array */
 	private $options;
+	/** @var  Messages */
+	private $messages;
 
-	public function __construct(Wordpress $wp, Options $options)
+	public function __construct(Wordpress $wp, Options $options, Messages $messages)
 	{
 		$this->options = $options->get(self::SLUG);
+		$this->messages = $messages;
 		$wp->addAction('admin_enqueue_scripts', function (){
 			if (!isset($_GET['tab']) || $_GET['tab'] != GeneralTab::SLUG) {
 				return;
@@ -87,7 +91,7 @@ class GeneralTab implements TabInterface
 						'name' => '[email]',
 						'title' => __('Administrator e-mail', 'jigoshop'),
 						'type' => 'text',
-						'tip' => __('This is used to send system notifications, orders, etc.', 'jigoshop'),
+						'tip' => __('The email address used to send all Jigoshop related emails, such as order confirmations and notices.', 'jigoshop'),
 						'value' => $this->options['email'],
 					),
 					array(
@@ -158,7 +162,7 @@ class GeneralTab implements TabInterface
 			),
 			array(
 				'title' => __('Company details', 'jigoshop'),
-				'description' => __('These details, alongside with shop location, will be used for invoicing and emails.', 'jigoshop'),
+				'description' => __('These details, alongside shop location, will be used for invoicing and emails.', 'jigoshop'),
 				'id' => 'company',
 				'fields' => array(
 					array(
@@ -236,6 +240,11 @@ class GeneralTab implements TabInterface
 	{
 		$settings['show_message'] = $settings['show_message'] == 'on';
 		$settings['demo_store'] = $settings['demo_store'] == 'on';
+
+		if(!in_array($settings['country'], array_keys(Country::getAll()))) {
+			$this->messages->addError(__('Invalid shop location (country), please select again.', 'jigoshop'));
+			$settings['country'] = '';
+		}
 
 		return $settings;
 	}

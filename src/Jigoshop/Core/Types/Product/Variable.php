@@ -28,6 +28,8 @@ class Variable implements Type
 
 	/** @var Wordpress */
 	private $wp;
+	/** @var Options */
+	private $options;
 	/** @var VariableServiceInterface */
 	private $service;
 	/** @var VariableFactory */
@@ -37,9 +39,10 @@ class Variable implements Type
 	/** @var array */
 	private $allowedSubtypes = array();
 
-	public function __construct(Wordpress $wp, ProductServiceInterface $productService, VariableServiceInterface $service, VariableFactory $factory)
+	public function __construct(Wordpress $wp, Options $options, ProductServiceInterface $productService, VariableServiceInterface $service, VariableFactory $factory)
 	{
 		$this->wp = $wp;
+		$this->options = $options;
 		$this->productService = $productService;
 		$this->service = $service;
 		$this->factory = $factory;
@@ -208,6 +211,7 @@ class Variable implements Type
 			$item->setName($variation->getTitle());
 			$item->setPrice($variation->getProduct()->getPrice());
 			$item->setQuantity($_POST['quantity']);
+			$item->setTaxClasses($variation->getProduct()->getTaxClasses());
 
 			$meta = new Item\Meta();
 			$meta->setKey('variation_id');
@@ -273,9 +277,15 @@ class Variable implements Type
 			$types[$type->getId()] = $type->getName();
 		}
 
+		$taxClasses = array();
+		foreach ($this->options->get('tax.classes') as $class) {
+			$taxClasses[$class['class']] = $class['label'];
+		}
+
 		$tabs['variations'] = array(
 			'product' => $product,
 			'allowedSubtypes' => $types,
+			'taxClasses' => $taxClasses,
 		);
 
 		return $tabs;
@@ -368,12 +378,18 @@ class Variable implements Type
 				$types[$type->getId()] = $type->getName();
 			}
 
+			$taxClasses = array();
+			foreach ($this->options->get('tax.classes') as $class) {
+				$taxClasses[$class['class']] = $class['label'];
+			}
+
 			echo json_encode(array(
 				'success' => true,
 				'html' => Render::get('admin/product/box/variations/variation', array(
 					'variation' => $variation,
 					'attributes' => $product->getVariableAttributes(),
 					'allowedSubtypes' => $types,
+					'taxClasses' => $taxClasses,
 				)),
 			));
 		} catch (Exception $e) {

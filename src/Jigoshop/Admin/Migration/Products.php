@@ -191,6 +191,11 @@ class Products implements Tool
 						{
 							foreach ($attributeData as $slug => $source)
 							{
+								if(empty($source['value']))
+								{
+									continue;
+								}
+
 								$productAttributes[$product->ID]['attributes'][$slug] = array(
 									'is_visible'  => $source['visible'],
 									'is_variable' => isset($source['variation']) && $source['variation'] == true,
@@ -645,6 +650,7 @@ class Products implements Tool
 			}
 			elseif($countRemain == 0)
 			{
+				$this->wp->updateOption('jigoshop_products_migrate_id', serialize($productsIdsMigration));
 				$this->wp->deleteOption('jigoshop_attributes_anti_duplicate');
 				Migration::saveLog(__('Migration products END.', 'jigoshop'));
 			}

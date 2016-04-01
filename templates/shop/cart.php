@@ -255,5 +255,6 @@ use Jigoshop\Helper\Tax;
 		<?php endif; //*/ ?>
 		<a href="<?php echo $shopUrl; ?>" class="btn btn-default pull-left"><?php _e('&larr; Return to shopping', 'jigoshop'); ?></a>
 		<button class="btn btn-primary pull-right" name="action" value="checkout"><?php _e('Proceed to checkout &rarr;', 'jigoshopp'); ?></button>
+		<div class="clear"></div>
 	</form>
 <?php endif; ?>

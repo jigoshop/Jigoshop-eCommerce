@@ -17,6 +17,7 @@ use Jigoshop\Helper\Render;
 				'variation' => $variation,
 				'attributes' => $product->getVariableAttributes(),
 				'allowedSubtypes' => $allowedSubtypes,
+				'taxClasses' => $taxClasses,
 			)); ?>
 		<?php endforeach; ?>
 	<?php endif; ?>

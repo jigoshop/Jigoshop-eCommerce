@@ -614,6 +614,7 @@ class Orders implements Tool
 			}
 			elseif($countRemain == 0)
 			{
+				$this->wp->updateOption('jigoshop_orders_migrate_id', serialize($ordersIdsMigration));
 				Migration::saveLog(__('Migration orders END.', 'jigoshop'));
 			}
 

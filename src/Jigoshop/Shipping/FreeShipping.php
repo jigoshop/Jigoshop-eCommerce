@@ -63,12 +63,19 @@ class FreeShipping implements Method
 	}
 
 	/**
-	 * @return string Human readable name of method.
+	 * @return string Name of method.
 	 */
 	public function getName()
 	{
-		// TODO: Add support for custom shipping title
 		return __('Free shipping', 'jigoshop');
+	}
+
+	/**
+	 * @return string Human readable (customizable) title of method.
+	 */
+	public function getTitle()
+	{
+		return $this->options['title'];
 	}
 
 	/**
@@ -117,9 +124,15 @@ class FreeShipping implements Method
 				'classes' => array('switch-medium'),
 			),
 			array(
+				'name' => sprintf('[%s][title]', self::NAME),
+				'title' => __('Method title', 'jigoshop'),
+				'type' => 'text',
+				'value' => $this->getTitle(),
+			),
+			array(
 				'name' => sprintf('[%s][minimum]', self::NAME),
 				'title' => __('Minimum cart value', 'jigoshop'),
-				'description' => __('Minimum cart value from Free Shipping option should be available.', 'jigoshop'),
+				'description' => __('Minimum cart value above which the Free Shipping method should be available.', 'jigoshop'),
 				'type' => 'text',
 				'value' => $this->options['minimum'],
 			),

@@ -69,6 +69,20 @@ class ProductsTab implements TabInterface
 	{
 		return array(
 			array(
+				'title' => __('Products options', 'jigoshop'),
+				'id' => 'products_options',
+				'fields' => array(
+					array(
+						'name' => '[related]',
+						'title' => __('Related products', 'jigoshop'),
+						'type' => 'checkbox',
+						'description' => __("Show or hide the related products section on a single product page based on the same category.", 'jigoshop'),
+						'checked' => $this->options['related'],
+						'classes' => array('switch-medium'),
+					),
+				),
+			),
+			array(
 				'title' => __('Units', 'jigoshop'),
 				'id' => 'units',
 				'fields' => array(
@@ -285,7 +299,7 @@ class ProductsTab implements TabInterface
 
 		$settings['manage_stock'] = $settings['manage_stock'] == 'on';
 		$settings['show_stock'] = $settings['show_stock'] == 'on';
-		$settings['hide_out_of_stock'] = $settings['hide_out_of_stock'] == 'on';
+		$settings['related'] = $settings['related'] == 'on';
 
 		$settings['low_stock_threshold'] = (int)$settings['low_stock_threshold'];
 		if ($settings['low_stock_threshold'] < 0) {

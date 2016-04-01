@@ -7,13 +7,14 @@
  * @var $placeholder string Field's placeholder.
  * @var $value mixed Current value.
  * @var $tip string Tip to show to the user.
- * @var $description string Field description.
  * @var $size int Size of form widget.
+ * @var string $startDate Date of sale (start).
+ * @var string $endDate Date of sale (end).
  */
 $hasLabel = !empty($label);
 ?>
 <div class="form-group <?php echo $id; ?>_field <?php echo join(' ',
-    $classes); ?><?php $hidden and print ' not-active'; ?> padding-bottom-5">
+    $classes); ?> padding-bottom-5">
     <div class="row">
         <div class="col-sm-<?php echo $size; ?>">
             <?php if ($hasLabel): $size -= 2; ?>
@@ -36,9 +37,6 @@ $hasLabel = !empty($label);
                 <input type="<?php echo $type; ?>" id="<?php echo $id; ?>-to" name="<?php echo $name['to']; ?>"
                        class="form-control <?php echo join(' ', $classes); ?>" placeholder="<?php echo $placeholder; ?>"
                        value="<?php echo $value['to']; ?>"/>
-                <?php if (!empty($description)): ?>
-                    <span class="help-block"><?php echo $description; ?></span>
-                <?php endif; ?>
             </div>
         </div>
     </div>
@@ -51,7 +49,7 @@ $hasLabel = !empty($label);
         container: '#<?php echo $id; ?>',
         orientation: 'top left',
         todayBtn: 'linked',
-        <?php echo $startDate ? 'startDate: "'. $startDate .'",' : ''; ?>
-        <?php echo $endDate ? 'endDate: "'. $endDate .'",' : ''; ?>
+        startDate: <?php echo $startDate ? "'" . $startDate . "'" : 'false'; ?>,
+        endDate: <?php echo $endDate ? "'" . $endDate . "'" : 'false'; ?>,
     });
 </script>

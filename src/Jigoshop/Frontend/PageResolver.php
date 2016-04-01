@@ -3,6 +3,7 @@
 namespace Jigoshop\Frontend;
 
 use Jigoshop\Container;
+use Jigoshop\Frontend\Page\PageInterface;
 use WPAL\Wordpress;
 
 /**
@@ -28,7 +29,10 @@ class PageResolver
 		} else {
 			$that = $this;
 			$this->wp->addAction('template_redirect', function () use ($container, $that){
-				$page = $that->getPage($container);
+				$page = $that->wp->applyFilters('jigoshop.frontend.page_resolver.page', null);
+				if($page == null || !($page instanceof PageInterface)) {
+					$page = $that->getPage($container);
+				}
 				$container->services->set('jigoshop.page.current', $page);
 				$container->get('jigoshop.template')->setPage($page);
 			});

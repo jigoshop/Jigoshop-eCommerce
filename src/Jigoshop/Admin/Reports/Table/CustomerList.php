@@ -21,12 +21,19 @@ class CustomerList implements TableInterface
 	private $totalPages;
 	private $items = array();
 	private $columns = array();
+	private $slugCsv = 'export_csv';
+	private $csvExportStart = false;
 
 	public function __construct(Wordpress $wp, Options $options, OrderServiceInterface $orderService)
 	{
 		$this->wp = $wp;
 		$this->options = $options;
 		$this->orderService = $orderService;
+		if(isset($_GET['action']) && $_GET['action'] == $this->slugCsv)
+		{
+			$this->csvExportStart = true;
+			$this->exportCsv();
+		}
 	}
 
 	public function getSlug()
@@ -34,7 +41,7 @@ class CustomerList implements TableInterface
 		return self::SLUG;
 	}
 
-	public function getTite()
+	public function getTitle()
 	{
 		return __('Customer List', 'jigoshop');
 	}
@@ -87,12 +94,12 @@ class CustomerList implements TableInterface
 		return isset($_GET['search']) ? $_GET['search'] : '';
 	}
 
-	public function getItems()
+	public function getItems($columns)
 	{
 		$users = $this->getUsers();
 		foreach ($users as $user) {
 			$item = array();
-			foreach ($this->getColumns() as $columnKey => $columnName) {
+			foreach ($columns as $columnKey => $columnName) {
 				$item[$columnKey] = $this->getRow($user, $columnKey);
 			}
 			$this->items[] = $item;
@@ -110,13 +117,14 @@ class CustomerList implements TableInterface
 	{
 		Render::output('admin/reports/table', array(
 			'columns' => $this->getColumns(),
-			'items' => $this->getItems(),
+			'items' => $this->getItems($this->getColumns()),
 			'no_items' => $this->noItems(),
 			'total_items' => $this->totalItems,
 			'total_pages' => $this->totalPages,
 			'active_page' => $this->activePageNumber,
 			'search_title' => __('Search Customers'),
 			'search' => $this->getSearch(),
+			'csv_download_link' => $this->getDownloadLink(),
 		));
 	}
 
@@ -138,8 +146,8 @@ class CustomerList implements TableInterface
 
 		$query = new \WP_User_Query(array(
 			'exclude' => array_merge($adminUsers->get_results(), $managerUsers->get_results()),
-			'number' => 20,
-			'offset' => ($this->getCurrentPage() - 1) * 20,
+			'number' => $this->csvExportStart ? 0 : 20,
+			'offset' => $this->csvExportStart ? 0 : ($this->getCurrentPage() - 1) * 20,
 			'search' => '*'.$this->getSearch().'*'
 		));
 
@@ -186,7 +194,7 @@ class CustomerList implements TableInterface
 				if($lastOrder){
 					/** @var \Jigoshop\Entity\Order $order */
 					$order = $this->orderService->find($lastOrder->order_id);
-					return '<a href="'.admin_url('post.php?post='.$lastOrder_id.'&action=edit').'">#'.$order->getNumber().'</a> &ndash; '.date_i18n(get_option('date_format'), strtotime($lastOrder->order_date));
+					return '<a href="'.admin_url('post.php?post='.$lastOrder->order_id.'&action=edit').'">#'.$order->getNumber().'</a> &ndash; '.date_i18n(get_option('date_format'), strtotime($lastOrder->order_date));
 				}
 				return '-';
 			case 'user_actions' :
@@ -233,5 +241,43 @@ class CustomerList implements TableInterface
 		$wpdb = $this->wp->getWPDB();
 
 		return $wpdb->get_row($wpdb->prepare("SELECT posts.ID AS order_id, posts.post_date AS order_date FROM {$wpdb->posts} AS posts LEFT JOIN {$wpdb->postmeta} AS meta ON meta.post_id = posts.ID AND meta.meta_key = %s WHERE meta.meta_value = %d ORDER BY posts.post_date DESC LIMIT 1", 'customer_id', $customerId));
+	}
+
+	private function getDownloadLink()
+	{
+		return add_query_arg(array(
+			'page'   => $_GET['page'],
+			'tab'    => $_GET['tab'],
+			'type'   => $this->getSlug(),
+			'action' => $this->slugCsv,
+		), '');
+	}
+
+	private function exportCsv()
+	{
+		header('Content-Type: text/csv; charset=utf-8');
+		header('Content-Disposition: attachment; filename=report_customer_list.csv');
+
+		$csvSource = fopen('php://output', 'w');
+
+		fputcsv($csvSource, $this->getCsvColumns());
+
+		foreach ($this->getItems($this->getCsvColumns()) as $row)
+		{
+			fputcsv($csvSource, $row);
+		}
+
+		exit;
+	}
+
+	private function getCsvColumns()
+	{
+		return array(
+			'username'   => __('Username', 'jigoshop'),
+//			'email'      => __('Email', 'jigoshop'),
+			'orders'     => __('Orders', 'jigoshop'),
+			'spent'      => __('Money Spent', 'jigoshop'),
+//			'last_order' => __('Last order', 'jigoshop'),
+		);
 	}
 }

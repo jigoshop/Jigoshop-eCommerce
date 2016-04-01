@@ -20,7 +20,10 @@ use Jigoshop\Helper\Render;
 								<?php _e('Class', 'jigoshop'); ?>
 								<span data-toggle="tooltip" class="badge" data-placement="top" title="<?php _e('Tax classes needs to be saved first before updating rules.', 'jigoshop'); ?>">?</span>
 							</th>
-							<th scope="col"><?php _e('Is compound?', 'jigoshop'); ?></th>
+							<th scope="col">
+								<?php _e('Is compound?', 'jigoshop'); ?>
+								<span data-toggle="tooltip" class="badge" data-placement="top" title="<?php _e('A compound tax, is calculated on top of a primary tax.', 'jigoshop'); ?>">?</span>
+							</th>
 							<th scope="col"><?php _e('Rate', 'jigoshop'); ?></th>
 							<th scope="col"><?php _e('Country', 'jigoshop'); ?></th>
 							<th scope="col">

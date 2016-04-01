@@ -22,7 +22,7 @@ abstract class Attribute
 	/** @var int */
 	private $id;
 	/** @var bool */
-	private $local;
+	private $local = false;
 	/** @var string */
 	private $slug;
 	/** @var string */

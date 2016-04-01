@@ -38,17 +38,24 @@ class Product implements PageInterface
 		$this->cartService = $cartService;
 		$this->messages = $messages;
 
-		Styles::add('jigoshop.vendors.colorbox', JIGOSHOP_URL.'/assets/css/vendors/colorbox.min.css');
-		Styles::add('jigoshop.vendors.select2', JIGOSHOP_URL.'/assets/css/vendors/select2.min.css');
+		Styles::add('jigoshop.vendors.colorbox', JIGOSHOP_URL.'/assets/css/vendors/colorbox.css');
+		Styles::add('jigoshop.vendors.select2', JIGOSHOP_URL.'/assets/css/vendors/select2.css');
 		Styles::add('jigoshop.shop.product', JIGOSHOP_URL.'/assets/css/shop/product.css', array(
 			'jigoshop.shop',
 			'jigoshop.vendors.select2',
 			'jigoshop.vendors.colorbox',
 		));
 
-		Scripts::add('jigoshop.vendors.select2', JIGOSHOP_URL.'/assets/js/vendors/select2.min.js', array('jquery'));
-		Scripts::add('jigoshop.vendors.colorbox', JIGOSHOP_URL.'/assets/js/vendors/colorbox.min.js', array('jquery'));
-		Scripts::add('jigoshop.vendors.bs_tab_trans_tooltip_collapse', JIGOSHOP_URL.'/assets/js/vendors/bs_tab_trans_tooltip_collapse.min.js', array('jquery'));
+		if($this->options->get('products.related'))
+		{
+			Styles::add('jigoshop.shop.related_products', JIGOSHOP_URL . '/assets/css/shop/related_products.css', array(
+				'jigoshop.shop',
+			));
+		}
+
+		Scripts::add('jigoshop.vendors.select2', JIGOSHOP_URL.'/assets/js/vendors/select2.js', array('jquery'));
+		Scripts::add('jigoshop.vendors.colorbox', JIGOSHOP_URL.'/assets/js/vendors/colorbox.js', array('jquery'));
+		Scripts::add('jigoshop.vendors.bs_tab_trans_tooltip_collapse', JIGOSHOP_URL.'/assets/js/vendors/bs_tab_trans_tooltip_collapse.js', array('jquery'));
 		Scripts::add('jigoshop.shop.product', JIGOSHOP_URL.'/assets/js/shop/product.js', array(
 			'jquery',
 			'jigoshop.shop',
@@ -76,6 +83,10 @@ class Product implements PageInterface
 		$wp->addAction('jigoshop\template\product\tab_panels', array(
 			$this,
 			'productDescription'
+		), 10, 2);
+		$wp->addAction('jigoshop\template\product\tab_panels', array(
+			$this,
+			'productDownloads'
 		), 10, 2);
 		$wp->doAction('jigoshop\product\assets', $wp);
 	}
@@ -150,7 +161,36 @@ class Product implements PageInterface
 		return Render::get('shop/product', array(
 			'product' => $product,
 			'messages' => $this->messages,
+			'related' => $this->getRelated(),
 		));
+	}
+
+	/**
+	 * Get related products based on the same parent product category.
+	 *
+	 * @return array
+	 */
+	protected function getRelated()
+	{
+		if (!$this->options->get('products.related'))
+		{
+			return array();
+		}
+
+		$related = new \WP_Query(array(
+			'post_type'      => 'product',
+			'orderby'        => 'rand',
+			'posts_per_page' => $this->wp->applyFilters('jigoshop/frontend/page/product/render/related_products_count', 3),
+			'tax_query'      => array(
+				array(
+					'taxonomy' => 'product_category',
+					'field'    => 'term_id',
+					'terms'    => 19,
+				),
+			)
+		));
+
+		return $this->productService->findByQuery($related);
 	}
 
 	/**
@@ -163,13 +203,14 @@ class Product implements PageInterface
 		$imageClasses = apply_filters('jigoshop\product\image_classes', array(), $product);
 		$featured = ProductHelper::getFeaturedImage($product, Options::IMAGE_LARGE);
 		$featuredUrl = ProductHelper::hasFeaturedImage($product) ? $this->wp->wpGetAttachmentUrl($this->wp->getPostThumbnailId($product->getId())) : '';
-		$thumbnails = $this->productService->getThumbnails($product, Options::IMAGE_THUMBNAIL);
+		$thumbnails = $this->productService->getAttachments($product, Options::IMAGE_THUMBNAIL)['gallery'];
 
 		Render::output('shop/product/images', array(
 			'product' => $product,
 			'featured' => $featured,
 			'featuredUrl' => $featuredUrl,
-			'thumbnails' => $thumbnails,
+//			@TODO $thumbnails powinien zawsze zwracać array, przerobić tak metodę by się przed tym zabezpieczyć
+			'thumbnails' => is_array($thumbnails) ? $thumbnails : array(),
 			'imageClasses' => $imageClasses,
 		));
 	}
@@ -185,6 +226,9 @@ class Product implements PageInterface
 		}
 		if ($product->getDescription()) {
 			$tabs['description'] = __('Description', 'jigoshop');
+		}
+		if ($product->getAttachments()) {
+			$tabs['downloads'] = __('Files to download', 'jigoshop');
 		}
 
 		$tabs = $this->wp->applyFilters('jigoshop\product\tabs', $tabs);
@@ -218,6 +262,19 @@ class Product implements PageInterface
 		Render::output('shop/product/description', array(
 			'product' => $product,
 			'currentTab' => $currentTab,
+		));
+	}
+
+	/**
+	 * @param $currentTab string Current tab name.
+	 * @param $product    \Jigoshop\Entity\Product Shown product.
+	 */
+	public function productDownloads($currentTab, $product)
+	{
+		Render::output('shop/product/downloads', array(
+			'product' => $product,
+			'currentTab' => $currentTab,
+			'attachments' => $this->productService->getAttachments($product)['downloads'],
 		));
 	}
 }

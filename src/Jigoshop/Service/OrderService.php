@@ -107,7 +107,7 @@ class OrderService implements OrderServiceInterface
 			$dateGmt = $this->wp->getHelpers()->currentTime('mysql', true);
 
 			$wpdb->insert($wpdb->posts, array(
-				'post_author' => $object->getCustomer()->getId(),
+				'post_author' => $object->getCustomer()->getId() ?  $object->getCustomer()->getId() : 0,
 				'post_date' => $date,
 				'post_date_gmt' => $dateGmt,
 				'post_modified' => $date,
@@ -243,7 +243,7 @@ class OrderService implements OrderServiceInterface
 		$wpdb = $this->wp->getWPDB();
 
 		return $this->wp->applyFilters('jigoshop\service\order\next_order_number', $wpdb->get_var($wpdb->prepare(
-			"SELECT MAX(ID)+1 FROM {$wpdb->posts} WHERE post_type = %s",
+			"SELECT COUNT(ID)+1 FROM {$wpdb->posts} WHERE post_type = %s",
 			array(Types::ORDER)
 		)));
 	}

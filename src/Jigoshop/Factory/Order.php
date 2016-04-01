@@ -68,7 +68,7 @@ class Order implements EntityFactoryInterface
 
 		// Support for our own post types and "Publish" button.
 		if (isset($_POST['original_post_status'])) {
-			$post->post_status = $_POST['original_post_status'];
+			$post->post_status = $_POST['order']['status'];
 		}
 
 		$order = $this->fetch($post);
@@ -100,7 +100,8 @@ class Order implements EntityFactoryInterface
 			$data['shipping']['method'] = $method;
 		}
 
-		return $order = $this->wp->applyFilters('jigoshop\factory\order\create', $this->fill($order, $data));
+//		return $order = $this->wp->applyFilters('jigoshop\factory\order\create', $this->fill($order, $data));
+		return $this->wp->applyFilters('jigoshop\factory\order\create', $order);
 	}
 
 	/**
@@ -179,10 +180,14 @@ class Order implements EntityFactoryInterface
 			$item->setTax($results[$i]['tax']);
 
 			while ($i < $endI && $results[$i]['id'] == $id) {
-				$meta = new Entity\Item\Meta();
-				$meta->setKey($results[$i]['meta_key']);
-				$meta->setValue($results[$i]['meta_value']);
-				$item->addMeta($meta);
+//				zabezpieczamy się przed pustymi metami, choć nadal żaden kawałek kodu nie dodaje tych meta
+				if ($results[$i]['meta_key'])
+				{
+					$meta = new Entity\Item\Meta();
+					$meta->setKey($results[$i]['meta_key']);
+					$meta->setValue($results[$i]['meta_value']);
+					$item->addMeta($meta);
+				}
 				$i++;
 			}
 
@@ -223,13 +228,19 @@ class Order implements EntityFactoryInterface
 		}
 
 		//We do not want to add coupons and from directly, without validation.
-		$coupons = $data['coupons'];
-		unset($data['coupons']);
-		unset($data['discount']);
+        $coupons = null;
+		if(isset($data['coupons'])) {
+			$coupons = $data['coupons'];
+			unset($data['coupons']);
+		}
+
+		if(isset($data['discount'])) {
+			unset($data['discount']);
+		}
 
 		$order->restoreState($data);
 
-		if (isset($data['coupons'])) {
+		if ($coupons) {
 			$coupons = $this->wp->getHelpers()->maybeUnserialize($coupons);
 			if(isset($coupons[0]) && is_array($coupons[0])) {
 				$codes = array_map(function ($coupon) {

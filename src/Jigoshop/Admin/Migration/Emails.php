@@ -235,6 +235,7 @@ class Emails implements Tool
 			}
 			elseif($countRemain == 0)
 			{
+				$this->wp->updateOption('jigoshop_emails_migrate_id', serialize($emailsIdsMigration));
 				Migration::saveLog(__('Migration emails END.', 'jigoshop'));
 			}
 

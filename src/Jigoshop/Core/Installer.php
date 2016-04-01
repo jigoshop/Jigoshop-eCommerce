@@ -255,6 +255,23 @@ class Installer
 		}
 
 		$query = "
+			CREATE TABLE IF NOT EXISTS {$wpdb->prefix}jigoshop_product_attachment (
+				product_id BIGINT(20) UNSIGNED NOT NULL,
+				attachment_id BIGINT(20) UNSIGNED NOT NULL,
+				type VARCHAR(50) NOT NULL,
+				FOREIGN KEY attachment (attachment_id) REFERENCES  {$wpdb->posts} (ID) ON DELETE CASCADE,
+				FOREIGN KEY product (product_id) REFERENCES {$wpdb->posts} (ID) ON DELETE CASCADE
+			) {$collate};
+		";
+
+		if (!$wpdb->query($query)) {
+			Registry::getInstance(JIGOSHOP_LOGGER)->addCritical(sprintf('Unable to create table "%s". Error: "%s".', 'jigoshop_attribute', $wpdb->last_error));
+			echo __('Unable to create Jigoshop tables.', 'jigoshop');
+			exit;
+		}
+
+
+		$query = "
 			CREATE TABLE IF NOT EXISTS {$wpdb->prefix}jigoshop_term_meta (
 				meta_id	BIGINT(20) NOT NULL AUTO_INCREMENT,
       	jigoshop_term_id BIGINT(20) NOT NULL,

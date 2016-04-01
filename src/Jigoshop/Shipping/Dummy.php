@@ -11,11 +11,13 @@ class Dummy implements Method
 {
 	private $id;
 	private $label;
+	private $title;
 
-	public function __construct($id, $label = null)
+	public function __construct($id, $label = null, $title = 'Shipping method does not exists')
 	{
 		$this->id = $id;
 		$this->label = $label !== null ? $label : $id;
+		$this->title = $title . ' (' . $id . ')';
 	}
 
 	/**
@@ -27,11 +29,19 @@ class Dummy implements Method
 	}
 
 	/**
-	 * @return string Human readable name of method.
+	 * @return string Name of method.
 	 */
 	public function getName()
 	{
 		return $this->label;
+	}
+
+	/**
+	 * @return string Customizable title of method.
+	 */
+	public function getTitle()
+	{
+		return $this->title;
 	}
 
 	/**

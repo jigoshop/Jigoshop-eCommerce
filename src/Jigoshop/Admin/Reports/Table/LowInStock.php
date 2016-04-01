@@ -28,7 +28,7 @@ class LowInStock implements TableInterface
 		return self::SLUG;
 	}
 
-	public function getTite()
+	public function getTitle()
 	{
 		return __('Low In Stock', 'jigoshop');
 	}
@@ -65,12 +65,12 @@ class LowInStock implements TableInterface
 		return isset($_GET['search']) ? $_GET['search'] : '';
 	}
 
-	public function getItems()
+	public function getItems($columns)
 	{
 		$products = $this->getProducts();
 		foreach ($products as $product) {
 			$item = array();
-			foreach ($this->getColumns() as $columnKey => $columnName) {
+			foreach ($columns as $columnKey => $columnName) {
 				$item[$columnKey] = $this->getRow($product, $columnKey);
 			}
 			$this->items[] = $item;
@@ -88,7 +88,7 @@ class LowInStock implements TableInterface
 	{
 		Render::output('admin/reports/table', array(
 			'columns' => $this->getColumns(),
-			'items' => $this->getItems(),
+			'items' => $this->getItems($this->getColumns()),
 			'no_items' => $this->noItems(),
 			'total_items' => $this->totalItems,
 			'total_pages' => $this->totalPages,
@@ -106,14 +106,14 @@ class LowInStock implements TableInterface
 		$this->totalItems = $wpdb->get_var($wpdb->prepare("SELECT COUNT(posts.ID) FROM {$wpdb->posts} AS posts
 													LEFT JOIN {$wpdb->postmeta} AS stock_manage ON posts.ID = stock_manage.post_id AND stock_manage.meta_key = 'stock_manage'
 													LEFT JOIN {$wpdb->postmeta} AS stock_stock ON posts.ID = stock_stock.post_id AND stock_stock.meta_key = 'stock_stock'
-													WHERE stock_manage.meta_value = 1 AND stock_stock.meta_value > 0 AND stock_stock.meta_value <= %d", $lowStockThreshold));
+													WHERE posts.post_type IN ('product', 'product_variation') AND posts.post_status = 'publish' AND stock_manage.meta_value = 1 AND stock_stock.meta_value > 0 AND stock_stock.meta_value <= %d", $lowStockThreshold));
 
 		$this->totalPages = ceil($this->totalItems/20);
 
 		$products = $wpdb->get_results($wpdb->prepare("SELECT posts.ID AS id, posts.post_parent AS parent, stock_stock.meta_value AS stock FROM {$wpdb->posts} AS posts
 													LEFT JOIN {$wpdb->postmeta} AS stock_manage ON posts.ID = stock_manage.post_id AND stock_manage.meta_key = 'stock_manage'
 													LEFT JOIN {$wpdb->postmeta} AS stock_stock ON posts.ID = stock_stock.post_id AND stock_stock.meta_key = 'stock_stock'
-													WHERE stock_manage.meta_value = 1 AND stock_stock.meta_value > 0 AND stock_stock.meta_value <= %d LIMIT 20 OFFSET %d", $lowStockThreshold, ($this->getCurrentPage() - 1) * 20));
+													WHERE posts.post_type IN ('product', 'product_variation') AND posts.post_status = 'publish' AND stock_manage.meta_value = 1 AND stock_stock.meta_value > 0 AND stock_stock.meta_value <= %d LIMIT 20 OFFSET %d", $lowStockThreshold, ($this->getCurrentPage() - 1) * 20));
 
 		return $products;
 	}

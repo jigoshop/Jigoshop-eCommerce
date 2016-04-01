@@ -35,8 +35,8 @@ class ByDate extends Chart
             if ($screen->base != 'jigoshop_page_' . Reports::NAME) {
                 return;
             }
-            Styles::add('jigoshop.vendors.select2', JIGOSHOP_URL . '/assets/css/vendors/select2.min.css', array('jigoshop.admin.reports'));
-            Scripts::add('jigoshop.vendors.select2', JIGOSHOP_URL . '/assets/js/vendors/select2.min.js', array('jigoshop.admin.reports'), array('in_footer' => true));
+            Styles::add('jigoshop.vendors.select2', JIGOSHOP_URL . '/assets/css/vendors/select2.css', array('jigoshop.admin.reports'));
+            Scripts::add('jigoshop.vendors.select2', JIGOSHOP_URL . '/assets/js/vendors/select2.js', array('jigoshop.admin.reports'), array('in_footer' => true));
             Scripts::localize('jigoshop.reports.chart', 'chart_data', $this->getMainChart());
         });
     }
@@ -315,8 +315,8 @@ class ByDate extends Chart
         $this->reportData->orders = $this->getOrderReportData($query);
         $this->reportData->totalSales = array_sum(wp_list_pluck($this->reportData->orders, 'total_sales'));
         $this->reportData->totalTax = array_sum(wp_list_pluck($this->reportData->orders, 'total_tax'));
-        $this->reportData->totalShipping = array_sum(wp_list_pluck($this->reportData->orders, 'total_shipping'));
-        $this->reportData->totalShippingTax = array_sum(wp_list_pluck($this->reportData->orders, 'total_shipping_tax'));
+        $this->reportData->totalShipping = 0;//array_sum(wp_list_pluck($this->reportData->orders, 'total_shipping'));
+        $this->reportData->totalShippingTax = 0;//array_sum(wp_list_pluck($this->reportData->orders, 'total_shipping_tax'));
         $this->reportData->totalCoupons = array_sum(wp_list_pluck($this->reportData->orders, 'discount_amount'));
         $this->reportData->totalOrders = absint(array_sum(wp_list_pluck($this->reportData->orders, 'count')));
         $this->reportData->totalItems = absint(array_sum(wp_list_pluck($this->reportData->orders, 'order_item_count')));
@@ -395,15 +395,17 @@ class ByDate extends Chart
         $orderItemCounts = $this->prepareChartData($this->reportData->orders, 'post_date', 'order_item_count', $this->chartInterval, $this->range['start'], $this->chartGroupBy);
         $orderAmounts = $this->prepareChartData($this->reportData->orders, 'post_date', 'total_sales', $this->chartInterval, $this->range['start'], $this->chartGroupBy);
         $couponAmounts = $this->prepareChartData($this->reportData->orders, 'post_date', 'discount_amount', $this->chartInterval, $this->range['start'], $this->chartGroupBy);
-        $shippingAmounts = $this->prepareChartData($this->reportData->orders, 'post_date', 'total_shipping', $this->chartInterval, $this->range['start'], $this->chartGroupBy);
-        $shippingTaxAmounts = $this->prepareChartData($this->reportData->orders, 'post_date', 'total_shipping_tax', $this->chartInterval, $this->range['start'], $this->chartGroupBy);
+        //$shippingAmounts = $this->prepareChartData($this->reportData->orders, 'post_date', 'total_shipping', $this->chartInterval, $this->range['start'], $this->chartGroupBy);
+        //$shippingTaxAmounts = $this->prepareChartData($this->reportData->orders, 'post_date', 'total_shipping_tax', $this->chartInterval, $this->range['start'], $this->chartGroupBy);
+        $shippingAmounts = array();
+        $shippingTaxAmounts = array();
         $taxAmounts = $this->prepareChartData($this->reportData->orders, 'post_date', 'total_tax', $this->chartInterval, $this->range['start'], $this->chartGroupBy);
 
         $netOrderAmounts = array();
 
         foreach ($orderAmounts as $orderAmountKey => $orderAmountValue) {
             $netOrderAmounts[$orderAmountKey] = $orderAmountValue;
-            $netOrderAmounts[$orderAmountKey][1] = $netOrderAmounts[$orderAmountKey][1] - $shippingAmounts[$orderAmountKey][1] - $shippingTaxAmounts[$orderAmountKey][1] - $taxAmounts[$orderAmountKey][1];
+            $netOrderAmounts[$orderAmountKey][1] = $netOrderAmounts[$orderAmountKey][1] /*- $shippingAmounts[$orderAmountKey][1] - $shippingTaxAmounts[$orderAmountKey][1]*/ - $taxAmounts[$orderAmountKey][1];
         }
 
         $data = array();

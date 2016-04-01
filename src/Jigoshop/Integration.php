@@ -11,6 +11,8 @@ class Integration
 {
     /** @var Container  */
     private static $di;
+    /** @var  \Composer\Autoload\ClassLoader */
+    private static $classLoader;
 
     /**
      * Integration constructor.
@@ -68,6 +70,16 @@ class Integration
             $service->addMethod($method);
         }
 
+    }
+
+    /**
+     * @param $service
+     *
+     * @return object
+     */
+    public static function getService($service)
+    {
+        return self::$di->get($service);
     }
 
     /**
@@ -204,5 +216,15 @@ class Integration
     public static function getAdminSettings()
     {
         return self::$di->get('jigoshop.admin.settings');
+    }
+
+    public static function addPsr4Autoload($namespace, $dir)
+    {
+        self::$classLoader->addPsr4($namespace, array($dir));
+    }
+
+    public static function setClassLoader($classLoader)
+    {
+        self::$classLoader = $classLoader;
     }
 }

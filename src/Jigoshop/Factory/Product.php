@@ -112,8 +112,27 @@ class Product implements EntityFactoryInterface
 			}
 
 			unset($_POST['product']['attributes']);
-			$_POST['product']['stock_manage'] = $_POST['product']['stock_manage'] == 'on';
-			$_POST['product']['sales_enabled'] = $_POST['product']['sales_enabled'] == 'on';
+
+			if(isset($_POST['product']['stock_manage']))
+			{
+				$_POST['product']['stock_manage'] = $_POST['product']['stock_manage'] == 'on';
+			}
+			if(isset($_POST['product']['sales_enabled']))
+			{
+				$_POST['product']['sales_enabled'] = $_POST['product']['sales_enabled'] == 'on';
+			}
+			if(isset($_POST['product']['attachments'])) {
+				$temp = $_POST['product']['attachments'];
+				$_POST['product']['attachments'] = array();
+				foreach($temp as $type => $ids) {
+					for($i = 0; $i < sizeof($ids); $i++){
+						$_POST['product']['attachments'][] = array(
+							'id' => $ids[$i],
+							'type' => $type
+						);
+					}
+				}
+			}
 
 			$product->restoreState($_POST['product']);
 			$product->markAsDirty($_POST['product']);
@@ -145,6 +164,7 @@ class Product implements EntityFactoryInterface
 			}, $this->wp->getPostMeta($post->ID));
 
 			$state['attributes'] = $this->getAttributes($post->ID);
+			$state['attachments'] = $this->getAttachments($post->ID);
 			$state['price'] = $this->getPrice($post->ID);
 			$state['id'] = $post->ID;
 			$state['name'] = $post->post_title;
@@ -300,6 +320,14 @@ class Product implements EntityFactoryInterface
 		}
 
 		return $attributes;
+	}
+
+	public function getAttachments($productId)
+	{
+		$wpdb = $this->wp->getWPDB();
+		$query = $wpdb->prepare("SELECT attachment_id as id, type as type FROM {$wpdb->prefix}jigoshop_product_attachment WHERE product_id = %d", array($productId));
+
+		return $wpdb->get_results($query, ARRAY_A);
 	}
 
 	/**
