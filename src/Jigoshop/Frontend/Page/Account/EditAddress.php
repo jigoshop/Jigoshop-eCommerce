@@ -61,7 +61,7 @@ class EditAddress implements PageInterface
 			$errors = array();
 			if ($address instanceof CompanyAddress) {
 				$address->setCompany(trim(htmlspecialchars(strip_tags($_POST['address']['company']))));
-				$address->setVatNumber(trim(htmlspecialchars(strip_tags($_POST['address']['vat_number']))));
+				$address->setVatNumber(trim(htmlspecialchars(strip_tags($_POST['address']['euvatno']))));
 			}
 
 			$address->setPhone(trim(htmlspecialchars(strip_tags($_POST['address']['phone']))));

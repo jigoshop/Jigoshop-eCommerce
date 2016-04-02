@@ -32,13 +32,13 @@ use Jigoshop\Entity\Order\Status;
 	<div class="tab-content form-horizontal">
 		<div class="tab-pane active" id="order">
 			<?php echo Forms::select(array(
-				'name' => 'order[status]',
+				'name' => 'jigoshop_order[status]',
 				'label' => __('Order status', 'jigoshop'),
 				'value' => $order->getStatus(),
 				'options' => Status::getStatuses(),
 			)); ?>
 			<?php echo Forms::select(array(
-				'name' => 'order[customer]',
+				'name' => 'jigoshop_order[customer]',
 				'label' => __('Customer', 'jigoshop'),
 				'value' => $order->getCustomer() ? $order->getCustomer()->getId() : '',
 				'options' => $customers,
@@ -53,7 +53,7 @@ use Jigoshop\Entity\Order\Status;
 			<?php $address = $order->getCustomer()->getBillingAddress(); ?>
 			<?php
 			foreach ($billingFields as $field => $definition) {
-				$definition['name'] = "order[billing_address][{$field}]";
+				$definition['name'] = "jigoshop_order[billing_address][{$field}]";
 				$definition['value'] = $address->get($field);
 				echo Forms::field($definition['type'], $definition);
 			}
@@ -64,7 +64,7 @@ use Jigoshop\Entity\Order\Status;
 			<?php $address = $order->getCustomer()->getShippingAddress(); ?>
 			<?php
 			foreach ($shippingFields as $field => $definition) {
-				$definition['name'] = "order[shipping_address][{$field}]";
+				$definition['name'] = "jigoshop_order[shipping_address][{$field}]";
 				$definition['value'] = $address->get($field);
 				echo Forms::field($definition['type'], $definition);
 			}

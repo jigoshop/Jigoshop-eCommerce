@@ -565,7 +565,7 @@ class Checkout implements PageInterface
 		$fields = $this->wp->applyFilters('jigoshop\checkout\billing_fields', $this->getDefaultBillingFields($address));
 
 		if (!Country::isEU($this->options->get('general.country'))) {
-			unset($fields['vat_number']);
+			unset($fields['euvatno']);
 		}
 
 		return $fields;
@@ -580,51 +580,33 @@ class Checkout implements PageInterface
 	 */
 	public function getDefaultBillingFields(Address $address)
 	{
-		return array(
+		return ProductHelper::getBasicBillingFields(array(
 			'first_name' => array(
-				'type' => 'text',
-				'label' => __('First name', 'jigoshop'),
-				'name' => 'jigoshop_order[billing_address][first_name]',
 				'value' => $address->getFirstName(),
 				'size' => 9,
 				'columnSize' => 6,
 			),
 			'last_name' => array(
-				'type' => 'text',
-				'label' => __('Last name', 'jigoshop'),
-				'name' => 'jigoshop_order[billing_address][last_name]',
 				'value' => $address->getLastName(),
 				'size' => 9,
 				'columnSize' => 6,
 			),
 			'company' => array(
-				'type' => 'text',
-				'label' => __('Company', 'jigoshop'),
-				'name' => 'jigoshop_order[billing_address][company]',
 				'value' => $address instanceof CompanyAddress ? $address->getCompany() : '',
 				'size' => 9,
 				'columnSize' => 6,
 			),
-			'vat_number' => array(
-				'type' => 'text',
-				'label' => __('EU VAT number', 'jigoshop'),
-				'name' => 'jigoshop_order[billing_address][eu_vat]',
+			'euvatno' => array(
 				'value' => $address instanceof CompanyAddress ? $address->getVatNumber() : '',
 				'size' => 9,
 				'columnSize' => 6,
 			),
 			'address' => array(
-				'type' => 'text',
-				'label' => __('Address', 'jigoshop'),
-				'name' => 'jigoshop_order[billing_address][address]',
 				'value' => $address->getAddress(),
 				'size' => 10,
 				'columnSize' => 12,
 			),
 			'country' => array(
-				'type' => 'select',
-				'label' => __('Country', 'jigoshop'),
-				'name' => 'jigoshop_order[billing_address][country]',
 				'options' => Country::getAllowed(),
 				'value' => $address->getCountry(),
 				'size' => 9,
@@ -632,46 +614,32 @@ class Checkout implements PageInterface
 			),
 			'state' => array(
 				'type' => Country::hasStates($address->getCountry()) ? 'select' : 'text',
-				'label' => __('State/Province', 'jigoshop'),
-				'name' => 'jigoshop_order[billing_address][state]',
 				'options' => Country::getStates($address->getCountry()),
 				'value' => $address->getState(),
 				'size' => 9,
 				'columnSize' => 6,
 			),
 			'city' => array(
-				'type' => 'text',
-				'label' => __('City', 'jigoshop'),
-				'name' => 'jigoshop_order[billing_address][city]',
 				'value' => $address->getCity(),
 				'size' => 9,
 				'columnSize' => 6,
 			),
 			'postcode' => array(
-				'type' => 'text',
-				'label' => __('Postcode', 'jigoshop'),
-				'name' => 'jigoshop_order[billing_address][postcode]',
 				'value' => $address->getPostcode(),
 				'size' => 9,
 				'columnSize' => 6,
 			),
 			'phone' => array(
-				'type' => 'text',
-				'label' => __('Phone', 'jigoshop'),
-				'name' => 'jigoshop_order[billing_address][phone]',
 				'value' => $address->getPhone(),
 				'size' => 9,
 				'columnSize' => 6,
 			),
 			'email' => array(
-				'type' => 'text',
-				'label' => __('Email', 'jigoshop'),
-				'name' => 'jigoshop_order[billing_address][email]',
 				'value' => $address->getEmail(),
 				'size' => 9,
 				'columnSize' => 6,
 			),
-		);
+		));
 	}
 
 	private function getShippingFields(Address $address)
@@ -688,43 +656,28 @@ class Checkout implements PageInterface
 	 */
 	public function getDefaultShippingFields(Address $address)
 	{
-		return array(
+		return ProductHelper::getBasicShippingFields(array(
 			'first_name' => array(
-				'type' => 'text',
-				'label' => __('First name', 'jigoshop'),
-				'name' => 'jigoshop_order[shipping_address][first_name]',
 				'value' => $address->getFirstName(),
 				'size' => 9,
 				'columnSize' => 6,
 			),
 			'last_name' => array(
-				'type' => 'text',
-				'label' => __('Last name', 'jigoshop'),
-				'name' => 'jigoshop_order[shipping_address][last_name]',
 				'value' => $address->getLastName(),
 				'size' => 9,
 				'columnSize' => 6,
 			),
 			'company' => array(
-				'type' => 'text',
-				'label' => __('Company', 'jigoshop'),
-				'name' => 'jigoshop_order[shipping_address][company]',
 				'value' => $address instanceof CompanyAddress ? $address->getCompany() : '',
 				'size' => 9,
 				'columnSize' => 6,
 			),
 			'address' => array(
-				'type' => 'text',
-				'label' => __('Address', 'jigoshop'),
-				'name' => 'jigoshop_order[shipping_address][address]',
 				'value' => $address->getAddress(),
 				'size' => 10,
 				'columnSize' => 12,
 			),
 			'country' => array(
-				'type' => 'select',
-				'label' => __('Country', 'jigoshop'),
-				'name' => 'jigoshop_order[shipping_address][country]',
 				'options' => Country::getAllowed(),
 				'value' => $address->getCountry(),
 				'size' => 9,
@@ -732,29 +685,21 @@ class Checkout implements PageInterface
 			),
 			'state' => array(
 				'type' => Country::hasStates($address->getCountry()) ? 'select' : 'text',
-				'label' => __('State/Province', 'jigoshop'),
-				'name' => 'jigoshop_order[shipping_address][state]',
 				'options' => Country::getStates($address->getCountry()),
 				'value' => $address->getState(),
 				'size' => 9,
 				'columnSize' => 6,
 			),
 			'city' => array(
-				'type' => 'text',
-				'label' => __('City', 'jigoshop'),
-				'name' => 'jigoshop_order[shipping_address][city]',
 				'value' => $address->getCity(),
 				'size' => 9,
 				'columnSize' => 6,
 			),
 			'postcode' => array(
-				'type' => 'text',
-				'label' => __('Postcode', 'jigoshop'),
-				'name' => 'jigoshop_order[shipping_address][postcode]',
 				'value' => $address->getPostcode(),
 				'size' => 9,
 				'columnSize' => 6,
 			),
-		);
+		));
 	}
 }

@@ -457,4 +457,126 @@ class Product
 
 		return $query->get_posts();
 	}
+
+	public static function getBasicBillingFields($fields, $except = array())
+	{
+		$fields = array_replace_recursive(array(
+			'company'    => array(
+				'label' => __('Company', 'jigoshop'),
+				'type'  => 'text',
+				'name'  => 'jigoshop_order[billing_address][company]',
+			),
+			'euvatno'    => array(
+				'label' => __('EU VAT Number', 'jigoshop'),
+				'type'  => 'text',
+				'name'  => 'jigoshop_order[billing_address][euvatno]',
+			),
+			'first_name' => array(
+				'label' => __('First Name', 'jigoshop'),
+				'type'  => 'text',
+				'name'  => 'jigoshop_order[billing_address][first_name]',
+			),
+			'last_name'  => array(
+				'label' => __('Last Name', 'jigoshop'),
+				'type'  => 'text',
+				'name'  => 'jigoshop_order[billing_address][last_name]',
+			),
+			'address'    => array(
+				'label' => __('Address', 'jigoshop'),
+				'type'  => 'text',
+				'name'  => 'jigoshop_order[billing_address][address]',
+			),
+			'city'       => array(
+				'label' => __('City', 'jigoshop'),
+				'type'  => 'text',
+				'name'  => 'jigoshop_order[billing_address][city]',
+			),
+			'postcode'   => array(
+				'label' => __('Postcode', 'jigoshop'),
+				'type'  => 'text',
+				'name'  => 'jigoshop_order[billing_address][postcode]',
+			),
+			'country'    => array(
+				'label' => __('Country', 'jigoshop'),
+				'type'  => 'select',
+				'name'  => 'jigoshop_order[billing_address][country]',
+			),
+			'state'      => array(
+				'label' => __('State/Province', 'jigoshop'),
+				'type'  => 'select',
+				'name'  => 'jigoshop_order[billing_address][state]',
+			),
+			'phone'      => array(
+				'label' => __('Phone', 'jigoshop'),
+				'type'  => 'text',
+				'name'  => 'jigoshop_order[billing_address][phone]',
+			),
+			'email'      => array(
+				'label' => __('Email Address', 'jigoshop'),
+				'type'  => 'text',
+				'name'  => 'jigoshop_order[billing_address][email]',
+			),
+		), $fields);
+
+		foreach ($except as $key)
+		{
+			unset($fields[$key]);
+		}
+
+		return $fields;
+	}
+
+	public static function getBasicShippingFields($fields, $except = array())
+	{
+		$fields = array_replace_recursive(array(
+			'company'    => array(
+				'label' => __('Company', 'jigoshop'),
+				'type'  => 'text',
+				'name'  => 'jigoshop_order[shipping_address][company]',
+			),
+			'first_name' => array(
+				'label' => __('First Name', 'jigoshop'),
+				'type'  => 'text',
+				'name'  => 'jigoshop_order[shipping_address][first_name]',
+			),
+			'last_name'  => array(
+				'label' => __('Last Name', 'jigoshop'),
+				'type'  => 'text',
+				'name'  => 'jigoshop_order[shipping_address][last_name]',
+			),
+			'address'    => array(
+				'label' => __('Address', 'jigoshop'),
+				'type'  => 'text',
+				'name'  => 'jigoshop_order[shipping_address][address]',
+			),
+			'city'       => array(
+				'label' => __('City', 'jigoshop'),
+				'type'  => 'text',
+				'name'  => 'jigoshop_order[shipping_address][city]',
+			),
+			'postcode'   => array(
+				'label' => __('Postcode', 'jigoshop'),
+				'type'  => 'text',
+				'name'  => 'jigoshop_order[shipping_address][postcode]',
+			),
+			'country'    => array(
+				'label' => __('Country', 'jigoshop'),
+				'type'  => 'select',
+				'name'  => 'jigoshop_order[shipping_address][country]',
+			),
+			'state'      => array(
+				'label' => __('State/Province', 'jigoshop'),
+				'type'  => 'select',
+				'name'  => 'jigoshop_order[shipping_address][state]',
+			),
+		), $fields);
+
+		foreach ($except as $key)
+		{
+			unset($fields[$key]);
+		}
+
+		return $fields;
+	}
+
 }
