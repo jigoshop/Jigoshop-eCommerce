@@ -542,7 +542,7 @@ class Product
 	 *
 	 * @return array
 	 */
-	public static function getBasicShippingFields($fields, $except = array())
+	public static function getBasicShippingFields($fields = array(), $except = array())
 	{
 		$fields = array_replace_recursive(array(
 			'company'    => array(
