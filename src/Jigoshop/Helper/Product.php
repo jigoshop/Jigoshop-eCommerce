@@ -458,7 +458,15 @@ class Product
 		return $query->get_posts();
 	}
 
-	public static function getBasicBillingFields($fields, $except = array())
+	/**
+	 * Get billing fields used across the project and plugins with default options.
+	 *
+	 * @param array $fields (optional) An array of data fields if you want to change the type, label or add new fields.
+	 * @param array $except (optional) List of fields that you do not want to show.
+	 *
+	 * @return array
+	 */
+	public static function getBasicBillingFields($fields = array(), $except = array())
 	{
 		$fields = array_replace_recursive(array(
 			'company'    => array(
@@ -526,6 +534,14 @@ class Product
 		return $fields;
 	}
 
+	/**
+	 * Get shipping fields used across the project and plugins with default options.
+	 *
+	 * @param array $fields (optional) An array of data fields if you want to change the type, label or add new fields.
+	 * @param array $except (optional) List of fields that you do not want to show.
+	 *
+	 * @return array
+	 */
 	public static function getBasicShippingFields($fields, $except = array())
 	{
 		$fields = array_replace_recursive(array(
@@ -568,6 +584,11 @@ class Product
 				'label' => __('State/Province', 'jigoshop'),
 				'type'  => 'select',
 				'name'  => 'jigoshop_order[shipping_address][state]',
+			),
+			'phone'      => array(
+				'label' => __('Phone', 'jigoshop'),
+				'type'  => 'text',
+				'name'  => 'jigoshop_order[shipping_address][phone]',
 			),
 		), $fields);
 
