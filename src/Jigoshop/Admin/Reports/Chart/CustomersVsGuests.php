@@ -135,6 +135,11 @@ class CustomersVsGuests extends Chart
 					'key' => 'customer.meta_value',
 					'value' => '0',
 					'compare' => '>'
+				),
+				array(
+					'key' => 'posts.post_type',
+					'value' => '"shop_order"',
+					'compare' => '='
 				)
 			),
 			'group_by' => $this->groupByQuery,
