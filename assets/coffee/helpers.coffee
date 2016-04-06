@@ -7,3 +7,14 @@ jigoshop.addMessage = addMessage = (type, message, ms) ->
   jigoshop.delay ms, ->
     $alert.slideUp ->
       $alert.remove()
+jigoshop.blockUiStyle = (params) ->
+  return {
+    message: '<img src="' + params.assets + '/images/loading.gif" width="15" height="15" />'
+    css:
+      padding: '5px'
+      width: 'auto'
+      height: 'auto'
+      border: '1px solid #83AC31'
+    overlayCSS:
+      backgroundColor: 'rgba(255, 255, 255, .8)'
+  }
