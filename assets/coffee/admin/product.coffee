@@ -15,7 +15,6 @@ class AdminProduct
     jQuery('#add-attribute').on 'click', @addAttribute
     jQuery('#new-attribute').on 'change', (event) ->
       $label = jQuery('#new-attribute-label')
-      window.console.log jQuery(event.target).val()
       if jQuery(event.target).val() == '-1'
         $label.closest('.form-group').css('display', 'inline-block')
         $label.fadeIn()
@@ -209,7 +208,6 @@ class AdminProduct
     wpMedia.open()
 
   initAttachments: =>
-    console.log(@params.attachments)
     if @params.attachments.gallery?
       template = wp.template 'product-gallery'
       for attachment in @params.attachments.gallery
