@@ -5,7 +5,6 @@ use Jigoshop\Helper\Render;
 /**
  * @var $product \Jigoshop\Entity\Product The product.
  * @var $messages \Jigoshop\Core\Messages Messages container.
- * @var array $related List of related products.
  */
 ?>
 <?php do_action('jigoshop\template\product\before', $product); ?>
@@ -42,12 +41,5 @@ use Jigoshop\Helper\Render;
 		<?php do_action('jigoshop\template\product\summary', $product); ?>
 	</div>
 	<?php do_action('jigoshop\template\product\after_summary', $product); ?>
-	<?php if(count($related) > 0): ?>
-		<ul id="related_products" class="list-inline">
-			<?php foreach ($related as $rel_prod): ?>
-				<?php Render::output('shop/list/product', array('product' => $rel_prod)); ?>
-			<?php endforeach; ?>
-		</ul>
-	<?php endif; ?>
 </article>
 <?php do_action('jigoshop\template\product\after', $product); ?>

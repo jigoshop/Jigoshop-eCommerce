@@ -76,6 +76,9 @@ class Product implements PageInterface
 			'productImages'
 		), 10, 1);
 		$wp->addAction('jigoshop\template\product\after_summary', array($this, 'productTabs'), 10, 1);
+		if($this->options->get('products.related')) {
+			$wp->addAction('jigoshop\template\product\after_summary', array($this, 'relatedProducts'), 20, 1);
+		}
 		$wp->addAction('jigoshop\template\product\tab_panels', array(
 			$this,
 			'productAttributes'
@@ -161,7 +164,6 @@ class Product implements PageInterface
 		return Render::get('shop/product', array(
 			'product' => $product,
 			'messages' => $this->messages,
-			'related' => $this->getRelated(),
 		));
 	}
 
@@ -231,13 +233,20 @@ class Product implements PageInterface
 			$tabs['downloads'] = __('Files to download', 'jigoshop');
 		}
 
-		$tabs = $this->wp->applyFilters('jigoshop\product\tabs', $tabs);
+		$tabs = $this->wp->applyFilters('jigoshop\product\tabs', $tabs, $product);
 		$availableTabs = array_keys($tabs);
 
 		Render::output('shop/product/tabs', array(
 			'product' => $product,
 			'tabs' => $tabs,
 			'currentTab' => reset($availableTabs),
+		));
+	}
+
+	public function relatedProducts()
+	{
+		Render::output('shop/product/related', array(
+			'products' => $this->getRelated(),
 		));
 	}
 
