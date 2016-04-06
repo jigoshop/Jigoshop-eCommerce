@@ -233,7 +233,7 @@ class Product implements PageInterface
 			$tabs['downloads'] = __('Files to download', 'jigoshop');
 		}
 
-		$tabs = $this->wp->applyFilters('jigoshop\product\tabs', $tabs);
+		$tabs = $this->wp->applyFilters('jigoshop\product\tabs', $tabs, $product);
 		$availableTabs = array_keys($tabs);
 
 		Render::output('shop/product/tabs', array(
