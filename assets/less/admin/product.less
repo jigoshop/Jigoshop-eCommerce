@@ -42,17 +42,26 @@
     display: none;
   }
   #attributes .form-inline {
-    margin-bottom: 2*@padding-base-vertical;
+    margin-bottom: @padding-base-vertical;
 
     .not-active {
       display: none;
     }
     .form-group {
-      width: 35%;
+      float: left;
+      width: 60%;
       margin-right: @padding-base-horizontal;
+      margin-bottom: @padding-base-vertical;
 
       .form-control {
         width: 100%;
+      }
+
+      .text-right {
+        display: none;
+      }
+      @media (max-width: 768px) {
+        width: 70%;
       }
     }
   }
