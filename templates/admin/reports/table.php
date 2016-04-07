@@ -96,7 +96,7 @@
 	<?php endif; ?>
 	<div class="row">
 		<?php foreach ($columns as $columnKey => $columnData) : ?>
-			<div class="col-sm-<?php echo $columnData['size'] ?> fix-padding visible-lg visible-md" style="text-align:center"><?php echo $columnData['name']; ?></div>
+			<div class="col-sm-<?php echo $columnData['size'] ?> fix-padding visible-lg visible-md"><?php echo $columnData['name']; ?></div>
 		<?php endforeach; ?>
 		<div class="clear"></div>
 	</div>
