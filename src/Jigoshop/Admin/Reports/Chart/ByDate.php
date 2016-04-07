@@ -391,6 +391,8 @@ class ByDate extends Chart
         // TODO: Remove this...
         global $wp_locale;
 
+        \WpDebugBar\Debugger::addMessage(\date('y-m-d', $this->range['start']), 'start');
+        \WpDebugBar\Debugger::addMessage($this->reportData->orders, 'asdasd');
         $orderCounts = $this->prepareChartData($this->reportData->orders, 'post_date', 'count', $this->chartInterval, $this->range['start'], $this->chartGroupBy);
         $orderItemCounts = $this->prepareChartData($this->reportData->orders, 'post_date', 'order_item_count', $this->chartInterval, $this->range['start'], $this->chartGroupBy);
         $orderAmounts = $this->prepareChartData($this->reportData->orders, 'post_date', 'total_sales', $this->chartInterval, $this->range['start'], $this->chartGroupBy);
@@ -420,7 +422,7 @@ class ByDate extends Chart
                 'show' => true,
                 'lineWidth' => 0,
                 'align' => 'left',
-                'barWidth' => $this->barwidth * 0.4,
+                'barWidth' => $this->barwidth * 0.2,
             ),
             'shadowSize' => 0,
             'hoverable' => false
@@ -434,8 +436,8 @@ class ByDate extends Chart
                 'fill' => true,
                 'show' => true,
                 'lineWidth' => 0,
-                'align' => 'right',
-                'barWidth' => $this->barwidth * 0.4,
+                'align' => 'left',
+                'barWidth' => $this->barwidth * 0.2,
             ),
             'shadowSize' => 0,
             'hoverable' => false
@@ -552,7 +554,7 @@ class ByDate extends Chart
                     'position' => 'bottom',
                     'tickColor' => 'transparent',
                     'mode' => 'time',
-                    'timeformat' => $this->chartGroupBy == 'hour' ? '%H' : $this->chartGroupBy == 'day' ? '%d %b' : '%b',
+                    'timeformat' => $this->chartGroupBy == 'hour' ? '%H' : ($this->chartGroupBy == 'day' ? '%d %b' : '%b'),
                     'monthNames' => array_values($wp_locale->month_abbrev),
                     'tickLength' => 1,
                     'minTickSize' => array(1, $this->chartGroupBy),
@@ -577,6 +579,8 @@ class ByDate extends Chart
                 )),
             ),
         ));
+        \WpDebugBar\Debugger::addMessage($this->chartGroupBy, 'groupby');
+        \WpDebugBar\Debugger::addMessage($data['options']->xaxes, 'xaxes');
         if ($this->chartGroupBy == 'hour') {
             $data['options']->xaxes[0]->min = 0;
             $data['options']->xaxes[0]->max = 24 * 60 * 60 * 1000;

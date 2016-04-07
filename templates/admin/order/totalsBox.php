@@ -34,6 +34,7 @@ $orderTax = $order->getTax();
 			'id' => 'subtotal',
 			'label' => __('Subtotal', 'jigoshop'),
 			'placeholder' => 0.0,
+			'size' => 12,
 			'value' => Product::formatPrice($order->getSubtotal()),
 		)); ?>
 		<?php Forms::text(array(
@@ -48,6 +49,7 @@ $orderTax = $order->getTax();
 				'label' => $option['label'],
 				'placeholder' => 0.0,
 				'value' => $option['value'],
+				'size' => 12,
 				'classes' => array($orderTax[$class] > 0 ? '' : 'not-active'),
 			)); ?>
 		<?php endforeach; ?>
@@ -56,6 +58,7 @@ $orderTax = $order->getTax();
 			'id' => 'total',
 			'label' => __('Total', 'jigoshop'),
 			'placeholder' => 0.0,
+			'size' => 12,
 			'value' => Product::formatPrice($order->getTotal())
 		)); ?>
 	</div>

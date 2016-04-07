@@ -21,7 +21,9 @@
   textarea.form-control {
     height: auto;
   }
-
+  #minor-publishing-actions {
+    display: none;
+  }
   .nav-tabs {
     li.hide {
       display: none;
@@ -49,12 +51,14 @@
     .form-group {
       margin: 0;
     }
+    td {
+      .form-group .text-right {
+        display: none;
+      }
+    }
     td.quantity, td.price, td.total {
       width: 200px;
 
-      div {
-        display: inline;
-      }
       input {
         width: auto;
       }
