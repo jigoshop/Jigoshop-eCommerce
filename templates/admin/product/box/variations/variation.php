@@ -29,8 +29,8 @@ $product = $variation->getProduct();
 	<div class="list-group-item-text row clearfix">
 		<div class="col-md-2">
 			<?php echo Product::getFeaturedImage($product, \Jigoshop\Core\Options::IMAGE_SMALL); ?>
-			<button class="btn btn-default set_variation_image"><?php _e('Set image', 'jigoshop'); ?></button>
-			<button class="btn btn-danger remove_variation_image<?php !Product::hasFeaturedImage($product) and print ' not-active'; ?>"><?php _e('Remove image', 'jigoshop'); ?></button>
+			<button class="btn btn-block btn-default set_variation_image"><?php _e('Set image', 'jigoshop'); ?></button>
+			<button class="btn btn-block btn-danger remove_variation_image<?php !Product::hasFeaturedImage($product) and print ' not-active'; ?>"><?php _e('Remove image', 'jigoshop'); ?></button>
 		</div>
 		<div class="col-md-10">
 			<fieldset>
