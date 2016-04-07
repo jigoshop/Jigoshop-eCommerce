@@ -20,7 +20,7 @@ use Jigoshop\Helper\Render;
 		'value' => $address->getCompany(),
 	)); ?>
 	<?php \Jigoshop\Helper\Forms::text(array(
-		'name' => 'address[vat_number]',
+		'name' => 'address[euvatno]',
 		'label' => __('VAT number', 'jigoshop'),
 		'value' => $address->getVatNumber(),
 	)); ?>

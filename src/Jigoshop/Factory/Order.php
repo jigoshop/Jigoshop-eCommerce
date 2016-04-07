@@ -68,7 +68,7 @@ class Order implements EntityFactoryInterface
 
 		// Support for our own post types and "Publish" button.
 		if (isset($_POST['original_post_status'])) {
-			$post->post_status = $_POST['order']['status'];
+			$post->post_status = $_POST['jigoshop_order']['status'];
 		}
 
 		$order = $this->fetch($post);
@@ -78,8 +78,26 @@ class Order implements EntityFactoryInterface
 		if (isset($_POST['post_excerpt'])) {
 			$data['customer_note'] = trim($_POST['post_excerpt']);
 		}
-		if (isset($_POST['order'])) {
-			$data = array_merge($data, $_POST['order']);
+		if (isset($_POST['jigoshop_order'])) {
+			$data = array_merge($data, $_POST['jigoshop_order']);
+		}
+
+		if (!empty($data['customer']) && is_numeric($data['customer']))
+		{
+			$data['customer'] = $this->customerService->find($data['customer']);
+		}
+		else
+		{
+			if (isset($data['billing_address']))
+			{
+				/** @var CustomerEntity $customer */
+				$order->getCustomer()->setBillingAddress($this->createAddress($data['billing_address']));
+			}
+			if (isset($data['shipping_address']))
+			{
+				/** @var CustomerEntity $customer */
+				$order->getCustomer()->setShippingAddress($this->createAddress($data['shipping_address']));
+			}
 		}
 
 		$data['items'] = $this->getItems($id);
@@ -180,7 +198,7 @@ class Order implements EntityFactoryInterface
 			$item->setTax($results[$i]['tax']);
 
 			while ($i < $endI && $results[$i]['id'] == $id) {
-//				zabezpieczamy się przed pustymi metami, choć nadal żaden kawałek kodu nie dodaje tych meta
+//				Securing against empty meta's, but still no piece of code does not add the meta.
 				if ($results[$i]['meta_key'])
 				{
 					$meta = new Entity\Item\Meta();
@@ -202,24 +220,6 @@ class Order implements EntityFactoryInterface
 
 	public function fill(OrderInterface $order, array $data)
 	{
-		if (!empty($data['customer']) && is_numeric($data['customer'])) {
-			$data['customer'] = $this->customerService->find($data['customer']);
-		}
-		if (isset($data['customer'])) {
-			$data['customer'] = $this->wp->getHelpers()->maybeUnserialize($data['customer']);
-
-			if (isset($data['billing_address'])) {
-				/** @var CustomerEntity $customer */
-				$customer = $data['customer'];
-				$customer->setBillingAddress($this->createAddress($data['billing_address']));
-			}
-			if (isset($data['shipping_address'])) {
-				/** @var CustomerEntity $customer */
-				$customer = $data['customer'];
-				$customer->setShippingAddress($this->createAddress($data['shipping_address']));
-			}
-		}
-
 		/** @var OrderInterface $order */
 		$order = $this->wp->applyFilters('jigoshop\factory\order\fetch\after_customer', $order);
 
