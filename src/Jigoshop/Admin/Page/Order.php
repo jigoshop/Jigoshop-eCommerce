@@ -496,10 +496,10 @@ class Order
 
 		$billingFields = $this->wp->applyFilters('jigoshop\admin\order\billing_fields', ProductHelper::getBasicBillingFields(array(
 			'company' => array(
-				'value' => $address->getCompany(),
+				'value' => $address instanceof Customer\CompanyAddress ? $address->getCompany() : '',
 			),
 			'euvatno' => array(
-				'value' => $address->getVatNumber(),
+				'value' => $address instanceof Customer\CompanyAddress ? $address->getVatNumber() : '',
 			),
 			'first_name' => array(
 				'value' => $address->getFirstName(),
@@ -537,7 +537,7 @@ class Order
 
 		$shippingFields = $this->wp->applyFilters('jigoshop\admin\order\shipping_fields', ProductHelper::getBasicShippingFields(array(
 			'company' => array(
-				'value' => $address->getCompany(),
+				'value' => $address instanceof Customer\CompanyAddress ? $address->getCompany() : '',
 			),
 			'first_name' => array(
 				'value' => $address->getFirstName(),
