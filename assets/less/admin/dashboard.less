@@ -1,3 +1,6 @@
+@import "/assets/bower/bootstrap/less/variables";
+@import "/assets/bower/bootstrap/less/mixins";
+
 @font-face {
   font-family: 'Open Sans';
   font-style: normal;
@@ -29,7 +32,8 @@
 @import 'order_statuses';
 
 mark {
-  display: inline-block;
+  float: left;
+  margin: 0 5px;
 }
 
 body.toplevel_page_jigoshop  #wpcontent {
@@ -226,8 +230,7 @@ div.pages ul.pages {
 }
 
 #jigoshop_dashboard_recent_orders .recent-orders li a {
-  width: 70px;
-  display: inline-block;
+  width: 20px;
   float: left;
   color: #464e3f;
 }
@@ -240,9 +243,10 @@ div.pages ul.pages {
   display: none;
 }
 
-#jigoshop_dashboard_recent_orders .recent-orders li small {
-  color: #91b93f;
-  font-size: 11px;
+#jigoshop_dashboard_recent_orders .recent-orders li .order-customer {
+  width:20%;
+  text-align: right;
+  float: left;
 }
 
 #jigoshop_dashboard_recent_orders .order-cost {
@@ -254,8 +258,12 @@ div.pages ul.pages {
   margin-left: 17px;
 }
 
+#jigoshop_dashboard_recent_orders .recent-orders li .order-cost {
+  color: #464e3f;
+  margin-left: 17px;
+}
+
 #jigoshop_dashboard_recent_orders .order-status {
-  display: inline-block;
   width: 12px;
   height: 12px;
   border-radius: 50%;
@@ -264,27 +272,27 @@ div.pages ul.pages {
 }
 
 #jigoshop_dashboard_recent_orders .order-status.cancelled {
-  background: #e21b23;
+  background: @order-cancelled-color;
 }
 
 #jigoshop_dashboard_recent_orders .order-status.on-hold {
-  background: #e21b23 /* #2f79d5 */;
+  background: @order-on-hold-color;
 }
 
 #jigoshop_dashboard_recent_orders .order-status.pending {
-  background: #f3ac32;
+  background: @order-pending-color;
 }
 
 #jigoshop_dashboard_recent_orders .order-status.completed {
-  background: #98c242;
+  background: @order-completed-color;
 }
 
 #jigoshop_dashboard_recent_orders .order-status.processing {
-  background: #2f79d5;
+  background: @order-processing-color;
 }
 
 #jigoshop_dashboard_recent_orders .order-status.refunded {
-  background: #cccccc;
+  background: @order-refunded-color;
 }
 
 #jigoshop_dashboard_latest_news .inside,
@@ -518,6 +526,7 @@ div.pages ul.pages li a:hover {
   font: 12px arial, sans-serif;
   color: #474d3f;
   padding-left: 61px;
+  padding-top: 5px;
   position: relative;
   padding-bottom: 0
 }
@@ -733,18 +742,16 @@ ul.recent-orders li .refunded, ul.recent-orders li .cancelled {
 }
 
 .jigoshop-links-widget {
-  width: 100%;
-  height: 100%
+  width: 50%;
+  float: left;
 }
 
 .jigoshop-links-widget div.links {
-  float: left;
-  width: 49%
+  margin: 0 15px;
 }
 
 .jigoshop-links-widget .social {
-  float: right;
-  width: 49%
+  margin: 0 15px;
 }
 
 .jigoshop-links-widget .social h4 {

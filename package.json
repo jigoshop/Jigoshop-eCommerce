@@ -6,7 +6,7 @@
   "dependencies": {},
   "devDependencies": {
     "coffee-script": "^1.7.1",
-    "flot": "^0.8",
+    "jquery-flot": "^0.8.3",
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^0.0.6",
     "gulp-cache": "^0.1.1",

@@ -112,7 +112,7 @@ class CustomersVsGuests extends Chart
 						'field' => 'post_date',
 						'function' => '',
 						'name' => 'post_date',
-					)
+					),
 				),
 			),
 			'from' => array(
@@ -126,11 +126,26 @@ class CustomersVsGuests extends Chart
 							'key' => 'post_id',
 							'value' => 'posts.ID',
 							'compare' => '=',
-						)
+						),
+						array(
+							'key' => 'meta_key',
+							'value' => '"customer_id"',
+							'compare' => '=',
+						),
 					),
 				),
 			),
 			'where' => array(
+				array(
+					'key' => 'posts.post_type',
+					'value' => '"shop_order"',
+					'compare' => '='
+				),
+				array(
+					'key' => 'posts.post_status',
+					'value' => '"auto-draft"',
+					'compare' => '!='
+				),
 				array(
 					'key' => 'customer.meta_value',
 					'value' => '0',
@@ -164,7 +179,7 @@ class CustomersVsGuests extends Chart
 						'field' => 'post_date',
 						'function' => '',
 						'name' => 'post_date',
-					)
+					),
 				),
 			),
 			'from' => array(
@@ -178,16 +193,31 @@ class CustomersVsGuests extends Chart
 							'key' => 'post_id',
 							'value' => 'posts.ID',
 							'compare' => '=',
-						)
+						),
+						array(
+							'key' => 'meta_key',
+							'value' => '"customer_id"',
+							'compare' => '=',
+						),
 					),
 				),
 			),
 			'where' => array(
 				array(
+					'key' => 'posts.post_type',
+					'value' => '"shop_order"',
+					'compare' => '='
+				),
+				array(
+					'key' => 'posts.post_status',
+					'value' => '"auto-draft"',
+					'compare' => '!='
+				),
+				array(
 					'key' => 'customer.meta_value',
 					'value' => '0',
 					'compare' => '='
-				)
+				),
 			),
 			'group_by' => $this->groupByQuery,
 			'order_by' => 'post_date ASC',
@@ -195,6 +225,7 @@ class CustomersVsGuests extends Chart
 		));
 
 		$this->reportData->guestOrders = $this->getOrderReportData($query);
+		\WpDebugBar\Debugger::addMessage($this->reportData->guestOrders, 'guest');
 
 		$adminUsers = new \WP_User_Query(array(
 			'role' => 'administrator',
@@ -241,6 +272,7 @@ class CustomersVsGuests extends Chart
 			'current_range' => $this->currentRange,
 			'legends' => $this->getChartLegend(),
 			'widgets' => $this->getChartWidgets(),
+			'export' => $this->getExportButton(),
 			'group_by' => $this->chartGroupBy
 		));
 	}

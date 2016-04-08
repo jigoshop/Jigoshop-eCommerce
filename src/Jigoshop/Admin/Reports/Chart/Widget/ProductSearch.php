@@ -35,6 +35,11 @@ class ProductSearch implements WidgetInterface
 		);
 	}
 
+	public function isVisible()
+	{
+		return !empty($this->productIds);
+	}
+	
 	public function display()
 	{
 		Forms::text($this->getArgs());
