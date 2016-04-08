@@ -243,8 +243,8 @@ class OrderService implements OrderServiceInterface
 		$wpdb = $this->wp->getWPDB();
 
 		return $this->wp->applyFilters('jigoshop\service\order\next_order_number', $wpdb->get_var($wpdb->prepare(
-			"SELECT COUNT(ID)+1 FROM {$wpdb->posts} WHERE post_type = %s",
-			array(Types::ORDER)
+			"SELECT COUNT(ID)+1 FROM {$wpdb->posts} WHERE post_type = %s AND post_status != %s",
+			array(Types::ORDER, 'auto-draft')
 		)));
 	}
 
