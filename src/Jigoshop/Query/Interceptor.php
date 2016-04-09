@@ -44,7 +44,7 @@ class Interceptor
 		foreach ($this->endpoints as $endpoint) {
 			$this->wp->addRewriteEndpoint($endpoint, EP_ROOT | EP_PAGES | EP_PERMALINK);
 		}
-		$this->wp->flushRewriteRules();
+		//$this->wp->flushRewriteRules();
 	}
 
 	/**

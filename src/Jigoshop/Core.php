@@ -100,7 +100,7 @@ class Core
 		$widget->init($container, $wp);
 
 		// TODO: Why this is required? :/
-		$this->wp->flushRewriteRules(false);
+		//$this->wp->flushRewriteRules(false);
 		$this->wp->doAction('jigoshop\run', $container);
 	}
 
