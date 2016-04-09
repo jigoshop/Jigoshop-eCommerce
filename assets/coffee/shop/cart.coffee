@@ -61,7 +61,7 @@ class Cart
         @_updateTotals(result.html.total, result.html.subtotal)
         @_updateTaxes(result.tax, result.html.tax)
       else
-        addMessage('danger', result.error, 6000)
+        jigoshop.addMessage('danger', result.error, 6000)
 
   updateCountry: =>
     @block()
@@ -92,7 +92,7 @@ class Cart
         else
           jQuery('#state').attr('type', 'text').select2('destroy').val('')
       else
-        addMessage('danger', result.error, 6000)
+        jigoshop.addMessage('danger', result.error, 6000)
       @unblock()
 
   updateState: (field) =>
@@ -118,7 +118,7 @@ class Cart
         @_updateTaxes(result.tax, result.html.tax)
         @_updateShipping(result.shipping, result.html.shipping)
       else
-        addMessage('danger', result.error, 6000)
+        jigoshop.addMessage('danger', result.error, 6000)
       @unblock()
 
   removeItem: (e) =>
@@ -161,7 +161,7 @@ class Cart
         @_updateTaxes(result.tax, result.html.tax)
         @_updateShipping(result.shipping, result.html.shipping)
       else
-        addMessage('danger', result.error, 6000)
+        jigoshop.addMessage('danger', result.error, 6000)
       @unblock()
 
   updateDiscounts: (event) =>
@@ -191,7 +191,7 @@ class Cart
         @_updateTaxes(result.tax, result.html.tax)
         @_updateShipping(result.shipping, result.html.shipping)
       else
-        addMessage('danger', result.error, 6000)
+        jigoshop.addMessage('danger', result.error, 6000)
       @unblock()
 
   _updateTotals: (total, subtotal) ->
@@ -208,7 +208,7 @@ class Cart
       else
         $parent.hide()
       if data.html.coupons?
-        addMessage('warning', data.html.coupons)
+        jigoshop.addMessage('warning', data.html.coupons)
 
   _updateShipping: (shipping, html) ->
     for own shippingClass, value of shipping
@@ -238,4 +238,4 @@ class Cart
         $tax.hide()
 
 jQuery () ->
-  new Cart(jigoshop)
+  new Cart(jigoshop_cart)

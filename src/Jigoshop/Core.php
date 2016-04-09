@@ -42,7 +42,7 @@ class Core
 		Styles::register('jigoshop.shop', JIGOSHOP_URL.'/assets/css/shop.css');
 		Styles::register('prettyphoto', JIGOSHOP_URL.'/assets/css/prettyPhoto.css');
 		Scripts::register('jigoshop.helpers', JIGOSHOP_URL.'/assets/js/helpers.js', array('jquery'));
-		Scripts::register('jigoshop.helpers.product_search', JIGOSHOP_URL.'/assets/js/helpers/product_search.js', array('jigoshop.helpers'));
+		Scripts::register('jigoshop.helpers.ajax_search', JIGOSHOP_URL.'/assets/js/helpers/ajax_search.js', array('jigoshop.helpers'));
 		Scripts::register('jigoshop.media', JIGOSHOP_URL.'/assets/js/media.js', array('jquery'));
 		Scripts::register('jigoshop.shop', JIGOSHOP_URL.'/assets/js/shop.js', array(
 			'jquery',

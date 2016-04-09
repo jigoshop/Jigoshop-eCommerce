@@ -97,7 +97,7 @@ class Checkout
         @_updateDiscount(result)
         @_updateTaxes(result.tax, result.html.tax)
       else
-        addMessage('danger', result.error, 6000)
+        jigoshop.addMessage('danger', result.error, 6000)
 
   updateCountry: (field, event) =>
     @block()
@@ -130,7 +130,7 @@ class Checkout
         else
           jQuery(stateClass).attr('type', 'text').select2('destroy').val('')
       else
-        addMessage('danger', result.error, 6000)
+        jigoshop.addMessage('danger', result.error, 6000)
       @unblock()
 
   updateState: (field) =>
@@ -168,7 +168,7 @@ class Checkout
         @_updateTaxes(result.tax, result.html.tax)
         @_updateShipping(result.shipping_address, result.html.shipping_address)
       else
-        addMessage('danger', result.error, 6000)
+        jigoshop.addMessage('danger', result.error, 6000)
       @unblock()
 
   _updateShippingField: (action, field, value) =>
@@ -189,7 +189,7 @@ class Checkout
         @_updateTaxes(result.tax, result.html.tax)
         @_updateShipping(result.shipping_address, result.html.shipping_address)
       else
-        addMessage('danger', result.error, 6000)
+        jigoshop.addMessage('danger', result.error, 6000)
       @unblock()
 
   _updateTotals: (total, subtotal) ->
@@ -206,7 +206,7 @@ class Checkout
       else
         $parent.hide()
       if data.html.coupons?
-        addMessage('warning', data.html.coupons)
+        jigoshop.addMessage('warning', data.html.coupons)
 
   _updateShipping: (shipping_address, html) ->
     for own shipping_addressClass, value of shipping_address

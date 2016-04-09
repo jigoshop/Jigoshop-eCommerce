@@ -49,7 +49,7 @@ class Coupon
 				Scripts::add('jigoshop.admin.coupon', JIGOSHOP_URL.'/assets/js/admin/coupon.js', array(
 					'jquery',
 					'jigoshop.admin',
-					'jigoshop.helpers',
+					'jigoshop.helpers.ajax_search',
 				));
 				Styles::add('jigoshop.vendors.select2', JIGOSHOP_URL.'/assets/css/vendors/select2.css', array('jigoshop.admin.coupon'));
 				Scripts::add('jigoshop.vendors.select2', JIGOSHOP_URL . '/assets/js/vendors/select2.js', array('jigoshop.admin.coupon'), array('in_footer' => true));

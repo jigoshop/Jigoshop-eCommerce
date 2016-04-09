@@ -23,7 +23,7 @@ class AdminProducts
       if data.success? and data.success
         jQuery('span', $button).toggleClass('glyphicon-star').toggleClass('glyphicon-star-empty')
       else
-        addMessage('danger', data.error, 6000)
+        jigoshop.addMessage('danger', data.error, 6000)
 
 jQuery ->
   new AdminProducts(jigoshop_admin_products)

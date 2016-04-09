@@ -172,7 +172,7 @@ class AdminOrder
         else
           $field.attr('type', 'text').select2('destroy').val('')
       else
-        addMessage('danger', result.error, 6000)
+        jigoshop.addMessage('danger', result.error, 6000)
 
   updateState: (e) =>
     $target = jQuery(e.target)
@@ -195,7 +195,7 @@ class AdminOrder
         @_updateTaxes(result.tax, result.html.tax)
         @_updateShipping(result.shipping, result.html.shipping)
       else
-        addMessage('danger', result.error, 6000)
+        jigoshop.addMessage('danger', result.error, 6000)
 
   updatePostcode: (e) =>
     $target = jQuery(e.target)
@@ -218,7 +218,7 @@ class AdminOrder
         @_updateTaxes(result.tax, result.html.tax)
         @_updateShipping(result.shipping, result.html.shipping)
       else
-        addMessage('danger', result.error, 6000)
+        jigoshop.addMessage('danger', result.error, 6000)
 
   _updateTaxes: (taxes, html) ->
     for own taxClass, tax of html
