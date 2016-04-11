@@ -225,7 +225,6 @@ class CustomersVsGuests extends Chart
 		));
 
 		$this->reportData->guestOrders = $this->getOrderReportData($query);
-		\WpDebugBar\Debugger::addMessage($this->reportData->guestOrders, 'guest');
 
 		$adminUsers = new \WP_User_Query(array(
 			'role' => 'administrator',

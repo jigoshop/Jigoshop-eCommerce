@@ -38,7 +38,7 @@ class AdminProductVariable
       if data.success? and data.success
         jQuery(data.html).hide().appendTo($parent).slideDown().trigger('jigoshop.variation.add')
       else
-        addMessage('danger', data.error, 6000)
+        jigoshop.addMessage('danger', data.error, 6000)
   updateVariation: (event) =>
     $container = jQuery('#product-variations')
     $parent = jQuery(event.target).closest('li.list-group-item')
@@ -79,9 +79,9 @@ class AdminProductVariable
     .done (data) =>
       if data.success? and data.success
         $parent.trigger('jigoshop.variation.update')
-        addMessage('success', @params.i18n.saved, 2000)
+        jigoshop.addMessage('success', @params.i18n.saved, 2000)
       else
-        addMessage('danger', data.error, 6000)
+        jigoshop.addMessage('danger', data.error, 6000)
   removeVariation: (event) =>
     event.preventDefault()
     if confirm(@params.i18n.confirm_remove)
@@ -98,9 +98,9 @@ class AdminProductVariable
         if data.success? and data.success
           $parent.trigger('jigoshop.variation.remove')
           $parent.slideUp -> $parent.remove()
-          addMessage('success', @params.i18n.variation_removed, 2000)
+          jigoshop.addMessage('success', @params.i18n.variation_removed, 2000)
         else
-          addMessage('danger', data.error, 6000)
+          jigoshop.addMessage('danger', data.error, 6000)
   connectImage: (index, element) =>
     $element = jQuery(element)
     $remove = $element.next('.remove_variation_image')
@@ -122,7 +122,7 @@ class AdminProductVariable
             image_id: attachment.id
         .done (data) ->
           if !data.success? or !data.success
-            addMessage('danger', data.error, 6000)
+            jigoshop.addMessage('danger', data.error, 6000)
       library:
         type: 'image'
     )
@@ -150,7 +150,7 @@ class AdminProductVariable
           .attr('height', 150)
         $element.hide()
       else
-        addMessage('danger', data.error, 6000)
+        jigoshop.addMessage('danger', data.error, 6000)
 
 jQuery ->
   new AdminProductVariable(jigoshop_admin_product_variable)

@@ -54,9 +54,9 @@ class Api
 		$endpoint = isset($_GET[self::API_ENDPOINT]) ? strtolower(esc_attr($_GET[self::API_ENDPOINT])) : null;
 
 		if (!empty($endpoint)) {
-			if ($this->di->hasParameter('jigoshop.api.'.$endpoint)) {
+			if ($this->di->services->exists('jigoshop.api.'.$endpoint)) {
 				ob_start();
-				$api = $this->di->getParameter('jigoshop.api.'.$endpoint);
+				$api = $this->di->get('jigoshop.api.'.$endpoint);
 
 				if (!($api instanceof Api\Processable)) {
 					if (WP_DEBUG) {
