@@ -19,7 +19,7 @@ class AdminEmail
       if data.success? and data.success
         jQuery('#available_arguments').replaceWith(data.html)
       else
-        addMessage('danger', data.error, 6000)
+        jigoshop.addMessage('danger', data.error, 6000)
 
 jQuery ->
   new AdminEmail(jigoshop_admin_email)

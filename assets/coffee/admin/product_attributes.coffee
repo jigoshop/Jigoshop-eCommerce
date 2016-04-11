@@ -38,7 +38,7 @@ class AdminProductAttributes
         @$newType.val('0').trigger('change')
         jQuery(data.html).appendTo($container)
       else
-        addMessage('danger', data.error, 6000)
+        jigoshop.addMessage('danger', data.error, 6000)
   updateAttribute: (event) =>
     $parent = jQuery(event.target).closest('tr')
     jQuery.ajax
@@ -54,9 +54,9 @@ class AdminProductAttributes
     .done (data) =>
       if data.success? and data.success
         $parent.replaceWith(data.html)
-        addMessage('success', @params.i18n.saved, 2000)
+        jigoshop.addMessage('success', @params.i18n.saved, 2000)
       else
-        addMessage('danger', data.error, 6000)
+        jigoshop.addMessage('danger', data.error, 6000)
   removeAttribute: (event) =>
     if confirm(@params.i18n.confirm_remove)
       $parent = jQuery(event.target).closest('tr')
@@ -70,9 +70,9 @@ class AdminProductAttributes
       .done (data) =>
         if data.success? and data.success
           $parent.remove()
-          addMessage('success', @params.i18n.removed, 2000)
+          jigoshop.addMessage('success', @params.i18n.removed, 2000)
         else
-          addMessage('danger', data.error, 6000)
+          jigoshop.addMessage('danger', data.error, 6000)
   configureAttribute: (event) ->
     $parent = jQuery(event.target).closest('tr')
     $options = jQuery('tr.options[data-id=' + $parent.data('id') + ']').toggle()
@@ -96,7 +96,7 @@ class AdminProductAttributes
         $value.val('')
         jQuery(data.html).appendTo($container)
       else
-        addMessage('danger', data.error, 6000)
+        jigoshop.addMessage('danger', data.error, 6000)
   updateAttributeOption: (event) =>
     $parent = jQuery(event.target).closest('tr')
     jQuery.ajax
@@ -112,9 +112,9 @@ class AdminProductAttributes
     .done (data) =>
       if data.success? and data.success
         $parent.replaceWith(data.html)
-        addMessage('success', @params.i18n.saved, 2000)
+        jigoshop.addMessage('success', @params.i18n.saved, 2000)
       else
-        addMessage('danger', data.error, 6000)
+        jigoshop.addMessage('danger', data.error, 6000)
   removeAttributeOption: (event) =>
     if confirm(@params.i18n.confirm_remove)
       $parent = jQuery(event.target).closest('tr')
@@ -129,9 +129,9 @@ class AdminProductAttributes
       .done (data) =>
         if data.success? and data.success
           $parent.remove()
-          addMessage('success', @params.i18n.option_removed, 2000)
+          jigoshop.addMessage('success', @params.i18n.option_removed, 2000)
         else
-          addMessage('danger', data.error, 6000)
+          jigoshop.addMessage('danger', data.error, 6000)
 
 jQuery ->
   new AdminProductAttributes(jigoshop_admin_product_attributes)

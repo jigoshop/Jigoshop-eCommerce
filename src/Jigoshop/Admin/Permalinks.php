@@ -144,8 +144,9 @@ class Permalinks
 			if ($shopPageId && trim($permalinks['product'], '/') === $shop_permalink) {
 				$permalinks['verbose'] = true;
 			}
-
+			
 			$this->options->update('permalinks', $permalinks);
+			$this->options->saveOptions();
 			$this->wp->getRewrite()->flush_rules();
 		}
 	}

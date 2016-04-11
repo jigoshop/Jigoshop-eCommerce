@@ -81,10 +81,10 @@ class AdminProduct
     value = parseInt($attribute.val())
     label = $label.val()
     if value < 0 and value != -1
-      addMessage('warning', @params.i18n.invalid_attribute)
+      jigoshop.addMessage('warning', @params.i18n.invalid_attribute)
       return
     if value == -1 and label.length == 0
-      addMessage('danger', @params.i18n.attribute_without_label, 6000)
+      jigoshop.addMessage('danger', @params.i18n.attribute_without_label, 6000)
       return
     $attribute.select2('val', '')
     $label.val('').slideUp()
@@ -103,7 +103,7 @@ class AdminProduct
       if data.success? and data.success
         jQuery(data.html).hide().appendTo($parent).slideDown()
       else
-        addMessage('danger', data.error, 6000)
+        jigoshop.addMessage('danger', data.error, 6000)
   updateAttribute: (event) =>
     $container = jQuery('#product-attributes')
     $parent = jQuery(event.target).closest('li.list-group-item')
@@ -143,9 +143,9 @@ class AdminProduct
         options: options
     .done (data) =>
       if data.success? and data.success
-        addMessage('success', @params.i18n.saved, 2000)
+        jigoshop.addMessage('success', @params.i18n.saved, 2000)
       else
-        addMessage('danger', data.error, 6000)
+        jigoshop.addMessage('danger', data.error, 6000)
   removeAttribute: (event) =>
     event.preventDefault()
     if confirm(@params.i18n.confirm_remove)
@@ -162,9 +162,9 @@ class AdminProduct
       .done (data) =>
         if data.success? and data.success
           $parent.slideUp -> $parent.remove()
-          addMessage('success', @params.i18n.attribute_removed, 2000)
+          jigoshop.addMessage('success', @params.i18n.attribute_removed, 2000)
         else
-          addMessage('danger', data.error, 6000)
+          jigoshop.addMessage('danger', data.error, 6000)
 
   updateAttachments: (event) =>
     event.preventDefault()

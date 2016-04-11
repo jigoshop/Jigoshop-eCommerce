@@ -1,4 +1,4 @@
-jigoshop.productSearch = ($field, params) ->
+jigoshop.ajaxSearch = ($field, params) ->
   if typeof params.initAction is 'undefined'
     params.initAction = params.action
   if typeof params.multiple is 'undefined'
