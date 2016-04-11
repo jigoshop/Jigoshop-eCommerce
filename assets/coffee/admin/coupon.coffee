@@ -19,6 +19,6 @@ class AdminCoupon
       action: 'jigoshop.admin.coupon.find_category'
       ajax: @params.ajax
     }
-    
+
 jQuery ->
   new AdminCoupon(jigoshop_admin_coupon)

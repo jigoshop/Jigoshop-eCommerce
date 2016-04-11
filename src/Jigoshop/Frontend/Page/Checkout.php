@@ -583,60 +583,49 @@ class Checkout implements PageInterface
 		return ProductHelper::getBasicBillingFields(array(
 			'first_name' => array(
 				'value' => $address->getFirstName(),
-				'size' => 9,
 				'columnSize' => 6,
 			),
 			'last_name' => array(
 				'value' => $address->getLastName(),
-				'size' => 9,
 				'columnSize' => 6,
 			),
 			'company' => array(
 				'value' => $address instanceof CompanyAddress ? $address->getCompany() : '',
-				'size' => 9,
 				'columnSize' => 6,
 			),
 			'euvatno' => array(
 				'value' => $address instanceof CompanyAddress ? $address->getVatNumber() : '',
-				'size' => 9,
 				'columnSize' => 6,
 			),
 			'address' => array(
 				'value' => $address->getAddress(),
-				'size' => 10,
 				'columnSize' => 12,
 			),
 			'country' => array(
 				'options' => Country::getAllowed(),
 				'value' => $address->getCountry(),
-				'size' => 9,
 				'columnSize' => 6,
 			),
 			'state' => array(
 				'type' => Country::hasStates($address->getCountry()) ? 'select' : 'text',
 				'options' => Country::getStates($address->getCountry()),
 				'value' => $address->getState(),
-				'size' => 9,
 				'columnSize' => 6,
 			),
 			'city' => array(
 				'value' => $address->getCity(),
-				'size' => 9,
 				'columnSize' => 6,
 			),
 			'postcode' => array(
 				'value' => $address->getPostcode(),
-				'size' => 9,
 				'columnSize' => 6,
 			),
 			'phone' => array(
 				'value' => $address->getPhone(),
-				'size' => 9,
 				'columnSize' => 6,
 			),
 			'email' => array(
 				'value' => $address->getEmail(),
-				'size' => 9,
 				'columnSize' => 6,
 			),
 		));
@@ -659,40 +648,37 @@ class Checkout implements PageInterface
 		return ProductHelper::getBasicShippingFields(array(
 			'first_name' => array(
 				'value' => $address->getFirstName(),
-				'size' => 9,
 				'columnSize' => 6,
 			),
 			'last_name' => array(
 				'value' => $address->getLastName(),
-				'size' => 9,
 				'columnSize' => 6,
+			),
+			'company' => array(
+				'value' => $address instanceof CompanyAddress ? $address->getCompany() : '',
+				'columnSize' => 12,
 			),
 			'address' => array(
 				'value' => $address->getAddress(),
-				'size' => 10,
 				'columnSize' => 12,
 			),
 			'country' => array(
 				'options' => Country::getAllowed(),
 				'value' => $address->getCountry(),
-				'size' => 9,
 				'columnSize' => 6,
 			),
 			'state' => array(
 				'type' => Country::hasStates($address->getCountry()) ? 'select' : 'text',
 				'options' => Country::getStates($address->getCountry()),
 				'value' => $address->getState(),
-				'size' => 9,
 				'columnSize' => 6,
 			),
 			'city' => array(
 				'value' => $address->getCity(),
-				'size' => 9,
 				'columnSize' => 6,
 			),
 			'postcode' => array(
 				'value' => $address->getPostcode(),
-				'size' => 9,
 				'columnSize' => 6,
 			),
 		));

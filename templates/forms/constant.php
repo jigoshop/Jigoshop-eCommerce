@@ -13,7 +13,7 @@
  */
 ?>
 <div class="form-group <?php echo $id; ?>_field clearfix<?php $hidden and print ' not-active'; ?>">
-	<label for="<?php echo $id; ?>" class="col-sm-<?php echo 12 - $size; ?> control-label">
+	<label for="<?php echo $id; ?>" class="col-sm-<?php echo $size == 12 ? 12 : 12 - $size; ?> control-label">
 		<?php echo $label; ?>
 		<?php if(!empty($tip)): ?>
 			<a href="#" data-toggle="tooltip" class="badge" data-placement="top" title="<?php echo $tip; ?>">?</a>

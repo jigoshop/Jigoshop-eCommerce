@@ -555,6 +555,11 @@ class Product
 				'type'  => 'text',
 				'name'  => 'jigoshop_order[shipping_address][last_name]',
 			),
+			'company'    => array(
+				'label' => __('Company', 'jigoshop'),
+				'type'  => 'text',
+				'name'  => 'jigoshop_order[shipping_address][company]',
+			),
 			'address'    => array(
 				'label' => __('Address', 'jigoshop'),
 				'type'  => 'text',

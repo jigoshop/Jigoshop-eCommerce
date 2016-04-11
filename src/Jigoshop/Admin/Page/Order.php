@@ -495,17 +495,17 @@ class Order
 		$address = $order->getCustomer()->getBillingAddress();
 
 		$billingFields = $this->wp->applyFilters('jigoshop\admin\order\billing_fields', ProductHelper::getBasicBillingFields(array(
-			'company' => array(
-				'value' => $address instanceof Customer\CompanyAddress ? $address->getCompany() : '',
-			),
-			'euvatno' => array(
-				'value' => $address instanceof Customer\CompanyAddress ? $address->getVatNumber() : '',
-			),
 			'first_name' => array(
 				'value' => $address->getFirstName(),
 			),
 			'last_name' => array(
 				'value' => $address->getLastName(),
+			),
+			'company' => array(
+				'value' => $address instanceof Customer\CompanyAddress ? $address->getCompany() : '',
+			),
+			'euvatno' => array(
+				'value' => $address instanceof Customer\CompanyAddress ? $address->getVatNumber() : '',
 			),
 			'address' => array(
 				'value' => $address->getAddress(),
@@ -541,6 +541,9 @@ class Order
 			),
 			'last_name' => array(
 				'value' => $address->getLastName(),
+			),
+			'company' => array(
+				'value' => $address instanceof Customer\CompanyAddress ? $address->getCompany() : '',
 			),
 			'address' => array(
 				'value' => $address->getAddress(),
