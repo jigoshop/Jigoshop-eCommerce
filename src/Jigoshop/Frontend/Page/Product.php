@@ -70,7 +70,7 @@ class Product implements PageInterface
 
 			return $item;
 		});
-
+		
 		$wp->addAction('jigoshop\template\product\before_summary', array(
 			$this,
 			'productImages'
@@ -81,16 +81,16 @@ class Product implements PageInterface
 		}
 		$wp->addAction('jigoshop\template\product\tab_panels', array(
 			$this,
-			'productAttributes'
-		), 10, 2);
-		$wp->addAction('jigoshop\template\product\tab_panels', array(
-			$this,
 			'productDescription'
 		), 10, 2);
 		$wp->addAction('jigoshop\template\product\tab_panels', array(
 			$this,
+			'productAttributes'
+		), 15, 2);
+		$wp->addAction('jigoshop\template\product\tab_panels', array(
+			$this,
 			'productDownloads'
-		), 10, 2);
+		), 20, 2);
 		$wp->doAction('jigoshop\product\assets', $wp);
 	}
 
