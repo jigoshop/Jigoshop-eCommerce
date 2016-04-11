@@ -667,11 +667,6 @@ class Checkout implements PageInterface
 				'size' => 9,
 				'columnSize' => 6,
 			),
-			'company' => array(
-				'value' => $address instanceof CompanyAddress ? $address->getCompany() : '',
-				'size' => 9,
-				'columnSize' => 6,
-			),
 			'address' => array(
 				'value' => $address->getAddress(),
 				'size' => 10,

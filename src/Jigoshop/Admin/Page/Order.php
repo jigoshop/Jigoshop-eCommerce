@@ -536,9 +536,6 @@ class Order
 		$address = $order->getCustomer()->getShippingAddress();
 
 		$shippingFields = $this->wp->applyFilters('jigoshop\admin\order\shipping_fields', ProductHelper::getBasicShippingFields(array(
-			'company' => array(
-				'value' => $address instanceof Customer\CompanyAddress ? $address->getCompany() : '',
-			),
 			'first_name' => array(
 				'value' => $address->getFirstName(),
 			),
@@ -562,9 +559,6 @@ class Order
 				'type' => Country::hasStates($address->getCountry()) ? 'select' : 'text',
 				'value' => $address->getState(),
 				'options' => Country::getStates($address->getCountry()),
-			),
-			'phone' => array(
-				'value' => $address->getPhone(),
 			),
 		), $order));
 		$customers = $this->customerService->findAll();

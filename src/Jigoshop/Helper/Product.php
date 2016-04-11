@@ -469,16 +469,6 @@ class Product
 	public static function getBasicBillingFields($fields = array(), $except = array())
 	{
 		$fields = array_replace_recursive(array(
-			'company'    => array(
-				'label' => __('Company', 'jigoshop'),
-				'type'  => 'text',
-				'name'  => 'jigoshop_order[billing_address][company]',
-			),
-			'euvatno'    => array(
-				'label' => __('EU VAT Number', 'jigoshop'),
-				'type'  => 'text',
-				'name'  => 'jigoshop_order[billing_address][euvatno]',
-			),
 			'first_name' => array(
 				'label' => __('First Name', 'jigoshop'),
 				'type'  => 'text',
@@ -488,6 +478,16 @@ class Product
 				'label' => __('Last Name', 'jigoshop'),
 				'type'  => 'text',
 				'name'  => 'jigoshop_order[billing_address][last_name]',
+			),
+			'company'    => array(
+				'label' => __('Company', 'jigoshop'),
+				'type'  => 'text',
+				'name'  => 'jigoshop_order[billing_address][company]',
+			),
+			'euvatno'    => array(
+				'label' => __('EU VAT Number', 'jigoshop'),
+				'type'  => 'text',
+				'name'  => 'jigoshop_order[billing_address][euvatno]',
 			),
 			'address'    => array(
 				'label' => __('Address', 'jigoshop'),
@@ -545,11 +545,6 @@ class Product
 	public static function getBasicShippingFields($fields = array(), $except = array())
 	{
 		$fields = array_replace_recursive(array(
-			'company'    => array(
-				'label' => __('Company', 'jigoshop'),
-				'type'  => 'text',
-				'name'  => 'jigoshop_order[shipping_address][company]',
-			),
 			'first_name' => array(
 				'label' => __('First Name', 'jigoshop'),
 				'type'  => 'text',
@@ -584,11 +579,6 @@ class Product
 				'label' => __('State/Province', 'jigoshop'),
 				'type'  => 'select',
 				'name'  => 'jigoshop_order[shipping_address][state]',
-			),
-			'phone'      => array(
-				'label' => __('Phone', 'jigoshop'),
-				'type'  => 'text',
-				'name'  => 'jigoshop_order[shipping_address][phone]',
 			),
 		), $fields);
 
