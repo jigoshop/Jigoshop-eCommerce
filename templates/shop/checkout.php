@@ -33,40 +33,49 @@ use Jigoshop\Helper\Tax;
 <form action="" role="form" method="post" id="checkout">
 	<div class="panel panel-default">
 		<div class="panel-heading">
-			<h3 class="panel-title"><?php _e('Your address', 'jigoshop'); ?></h3>
+			<h3 class="panel-title"><?php _e('Billing address', 'jigoshop'); ?></h3>
 		</div>
 		<div class="panel-body">
-			<div class="row" id="billing-address clearfix">
+			<div class="row clearfix" id="billing-address">
 				<?php foreach($billingFields as $field): ?>
 				<div class="col-md-<?php echo $field['columnSize']; ?>">
 					<?php Forms::field($field['type'], $field); ?>
 				</div>
 				<?php endforeach; ?>
 			</div>
-			<?php if (!$alwaysShowShipping): ?>
+		</div>
+	</div>
+	<?php if (!$alwaysShowShipping): ?>
+		<div class="col-md-6 col-xs-12 pull-right toggle-panels">
 			<?php Forms::checkbox(array(
-				'label' => __('Different shipping address', 'jigoshop'),
-					'name' => 'jigoshop_order[different_shipping_address]',
-					'id' => 'different_shipping_address',
+				'description' => __('Different shipping address', 'jigoshop'),
+				'name' => 'jigoshop_order[different_shipping_address]',
+				'id' => 'different_shipping_address',
 				'checked' => $differentShipping,
-				'size' => 9
 			)); ?>
-			<?php endif; ?>
-			<div class="row clearfix<?php !$differentShipping && !$alwaysShowShipping and print ' not-active'; ?>" id="shipping-address">
-				<h4><?php _e('Shipping address', 'jigoshop'); ?></h4>
+
+		</div>
+	<div class="clear"></div>
+	<?php endif; ?>
+	<div id="shipping-address" class="panel panel-default <?php !$differentShipping && !$alwaysShowShipping and print ' not-active'; ?>">
+		<div class="panel-heading">
+			<h3 class="panel-title"><?php _e('Shipping address', 'jigoshop'); ?></h3>
+		</div>
+		<div class="panel-body">
+			<div class="row clearfix" >
 				<?php foreach($shippingFields as $field): ?>
 					<div class="col-md-<?php echo $field['columnSize']; ?>">
 						<?php Forms::field($field['type'], $field); ?>
 					</div>
 				<?php endforeach; ?>
 			</div>
-			<?php if ($allowRegistration): ?>
-				<?php Render::output('shop/checkout/registration_form', array(
-					'showRegistrationForm' => $showRegistrationForm,
-				)); ?>
-			<?php endif; ?>
 		</div>
 	</div>
+	<?php if ($allowRegistration): ?>
+		<?php Render::output('shop/checkout/registration_form', array(
+			'showRegistrationForm' => $showRegistrationForm,
+		)); ?>
+	<?php endif; ?>
 	<div class="panel panel-success">
 		<div class="panel-heading">
 			<h3 class="panel-title"><?php _e('Your order', 'jigoshop'); ?></h3>
@@ -90,7 +99,7 @@ use Jigoshop\Helper\Tax;
 			</tbody>
 			<tfoot>
 			<tr>
-				<td colspan="3">
+				<td colspan="2">
 					<?php \Jigoshop\Helper\Forms::text(array(
 						'id' => 'jigoshop_coupons',
 						'name' => 'jigoshop_coupons',
@@ -102,7 +111,7 @@ use Jigoshop\Helper\Tax;
 					)); ?>
 				</td>
 				<?php $productSubtotal = $showWithTax ? $cart->getProductSubtotal() + $cart->getTotalTax() : $cart->getProductSubtotal(); ?>
-				<th scope="row" class="text-right"><?php _e('Products subtotal', 'jigoshop'); ?></th>
+				<th colspan="2" scope="row" class="text-right"><?php _e('Products subtotal', 'jigoshop'); ?></th>
 				<td id="product-subtotal"><?php echo Product::formatPrice($productSubtotal); ?></td>
 			</tr>
 			</tfoot>
@@ -195,11 +204,14 @@ use Jigoshop\Helper\Tax;
 	</div>
 	<?php endif; ?>
 	<?php if (!empty($termsUrl)): ?>
+	<div class="col-md-6 col-xs-12 pull-right toggle-panels">
 		<?php Forms::checkbox(array(
 			'name' => 'terms',
-			'label' => sprintf(__('I accept the <a href="%s">Terms &amp; Conditions</a>'), $termsUrl),
+			'description' => sprintf(__('I accept the <a href="%s">Terms &amp; Conditions</a>'), $termsUrl),
 			'checked' => false,
 		)); ?>
+		</div>
+		<div class="clear"></div>
 	<?php endif; ?>
 	<?php if(!empty($verificationMessage)) : ?>
 		<?php Render::output('shop/checkout/verification_message', array(

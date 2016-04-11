@@ -29,7 +29,7 @@ use Jigoshop\Helper\Forms;
 		<?php endif; ?>
 		<input type="checkbox" id="<?php echo $id; ?>" name="<?php echo $name; ?>" class="<?php echo join(' ', $classes); ?>" <?php echo Forms::checked($checked, true); ?> value="<?php echo $value; ?>"<?php $disabled and print ' disabled'; ?> />
 		<?php if(!empty($description)): ?>
-			<span class="help"><?php echo $description; ?></span>
+			<label for="<?php echo $id; ?>"><span class="help"><?php echo $description; ?></span></label>
 		<?php endif; ?>
 	</div>
 </div>
