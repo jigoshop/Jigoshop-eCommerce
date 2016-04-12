@@ -129,7 +129,13 @@ class Order implements EntityFactoryInterface
             $order->setId($post->ID);
             if (isset($state['customer'])) {
                 // Customer must be unserialized twice "thanks" to WordPress second serialization.
+                /** @var CustomerEntity */
                 $state['customer'] = unserialize(unserialize($state['customer']));
+                if($state['customer'] instanceof CustomerEntity &&
+                    !($state['customer'] instanceof CustomerEntity\Guest) &&
+                    $state['customer_id'] > 0) {
+                    $state['customer'] = $this->customerService->find($state['customer_id']);
+                }
             }
             $state['customer_note'] = $post->post_excerpt;
             $state['status'] = $post->post_status;

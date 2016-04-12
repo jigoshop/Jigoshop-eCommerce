@@ -17,14 +17,16 @@ $variation = $product->getVariation($item->getMeta('variation_id')->getValue());
 	<td class="sku"><?php Forms::constant(array('name' => 'order[items]['.$id.'][sku]', 'value' => $product->getSku())); ?></td>
 	<td class="name">
 		<?php Forms::constant(array('name' => 'order[items]['.$id.'][name]', 'value' => $item->getName())); ?>
-		<dl class="dl-horizontal variation-data">
-			<?php foreach ($variation->getAttributes() as $attribute): /** @var $attribute \Jigoshop\Entity\Product\Variable\Attribute */?>
-				<?php if ($attribute->getValue() === ''): ?>
-					<dt><?php echo $attribute->getAttribute()->getLabel(); ?></dt>
-					<dd><?php echo $attribute->printValue($item); ?></dd>
-				<?php endif; ?>
-			<?php endforeach; ?>
-		</dl>
+		<?php if($variation) : ?>
+			<dl class="dl-horizontal variation-data">
+				<?php foreach ($variation->getAttributes() as $attribute): /** @var $attribute \Jigoshop\Entity\Product\Variable\Attribute */?>
+					<?php if ($attribute->getValue() === ''): ?>
+						<dt><?php echo $attribute->getAttribute()->getLabel(); ?></dt>
+						<dd><?php echo $attribute->printValue($item); ?></dd>
+					<?php endif; ?>
+				<?php endforeach; ?>
+			</dl>
+		<?php endif; ?>
 	</td>
 	<td class="price"><?php Forms::text(array('name' => 'order[items]['.$id.'][price]', 'value' => Product::formatNumericPrice($item->getPrice()))); ?></td>
 	<td class="quantity"><?php Forms::text(array('name' => 'quantity['.$id.']', 'value' => $item->getQuantity())); ?></td>
