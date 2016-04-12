@@ -223,11 +223,11 @@ class Product implements PageInterface
 	public function productTabs($product)
 	{
 		$tabs = array();
-		if ($product->getVisibleAttributes()) {
-			$tabs['attributes'] = __('Additional information', 'jigoshop');
-		}
 		if ($product->getDescription()) {
 			$tabs['description'] = __('Description', 'jigoshop');
+		}
+		if ($product->getVisibleAttributes()) {
+			$tabs['attributes'] = __('Additional information', 'jigoshop');
 		}
 		if ($product->getAttachments()) {
 			$tabs['downloads'] = __('Files to download', 'jigoshop');
