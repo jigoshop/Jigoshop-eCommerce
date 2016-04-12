@@ -362,14 +362,19 @@ class ProductService implements ProductServiceInterface
 		$uploadUrl = $this->wp->wpUploadDir()['baseurl'];
 		$wpdb = $this->wp->getWPDB();
 
+		$attachments = $this->wp->applyFilters('jigoshop\service\product\attachments\types', array(
+			'gallery' => array(),
+			'downloads' => array(),
+		));
+
 		$query = $wpdb->prepare("SELECT post.ID as id, post.post_title as title, post.guid as url, meta.meta_value as meta, attachment.type
 				FROM {$wpdb->prefix}jigoshop_product_attachment as attachment
 				LEFT JOIN {$wpdb->posts} as post ON (attachment.attachment_id = post.ID)
 				LEFT JOIN {$wpdb->postmeta} as meta ON (meta.meta_key = '_wp_attachment_metadata' AND meta.post_id = post.ID)
 				WHERE product_id = %d", $product->getId());
-		$attachments = $wpdb->get_results($query, ARRAY_A);
+		$results = $wpdb->get_results($query, ARRAY_A);
 
-		foreach($attachments as $attachment) {
+		foreach($results as $attachment) {
 			$attachment['meta'] = unserialize($attachment['meta']);
 			if (isset($attachment['meta']['sizes']) && isset($attachment['meta']['sizes'][$size])) {
 				$thumbUrl = $uploadUrl . '/' . str_replace(
