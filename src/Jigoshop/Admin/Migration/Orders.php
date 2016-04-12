@@ -442,6 +442,7 @@ class Orders implements Tool
 	{
 		switch ($status) {
 			case 'pending':
+			case 'waiting-for-payment':
 				return Status::PENDING;
 			case 'processing':
 				return Status::PROCESSING;
