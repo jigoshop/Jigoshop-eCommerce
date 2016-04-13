@@ -169,30 +169,20 @@ class Product implements PageInterface
 
 	/**
 	 * Get related products based on the same parent product category.
+	 * @param \Jigoshop\Entity\Product $product
 	 *
 	 * @return array
 	 */
-	protected function getRelated()
+	protected function getRelated($product)
 	{
-		if (!$this->options->get('products.related'))
-		{
+		if (!$this->options->get('products.related')) {
 			return array();
 		}
+		
+		
+		$count = $this->wp->applyFilters('jigoshop/frontend/page/product/render/related_products_count', 3);
 
-		$related = new \WP_Query(array(
-			'post_type'      => 'product',
-			'orderby'        => 'rand',
-			'posts_per_page' => $this->wp->applyFilters('jigoshop/frontend/page/product/render/related_products_count', 3),
-			'tax_query'      => array(
-				array(
-					'taxonomy' => 'product_category',
-					'field'    => 'term_id',
-					'terms'    => 19,
-				),
-			)
-		));
-
-		return $this->productService->findByQuery($related);
+		return $this->productService->findByQuery(ProductHelper::getRelated($product, $count));
 	}
 
 	/**
@@ -211,7 +201,6 @@ class Product implements PageInterface
 			'product' => $product,
 			'featured' => $featured,
 			'featuredUrl' => $featuredUrl,
-//			@TODO $thumbnails powinien zawsze zwracać array, przerobić tak metodę by się przed tym zabezpieczyć
 			'thumbnails' => is_array($thumbnails) ? $thumbnails : array(),
 			'imageClasses' => $imageClasses,
 		));
@@ -243,10 +232,13 @@ class Product implements PageInterface
 		));
 	}
 
-	public function relatedProducts()
+	/**
+	 * @param \Jigoshop\Entity\Product $product
+	 */
+	public function relatedProducts($product)
 	{
 		Render::output('shop/product/related', array(
-			'products' => $this->getRelated(),
+			'products' => $this->getRelated($product),
 		));
 	}
 

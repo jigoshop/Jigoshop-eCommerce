@@ -423,7 +423,6 @@ class Product
 			'posts_per_page' => $limit,
 			'post__not_in' => array($product->getId()),
 			'post_type' => Types::PRODUCT,
-			'fields' => 'ids',
 			'orderby' => 'rand',
 			'meta_query' => array(
 				array(
@@ -440,22 +439,18 @@ class Product
 		if (!empty($cats)) {
 			$query['tax_query'][] = array(
 				'taxonomy' => Types::PRODUCT_CATEGORY,
-				'field' => 'id',
-				'terms' => $cats
+				'terms' => $cats,
+				'operator' => 'IN',
 			);
 		}
 		if (!empty($tags)) {
 			$query['tax_query'][] = array(
 				'taxonomy' => Types::PRODUCT_TAG,
-				'field' => 'id',
-				'terms' => $tags
+				'terms' => $tags,
+				'operator' => 'IN',
 			);
 		}
-
-		// TODO: Should we use ProductService for that?
-		$query = new \WP_Query($query);
-
-		return $query->get_posts();
+		return new \WP_Query($query);
 	}
 
 	/**
