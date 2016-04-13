@@ -202,9 +202,12 @@ class Variable implements Type
 				/** @var $attribute \Jigoshop\Entity\Product\Variable\Attribute */
 				if ($attribute->getValue() === '') {
 					$meta = new Item\Meta();
+					$metaValue = isset($_POST['attributes']) ? $_POST['attributes'][$attribute->getAttribute()->getId()] : 'any';
 					$meta->setKey($attribute->getAttribute()->getSlug());
-					$meta->setValue($_POST['attributes'][$attribute->getAttribute()->getId()]);
+					$meta->setValue($metaValue);
 					$item->addMeta($meta);
+
+					$attribute->setValue($metaValue);
 				}
 			}
 

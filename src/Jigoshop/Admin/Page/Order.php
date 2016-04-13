@@ -8,6 +8,7 @@ use Jigoshop\Entity\Customer;
 use Jigoshop\Entity\Order\Item;
 use Jigoshop\Entity\OrderInterface;
 use Jigoshop\Entity\Product as ProductEntity;
+use Jigoshop\Entity\Product;
 use Jigoshop\Exception;
 use Jigoshop\Helper\Country;
 use Jigoshop\Helper\Product as ProductHelper;
@@ -99,7 +100,15 @@ class Order
 			}
 
 			/** @var ProductEntity|ProductEntity\Purchasable $product */
-			$product = $this->productService->find((int)$_POST['product']);
+			$post =  $this->wp->getPost((int)$_POST['product']);
+			if($post->post_type == 'product_variation' && $post->post_parent > 0) {
+				$post = $this->wp->getPost($post->post_parent);
+				//TODO: change this!!!
+				$_POST['variation_id'] = (int)$_POST['product'];
+				$_POST['quantity'] = 1;
+			}
+			/** @var Product\* $product */
+			$product = $this->productService->findforPost($post);
 
 			if ($product->getId() === null) {
 				throw new Exception(__('Product not found.', 'jigoshop'));
@@ -114,7 +123,7 @@ class Order
 
 			$key = $this->productService->generateItemKey($item);
 			$item->setKey($key);
-
+			
 			$order->addItem($item);
 			$this->orderService->save($order);
 

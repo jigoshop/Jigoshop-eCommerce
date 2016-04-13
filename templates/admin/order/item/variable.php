@@ -10,8 +10,10 @@ use Jigoshop\Helper\Product;
 $id = $item->getKey();
 /** @var \Jigoshop\Entity\Product\Variable $product */
 $product = $item->getProduct();
+$variation = $product->getVariation($item->getMeta('variation_id')->getValue());
+$product = $variation ? $variation->getProduct() : $product;
 ?>
-<tr data-id="<?php echo $id; ?>" data-product="<?php echo $item->getProduct()->getId(); ?>">
+<tr data-id="<?php echo $id; ?>" data-product="<?php echo $product->getId(); ?>">
 	<td class="id"><?php Forms::constant(array('name' => 'order[items]['.$id.'][id]', 'value' => $product->getId())); ?></td>
 	<td class="sku"><?php Forms::constant(array('name' => 'order[items]['.$id.'][sku]', 'value' => $product->getSku())); ?></td>
 	<td class="name"><?php Forms::constant(array('name' => 'order[items]['.$id.'][name]', 'value' => $item->getName())); ?></td>
