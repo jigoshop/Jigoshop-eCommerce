@@ -10,7 +10,7 @@ use Jigoshop\Helper\Render;
 ?>
 <h1><?php _e('My account &raquo; Change password', 'jigoshop'); ?></h1>
 <?php Render::output('shop/messages', array('messages' => $messages)); ?>
-<form class="form-horizontal" role="form" method="post">
+<form class="" role="form" method="post">
 	<?php \Jigoshop\Helper\Forms::text(array(
 		'name' => 'password',
 		'type' => 'password',
