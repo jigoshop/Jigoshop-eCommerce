@@ -703,6 +703,17 @@ class Orders implements Tool
 			'taxrate'      => 0,
 		);
 
+		if($args['variation_id'] > 0) {
+			$post = $this->wp->getPost($args['variation_id']);
+			if($post) {
+				/** @var Product\Variable $product */
+				$product = $this->productService->find($post->post_parent);
+				if($product->getId()) {
+					$args['name'] = $product->getVariation($post->ID)->getTitle();
+				}
+			}
+		}
+
 		return $this->_fetchData($defaults, $args);
 	}
 }
