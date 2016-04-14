@@ -243,8 +243,10 @@ class OrderService implements OrderServiceInterface
 		$wpdb = $this->wp->getWPDB();
 
 		return $this->wp->applyFilters('jigoshop\service\order\next_order_number', $wpdb->get_var($wpdb->prepare(
-			"SELECT COUNT(ID)+1 FROM {$wpdb->posts} WHERE post_type = %s AND post_status != %s",
-			array(Types::ORDER, 'auto-draft')
+			"SELECT MAX(meta.meta_value*1)+1 FROM {$wpdb->posts} as posts 
+			LEFT JOIN {$wpdb->postmeta} as meta ON (posts.ID = meta.post_id AND meta.meta_key = %s)
+			WHERE post_type = %s AND post_status != %s",
+			array('number', Types::ORDER, 'auto-draft')
 		)));
 	}
 
