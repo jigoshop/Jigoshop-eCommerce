@@ -103,7 +103,7 @@ jQuery ($) ->
       csv_data += xaxes_label + ','
 
       $.each the_series, (index, value) ->
-        if !exclude_series or $.inArray index.toString(), exclude_series  == -1
+        if !exclude_series or $.inArray(index.toString(), exclude_series) == -1
           series.push value
 
       # CSV Headers
