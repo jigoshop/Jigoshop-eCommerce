@@ -130,7 +130,13 @@ class Products implements Tool
 			{
 				$this->checkSql();
 				$globalAttributes[$this->wp->getHelpers()
-				                           ->sanitizeTitle($attribute->attribute_name)] = $attribute;
+					->sanitizeTitle($attribute->attribute_name)] = $attribute;
+			}
+
+			foreach ($wpdb->get_results("SELECT id AS attribute_id, slug AS attribute_name, label AS attribute_label, type AS attribute_type FROM {$wpdb->prefix}jigoshop_attribute") as $attribute)
+			{
+				$this->checkSql();
+				$globalAttributes[$attribute->attribute_name] = $attribute;
 			}
 
 			for ($i = 0, $endI = count($products); $i < $endI;)
@@ -196,21 +202,41 @@ class Products implements Tool
 									continue;
 								}
 
+								$changeLocalToGlobal = ( isset($source['variation']) && $source['variation'] == true
+									&& $source['is_taxonomy'] != true);
+
 								$productAttributes[$product->ID]['attributes'][$slug] = array(
 									'is_visible'  => $source['visible'],
 									'is_variable' => isset($source['variation']) && $source['variation'] == true,
-									'values'      => $source['value'],
+									'values'      => $changeLocalToGlobal ? str_replace(',', '|',$source['value']) : $source['value'],
 								);
 
 								if (!isset($attributes[$slug]))
 								{
 									$type = isset($globalAttributes[$slug]) ? $this->_getAttributeType($globalAttributes[$slug]) : Text::TYPE;
+									if($changeLocalToGlobal) {
+										$type = Multiselect::TYPE;
+									}
 									$label = isset($globalAttributes[$slug]) ? !empty($globalAttributes[$slug]->attribute_label) ? $globalAttributes[$slug]->attribute_label : $globalAttributes[$slug]->attribute_name : $source['name'];
 
 									$attribute = $this->productService->createAttribute($type);
 									$attribute->setSlug($slug);
 									$attribute->setLabel($label);
-									$attribute->setLocal($source['is_taxonomy'] != true);
+									$attribute->setLocal(($source['is_taxonomy'] != true && $changeLocalToGlobal != true));
+
+									if($changeLocalToGlobal) {
+										foreach(explode('|', $productAttributes[$product->ID]['attributes'][$slug]['values']) as $attributeOption) {
+											$option = new Option();
+											$option->setLabel($attributeOption);
+											$option->setValue(sanitize_title($attributeOption));
+											$attribute->addOption($option);
+										}
+
+										$productAttributes[$product->ID]['attributes'][$slug]['values'] = array_map(function($item) {
+											return sanitize_title($item);
+										}, explode('|', $productAttributes[$product->ID]['attributes'][$slug]['values']));
+									}
+
 
 									$attributes[$slug] = $attribute;
 								}
@@ -224,7 +250,7 @@ class Products implements Tool
 						$variations = unserialize($products[$i]->meta_value);
 						foreach ($variations as $variation => $value)
 						{
-							$productAttributes[$product->ID]['variations'][str_replace('tax_', '', $variation)] = $value;
+							$productAttributes[$product->ID]['variations'][str_replace('tax_', '', $variation)] = sanitize_title($value);
 						}
 					}
 
@@ -394,6 +420,9 @@ class Products implements Tool
 
 			foreach ($productIds as $id)
 			{
+				if($id == 33) {
+					echo '<pre>';var_dump($productAttributes[$id]['variations']);echo '</pre>';exit;
+				}
 				foreach ($productAttributes[$id]['variations'] as $taxonomy => $value)
 				{
 					if (!isset($attributes[$taxonomy]))
@@ -403,16 +432,13 @@ class Products implements Tool
 
 					$attribute = $attributes[$taxonomy];
 					$option = $this->_findOption($attribute->getOptions(), $value);
-					if ($option !== null)
-					{
-						$query = array(
-							'variation_id' => $id,
-							'attribute_id' => $attribute->getId(),
-							'value'        => $option,
-						);
-						$wpdb->insert($wpdb->prefix . 'jigoshop_product_variation_attribute', $query);
-						$this->checkSql();
-					}
+					$query = array(
+						'variation_id' => $id,
+						'attribute_id' => $attribute->getId(),
+						'value'        => $option,
+					);
+					$wpdb->insert($wpdb->prefix . 'jigoshop_product_variation_attribute', $query);
+					$this->checkSql();
 				}
 			}
 
