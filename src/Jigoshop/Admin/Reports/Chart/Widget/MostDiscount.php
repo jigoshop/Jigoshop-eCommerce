@@ -32,7 +32,7 @@ class MostDiscount implements WidgetInterface
 		foreach($this->mostDiscount as $coupon){
 			$args[] = array(
 				'total' => Product::formatPrice($coupon['amount']),
-				'url' => esc_url(add_query_arg('coupon_codes', $coupon['code'])),
+				'url' => esc_url(add_query_arg('coupon_codes', $coupon['code'], add_query_arg('last_used', self::SLUG))),
 				'title' => $coupon['code']
 			);
 		}
@@ -40,6 +40,11 @@ class MostDiscount implements WidgetInterface
 		return $args;
 	}
 
+	public function isVisible()
+	{
+		return (isset($_GET['last_used']) && $_GET['last_used'] == self::SLUG);
+	}
+	
 	public function display()
 	{
 		Render::output('admin/reports/widget/most_discount', array('args' => $this->getArgs()));

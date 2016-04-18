@@ -1,1 +1,199 @@
-var AdminProductAttributes,bind=function(t,e){return function(){return t.apply(e,arguments)}};AdminProductAttributes=function(){function t(t){this.params=t,this.removeAttributeOption=bind(this.removeAttributeOption,this),this.updateAttributeOption=bind(this.updateAttributeOption,this),this.addAttributeOption=bind(this.addAttributeOption,this),this.removeAttribute=bind(this.removeAttribute,this),this.updateAttribute=bind(this.updateAttribute,this),this.addAttribute=bind(this.addAttribute,this),jQuery("#add-attribute").on("click",this.addAttribute),jQuery("table#product-attributes > tbody").on("click",".remove-attribute",this.removeAttribute).on("change",".attribute input, .attribute select",this.updateAttribute).on("click",".configure-attribute, .options button",this.configureAttribute).on("click",".remove-attribute-option",this.removeAttributeOption).on("click",".add-option",this.addAttributeOption).on("change",".options tbody input",this.updateAttributeOption),this.$newLabel=jQuery("#attribute-label"),this.$newSlug=jQuery("#attribute-slug"),this.$newType=jQuery("#attribute-type")}return t.prototype.params={ajax:"",i18n:{saved:"",removed:"",option_removed:"",confirm_remove:""}},t.prototype.addAttribute=function(t){var e;return e=jQuery("tbody",jQuery(t.target).closest("table")),jQuery.ajax({url:this.params.ajax,type:"post",dataType:"json",data:{action:"jigoshop.admin.product_attributes.save",label:this.$newLabel.val(),slug:this.$newSlug.val(),type:this.$newType.val()}}).done(function(t){return function(r){return null!=r.success&&r.success?(t.$newLabel.val(""),t.$newSlug.val(""),t.$newType.val("0").trigger("change"),jQuery(r.html).appendTo(e)):addMessage("danger",r.error,6e3)}}(this))},t.prototype.updateAttribute=function(t){var e;return e=jQuery(t.target).closest("tr"),jQuery.ajax({url:this.params.ajax,type:"post",dataType:"json",data:{action:"jigoshop.admin.product_attributes.save",id:e.data("id"),label:jQuery("input.attribute-label",e).val(),slug:jQuery("input.attribute-slug",e).val(),type:jQuery("select.attribute-type",e).val()}}).done(function(t){return function(r){return null!=r.success&&r.success?(e.replaceWith(r.html),addMessage("success",t.params.i18n.saved,2e3)):addMessage("danger",r.error,6e3)}}(this))},t.prototype.removeAttribute=function(t){var e;return confirm(this.params.i18n.confirm_remove)?(e=jQuery(t.target).closest("tr"),jQuery.ajax({url:this.params.ajax,type:"post",dataType:"json",data:{action:"jigoshop.admin.product_attributes.remove",id:e.data("id")}}).done(function(t){return function(r){return null!=r.success&&r.success?(e.remove(),addMessage("success",t.params.i18n.removed,2e3)):addMessage("danger",r.error,6e3)}}(this))):void 0},t.prototype.configureAttribute=function(t){var e,r;return r=jQuery(t.target).closest("tr"),e=jQuery("tr.options[data-id="+r.data("id")+"]").toggle()},t.prototype.addAttributeOption=function(t){var e,r,a,i;return a=jQuery(t.target).closest("tr.options"),e=jQuery("tbody",a),r=jQuery("input.new-option-label",a),i=jQuery("input.new-option-value",a),jQuery.ajax({url:this.params.ajax,type:"post",dataType:"json",data:{action:"jigoshop.admin.product_attributes.save_option",attribute_id:a.data("id"),label:r.val(),value:i.val()}}).done(function(t){return null!=t.success&&t.success?(r.val(""),i.val(""),jQuery(t.html).appendTo(e)):addMessage("danger",t.error,6e3)})},t.prototype.updateAttributeOption=function(t){var e;return e=jQuery(t.target).closest("tr"),jQuery.ajax({url:this.params.ajax,type:"post",dataType:"json",data:{action:"jigoshop.admin.product_attributes.save_option",id:e.data("id"),attribute_id:e.closest("tr.options").data("id"),label:jQuery("input.option-label",e).val(),value:jQuery("input.option-value",e).val()}}).done(function(t){return function(r){return null!=r.success&&r.success?(e.replaceWith(r.html),addMessage("success",t.params.i18n.saved,2e3)):addMessage("danger",r.error,6e3)}}(this))},t.prototype.removeAttributeOption=function(t){var e;return confirm(this.params.i18n.confirm_remove)?(e=jQuery(t.target).closest("tr"),jQuery.ajax({url:this.params.ajax,type:"post",dataType:"json",data:{action:"jigoshop.admin.product_attributes.remove_option",id:e.data("id"),attribute_id:e.closest("tr.options").data("id")}}).done(function(t){return function(r){return null!=r.success&&r.success?(e.remove(),addMessage("success",t.params.i18n.option_removed,2e3)):addMessage("danger",r.error,6e3)}}(this))):void 0},t}(),jQuery(function(){return new AdminProductAttributes(jigoshop_admin_product_attributes)});
+var AdminProductAttributes,
+  bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
+
+AdminProductAttributes = (function() {
+  AdminProductAttributes.prototype.params = {
+    ajax: '',
+    i18n: {
+      saved: '',
+      removed: '',
+      option_removed: '',
+      confirm_remove: ''
+    }
+  };
+
+  function AdminProductAttributes(params) {
+    this.params = params;
+    this.removeAttributeOption = bind(this.removeAttributeOption, this);
+    this.updateAttributeOption = bind(this.updateAttributeOption, this);
+    this.addAttributeOption = bind(this.addAttributeOption, this);
+    this.removeAttribute = bind(this.removeAttribute, this);
+    this.updateAttribute = bind(this.updateAttribute, this);
+    this.addAttribute = bind(this.addAttribute, this);
+    jQuery('#add-attribute').on('click', this.addAttribute);
+    jQuery('table#product-attributes > tbody').on('click', '.remove-attribute', this.removeAttribute).on('change', '.attribute input, .attribute select', this.updateAttribute).on('click', '.configure-attribute, .options button', this.configureAttribute).on('click', '.remove-attribute-option', this.removeAttributeOption).on('click', '.add-option', this.addAttributeOption).on('change', '.options tbody input', this.updateAttributeOption);
+    this.$newLabel = jQuery('#attribute-label');
+    this.$newSlug = jQuery('#attribute-slug');
+    this.$newType = jQuery('#attribute-type');
+  }
+
+  AdminProductAttributes.prototype.addAttribute = function(event) {
+    var $container;
+    $container = jQuery('tbody', jQuery(event.target).closest('table'));
+    return jQuery.ajax({
+      url: this.params.ajax,
+      type: 'post',
+      dataType: 'json',
+      data: {
+        action: 'jigoshop.admin.product_attributes.save',
+        label: this.$newLabel.val(),
+        slug: this.$newSlug.val(),
+        type: this.$newType.val()
+      }
+    }).done((function(_this) {
+      return function(data) {
+        if ((data.success != null) && data.success) {
+          _this.$newLabel.val('');
+          _this.$newSlug.val('');
+          _this.$newType.val('0').trigger('change');
+          return jQuery(data.html).appendTo($container);
+        } else {
+          return jigoshop.addMessage('danger', data.error, 6000);
+        }
+      };
+    })(this));
+  };
+
+  AdminProductAttributes.prototype.updateAttribute = function(event) {
+    var $parent;
+    $parent = jQuery(event.target).closest('tr');
+    return jQuery.ajax({
+      url: this.params.ajax,
+      type: 'post',
+      dataType: 'json',
+      data: {
+        action: 'jigoshop.admin.product_attributes.save',
+        id: $parent.data('id'),
+        label: jQuery('input.attribute-label', $parent).val(),
+        slug: jQuery('input.attribute-slug', $parent).val(),
+        type: jQuery('select.attribute-type', $parent).val()
+      }
+    }).done((function(_this) {
+      return function(data) {
+        if ((data.success != null) && data.success) {
+          $parent.replaceWith(data.html);
+          return jigoshop.addMessage('success', _this.params.i18n.saved, 2000);
+        } else {
+          return jigoshop.addMessage('danger', data.error, 6000);
+        }
+      };
+    })(this));
+  };
+
+  AdminProductAttributes.prototype.removeAttribute = function(event) {
+    var $parent;
+    if (confirm(this.params.i18n.confirm_remove)) {
+      $parent = jQuery(event.target).closest('tr');
+      return jQuery.ajax({
+        url: this.params.ajax,
+        type: 'post',
+        dataType: 'json',
+        data: {
+          action: 'jigoshop.admin.product_attributes.remove',
+          id: $parent.data('id')
+        }
+      }).done((function(_this) {
+        return function(data) {
+          if ((data.success != null) && data.success) {
+            $parent.remove();
+            return jigoshop.addMessage('success', _this.params.i18n.removed, 2000);
+          } else {
+            return jigoshop.addMessage('danger', data.error, 6000);
+          }
+        };
+      })(this));
+    }
+  };
+
+  AdminProductAttributes.prototype.configureAttribute = function(event) {
+    var $options, $parent;
+    $parent = jQuery(event.target).closest('tr');
+    return $options = jQuery('tr.options[data-id=' + $parent.data('id') + ']').toggle();
+  };
+
+  AdminProductAttributes.prototype.addAttributeOption = function(event) {
+    var $container, $label, $parent, $value;
+    $parent = jQuery(event.target).closest('tr.options');
+    $container = jQuery('tbody', $parent);
+    $label = jQuery('input.new-option-label', $parent);
+    $value = jQuery('input.new-option-value', $parent);
+    return jQuery.ajax({
+      url: this.params.ajax,
+      type: 'post',
+      dataType: 'json',
+      data: {
+        action: 'jigoshop.admin.product_attributes.save_option',
+        attribute_id: $parent.data('id'),
+        label: $label.val(),
+        value: $value.val()
+      }
+    }).done(function(data) {
+      if ((data.success != null) && data.success) {
+        $label.val('');
+        $value.val('');
+        return jQuery(data.html).appendTo($container);
+      } else {
+        return jigoshop.addMessage('danger', data.error, 6000);
+      }
+    });
+  };
+
+  AdminProductAttributes.prototype.updateAttributeOption = function(event) {
+    var $parent;
+    $parent = jQuery(event.target).closest('tr');
+    return jQuery.ajax({
+      url: this.params.ajax,
+      type: 'post',
+      dataType: 'json',
+      data: {
+        action: 'jigoshop.admin.product_attributes.save_option',
+        id: $parent.data('id'),
+        attribute_id: $parent.closest('tr.options').data('id'),
+        label: jQuery('input.option-label', $parent).val(),
+        value: jQuery('input.option-value', $parent).val()
+      }
+    }).done((function(_this) {
+      return function(data) {
+        if ((data.success != null) && data.success) {
+          $parent.replaceWith(data.html);
+          return jigoshop.addMessage('success', _this.params.i18n.saved, 2000);
+        } else {
+          return jigoshop.addMessage('danger', data.error, 6000);
+        }
+      };
+    })(this));
+  };
+
+  AdminProductAttributes.prototype.removeAttributeOption = function(event) {
+    var $parent;
+    if (confirm(this.params.i18n.confirm_remove)) {
+      $parent = jQuery(event.target).closest('tr');
+      return jQuery.ajax({
+        url: this.params.ajax,
+        type: 'post',
+        dataType: 'json',
+        data: {
+          action: 'jigoshop.admin.product_attributes.remove_option',
+          id: $parent.data('id'),
+          attribute_id: $parent.closest('tr.options').data('id')
+        }
+      }).done((function(_this) {
+        return function(data) {
+          if ((data.success != null) && data.success) {
+            $parent.remove();
+            return jigoshop.addMessage('success', _this.params.i18n.option_removed, 2000);
+          } else {
+            return jigoshop.addMessage('danger', data.error, 6000);
+          }
+        };
+      })(this));
+    }
+  };
+
+  return AdminProductAttributes;
+
+})();
+
+jQuery(function() {
+  return new AdminProductAttributes(jigoshop_admin_product_attributes);
+});

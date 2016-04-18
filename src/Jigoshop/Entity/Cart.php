@@ -55,7 +55,7 @@ class Cart extends Order
 			throw new NotEnoughStockException($product->getStock()->getStock());
 		}
 
-		$item->setQuantity($quantity);
+		parent::updateQuantity($key, $quantity);
 	}
 
 	/**

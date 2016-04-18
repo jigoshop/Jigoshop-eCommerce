@@ -70,24 +70,27 @@ class Product implements PageInterface
 
 			return $item;
 		});
-
+		
 		$wp->addAction('jigoshop\template\product\before_summary', array(
 			$this,
 			'productImages'
 		), 10, 1);
 		$wp->addAction('jigoshop\template\product\after_summary', array($this, 'productTabs'), 10, 1);
-		$wp->addAction('jigoshop\template\product\tab_panels', array(
-			$this,
-			'productAttributes'
-		), 10, 2);
+		if($this->options->get('products.related')) {
+			$wp->addAction('jigoshop\template\product\after_summary', array($this, 'relatedProducts'), 20, 1);
+		}
 		$wp->addAction('jigoshop\template\product\tab_panels', array(
 			$this,
 			'productDescription'
 		), 10, 2);
 		$wp->addAction('jigoshop\template\product\tab_panels', array(
 			$this,
+			'productAttributes'
+		), 15, 2);
+		$wp->addAction('jigoshop\template\product\tab_panels', array(
+			$this,
 			'productDownloads'
-		), 10, 2);
+		), 20, 2);
 		$wp->doAction('jigoshop\product\assets', $wp);
 	}
 
@@ -161,36 +164,25 @@ class Product implements PageInterface
 		return Render::get('shop/product', array(
 			'product' => $product,
 			'messages' => $this->messages,
-			'related' => $this->getRelated(),
 		));
 	}
 
 	/**
 	 * Get related products based on the same parent product category.
+	 * @param \Jigoshop\Entity\Product $product
 	 *
 	 * @return array
 	 */
-	protected function getRelated()
+	protected function getRelated($product)
 	{
-		if (!$this->options->get('products.related'))
-		{
+		if (!$this->options->get('products.related')) {
 			return array();
 		}
+		
+		
+		$count = $this->wp->applyFilters('jigoshop/frontend/page/product/render/related_products_count', 3);
 
-		$related = new \WP_Query(array(
-			'post_type'      => 'product',
-			'orderby'        => 'rand',
-			'posts_per_page' => $this->wp->applyFilters('jigoshop/frontend/page/product/render/related_products_count', 3),
-			'tax_query'      => array(
-				array(
-					'taxonomy' => 'product_category',
-					'field'    => 'term_id',
-					'terms'    => 19,
-				),
-			)
-		));
-
-		return $this->productService->findByQuery($related);
+		return $this->productService->findByQuery(ProductHelper::getRelated($product, $count));
 	}
 
 	/**
@@ -209,7 +201,6 @@ class Product implements PageInterface
 			'product' => $product,
 			'featured' => $featured,
 			'featuredUrl' => $featuredUrl,
-//			@TODO $thumbnails powinien zawsze zwracać array, przerobić tak metodę by się przed tym zabezpieczyć
 			'thumbnails' => is_array($thumbnails) ? $thumbnails : array(),
 			'imageClasses' => $imageClasses,
 		));
@@ -221,23 +212,33 @@ class Product implements PageInterface
 	public function productTabs($product)
 	{
 		$tabs = array();
-		if ($product->getVisibleAttributes()) {
-			$tabs['attributes'] = __('Additional information', 'jigoshop');
-		}
 		if ($product->getDescription()) {
 			$tabs['description'] = __('Description', 'jigoshop');
+		}
+		if ($product->getVisibleAttributes()) {
+			$tabs['attributes'] = __('Additional information', 'jigoshop');
 		}
 		if ($product->getAttachments()) {
 			$tabs['downloads'] = __('Files to download', 'jigoshop');
 		}
 
-		$tabs = $this->wp->applyFilters('jigoshop\product\tabs', $tabs);
+		$tabs = $this->wp->applyFilters('jigoshop\product\tabs', $tabs, $product);
 		$availableTabs = array_keys($tabs);
 
 		Render::output('shop/product/tabs', array(
 			'product' => $product,
 			'tabs' => $tabs,
 			'currentTab' => reset($availableTabs),
+		));
+	}
+
+	/**
+	 * @param \Jigoshop\Entity\Product $product
+	 */
+	public function relatedProducts($product)
+	{
+		Render::output('shop/product/related', array(
+			'products' => $this->getRelated($product),
 		));
 	}
 

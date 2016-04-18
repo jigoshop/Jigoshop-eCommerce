@@ -1,1 +1,1940 @@
-.full-width #page .site-main .site-content .product.has-post-thumbnail,.jigoshop body{margin:0}.jigoshop .btn,.jigoshop .text-nowrap{white-space:nowrap}.jigoshop{/*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */}.jigoshop html{font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}.jigoshop article,.jigoshop aside,.jigoshop details,.jigoshop figcaption,.jigoshop figure,.jigoshop footer,.jigoshop header,.jigoshop hgroup,.jigoshop main,.jigoshop menu,.jigoshop nav,.jigoshop section,.jigoshop summary{display:block}.jigoshop audio,.jigoshop canvas,.jigoshop progress,.jigoshop video{display:inline-block;vertical-align:baseline}.jigoshop audio:not([controls]){display:none;height:0}.jigoshop [hidden],.jigoshop template{display:none}.jigoshop a{background-color:transparent}.jigoshop a:active,.jigoshop a:hover{outline:0}.jigoshop b,.jigoshop strong{font-weight:700}.jigoshop dfn{font-style:italic}.jigoshop h1{margin:.67em 0}.jigoshop mark{background:#ff0;color:#000}.jigoshop .btn,.jigoshop .btn-danger.active,.jigoshop .btn-danger:active,.jigoshop .btn-default.active,.jigoshop .btn-default:active,.jigoshop .btn-info.active,.jigoshop .btn-info:active,.jigoshop .btn-primary.active,.jigoshop .btn-primary:active,.jigoshop .btn-success.active,.jigoshop .btn-success:active,.jigoshop .btn-warning.active,.jigoshop .btn-warning:active,.jigoshop .form-control,.open>.dropdown-toggle.jigoshop .btn-danger,.open>.dropdown-toggle.jigoshop .btn-default,.open>.dropdown-toggle.jigoshop .btn-info,.open>.dropdown-toggle.jigoshop .btn-primary,.open>.dropdown-toggle.jigoshop .btn-success,.open>.dropdown-toggle.jigoshop .btn-warning{background-image:none}.jigoshop sub,.jigoshop sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}.jigoshop sup{top:-.5em}.jigoshop sub{bottom:-.25em}.jigoshop img{border:0;vertical-align:middle}.jigoshop svg:not(:root){overflow:hidden}.jigoshop hr{box-sizing:content-box;height:0}.jigoshop pre{overflow:auto}.jigoshop code,.jigoshop kbd,.jigoshop pre,.jigoshop samp{font-family:monospace,monospace;font-size:1em}.jigoshop button,.jigoshop input,.jigoshop optgroup,.jigoshop select,.jigoshop textarea{color:inherit;font:inherit;margin:0}.jigoshop button{overflow:visible}.jigoshop button,.jigoshop select{text-transform:none}.jigoshop button,.jigoshop html input[type=button],.jigoshop input[type=reset],.jigoshop input[type=submit]{-webkit-appearance:button;cursor:pointer}.jigoshop button[disabled],.jigoshop html input[disabled]{cursor:default}.jigoshop button::-moz-focus-inner,.jigoshop input::-moz-focus-inner{border:0;padding:0}.jigoshop input[type=checkbox],.jigoshop input[type=radio]{box-sizing:border-box;padding:0}.jigoshop input[type=number]::-webkit-inner-spin-button,.jigoshop input[type=number]::-webkit-outer-spin-button{height:auto}.jigoshop input[type=search]::-webkit-search-cancel-button,.jigoshop input[type=search]::-webkit-search-decoration{-webkit-appearance:none}.jigoshop textarea{overflow:auto}.jigoshop optgroup{font-weight:700}.jigoshop table{border-collapse:collapse;border-spacing:0}.jigoshop td,.jigoshop th{padding:0}.jigoshop *,.jigoshop :after,.jigoshop :before{-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box}.jigoshop html{font-size:10px;-webkit-tap-highlight-color:transparent}.jigoshop body{font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-size:14px;line-height:1.42857143;color:#333;background-color:#fff}.jigoshop button,.jigoshop input,.jigoshop select,.jigoshop textarea{font-family:inherit;font-size:inherit;line-height:inherit}.jigoshop a{color:#337ab7;text-decoration:none}.jigoshop a:focus,.jigoshop a:hover{color:#23527c;text-decoration:underline}.jigoshop a:focus{outline:dotted thin;outline:-webkit-focus-ring-color auto 5px;outline-offset:-2px}.jigoshop figure{margin:0}.jigoshop .img-responsive{display:block;max-width:100%;height:auto}.jigoshop .img-rounded{border-radius:6px}.jigoshop .img-thumbnail{padding:4px;line-height:1.42857143;background-color:#fff;border:1px solid #ddd;border-radius:4px;-webkit-transition:all .2s ease-in-out;-o-transition:all .2s ease-in-out;transition:all .2s ease-in-out;display:inline-block;max-width:100%;height:auto}.jigoshop .img-circle{border-radius:50%}.jigoshop hr{margin-top:20px;margin-bottom:20px;border:0;border-top:1px solid #eee}.jigoshop .sr-only{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0,0,0,0);border:0}.jigoshop .sr-only-focusable:active,.jigoshop .sr-only-focusable:focus{position:static;width:auto;height:auto;margin:0;overflow:visible;clip:auto}.jigoshop [role=button]{cursor:pointer}.jigoshop .h1,.jigoshop .h2,.jigoshop .h3,.jigoshop .h4,.jigoshop .h5,.jigoshop .h6,.jigoshop h1,.jigoshop h2,.jigoshop h3,.jigoshop h4,.jigoshop h5,.jigoshop h6{font-family:inherit;font-weight:500;line-height:1.1;color:inherit}.jigoshop .h1 .small,.jigoshop .h1 small,.jigoshop .h2 .small,.jigoshop .h2 small,.jigoshop .h3 .small,.jigoshop .h3 small,.jigoshop .h4 .small,.jigoshop .h4 small,.jigoshop .h5 .small,.jigoshop .h5 small,.jigoshop .h6 .small,.jigoshop .h6 small,.jigoshop h1 .small,.jigoshop h1 small,.jigoshop h2 .small,.jigoshop h2 small,.jigoshop h3 .small,.jigoshop h3 small,.jigoshop h4 .small,.jigoshop h4 small,.jigoshop h5 .small,.jigoshop h5 small,.jigoshop h6 .small,.jigoshop h6 small{font-weight:400;line-height:1;color:#777}.jigoshop .h1,.jigoshop .h2,.jigoshop .h3,.jigoshop h1,.jigoshop h2,.jigoshop h3{margin-top:20px;margin-bottom:10px}.jigoshop .h1 .small,.jigoshop .h1 small,.jigoshop .h2 .small,.jigoshop .h2 small,.jigoshop .h3 .small,.jigoshop .h3 small,.jigoshop h1 .small,.jigoshop h1 small,.jigoshop h2 .small,.jigoshop h2 small,.jigoshop h3 .small,.jigoshop h3 small{font-size:65%}.jigoshop .h4,.jigoshop .h5,.jigoshop .h6,.jigoshop h4,.jigoshop h5,.jigoshop h6{margin-top:10px;margin-bottom:10px}.jigoshop .h4 .small,.jigoshop .h4 small,.jigoshop .h5 .small,.jigoshop .h5 small,.jigoshop .h6 .small,.jigoshop .h6 small,.jigoshop h4 .small,.jigoshop h4 small,.jigoshop h5 .small,.jigoshop h5 small,.jigoshop h6 .small,.jigoshop h6 small{font-size:75%}.jigoshop .h1,.jigoshop h1{font-size:36px}.jigoshop .h2,.jigoshop h2{font-size:30px}.jigoshop .h3,.jigoshop h3{font-size:24px}.jigoshop .h4,.jigoshop h4{font-size:18px}.jigoshop .h5,.jigoshop h5{font-size:14px}.jigoshop .h6,.jigoshop h6{font-size:12px}.jigoshop p{margin:0 0 10px}.jigoshop .lead{margin-bottom:20px;font-size:16px;font-weight:300;line-height:1.4}.jigoshop dt,.jigoshop label{font-weight:700}.jigoshop address,.jigoshop dd,.jigoshop dt{line-height:1.42857143}@media (min-width:768px){.jigoshop .lead{font-size:21px}}.jigoshop .small,.jigoshop small{font-size:85%}.jigoshop .mark,.jigoshop mark{background-color:#fcf8e3;padding:.2em}.jigoshop .list-inline,.jigoshop .list-unstyled{padding-left:0;list-style:none}.jigoshop .text-left{text-align:left}.jigoshop .text-right{text-align:right}.jigoshop .text-center{text-align:center}.jigoshop .text-justify{text-align:justify}.jigoshop .text-lowercase{text-transform:lowercase}.jigoshop .text-uppercase{text-transform:uppercase}.jigoshop .text-capitalize{text-transform:capitalize}.jigoshop .text-muted{color:#777}.jigoshop .text-primary{color:#337ab7}a.jigoshop .text-primary:focus,a.jigoshop .text-primary:hover{color:#286090}.jigoshop .text-success{color:#3c763d}a.jigoshop .text-success:focus,a.jigoshop .text-success:hover{color:#2b542c}.jigoshop .text-info{color:#31708f}a.jigoshop .text-info:focus,a.jigoshop .text-info:hover{color:#245269}.jigoshop .text-warning{color:#8a6d3b}a.jigoshop .text-warning:focus,a.jigoshop .text-warning:hover{color:#66512c}.jigoshop .text-danger{color:#a94442}a.jigoshop .text-danger:focus,a.jigoshop .text-danger:hover{color:#843534}.jigoshop .bg-primary{color:#fff;background-color:#337ab7}a.jigoshop .bg-primary:focus,a.jigoshop .bg-primary:hover{background-color:#286090}.jigoshop .bg-success{background-color:#dff0d8}a.jigoshop .bg-success:focus,a.jigoshop .bg-success:hover{background-color:#c1e2b3}.jigoshop .bg-info{background-color:#d9edf7}a.jigoshop .bg-info:focus,a.jigoshop .bg-info:hover{background-color:#afd9ee}.jigoshop .bg-warning{background-color:#fcf8e3}a.jigoshop .bg-warning:focus,a.jigoshop .bg-warning:hover{background-color:#f7ecb5}.jigoshop .bg-danger{background-color:#f2dede}a.jigoshop .bg-danger:focus,a.jigoshop .bg-danger:hover{background-color:#e4b9b9}.jigoshop .page-header{padding-bottom:9px;margin:40px 0 20px;border-bottom:1px solid #eee}.jigoshop ol,.jigoshop ul{margin-top:0;margin-bottom:10px}.jigoshop ol ol,.jigoshop ol ul,.jigoshop ul ol,.jigoshop ul ul{margin-bottom:0}.jigoshop .list-inline{margin-left:-5px}.jigoshop .list-inline>li{display:inline-block;padding-left:5px;padding-right:5px}.jigoshop dl{margin-top:0;margin-bottom:20px}.jigoshop dd{margin-left:0}@media (min-width:768px){.jigoshop .dl-horizontal dt{float:left;width:160px;clear:left;text-align:right;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.jigoshop .dl-horizontal dd{margin-left:180px}}.jigoshop .clearfix:after,.jigoshop .jigoshop .dl-horizontal dd:after,.jigoshop .jigoshop .form-horizontal .form-group:after,.jigoshop .jigoshop .nav:after,.jigoshop .product div.images div.thumbnails:after{clear:both}.jigoshop abbr[data-original-title],.jigoshop abbr[title]{cursor:help;border-bottom:1px dotted #777}.jigoshop .initialism{font-size:90%;text-transform:uppercase}.jigoshop blockquote{padding:10px 20px;margin:0 0 20px;font-size:17.5px;border-left:5px solid #eee}.jigoshop blockquote ol:last-child,.jigoshop blockquote p:last-child,.jigoshop blockquote ul:last-child{margin-bottom:0}.jigoshop blockquote .small,.jigoshop blockquote footer,.jigoshop blockquote small{display:block;font-size:80%;line-height:1.42857143;color:#777}.jigoshop blockquote .small:before,.jigoshop blockquote footer:before,.jigoshop blockquote small:before{content:'\2014 \00A0'}.jigoshop .blockquote-reverse,.jigoshop blockquote.pull-right{padding-right:15px;padding-left:0;border-right:5px solid #eee;border-left:0;text-align:right}.jigoshop .blockquote-reverse .small:before,.jigoshop .blockquote-reverse footer:before,.jigoshop .blockquote-reverse small:before,.jigoshop blockquote.pull-right .small:before,.jigoshop blockquote.pull-right footer:before,.jigoshop blockquote.pull-right small:before{content:''}.jigoshop .blockquote-reverse .small:after,.jigoshop .blockquote-reverse footer:after,.jigoshop .blockquote-reverse small:after,.jigoshop blockquote.pull-right .small:after,.jigoshop blockquote.pull-right footer:after,.jigoshop blockquote.pull-right small:after{content:'\00A0 \2014'}.jigoshop address{margin-bottom:20px;font-style:normal}.jigoshop fieldset{padding:0;margin:0;border:0;min-width:0}.jigoshop legend{display:block;width:100%;padding:0;margin-bottom:20px;font-size:21px;line-height:inherit;color:#333;border:0;border-bottom:1px solid #e5e5e5}.jigoshop label{display:inline-block;max-width:100%;margin-bottom:5px}.jigoshop input[type=search]{-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box;-webkit-appearance:none}.jigoshop input[type=checkbox],.jigoshop input[type=radio]{margin:4px 0 0;margin-top:1px\9;line-height:normal}.jigoshop .form-control,.jigoshop output{font-size:14px;line-height:1.42857143;color:#555;display:block}.jigoshop input[type=file]{display:block}.jigoshop input[type=range]{display:block;width:100%}.jigoshop select[multiple],.jigoshop select[size]{height:auto}.jigoshop input[type=file]:focus,.jigoshop input[type=checkbox]:focus,.jigoshop input[type=radio]:focus{outline:dotted thin;outline:-webkit-focus-ring-color auto 5px;outline-offset:-2px}.jigoshop output{padding-top:7px}.jigoshop .form-control{width:100%;height:34px;padding:6px 12px;background-color:#fff;border:1px solid #ccc;border-radius:4px;-webkit-box-shadow:inset 0 1px 1px rgba(0,0,0,.075);box-shadow:inset 0 1px 1px rgba(0,0,0,.075);-webkit-transition:border-color ease-in-out .15s,box-shadow ease-in-out .15s;-o-transition:border-color ease-in-out .15s,box-shadow ease-in-out .15s;transition:border-color ease-in-out .15s,box-shadow ease-in-out .15s}.jigoshop .form-control:focus{border-color:#66afe9;outline:0;-webkit-box-shadow:inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6);box-shadow:inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6)}.jigoshop .form-control::-moz-placeholder{color:#999;opacity:1}.jigoshop .form-control:-ms-input-placeholder{color:#999}.jigoshop .form-control::-webkit-input-placeholder{color:#999}.jigoshop .has-success .checkbox,.jigoshop .has-success .checkbox-inline,.jigoshop .has-success .control-label,.jigoshop .has-success .form-control-feedback,.jigoshop .has-success .help-block,.jigoshop .has-success .radio,.jigoshop .has-success .radio-inline,.jigoshop .has-success.checkbox label,.jigoshop .has-success.checkbox-inline label,.jigoshop .has-success.radio label,.jigoshop .has-success.radio-inline label{color:#3c763d}.jigoshop .form-control::-ms-expand{border:0;background-color:transparent}.jigoshop .form-control[disabled],.jigoshop .form-control[readonly],fieldset[disabled] .jigoshop .form-control{background-color:#eee;opacity:1}.jigoshop .form-control[disabled],fieldset[disabled] .jigoshop .form-control{cursor:not-allowed}textarea.jigoshop .form-control{height:auto}@media screen and (-webkit-min-device-pixel-ratio:0){.jigoshop input[type=date].form-control,.jigoshop input[type=time].form-control,.jigoshop input[type=datetime-local].form-control,.jigoshop input[type=month].form-control{line-height:34px}.input-group-sm .jigoshop input[type=date],.input-group-sm .jigoshop input[type=time],.input-group-sm .jigoshop input[type=datetime-local],.input-group-sm .jigoshop input[type=month],.jigoshop input[type=date].input-sm,.jigoshop input[type=time].input-sm,.jigoshop input[type=datetime-local].input-sm,.jigoshop input[type=month].input-sm{line-height:30px}.input-group-lg .jigoshop input[type=date],.input-group-lg .jigoshop input[type=time],.input-group-lg .jigoshop input[type=datetime-local],.input-group-lg .jigoshop input[type=month],.jigoshop input[type=date].input-lg,.jigoshop input[type=time].input-lg,.jigoshop input[type=datetime-local].input-lg,.jigoshop input[type=month].input-lg{line-height:46px}}.jigoshop .form-group{margin-bottom:15px}.jigoshop .checkbox,.jigoshop .radio{position:relative;display:block;margin-top:10px;margin-bottom:10px}.jigoshop .checkbox label,.jigoshop .radio label{min-height:20px;padding-left:20px;margin-bottom:0;font-weight:400;cursor:pointer}.jigoshop .checkbox input[type=checkbox],.jigoshop .checkbox-inline input[type=checkbox],.jigoshop .radio input[type=radio],.jigoshop .radio-inline input[type=radio]{position:absolute;margin-left:-20px;margin-top:4px\9}.jigoshop .checkbox+.checkbox,.jigoshop .radio+.radio{margin-top:-5px}.jigoshop .checkbox-inline,.jigoshop .radio-inline{position:relative;display:inline-block;padding-left:20px;margin-bottom:0;vertical-align:middle;font-weight:400;cursor:pointer}.jigoshop .checkbox-inline+.checkbox-inline,.jigoshop .radio-inline+.radio-inline{margin-top:0;margin-left:10px}.jigoshop .checkbox-inline.disabled,.jigoshop .checkbox.disabled label,.jigoshop .radio-inline.disabled,.jigoshop .radio.disabled label,.jigoshop input[type=checkbox].disabled,.jigoshop input[type=checkbox][disabled],.jigoshop input[type=radio].disabled,.jigoshop input[type=radio][disabled],fieldset[disabled] .jigoshop .checkbox label,fieldset[disabled] .jigoshop .checkbox-inline,fieldset[disabled] .jigoshop .radio label,fieldset[disabled] .jigoshop .radio-inline,fieldset[disabled] .jigoshop input[type=checkbox],fieldset[disabled] .jigoshop input[type=radio]{cursor:not-allowed}.jigoshop .form-control-static{padding-top:7px;padding-bottom:7px;margin-bottom:0;min-height:34px}.jigoshop .form-control-static.input-lg,.jigoshop .form-control-static.input-sm{padding-left:0;padding-right:0}.jigoshop .input-sm{height:30px;padding:5px 10px;font-size:12px;line-height:1.5;border-radius:3px}select.jigoshop .input-sm{height:30px;line-height:30px}select[multiple].jigoshop .input-sm,textarea.jigoshop .input-sm{height:auto}.jigoshop .form-group-sm .form-control{height:30px;padding:5px 10px;font-size:12px;line-height:1.5;border-radius:3px}.jigoshop .form-group-sm select.form-control{height:30px;line-height:30px}.jigoshop .form-group-sm select[multiple].form-control,.jigoshop .form-group-sm textarea.form-control{height:auto}.jigoshop .form-group-sm .form-control-static{height:30px;min-height:32px;padding:6px 10px;font-size:12px;line-height:1.5}.jigoshop .input-lg{height:46px;padding:10px 16px;font-size:18px;line-height:1.3333333;border-radius:6px}select.jigoshop .input-lg{height:46px;line-height:46px}select[multiple].jigoshop .input-lg,textarea.jigoshop .input-lg{height:auto}.jigoshop .form-group-lg .form-control{height:46px;padding:10px 16px;font-size:18px;line-height:1.3333333;border-radius:6px}.jigoshop .form-group-lg select.form-control{height:46px;line-height:46px}.jigoshop .form-group-lg select[multiple].form-control,.jigoshop .form-group-lg textarea.form-control{height:auto}.jigoshop .form-group-lg .form-control-static{height:46px;min-height:38px;padding:11px 16px;font-size:18px;line-height:1.3333333}.jigoshop .has-feedback{position:relative}.jigoshop .has-feedback .form-control{padding-right:42.5px}.jigoshop .form-control-feedback{position:absolute;top:0;right:0;z-index:2;display:block;width:34px;height:34px;line-height:34px;text-align:center;pointer-events:none}.jigoshop .nav>li,.jigoshop .nav>li>a{position:relative;display:block}.jigoshop .form-group-lg .form-control+.form-control-feedback,.jigoshop .input-group-lg+.form-control-feedback,.jigoshop .input-lg+.form-control-feedback{width:46px;height:46px;line-height:46px}.jigoshop .form-group-sm .form-control+.form-control-feedback,.jigoshop .input-group-sm+.form-control-feedback,.jigoshop .input-sm+.form-control-feedback{width:30px;height:30px;line-height:30px}.jigoshop .has-success .form-control{border-color:#3c763d;-webkit-box-shadow:inset 0 1px 1px rgba(0,0,0,.075);box-shadow:inset 0 1px 1px rgba(0,0,0,.075)}.jigoshop .has-success .form-control:focus{border-color:#2b542c;-webkit-box-shadow:inset 0 1px 1px rgba(0,0,0,.075),0 0 6px #67b168;box-shadow:inset 0 1px 1px rgba(0,0,0,.075),0 0 6px #67b168}.jigoshop .has-success .input-group-addon{color:#3c763d;border-color:#3c763d;background-color:#dff0d8}.jigoshop .has-warning .checkbox,.jigoshop .has-warning .checkbox-inline,.jigoshop .has-warning .control-label,.jigoshop .has-warning .form-control-feedback,.jigoshop .has-warning .help-block,.jigoshop .has-warning .radio,.jigoshop .has-warning .radio-inline,.jigoshop .has-warning.checkbox label,.jigoshop .has-warning.checkbox-inline label,.jigoshop .has-warning.radio label,.jigoshop .has-warning.radio-inline label{color:#8a6d3b}.jigoshop .has-warning .form-control{border-color:#8a6d3b;-webkit-box-shadow:inset 0 1px 1px rgba(0,0,0,.075);box-shadow:inset 0 1px 1px rgba(0,0,0,.075)}.jigoshop .has-warning .form-control:focus{border-color:#66512c;-webkit-box-shadow:inset 0 1px 1px rgba(0,0,0,.075),0 0 6px #c0a16b;box-shadow:inset 0 1px 1px rgba(0,0,0,.075),0 0 6px #c0a16b}.jigoshop .has-warning .input-group-addon{color:#8a6d3b;border-color:#8a6d3b;background-color:#fcf8e3}.jigoshop .has-error .checkbox,.jigoshop .has-error .checkbox-inline,.jigoshop .has-error .control-label,.jigoshop .has-error .form-control-feedback,.jigoshop .has-error .help-block,.jigoshop .has-error .radio,.jigoshop .has-error .radio-inline,.jigoshop .has-error.checkbox label,.jigoshop .has-error.checkbox-inline label,.jigoshop .has-error.radio label,.jigoshop .has-error.radio-inline label{color:#a94442}.jigoshop .has-error .form-control{border-color:#a94442;-webkit-box-shadow:inset 0 1px 1px rgba(0,0,0,.075);box-shadow:inset 0 1px 1px rgba(0,0,0,.075)}.jigoshop .has-error .form-control:focus{border-color:#843534;-webkit-box-shadow:inset 0 1px 1px rgba(0,0,0,.075),0 0 6px #ce8483;box-shadow:inset 0 1px 1px rgba(0,0,0,.075),0 0 6px #ce8483}.jigoshop .has-error .input-group-addon{color:#a94442;border-color:#a94442;background-color:#f2dede}.jigoshop .has-feedback label~.form-control-feedback{top:25px}.jigoshop .has-feedback label.sr-only~.form-control-feedback{top:0}.jigoshop .help-block{display:block;margin-top:5px;margin-bottom:10px;color:#737373}@media (min-width:768px){.jigoshop .form-inline .form-control-static,.jigoshop .form-inline .form-group{display:inline-block}.jigoshop .form-inline .control-label,.jigoshop .form-inline .form-group{margin-bottom:0;vertical-align:middle}.jigoshop .form-inline .form-control{display:inline-block;width:auto;vertical-align:middle}.jigoshop .form-inline .input-group{display:inline-table;vertical-align:middle}.jigoshop .form-inline .input-group .form-control,.jigoshop .form-inline .input-group .input-group-addon,.jigoshop .form-inline .input-group .input-group-btn{width:auto}.jigoshop .form-inline .input-group>.form-control{width:100%}.jigoshop .form-inline .checkbox,.jigoshop .form-inline .radio{display:inline-block;margin-top:0;margin-bottom:0;vertical-align:middle}.jigoshop .form-inline .checkbox label,.jigoshop .form-inline .radio label{padding-left:0}.jigoshop .form-inline .checkbox input[type=checkbox],.jigoshop .form-inline .radio input[type=radio]{position:relative;margin-left:0}.jigoshop .form-inline .has-feedback .form-control-feedback{top:0}.jigoshop .form-horizontal .control-label{text-align:right;margin-bottom:0;padding-top:7px}}.jigoshop .nav-justified>.dropdown .dropdown-menu,.jigoshop .nav-tabs.nav-justified>.dropdown .dropdown-menu{top:auto;left:auto}.jigoshop .form-horizontal .checkbox,.jigoshop .form-horizontal .checkbox-inline,.jigoshop .form-horizontal .radio,.jigoshop .form-horizontal .radio-inline{margin-top:0;margin-bottom:0;padding-top:7px}.jigoshop .form-horizontal .checkbox,.jigoshop .form-horizontal .radio{min-height:27px}.jigoshop .form-horizontal .form-group{margin-left:-15px;margin-right:-15px}.jigoshop .form-horizontal .has-feedback .form-control-feedback{right:15px}@media (min-width:768px){.jigoshop .form-horizontal .form-group-lg .control-label{padding-top:11px;font-size:18px}.jigoshop .form-horizontal .form-group-sm .control-label{padding-top:6px;font-size:12px}}.jigoshop .btn{display:inline-block;margin-bottom:0;font-weight:400;text-align:center;vertical-align:middle;touch-action:manipulation;cursor:pointer;border:1px solid transparent;padding:6px 12px;font-size:14px;line-height:1.42857143;border-radius:4px;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.jigoshop .btn.active.focus,.jigoshop .btn.active:focus,.jigoshop .btn.focus,.jigoshop .btn:active.focus,.jigoshop .btn:active:focus,.jigoshop .btn:focus{outline:dotted thin;outline:-webkit-focus-ring-color auto 5px;outline-offset:-2px}.jigoshop .btn.focus,.jigoshop .btn:focus,.jigoshop .btn:hover{color:#333;text-decoration:none}.jigoshop .btn.active,.jigoshop .btn:active{outline:0;background-image:none;-webkit-box-shadow:inset 0 3px 5px rgba(0,0,0,.125);box-shadow:inset 0 3px 5px rgba(0,0,0,.125)}.jigoshop .btn.disabled,.jigoshop .btn[disabled],fieldset[disabled] .jigoshop .btn{cursor:not-allowed;opacity:.65;filter:alpha(opacity=65);-webkit-box-shadow:none;box-shadow:none}a.jigoshop .btn.disabled,fieldset[disabled] a.jigoshop .btn{pointer-events:none}.jigoshop .btn-default{color:#333;background-color:#fff;border-color:#ccc}.jigoshop .btn-default.focus,.jigoshop .btn-default:focus{color:#333;background-color:#e6e6e6;border-color:#8c8c8c}.jigoshop .btn-default.active,.jigoshop .btn-default:active,.jigoshop .btn-default:hover,.open>.dropdown-toggle.jigoshop .btn-default{color:#333;background-color:#e6e6e6;border-color:#adadad}.jigoshop .btn-default.active.focus,.jigoshop .btn-default.active:focus,.jigoshop .btn-default.active:hover,.jigoshop .btn-default:active.focus,.jigoshop .btn-default:active:focus,.jigoshop .btn-default:active:hover,.open>.dropdown-toggle.jigoshop .btn-default.focus,.open>.dropdown-toggle.jigoshop .btn-default:focus,.open>.dropdown-toggle.jigoshop .btn-default:hover{color:#333;background-color:#d4d4d4;border-color:#8c8c8c}.jigoshop .btn-default.disabled.focus,.jigoshop .btn-default.disabled:focus,.jigoshop .btn-default.disabled:hover,.jigoshop .btn-default[disabled].focus,.jigoshop .btn-default[disabled]:focus,.jigoshop .btn-default[disabled]:hover,fieldset[disabled] .jigoshop .btn-default.focus,fieldset[disabled] .jigoshop .btn-default:focus,fieldset[disabled] .jigoshop .btn-default:hover{background-color:#fff;border-color:#ccc}.jigoshop .btn-default .badge{color:#fff;background-color:#333}.jigoshop .btn-primary{color:#fff;background-color:#337ab7;border-color:#2e6da4}.jigoshop .btn-primary.focus,.jigoshop .btn-primary:focus{color:#fff;background-color:#286090;border-color:#122b40}.jigoshop .btn-primary.active,.jigoshop .btn-primary:active,.jigoshop .btn-primary:hover,.open>.dropdown-toggle.jigoshop .btn-primary{color:#fff;background-color:#286090;border-color:#204d74}.jigoshop .btn-primary.active.focus,.jigoshop .btn-primary.active:focus,.jigoshop .btn-primary.active:hover,.jigoshop .btn-primary:active.focus,.jigoshop .btn-primary:active:focus,.jigoshop .btn-primary:active:hover,.open>.dropdown-toggle.jigoshop .btn-primary.focus,.open>.dropdown-toggle.jigoshop .btn-primary:focus,.open>.dropdown-toggle.jigoshop .btn-primary:hover{color:#fff;background-color:#204d74;border-color:#122b40}.jigoshop .btn-primary.disabled.focus,.jigoshop .btn-primary.disabled:focus,.jigoshop .btn-primary.disabled:hover,.jigoshop .btn-primary[disabled].focus,.jigoshop .btn-primary[disabled]:focus,.jigoshop .btn-primary[disabled]:hover,fieldset[disabled] .jigoshop .btn-primary.focus,fieldset[disabled] .jigoshop .btn-primary:focus,fieldset[disabled] .jigoshop .btn-primary:hover{background-color:#337ab7;border-color:#2e6da4}.jigoshop .btn-primary .badge{color:#337ab7;background-color:#fff}.jigoshop .btn-success{color:#fff;background-color:#5cb85c;border-color:#4cae4c}.jigoshop .btn-success.focus,.jigoshop .btn-success:focus{color:#fff;background-color:#449d44;border-color:#255625}.jigoshop .btn-success.active,.jigoshop .btn-success:active,.jigoshop .btn-success:hover,.open>.dropdown-toggle.jigoshop .btn-success{color:#fff;background-color:#449d44;border-color:#398439}.jigoshop .btn-success.active.focus,.jigoshop .btn-success.active:focus,.jigoshop .btn-success.active:hover,.jigoshop .btn-success:active.focus,.jigoshop .btn-success:active:focus,.jigoshop .btn-success:active:hover,.open>.dropdown-toggle.jigoshop .btn-success.focus,.open>.dropdown-toggle.jigoshop .btn-success:focus,.open>.dropdown-toggle.jigoshop .btn-success:hover{color:#fff;background-color:#398439;border-color:#255625}.jigoshop .btn-success.disabled.focus,.jigoshop .btn-success.disabled:focus,.jigoshop .btn-success.disabled:hover,.jigoshop .btn-success[disabled].focus,.jigoshop .btn-success[disabled]:focus,.jigoshop .btn-success[disabled]:hover,fieldset[disabled] .jigoshop .btn-success.focus,fieldset[disabled] .jigoshop .btn-success:focus,fieldset[disabled] .jigoshop .btn-success:hover{background-color:#5cb85c;border-color:#4cae4c}.jigoshop .btn-success .badge{color:#5cb85c;background-color:#fff}.jigoshop .btn-info{color:#fff;background-color:#5bc0de;border-color:#46b8da}.jigoshop .btn-info.focus,.jigoshop .btn-info:focus{color:#fff;background-color:#31b0d5;border-color:#1b6d85}.jigoshop .btn-info.active,.jigoshop .btn-info:active,.jigoshop .btn-info:hover,.open>.dropdown-toggle.jigoshop .btn-info{color:#fff;background-color:#31b0d5;border-color:#269abc}.jigoshop .btn-info.active.focus,.jigoshop .btn-info.active:focus,.jigoshop .btn-info.active:hover,.jigoshop .btn-info:active.focus,.jigoshop .btn-info:active:focus,.jigoshop .btn-info:active:hover,.open>.dropdown-toggle.jigoshop .btn-info.focus,.open>.dropdown-toggle.jigoshop .btn-info:focus,.open>.dropdown-toggle.jigoshop .btn-info:hover{color:#fff;background-color:#269abc;border-color:#1b6d85}.jigoshop .btn-info.disabled.focus,.jigoshop .btn-info.disabled:focus,.jigoshop .btn-info.disabled:hover,.jigoshop .btn-info[disabled].focus,.jigoshop .btn-info[disabled]:focus,.jigoshop .btn-info[disabled]:hover,fieldset[disabled] .jigoshop .btn-info.focus,fieldset[disabled] .jigoshop .btn-info:focus,fieldset[disabled] .jigoshop .btn-info:hover{background-color:#5bc0de;border-color:#46b8da}.jigoshop .btn-info .badge{color:#5bc0de;background-color:#fff}.jigoshop .btn-warning{color:#fff;background-color:#f0ad4e;border-color:#eea236}.jigoshop .btn-warning.focus,.jigoshop .btn-warning:focus{color:#fff;background-color:#ec971f;border-color:#985f0d}.jigoshop .btn-warning.active,.jigoshop .btn-warning:active,.jigoshop .btn-warning:hover,.open>.dropdown-toggle.jigoshop .btn-warning{color:#fff;background-color:#ec971f;border-color:#d58512}.jigoshop .btn-warning.active.focus,.jigoshop .btn-warning.active:focus,.jigoshop .btn-warning.active:hover,.jigoshop .btn-warning:active.focus,.jigoshop .btn-warning:active:focus,.jigoshop .btn-warning:active:hover,.open>.dropdown-toggle.jigoshop .btn-warning.focus,.open>.dropdown-toggle.jigoshop .btn-warning:focus,.open>.dropdown-toggle.jigoshop .btn-warning:hover{color:#fff;background-color:#d58512;border-color:#985f0d}.jigoshop .btn-warning.disabled.focus,.jigoshop .btn-warning.disabled:focus,.jigoshop .btn-warning.disabled:hover,.jigoshop .btn-warning[disabled].focus,.jigoshop .btn-warning[disabled]:focus,.jigoshop .btn-warning[disabled]:hover,fieldset[disabled] .jigoshop .btn-warning.focus,fieldset[disabled] .jigoshop .btn-warning:focus,fieldset[disabled] .jigoshop .btn-warning:hover{background-color:#f0ad4e;border-color:#eea236}.jigoshop .btn-warning .badge{color:#f0ad4e;background-color:#fff}.jigoshop .btn-danger{color:#fff;background-color:#d9534f;border-color:#d43f3a}.jigoshop .btn-danger.focus,.jigoshop .btn-danger:focus{color:#fff;background-color:#c9302c;border-color:#761c19}.jigoshop .btn-danger.active,.jigoshop .btn-danger:active,.jigoshop .btn-danger:hover,.open>.dropdown-toggle.jigoshop .btn-danger{color:#fff;background-color:#c9302c;border-color:#ac2925}.jigoshop .btn-danger.active.focus,.jigoshop .btn-danger.active:focus,.jigoshop .btn-danger.active:hover,.jigoshop .btn-danger:active.focus,.jigoshop .btn-danger:active:focus,.jigoshop .btn-danger:active:hover,.open>.dropdown-toggle.jigoshop .btn-danger.focus,.open>.dropdown-toggle.jigoshop .btn-danger:focus,.open>.dropdown-toggle.jigoshop .btn-danger:hover{color:#fff;background-color:#ac2925;border-color:#761c19}.jigoshop .btn-danger.disabled.focus,.jigoshop .btn-danger.disabled:focus,.jigoshop .btn-danger.disabled:hover,.jigoshop .btn-danger[disabled].focus,.jigoshop .btn-danger[disabled]:focus,.jigoshop .btn-danger[disabled]:hover,fieldset[disabled] .jigoshop .btn-danger.focus,fieldset[disabled] .jigoshop .btn-danger:focus,fieldset[disabled] .jigoshop .btn-danger:hover{background-color:#d9534f;border-color:#d43f3a}.jigoshop .btn-danger .badge{color:#d9534f;background-color:#fff}.jigoshop .btn-link{color:#337ab7;font-weight:400;border-radius:0}.jigoshop .btn-link,.jigoshop .btn-link.active,.jigoshop .btn-link:active,.jigoshop .btn-link[disabled],fieldset[disabled] .jigoshop .btn-link{background-color:transparent;-webkit-box-shadow:none;box-shadow:none}.jigoshop .btn-link,.jigoshop .btn-link:active,.jigoshop .btn-link:focus,.jigoshop .btn-link:hover{border-color:transparent}.jigoshop .btn-link:focus,.jigoshop .btn-link:hover{color:#23527c;text-decoration:underline;background-color:transparent}.jigoshop .btn-link[disabled]:focus,.jigoshop .btn-link[disabled]:hover,fieldset[disabled] .jigoshop .btn-link:focus,fieldset[disabled] .jigoshop .btn-link:hover{color:#777;text-decoration:none}.jigoshop .btn-lg{padding:10px 16px;font-size:18px;line-height:1.3333333;border-radius:6px}.jigoshop .btn-sm,.jigoshop .btn-xs{font-size:12px;line-height:1.5;border-radius:3px}.jigoshop .btn-sm{padding:5px 10px}.jigoshop .btn-xs{padding:1px 5px}.jigoshop .btn-block{display:block;width:100%}.jigoshop .btn-block+.btn-block{margin-top:5px}.jigoshop input[type=button].btn-block,.jigoshop input[type=reset].btn-block,.jigoshop input[type=submit].btn-block{width:100%}.jigoshop .nav{margin-bottom:0;padding-left:0;list-style:none}.jigoshop .nav>li>a{padding:10px 15px}.jigoshop .nav>li>a:focus,.jigoshop .nav>li>a:hover{text-decoration:none;background-color:#eee}.jigoshop .nav>li.disabled>a{color:#777}.jigoshop .nav>li.disabled>a:focus,.jigoshop .nav>li.disabled>a:hover{color:#777;text-decoration:none;background-color:transparent;cursor:not-allowed}.jigoshop .nav .open>a,.jigoshop .nav .open>a:focus,.jigoshop .nav .open>a:hover{background-color:#eee;border-color:#337ab7}.jigoshop .nav .nav-divider{height:1px;margin:9px 0;overflow:hidden;background-color:#e5e5e5}.jigoshop .nav>li>a>img{max-width:none}.jigoshop .nav-tabs{border-bottom:1px solid #ddd}.jigoshop .nav-tabs>li{float:left;margin-bottom:-1px}.jigoshop .nav-tabs>li>a{margin-right:2px;line-height:1.42857143;border:1px solid transparent;border-radius:4px 4px 0 0}.jigoshop .nav-tabs>li>a:hover{border-color:#eee #eee #ddd}.jigoshop .nav-tabs>li.active>a,.jigoshop .nav-tabs>li.active>a:focus,.jigoshop .nav-tabs>li.active>a:hover{color:#555;background-color:#fff;border:1px solid #ddd;border-bottom-color:transparent;cursor:default}.jigoshop .nav-tabs.nav-justified{width:100%;border-bottom:0}.jigoshop .nav-tabs.nav-justified>li{float:none}.jigoshop .nav-tabs.nav-justified>li>a{text-align:center;margin-bottom:5px;margin-right:0;border-radius:4px}.jigoshop .nav-tabs.nav-justified>.active>a,.jigoshop .nav-tabs.nav-justified>.active>a:focus,.jigoshop .nav-tabs.nav-justified>.active>a:hover{border:1px solid #ddd}@media (min-width:768px){.jigoshop .nav-tabs.nav-justified>li{display:table-cell;width:1%}.jigoshop .nav-tabs.nav-justified>li>a{margin-bottom:0;border-bottom:1px solid #ddd;border-radius:4px 4px 0 0}.jigoshop .nav-tabs.nav-justified>.active>a,.jigoshop .nav-tabs.nav-justified>.active>a:focus,.jigoshop .nav-tabs.nav-justified>.active>a:hover{border-bottom-color:#fff}}.jigoshop .nav-pills>li{float:left}.jigoshop .nav-justified>li,.jigoshop .nav-stacked>li{float:none}.jigoshop .nav-pills>li>a{border-radius:4px}.jigoshop .nav-pills>li+li{margin-left:2px}.jigoshop .nav-pills>li.active>a,.jigoshop .nav-pills>li.active>a:focus,.jigoshop .nav-pills>li.active>a:hover{color:#fff;background-color:#337ab7}.jigoshop .nav-stacked>li+li{margin-top:2px;margin-left:0}.jigoshop .nav-justified{width:100%}.jigoshop .nav-justified>li>a{text-align:center;margin-bottom:5px}.jigoshop .nav-tabs-justified{border-bottom:0}.jigoshop .nav-tabs-justified>li>a{margin-right:0;border-radius:4px}.jigoshop .nav-tabs-justified>.active>a,.jigoshop .nav-tabs-justified>.active>a:focus,.jigoshop .nav-tabs-justified>.active>a:hover{border:1px solid #ddd}@media (min-width:768px){.jigoshop .nav-justified>li{display:table-cell;width:1%}.jigoshop .nav-justified>li>a{margin-bottom:0}.jigoshop .nav-tabs-justified>li>a{border-bottom:1px solid #ddd;border-radius:4px 4px 0 0}.jigoshop .nav-tabs-justified>.active>a,.jigoshop .nav-tabs-justified>.active>a:focus,.jigoshop .nav-tabs-justified>.active>a:hover{border-bottom-color:#fff}}.jigoshop .tab-content>.tab-pane{display:none}.jigoshop .tab-content>.active{display:block}.jigoshop .nav-tabs .dropdown-menu{margin-top:-1px;border-top-right-radius:0;border-top-left-radius:0}.jigoshop .clearfix:after,.jigoshop .clearfix:before,.jigoshop .jigoshop .dl-horizontal dd:after,.jigoshop .jigoshop .dl-horizontal dd:before,.jigoshop .jigoshop .form-horizontal .form-group:after,.jigoshop .jigoshop .form-horizontal .form-group:before,.jigoshop .jigoshop .nav:after,.jigoshop .jigoshop .nav:before{content:" ";display:table}.jigoshop .center-block{display:block;margin-left:auto;margin-right:auto}.jigoshop .pull-right{float:right!important}.jigoshop .pull-left{float:left!important}.jigoshop .hide{display:none!important}.jigoshop .show{display:block!important}.jigoshop .invisible{visibility:hidden}.jigoshop .text-hide{font:0/0 a;color:transparent;text-shadow:none;background-color:transparent;border:0}.jigoshop .hidden{display:none!important}.jigoshop .affix{position:fixed}.jigoshop .product{position:relative}.jigoshop .product p.price{color:green;font-size:1.3em}.jigoshop .product p.price del{font-size:14px;color:#aaa}.jigoshop .product p.stock{font-size:.92em}.jigoshop .product div.images{vertical-align:top;display:inline-block;width:39%;margin-bottom:10px;position:relative;box-sizing:border-box}.jigoshop .product div.images img{border:1px solid #ddd;background:#f5f5f5;padding:6px;display:block}.jigoshop .product div.images div.thumbnails{padding-top:10px}.jigoshop .product div.images div.thumbnails:after,.jigoshop .product div.images div.thumbnails:before{content:" ";display:table}.jigoshop .product div.images div.thumbnails a{margin-right:10px;margin-bottom:10px;float:left}.jigoshop .product div.images div.thumbnails a img{padding:3px}.jigoshop .product div.summary{display:inline-block;width:60%;vertical-align:top;box-sizing:border-box}.jigoshop .product div.summary>dl{margin-top:30px}.jigoshop .product div.summary dd{margin-bottom:0}.jigoshop .product dd.categories a:after,.jigoshop .product dd.tags a:after{content:', '}.jigoshop .product dd.categories a:last-child:after,.jigoshop .product dd.tags a:last-child:after,.jigoshop .product ul.nav:after{content:''}.jigoshop .product ul.nav{margin:0}.jigoshop .product ul.nav:after{display:block;clear:both}.jigoshop .product ul.downloads-list{padding-top:10px}.jigoshop .product div.tab-content{border:1px solid #ddd;border-top:0;padding:6px 12px}
+.full-width #page .site-main .site-content .product.has-post-thumbnail {
+  margin: 0;
+}
+.jigoshop {
+  /*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */
+}
+.jigoshop html {
+  font-family: sans-serif;
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+}
+.jigoshop body {
+  margin: 0;
+}
+.jigoshop article,
+.jigoshop aside,
+.jigoshop details,
+.jigoshop figcaption,
+.jigoshop figure,
+.jigoshop footer,
+.jigoshop header,
+.jigoshop hgroup,
+.jigoshop main,
+.jigoshop menu,
+.jigoshop nav,
+.jigoshop section,
+.jigoshop summary {
+  display: block;
+}
+.jigoshop audio,
+.jigoshop canvas,
+.jigoshop progress,
+.jigoshop video {
+  display: inline-block;
+  vertical-align: baseline;
+}
+.jigoshop audio:not([controls]) {
+  display: none;
+  height: 0;
+}
+.jigoshop [hidden],
+.jigoshop template {
+  display: none;
+}
+.jigoshop a {
+  background-color: transparent;
+}
+.jigoshop a:active,
+.jigoshop a:hover {
+  outline: 0;
+}
+.jigoshop abbr[title] {
+  border-bottom: 1px dotted;
+}
+.jigoshop b,
+.jigoshop strong {
+  font-weight: bold;
+}
+.jigoshop dfn {
+  font-style: italic;
+}
+.jigoshop h1 {
+  font-size: 2em;
+  margin: 0.67em 0;
+}
+.jigoshop mark {
+  background: #ff0;
+  color: #000;
+}
+.jigoshop small {
+  font-size: 80%;
+}
+.jigoshop sub,
+.jigoshop sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+.jigoshop sup {
+  top: -0.5em;
+}
+.jigoshop sub {
+  bottom: -0.25em;
+}
+.jigoshop img {
+  border: 0;
+}
+.jigoshop svg:not(:root) {
+  overflow: hidden;
+}
+.jigoshop figure {
+  margin: 1em 40px;
+}
+.jigoshop hr {
+  box-sizing: content-box;
+  height: 0;
+}
+.jigoshop pre {
+  overflow: auto;
+}
+.jigoshop code,
+.jigoshop kbd,
+.jigoshop pre,
+.jigoshop samp {
+  font-family: monospace, monospace;
+  font-size: 1em;
+}
+.jigoshop button,
+.jigoshop input,
+.jigoshop optgroup,
+.jigoshop select,
+.jigoshop textarea {
+  color: inherit;
+  font: inherit;
+  margin: 0;
+}
+.jigoshop button {
+  overflow: visible;
+}
+.jigoshop button,
+.jigoshop select {
+  text-transform: none;
+}
+.jigoshop button,
+.jigoshop html input[type="button"],
+.jigoshop input[type="reset"],
+.jigoshop input[type="submit"] {
+  -webkit-appearance: button;
+  cursor: pointer;
+}
+.jigoshop button[disabled],
+.jigoshop html input[disabled] {
+  cursor: default;
+}
+.jigoshop button::-moz-focus-inner,
+.jigoshop input::-moz-focus-inner {
+  border: 0;
+  padding: 0;
+}
+.jigoshop input {
+  line-height: normal;
+}
+.jigoshop input[type="checkbox"],
+.jigoshop input[type="radio"] {
+  box-sizing: border-box;
+  padding: 0;
+}
+.jigoshop input[type="number"]::-webkit-inner-spin-button,
+.jigoshop input[type="number"]::-webkit-outer-spin-button {
+  height: auto;
+}
+.jigoshop input[type="search"] {
+  -webkit-appearance: textfield;
+  box-sizing: content-box;
+}
+.jigoshop input[type="search"]::-webkit-search-cancel-button,
+.jigoshop input[type="search"]::-webkit-search-decoration {
+  -webkit-appearance: none;
+}
+.jigoshop fieldset {
+  border: 1px solid #c0c0c0;
+  margin: 0 2px;
+  padding: 0.35em 0.625em 0.75em;
+}
+.jigoshop legend {
+  border: 0;
+  padding: 0;
+}
+.jigoshop textarea {
+  overflow: auto;
+}
+.jigoshop optgroup {
+  font-weight: bold;
+}
+.jigoshop table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+.jigoshop td,
+.jigoshop th {
+  padding: 0;
+}
+.jigoshop * {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+.jigoshop *:before,
+.jigoshop *:after {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+.jigoshop html {
+  font-size: 10px;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+.jigoshop body {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.42857143;
+  color: #333333;
+  background-color: #ffffff;
+}
+.jigoshop input,
+.jigoshop button,
+.jigoshop select,
+.jigoshop textarea {
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+}
+.jigoshop a {
+  color: #337ab7;
+  text-decoration: none;
+}
+.jigoshop a:hover,
+.jigoshop a:focus {
+  color: #23527c;
+  text-decoration: underline;
+}
+.jigoshop a:focus {
+  outline: thin dotted;
+  outline: 5px auto -webkit-focus-ring-color;
+  outline-offset: -2px;
+}
+.jigoshop figure {
+  margin: 0;
+}
+.jigoshop img {
+  vertical-align: middle;
+}
+.jigoshop .img-responsive {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+.jigoshop .img-rounded {
+  border-radius: 6px;
+}
+.jigoshop .img-thumbnail {
+  padding: 4px;
+  line-height: 1.42857143;
+  background-color: #ffffff;
+  border: 1px solid #dddddd;
+  border-radius: 4px;
+  -webkit-transition: all 0.2s ease-in-out;
+  -o-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
+  display: inline-block;
+  max-width: 100%;
+  height: auto;
+}
+.jigoshop .img-circle {
+  border-radius: 50%;
+}
+.jigoshop hr {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  border: 0;
+  border-top: 1px solid #eeeeee;
+}
+.jigoshop .sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+.jigoshop .sr-only-focusable:active,
+.jigoshop .sr-only-focusable:focus {
+  position: static;
+  width: auto;
+  height: auto;
+  margin: 0;
+  overflow: visible;
+  clip: auto;
+}
+.jigoshop [role="button"] {
+  cursor: pointer;
+}
+.jigoshop h1,
+.jigoshop h2,
+.jigoshop h3,
+.jigoshop h4,
+.jigoshop h5,
+.jigoshop h6,
+.jigoshop .h1,
+.jigoshop .h2,
+.jigoshop .h3,
+.jigoshop .h4,
+.jigoshop .h5,
+.jigoshop .h6 {
+  font-family: inherit;
+  font-weight: 500;
+  line-height: 1.1;
+  color: inherit;
+}
+.jigoshop h1 small,
+.jigoshop h2 small,
+.jigoshop h3 small,
+.jigoshop h4 small,
+.jigoshop h5 small,
+.jigoshop h6 small,
+.jigoshop .h1 small,
+.jigoshop .h2 small,
+.jigoshop .h3 small,
+.jigoshop .h4 small,
+.jigoshop .h5 small,
+.jigoshop .h6 small,
+.jigoshop h1 .small,
+.jigoshop h2 .small,
+.jigoshop h3 .small,
+.jigoshop h4 .small,
+.jigoshop h5 .small,
+.jigoshop h6 .small,
+.jigoshop .h1 .small,
+.jigoshop .h2 .small,
+.jigoshop .h3 .small,
+.jigoshop .h4 .small,
+.jigoshop .h5 .small,
+.jigoshop .h6 .small {
+  font-weight: normal;
+  line-height: 1;
+  color: #777777;
+}
+.jigoshop h1,
+.jigoshop .h1,
+.jigoshop h2,
+.jigoshop .h2,
+.jigoshop h3,
+.jigoshop .h3 {
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+.jigoshop h1 small,
+.jigoshop .h1 small,
+.jigoshop h2 small,
+.jigoshop .h2 small,
+.jigoshop h3 small,
+.jigoshop .h3 small,
+.jigoshop h1 .small,
+.jigoshop .h1 .small,
+.jigoshop h2 .small,
+.jigoshop .h2 .small,
+.jigoshop h3 .small,
+.jigoshop .h3 .small {
+  font-size: 65%;
+}
+.jigoshop h4,
+.jigoshop .h4,
+.jigoshop h5,
+.jigoshop .h5,
+.jigoshop h6,
+.jigoshop .h6 {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.jigoshop h4 small,
+.jigoshop .h4 small,
+.jigoshop h5 small,
+.jigoshop .h5 small,
+.jigoshop h6 small,
+.jigoshop .h6 small,
+.jigoshop h4 .small,
+.jigoshop .h4 .small,
+.jigoshop h5 .small,
+.jigoshop .h5 .small,
+.jigoshop h6 .small,
+.jigoshop .h6 .small {
+  font-size: 75%;
+}
+.jigoshop h1,
+.jigoshop .h1 {
+  font-size: 36px;
+}
+.jigoshop h2,
+.jigoshop .h2 {
+  font-size: 30px;
+}
+.jigoshop h3,
+.jigoshop .h3 {
+  font-size: 24px;
+}
+.jigoshop h4,
+.jigoshop .h4 {
+  font-size: 18px;
+}
+.jigoshop h5,
+.jigoshop .h5 {
+  font-size: 14px;
+}
+.jigoshop h6,
+.jigoshop .h6 {
+  font-size: 12px;
+}
+.jigoshop p {
+  margin: 0 0 10px;
+}
+.jigoshop .lead {
+  margin-bottom: 20px;
+  font-size: 16px;
+  font-weight: 300;
+  line-height: 1.4;
+}
+@media (min-width: 768px) {
+  .jigoshop .lead {
+    font-size: 21px;
+  }
+}
+.jigoshop small,
+.jigoshop .small {
+  font-size: 85%;
+}
+.jigoshop mark,
+.jigoshop .mark {
+  background-color: #fcf8e3;
+  padding: .2em;
+}
+.jigoshop .text-left {
+  text-align: left;
+}
+.jigoshop .text-right {
+  text-align: right;
+}
+.jigoshop .text-center {
+  text-align: center;
+}
+.jigoshop .text-justify {
+  text-align: justify;
+}
+.jigoshop .text-nowrap {
+  white-space: nowrap;
+}
+.jigoshop .text-lowercase {
+  text-transform: lowercase;
+}
+.jigoshop .text-uppercase {
+  text-transform: uppercase;
+}
+.jigoshop .text-capitalize {
+  text-transform: capitalize;
+}
+.jigoshop .text-muted {
+  color: #777777;
+}
+.jigoshop .text-primary {
+  color: #337ab7;
+}
+a.jigoshop .text-primary:hover,
+a.jigoshop .text-primary:focus {
+  color: #286090;
+}
+.jigoshop .text-success {
+  color: #3c763d;
+}
+a.jigoshop .text-success:hover,
+a.jigoshop .text-success:focus {
+  color: #2b542c;
+}
+.jigoshop .text-info {
+  color: #31708f;
+}
+a.jigoshop .text-info:hover,
+a.jigoshop .text-info:focus {
+  color: #245269;
+}
+.jigoshop .text-warning {
+  color: #8a6d3b;
+}
+a.jigoshop .text-warning:hover,
+a.jigoshop .text-warning:focus {
+  color: #66512c;
+}
+.jigoshop .text-danger {
+  color: #a94442;
+}
+a.jigoshop .text-danger:hover,
+a.jigoshop .text-danger:focus {
+  color: #843534;
+}
+.jigoshop .bg-primary {
+  color: #fff;
+  background-color: #337ab7;
+}
+a.jigoshop .bg-primary:hover,
+a.jigoshop .bg-primary:focus {
+  background-color: #286090;
+}
+.jigoshop .bg-success {
+  background-color: #dff0d8;
+}
+a.jigoshop .bg-success:hover,
+a.jigoshop .bg-success:focus {
+  background-color: #c1e2b3;
+}
+.jigoshop .bg-info {
+  background-color: #d9edf7;
+}
+a.jigoshop .bg-info:hover,
+a.jigoshop .bg-info:focus {
+  background-color: #afd9ee;
+}
+.jigoshop .bg-warning {
+  background-color: #fcf8e3;
+}
+a.jigoshop .bg-warning:hover,
+a.jigoshop .bg-warning:focus {
+  background-color: #f7ecb5;
+}
+.jigoshop .bg-danger {
+  background-color: #f2dede;
+}
+a.jigoshop .bg-danger:hover,
+a.jigoshop .bg-danger:focus {
+  background-color: #e4b9b9;
+}
+.jigoshop .page-header {
+  padding-bottom: 9px;
+  margin: 40px 0 20px;
+  border-bottom: 1px solid #eeeeee;
+}
+.jigoshop ul,
+.jigoshop ol {
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+.jigoshop ul ul,
+.jigoshop ol ul,
+.jigoshop ul ol,
+.jigoshop ol ol {
+  margin-bottom: 0;
+}
+.jigoshop .list-unstyled {
+  padding-left: 0;
+  list-style: none;
+}
+.jigoshop .list-inline {
+  padding-left: 0;
+  list-style: none;
+  margin-left: -5px;
+}
+.jigoshop .list-inline > li {
+  display: inline-block;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+.jigoshop dl {
+  margin-top: 0;
+  margin-bottom: 20px;
+}
+.jigoshop dt,
+.jigoshop dd {
+  line-height: 1.42857143;
+}
+.jigoshop dt {
+  font-weight: bold;
+}
+.jigoshop dd {
+  margin-left: 0;
+}
+@media (min-width: 768px) {
+  .jigoshop .dl-horizontal dt {
+    float: left;
+    width: 160px;
+    clear: left;
+    text-align: right;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .jigoshop .dl-horizontal dd {
+    margin-left: 180px;
+  }
+}
+.jigoshop abbr[title],
+.jigoshop abbr[data-original-title] {
+  cursor: help;
+  border-bottom: 1px dotted #777777;
+}
+.jigoshop .initialism {
+  font-size: 90%;
+  text-transform: uppercase;
+}
+.jigoshop blockquote {
+  padding: 10px 20px;
+  margin: 0 0 20px;
+  font-size: 17.5px;
+  border-left: 5px solid #eeeeee;
+}
+.jigoshop blockquote p:last-child,
+.jigoshop blockquote ul:last-child,
+.jigoshop blockquote ol:last-child {
+  margin-bottom: 0;
+}
+.jigoshop blockquote footer,
+.jigoshop blockquote small,
+.jigoshop blockquote .small {
+  display: block;
+  font-size: 80%;
+  line-height: 1.42857143;
+  color: #777777;
+}
+.jigoshop blockquote footer:before,
+.jigoshop blockquote small:before,
+.jigoshop blockquote .small:before {
+  content: '\2014 \00A0';
+}
+.jigoshop .blockquote-reverse,
+.jigoshop blockquote.pull-right {
+  padding-right: 15px;
+  padding-left: 0;
+  border-right: 5px solid #eeeeee;
+  border-left: 0;
+  text-align: right;
+}
+.jigoshop .blockquote-reverse footer:before,
+.jigoshop blockquote.pull-right footer:before,
+.jigoshop .blockquote-reverse small:before,
+.jigoshop blockquote.pull-right small:before,
+.jigoshop .blockquote-reverse .small:before,
+.jigoshop blockquote.pull-right .small:before {
+  content: '';
+}
+.jigoshop .blockquote-reverse footer:after,
+.jigoshop blockquote.pull-right footer:after,
+.jigoshop .blockquote-reverse small:after,
+.jigoshop blockquote.pull-right small:after,
+.jigoshop .blockquote-reverse .small:after,
+.jigoshop blockquote.pull-right .small:after {
+  content: '\00A0 \2014';
+}
+.jigoshop address {
+  margin-bottom: 20px;
+  font-style: normal;
+  line-height: 1.42857143;
+}
+.jigoshop fieldset {
+  padding: 0;
+  margin: 0;
+  border: 0;
+  min-width: 0;
+}
+.jigoshop legend {
+  display: block;
+  width: 100%;
+  padding: 0;
+  margin-bottom: 20px;
+  font-size: 21px;
+  line-height: inherit;
+  color: #333333;
+  border: 0;
+  border-bottom: 1px solid #e5e5e5;
+}
+.jigoshop label {
+  display: inline-block;
+  max-width: 100%;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+.jigoshop input[type="search"] {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+.jigoshop input[type="radio"],
+.jigoshop input[type="checkbox"] {
+  margin: 4px 0 0;
+  margin-top: 1px \9;
+  line-height: normal;
+}
+.jigoshop input[type="file"] {
+  display: block;
+}
+.jigoshop input[type="range"] {
+  display: block;
+  width: 100%;
+}
+.jigoshop select[multiple],
+.jigoshop select[size] {
+  height: auto;
+}
+.jigoshop input[type="file"]:focus,
+.jigoshop input[type="radio"]:focus,
+.jigoshop input[type="checkbox"]:focus {
+  outline: thin dotted;
+  outline: 5px auto -webkit-focus-ring-color;
+  outline-offset: -2px;
+}
+.jigoshop output {
+  display: block;
+  padding-top: 7px;
+  font-size: 14px;
+  line-height: 1.42857143;
+  color: #555555;
+}
+.jigoshop .form-control {
+  display: block;
+  width: 100%;
+  height: 34px;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.42857143;
+  color: #555555;
+  background-color: #ffffff;
+  background-image: none;
+  border: 1px solid #cccccc;
+  border-radius: 4px;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  -webkit-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+  -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+  transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+}
+.jigoshop .form-control:focus {
+  border-color: #66afe9;
+  outline: 0;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, 0.6);
+  box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, 0.6);
+}
+.jigoshop .form-control::-moz-placeholder {
+  color: #999999;
+  opacity: 1;
+}
+.jigoshop .form-control:-ms-input-placeholder {
+  color: #999999;
+}
+.jigoshop .form-control::-webkit-input-placeholder {
+  color: #999999;
+}
+.jigoshop .form-control::-ms-expand {
+  border: 0;
+  background-color: transparent;
+}
+.jigoshop .form-control[disabled],
+.jigoshop .form-control[readonly],
+fieldset[disabled] .jigoshop .form-control {
+  background-color: #eeeeee;
+  opacity: 1;
+}
+.jigoshop .form-control[disabled],
+fieldset[disabled] .jigoshop .form-control {
+  cursor: not-allowed;
+}
+textarea.jigoshop .form-control {
+  height: auto;
+}
+.jigoshop input[type="search"] {
+  -webkit-appearance: none;
+}
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+  .jigoshop input[type="date"].form-control,
+  .jigoshop input[type="time"].form-control,
+  .jigoshop input[type="datetime-local"].form-control,
+  .jigoshop input[type="month"].form-control {
+    line-height: 34px;
+  }
+  .jigoshop input[type="date"].input-sm,
+  .jigoshop input[type="time"].input-sm,
+  .jigoshop input[type="datetime-local"].input-sm,
+  .jigoshop input[type="month"].input-sm,
+  .input-group-sm .jigoshop input[type="date"],
+  .input-group-sm .jigoshop input[type="time"],
+  .input-group-sm .jigoshop input[type="datetime-local"],
+  .input-group-sm .jigoshop input[type="month"] {
+    line-height: 30px;
+  }
+  .jigoshop input[type="date"].input-lg,
+  .jigoshop input[type="time"].input-lg,
+  .jigoshop input[type="datetime-local"].input-lg,
+  .jigoshop input[type="month"].input-lg,
+  .input-group-lg .jigoshop input[type="date"],
+  .input-group-lg .jigoshop input[type="time"],
+  .input-group-lg .jigoshop input[type="datetime-local"],
+  .input-group-lg .jigoshop input[type="month"] {
+    line-height: 46px;
+  }
+}
+.jigoshop .form-group {
+  margin-bottom: 15px;
+}
+.jigoshop .radio,
+.jigoshop .checkbox {
+  position: relative;
+  display: block;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.jigoshop .radio label,
+.jigoshop .checkbox label {
+  min-height: 20px;
+  padding-left: 20px;
+  margin-bottom: 0;
+  font-weight: normal;
+  cursor: pointer;
+}
+.jigoshop .radio input[type="radio"],
+.jigoshop .radio-inline input[type="radio"],
+.jigoshop .checkbox input[type="checkbox"],
+.jigoshop .checkbox-inline input[type="checkbox"] {
+  position: absolute;
+  margin-left: -20px;
+  margin-top: 4px \9;
+}
+.jigoshop .radio + .radio,
+.jigoshop .checkbox + .checkbox {
+  margin-top: -5px;
+}
+.jigoshop .radio-inline,
+.jigoshop .checkbox-inline {
+  position: relative;
+  display: inline-block;
+  padding-left: 20px;
+  margin-bottom: 0;
+  vertical-align: middle;
+  font-weight: normal;
+  cursor: pointer;
+}
+.jigoshop .radio-inline + .radio-inline,
+.jigoshop .checkbox-inline + .checkbox-inline {
+  margin-top: 0;
+  margin-left: 10px;
+}
+.jigoshop input[type="radio"][disabled],
+.jigoshop input[type="checkbox"][disabled],
+.jigoshop input[type="radio"].disabled,
+.jigoshop input[type="checkbox"].disabled,
+fieldset[disabled] .jigoshop input[type="radio"],
+fieldset[disabled] .jigoshop input[type="checkbox"] {
+  cursor: not-allowed;
+}
+.jigoshop .radio-inline.disabled,
+.jigoshop .checkbox-inline.disabled,
+fieldset[disabled] .jigoshop .radio-inline,
+fieldset[disabled] .jigoshop .checkbox-inline {
+  cursor: not-allowed;
+}
+.jigoshop .radio.disabled label,
+.jigoshop .checkbox.disabled label,
+fieldset[disabled] .jigoshop .radio label,
+fieldset[disabled] .jigoshop .checkbox label {
+  cursor: not-allowed;
+}
+.jigoshop .form-control-static {
+  padding-top: 7px;
+  padding-bottom: 7px;
+  margin-bottom: 0;
+  min-height: 34px;
+}
+.jigoshop .form-control-static.input-lg,
+.jigoshop .form-control-static.input-sm {
+  padding-left: 0;
+  padding-right: 0;
+}
+.jigoshop .input-sm {
+  height: 30px;
+  padding: 5px 10px;
+  font-size: 12px;
+  line-height: 1.5;
+  border-radius: 3px;
+}
+select.jigoshop .input-sm {
+  height: 30px;
+  line-height: 30px;
+}
+textarea.jigoshop .input-sm,
+select[multiple].jigoshop .input-sm {
+  height: auto;
+}
+.jigoshop .form-group-sm .form-control {
+  height: 30px;
+  padding: 5px 10px;
+  font-size: 12px;
+  line-height: 1.5;
+  border-radius: 3px;
+}
+.jigoshop .form-group-sm select.form-control {
+  height: 30px;
+  line-height: 30px;
+}
+.jigoshop .form-group-sm textarea.form-control,
+.jigoshop .form-group-sm select[multiple].form-control {
+  height: auto;
+}
+.jigoshop .form-group-sm .form-control-static {
+  height: 30px;
+  min-height: 32px;
+  padding: 6px 10px;
+  font-size: 12px;
+  line-height: 1.5;
+}
+.jigoshop .input-lg {
+  height: 46px;
+  padding: 10px 16px;
+  font-size: 18px;
+  line-height: 1.3333333;
+  border-radius: 6px;
+}
+select.jigoshop .input-lg {
+  height: 46px;
+  line-height: 46px;
+}
+textarea.jigoshop .input-lg,
+select[multiple].jigoshop .input-lg {
+  height: auto;
+}
+.jigoshop .form-group-lg .form-control {
+  height: 46px;
+  padding: 10px 16px;
+  font-size: 18px;
+  line-height: 1.3333333;
+  border-radius: 6px;
+}
+.jigoshop .form-group-lg select.form-control {
+  height: 46px;
+  line-height: 46px;
+}
+.jigoshop .form-group-lg textarea.form-control,
+.jigoshop .form-group-lg select[multiple].form-control {
+  height: auto;
+}
+.jigoshop .form-group-lg .form-control-static {
+  height: 46px;
+  min-height: 38px;
+  padding: 11px 16px;
+  font-size: 18px;
+  line-height: 1.3333333;
+}
+.jigoshop .has-feedback {
+  position: relative;
+}
+.jigoshop .has-feedback .form-control {
+  padding-right: 42.5px;
+}
+.jigoshop .form-control-feedback {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 2;
+  display: block;
+  width: 34px;
+  height: 34px;
+  line-height: 34px;
+  text-align: center;
+  pointer-events: none;
+}
+.jigoshop .input-lg + .form-control-feedback,
+.jigoshop .input-group-lg + .form-control-feedback,
+.jigoshop .form-group-lg .form-control + .form-control-feedback {
+  width: 46px;
+  height: 46px;
+  line-height: 46px;
+}
+.jigoshop .input-sm + .form-control-feedback,
+.jigoshop .input-group-sm + .form-control-feedback,
+.jigoshop .form-group-sm .form-control + .form-control-feedback {
+  width: 30px;
+  height: 30px;
+  line-height: 30px;
+}
+.jigoshop .has-success .help-block,
+.jigoshop .has-success .control-label,
+.jigoshop .has-success .radio,
+.jigoshop .has-success .checkbox,
+.jigoshop .has-success .radio-inline,
+.jigoshop .has-success .checkbox-inline,
+.jigoshop .has-success.radio label,
+.jigoshop .has-success.checkbox label,
+.jigoshop .has-success.radio-inline label,
+.jigoshop .has-success.checkbox-inline label {
+  color: #3c763d;
+}
+.jigoshop .has-success .form-control {
+  border-color: #3c763d;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+}
+.jigoshop .has-success .form-control:focus {
+  border-color: #2b542c;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #67b168;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #67b168;
+}
+.jigoshop .has-success .input-group-addon {
+  color: #3c763d;
+  border-color: #3c763d;
+  background-color: #dff0d8;
+}
+.jigoshop .has-success .form-control-feedback {
+  color: #3c763d;
+}
+.jigoshop .has-warning .help-block,
+.jigoshop .has-warning .control-label,
+.jigoshop .has-warning .radio,
+.jigoshop .has-warning .checkbox,
+.jigoshop .has-warning .radio-inline,
+.jigoshop .has-warning .checkbox-inline,
+.jigoshop .has-warning.radio label,
+.jigoshop .has-warning.checkbox label,
+.jigoshop .has-warning.radio-inline label,
+.jigoshop .has-warning.checkbox-inline label {
+  color: #8a6d3b;
+}
+.jigoshop .has-warning .form-control {
+  border-color: #8a6d3b;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+}
+.jigoshop .has-warning .form-control:focus {
+  border-color: #66512c;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #c0a16b;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #c0a16b;
+}
+.jigoshop .has-warning .input-group-addon {
+  color: #8a6d3b;
+  border-color: #8a6d3b;
+  background-color: #fcf8e3;
+}
+.jigoshop .has-warning .form-control-feedback {
+  color: #8a6d3b;
+}
+.jigoshop .has-error .help-block,
+.jigoshop .has-error .control-label,
+.jigoshop .has-error .radio,
+.jigoshop .has-error .checkbox,
+.jigoshop .has-error .radio-inline,
+.jigoshop .has-error .checkbox-inline,
+.jigoshop .has-error.radio label,
+.jigoshop .has-error.checkbox label,
+.jigoshop .has-error.radio-inline label,
+.jigoshop .has-error.checkbox-inline label {
+  color: #a94442;
+}
+.jigoshop .has-error .form-control {
+  border-color: #a94442;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+}
+.jigoshop .has-error .form-control:focus {
+  border-color: #843534;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #ce8483;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #ce8483;
+}
+.jigoshop .has-error .input-group-addon {
+  color: #a94442;
+  border-color: #a94442;
+  background-color: #f2dede;
+}
+.jigoshop .has-error .form-control-feedback {
+  color: #a94442;
+}
+.jigoshop .has-feedback label ~ .form-control-feedback {
+  top: 25px;
+}
+.jigoshop .has-feedback label.sr-only ~ .form-control-feedback {
+  top: 0;
+}
+.jigoshop .help-block {
+  display: block;
+  margin-top: 5px;
+  margin-bottom: 10px;
+  color: #737373;
+}
+@media (min-width: 768px) {
+  .jigoshop .form-inline .form-group {
+    display: inline-block;
+    margin-bottom: 0;
+    vertical-align: middle;
+  }
+  .jigoshop .form-inline .form-control {
+    display: inline-block;
+    width: auto;
+    vertical-align: middle;
+  }
+  .jigoshop .form-inline .form-control-static {
+    display: inline-block;
+  }
+  .jigoshop .form-inline .input-group {
+    display: inline-table;
+    vertical-align: middle;
+  }
+  .jigoshop .form-inline .input-group .input-group-addon,
+  .jigoshop .form-inline .input-group .input-group-btn,
+  .jigoshop .form-inline .input-group .form-control {
+    width: auto;
+  }
+  .jigoshop .form-inline .input-group > .form-control {
+    width: 100%;
+  }
+  .jigoshop .form-inline .control-label {
+    margin-bottom: 0;
+    vertical-align: middle;
+  }
+  .jigoshop .form-inline .radio,
+  .jigoshop .form-inline .checkbox {
+    display: inline-block;
+    margin-top: 0;
+    margin-bottom: 0;
+    vertical-align: middle;
+  }
+  .jigoshop .form-inline .radio label,
+  .jigoshop .form-inline .checkbox label {
+    padding-left: 0;
+  }
+  .jigoshop .form-inline .radio input[type="radio"],
+  .jigoshop .form-inline .checkbox input[type="checkbox"] {
+    position: relative;
+    margin-left: 0;
+  }
+  .jigoshop .form-inline .has-feedback .form-control-feedback {
+    top: 0;
+  }
+}
+.jigoshop .form-horizontal .radio,
+.jigoshop .form-horizontal .checkbox,
+.jigoshop .form-horizontal .radio-inline,
+.jigoshop .form-horizontal .checkbox-inline {
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-top: 7px;
+}
+.jigoshop .form-horizontal .radio,
+.jigoshop .form-horizontal .checkbox {
+  min-height: 27px;
+}
+.jigoshop .form-horizontal .form-group {
+  margin-left: -15px;
+  margin-right: -15px;
+}
+@media (min-width: 768px) {
+  .jigoshop .form-horizontal .control-label {
+    text-align: right;
+    margin-bottom: 0;
+    padding-top: 7px;
+  }
+}
+.jigoshop .form-horizontal .has-feedback .form-control-feedback {
+  right: 15px;
+}
+@media (min-width: 768px) {
+  .jigoshop .form-horizontal .form-group-lg .control-label {
+    padding-top: 11px;
+    font-size: 18px;
+  }
+}
+@media (min-width: 768px) {
+  .jigoshop .form-horizontal .form-group-sm .control-label {
+    padding-top: 6px;
+    font-size: 12px;
+  }
+}
+.jigoshop .btn {
+  display: inline-block;
+  margin-bottom: 0;
+  font-weight: normal;
+  text-align: center;
+  vertical-align: middle;
+  touch-action: manipulation;
+  cursor: pointer;
+  background-image: none;
+  border: 1px solid transparent;
+  white-space: nowrap;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.42857143;
+  border-radius: 4px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.jigoshop .btn:focus,
+.jigoshop .btn:active:focus,
+.jigoshop .btn.active:focus,
+.jigoshop .btn.focus,
+.jigoshop .btn:active.focus,
+.jigoshop .btn.active.focus {
+  outline: thin dotted;
+  outline: 5px auto -webkit-focus-ring-color;
+  outline-offset: -2px;
+}
+.jigoshop .btn:hover,
+.jigoshop .btn:focus,
+.jigoshop .btn.focus {
+  color: #333333;
+  text-decoration: none;
+}
+.jigoshop .btn:active,
+.jigoshop .btn.active {
+  outline: 0;
+  background-image: none;
+  -webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+  box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+}
+.jigoshop .btn.disabled,
+.jigoshop .btn[disabled],
+fieldset[disabled] .jigoshop .btn {
+  cursor: not-allowed;
+  opacity: 0.65;
+  filter: alpha(opacity=65);
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+a.jigoshop .btn.disabled,
+fieldset[disabled] a.jigoshop .btn {
+  pointer-events: none;
+}
+.jigoshop .btn-default {
+  color: #333333;
+  background-color: #ffffff;
+  border-color: #cccccc;
+}
+.jigoshop .btn-default:focus,
+.jigoshop .btn-default.focus {
+  color: #333333;
+  background-color: #e6e6e6;
+  border-color: #8c8c8c;
+}
+.jigoshop .btn-default:hover {
+  color: #333333;
+  background-color: #e6e6e6;
+  border-color: #adadad;
+}
+.jigoshop .btn-default:active,
+.jigoshop .btn-default.active,
+.open > .dropdown-toggle.jigoshop .btn-default {
+  color: #333333;
+  background-color: #e6e6e6;
+  border-color: #adadad;
+}
+.jigoshop .btn-default:active:hover,
+.jigoshop .btn-default.active:hover,
+.open > .dropdown-toggle.jigoshop .btn-default:hover,
+.jigoshop .btn-default:active:focus,
+.jigoshop .btn-default.active:focus,
+.open > .dropdown-toggle.jigoshop .btn-default:focus,
+.jigoshop .btn-default:active.focus,
+.jigoshop .btn-default.active.focus,
+.open > .dropdown-toggle.jigoshop .btn-default.focus {
+  color: #333333;
+  background-color: #d4d4d4;
+  border-color: #8c8c8c;
+}
+.jigoshop .btn-default:active,
+.jigoshop .btn-default.active,
+.open > .dropdown-toggle.jigoshop .btn-default {
+  background-image: none;
+}
+.jigoshop .btn-default.disabled:hover,
+.jigoshop .btn-default[disabled]:hover,
+fieldset[disabled] .jigoshop .btn-default:hover,
+.jigoshop .btn-default.disabled:focus,
+.jigoshop .btn-default[disabled]:focus,
+fieldset[disabled] .jigoshop .btn-default:focus,
+.jigoshop .btn-default.disabled.focus,
+.jigoshop .btn-default[disabled].focus,
+fieldset[disabled] .jigoshop .btn-default.focus {
+  background-color: #ffffff;
+  border-color: #cccccc;
+}
+.jigoshop .btn-default .badge {
+  color: #ffffff;
+  background-color: #333333;
+}
+.jigoshop .btn-primary {
+  color: #ffffff;
+  background-color: #337ab7;
+  border-color: #2e6da4;
+}
+.jigoshop .btn-primary:focus,
+.jigoshop .btn-primary.focus {
+  color: #ffffff;
+  background-color: #286090;
+  border-color: #122b40;
+}
+.jigoshop .btn-primary:hover {
+  color: #ffffff;
+  background-color: #286090;
+  border-color: #204d74;
+}
+.jigoshop .btn-primary:active,
+.jigoshop .btn-primary.active,
+.open > .dropdown-toggle.jigoshop .btn-primary {
+  color: #ffffff;
+  background-color: #286090;
+  border-color: #204d74;
+}
+.jigoshop .btn-primary:active:hover,
+.jigoshop .btn-primary.active:hover,
+.open > .dropdown-toggle.jigoshop .btn-primary:hover,
+.jigoshop .btn-primary:active:focus,
+.jigoshop .btn-primary.active:focus,
+.open > .dropdown-toggle.jigoshop .btn-primary:focus,
+.jigoshop .btn-primary:active.focus,
+.jigoshop .btn-primary.active.focus,
+.open > .dropdown-toggle.jigoshop .btn-primary.focus {
+  color: #ffffff;
+  background-color: #204d74;
+  border-color: #122b40;
+}
+.jigoshop .btn-primary:active,
+.jigoshop .btn-primary.active,
+.open > .dropdown-toggle.jigoshop .btn-primary {
+  background-image: none;
+}
+.jigoshop .btn-primary.disabled:hover,
+.jigoshop .btn-primary[disabled]:hover,
+fieldset[disabled] .jigoshop .btn-primary:hover,
+.jigoshop .btn-primary.disabled:focus,
+.jigoshop .btn-primary[disabled]:focus,
+fieldset[disabled] .jigoshop .btn-primary:focus,
+.jigoshop .btn-primary.disabled.focus,
+.jigoshop .btn-primary[disabled].focus,
+fieldset[disabled] .jigoshop .btn-primary.focus {
+  background-color: #337ab7;
+  border-color: #2e6da4;
+}
+.jigoshop .btn-primary .badge {
+  color: #337ab7;
+  background-color: #ffffff;
+}
+.jigoshop .btn-success {
+  color: #ffffff;
+  background-color: #5cb85c;
+  border-color: #4cae4c;
+}
+.jigoshop .btn-success:focus,
+.jigoshop .btn-success.focus {
+  color: #ffffff;
+  background-color: #449d44;
+  border-color: #255625;
+}
+.jigoshop .btn-success:hover {
+  color: #ffffff;
+  background-color: #449d44;
+  border-color: #398439;
+}
+.jigoshop .btn-success:active,
+.jigoshop .btn-success.active,
+.open > .dropdown-toggle.jigoshop .btn-success {
+  color: #ffffff;
+  background-color: #449d44;
+  border-color: #398439;
+}
+.jigoshop .btn-success:active:hover,
+.jigoshop .btn-success.active:hover,
+.open > .dropdown-toggle.jigoshop .btn-success:hover,
+.jigoshop .btn-success:active:focus,
+.jigoshop .btn-success.active:focus,
+.open > .dropdown-toggle.jigoshop .btn-success:focus,
+.jigoshop .btn-success:active.focus,
+.jigoshop .btn-success.active.focus,
+.open > .dropdown-toggle.jigoshop .btn-success.focus {
+  color: #ffffff;
+  background-color: #398439;
+  border-color: #255625;
+}
+.jigoshop .btn-success:active,
+.jigoshop .btn-success.active,
+.open > .dropdown-toggle.jigoshop .btn-success {
+  background-image: none;
+}
+.jigoshop .btn-success.disabled:hover,
+.jigoshop .btn-success[disabled]:hover,
+fieldset[disabled] .jigoshop .btn-success:hover,
+.jigoshop .btn-success.disabled:focus,
+.jigoshop .btn-success[disabled]:focus,
+fieldset[disabled] .jigoshop .btn-success:focus,
+.jigoshop .btn-success.disabled.focus,
+.jigoshop .btn-success[disabled].focus,
+fieldset[disabled] .jigoshop .btn-success.focus {
+  background-color: #5cb85c;
+  border-color: #4cae4c;
+}
+.jigoshop .btn-success .badge {
+  color: #5cb85c;
+  background-color: #ffffff;
+}
+.jigoshop .btn-info {
+  color: #ffffff;
+  background-color: #5bc0de;
+  border-color: #46b8da;
+}
+.jigoshop .btn-info:focus,
+.jigoshop .btn-info.focus {
+  color: #ffffff;
+  background-color: #31b0d5;
+  border-color: #1b6d85;
+}
+.jigoshop .btn-info:hover {
+  color: #ffffff;
+  background-color: #31b0d5;
+  border-color: #269abc;
+}
+.jigoshop .btn-info:active,
+.jigoshop .btn-info.active,
+.open > .dropdown-toggle.jigoshop .btn-info {
+  color: #ffffff;
+  background-color: #31b0d5;
+  border-color: #269abc;
+}
+.jigoshop .btn-info:active:hover,
+.jigoshop .btn-info.active:hover,
+.open > .dropdown-toggle.jigoshop .btn-info:hover,
+.jigoshop .btn-info:active:focus,
+.jigoshop .btn-info.active:focus,
+.open > .dropdown-toggle.jigoshop .btn-info:focus,
+.jigoshop .btn-info:active.focus,
+.jigoshop .btn-info.active.focus,
+.open > .dropdown-toggle.jigoshop .btn-info.focus {
+  color: #ffffff;
+  background-color: #269abc;
+  border-color: #1b6d85;
+}
+.jigoshop .btn-info:active,
+.jigoshop .btn-info.active,
+.open > .dropdown-toggle.jigoshop .btn-info {
+  background-image: none;
+}
+.jigoshop .btn-info.disabled:hover,
+.jigoshop .btn-info[disabled]:hover,
+fieldset[disabled] .jigoshop .btn-info:hover,
+.jigoshop .btn-info.disabled:focus,
+.jigoshop .btn-info[disabled]:focus,
+fieldset[disabled] .jigoshop .btn-info:focus,
+.jigoshop .btn-info.disabled.focus,
+.jigoshop .btn-info[disabled].focus,
+fieldset[disabled] .jigoshop .btn-info.focus {
+  background-color: #5bc0de;
+  border-color: #46b8da;
+}
+.jigoshop .btn-info .badge {
+  color: #5bc0de;
+  background-color: #ffffff;
+}
+.jigoshop .btn-warning {
+  color: #ffffff;
+  background-color: #f0ad4e;
+  border-color: #eea236;
+}
+.jigoshop .btn-warning:focus,
+.jigoshop .btn-warning.focus {
+  color: #ffffff;
+  background-color: #ec971f;
+  border-color: #985f0d;
+}
+.jigoshop .btn-warning:hover {
+  color: #ffffff;
+  background-color: #ec971f;
+  border-color: #d58512;
+}
+.jigoshop .btn-warning:active,
+.jigoshop .btn-warning.active,
+.open > .dropdown-toggle.jigoshop .btn-warning {
+  color: #ffffff;
+  background-color: #ec971f;
+  border-color: #d58512;
+}
+.jigoshop .btn-warning:active:hover,
+.jigoshop .btn-warning.active:hover,
+.open > .dropdown-toggle.jigoshop .btn-warning:hover,
+.jigoshop .btn-warning:active:focus,
+.jigoshop .btn-warning.active:focus,
+.open > .dropdown-toggle.jigoshop .btn-warning:focus,
+.jigoshop .btn-warning:active.focus,
+.jigoshop .btn-warning.active.focus,
+.open > .dropdown-toggle.jigoshop .btn-warning.focus {
+  color: #ffffff;
+  background-color: #d58512;
+  border-color: #985f0d;
+}
+.jigoshop .btn-warning:active,
+.jigoshop .btn-warning.active,
+.open > .dropdown-toggle.jigoshop .btn-warning {
+  background-image: none;
+}
+.jigoshop .btn-warning.disabled:hover,
+.jigoshop .btn-warning[disabled]:hover,
+fieldset[disabled] .jigoshop .btn-warning:hover,
+.jigoshop .btn-warning.disabled:focus,
+.jigoshop .btn-warning[disabled]:focus,
+fieldset[disabled] .jigoshop .btn-warning:focus,
+.jigoshop .btn-warning.disabled.focus,
+.jigoshop .btn-warning[disabled].focus,
+fieldset[disabled] .jigoshop .btn-warning.focus {
+  background-color: #f0ad4e;
+  border-color: #eea236;
+}
+.jigoshop .btn-warning .badge {
+  color: #f0ad4e;
+  background-color: #ffffff;
+}
+.jigoshop .btn-danger {
+  color: #ffffff;
+  background-color: #d9534f;
+  border-color: #d43f3a;
+}
+.jigoshop .btn-danger:focus,
+.jigoshop .btn-danger.focus {
+  color: #ffffff;
+  background-color: #c9302c;
+  border-color: #761c19;
+}
+.jigoshop .btn-danger:hover {
+  color: #ffffff;
+  background-color: #c9302c;
+  border-color: #ac2925;
+}
+.jigoshop .btn-danger:active,
+.jigoshop .btn-danger.active,
+.open > .dropdown-toggle.jigoshop .btn-danger {
+  color: #ffffff;
+  background-color: #c9302c;
+  border-color: #ac2925;
+}
+.jigoshop .btn-danger:active:hover,
+.jigoshop .btn-danger.active:hover,
+.open > .dropdown-toggle.jigoshop .btn-danger:hover,
+.jigoshop .btn-danger:active:focus,
+.jigoshop .btn-danger.active:focus,
+.open > .dropdown-toggle.jigoshop .btn-danger:focus,
+.jigoshop .btn-danger:active.focus,
+.jigoshop .btn-danger.active.focus,
+.open > .dropdown-toggle.jigoshop .btn-danger.focus {
+  color: #ffffff;
+  background-color: #ac2925;
+  border-color: #761c19;
+}
+.jigoshop .btn-danger:active,
+.jigoshop .btn-danger.active,
+.open > .dropdown-toggle.jigoshop .btn-danger {
+  background-image: none;
+}
+.jigoshop .btn-danger.disabled:hover,
+.jigoshop .btn-danger[disabled]:hover,
+fieldset[disabled] .jigoshop .btn-danger:hover,
+.jigoshop .btn-danger.disabled:focus,
+.jigoshop .btn-danger[disabled]:focus,
+fieldset[disabled] .jigoshop .btn-danger:focus,
+.jigoshop .btn-danger.disabled.focus,
+.jigoshop .btn-danger[disabled].focus,
+fieldset[disabled] .jigoshop .btn-danger.focus {
+  background-color: #d9534f;
+  border-color: #d43f3a;
+}
+.jigoshop .btn-danger .badge {
+  color: #d9534f;
+  background-color: #ffffff;
+}
+.jigoshop .btn-link {
+  color: #337ab7;
+  font-weight: normal;
+  border-radius: 0;
+}
+.jigoshop .btn-link,
+.jigoshop .btn-link:active,
+.jigoshop .btn-link.active,
+.jigoshop .btn-link[disabled],
+fieldset[disabled] .jigoshop .btn-link {
+  background-color: transparent;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+.jigoshop .btn-link,
+.jigoshop .btn-link:hover,
+.jigoshop .btn-link:focus,
+.jigoshop .btn-link:active {
+  border-color: transparent;
+}
+.jigoshop .btn-link:hover,
+.jigoshop .btn-link:focus {
+  color: #23527c;
+  text-decoration: underline;
+  background-color: transparent;
+}
+.jigoshop .btn-link[disabled]:hover,
+fieldset[disabled] .jigoshop .btn-link:hover,
+.jigoshop .btn-link[disabled]:focus,
+fieldset[disabled] .jigoshop .btn-link:focus {
+  color: #777777;
+  text-decoration: none;
+}
+.jigoshop .btn-lg {
+  padding: 10px 16px;
+  font-size: 18px;
+  line-height: 1.3333333;
+  border-radius: 6px;
+}
+.jigoshop .btn-sm {
+  padding: 5px 10px;
+  font-size: 12px;
+  line-height: 1.5;
+  border-radius: 3px;
+}
+.jigoshop .btn-xs {
+  padding: 1px 5px;
+  font-size: 12px;
+  line-height: 1.5;
+  border-radius: 3px;
+}
+.jigoshop .btn-block {
+  display: block;
+  width: 100%;
+}
+.jigoshop .btn-block + .btn-block {
+  margin-top: 5px;
+}
+.jigoshop input[type="submit"].btn-block,
+.jigoshop input[type="reset"].btn-block,
+.jigoshop input[type="button"].btn-block {
+  width: 100%;
+}
+.jigoshop .nav {
+  margin-bottom: 0;
+  padding-left: 0;
+  list-style: none;
+}
+.jigoshop .nav > li {
+  position: relative;
+  display: block;
+}
+.jigoshop .nav > li > a {
+  position: relative;
+  display: block;
+  padding: 10px 15px;
+}
+.jigoshop .nav > li > a:hover,
+.jigoshop .nav > li > a:focus {
+  text-decoration: none;
+  background-color: #eeeeee;
+}
+.jigoshop .nav > li.disabled > a {
+  color: #777777;
+}
+.jigoshop .nav > li.disabled > a:hover,
+.jigoshop .nav > li.disabled > a:focus {
+  color: #777777;
+  text-decoration: none;
+  background-color: transparent;
+  cursor: not-allowed;
+}
+.jigoshop .nav .open > a,
+.jigoshop .nav .open > a:hover,
+.jigoshop .nav .open > a:focus {
+  background-color: #eeeeee;
+  border-color: #337ab7;
+}
+.jigoshop .nav .nav-divider {
+  height: 1px;
+  margin: 9px 0;
+  overflow: hidden;
+  background-color: #e5e5e5;
+}
+.jigoshop .nav > li > a > img {
+  max-width: none;
+}
+.jigoshop .nav-tabs {
+  border-bottom: 1px solid #dddddd;
+}
+.jigoshop .nav-tabs > li {
+  float: left;
+  margin-bottom: -1px;
+}
+.jigoshop .nav-tabs > li > a {
+  margin-right: 2px;
+  line-height: 1.42857143;
+  border: 1px solid transparent;
+  border-radius: 4px 4px 0 0;
+}
+.jigoshop .nav-tabs > li > a:hover {
+  border-color: #eeeeee #eeeeee #dddddd;
+}
+.jigoshop .nav-tabs > li.active > a,
+.jigoshop .nav-tabs > li.active > a:hover,
+.jigoshop .nav-tabs > li.active > a:focus {
+  color: #555555;
+  background-color: #ffffff;
+  border: 1px solid #dddddd;
+  border-bottom-color: transparent;
+  cursor: default;
+}
+.jigoshop .nav-tabs.nav-justified {
+  width: 100%;
+  border-bottom: 0;
+}
+.jigoshop .nav-tabs.nav-justified > li {
+  float: none;
+}
+.jigoshop .nav-tabs.nav-justified > li > a {
+  text-align: center;
+  margin-bottom: 5px;
+}
+.jigoshop .nav-tabs.nav-justified > .dropdown .dropdown-menu {
+  top: auto;
+  left: auto;
+}
+@media (min-width: 768px) {
+  .jigoshop .nav-tabs.nav-justified > li {
+    display: table-cell;
+    width: 1%;
+  }
+  .jigoshop .nav-tabs.nav-justified > li > a {
+    margin-bottom: 0;
+  }
+}
+.jigoshop .nav-tabs.nav-justified > li > a {
+  margin-right: 0;
+  border-radius: 4px;
+}
+.jigoshop .nav-tabs.nav-justified > .active > a,
+.jigoshop .nav-tabs.nav-justified > .active > a:hover,
+.jigoshop .nav-tabs.nav-justified > .active > a:focus {
+  border: 1px solid #dddddd;
+}
+@media (min-width: 768px) {
+  .jigoshop .nav-tabs.nav-justified > li > a {
+    border-bottom: 1px solid #dddddd;
+    border-radius: 4px 4px 0 0;
+  }
+  .jigoshop .nav-tabs.nav-justified > .active > a,
+  .jigoshop .nav-tabs.nav-justified > .active > a:hover,
+  .jigoshop .nav-tabs.nav-justified > .active > a:focus {
+    border-bottom-color: #ffffff;
+  }
+}
+.jigoshop .nav-pills > li {
+  float: left;
+}
+.jigoshop .nav-pills > li > a {
+  border-radius: 4px;
+}
+.jigoshop .nav-pills > li + li {
+  margin-left: 2px;
+}
+.jigoshop .nav-pills > li.active > a,
+.jigoshop .nav-pills > li.active > a:hover,
+.jigoshop .nav-pills > li.active > a:focus {
+  color: #ffffff;
+  background-color: #337ab7;
+}
+.jigoshop .nav-stacked > li {
+  float: none;
+}
+.jigoshop .nav-stacked > li + li {
+  margin-top: 2px;
+  margin-left: 0;
+}
+.jigoshop .nav-justified {
+  width: 100%;
+}
+.jigoshop .nav-justified > li {
+  float: none;
+}
+.jigoshop .nav-justified > li > a {
+  text-align: center;
+  margin-bottom: 5px;
+}
+.jigoshop .nav-justified > .dropdown .dropdown-menu {
+  top: auto;
+  left: auto;
+}
+@media (min-width: 768px) {
+  .jigoshop .nav-justified > li {
+    display: table-cell;
+    width: 1%;
+  }
+  .jigoshop .nav-justified > li > a {
+    margin-bottom: 0;
+  }
+}
+.jigoshop .nav-tabs-justified {
+  border-bottom: 0;
+}
+.jigoshop .nav-tabs-justified > li > a {
+  margin-right: 0;
+  border-radius: 4px;
+}
+.jigoshop .nav-tabs-justified > .active > a,
+.jigoshop .nav-tabs-justified > .active > a:hover,
+.jigoshop .nav-tabs-justified > .active > a:focus {
+  border: 1px solid #dddddd;
+}
+@media (min-width: 768px) {
+  .jigoshop .nav-tabs-justified > li > a {
+    border-bottom: 1px solid #dddddd;
+    border-radius: 4px 4px 0 0;
+  }
+  .jigoshop .nav-tabs-justified > .active > a,
+  .jigoshop .nav-tabs-justified > .active > a:hover,
+  .jigoshop .nav-tabs-justified > .active > a:focus {
+    border-bottom-color: #ffffff;
+  }
+}
+.jigoshop .tab-content > .tab-pane {
+  display: none;
+}
+.jigoshop .tab-content > .active {
+  display: block;
+}
+.jigoshop .nav-tabs .dropdown-menu {
+  margin-top: -1px;
+  border-top-right-radius: 0;
+  border-top-left-radius: 0;
+}
+.jigoshop .clearfix:before,
+.jigoshop .clearfix:after,
+.jigoshop .jigoshop .dl-horizontal dd:before,
+.jigoshop .jigoshop .dl-horizontal dd:after,
+.jigoshop .jigoshop .form-horizontal .form-group:before,
+.jigoshop .jigoshop .form-horizontal .form-group:after,
+.jigoshop .jigoshop .nav:before,
+.jigoshop .jigoshop .nav:after {
+  content: " ";
+  display: table;
+}
+.jigoshop .clearfix:after,
+.jigoshop .jigoshop .dl-horizontal dd:after,
+.jigoshop .jigoshop .form-horizontal .form-group:after,
+.jigoshop .jigoshop .nav:after {
+  clear: both;
+}
+.jigoshop .center-block {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+.jigoshop .pull-right {
+  float: right !important;
+}
+.jigoshop .pull-left {
+  float: left !important;
+}
+.jigoshop .hide {
+  display: none !important;
+}
+.jigoshop .show {
+  display: block !important;
+}
+.jigoshop .invisible {
+  visibility: hidden;
+}
+.jigoshop .text-hide {
+  font: 0/0 a;
+  color: transparent;
+  text-shadow: none;
+  background-color: transparent;
+  border: 0;
+}
+.jigoshop .hidden {
+  display: none !important;
+}
+.jigoshop .affix {
+  position: fixed;
+}
+.jigoshop .product {
+  position: relative;
+}
+.jigoshop .product p.price {
+  color: green;
+  font-size: 1.3em;
+}
+.jigoshop .product p.price del {
+  font-size: 14px;
+  color: #aaaaaa;
+}
+.jigoshop .product p.stock {
+  font-size: 0.92em;
+}
+.jigoshop .product div.images {
+  vertical-align: top;
+  display: inline-block;
+  width: 39%;
+  margin-bottom: 10px;
+  position: relative;
+  box-sizing: border-box;
+}
+.jigoshop .product div.images img {
+  border: 1px solid #dddddd;
+  background: #f5f5f5;
+  padding: 6px;
+  display: block;
+}
+.jigoshop .product div.images div.thumbnails {
+  padding-top: 10px;
+}
+.jigoshop .product div.images div.thumbnails:before,
+.jigoshop .product div.images div.thumbnails:after {
+  content: " ";
+  display: table;
+}
+.jigoshop .product div.images div.thumbnails:after {
+  clear: both;
+}
+.jigoshop .product div.images div.thumbnails a {
+  margin-right: 10px;
+  margin-bottom: 10px;
+  float: left;
+}
+.jigoshop .product div.images div.thumbnails a img {
+  padding: 3px;
+}
+.jigoshop .product div.summary {
+  display: inline-block;
+  width: 60%;
+  vertical-align: top;
+  box-sizing: border-box;
+}
+.jigoshop .product div.summary > dl {
+  margin-top: 30px;
+}
+.jigoshop .product div.summary dd {
+  margin-bottom: 0;
+}
+.jigoshop .product dd.tags a:after,
+.jigoshop .product dd.categories a:after {
+  content: ', ';
+}
+.jigoshop .product dd.tags a:last-child:after,
+.jigoshop .product dd.categories a:last-child:after {
+  content: '';
+}
+.jigoshop .product ul.nav {
+  margin: 0;
+}
+.jigoshop .product ul.nav:after {
+  content: '';
+  display: block;
+  clear: both;
+}
+.jigoshop .product ul.downloads-list {
+  padding-top: 10px;
+}
+.jigoshop .product div.tab-content {
+  border: 1px solid #dddddd;
+  border-top: 0;
+  padding: 6px 12px;
+}

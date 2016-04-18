@@ -12,7 +12,7 @@ use Jigoshop\Helper\Render;
 ?>
 <h1><?php _e('My account &raquo; Edit address', 'jigoshop'); ?></h1>
 <?php Render::output('shop/messages', array('messages' => $messages)); ?>
-<form class="form-horizontal" role="form" method="post">
+<form class="" role="form" method="post">
 	<?php if ($address instanceof Customer\CompanyAddress): ?>
 	<?php \Jigoshop\Helper\Forms::text(array(
 		'name' => 'address[company]',
@@ -20,7 +20,7 @@ use Jigoshop\Helper\Render;
 		'value' => $address->getCompany(),
 	)); ?>
 	<?php \Jigoshop\Helper\Forms::text(array(
-		'name' => 'address[vat_number]',
+		'name' => 'address[euvatno]',
 		'label' => __('VAT number', 'jigoshop'),
 		'value' => $address->getVatNumber(),
 	)); ?>

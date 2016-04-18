@@ -1,1 +1,22 @@
-var AdminProductSimple;AdminProductSimple=function(){function e(){jQuery("#product-type").on("change",this.removeParameters)}return e.prototype.removeParameters=function(e){var r;return r=jQuery(e.target),"simple"===r.val()?jQuery(".product_regular_price_field").slideDown():void 0},e}(),jQuery(function(){return new AdminProductSimple});
+var AdminProductSimple;
+
+AdminProductSimple = (function() {
+  function AdminProductSimple() {
+    jQuery('#product-type').on('change', this.removeParameters);
+  }
+
+  AdminProductSimple.prototype.removeParameters = function(event) {
+    var $item;
+    $item = jQuery(event.target);
+    if ($item.val() === 'simple') {
+      return jQuery('.product_regular_price_field').slideDown();
+    }
+  };
+
+  return AdminProductSimple;
+
+})();
+
+jQuery(function() {
+  return new AdminProductSimple();
+});

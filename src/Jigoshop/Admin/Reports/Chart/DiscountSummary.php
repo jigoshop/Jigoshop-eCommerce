@@ -115,6 +115,7 @@ class DiscountSummary extends Chart
 			'current_range' => $this->currentRange,
 			'legends' => $this->getChartLegend(),
 			'widgets' => $this->getChartWidgets(),
+			'export' => $this->getExportButton(),
 			'group_by' => $this->chartGroupBy
 		));
 	}

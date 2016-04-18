@@ -29,7 +29,15 @@ class ByCategory extends Chart
 	{
 		parent::__construct($wp, $options, $currentRange);
 		if (isset($_GET['show_categories'])) {
-			$this->showCategories = is_array($_GET['show_categories']) ? array_map('absint', $_GET['show_categories']) : array(absint($_GET['show_categories']));
+			if(in_array(-1, $_GET['show_categories'])) {
+				$allCategories = get_terms('product_category', array('orderby' => 'name', 'hide_empty' => false));
+				$this->showCategories = array_map(function($category){
+					return $category->term_id;
+				}, $allCategories);
+			} else {
+				$this->showCategories = is_array($_GET['show_categories']) ? array_map('absint',
+					$_GET['show_categories']) : array(absint($_GET['show_categories']));
+			}
 		} else {
 			$this->showCategories = $this->getLastCategoryID();
 		}
@@ -212,6 +220,7 @@ class ByCategory extends Chart
 			'current_range' => $this->currentRange,
 			'legends' => $this->getChartLegend(),
 			'widgets' => $this->getChartWidgets(),
+			'export' => $this->getExportButton(),
 			'group_by' => $this->chartGroupBy
 		));
 	}
@@ -224,7 +233,8 @@ class ByCategory extends Chart
 		foreach ($categories as $category) {
 			$allCategories[$category->term_id] = $category->name;
 		}
-
+		$allCategories[-1] = __('All categories', 'jigoshop');
+		
 		$widgets[] = new Chart\Widget\CustomRange();
 		$widgets[] = new Chart\Widget\SelectCategories($this->showCategories, $allCategories);
 

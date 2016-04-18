@@ -1,1 +1,34 @@
-var AdminCoupon,bind=function(t,e){return function(){return t.apply(e,arguments)}};AdminCoupon=function(){function t(t){this.params=t,this._attachSelectField=bind(this._attachSelectField,this),this._attachSelectField(jQuery("#jigoshop_coupon_products"),"jigoshop.admin.product.find"),this._attachSelectField(jQuery("#jigoshop_coupon_excluded_products"),"jigoshop.admin.product.find"),this._attachSelectField(jQuery("#jigoshop_coupon_categories"),"jigoshop.admin.coupon.find_category"),this._attachSelectField(jQuery("#jigoshop_coupon_excluded_categories"),"jigoshop.admin.coupon.find_category")}return t.prototype.params={ajax:""},t.prototype._attachSelectField=function(t,e){return t.select2({multiple:!0,minimumInputLength:3,ajax:{url:this.params.ajax,type:"post",dataType:"json",cache:!0,data:function(t){return{action:e,query:t}},results:function(t){return null!=t.success&&t.success?{results:t.results}:addMessage("danger",t.error,6e3)}},initSelection:function(t){return function(n,o){return jQuery.ajax({url:t.params.ajax,type:"post",dataType:"json",data:{action:e,value:jQuery(n).val()}}).done(function(t){return null!=t.success&&t.success?o(t.results):addMessage("danger",t.error,6e3)})}}(this)})},t}(),jQuery(function(){return new AdminCoupon(jigoshop_admin_coupon)});
+var AdminCoupon;
+
+AdminCoupon = (function() {
+  AdminCoupon.prototype.params = {
+    ajax: ''
+  };
+
+  function AdminCoupon(params) {
+    this.params = params;
+    jigoshop.ajaxSearch(jQuery('#jigoshop_coupon_products'), {
+      action: 'jigoshop.admin.product.find',
+      ajax: this.params.ajax
+    });
+    jigoshop.ajaxSearch(jQuery('#jigoshop_coupon_excluded_products'), {
+      action: 'jigoshop.admin.product.find',
+      ajax: this.params.ajax
+    });
+    jigoshop.ajaxSearch(jQuery('#jigoshop_coupon_categories'), {
+      action: 'jigoshop.admin.coupon.find_category',
+      ajax: this.params.ajax
+    });
+    jigoshop.ajaxSearch(jQuery('#jigoshop_coupon_excluded_categories'), {
+      action: 'jigoshop.admin.coupon.find_category',
+      ajax: this.params.ajax
+    });
+  }
+
+  return AdminCoupon;
+
+})();
+
+jQuery(function() {
+  return new AdminCoupon(jigoshop_admin_coupon);
+});

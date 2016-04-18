@@ -1,1 +1,22 @@
-var ProductSearch,bind=function(t,e){return function(){return t.apply(e,arguments)}};ProductSearch=function(){function t(t){this.params=t,this._attachSelectField=bind(this._attachSelectField,this),this._attachSelectField(jQuery("#jigoshop_find_products"),"jigoshop.admin.product.find")}return t.prototype.params={ajax:""},t.prototype._attachSelectField=function(t,e){return t.select2({multiple:!0,minimumInputLength:3,ajax:{url:this.params.ajax,type:"post",dataType:"json",cache:!0,data:function(t){return{action:e,query:t}},results:function(t){return null!=t.success&&t.success?{results:t.results}:addMessage("danger",t.error,6e3)}},initSelection:function(t){return function(r,a){return jQuery.ajax({url:t.params.ajax,type:"post",dataType:"json",data:{action:e,value:jQuery(r).val()}}).done(function(t){return null!=t.success&&t.success?a(t.results):addMessage("danger",t.error,6e3)})}}(this)})},t}(),jQuery(function(){return new ProductSearch(jigoshop_admin_reports_widget_product_search)});
+var ProductSearch;
+
+ProductSearch = (function() {
+  ProductSearch.prototype.params = {
+    ajax: ''
+  };
+
+  function ProductSearch(params) {
+    this.params = params;
+    jigoshop.ajaxSearch(jQuery('#jigoshop_find_products'), {
+      action: 'jigoshop.admin.product.find',
+      ajax: this.params.ajax
+    });
+  }
+
+  return ProductSearch;
+
+})();
+
+jQuery(function() {
+  return new ProductSearch(jigoshop_admin_reports_widget_product_search);
+});

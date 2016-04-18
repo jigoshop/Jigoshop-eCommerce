@@ -71,7 +71,7 @@ class Downloadable implements Type
 	{
 		$wp->addFilter('jigoshop\cart\add', array($this, 'addToCart'), 10, 2);
 		$wp->addFilter('jigoshop\emails\order_item', array($this, 'emailLink'), 10, 3);
-//		$wp->addFilter('jigoshop\core\types\variable\subtypes', array($this, 'addVariableSubtype'), 10, 1); // TODO: Enable variable subtypes changing
+		$wp->addFilter('jigoshop\core\types\variable\subtypes', array($this, 'addVariableSubtype'), 10, 1);
 		$wp->addAction('jigoshop\order\before\\'.Order\Status::PROCESSING, array($this, 'updateProcessingStatus'));
 		$wp->addFilter('jigoshop\product\reduce_stock_status', array($this, 'reduceStockStatus'), 10, 2);
 

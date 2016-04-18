@@ -42,6 +42,11 @@ class SelectCoupons implements WidgetInterface
 		);
 	}
 
+	public function isVisible()
+	{
+		return true;
+	}
+	
 	public function display()
 	{
 		Forms::select($this->getArgs());

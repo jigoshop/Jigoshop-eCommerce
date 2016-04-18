@@ -442,6 +442,7 @@ class Orders implements Tool
 	{
 		switch ($status) {
 			case 'pending':
+			case 'waiting-for-payment':
 				return Status::PENDING;
 			case 'processing':
 				return Status::PROCESSING;
@@ -600,7 +601,7 @@ class Orders implements Tool
 				'total' => $countAll,
 			);
 
-			if($countRemain > 0)
+			if($singleOrdersId)
 			{
 				if ($this->migrate($order))
 				{
@@ -701,6 +702,17 @@ class Orders implements Tool
 			'cost'         => 0,
 			'taxrate'      => 0,
 		);
+
+		if($args['variation_id'] > 0) {
+			$post = $this->wp->getPost($args['variation_id']);
+			if($post) {
+				/** @var Product\Variable $product */
+				$product = $this->productService->find($post->post_parent);
+				if($product->getId()) {
+					$args['name'] = $product->getVariation($post->ID)->getTitle();
+				}
+			}
+		}
 
 		return $this->_fetchData($defaults, $args);
 	}

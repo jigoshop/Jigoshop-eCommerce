@@ -1,1 +1,44 @@
-var CheckoutPay;CheckoutPay=function(){function e(e){this.params=e,jQuery.fn.payment=this.payment.bind(this,this.params),jQuery("#payment-methods").on("change","li input[type=radio]",function(){return jQuery("#payment-methods li > div").slideUp(),jQuery("div",jQuery(this).closest("li")).slideDown()})}return e.prototype.params={assets:""},e.prototype.payment=function(e,t){var r;return r=jQuery.extend({redirect:"Redirecting...",message:"Thank you for your order. We are now redirecting you to make payment."},t),jQuery(document.body).block({message:'<img src="'+e.assets+'/images/loading.gif" alt="'+r.redirect+'" />'+r.message,css:{padding:"20px",width:"auto",height:"auto",border:"1px solid #83AC31"},overlayCss:{opacity:.01}}),this.submit()},e}(),jQuery(function(){return new CheckoutPay(jigoshop_checkout_pay)});
+var CheckoutPay;
+
+CheckoutPay = (function() {
+  CheckoutPay.prototype.params = {
+    assets: ''
+  };
+
+  function CheckoutPay(params1) {
+    this.params = params1;
+    jQuery.fn.payment = this.payment.bind(this, this.params);
+    jQuery('#payment-methods').on('change', 'li input[type=radio]', function() {
+      jQuery('#payment-methods li > div').slideUp();
+      return jQuery('div', jQuery(this).closest('li')).slideDown();
+    });
+  }
+
+  CheckoutPay.prototype.payment = function(params, options) {
+    var settings;
+    settings = jQuery.extend({
+      redirect: 'Redirecting...',
+      message: 'Thank you for your order. We are now redirecting you to make payment.'
+    }, options);
+    jQuery(document.body).block({
+      message: '<img src="' + params.assets + '/images/loading.gif" alt="' + settings.redirect + '" />' + settings.message,
+      css: {
+        padding: '20px',
+        width: 'auto',
+        height: 'auto',
+        border: '1px solid #83AC31'
+      },
+      overlayCss: {
+        opacity: 0.01
+      }
+    });
+    return this.submit();
+  };
+
+  return CheckoutPay;
+
+})();
+
+jQuery(function() {
+  return new CheckoutPay(jigoshop_checkout_pay);
+});

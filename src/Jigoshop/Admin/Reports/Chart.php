@@ -54,6 +54,11 @@ abstract class Chart
 				return;
 			}
 			Scripts::add('jigoshop.vendors.flot', JIGOSHOP_URL.'/assets/js/vendors/flot.js', array('jquery'));
+			/*Scripts::add('jigoshop.vendors.flot', JIGOSHOP_URL.'/assets/js/flot/jquery.flot.min.js', array('jquery'));
+			Scripts::add('jigoshop.vendors.flot2', JIGOSHOP_URL.'/assets/js/flot/jquery.flot.stack.min.js', array('jquery'));
+			Scripts::add('jigoshop.vendors.flot3', JIGOSHOP_URL.'/assets/js/flot/jquery.flot.pie.min.js', array('jquery'));
+			Scripts::add('jigoshop.vendors.flot4', JIGOSHOP_URL.'/assets/js/flot/jquery.flot.resize.min.js', array('jquery'));
+			Scripts::add('jigoshop.vendors.flot5', JIGOSHOP_URL.'/assets/js/flot/jquery.flot.time.min.js', array('jquery'));*/
 			Scripts::add('jigoshop.reports.chart', JIGOSHOP_URL.'/assets/js/admin/reports/chart.js', array(
 					'jquery',
 					'jigoshop.vendors.flot'

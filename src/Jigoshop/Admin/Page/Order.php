@@ -8,6 +8,7 @@ use Jigoshop\Entity\Customer;
 use Jigoshop\Entity\Order\Item;
 use Jigoshop\Entity\OrderInterface;
 use Jigoshop\Entity\Product as ProductEntity;
+use Jigoshop\Entity\Product;
 use Jigoshop\Exception;
 use Jigoshop\Helper\Country;
 use Jigoshop\Helper\Product as ProductHelper;
@@ -99,7 +100,15 @@ class Order
 			}
 
 			/** @var ProductEntity|ProductEntity\Purchasable $product */
-			$product = $this->productService->find((int)$_POST['product']);
+			$post =  $this->wp->getPost((int)$_POST['product']);
+			if($post->post_type == 'product_variation' && $post->post_parent > 0) {
+				$post = $this->wp->getPost($post->post_parent);
+				//TODO: change this!!!
+				$_POST['variation_id'] = (int)$_POST['product'];
+				$_POST['quantity'] = 1;
+			}
+			/** @var Product\* $product */
+			$product = $this->productService->findforPost($post);
 
 			if ($product->getId() === null) {
 				throw new Exception(__('Product not found.', 'jigoshop'));
@@ -114,7 +123,7 @@ class Order
 
 			$key = $this->productService->generateItemKey($item);
 			$item->setKey($key);
-
+			
 			$order->addItem($item);
 			$this->orderService->save($order);
 
@@ -491,94 +500,79 @@ class Order
 		/** @var \Jigoshop\Entity\Order $order */
 		$order = $this->orderService->findForPost($post);
 		$billingOnly = $this->options->get('shipping.only_to_billing');
-		$billingFields = $this->wp->applyFilters('jigoshop\admin\order\billing_fields', array(
+
+		$address = $order->getCustomer()->getBillingAddress();
+
+		$billingFields = $this->wp->applyFilters('jigoshop\admin\order\billing_fields', ProductHelper::getBasicBillingFields(array(
+			'first_name' => array(
+				'value' => $address->getFirstName(),
+			),
+			'last_name' => array(
+				'value' => $address->getLastName(),
+			),
 			'company' => array(
-				'label' => __('Company', 'jigoshop'),
-				'type' => 'text',
+				'value' => $address instanceof Customer\CompanyAddress ? $address->getCompany() : '',
 			),
 			'euvatno' => array(
-				'label' => __('EU VAT Number', 'jigoshop'),
-				'type' => 'text',
-			),
-			'first_name' => array(
-				'label' => __('First Name', 'jigoshop'),
-				'type' => 'text',
-			),
-			'last_name' => array(
-				'label' => __('Last Name', 'jigoshop'),
-				'type' => 'text',
+				'value' => $address instanceof Customer\CompanyAddress ? $address->getVatNumber() : '',
 			),
 			'address' => array(
-				'label' => __('Address', 'jigoshop'),
-				'type' => 'text',
+				'value' => $address->getAddress(),
 			),
 			'city' => array(
-				'label' => __('City', 'jigoshop'),
-				'type' => 'text',
+				'value' => $address->getCity(),
 			),
 			'postcode' => array(
-				'label' => __('Postcode', 'jigoshop'),
-				'type' => 'text',
+				'value' => $address->getPostcode(),
 			),
 			'country' => array(
-				'label' => __('Country', 'jigoshop'),
-				'type' => 'select',
+				'value' => $address->getCountry(),
 				'options' => Country::getAllowed(),
 			),
 			'state' => array(
-				'label' => __('State/Province', 'jigoshop'),
-				'type' => Country::hasStates($order->getCustomer()->getBillingAddress()->getCountry()) ? 'select' : 'text',
-				'options' => Country::getStates($order->getCustomer()->getBillingAddress()->getCountry()),
+				'type' => Country::hasStates($address->getCountry()) ? 'select' : 'text',
+				'value' => $address->getState(),
+				'options' => Country::getStates($address->getCountry()),
 			),
 			'phone' => array(
-				'label' => __('Phone', 'jigoshop'),
-				'type' => 'text',
+				'value' => $address->getPhone(),
 			),
 			'email' => array(
-				'label' => __('Email Address', 'jigoshop'),
-				'type' => 'text',
+				'value' => $address->getEmail(),
 			),
-		), $order);
-		$shippingFields = $this->wp->applyFilters('jigoshop\admin\order\shipping_fields', array(
-			'company' => array(
-				'label' => __('Company', 'jigoshop'),
-				'type' => 'text',
-			),
+		), $order));
+
+		$address = $order->getCustomer()->getShippingAddress();
+
+		$shippingFields = $this->wp->applyFilters('jigoshop\admin\order\shipping_fields', ProductHelper::getBasicShippingFields(array(
 			'first_name' => array(
-				'label' => __('First Name', 'jigoshop'),
-				'type' => 'text',
+				'value' => $address->getFirstName(),
 			),
 			'last_name' => array(
-				'label' => __('Last Name', 'jigoshop'),
-				'type' => 'text',
+				'value' => $address->getLastName(),
+			),
+			'company' => array(
+				'value' => $address instanceof Customer\CompanyAddress ? $address->getCompany() : '',
 			),
 			'address' => array(
-				'label' => __('Address', 'jigoshop'),
-				'type' => 'text',
+				'value' => $address->getAddress(),
 			),
 			'city' => array(
-				'label' => __('City', 'jigoshop'),
-				'type' => 'text',
+				'value' => $address->getCity(),
 			),
 			'postcode' => array(
-				'label' => __('Postcode', 'jigoshop'),
-				'type' => 'text',
+				'value' => $address->getPostcode(),
 			),
 			'country' => array(
-				'label' => __('Country', 'jigoshop'),
-				'type' => 'select',
+				'value' => $address->getCountry(),
 				'options' => Country::getAllowed(),
 			),
 			'state' => array(
-				'label' => __('State/Province', 'jigoshop'),
-				'type' => Country::hasStates($order->getCustomer()->getShippingAddress()->getCountry()) ? 'select' : 'text',
-				'options' => Country::getStates($order->getCustomer()->getShippingAddress()->getCountry()),
+				'type' => Country::hasStates($address->getCountry()) ? 'select' : 'text',
+				'value' => $address->getState(),
+				'options' => Country::getStates($address->getCountry()),
 			),
-			'phone' => array(
-				'label' => __('Phone', 'jigoshop'),
-				'type' => 'text',
-			),
-		), $order);
+		), $order));
 		$customers = $this->customerService->findAll();
 
 		Render::output('admin/order/dataBox', array(

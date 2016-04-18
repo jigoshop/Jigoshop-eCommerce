@@ -150,7 +150,7 @@ class Product implements EntityFactoryInterface
 	 */
 	public function fetch($post)
 	{
-		$type = $this->wp->getPostMeta($post->ID, 'type', true);
+		$type = $post ? $this->wp->getPostMeta($post->ID, 'type', true) : '';
 		if (empty($type)) {
 			$type = Simple::TYPE;
 		}

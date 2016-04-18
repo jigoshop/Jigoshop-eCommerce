@@ -1,1 +1,14 @@
-jQuery(function(t){return t("a[data-lightbox], img[data-lightbox]").colorbox({rel:"product-gallery",scalePhotos:!0,preloading:!1,loop:!1,maxWidth:window.innerWidth-50,maxHeight:window.innerHeight-50}),t("ul.tabs a").on("click",function(o){return o.preventDefault(),t(this).tab("show")})});
+jQuery(function($) {
+  $('a[data-lightbox], img[data-lightbox]').colorbox({
+    rel: 'product-gallery',
+    scalePhotos: true,
+    preloading: false,
+    loop: false,
+    maxWidth: window.innerWidth - 50,
+    maxHeight: window.innerHeight - 50
+  });
+  return $('ul.tabs a').on('click', function(e) {
+    e.preventDefault();
+    return $(this).tab('show');
+  });
+});
