@@ -1,1 +1,49 @@
-jQuery(function(){return jQuery.fn.jigoshop_media=function(t){var e,i;return e=!1,i=jQuery.extend({field:jQuery("#media-library-file"),thumbnail:!1,callback:!1,library:{},bind:!0},t),jQuery(this).on("jigoshop_media",function(t){var r;return t.preventDefault(),r=jQuery(t.target),e?void e.open():(e=wp.media({title:r.data("title"),library:i.library,button:{text:r.data("button")}}),e.on("select",function(){var t;return t=e.state().get("selection").first(),i.field&&i.field.val(t.id),i.thumbnail&&i.thumbnail.attr("src",t.changed.url).attr("width",t.changed.width).attr("height",t.changed.height),"function"==typeof i.callback?i.callback(t):void 0}),e.open())}),i.bind?jQuery(this).on("click",function(t){return t.preventDefault(),jQuery(t.target).trigger("jigoshop_media")}):void 0}});
+jQuery(function() {
+  return jQuery.fn.jigoshop_media = function(options) {
+    var frame, settings;
+    frame = false;
+    settings = jQuery.extend({
+      field: jQuery('#media-library-file'),
+      thumbnail: false,
+      callback: false,
+      library: {},
+      bind: true
+    }, options);
+    jQuery(this).on('jigoshop_media', function(e) {
+      var $el;
+      e.preventDefault();
+      $el = jQuery(e.target);
+      if (frame) {
+        frame.open();
+        return;
+      }
+      frame = wp.media({
+        title: $el.data('title'),
+        library: settings.library,
+        button: {
+          text: $el.data('button')
+        }
+      });
+      frame.on('select', function() {
+        var attachment;
+        attachment = frame.state().get('selection').first();
+        if (settings.field) {
+          settings.field.val(attachment.id);
+        }
+        if (settings.thumbnail) {
+          settings.thumbnail.attr('src', attachment.changed.url).attr('width', attachment.changed.width).attr('height', attachment.changed.height);
+        }
+        if (typeof settings.callback === 'function') {
+          return settings.callback(attachment);
+        }
+      });
+      return frame.open();
+    });
+    if (settings.bind) {
+      return jQuery(this).on('click', function(event) {
+        event.preventDefault();
+        return jQuery(event.target).trigger('jigoshop_media');
+      });
+    }
+  };
+});

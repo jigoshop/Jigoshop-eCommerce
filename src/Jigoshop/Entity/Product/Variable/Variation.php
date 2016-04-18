@@ -51,6 +51,8 @@ class Variation
 				$value = $item->getValue();
 				if (is_numeric($value) && $value > 0) {
 					return sprintf(_x('%s: %s', 'product_variation', 'jigoshop'), $item->getAttribute()->getLabel(), $item->getAttribute()->getOption($value)->getLabel());
+				} else {
+					return sprintf(_x('%s: any', 'product_variation', 'jigoshop'), $item->getAttribute()->getLabel());
 				}
 
 				return '';

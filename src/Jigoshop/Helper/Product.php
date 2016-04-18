@@ -423,7 +423,6 @@ class Product
 			'posts_per_page' => $limit,
 			'post__not_in' => array($product->getId()),
 			'post_type' => Types::PRODUCT,
-			'fields' => 'ids',
 			'orderby' => 'rand',
 			'meta_query' => array(
 				array(
@@ -440,21 +439,155 @@ class Product
 		if (!empty($cats)) {
 			$query['tax_query'][] = array(
 				'taxonomy' => Types::PRODUCT_CATEGORY,
-				'field' => 'id',
-				'terms' => $cats
+				'terms' => $cats,
+				'operator' => 'IN',
 			);
 		}
 		if (!empty($tags)) {
 			$query['tax_query'][] = array(
 				'taxonomy' => Types::PRODUCT_TAG,
-				'field' => 'id',
-				'terms' => $tags
+				'terms' => $tags,
+				'operator' => 'IN',
 			);
 		}
-
-		// TODO: Should we use ProductService for that?
-		$query = new \WP_Query($query);
-
-		return $query->get_posts();
+		return new \WP_Query($query);
 	}
+
+	/**
+	 * Get billing fields used across the project and plugins with default options.
+	 *
+	 * @param array $fields (optional) An array of data fields if you want to change the type, label or add new fields.
+	 * @param array $except (optional) List of fields that you do not want to show.
+	 *
+	 * @return array
+	 */
+	public static function getBasicBillingFields($fields = array(), $except = array())
+	{
+		$fields = array_replace_recursive(array(
+			'first_name' => array(
+				'label' => __('First Name', 'jigoshop'),
+				'type'  => 'text',
+				'name'  => 'jigoshop_order[billing_address][first_name]',
+			),
+			'last_name'  => array(
+				'label' => __('Last Name', 'jigoshop'),
+				'type'  => 'text',
+				'name'  => 'jigoshop_order[billing_address][last_name]',
+			),
+			'company'    => array(
+				'label' => __('Company', 'jigoshop'),
+				'type'  => 'text',
+				'name'  => 'jigoshop_order[billing_address][company]',
+			),
+			'euvatno'    => array(
+				'label' => __('EU VAT Number', 'jigoshop'),
+				'type'  => 'text',
+				'name'  => 'jigoshop_order[billing_address][euvatno]',
+			),
+			'address'    => array(
+				'label' => __('Address', 'jigoshop'),
+				'type'  => 'text',
+				'name'  => 'jigoshop_order[billing_address][address]',
+			),
+			'city'       => array(
+				'label' => __('City', 'jigoshop'),
+				'type'  => 'text',
+				'name'  => 'jigoshop_order[billing_address][city]',
+			),
+			'postcode'   => array(
+				'label' => __('Postcode', 'jigoshop'),
+				'type'  => 'text',
+				'name'  => 'jigoshop_order[billing_address][postcode]',
+			),
+			'country'    => array(
+				'label' => __('Country', 'jigoshop'),
+				'type'  => 'select',
+				'name'  => 'jigoshop_order[billing_address][country]',
+			),
+			'state'      => array(
+				'label' => __('State/Province', 'jigoshop'),
+				'type'  => 'select',
+				'name'  => 'jigoshop_order[billing_address][state]',
+			),
+			'phone'      => array(
+				'label' => __('Phone', 'jigoshop'),
+				'type'  => 'text',
+				'name'  => 'jigoshop_order[billing_address][phone]',
+			),
+			'email'      => array(
+				'label' => __('Email Address', 'jigoshop'),
+				'type'  => 'text',
+				'name'  => 'jigoshop_order[billing_address][email]',
+			),
+		), $fields);
+
+		foreach ($except as $key)
+		{
+			unset($fields[$key]);
+		}
+
+		return $fields;
+	}
+
+	/**
+	 * Get shipping fields used across the project and plugins with default options.
+	 *
+	 * @param array $fields (optional) An array of data fields if you want to change the type, label or add new fields.
+	 * @param array $except (optional) List of fields that you do not want to show.
+	 *
+	 * @return array
+	 */
+	public static function getBasicShippingFields($fields = array(), $except = array())
+	{
+		$fields = array_replace_recursive(array(
+			'first_name' => array(
+				'label' => __('First Name', 'jigoshop'),
+				'type'  => 'text',
+				'name'  => 'jigoshop_order[shipping_address][first_name]',
+			),
+			'last_name'  => array(
+				'label' => __('Last Name', 'jigoshop'),
+				'type'  => 'text',
+				'name'  => 'jigoshop_order[shipping_address][last_name]',
+			),
+			'company'    => array(
+				'label' => __('Company', 'jigoshop'),
+				'type'  => 'text',
+				'name'  => 'jigoshop_order[shipping_address][company]',
+			),
+			'address'    => array(
+				'label' => __('Address', 'jigoshop'),
+				'type'  => 'text',
+				'name'  => 'jigoshop_order[shipping_address][address]',
+			),
+			'city'       => array(
+				'label' => __('City', 'jigoshop'),
+				'type'  => 'text',
+				'name'  => 'jigoshop_order[shipping_address][city]',
+			),
+			'postcode'   => array(
+				'label' => __('Postcode', 'jigoshop'),
+				'type'  => 'text',
+				'name'  => 'jigoshop_order[shipping_address][postcode]',
+			),
+			'country'    => array(
+				'label' => __('Country', 'jigoshop'),
+				'type'  => 'select',
+				'name'  => 'jigoshop_order[shipping_address][country]',
+			),
+			'state'      => array(
+				'label' => __('State/Province', 'jigoshop'),
+				'type'  => 'select',
+				'name'  => 'jigoshop_order[shipping_address][state]',
+			),
+		), $fields);
+
+		foreach ($except as $key)
+		{
+			unset($fields[$key]);
+		}
+
+		return $fields;
+	}
+
 }

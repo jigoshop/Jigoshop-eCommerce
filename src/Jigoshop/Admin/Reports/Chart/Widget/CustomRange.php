@@ -34,6 +34,13 @@ class CustomRange implements WidgetInterface
 		return $args;
 	}
 
+	public function isVisible()
+	{
+		return (!isset($_GET['last_used']) 
+			|| (isset($_GET['start_date']) && !empty($_GET['start_date']))
+			|| (isset($_GET['end_date']) && !empty($_GET['end_date'])) );
+	}
+
 	public function display()
 	{
 		Render::output('admin/reports/widget/custom_range', array(

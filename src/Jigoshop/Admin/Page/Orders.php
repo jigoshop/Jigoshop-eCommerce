@@ -30,11 +30,13 @@ class Orders
 		$this->orderService = $orderService;
 
 		$wp->addFilter('request', array($this, 'request'));
+		$wp->addFilter('the_title',array($this, 'replaceTitle'));
 		$wp->addFilter('post_row_actions', array($this, 'displayTitle'));
 		$wp->addFilter(sprintf('bulk_actions-edit-%s', Types::ORDER), array($this, 'bulkActions'));
 		$wp->addFilter(sprintf('views_edit-%s', Types::ORDER), array($this, 'statusFilters'));
 		$wp->addFilter(sprintf('manage_edit-%s_columns', Types::ORDER), array($this, 'columns'));
 		$wp->addAction(sprintf('manage_%s_posts_custom_column', Types::ORDER), array($this, 'displayColumn'), 2);
+		$wp->addAction(sprintf('manage_edit-%s_sortable_columns', Types::ORDER), array($this, 'disableSorting'));
 
 		$wp->addAction('admin_enqueue_scripts', function () use ($wp){
 			if ($wp->getPostType() == Types::ORDER) {
@@ -129,6 +131,36 @@ class Orders
 		}
 	}
 
+	/**
+	 * Disable all sortings.
+	 * @param $sortableColumns
+	 *
+	 * @return array
+	 */
+	public function disableSorting($sortableColumns)
+	{
+		return array();
+	}
+
+	/**
+	 * Replace order title.
+	 * @param $title
+	 *
+	 * @return mixed
+	 */
+	public function replaceTitle($title)
+	{
+		$post = $this->wp->getGlobalPost();
+		
+		if ($post->post_type == Types::ORDER) {
+			/** @var Entity $order */
+			$order = $this->orderService->findForPost($post);
+			$title = sprintf(__('Order #%d', 'jigoshop'), $order->getNumber());
+		}
+
+		return $title;
+	}
+
 	public function displayTitle($actions)
 	{
 		$post = $this->wp->getGlobalPost();
@@ -183,7 +215,7 @@ class Orders
 	}
 
 	/**
-	 * Ajax zmieniający status zamówienia ze strony: lista zamówień
+	 * Change order status.
 	 */
 	public function ajaxChangeStatus()
 	{

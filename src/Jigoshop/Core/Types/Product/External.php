@@ -51,7 +51,7 @@ class External implements Type
 	public function initialize(Wordpress $wp, array $enabledTypes)
 	{
 		$wp->addFilter('jigoshop\cart\add', array($this, 'addToCart'), 10, 2);
-//		$wp->addFilter('jigoshop\core\types\variable\subtypes', array($this, 'addVariableSubtype'), 10, 1); // TODO: Enable variable subtypes changing
+		$wp->addFilter('jigoshop\core\types\variable\subtypes', array($this, 'addVariableSubtype'), 10, 1);
 
 		$wp->addAction('jigoshop\admin\product\assets', array($this, 'addAssets'), 10, 0);
 		$wp->addFilter('jigoshop\admin\product\menu', array($this, 'addProductMenu'));

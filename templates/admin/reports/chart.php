@@ -40,7 +40,7 @@ use Jigoshop\Admin\Reports;
 			<?php foreach($widgets as $widget) : ?>
 				<div class="chart-widget <?php echo $widget->getSlug(); ?>">
 					<div class="title"><?php echo $widget->getTitle(); ?></div>
-					<div class="content"><?php $widget->display(); ?></div>
+					<div class="content<?php $widget->isVisible() and print ' visible'; ?>"><?php $widget->display(); ?></div>
 				</div>
 			<?php endforeach; ?>
 			<button type="submit" class="btn btn-primary btn-block"><?php _e('Fiter Report') ?></button>

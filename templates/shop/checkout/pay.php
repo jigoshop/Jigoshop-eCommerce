@@ -55,10 +55,10 @@ use Jigoshop\Helper\Render;
 							<?php _e('Shipping', 'jigoshop'); ?>
 						</th>
 						<td>
-							<label>
-								<?php echo $order->getShippingMethod()->getName(); ?>
-							</label>
-							<span class="pull-right"><?php echo Product::formatPrice($order->getShippingPrice()); ?></span>
+							<?php echo Product::formatPrice($order->getShippingPrice()); ?>
+							<p class="method">
+								<small><?php echo $order->getShippingMethod()->getName(); ?></small>
+							</p>
 						</td>
 					</tr>
 				<?php endif; ?>
@@ -114,11 +114,14 @@ use Jigoshop\Helper\Render;
 	</div>
 	<?php endif; ?>
 	<?php if (!empty($termsUrl)): ?>
+	<div class="col-md-6 col-xs-12 pull-right toggle-panels">
 		<?php Forms::checkbox(array(
 			'name' => 'terms',
-			'label' => sprintf(__('I accept the <a href="%s">Terms &amp; Conditions</a>'), $termsUrl),
+			'description' => sprintf(__('I accept the <a href="%s">Terms &amp; Conditions</a>'), $termsUrl),
 			'checked' => false,
 		)); ?>
+	</div>
+		<div class="clear"></div>
 	<?php endif; ?>
 	<a class="btn btn-default" href="<?php echo $myAccountUrl; ?>"><?php _e('Go back to My account', 'jigoshop'); ?></a>
 	<a class="btn btn-default" href="<?php echo $myOrdersUrl; ?>"><?php _e('Go back to My orders', 'jigoshop'); ?></a>

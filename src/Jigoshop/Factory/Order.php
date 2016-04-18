@@ -20,302 +20,316 @@ use WPAL\Wordpress;
 
 class Order implements EntityFactoryInterface
 {
-	/** @var \WPAL\Wordpress */
-	private $wp;
-	/** @var Options */
-	private $options;
-	/** @var Messages */
-	private $messages;
-	/** @var CustomerServiceInterface */
-	private $customerService;
-	/** @var ProductServiceInterface */
-	private $productService;
-	/** @var ShippingServiceInterface */
-	private $shippingService;
-	/** @var PaymentServiceInterface */
-	private $paymentService;
-	/** @var CouponServiceInterface */
-	private $couponService;
+    /** @var \WPAL\Wordpress */
+    private $wp;
+    /** @var Options */
+    private $options;
+    /** @var Messages */
+    private $messages;
+    /** @var CustomerServiceInterface */
+    private $customerService;
+    /** @var ProductServiceInterface */
+    private $productService;
+    /** @var ShippingServiceInterface */
+    private $shippingService;
+    /** @var PaymentServiceInterface */
+    private $paymentService;
+    /** @var CouponServiceInterface */
+    private $couponService;
 
-	public function __construct(Wordpress $wp, Options $options, Messages $messages)
-	{
-		$this->wp = $wp;
-		$this->options = $options;
-		$this->messages = $messages;
-	}
+    public function __construct(Wordpress $wp, Options $options, Messages $messages)
+    {
+        $this->wp = $wp;
+        $this->options = $options;
+        $this->messages = $messages;
+    }
 
-	public function init(CustomerServiceInterface $customerService, ProductServiceInterface $productService,
-		ShippingServiceInterface $shippingService, PaymentServiceInterface $paymentService,
-		CouponServiceInterface $couponService)
-	{
-		$this->customerService = $customerService;
-		$this->productService = $productService;
-		$this->shippingService = $shippingService;
-		$this->paymentService = $paymentService;
-		$this->couponService = $couponService;
-	}
+    public function init(
+        CustomerServiceInterface $customerService,
+        ProductServiceInterface $productService,
+        ShippingServiceInterface $shippingService,
+        PaymentServiceInterface $paymentService,
+        CouponServiceInterface $couponService
+    ) {
+        $this->customerService = $customerService;
+        $this->productService = $productService;
+        $this->shippingService = $shippingService;
+        $this->paymentService = $paymentService;
+        $this->couponService = $couponService;
+    }
 
-	/**
-	 * Creates new order properly based on POST variable data.
-	 *
-	 * @param $id int Post ID to create object for.
-	 *
-	 * @return Entity
-	 */
-	public function create($id)
-	{
-		$post = $this->wp->getPost($id);
+    /**
+     * Creates new order properly based on POST variable data.
+     *
+     * @param $id int Post ID to create object for.
+     *
+     * @return Entity
+     */
+    public function create($id)
+    {
+        $post = $this->wp->getPost($id);
 
-		// Support for our own post types and "Publish" button.
-		if (isset($_POST['original_post_status'])) {
-			$post->post_status = $_POST['order']['status'];
-		}
+        // Support for our own post types and "Publish" button.
+        if (isset($_POST['original_post_status'])) {
+            $post->post_status = $_POST['jigoshop_order']['status'];
+        }
 
-		$order = $this->fetch($post);
-		$data = array(
-			'updated_at' => time(),
-		);
-		if (isset($_POST['post_excerpt'])) {
-			$data['customer_note'] = trim($_POST['post_excerpt']);
-		}
-		if (isset($_POST['order'])) {
-			$data = array_merge($data, $_POST['order']);
-		}
+        $order = $this->fetch($post);
+        $data = array(
+            'updated_at' => time(),
+        );
+        if (isset($_POST['post_excerpt'])) {
+            $data['customer_note'] = trim($_POST['post_excerpt']);
+        }
 
-		$data['items'] = $this->getItems($id);
+        if (isset($_POST['jigoshop_order'])) {
+            $data = array_merge($data, $_POST['jigoshop_order']);
+        }
 
-		if (isset($_POST['order']['shipping'])) {
-			$data['shipping'] = array(
-				'method' => null,
-				'rate' => null,
-				'price' => -1,
-			);
+        $data['items'] = $this->getItems($id);
 
-			$method = $this->shippingService->get($_POST['order']['shipping']);
-			if ($method instanceof MultipleMethod && isset($_POST['order']['shipping_rate'])) {
-				$method->setShippingRate($_POST['order']['shipping_rate']);
-				$data['shipping']['rate'] = $method->getShippingRate();
-			}
+        if (isset($_POST['order']['shipping'])) {
+            $data['shipping'] = array(
+                'method' => null,
+                'rate' => null,
+                'price' => -1,
+            );
 
-			$data['shipping']['method'] = $method;
-		}
+            $method = $this->shippingService->get($_POST['order']['shipping']);
+            if ($method instanceof MultipleMethod && isset($_POST['order']['shipping_rate'])) {
+                $method->setShippingRate($_POST['order']['shipping_rate']);
+                $data['shipping']['rate'] = $method->getShippingRate();
+            }
 
-//		return $order = $this->wp->applyFilters('jigoshop\factory\order\create', $this->fill($order, $data));
-		return $this->wp->applyFilters('jigoshop\factory\order\create', $order);
-	}
+            $data['shipping']['method'] = $method;
+        }
 
-	/**
-	 * Fetches order from database.
-	 *
-	 * @param $post \WP_Post Post to fetch order for.
-	 *
-	 * @return \Jigoshop\Entity\Order
-	 */
-	public function fetch($post)
-	{
-		$order = new Entity($this->wp, $this->options->get('tax.classes'));
-		/** @var Entity $order */
-		$order = $this->wp->applyFilters('jigoshop\factory\order\fetch\before', $order);
-		$state = array();
+        return $order = $this->wp->applyFilters('jigoshop\factory\order\create', $this->fill($order, $data));
+    }
 
-		if ($post) {
-			$state = array_map(function ($item){
-				return $item[0];
-			}, $this->wp->getPostMeta($post->ID));
+    /**
+     * Fetches order from database.
+     *
+     * @param $post \WP_Post Post to fetch order for.
+     *
+     * @return \Jigoshop\Entity\Order
+     */
+    public function fetch($post)
+    {
+        $order = new Entity($this->wp, $this->options->get('tax.classes'));
+        /** @var Entity $order */
+        $order = $this->wp->applyFilters('jigoshop\factory\order\fetch\before', $order);
+        $state = array();
 
-			$order->setId($post->ID);
-			if (isset($state['customer'])) {
-				// Customer must be unserialized twice "thanks" to WordPress second serialization.
-				$state['customer'] = unserialize(unserialize($state['customer']));
-			}
-			$state['customer_note'] = $post->post_excerpt;
-			$state['status'] = $post->post_status;
-			$state['created_at'] = strtotime($post->post_date);
-			$state['items'] = $this->getItems($post->ID);
-			if (isset($state['shipping'])) {
-				$shipping = unserialize($state['shipping']);
-				if (!empty($shipping['method'])) {
-					$state['shipping'] = array(
-						'method' => $this->shippingService->findForState($shipping['method']),
-						'price' => $shipping['price'],
-						'rate' => isset($shipping['rate']) ? $shipping['rate'] : null,
-					);
-				}
-			}
-			if (isset($state['payment'])) {
-				$state['payment'] = $this->paymentService->get($state['payment']);
-			}
+        if ($post) {
+            $state = array_map(function ($item) {
+                return $item[0];
+            }, $this->wp->getPostMeta($post->ID));
 
-			$order = $this->fill($order, $state);
-		}
+            $order->setId($post->ID);
+            if (isset($state['customer'])) {
+                // Customer must be unserialized twice "thanks" to WordPress second serialization.
+                /** @var CustomerEntity */
+                $state['customer'] = unserialize(unserialize($state['customer']));
+                if($state['customer'] instanceof CustomerEntity &&
+                    !($state['customer'] instanceof CustomerEntity\Guest) &&
+                    $state['customer_id'] > 0) {
+                    $state['customer'] = $this->customerService->find($state['customer_id']);
+                }
+            }
+            $state['customer_note'] = $post->post_excerpt;
+            $state['status'] = $post->post_status;
+            $state['created_at'] = strtotime($post->post_date);
+            $state['items'] = $this->getItems($post->ID);
+            if (isset($state['shipping'])) {
+                $shipping = unserialize($state['shipping']);
+                if (!empty($shipping['method'])) {
+                    $state['shipping'] = array(
+                        'method' => $this->shippingService->findForState($shipping['method']),
+                        'price' => $shipping['price'],
+                        'rate' => isset($shipping['rate']) ? $shipping['rate'] : null,
+                    );
+                }
+            }
+            if (isset($state['payment'])) {
+                $state['payment'] = $this->paymentService->get($state['payment']);
+            }
 
-		return $this->wp->applyFilters('jigoshop\find\order', $order, $state);
-	}
+            $order = $this->fill($order, $state);
+        }
 
-	/**
-	 * @param $id int Order ID.
-	 *
-	 * @return array List of items assigned to the order.
-	 */
-	private function getItems($id)
-	{
-		$wpdb = $this->wp->getWPDB();
-		$query = $wpdb->prepare("
+        return $this->wp->applyFilters('jigoshop\find\order', $order, $state);
+    }
+
+    /**
+     * @param $id int Order ID.
+     *
+     * @return array List of items assigned to the order.
+     */
+    private function getItems($id)
+    {
+        $wpdb = $this->wp->getWPDB();
+        $query = $wpdb->prepare("
 			SELECT * FROM {$wpdb->prefix}jigoshop_order_item joi
 			LEFT JOIN {$wpdb->prefix}jigoshop_order_item_meta joim ON joim.item_id = joi.id
 			WHERE joi.order_id = %d
 			ORDER BY joi.id",
-			array($id));
-		$results = $wpdb->get_results($query, ARRAY_A);
-		$items = array();
+            array($id));
+        $results = $wpdb->get_results($query, ARRAY_A);
+        $items = array();
 
-		for ($i = 0, $endI = count($results); $i < $endI;) {
-			$id = $results[$i]['id'];
-			$product = $this->productService->find($results[$i]['product_id']);
-			$item = new Entity\Item();
-			$item->setId($results[$i]['item_id']);
-			$item->setName($results[$i]['title']);
-			$item->setQuantity($results[$i]['quantity']);
-			$item->setPrice($results[$i]['price']);
-			$item->setTax($results[$i]['tax']);
+        for ($i = 0, $endI = count($results); $i < $endI;) {
+            $id = $results[$i]['id'];
+            $product = $this->productService->find($results[$i]['product_id']);
+            $item = new Entity\Item();
+            $item->setId($results[$i]['item_id']);
+            $item->setName($results[$i]['title']);
+            $item->setQuantity($results[$i]['quantity']);
+            $item->setPrice($results[$i]['price']);
+            $item->setTax($results[$i]['tax']);
 
-			while ($i < $endI && $results[$i]['id'] == $id) {
-//				zabezpieczamy się przed pustymi metami, choć nadal żaden kawałek kodu nie dodaje tych meta
-				if ($results[$i]['meta_key'])
-				{
-					$meta = new Entity\Item\Meta();
-					$meta->setKey($results[$i]['meta_key']);
-					$meta->setValue($results[$i]['meta_value']);
-					$item->addMeta($meta);
-				}
-				$i++;
-			}
+            while ($i < $endI && $results[$i]['id'] == $id) {
+//				Securing against empty meta's, but still no piece of code does not add the meta.
+                if ($results[$i]['meta_key']) {
+                    $meta = new Entity\Item\Meta();
+                    $meta->setKey($results[$i]['meta_key']);
+                    $meta->setValue($results[$i]['meta_value']);
+                    $item->addMeta($meta);
+                }
+                $i++;
+            }
 
-			$product = $this->wp->applyFilters('jigoshop\factory\order\find_product', $product, $item);
-			$item->setProduct($product);
-			$item->setKey($this->productService->generateItemKey($item));
-			$items[] = $item;
-		}
+            $product = $this->wp->applyFilters('jigoshop\factory\order\find_product', $product, $item);
+            $item->setProduct($product);
+            $item->setKey($this->productService->generateItemKey($item));
+            $items[] = $item;
+        }
 
-		return $items;
-	}
+        return $items;
+    }
 
-	public function fill(OrderInterface $order, array $data)
-	{
-		if (!empty($data['customer']) && is_numeric($data['customer'])) {
-			$data['customer'] = $this->customerService->find($data['customer']);
-		}
-		if (isset($data['customer'])) {
-			$data['customer'] = $this->wp->getHelpers()->maybeUnserialize($data['customer']);
+    public function fill(OrderInterface $order, array $data)
+    {
+        if (!empty($data['customer']) && is_numeric($data['customer'])) {
+            $data['customer'] = $this->customerService->find($data['customer']);
+        }
+        
+        if (isset($data['customer'])) {
 
-			if (isset($data['billing_address'])) {
-				/** @var CustomerEntity $customer */
-				$customer = $data['customer'];
-				$customer->setBillingAddress($this->createAddress($data['billing_address']));
-			}
-			if (isset($data['shipping_address'])) {
-				/** @var CustomerEntity $customer */
-				$customer = $data['customer'];
-				$customer->setShippingAddress($this->createAddress($data['shipping_address']));
-			}
-		}
+            if (!empty($data['customer'])) {
+                $data['customer'] = $this->wp->getHelpers()->maybeUnserialize($data['customer']);
+            } else {
+                $data['customer'] = new CustomerEntity\Guest();
+            }
+            
+            if (isset($data['billing_address'])) {
+                /** @var CustomerEntity $customer */
+                $customer = $data['customer'];
+                $customer->setBillingAddress($this->createAddress($data['billing_address']));
+            }
+            if (isset($data['shipping_address'])) {
+                /** @var CustomerEntity $customer */
+                $customer = $data['customer'];
+                $customer->setShippingAddress($this->createAddress($data['shipping_address']));
+            }
 
-		/** @var OrderInterface $order */
-		$order = $this->wp->applyFilters('jigoshop\factory\order\fetch\after_customer', $order);
+        }
+        /** @var OrderInterface $order */
+        $order = $this->wp->applyFilters('jigoshop\factory\order\fetch\after_customer', $order);
 
-		if (isset($data['items'])) {
-			$order->removeItems();
-		}
+        if (isset($data['items'])) {
+            $order->removeItems();
+        }
 
-		//We do not want to add coupons and from directly, without validation.
+        //We do not want to add coupons and from directly, without validation.
         $coupons = null;
-		if(isset($data['coupons'])) {
-			$coupons = $data['coupons'];
-			unset($data['coupons']);
-		}
+        if (isset($data['coupons'])) {
+            $coupons = $data['coupons'];
+            unset($data['coupons']);
+        }
 
-		if(isset($data['discount'])) {
-			unset($data['discount']);
-		}
+        if (isset($data['discount'])) {
+            unset($data['discount']);
+        }
 
-		$order->restoreState($data);
+        $order->restoreState($data);
 
-		if ($coupons) {
-			$coupons = $this->wp->getHelpers()->maybeUnserialize($coupons);
-			if(isset($coupons[0]) && is_array($coupons[0])) {
-				$codes = array_map(function ($coupon) {
-					return $coupon['code'];
-				}, $coupons);
-			} else {
-				$codes = $coupons;
-			}
-			$coupons = $this->couponService->getByCodes($codes);
-			foreach ($coupons as $coupon) {
-				/** @var Coupon $coupon */
-				try {
-					$order->addCoupon($coupon);
-				} catch (Exception $e) {
-					$this->messages->addWarning($e->getMessage(), false);
-				}
-			}
-		}
+        if ($coupons) {
+            $coupons = $this->wp->getHelpers()->maybeUnserialize($coupons);
+            if (isset($coupons[0]) && is_array($coupons[0])) {
+                $codes = array_map(function ($coupon) {
+                    return $coupon['code'];
+                }, $coupons);
+            } else {
+                $codes = $coupons;
+            }
+            $coupons = $this->couponService->getByCodes($codes);
+            foreach ($coupons as $coupon) {
+                /** @var Coupon $coupon */
+                try {
+                    $order->addCoupon($coupon);
+                } catch (Exception $e) {
+                    $this->messages->addWarning($e->getMessage(), false);
+                }
+            }
+        }
 
-		return $this->wp->applyFilters('jigoshop\factory\order\fill', $order);
-	}
+        return $this->wp->applyFilters('jigoshop\factory\order\fill', $order);
+    }
 
-	private function createAddress($data)
-	{
-		if (!empty($data['company'])) {
-			$address = new CustomerEntity\CompanyAddress();
-			$address->setCompany($data['company']);
-			if (isset($data['euvatno'])) {
-				$address->setVatNumber($data['euvatno']);
-			}
-		} else {
-			$address = new CustomerEntity\Address();
-		}
+    private function createAddress($data)
+    {
+        if (!empty($data['company'])) {
+            $address = new CustomerEntity\CompanyAddress();
+            $address->setCompany($data['company']);
+            if (isset($data['euvatno'])) {
+                $address->setVatNumber($data['euvatno']);
+            }
+        } else {
+            $address = new CustomerEntity\Address();
+        }
 
-		$address->setFirstName($data['first_name']);
-		$address->setLastName($data['last_name']);
-		$address->setAddress($data['address']);
-		$address->setCountry($data['country']);
-		$address->setState($data['state']);
-		$address->setCity($data['city']);
-		$address->setPostcode($data['postcode']);
+        $address->setFirstName($data['first_name']);
+        $address->setLastName($data['last_name']);
+        $address->setAddress($data['address']);
+        $address->setCountry($data['country']);
+        $address->setState($data['state']);
+        $address->setCity($data['city']);
+        $address->setPostcode($data['postcode']);
 
-		if (isset($data['phone'])) {
-			$address->setPhone($data['phone']);
-		}
+        if (isset($data['phone'])) {
+            $address->setPhone($data['phone']);
+        }
 
-		if (isset($data['email'])) {
-			$address->setEmail($data['email']);
-		}
+        if (isset($data['email'])) {
+            $address->setEmail($data['email']);
+        }
 
-		return $address;
-	}
+        return $address;
+    }
 
-	public function fromCart(\Jigoshop\Entity\Cart $cart)
-	{
-		$order = new \Jigoshop\Entity\Order($this->wp, $this->options->get('tax.classes'));
-		$state = $cart->getStateToSave();
-		$state['items'] = unserialize($state['items']);
-		$state['customer'] = unserialize($state['customer']);
-		unset($state['shipping'], $state['payment']);
+    public function fromCart(\Jigoshop\Entity\Cart $cart)
+    {
+        $order = new \Jigoshop\Entity\Order($this->wp, $this->options->get('tax.classes'));
+        $state = $cart->getStateToSave();
+        $state['items'] = unserialize($state['items']);
+        $state['customer'] = unserialize($state['customer']);
+        unset($state['shipping'], $state['payment']);
 
-		$order->setTaxDefinitions($cart->getTaxDefinitions());
-		$order->restoreState($state);
+        $order->setTaxDefinitions($cart->getTaxDefinitions());
+        $order->restoreState($state);
 
-		$shipping = $cart->getShippingMethod();
-		if ($shipping !== null) {
-			$order->setShippingMethod($shipping);
-			$order->setShippingTax($cart->getShippingTax());
-		}
+        $shipping = $cart->getShippingMethod();
+        if ($shipping !== null) {
+            $order->setShippingMethod($shipping);
+            $order->setShippingTax($cart->getShippingTax());
+        }
 
-		$payment = $cart->getPaymentMethod();
-		if ($payment !== null) {
-			$order->setPaymentMethod($payment);
-		}
+        $payment = $cart->getPaymentMethod();
+        if ($payment !== null) {
+            $order->setPaymentMethod($payment);
+        }
 
-		return $order;
-	}
+        return $order;
+    }
 }

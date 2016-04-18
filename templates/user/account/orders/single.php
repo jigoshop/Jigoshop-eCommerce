@@ -83,10 +83,10 @@ use Jigoshop\Helper\Render;
 						<?php _e('Shipping', 'jigoshop'); ?>
 					</th>
 					<td>
-						<label>
-							<?php echo $order->getShippingMethod()->getName(); ?>
-						</label>
-						<span class="pull-right"><?php echo Product::formatPrice($order->getShippingPrice()); ?></span>
+						<?php echo Product::formatPrice($order->getShippingPrice()); ?>
+						<p class="method">
+							<small><?php echo $order->getShippingMethod()->getName(); ?></small>
+						</p>
 					</td>
 				</tr>
 			<?php endif; ?>

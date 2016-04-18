@@ -1,1 +1,10 @@
-jQuery(function(t){return t("div.flat_rate_countries_field").show(),t("#flat_rate_available_for").on("change",function(){return"specific"===t(this).val()?t("#flat_rate_countries").closest("tr").show():t("#flat_rate_countries").closest("tr").hide()})});
+jQuery(function($) {
+  $('div.flat_rate_countries_field').show();
+  return $('#flat_rate_available_for').on('change', function() {
+    if ($(this).val() === 'specific') {
+      return $('#flat_rate_countries').closest('tr').show();
+    } else {
+      return $('#flat_rate_countries').closest('tr').hide();
+    }
+  });
+});

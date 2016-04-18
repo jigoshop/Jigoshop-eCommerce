@@ -3,5 +3,5 @@ composer.lock
 deploy.sh
 node_modules
 assets/bower
-
+compiler.sh
 *.idea/*

@@ -31,7 +31,7 @@ class MostPopular implements WidgetInterface
 		foreach($this->mostPopular as $coupon){
 			$args[] = array(
 				'count' => $coupon['usage'],
-				'url' => esc_url(add_query_arg('coupon_codes', $coupon['code'])),
+				'url' => esc_url(add_query_arg('coupon_codes', $coupon['code'], add_query_arg('last_used', self::SLUG))),
 				'title' => $coupon['code']
 			);
 		}
@@ -39,6 +39,11 @@ class MostPopular implements WidgetInterface
 		return $args;
 	}
 
+	public function isVisible()
+	{
+		return (isset($_GET['last_used']) && $_GET['last_used'] == self::SLUG);
+	}
+	
 	public function display()
 	{
 		Render::output('admin/reports/widget/most_popular', array('args' => $this->getArgs()));

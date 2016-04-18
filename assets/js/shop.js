@@ -1,1 +1,12 @@
-jQuery(function(e){return delay(8e3,function(){return e(".alert-danger").slideUp(function(){return e(this).remove()})}),delay(4e3,function(){return e(".alert-success").slideUp(function(){return e(this).remove()})})});
+jQuery(function($) {
+  jigoshop.delay(8000, function() {
+    return $('.alert-danger').slideUp(function() {
+      return $(this).remove();
+    });
+  });
+  return jigoshop.delay(4000, function() {
+    return $('.alert-success').slideUp(function() {
+      return $(this).remove();
+    });
+  });
+});

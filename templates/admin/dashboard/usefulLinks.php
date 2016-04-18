@@ -9,6 +9,9 @@
 			<li><a href="http://wordpress.org/plugins/jigoshop/"><?php _e('Jigoshop on WordPress.org', 'jigoshop'); ?></a> &ndash; <?php _e('Leave us a rating!', 'jigoshop'); ?></li>
 		</ul>
 	</div>
+	<div class="clear"></div>
+</div>
+<div class="jigoshop-links-widget">
 	<div class="social">
 		<div>
 			<h4 class="first"><?php _e('Jigoshop Project', 'jigoshop') ?></h4>
@@ -31,4 +34,5 @@
 			<li><a href="https://www.jigoshop.com/support/"><?php _e('Support', 'jigoshop'); ?></a></li>
 		</ul>
 	</div>
+	<div class="clear"></div>
 </div>

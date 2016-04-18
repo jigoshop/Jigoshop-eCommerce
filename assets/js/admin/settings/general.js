@@ -1,1 +1,65 @@
-var GeneralSettings,bind=function(t,e){return function(){return t.apply(e,arguments)}};GeneralSettings=function(){function t(t){this.params=t,this.updateStateField=bind(this.updateStateField,this),jQuery("#show_message").on("switchChange.bootstrapSwitch",this.toggleCustomMessage),jQuery("#custom_message").show().closest("div.form-group").show(),jQuery("select#country").on("change",this.updateStateField),this.updateFields()}return t.prototype.params={states:{}},t.prototype.updateStateField=function(t){var e,s,a;return e=jQuery(t.target),s=jQuery("input#state"),a=e.val(),null!=this.params.states[a]?this._attachSelectField(s,this.params.states[a]):this._attachTextField(s)},t.prototype.toggleCustomMessage=function(){return jQuery("#custom_message").closest("tr").toggle()},t.prototype.updateFields=function(){return jQuery("select#country").change()},t.prototype._attachSelectField=function(t,e){return t.select2({data:e,multiple:!1})},t.prototype._attachTextField=function(t){return t.select2("destroy")},t}(),jQuery(function(){return new GeneralSettings(jigoshop_admin_general)});
+var GeneralSettings,
+  bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
+
+GeneralSettings = (function() {
+  GeneralSettings.prototype.params = {
+    states: {}
+  };
+
+  function GeneralSettings(params) {
+    this.params = params;
+    this.updateStateField = bind(this.updateStateField, this);
+    jQuery('#show_message').on('switchChange.bootstrapSwitch', this.toggleCustomMessage);
+    jQuery('#custom_message').show().closest('div.form-group').show();
+    jQuery('select#country').on('change', this.updateStateField);
+    this.updateFields();
+  }
+
+  GeneralSettings.prototype.updateStateField = function(event) {
+    var $country, $states, country;
+    $country = jQuery(event.target);
+    $states = jQuery('input#state');
+    country = $country.val();
+    if (this.params.states[country] != null) {
+      return this._attachSelectField($states, this.params.states[country]);
+    } else {
+      return this._attachTextField($states);
+    }
+  };
+
+  GeneralSettings.prototype.toggleCustomMessage = function() {
+    return jQuery('#custom_message').closest('tr').toggle();
+  };
+
+  GeneralSettings.prototype.updateFields = function() {
+    return jQuery('select#country').change();
+  };
+
+
+  /*
+  Attaches Select2 to provided field with proper states to select
+   */
+
+  GeneralSettings.prototype._attachSelectField = function($field, states) {
+    return $field.select2({
+      data: states,
+      multiple: false
+    });
+  };
+
+
+  /*
+  Attaches simple text field to write a state
+   */
+
+  GeneralSettings.prototype._attachTextField = function($field) {
+    return $field.select2('destroy');
+  };
+
+  return GeneralSettings;
+
+})();
+
+jQuery(function() {
+  return new GeneralSettings(jigoshop_admin_general);
+});

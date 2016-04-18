@@ -1,1 +1,74 @@
-.jigoshop #related_products .product{position:relative;vertical-align:bottom;width:160px}.jigoshop #related_products .product .on-sale{top:0;right:0;left:auto;margin:-6px -6px 0 0}.jigoshop #related_products .product a{text-decoration:none;display:inline}.jigoshop #related_products .product a:hover{text-decoration:underline}.jigoshop #related_products .product a strong{color:#555}.jigoshop #related_products .product a.image{display:block}.jigoshop #related_products .product a.image:hover{text-decoration:none}.jigoshop #related_products .product a.image:hover img{border:1px solid #bbb}.jigoshop #related_products .product a.image:hover .on-sale{color:#ff0}.jigoshop #related_products .product a.image img{max-width:150px!important;max-height:150px!important;display:block;margin:0 auto 8px!important;border:1px solid #ddd}.jigoshop #related_products .product .price{color:green;display:inline-block;float:right;font-weight:400;text-align:right;font-size:18px;line-height:1.42857143}.jigoshop #related_products .product .price del{font-size:12px;display:inline-block;color:#aaa}.jigoshop #related_products .product .price ins{display:inline-block;font-size:14px}.jigoshop #related_products .product .price .from{font-size:10px;line-height:10px;margin:-2px 0 0;display:block;color:#aaa;padding-bottom:3px}.jigoshop #related_products .product .cart:after,.jigoshop #related_products .product .cart:before{content:" ";display:table}.jigoshop #related_products .product .cart:after{clear:both}
+.jigoshop #related_products .product {
+  position: relative;
+  vertical-align: bottom;
+  width: 160px;
+}
+.jigoshop #related_products .product .on-sale {
+  top: 0;
+  right: 0;
+  left: auto;
+  margin: -6px -6px 0 0;
+}
+.jigoshop #related_products .product a {
+  text-decoration: none;
+  display: inline;
+}
+.jigoshop #related_products .product a:hover {
+  text-decoration: underline;
+}
+.jigoshop #related_products .product a strong {
+  color: #555555;
+}
+.jigoshop #related_products .product a.image {
+  display: block;
+}
+.jigoshop #related_products .product a.image:hover {
+  text-decoration: none;
+}
+.jigoshop #related_products .product a.image:hover img {
+  border: 1px solid #bbbbbb;
+}
+.jigoshop #related_products .product a.image:hover .on-sale {
+  color: #ffff00;
+}
+.jigoshop #related_products .product a.image img {
+  max-width: 150px !important;
+  max-height: 150px !important;
+  display: block;
+  margin: 0 auto 8px !important;
+  border: 1px solid #dddddd;
+}
+.jigoshop #related_products .product .price {
+  color: green;
+  display: inline-block;
+  float: right;
+  font-weight: normal;
+  text-align: right;
+  font-size: 18px;
+  line-height: 1.42857143;
+}
+.jigoshop #related_products .product .price del {
+  font-size: 12px;
+  display: inline-block;
+  color: #aaaaaa;
+}
+.jigoshop #related_products .product .price ins {
+  display: inline-block;
+  font-size: 14px;
+}
+.jigoshop #related_products .product .price .from {
+  font-size: 10px;
+  line-height: 10px;
+  margin: -2px 0 0 0;
+  display: block;
+  color: #aaaaaa;
+  padding-bottom: 3px;
+}
+.jigoshop #related_products .product .cart:before,
+.jigoshop #related_products .product .cart:after {
+  content: " ";
+  display: table;
+}
+.jigoshop #related_products .product .cart:after {
+  clear: both;
+}

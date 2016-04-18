@@ -38,6 +38,11 @@ class OrderStatusFilter implements WidgetInterface
 		);
 	}
 
+	public function isVisible()
+	{
+		return false;
+	}
+	
 	public function display()
 	{
 		Forms::select($this->getArgs());
