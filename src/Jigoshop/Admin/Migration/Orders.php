@@ -601,7 +601,7 @@ class Orders implements Tool
 				'total' => $countAll,
 			);
 
-			if($countRemain > 0)
+			if($singleOrdersId)
 			{
 				if ($this->migrate($order))
 				{
