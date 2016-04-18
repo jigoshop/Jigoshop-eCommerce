@@ -221,7 +221,7 @@ class Emails implements Tool
 				'total' => $countAll,
 			);
 
-			if($countRemain > 0)
+			if($singleEmailsId)
 			{
 				if ($this->migrate($joinEmails[$singleEmailsId]))
 				{
