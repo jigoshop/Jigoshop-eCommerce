@@ -253,7 +253,7 @@ class CartService implements CartServiceInterface
 	{
 		$errors = array();
 
-		if (!$address->isValid()) {
+		if (!$this->wp->applyFilters('jigoshop\service\cart\validate_address', $address->isValid(), $address)) {
 			if ($address->getFirstName() == null) {
 				$errors[] = __('First name is empty.', 'jigoshop');
 			}

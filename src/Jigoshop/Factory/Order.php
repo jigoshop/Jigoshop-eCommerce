@@ -10,6 +10,7 @@ use Jigoshop\Entity\Customer as CustomerEntity;
 use Jigoshop\Entity\Order as Entity;
 use Jigoshop\Entity\OrderInterface;
 use Jigoshop\Exception;
+use Jigoshop\Helper\Product;
 use Jigoshop\Service\CouponServiceInterface;
 use Jigoshop\Service\CustomerServiceInterface;
 use Jigoshop\Service\PaymentServiceInterface;
@@ -78,6 +79,7 @@ class Order implements EntityFactoryInterface
         $data = array(
             'updated_at' => time(),
         );
+
         if (isset($_POST['post_excerpt'])) {
             $data['customer_note'] = trim($_POST['post_excerpt']);
         }
@@ -223,11 +225,20 @@ class Order implements EntityFactoryInterface
             }
             
             if (isset($data['billing_address'])) {
+                $data['billing_address'] = array_merge(
+                    array_flip(array_keys(Product::getBasicBillingFields())),
+                    $data['billing_address']
+                );
                 /** @var CustomerEntity $customer */
                 $customer = $data['customer'];
                 $customer->setBillingAddress($this->createAddress($data['billing_address']));
             }
             if (isset($data['shipping_address'])) {
+                $data['shipping_address'] = array_merge(
+                    array_flip(array_keys(Product::getBasicShippingFields())),
+                    $data['shipping_address']
+                );
+
                 /** @var CustomerEntity $customer */
                 $customer = $data['customer'];
                 $customer->setShippingAddress($this->createAddress($data['shipping_address']));
