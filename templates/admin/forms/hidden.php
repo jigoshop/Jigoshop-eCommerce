@@ -1,4 +1,6 @@
 <?php
+use Jigoshop\Admin\Helper\Forms;
+
 /**
  * @var $id string Field ID.
  * @var $label string Field label.
@@ -10,6 +12,6 @@
 ?>
 <div class="form-group <?php echo $id; ?>_field">
 	<div>
-		<input type="hidden" id="<?php echo $id; ?>" name="<?php echo $name; ?>" class="form-control <?php echo join(' ', $classes); ?>" placeholder="<?php echo $placeholder; ?>" value="<?php echo $value; ?>" />
+		<input type="hidden" id="<?php echo $id; ?>" name="<?php echo $name; ?>" class="form-control <?php echo join(' ', $classes); ?>" value="<?php echo $value; ?>" />
 	</div>
 </div>

@@ -96,6 +96,9 @@ class Forms
 			case 'daterange':
 				self::daterange($field);
 				break;
+			default :
+				do_action('jigoshop\helper\forms\custom', $type, $field);
+				break;
 		}
 	}
 
