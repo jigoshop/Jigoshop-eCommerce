@@ -8,6 +8,7 @@ use Monolog\Registry;
 class Forms
 {
 	protected static $checkboxTemplate = 'forms/checkbox';
+	protected static $radioTemplate = 'forms/radio';
 	protected static $selectTemplate = 'forms/select';
 	protected static $textTemplate = 'forms/text';
 	protected static $numberTemplate = 'forms/number';
@@ -83,6 +84,9 @@ class Forms
 				break;
 			case 'checkbox':
 				self::checkbox($field);
+				break;
+			case 'radio':
+				self::radio($field);
 				break;
 			case 'textarea':
 				self::textarea($field);
@@ -379,6 +383,68 @@ class Forms
 		}
 
 		Render::output(static::$checkboxTemplate, $field);
+	}
+
+	/**
+	 * Outputs radio field.
+	 *
+	 * Available parameters (with defaults):
+	 *   * id (null) - HTML id for the tag
+	 *   * name (null) - HTML name for the tag
+	 *   * label (null) - label for the tag
+	 *   * value ('on') - HTML value of the tag
+	 *   * multiple (false) - whether there are many checkboxes with the same name
+	 *   * checked (false) - whether checkbox is checked by default
+	 *   * disabled (false) - whether checkbox is disabled
+	 *   * classes (array()) - list of HTML classes for the tag
+	 *   * description (false) - description of the tag
+	 *   * tip (false) - tip for the tag
+	 *   * hidden (false) - whether to hide element by default
+	 *   * size (12) - default size of the element (Bootstrap column size 12)
+	 *
+	 * Field's name is required.
+	 *
+	 * @param $field array Field parameters.
+	 *
+	 * @throws \Jigoshop\Exception
+	 *
+	 */
+	public static function radio($field)
+	{
+		$defaults = array(
+			'id' => null,
+			'name' => null,
+			'label' => null,
+			'value' => 'on',
+			'checked' => false,
+			'disabled' => false,
+			'classes' => array(),
+			'description' => false,
+			'tip' => false,
+			'hidden' => false,
+			'size' => 12,
+		);
+		$field = wp_parse_args($field, $defaults);
+
+		if (empty($field['name'])) {
+			if (WP_DEBUG) {
+				throw new Exception('Field "%s" must have a name!', serialize($field));
+			}
+
+			Registry::getInstance(JIGOSHOP_LOGGER)->addCritical('Field must have a name!', array('field' => $field));
+
+			return;
+		}
+
+		if (empty($field['id'])) {
+			$field['id'] = self::prepareIdFromName($field['name']);
+		}
+
+		if ($field['multiple']) {
+			$field['name'] .= '[]';
+		}
+
+		Render::output(static::$radioTemplate, $field);
 	}
 
 	/**
