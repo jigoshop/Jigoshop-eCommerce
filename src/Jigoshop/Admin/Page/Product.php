@@ -204,6 +204,7 @@ class Product
                 }
 
                 $attribute->setLabel($label);
+                $attribute->setSlug($this->wp->getHelpers()->sanitizeTitle($label));
                 $this->productService->saveAttribute($attribute);
                 $attributeExists = false;
             } else {
