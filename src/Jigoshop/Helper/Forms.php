@@ -178,6 +178,7 @@ class Forms
 	 *   * size (12) - default size of the element (Bootstrap column size 12)
 	 *   * min (false) - minimal value of number input
 	 *   * max (false) - maximal value of number input
+	 *   * step (1) - Step of number
 	 *
 	 * Field's name is required.
 	 *
@@ -202,6 +203,7 @@ class Forms
 			'size' => 12,
 			'min' => false,
 			'max' => false,
+			'step' => 1,
 		);
 
 		$field = wp_parse_args($field, $defaults);
