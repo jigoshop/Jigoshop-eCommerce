@@ -283,7 +283,7 @@ class Emails
 
 	private function getOrderEmailArgumentsDescription()
 	{
-		return apply_filters('jigoshop_order_email_variables_description', array(
+		return apply_filters('jigoshop\email\order_variables_description', array(
 			'blog_name' => __('Blog Name', 'jigoshop'),
 			'order_number' => __('Order Number', 'jigoshop'),
 			'order_date' => __('Order Date', 'jigoshop'),
