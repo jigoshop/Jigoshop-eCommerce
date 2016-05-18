@@ -34,7 +34,7 @@ $hasLabel = !empty($label);
 					<?php if (!$multiple): ?>
 						<input type="hidden" name="<?php echo $name; ?>" value="off"/>
 					<?php endif; ?>
-					<input type="checkbox" id="<?php echo $id; ?>" name="<?php echo $name; ?>" class="<?php echo join(' ', $classes); ?>" <?php echo Forms::checked($checked, true); ?> value="<?php echo $value; ?>"/>
+					<input type="checkbox" id="<?php echo $id; ?>" name="<?php echo $name; ?>" class="<?php echo join(' ', $classes); ?>" <?php echo Forms::checked($checked, true); ?> value="<?php echo $value; ?>"<?php echo Forms::disabled($disabled); ?>/>
 					<?php if (!empty($description)): ?>
 						<label for="<?php echo $id; ?>"><span class="help"><?php echo $description; ?></span></label>
 					<?php endif; ?>

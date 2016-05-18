@@ -58,7 +58,7 @@ use Jigoshop\Helper\Product;
 					<div class="panel-body"><?php
 					Forms::text(array(
 						'name' => 'product[attributes]['.$attribute->getId().']',
-						'classes' => array('attribute-'.$attribute->getId()),
+						'classes' => array('attribute-'.$attribute->getId(), ($attribute->isLocal() ? 'local' : '')),
 						'value' => apply_filters('jigoshop\template\admin\product\attribute\text\value', $attribute->getValue(), $attribute),
 						'size' => 12,
 					)); ?>

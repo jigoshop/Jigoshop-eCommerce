@@ -1,13 +1,1 @@
-jQuery(function($) {
-  return $('#generate-report').on('click', function() {
-    var report;
-    report = [];
-    $.each(system_data, function(index, value) {
-      return report.push(value);
-    });
-    $('#report-for-support').html(report.join('\n'));
-    $('#report-for-support').slideDown(1000);
-    $('#report-for-support').removeClass('hidden');
-    return $(this).slideUp(1000);
-  });
-});
+jQuery(function(r){return r("#generate-report").on("click",function(){var e;return e=[],r.each(system_data,function(r,t){return e.push(t)}),r("#report-for-support").html(e.join("\n")),r("#report-for-support").slideDown(1e3),r("#report-for-support").removeClass("hidden"),r(this).slideUp(1e3)})});

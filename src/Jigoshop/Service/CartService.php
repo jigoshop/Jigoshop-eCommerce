@@ -232,6 +232,18 @@ class CartService implements CartServiceInterface
 
 		$shippingErrors = $this->validateAddress($customer->getShippingAddress());
 
+		$billingErrors = $this->wp->applyFilters(
+			'jigoshop\service\cart\billing_address_validation',
+			$billingErrors,
+			$customer->getBillingAddress()
+		);
+
+		$shippingErrors = $this->wp->applyFilters(
+			'jigoshop\service\cart\shipping_address_validation',
+			$shippingErrors,
+			$customer->getShippingAddress()
+		);
+
 		$error = '';
 		if (!empty($billingErrors)) {
 			$error .= $this->prepareAddressError(__('Billing address is not valid.', 'jigoshop'), $billingErrors);
@@ -253,7 +265,7 @@ class CartService implements CartServiceInterface
 	{
 		$errors = array();
 
-		if (!$address->isValid()) {
+		if ($address->isValid()) {
 			if ($address->getFirstName() == null) {
 				$errors[] = __('First name is empty.', 'jigoshop');
 			}

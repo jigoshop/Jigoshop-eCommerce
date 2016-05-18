@@ -1,4 +1,6 @@
 <?php
+use Jigoshop\Admin\Helper\Forms;
+
 /**
  * @var $id string Field ID.
  * @var $label string Field label.
@@ -14,6 +16,7 @@
  * @var $size int Size of form widget.
  * @var int $min Minimal value of input
  * @var int $max Maximal value of input
+ * @var int $step Step of number
  */
 $hasLabel = !empty($label);
 ?>
@@ -31,7 +34,7 @@ $hasLabel = !empty($label);
 				<?php endif; ?>
 			</div>
 			<div class="col-xs-<?php echo $size - 2 ?> col-sm-<?php echo $size - 1 ?>">
-				<input type="<?php echo $type; ?>" id="<?php echo $id; ?>" name="<?php echo $name; ?>" class="form-control <?php echo join(' ', $classes); ?>" placeholder="<?php echo $placeholder; ?>" value="<?php echo $value; ?>"<?php echo ($min === false ? '' : ' min="' . $min . '"') ?><?php echo ($max === false ? '' : ' max="' . $max . '"') ?> />
+				<input type="<?php echo $type; ?>" id="<?php echo $id; ?>" name="<?php echo $name; ?>" class="form-control <?php echo join(' ', $classes); ?>" placeholder="<?php echo $placeholder; ?>" step="<?php echo $step; ?>" value="<?php echo $value; ?>"<?php echo ($min === false ? '' : ' min="' . $min . '"') ?><?php echo ($max === false ? '' : ' max="' . $max . '"') ?><?php echo Forms::disabled($disabled); ?>/>
 				<?php if (!empty($description)): ?>
 					<span class="help-block"><?php echo $description; ?></span>
 				<?php endif; ?>
