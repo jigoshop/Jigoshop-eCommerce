@@ -34,6 +34,6 @@ class Text extends Attribute
 	 */
 	public function printValue()
 	{
-		return $this->value;
+		return htmlspecialchars_decode(stripslashes($this->value));
 	}
 }
