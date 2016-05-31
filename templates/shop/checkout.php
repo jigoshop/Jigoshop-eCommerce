@@ -32,6 +32,7 @@ use Jigoshop\Helper\Tax;
 <?php endif; ?>
 <?php do_action('jigoshop\template\checkout\before'); ?>
 <form action="" role="form" method="post" id="checkout">
+    <?php do_action('jigoshop\template\checkout\before'); ?>
 	<div class="panel panel-default">
 		<div class="panel-heading">
 			<h3 class="panel-title"><?php _e('Billing address', 'jigoshop'); ?></h3>
