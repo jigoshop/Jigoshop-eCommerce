@@ -217,7 +217,7 @@ class Product
             }
 
             if (isset($_POST['value'])) {
-                $attribute->setValue(trim(htmlspecialchars(strip_tags($_POST['value']))));
+                $attribute->setValue(trim(htmlspecialchars(wp_kses_post($_POST['value']))));
             } else if ($attributeExists) {
                 throw new Exception(sprintf(__('Attribute "%s" already exists.', 'jigoshop'), $attribute->getLabel()));
             } else {
