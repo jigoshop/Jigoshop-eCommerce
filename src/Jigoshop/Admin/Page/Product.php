@@ -65,7 +65,8 @@ class Product
                 Scripts::add('jigoshop.vendors.datepicker', JIGOSHOP_URL . '/assets/js/vendors/datepicker.js', array('jquery', 'jigoshop.admin.product'));
                 Scripts::add('jigoshop.admin.product', JIGOSHOP_URL . '/assets/js/admin/product.js', array(
                     'jquery',
-                    'jigoshop.helpers'
+                    'jigoshop.helpers',
+                    'jquery-ui-sortable'
                 ));
                 Scripts::localize('jigoshop.admin.product', 'jigoshop_admin_product', array(
                     'ajax' => $wp->getAjaxUrl(),
@@ -129,7 +130,7 @@ class Product
             'attributes' => array(
                 'product' => $product,
                 'availableAttributes' => $attributes,
-                'attributes' => $this->productService->getAttributes($product->getId()),
+                'attributes' => $product->getAttributes(),
             ),
             'stock' => array(
                 'product' => $product,

@@ -30,6 +30,8 @@ class AdminProduct
     jQuery('#product-attributes')
       .on 'change', 'input, select', @updateAttribute
       .on 'click', '.remove-attribute', @removeAttribute
+      .sortable
+        axis: "y"
     jQuery('#product-type').on 'change', @changeProductType
 
     jQuery('.jigoshop_product_data a').on 'click', (e) ->
