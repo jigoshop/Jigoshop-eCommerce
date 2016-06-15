@@ -95,6 +95,9 @@ class OrderService implements OrderServiceInterface
 			$object->setNumber($this->getNextOrderNumber());
 		}
 
+		//Recalculate shiping
+		$object->setShippingMethod($object->getShippingMethod());
+		
 		$fields = $object->getStateToSave();
 
 		if (isset($fields['id'])) {
