@@ -168,7 +168,7 @@ class Product
 	 */
 	public static function getStock(Entity\Product $product)
 	{
-		if (!($product instanceof Entity\Product\Purchasable) || !$product->getStock()->getManage()) {
+		if (!($product instanceof Entity\Product\Purchasable)) {
 			return '';
 		}
 
@@ -181,10 +181,10 @@ class Product
 					_x('In stock', 'product', 'jigoshop') :
 					'<strong class="attention">'._x('Out of stock', 'product', 'jigoshop').'</strong>';
 
-				if (!self::$options->get('products.show_stock')) {
+				if (!self::$options->get('products.show_stock') || !$product->getStock()->getManage()) {
 					return $status;
 				}
-
+				
 				return sprintf(_x('%s <strong>(%d available)</strong>', 'product', 'jigoshop'), $status, $product->getStock()->getStock());
 			default:
 				return apply_filters('jigoshop\helper\product\get_stock', '', $product);
