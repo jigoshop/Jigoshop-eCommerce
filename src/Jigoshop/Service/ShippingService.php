@@ -75,10 +75,14 @@ class ShippingService implements ShippingServiceInterface
 
 		foreach ($this->getEnabled() as $method) {
 			/** @var Method $method */
-			$price = $method->calculate($cart);
+			try {
+				$price = $method->calculate($cart);
 
-			if ($price < $cheapestPrice) {
-				$cheapest = $method;
+				if ($price < $cheapestPrice) {
+					$cheapest = $method;
+				}
+			} catch(\Exception $e) {
+				//Silence.....
 			}
 		}
 
