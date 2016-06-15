@@ -11,7 +11,7 @@ use Jigoshop\Helper\Product;
 	<a class="image" href="<?php echo $product->getLink(); ?>">
 		<?php do_action('jigoshop\shop\list\product\before_title', $product); ?>
 		<?php if (Product::isOnSale($product)): ?>
-			<span class="on-sale"><?php _e('Sale!', 'jigoshop'); ?></span>
+			<span class="on-sale"><?php apply_filters('jigoshop\shop\list\product\sale_text', __('Sale!', 'jigoshop')) ?></span>
 		<?php endif; ?>
 		<?php echo Product::getFeaturedImage($product, Options::IMAGE_SMALL); ?>
 	</a>
