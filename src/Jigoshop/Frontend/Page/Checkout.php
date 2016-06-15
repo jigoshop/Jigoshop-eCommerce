@@ -381,13 +381,13 @@ class Checkout implements PageInterface
 				$order = $this->orderService->createFromCart($cart);
 				/** @var Order $order */
 				$order = $this->wp->applyFilters('jigoshop\checkout\order', $order);
-				$this->orderService->save($order);
-				$this->cartService->remove($cart);
 
 				$url = '';
 				if ($isPaymentRequired) {
 					$url = $payment->process($order);
 				}
+				$this->orderService->save($order);
+				$this->cartService->remove($cart);
 
 				// Redirect to thank you page
 				if (empty($url)) {
