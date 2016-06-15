@@ -102,6 +102,7 @@ class AdminProduct
     .done (data) ->
       if data.success? and data.success
         jQuery(data.html).hide().appendTo($parent).slideDown()
+        $parent.trigger 'add-attribute'
       else
         jigoshop.addMessage('danger', data.error, 6000)
   updateAttribute: (event) =>
