@@ -59,6 +59,13 @@ class Account implements PageInterface
 			'post_type' => Types::ORDER,
 			'post_status' => array(Status::PENDING, Status::ON_HOLD),
 			'posts_per_page' => $this->options->get('shopping.unpaid_orders_number'),
+			'meta_query' => array(
+				array(
+					'key'     => 'customer_id',
+					'value'   => $this->wp->getCurrentUserId(),
+					'compare' => '=',
+				),
+			),
 		));
 		$orders = $this->orderService->findByQuery($query);
 

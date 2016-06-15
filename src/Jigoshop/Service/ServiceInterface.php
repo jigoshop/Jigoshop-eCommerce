@@ -3,6 +3,7 @@
 namespace Jigoshop\Service;
 
 use Jigoshop\Entity\EntityInterface;
+use Jigoshop\Entity\Product;
 
 /**
  * Interface for Jigoshop services.
@@ -35,7 +36,7 @@ interface ServiceInterface
 	 *
 	 * @param $query \WP_Query WordPress query.
 	 *
-	 * @return array Collection of found items.
+	 * @return Product[] Collection of found items.
 	 */
 	public function findByQuery($query);
 

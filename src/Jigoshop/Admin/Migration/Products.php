@@ -349,62 +349,66 @@ class Products implements Tool
 				} else {
 					//merge attributes
 					$attribute = $this->productService->getAttribute($antiDuplicateAttributes[$attribute->getSlug()]);
-					$savedOptions = array_map(function($item){
-						return $item->getValue();
-					}, $attribute->getOptions());
+					if($attribute instanceof Product\Attribute) {
+						$savedOptions = array_map(function($item){
+							return $item->getValue();
+						}, $attribute->getOptions());
 
-					foreach($attributes[$slug]->getOptions() as $option) {
-						if(!in_array($option->getValue(), $savedOptions)) {
-							$attribute->addOption($option);
-						}
-					}
-
-					$attributes[$slug] = $attribute;
-					$this->productService->saveAttribute($attribute);
-				}
-
-				// Add attribute to the products
-				foreach ($productIds as $id) {
-					if (isset($productAttributes[$id]['attributes'][$attribute->getSlug()])) {
-						$data = $productAttributes[$id]['attributes'][$attribute->getSlug()];
-						$value = array();
-						if (is_array($data['values'])) {
-							foreach ($attribute->getOptions() as $option) {
-								/** @var $option Option */
-								if (in_array($option->getValue(), $data['values'])) {
-									$value[] = $option->getId();
-								}
+						foreach($attributes[$slug]->getOptions() as $option) {
+							if(!in_array($option->getValue(), $savedOptions)) {
+								$attribute->addOption($option);
 							}
 						}
 
-						if (empty($value)) {
-							$value = $data['values'];
-						}
+						$attributes[$slug] = $attribute;
+						$this->productService->saveAttribute($attribute);
+					}
+				}
 
-						$wpdb->insert($wpdb->prefix . 'jigoshop_product_attribute', array(
-							'product_id' => $id,
-							'attribute_id' => $attribute->getId(),
-							'value' => is_array($value) ? join('|', $value) : $value,
-						));
-						$this->checkSql();
+				// Add attribute to the products
+				if($attribute instanceof Product\Attribute) {
+					foreach ($productIds as $id) {
+						if (isset($productAttributes[$id]['attributes'][$attribute->getSlug()])) {
+							$data = $productAttributes[$id]['attributes'][$attribute->getSlug()];
+							$value = array();
+							if (is_array($data['values'])) {
+								foreach ($attribute->getOptions() as $option) {
+									/** @var $option Option */
+									if (in_array($option->getValue(), $data['values'])) {
+										$value[] = $option->getId();
+									}
+								}
+							}
 
-						$query = array(
-							'product_id' => $id,
-							'attribute_id' => $attribute->getId(),
-							'meta_key' => 'is_visible',
-							'meta_value' => $data['is_visible'],
-						);
-						$wpdb->insert($wpdb->prefix . 'jigoshop_product_attribute_meta', $query);
-						$this->checkSql();
-						if ($data['is_variable']) {
+							if (empty($value)) {
+								$value = $data['values'];
+							}
+
+							$wpdb->insert($wpdb->prefix . 'jigoshop_product_attribute', array(
+								'product_id' => $id,
+								'attribute_id' => $attribute->getId(),
+								'value' => is_array($value) ? join('|', $value) : $value,
+							));
+							$this->checkSql();
+
 							$query = array(
 								'product_id' => $id,
 								'attribute_id' => $attribute->getId(),
-								'meta_key' => 'is_variable',
-								'meta_value' => true,
+								'meta_key' => 'is_visible',
+								'meta_value' => $data['is_visible'],
 							);
 							$wpdb->insert($wpdb->prefix . 'jigoshop_product_attribute_meta', $query);
 							$this->checkSql();
+							if ($data['is_variable']) {
+								$query = array(
+									'product_id' => $id,
+									'attribute_id' => $attribute->getId(),
+									'meta_key' => 'is_variable',
+									'meta_value' => true,
+								);
+								$wpdb->insert($wpdb->prefix . 'jigoshop_product_attribute_meta', $query);
+								$this->checkSql();
+							}
 						}
 					}
 				}
