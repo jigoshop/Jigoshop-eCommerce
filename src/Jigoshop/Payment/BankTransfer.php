@@ -144,7 +144,7 @@ class BankTransfer implements Method
 	 */
 	public function process($order)
 	{
-		$order->setStatus(Order\Status::ON_HOLD, __('We are waiting for the confirmation of your bank transfer.', 'jigoshop'));
+		$order->setStatus(Order\Status::PENDING, __('We are waiting for the confirmation of your bank transfer.', 'jigoshop'));
 
 		return '';
 	}
