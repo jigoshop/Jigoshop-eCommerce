@@ -7,6 +7,7 @@ use Jigoshop\Core\Types;
 use Jigoshop\Entity\Cart;
 use Jigoshop\Entity\EntityInterface;
 use Jigoshop\Entity\Order;
+use Jigoshop\Entity\Product\Variable;
 use Jigoshop\Factory\Order as Factory;
 use WPAL\Wordpress;
 
@@ -194,8 +195,13 @@ class OrderService implements OrderServiceInterface
 			if ($object->getStatus() == $reduceStatus) {
 				foreach ($object->getItems() as $item) {
 					/** @var \Jigoshop\Entity\Order\Item $item */
-					if($item->getProduct()->getStock()->getManage()) {
-						$this->wp->doAction('jigoshop\product\sold', $item->getProduct(), $item->getQuantity(), $item);
+					$product = $item->getProduct();
+					if($product instanceof Variable) {
+						$product = $product->getVariation($item->getMeta('variation_id')->getValue())->getProduct();
+					}
+
+					if($product->getStock()->getManage()) {
+						$this->wp->doAction('jigoshop\product\sold', $product, $item->getQuantity(), $item);
 					}
 				}
 			}
