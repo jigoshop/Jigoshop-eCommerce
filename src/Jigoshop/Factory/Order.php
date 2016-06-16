@@ -72,7 +72,7 @@ class Order implements EntityFactoryInterface
 
         // Support for our own post types and "Publish" button.
         if (isset($_POST['original_post_status'])) {
-            $post->post_status = $_POST['jigoshop_order']['status'];
+            $post->post_status = $_POST['original_post_status'];
         }
 
         $order = $this->fetch($post);
@@ -80,6 +80,9 @@ class Order implements EntityFactoryInterface
             'updated_at' => time(),
         );
 
+        if (isset($_POST['jigoshop_order']['status'])) {
+            $order->setStatus($_POST['jigoshop_order']['status']);
+        }
         if (isset($_POST['post_excerpt'])) {
             $data['customer_note'] = trim($_POST['post_excerpt']);
         }
