@@ -1,4 +1,4 @@
-jigoshop.ajaxSearch = ($field, params) ->
+JigoshopHelpers.prototype.ajaxSearch = ($field, params) ->
   if typeof params.initAction is 'undefined'
     params.initAction = params.action
   if typeof params.multiple is 'undefined'
@@ -8,7 +8,7 @@ jigoshop.ajaxSearch = ($field, params) ->
     multiple: params.multiple
     minimumInputLength: 3
     ajax:
-      url: params.ajax
+      url: this.params.ajax
       type: 'post'
       dataType: 'json'
       cache: true
