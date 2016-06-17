@@ -6,7 +6,6 @@ class JigoshopHelpers
 
   constructor: (params) ->
     @params = params
-    @params.ajaxUrl = ajaxurl
 
   delay: (time, callback) -> setTimeout callback, time
 

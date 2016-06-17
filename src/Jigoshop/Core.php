@@ -53,6 +53,7 @@ class Core
 		Scripts::register('prettyphoto', JIGOSHOP_URL.'/assets/js/jquery.prettyPhoto.js');
 		Scripts::localize('jigoshop.helpers', 'jigoshop_helpers', array(
 			'assets' => JIGOSHOP_URL.'/assets',
+			'ajaxUrl' => admin_url('admin-ajax.php'),
 		));
 	}
 
