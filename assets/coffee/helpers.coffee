@@ -10,6 +10,12 @@ class JigoshopHelpers
 
   delay: (time, callback) -> setTimeout callback, time
 
+  getAssetsUrl: ->
+    @params.assets
+
+  getAjaxUrl: ->
+    @params.ajaxUrl
+
   addMessage: (type, message, ms) ->
     $alert = jQuery(document.createElement('div')).attr('class', "alert alert-#{type}").html(message).hide()
     $alert.appendTo(jQuery('#messages'))

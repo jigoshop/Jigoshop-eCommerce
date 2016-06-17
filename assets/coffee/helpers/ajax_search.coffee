@@ -8,7 +8,7 @@ JigoshopHelpers.prototype.ajaxSearch = ($field, params) ->
     multiple: params.multiple
     minimumInputLength: 3
     ajax:
-      url: this.params.ajax
+      url: jigoshop.getAjaxUrl()
       type: 'post'
       dataType: 'json'
       cache: true
@@ -26,7 +26,7 @@ JigoshopHelpers.prototype.ajaxSearch = ($field, params) ->
           jigoshop.addMessage('danger', data.error, 6000)
     initSelection: (element, callback) ->
       jQuery.ajax
-        url: params.ajax
+        url: jigoshop.getAjaxUrl()
         type: 'post'
         dataType: 'json'
         data:
