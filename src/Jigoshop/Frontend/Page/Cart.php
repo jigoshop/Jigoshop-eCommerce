@@ -300,7 +300,7 @@ class Cart implements PageInterface
 					throw new Exception(__('Method rate is required.', 'jigoshop'));
 				}
 
-				$method->setShippingRate((int)$_POST['rate']);
+				$method->setShippingRate($_POST['rate']);
 			}
 
 			$cart->setShippingMethod($method);
