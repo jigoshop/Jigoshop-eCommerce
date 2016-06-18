@@ -1,6 +1,5 @@
 class AdminProducts
   params:
-    ajax: ''
     i18n:
       saved: ''
       confirm_remove: ''
@@ -13,7 +12,7 @@ class AdminProducts
     event.preventDefault()
     $button = jQuery(event.target).closest('a.product-featured')
     jQuery.ajax
-      url: @params.ajax
+      url: jigoshop.getAjaxUrl()
       type: 'post'
       dataType: 'json'
       data:

@@ -52,7 +52,6 @@ class Attributes implements PageInterface
 				'jigoshop.helpers'
 			));
 			Scripts::localize('jigoshop.admin.product_attributes', 'jigoshop_admin_product_attributes', array(
-				'ajax' => $wp->getAjaxUrl(),
 				'i18n' => array(
 					'saved' => __('Changes saved.', 'jigoshop'),
 					'removed' => __('Attribute has been successfully removed.', 'jigoshop'),

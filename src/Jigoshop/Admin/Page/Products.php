@@ -45,9 +45,6 @@ class Products
 					'jquery',
 					'jigoshop.helpers'
 				));
-				Scripts::localize('jigoshop.admin.products', 'jigoshop_admin_products', array(
-					'ajax' => $wp->getAjaxUrl(),
-				));
 
 				Styles::add('jigoshop.admin.products_list', JIGOSHOP_URL.'/assets/css/admin/products_list.css', array('jigoshop.admin'));
 

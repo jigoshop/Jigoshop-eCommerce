@@ -55,10 +55,6 @@ class Coupon
 				Scripts::add('jigoshop.vendors.select2', JIGOSHOP_URL . '/assets/js/vendors/select2.js', array('jigoshop.admin.coupon'), array('in_footer' => true));
 				Styles::add('jigoshop.vendors.datepicker', JIGOSHOP_URL.'/assets/css/vendors/datepicker.css', array('jigoshop.admin.coupon'));
 				Scripts::add('jigoshop.vendors.datepicker', JIGOSHOP_URL . '/assets/js/vendors/datepicker.js', array('jquery', 'jigoshop.admin.coupon'));
-				Scripts::localize('jigoshop.admin.coupon', 'jigoshop_admin_coupon', array(
-					'ajax' => $wp->getAjaxUrl(),
-				));
-
 				$wp->doAction('jigoshop\admin\coupon\assets', $wp);
 			}
 		});

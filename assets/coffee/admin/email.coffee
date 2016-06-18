@@ -1,14 +1,12 @@
 class AdminEmail
-  params:
-    ajax: ''
 
-  constructor: (@params) ->
+  constructor: ->
     jQuery('#jigoshop_email_actions').on 'change', @updateVariables
   updateVariables: (event) =>
     event.preventDefault()
     $parent = jQuery(event.target).closest('div.jigoshop')
     jQuery.ajax
-      url: @params.ajax
+      url: jigoshop.getAjaxUrl()
       type: 'post'
       dataType: 'json'
       data:

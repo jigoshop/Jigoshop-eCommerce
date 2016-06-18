@@ -1,6 +1,5 @@
 class AdminProduct
   params:
-    ajax: ''
     i18n:
       saved: ''
       confirm_remove: ''
@@ -93,7 +92,7 @@ class AdminProduct
     if value > 0
       jQuery("option[value=#{value}]", $attribute).attr('disabled', 'disabled')
     jQuery.ajax
-      url: @params.ajax
+      url: jigoshop.getAjaxUrl()
       type: 'post'
       dataType: 'json'
       data:
@@ -135,7 +134,7 @@ class AdminProduct
       options[results[1]] = getOptionValue(option)
 
     jQuery.ajax
-      url: @params.ajax
+      url: jigoshop.getAjaxUrl()
       type: 'post'
       dataType: 'json'
       data:
@@ -155,7 +154,7 @@ class AdminProduct
       $parent = jQuery(event.target).closest('li')
       jQuery('option[value=' + $parent.data('id') + ']', jQuery('#new-attribute')).removeAttr('disabled')
       jQuery.ajax
-        url: @params.ajax
+        url: jigoshop.getAjaxUrl()
         type: 'post'
         dataType: 'json'
         data:

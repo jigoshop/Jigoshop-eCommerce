@@ -17,7 +17,7 @@ jQuery(document).ready ($) ->
     params = jigoshop_admin_migration
     msgLog = $('#msgLog').val()
     $.ajax(
-      url: params['ajax']
+      url: jigoshop.getAjaxUrl()
       type: 'post'
       dataType: 'json'
       data: action: ajaxModule, msgLog: msgLog).done((data) ->

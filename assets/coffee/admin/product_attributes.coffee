@@ -1,6 +1,5 @@
 class AdminProductAttributes
   params:
-    ajax: ''
     i18n:
       saved: ''
       removed: ''
@@ -23,7 +22,7 @@ class AdminProductAttributes
   addAttribute: (event) =>
     $container = jQuery('tbody', jQuery(event.target).closest('table'))
     jQuery.ajax
-      url: @params.ajax
+      url: jigoshop.getAjaxUrl()
       type: 'post'
       dataType: 'json'
       data:
@@ -42,7 +41,7 @@ class AdminProductAttributes
   updateAttribute: (event) =>
     $parent = jQuery(event.target).closest('tr')
     jQuery.ajax
-      url: @params.ajax
+      url: jigoshop.getAjaxUrl()
       type: 'post'
       dataType: 'json'
       data:
@@ -61,7 +60,7 @@ class AdminProductAttributes
     if confirm(@params.i18n.confirm_remove)
       $parent = jQuery(event.target).closest('tr')
       jQuery.ajax
-        url: @params.ajax
+        url: jigoshop.getAjaxUrl()
         type: 'post'
         dataType: 'json'
         data:
@@ -82,7 +81,7 @@ class AdminProductAttributes
     $label = jQuery('input.new-option-label', $parent)
     $value = jQuery('input.new-option-value', $parent)
     jQuery.ajax
-      url: @params.ajax
+      url: jigoshop.getAjaxUrl()
       type: 'post'
       dataType: 'json'
       data:
@@ -100,7 +99,7 @@ class AdminProductAttributes
   updateAttributeOption: (event) =>
     $parent = jQuery(event.target).closest('tr')
     jQuery.ajax
-      url: @params.ajax
+      url: jigoshop.getAjaxUrl()
       type: 'post'
       dataType: 'json'
       data:
@@ -119,7 +118,7 @@ class AdminProductAttributes
     if confirm(@params.i18n.confirm_remove)
       $parent = jQuery(event.target).closest('tr')
       jQuery.ajax
-        url: @params.ajax
+        url: jigoshop.getAjaxUrl()
         type: 'post'
         dataType: 'json'
         data:
