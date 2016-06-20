@@ -1,6 +1,5 @@
 class Checkout
   params:
-    ajax: ''
     assets: ''
     i18n:
       loading: 'Loading...'
@@ -83,7 +82,8 @@ class Checkout
   selectShipping: =>
     $method = jQuery('#shipping-calculator input[type=radio]:checked')
     $rate = jQuery('.shipping-method-rate', $method.closest('li'))
-    jQuery.ajax(@params.ajax,
+    jQuery.ajax(
+      url: jigoshop.getAjaxUrl(),
       type: 'post'
       dataType: 'json'
       data:
@@ -102,7 +102,8 @@ class Checkout
   updateCountry: (field, event) =>
     @block()
     jQuery('.noscript_state_field').remove()
-    jQuery.ajax(@params.ajax,
+    jQuery.ajax(
+      url: jigoshop.getAjaxUrl()
       type: 'post'
       dataType: 'json'
       data:
@@ -144,7 +145,8 @@ class Checkout
   updateDiscounts: (event) =>
     $item = jQuery(event.target)
     @block()
-    jQuery.ajax(@params.ajax,
+    jQuery.ajax(
+      url: jigoshop.getAjaxUrl()
       type: 'post'
       dataType: 'json'
       data:
@@ -173,7 +175,8 @@ class Checkout
 
   _updateShippingField: (action, field, value) =>
     @block()
-    jQuery.ajax(@params.ajax,
+    jQuery.ajax(
+      url: jigoshop.getAjaxUrl()
       type: 'post'
       dataType: 'json'
       data:

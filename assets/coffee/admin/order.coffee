@@ -1,6 +1,5 @@
 class AdminOrder
   params:
-    ajax: ''
     tax_shipping: false
     ship_to_billing: false
 
@@ -28,7 +27,8 @@ class AdminOrder
     $method = jQuery(e.target)
     $rate = jQuery('.shipping-method-rate', $method.closest('li'))
 
-    jQuery.ajax(@params.ajax,
+    jQuery.ajax(
+      url: jigoshop.getAjaxUrl()
       type: 'post'
       dataType: 'json'
       data:
@@ -48,8 +48,7 @@ class AdminOrder
   newItemSelect: =>
     jQuery('#new-item').select2
       minimumInputLength: 3
-      ajax:
-        url: @params.ajax
+        url: jigoshop.getAjaxUrl()
         type: 'post'
         dataType: 'json'
         data: (term) ->
@@ -77,7 +76,7 @@ class AdminOrder
       return
 
     jQuery.ajax
-      url: @params.ajax
+      url: jigoshop.getAjaxUrl()
       type: 'post'
       dataType: 'json'
       data:
@@ -98,7 +97,7 @@ class AdminOrder
     $parent = $row.closest('table')
 
     jQuery.ajax
-      url: @params.ajax
+      url: jigoshop.getAjaxUrl()
       type: 'post'
       dataType: 'json'
       data:
@@ -123,7 +122,7 @@ class AdminOrder
     $parent = $row.closest('table')
 
     jQuery.ajax
-      url: @params.ajax
+      url: jigoshop.getAjaxUrl()
       type: 'post'
       dataType: 'json'
       data:
@@ -143,7 +142,8 @@ class AdminOrder
     id = $target.attr('id')
     type = id.replace(/order_/, '').replace(/_country/, '')
 
-    jQuery.ajax(@params.ajax,
+    jQuery.ajax(
+      url: jigoshop.getAjaxUrl()
       type: 'post'
       dataType: 'json'
       data:
@@ -180,7 +180,8 @@ class AdminOrder
     id = $target.attr('id')
     type = id.replace(/order_/, '').replace(/_state/, '')
 
-    jQuery.ajax(@params.ajax,
+    jQuery.ajax(
+      url: jigoshop.getAjaxUrl()
       type: 'post'
       dataType: 'json'
       data:
@@ -203,7 +204,8 @@ class AdminOrder
     id = $target.attr('id')
     type = id.replace(/order_/, '').replace(/_postcode/, '')
 
-    jQuery.ajax(@params.ajax,
+    jQuery.ajax(
+      url: jigoshop.getAjaxUrl()
       type: 'post'
       dataType: 'json'
       data:

@@ -4,7 +4,6 @@ class ProductVariable
   VARIATION_NOT_FULL: 3
 
   params:
-    ajax: ''
     variations: {}
   attributes: {}
 

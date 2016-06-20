@@ -84,7 +84,6 @@ class Cart implements PageInterface
 
 
 		Scripts::localize('jigoshop.shop.cart', 'jigoshop_cart', array(
-			'ajax' => $wp->getAjaxUrl(),
 			'assets' => JIGOSHOP_URL.'/assets',
 			'i18n' => array(
 				'loading' => __('Loading...', 'jigoshop'),

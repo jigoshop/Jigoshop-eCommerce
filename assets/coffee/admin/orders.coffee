@@ -2,7 +2,7 @@ jQuery(document).ready ($) ->
   changeStatus = (order_id, status) ->
     params = jigoshop_admin_orders_list
     $.ajax(
-      url: params['ajax']
+      url: jigoshop.getAjaxUrl()
       type: 'post'
       dataType: 'json'
       data:

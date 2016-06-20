@@ -53,7 +53,6 @@ class Migration implements PageInterface
 
 			$migration_title = __('Jigoshop &raquo; Migration Tool &raquo; ', 'jigoshop');
 			Scripts::localize('jigoshop.admin.migration', 'jigoshop_admin_migration', array(
-				'ajax' => $wp->getAjaxUrl(),
 				'i18n' => array(
 					'migration_complete' => __('migration complete', 'jigoshop'),
 					'migration_error' => __('migration error', 'jigoshop'),

@@ -1,6 +1,5 @@
 class AdminProductVariable
   params:
-    ajax: ''
     i18n:
       confirm_remove: ''
       variation_removed: ''
@@ -28,7 +27,7 @@ class AdminProductVariable
     event.preventDefault()
     $parent = jQuery('#product-variations')
     jQuery.ajax
-      url: @params.ajax
+      url: jigoshop.getAjaxUrl()
       type: 'post'
       dataType: 'json'
       data:
@@ -67,7 +66,7 @@ class AdminProductVariable
         product[results[1]] = getOptionValue(option)
 
     jQuery.ajax
-      url: @params.ajax
+      url: jigoshop.getAjaxUrl()
       type: 'post'
       dataType: 'json'
       data:
@@ -87,7 +86,7 @@ class AdminProductVariable
     if confirm(@params.i18n.confirm_remove)
       $parent = jQuery(event.target).closest('li')
       jQuery.ajax
-        url: @params.ajax
+        url: jigoshop.getAjaxUrl()
         type: 'post'
         dataType: 'json'
         data:
@@ -112,7 +111,7 @@ class AdminProductVariable
       callback: (attachment) =>
         $remove.show()
         jQuery.ajax
-          url: @params.ajax
+          url: jigoshop.getAjaxUrl()
           type: 'post'
           dataType: 'json'
           data:
@@ -134,7 +133,7 @@ class AdminProductVariable
     $element = jQuery(event.target)
     $thumbnail = jQuery('img', $element.parent())
     jQuery.ajax
-      url: @params.ajax
+      url: jigoshop.getAjaxUrl()
       type: 'post'
       dataType: 'json'
       data:

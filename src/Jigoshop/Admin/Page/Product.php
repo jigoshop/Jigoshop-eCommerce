@@ -70,7 +70,6 @@ class Product
                     'jquery-ui-sortable'
                 ));
                 Scripts::localize('jigoshop.admin.product', 'jigoshop_admin_product', array(
-                    'ajax' => $wp->getAjaxUrl(),
                     'i18n' => array(
                         'saved' => __('Changes saved.', 'jigoshop'),
                         'attribute_removed' => __('Attribute successfully removed.', 'jigoshop'),

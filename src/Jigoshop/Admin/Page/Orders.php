@@ -46,7 +46,6 @@ class Orders
 
 		Scripts::add('jigoshop.admin.page.orders_list', JIGOSHOP_URL.'/assets/js/admin/orders.js');
 		Scripts::localize('jigoshop.admin.page.orders_list', 'jigoshop_admin_orders_list', array(
-			'ajax' => $wp->getAjaxUrl(),
 			'module' => 'jigoshop.admin.orders',
 			'ajax_error' => __('Ajax Error', 'jigoshop'),
 		));

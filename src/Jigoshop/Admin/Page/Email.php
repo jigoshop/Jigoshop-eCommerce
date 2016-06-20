@@ -39,9 +39,6 @@ class Email
 					'jquery',
 					'jigoshop.helpers'
 				));
-				Scripts::localize('jigoshop.admin.email', 'jigoshop_admin_email', array(
-					'ajax' => $wp->getAjaxUrl(),
-				));
 
 				$wp->doAction('jigoshop\admin\email\assets', $wp);
 			}

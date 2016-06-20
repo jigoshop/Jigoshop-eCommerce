@@ -78,7 +78,6 @@ class Checkout implements PageInterface
 			'jigoshop.vendors.bs_tab_trans_tooltip_collapse',
 		));
 		Scripts::localize('jigoshop.checkout', 'jigoshop_checkout', array(
-			'ajax' => $this->wp->getAjaxUrl(),
 			'assets' => JIGOSHOP_URL.'/assets',
 			'i18n' => array(
 				'loading' => __('Loading...', 'jigoshop'),

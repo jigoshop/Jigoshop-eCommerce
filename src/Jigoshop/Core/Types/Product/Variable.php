@@ -306,7 +306,6 @@ class Variable implements Type
 			'jigoshop.media'
 		));
 		Scripts::localize('jigoshop.admin.product.variable', 'jigoshop_admin_product_variable', array(
-			'ajax' => $wp->getAjaxUrl(),
 			'i18n' => array(
 				'confirm_remove' => __('Are you sure?', 'jigoshop'),
 				'variation_removed' => __('Variation successfully removed.', 'jigoshop'),
@@ -343,7 +342,6 @@ class Variable implements Type
 			Styles::add('jigoshop.product.variable', JIGOSHOP_URL.'/assets/css/shop/product/variable.css');
 			Scripts::add('jigoshop.product.variable', JIGOSHOP_URL.'/assets/js/shop/product/variable.js', array('jquery'));
 			Scripts::localize('jigoshop.product.variable', 'jigoshop_product_variable', array(
-				'ajax' => $wp->getAjaxUrl(),
 				'variations' => $variations,
 			));
 		}

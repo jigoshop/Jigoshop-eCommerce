@@ -50,9 +50,6 @@ class ByProduct extends Chart
 				'jigoshop.vendors.select2'
 			), array('in_footer' => true));
 			Scripts::localize('jigoshop.reports.chart', 'chart_data', $this->getMainChart());
-			Scripts::localize('jigoshop.admin.reports.widget.product_search', 'jigoshop_admin_reports_widget_product_search', array(
-				'ajax' => $wp->getAjaxUrl(),
-			));
 		});
 	}
 
