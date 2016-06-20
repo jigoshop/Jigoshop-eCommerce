@@ -9,6 +9,7 @@ use Jigoshop\Entity\EntityInterface;
 use Jigoshop\Entity\Order;
 use Jigoshop\Entity\Product\Variable;
 use Jigoshop\Factory\Order as Factory;
+use Jigoshop\Shipping\Method;
 use WPAL\Wordpress;
 
 /**
@@ -97,7 +98,10 @@ class OrderService implements OrderServiceInterface
         }
 
         //Recalculate shiping
-        $object->setShippingMethod($object->getShippingMethod());
+        $shipping = $object->getShippingMethod();
+        if($shipping && $shipping instanceof Method) {
+            $object->setShippingMethod($object->getShippingMethod());
+        }
 
         $fields = $object->getStateToSave();
 
@@ -132,7 +136,7 @@ class OrderService implements OrderServiceInterface
             }
 
             $object->setId($id);
-            $this->wp->doAction('jigoshop\service\order\new', $id);
+            $this->wp->doAction('jigoshop\service\order\new', $id, $object);
             unset($fields['status'], $fields['customer_note']);
         }
 
