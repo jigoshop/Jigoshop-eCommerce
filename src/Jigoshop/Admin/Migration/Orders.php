@@ -146,11 +146,13 @@ class Orders implements Tool
 
 				if (!empty($status)) {
 					$status = $this->_transformStatus($status[0]->slug);
-					$query = $wpdb->prepare("UPDATE {$wpdb->posts} SET post_status = %s WHERE ID = %d", $status, $order->ID);
-					$wpdb->query($query);
-					$this->checkSql();
+				} else {
+					$status = Status::PENDING;
 				}
 
+				$query = $wpdb->prepare("UPDATE {$wpdb->posts} SET post_status = %s WHERE ID = %d", $status, $order->ID);
+				$wpdb->query($query);
+				$this->checkSql();
 				$wpdb->query($wpdb->prepare("INSERT INTO {$wpdb->postmeta} (post_id, meta_key, meta_value) VALUES (%d, %s, %s)", $order->ID, 'number', $order->ID));
 				$this->checkSql();
 				$wpdb->query($wpdb->prepare("INSERT INTO {$wpdb->postmeta} (post_id, meta_key, meta_value) VALUES (%d, %s, %s)", $order->ID, 'updated_at', time()));
