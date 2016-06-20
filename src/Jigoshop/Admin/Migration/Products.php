@@ -119,6 +119,9 @@ class Products implements Tool
 			$wpdb->query($wpdb->prepare("UPDATE {$wpdb->term_taxonomy} SET taxonomy = %s WHERE taxonomy = %s",
 				array('product_category', 'product_cat')));
 			$this->checkSql();
+			$wpdb->query($wpdb->prepare("UPDATE {$wpdb->postmeta} SET meta_value = %s WHERE meta_key = %s AND meta_value = %s",
+				array('product_category', '_menu_item_object', 'product_cat')));
+			$this->checkSql();
 
 			$productIds = array();
 			$attributes = array();
