@@ -23,7 +23,7 @@ class AdminProductVariable
     $item = jQuery(event.target)
     if $item.val() == 'variable'
       jQuery('.product_regular_price_field').slideUp()
-  addVariation: (event) =>
+  addVariation: (event) ->
     event.preventDefault()
     $parent = jQuery('#product-variations')
     jQuery.ajax
@@ -100,7 +100,7 @@ class AdminProductVariable
           jigoshop.addMessage('success', @params.i18n.variation_removed, 2000)
         else
           jigoshop.addMessage('danger', data.error, 6000)
-  connectImage: (index, element) =>
+  connectImage: (index, element) ->
     $element = jQuery(element)
     $remove = $element.next('.remove_variation_image')
     $thumbnail = jQuery('img', $element.parent())
@@ -108,7 +108,7 @@ class AdminProductVariable
       field: false
       bind: false
       thumbnail: $thumbnail
-      callback: (attachment) =>
+      callback: (attachment) ->
         $remove.show()
         jQuery.ajax
           url: jigoshop.getAjaxUrl()
@@ -128,7 +128,7 @@ class AdminProductVariable
   setImage: (event) ->
     event.preventDefault()
     jQuery(event.target).trigger('jigoshop_media')
-  removeImage: (event) =>
+  removeImage: (event) ->
     event.preventDefault()
     $element = jQuery(event.target)
     $thumbnail = jQuery('img', $element.parent())

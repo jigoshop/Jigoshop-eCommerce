@@ -45,9 +45,10 @@ class AdminOrder
         # TODO: It would be nice to have kind of helper for error messages
         alert result.error
 
-  newItemSelect: =>
+  newItemSelect: ->
     jQuery('#new-item').select2
       minimumInputLength: 3
+      ajax:
         url: jigoshop.getAjaxUrl()
         type: 'post'
         dataType: 'json'

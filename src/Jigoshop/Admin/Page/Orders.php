@@ -44,12 +44,8 @@ class Orders
 			}
 		});
 
-		Scripts::add('jigoshop.admin.page.orders_list', JIGOSHOP_URL.'/assets/js/admin/orders.js');
-		Scripts::localize('jigoshop.admin.page.orders_list', 'jigoshop_admin_orders_list', array(
-			'module' => 'jigoshop.admin.orders',
-			'ajax_error' => __('Ajax Error', 'jigoshop'),
-		));
-		$wp->addAction('wp_ajax_jigoshop.admin.orders', array($this, 'ajaxChangeStatus'), 10, 0);
+		Scripts::add('jigoshop.admin.page.orders_list', JIGOSHOP_URL.'/assets/js/admin/orders.js', array('jquery-blockui'));
+		$wp->addAction('wp_ajax_jigoshop.admin.orders.change_status', array($this, 'ajaxChangeStatus'), 10, 0);
 	}
 
 	public function request($vars)
@@ -218,37 +214,33 @@ class Orders
 	 */
 	public function ajaxChangeStatus()
 	{
-		try
-		{
+		try {
 			$status = trim($_POST['status']);
-			if (empty($status))
-			{
+			if (empty($status)) {
 				throw new \Exception('Empty status');
 			}
 
 			$orderId = (int)$_POST['orderId'];
 
-			if ($orderId < 1)
-			{
+			if ($orderId < 1) {
 				throw new \Exception('Bad order id');
 			}
 
 			/** @var Entity $order */
 			$order = $this->orderService->find($orderId);
 
-			if($this->isAvailbleChange($order->getStatus(), $status))
-			{
+			if($this->isAvailbleChange($order->getStatus(), $status)) {
 				$order->setStatus($status);
 				$this->orderService->save($order);
-				echo json_encode(array('success' => true));
-			}
-			else
-			{
+				ob_start();
+				OrderHelper::renderStatus($order);
+				$html = ob_get_clean();
+				echo json_encode(array('success' => true, 'html' => $html));
+			} else {
 				throw new \Exception('Not possible');
 			}
-		} catch (\Exception $e)
-		{
-			echo json_encode(array('status' => false, 'msg' => $e->getMessage()));
+		} catch (\Exception $e) {
+			echo json_encode(array('status' => false, 'error' => $e->getMessage()));
 		}
 		exit;
 	}

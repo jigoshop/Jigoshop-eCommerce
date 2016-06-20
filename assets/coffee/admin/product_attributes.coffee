@@ -75,7 +75,7 @@ class AdminProductAttributes
   configureAttribute: (event) ->
     $parent = jQuery(event.target).closest('tr')
     $options = jQuery('tr.options[data-id=' + $parent.data('id') + ']').toggle()
-  addAttributeOption: (event) =>
+  addAttributeOption: (event) ->
     $parent = jQuery(event.target).closest('tr.options')
     $container = jQuery('tbody', $parent)
     $label = jQuery('input.new-option-label', $parent)

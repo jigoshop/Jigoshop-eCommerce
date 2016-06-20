@@ -2,7 +2,7 @@ class AdminEmail
 
   constructor: ->
     jQuery('#jigoshop_email_actions').on 'change', @updateVariables
-  updateVariables: (event) =>
+  updateVariables: (event) ->
     event.preventDefault()
     $parent = jQuery(event.target).closest('div.jigoshop')
     jQuery.ajax

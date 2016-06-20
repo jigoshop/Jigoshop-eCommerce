@@ -8,7 +8,7 @@ class AdminProducts
   constructor: (@params) ->
     jQuery('.product-featured').on 'click', @featureProduct
 
-  featureProduct: (event) =>
+  featureProduct: (event) ->
     event.preventDefault()
     $button = jQuery(event.target).closest('a.product-featured')
     jQuery.ajax
