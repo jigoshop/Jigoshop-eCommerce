@@ -7,6 +7,7 @@ use Jigoshop\Core\Types;
 use Jigoshop\Entity\Product\Attribute;
 use Jigoshop\Entity\Product\Simple;
 use Jigoshop\Entity\Product\Variable;
+use Jigoshop\Entity\Product\Virtual;
 use Jigoshop\Exception;
 use Jigoshop\Helper\Render;
 use Jigoshop\Helper\Scripts;
@@ -47,10 +48,10 @@ class Product
 
         $this->menu = $menu = $this->wp->applyFilters('jigoshop\admin\product\menu', array(
             'general' => array('label' => __('General', 'jigoshop'), 'visible' => true),
-            'advanced' => array('label' => __('Advanced', 'jigoshop'), 'visible' => array(Simple::TYPE)),
+            'advanced' => array('label' => __('Advanced', 'jigoshop'), 'visible' => array(Simple::TYPE, Virtual::TYPE)),
             'attributes' => array('label' => __('Attributes', 'jigoshop'), 'visible' => true),
-            'stock' => array('label' => __('Stock', 'jigoshop'), 'visible' => array(Simple::TYPE)),
-            'sales' => array('label' => __('Sales', 'jigoshop'), 'visible' => array(Simple::TYPE)),
+            'stock' => array('label' => __('Stock', 'jigoshop'), 'visible' => array(Simple::TYPE, Virtual::TYPE)),
+            'sales' => array('label' => __('Sales', 'jigoshop'), 'visible' => array(Simple::TYPE, Virtual::TYPE)),
         ));
 
         $wp->addAction('admin_enqueue_scripts', function () use ($wp, $menu, $that){
@@ -65,10 +66,10 @@ class Product
                 Scripts::add('jigoshop.vendors.datepicker', JIGOSHOP_URL . '/assets/js/vendors/datepicker.js', array('jquery', 'jigoshop.admin.product'));
                 Scripts::add('jigoshop.admin.product', JIGOSHOP_URL . '/assets/js/admin/product.js', array(
                     'jquery',
-                    'jigoshop.helpers'
+                    'jigoshop.helpers',
+                    'jquery-ui-sortable'
                 ));
                 Scripts::localize('jigoshop.admin.product', 'jigoshop_admin_product', array(
-                    'ajax' => $wp->getAjaxUrl(),
                     'i18n' => array(
                         'saved' => __('Changes saved.', 'jigoshop'),
                         'attribute_removed' => __('Attribute successfully removed.', 'jigoshop'),
@@ -129,7 +130,7 @@ class Product
             'attributes' => array(
                 'product' => $product,
                 'availableAttributes' => $attributes,
-                'attributes' => $this->productService->getAttributes($product->getId()),
+                'attributes' => $product->getAttributes(),
             ),
             'stock' => array(
                 'product' => $product,

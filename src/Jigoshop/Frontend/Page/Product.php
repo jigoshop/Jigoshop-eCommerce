@@ -192,7 +192,7 @@ class Product implements PageInterface
 	 */
 	public function productImages($product)
 	{
-		$imageClasses = apply_filters('jigoshop\product\image_classes', array(), $product);
+		$imageClasses = apply_filters('jigoshop\product\image_classes', array('featured-image'), $product);
 		$featured = ProductHelper::getFeaturedImage($product, Options::IMAGE_LARGE);
 		$featuredUrl = ProductHelper::hasFeaturedImage($product) ? $this->wp->wpGetAttachmentUrl($this->wp->getPostThumbnailId($product->getId())) : '';
 		$thumbnails = $this->productService->getAttachments($product, Options::IMAGE_THUMBNAIL)['gallery'];

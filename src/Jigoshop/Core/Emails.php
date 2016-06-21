@@ -28,12 +28,12 @@ class Emails
 		$this->emailService = $emailService;
 
 		$wp->addAction('init', array($this, 'registerMails'), 100);
-		$wp->addAction('order_status_pending_to_processing', array($this, 'orderPendingToProcessing'));
-		$wp->addAction('order_status_pending_to_completed', array($this, 'orderPendingToCompleted'));
-		$wp->addAction('order_status_pending_to_on_hold', array($this, 'orderPendingToOnHold'));
-		$wp->addAction('order_status_on_hold_to_processing', array($this, 'orderOnHoldToProcessing'));
-		$wp->addAction('order_status_completed', array($this, 'orderCompleted'));
-		$wp->addAction('order_status_refunded', array($this, 'orderRefunded'));
+		$wp->addAction('jigoshop\order\\'.Order\Status::PENDING.'_to_'.Order\Status::PROCESSING, array($this, 'orderPendingToProcessing'));
+		$wp->addAction('jigoshop\order\\'.Order\Status::PENDING.'_to_'.Order\Status::COMPLETED, array($this, 'orderPendingToCompleted'));
+		$wp->addAction('jigoshop\order\\'.Order\Status::PENDING.'_to_'.Order\Status::ON_HOLD, array($this, 'orderPendingToOnHold'));
+		$wp->addAction('jigoshop\order\\'.Order\Status::ON_HOLD.'_to_'.Order\Status::PROCESSING, array($this, 'orderOnHoldToProcessing'));
+		$wp->addAction('jigoshop\order\\'.Order\Status::COMPLETED, array($this, 'orderCompleted'));
+		$wp->addAction('jigoshop\order\\'.Order\Status::REFUNDED, array($this, 'orderRefunded'));
 		$wp->addAction('jigoshop_low_stock_notification', array($this, 'productLowStock'));
 		$wp->addAction('jigoshop_no_stock_notification', array($this, 'productOutOfStock'));
 		$wp->addAction('jigoshop_product_on_backorders_notification', array($this, 'productBackorders'));

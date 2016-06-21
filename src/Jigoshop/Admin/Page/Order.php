@@ -57,7 +57,6 @@ class Order
 					'jigoshop.helpers'
 				));
 				Scripts::localize('jigoshop.admin.order', 'jigoshop_admin_order', array(
-					'ajax' => $wp->getAjaxUrl(),
 					'tax_shipping' => $options->get('tax.shipping'),
 					'ship_to_billing' => $options->get('shipping.only_to_billing'),
 				));

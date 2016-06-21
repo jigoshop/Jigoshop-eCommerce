@@ -84,7 +84,6 @@ class Cart implements PageInterface
 
 
 		Scripts::localize('jigoshop.shop.cart', 'jigoshop_cart', array(
-			'ajax' => $wp->getAjaxUrl(),
 			'assets' => JIGOSHOP_URL.'/assets',
 			'i18n' => array(
 				'loading' => __('Loading...', 'jigoshop'),
@@ -300,7 +299,7 @@ class Cart implements PageInterface
 					throw new Exception(__('Method rate is required.', 'jigoshop'));
 				}
 
-				$method->setShippingRate((int)$_POST['rate']);
+				$method->setShippingRate($_POST['rate']);
 			}
 
 			$cart->setShippingMethod($method);

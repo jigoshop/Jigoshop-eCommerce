@@ -223,6 +223,30 @@ class Integration
         self::$classLoader->addPsr4($namespace, array($dir));
     }
 
+    public static function addComposerFiles($dir)
+    {
+        if(file_exists($dir.'/vendor/composer/autoload_namespaces.php')) {
+            $map = require $dir.'/vendor/composer/autoload_namespaces.php';
+            foreach ($map as $namespace => $path) {
+                self::$classLoader->set($namespace, $path);
+            }
+        }
+
+        if(file_exists($dir.'/vendor/composer/autoload_psr4.php')) {
+            $map = require $dir.'/vendor/composer/autoload_psr4.php';
+            foreach ($map as $namespace => $path) {
+                self::$classLoader->setPsr4($namespace, $path);
+            }
+        }
+
+        if(file_exists($dir.'/vendor/composer/autoload_classmap.php')) {
+            $classMap = require $dir.'/vendor/composer/autoload_classmap.php';
+            if ($classMap) {
+                self::$classLoader->addClassMap($classMap);
+            }
+        }
+    }
+
     public static function setClassLoader($classLoader)
     {
         self::$classLoader = $classLoader;

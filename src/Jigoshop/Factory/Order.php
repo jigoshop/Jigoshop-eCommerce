@@ -11,6 +11,8 @@ use Jigoshop\Entity\Order as Entity;
 use Jigoshop\Entity\OrderInterface;
 use Jigoshop\Exception;
 use Jigoshop\Helper\Product;
+use Jigoshop\Shipping\Method as ShippingMethod;
+use Jigoshop\Payment\Method as PaymentMethod;
 use Jigoshop\Service\CouponServiceInterface;
 use Jigoshop\Service\CustomerServiceInterface;
 use Jigoshop\Service\PaymentServiceInterface;
@@ -72,7 +74,7 @@ class Order implements EntityFactoryInterface
 
         // Support for our own post types and "Publish" button.
         if (isset($_POST['original_post_status'])) {
-            $post->post_status = $_POST['jigoshop_order']['status'];
+            $post->post_status = $_POST['original_post_status'];
         }
 
         $order = $this->fetch($post);
@@ -80,6 +82,9 @@ class Order implements EntityFactoryInterface
             'updated_at' => time(),
         );
 
+        if (isset($_POST['jigoshop_order']['status'])) {
+            $order->setStatus($_POST['jigoshop_order']['status']);
+        }
         if (isset($_POST['post_excerpt'])) {
             $data['customer_note'] = trim($_POST['post_excerpt']);
         }
@@ -215,7 +220,7 @@ class Order implements EntityFactoryInterface
         if (!empty($data['customer']) && is_numeric($data['customer'])) {
             $data['customer'] = $this->customerService->find($data['customer']);
         }
-        
+
         if (isset($data['customer'])) {
 
             if (!empty($data['customer'])) {
@@ -223,7 +228,7 @@ class Order implements EntityFactoryInterface
             } else {
                 $data['customer'] = new CustomerEntity\Guest();
             }
-            
+
             if (isset($data['billing_address'])) {
                 $data['billing_address'] = array_merge(
                     array_flip(array_keys(Product::getBasicBillingFields())),
@@ -331,13 +336,13 @@ class Order implements EntityFactoryInterface
         $order->restoreState($state);
 
         $shipping = $cart->getShippingMethod();
-        if ($shipping !== null) {
+        if ($shipping && $shipping instanceof ShippingMethod) {
             $order->setShippingMethod($shipping);
             $order->setShippingTax($cart->getShippingTax());
         }
 
         $payment = $cart->getPaymentMethod();
-        if ($payment !== null) {
+        if ($payment && $payment instanceof PaymentMethod) {
             $order->setPaymentMethod($payment);
         }
 

@@ -107,7 +107,7 @@ class Cheque implements Method
 	 */
 	public function process($order)
 	{
-		$order->setStatus(Order\Status::ON_HOLD, __('Waiting for cheque to arrive.', 'jigoshop'));
+		$order->setStatus(Order\Status::PENDING, __('Waiting for cheque to arrive.', 'jigoshop'));
 
 		return '';
 	}

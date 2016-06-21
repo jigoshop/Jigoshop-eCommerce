@@ -43,6 +43,7 @@ class Core
 		Styles::register('prettyphoto', JIGOSHOP_URL.'/assets/css/prettyPhoto.css');
 		Scripts::register('jigoshop.helpers', JIGOSHOP_URL.'/assets/js/helpers.js', array('jquery'));
 		Scripts::register('jigoshop.helpers.ajax_search', JIGOSHOP_URL.'/assets/js/helpers/ajax_search.js', array('jigoshop.helpers'));
+		Scripts::register('jigoshop.helpers.payment', JIGOSHOP_URL.'/assets/js/helpers/payment.js', array('jigoshop.helpers', 'jquery-blockui'));
 		Scripts::register('jigoshop.media', JIGOSHOP_URL.'/assets/js/media.js', array('jquery'));
 		Scripts::register('jigoshop.shop', JIGOSHOP_URL.'/assets/js/shop.js', array(
 			'jquery',
@@ -50,6 +51,10 @@ class Core
 		));
 		Scripts::register('jquery-blockui', '//cdnjs.cloudflare.com/ajax/libs/jquery.blockUI/2.66.0-2013.10.09/jquery.blockUI.min.js', array('jquery'));
 		Scripts::register('prettyphoto', JIGOSHOP_URL.'/assets/js/jquery.prettyPhoto.js');
+		Scripts::localize('jigoshop.helpers', 'jigoshop_helpers', array(
+			'assets' => JIGOSHOP_URL.'/assets',
+			'ajaxUrl' => admin_url('admin-ajax.php'),
+		));
 	}
 
 	/**

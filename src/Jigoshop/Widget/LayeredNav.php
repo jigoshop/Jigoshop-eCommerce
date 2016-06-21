@@ -16,7 +16,7 @@ class LayeredNav extends \WP_Widget
 	/** @var ProductServiceInterface */
 	private static $productService;
 	/** @var array */
-	private static $parameters;
+	private static $parameters = array();
 
 	/** @var array */
 	private $products;

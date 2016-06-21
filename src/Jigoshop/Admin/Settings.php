@@ -243,12 +243,11 @@ class Settings implements PageInterface
 	 */
 	public function validate($input)
 	{
-		$options = $this->options->getAll();
 		$currentTab = $this->getCurrentTab();
 		/** @var TabInterface $tab */
 		$tab = $this->tabs[$currentTab];
-		$options[$currentTab] = $tab->validate($input);
+		$this->options->update($currentTab, $tab->validate($input));
 
-		return $options;
+		return $this->options->getAll();
 	}
 }

@@ -111,6 +111,7 @@ class Product implements EntityFactoryInterface
 				$_POST['product']['tax_classes'] = array();
 			}
 
+			$_POST['product']['attribute_order'] = array_keys($_POST['product']['attributes']);
 			unset($_POST['product']['attributes']);
 
 			if(isset($_POST['product']['stock_manage']))
@@ -176,6 +177,20 @@ class Product implements EntityFactoryInterface
 				$state['tax_classes'] = unserialize($state['tax_classes']);
 			}
 
+			if (isset($state['attribute_order']) && $state['attribute_order']) {
+				$state['attribute_order'] = maybe_unserialize($state['attribute_order']);
+				$attributes = array();
+				foreach($state['attribute_order'] as $attributeId) {
+					$attributes[$attributeId] = $state['attributes'][$attributeId];
+				}
+				foreach ($state['attributes'] as $attributeId => $attribute) {
+					if(!isset($attributes[$attributeId])) {
+						$attributes[$attributeId] = $attribute;
+					}
+				}
+				$state['attributes'] = $attributes;
+			}
+			
 			$product->restoreState($state);
 		}
 

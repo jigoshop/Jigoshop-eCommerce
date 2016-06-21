@@ -316,6 +316,10 @@ class CartService implements CartServiceInterface
 	{
 		// TODO: Support for transients?
 		$cart->recalculateCoupons();
+		if($cart->getShippingMethod() == null) {
+			$cart->setShippingMethod($this->shippingService->getCheapest($cart));
+		}
+		
 		$_SESSION[self::CART][$cart->getId()] = $cart->getStateToSave();
 	}
 

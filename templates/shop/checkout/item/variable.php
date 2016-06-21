@@ -19,7 +19,6 @@ $price = $showWithTax ? $item->getPrice() + $item->getTax() / $item->getQuantity
 <tr data-id="<?php echo $key; ?>" data-product="<?php echo $product->getId(); ?>">
 	<td class="product-thumbnail"><a href="<?php echo $url; ?>"><?php echo Product::getFeaturedImage($product, 'shop_tiny'); ?></a></td>
 	<td class="product-name">
-	<td class="product-name"></td>
 		<a href="<?php echo $url; ?>"><?php echo apply_filters('jigoshop\template\shop\checkout\product_title', $product->getName(), $product, $item); ?></a>
 		<?php echo Product::getVariation($variation, $item); ?>
 		<?php do_action('jigoshop\template\shop\checkout\after_product_title', $product, $item); ?>

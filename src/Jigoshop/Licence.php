@@ -302,7 +302,7 @@ class Licence
 		/*$active = $this->is_active();
 
 		if (!$active) {
-			add_action('admin_notices', array($this, 'display_inactive_plugin_warning'));
+			add_action('admin_notices', array($this, 'displayWarnings'));
 			deactivate_plugins( plugin_basename( __FILE__ );
 		}
 

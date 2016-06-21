@@ -67,7 +67,8 @@ class Email implements EntityFactoryInterface
 			$email->setText($helpers->parsePostBody($_POST['content']));
 
 			$availableActions = $this->getActions();
-			$_POST['jigoshop_email']['actions'] = array_intersect($_POST['jigoshop_email']['actions'], $availableActions);
+
+			$_POST['jigoshop_email']['actions'] = array_intersect($_POST['jigoshop_email']['actions'], array_keys($availableActions));
 			$email->restoreState($_POST['jigoshop_email']);
 		}
 

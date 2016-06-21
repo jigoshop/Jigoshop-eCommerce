@@ -78,7 +78,6 @@ class Checkout implements PageInterface
 			'jigoshop.vendors.bs_tab_trans_tooltip_collapse',
 		));
 		Scripts::localize('jigoshop.checkout', 'jigoshop_checkout', array(
-			'ajax' => $this->wp->getAjaxUrl(),
 			'assets' => JIGOSHOP_URL.'/assets',
 			'i18n' => array(
 				'loading' => __('Loading...', 'jigoshop'),
@@ -381,13 +380,13 @@ class Checkout implements PageInterface
 				$order = $this->orderService->createFromCart($cart);
 				/** @var Order $order */
 				$order = $this->wp->applyFilters('jigoshop\checkout\order', $order);
-				$this->orderService->save($order);
-				$this->cartService->remove($cart);
 
 				$url = '';
 				if ($isPaymentRequired) {
 					$url = $payment->process($order);
 				}
+				$this->orderService->save($order);
+				$this->cartService->remove($cart);
 
 				// Redirect to thank you page
 				if (empty($url)) {

@@ -34,6 +34,7 @@ abstract class Product implements EntityInterface, Product\Taxable
 	private $visibility = self::VISIBILITY_PUBLIC;
 	private $featured;
 	private $attributes;
+	private $attributeOrder;
 	private $attachments;
 
 	protected $dirtyFields = array();
@@ -430,6 +431,22 @@ abstract class Product implements EntityInterface, Product\Taxable
 	}
 
 	/**
+	 * @return mixed
+	 */
+	public function getAttributeOrder()
+	{
+		return $this->attributeOrder;
+	}
+
+	/**
+	 * @param mixed $attributeOrder
+	 */
+	public function setAttributeOrder($attributeOrder)
+	{
+		$this->attributeOrder = $attributeOrder;
+	}
+
+	/**
 	 * @param string $attribute Attribute name to find.
 	 *
 	 * @return int Key in attributes array.
@@ -487,6 +504,7 @@ abstract class Product implements EntityInterface, Product\Taxable
 		$toSave['size_length'] = $this->size->getLength();
 
 		$toSave['attributes'] = $this->attributes;
+		$toSave['attribute_order'] = $this->attributeOrder;
 		$toSave['attachments'] = $this->attachments;
 
 		return $toSave;
@@ -552,6 +570,9 @@ abstract class Product implements EntityInterface, Product\Taxable
 		}
 		if (isset($state['attributes'])) {
 			$this->attributes = $state['attributes'];
+		}
+		if (isset($state['attribute_order'])) {
+			$this->attributeOrder = $state['attribute_order'];
 		}
 		if (isset($state['attachments'])) {
 			$this->attachments = $state['attachments'];
