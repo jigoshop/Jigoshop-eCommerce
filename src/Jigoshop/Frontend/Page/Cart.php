@@ -186,23 +186,26 @@ class Cart implements PageInterface
 				foreach ($method->getRates() as $rate) {
 					/** @var $rate Rate */
 					$shipping[$method->getId().'-'.$rate->getId()] = $method->isEnabled() ? $rate->calculate($cart) : -1;
-
 					if ($method->isEnabled()) {
 						$shippingHtml[$method->getId().'-'.$rate->getId()] = array(
 							'price' => Product::formatPrice($rate->calculate($cart)),
 							'html' => Render::get('shop/cart/shipping/rate', array('method' => $method, 'rate' => $rate, 'cart' => $cart)),
 						);
+						$cart->setShippingMethod($method);
 					}
 				}
 			} else {
 				$shipping[$method->getId()] = $method->isEnabled() ? $method->calculate($cart) : -1;
-
 				if ($method->isEnabled()) {
 					$shippingHtml[$method->getId()] = array(
-						'price' => Product::formatPrice($method->calculate($cart)),
+						'price' => Product::formatPrice($cart->getShippingPrice()),
 						'html' => Render::get('shop/cart/shipping/method', array('method' => $method, 'cart' => $cart)),
 					);
 				}
+			}
+
+			if($cart->getShippingMethod() instanceof $method) {
+				$cart->setShippingMethod($method);
 			}
 		}
 
