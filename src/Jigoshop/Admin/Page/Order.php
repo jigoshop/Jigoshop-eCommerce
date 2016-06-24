@@ -166,7 +166,7 @@ class Order
 			/** @var $method Shipping\Method */
 			if ($method instanceof Shipping\MultipleMethod) {
 				/** @var $method Shipping\MultipleMethod */
-				foreach ($method->getRates() as $rate) {
+				foreach ($method->getRates($order) as $rate) {
 					/** @var $rate Shipping\Rate */
 					$shipping[$method->getId().'-'.$rate->getId()] = $method->isEnabled() ? $rate->calculate($order) : -1;
 

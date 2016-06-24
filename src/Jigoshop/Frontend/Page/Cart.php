@@ -183,7 +183,7 @@ class Cart implements PageInterface
 			/** @var $method Method */
 			if ($method instanceof MultipleMethod) {
 				/** @var $method MultipleMethod */
-				foreach ($method->getRates() as $rate) {
+				foreach ($method->getRates($cart) as $rate) {
 					/** @var $rate Rate */
 					$shipping[$method->getId().'-'.$rate->getId()] = $method->isEnabled() ? $rate->calculate($cart) : -1;
 					if ($method->isEnabled()) {

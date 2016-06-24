@@ -2,14 +2,18 @@
 
 namespace Jigoshop\Shipping;
 
+use Jigoshop\Entity\OrderInterface;
+
 interface MultipleMethod extends Method
 {
 	/**
 	 * Returns list of available shipping rates.
+	 * 
+	 * @param OrderInterface $order
 	 *
 	 * @return array List of available shipping rates.
 	 */
-	public function getRates();
+	public function getRates($order);
 
 	/**
 	 * @param $rate int Rate to use.
