@@ -157,6 +157,7 @@ class Cart
           $item.remove()
         else
           jQuery('.product-subtotal', $item).html(result.html.item_subtotal)
+          jQuery('.product-price', $item).html(result.html.item_price)
 
         jQuery('td#product-subtotal').html(result.html.product_subtotal)
         @_updateTotals(result.html.total, result.html.subtotal)
