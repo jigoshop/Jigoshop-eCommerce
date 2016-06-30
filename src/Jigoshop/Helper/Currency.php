@@ -342,6 +342,22 @@ class Currency
 		return $countries;
 	}
 
+	/**
+	 * @param string $symbol
+	 */
+	public static function setSymbol($symbol)
+	{
+		self::$symbol = $symbol;
+	}
+
+	/**
+	 * @param string $code
+	 */
+	public static function setCode($code)
+	{
+		self::$code = $code;
+	}
+
 	public static function positions()
 	{
 		$symbol = self::symbol();
