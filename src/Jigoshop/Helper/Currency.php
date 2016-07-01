@@ -358,6 +358,14 @@ class Currency
 		self::$code = $code;
 	}
 
+	/**
+	 * @param string $format
+	 */
+	public static function setFormat($format)
+	{
+		self::$format = $format;
+	}
+
 	public static function positions()
 	{
 		$symbol = self::symbol();
