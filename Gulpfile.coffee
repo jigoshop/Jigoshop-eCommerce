@@ -16,6 +16,7 @@ replace = require('gulp-replace')
 cssFiles =
   select2: ['assets/bower/select2/select2.css', 'assets/bower/select2/select2-bootstrap.css']
   colorbox: ['assets/bower/jquery-colorbox/example1/colorbox.css']
+  tokenfield: ['assets/bower/bootstrap-tokenfield/bootstrap-tokenfield/bootstrap-tokenfield.css']
 
 # JS
 jsFiles =
