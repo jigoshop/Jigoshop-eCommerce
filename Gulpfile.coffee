@@ -10,7 +10,7 @@ uglify = require('gulp-uglify')
 rimraf = require('gulp-rimraf')
 replace = require('gulp-replace')
 
-# Deklaracja źródeł
+# Sources declaration
 
 # CSS
 cssFiles =
@@ -22,6 +22,7 @@ jsFiles =
   select2: ['assets/bower/select2/select2.js']
   bs_tab_trans_tooltip_collapse: ['assets/bower/bootstrap/js/{tab,transition,tooltip,collapse}.js']
   datepicker: ['assets/bower/bootstrap-datepicker/js/bootstrap-datepicker.js']
+  tokenfield: ['assets/bower/bootstrap-tokenfield/bootstrap-tokenfield/bootstrap-tokenfield.js']
   colorbox: ['assets/bower/jquery-colorbox/jquery.colorbox-min.js']
   flot: ['node_modules/jquery-flot/{jquery.flot,jquery.flot.stack,jquery.flot.pie,jquery.flot.resize,jquery.flot.time}.js']
 
@@ -31,7 +32,7 @@ coffeeFiles =
 
 defaultTask = ['scripts', 'styles', 'fonts']
 
-# Przetwarzanie
+# Processing
 
 # CSS
 cssTasks = Object.keys(cssFiles)
