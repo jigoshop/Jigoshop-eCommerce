@@ -178,7 +178,7 @@ class Emails
 			'shipping' => ProductHelper::formatPrice($order->getShippingPrice()),
 			'shipping_cost' => ProductHelper::formatPrice($order->getShippingPrice()),
 			'shipping_cost_raw' => $order->getShippingPrice(),
-			'shipping_method' => $order->getShippingMethod(),
+			'shipping_method' => $order->getShippingMethod()->getName(),
 			'discount' => ProductHelper::formatPrice($order->getDiscount()),
 			'total_tax' => ProductHelper::formatPrice($order->getTotalTax()),
 			'total' => ProductHelper::formatPrice($order->getTotal()),
