@@ -37,6 +37,7 @@ use Jigoshop\Helper\Render;
 				<?php Render::output('user/account/address', array('address' => $customer->getShippingAddress())); ?>
 			</div>
 		</div>
+	<?php do_action('jigoshop\user\account\primary_panels', $customer); ?>
 </div>
 <div class="col-md-4">
 	<div class="panel panel-default">
@@ -72,5 +73,6 @@ use Jigoshop\Helper\Render;
 			</li>
 		</ul>
 	</div>
+	<?php do_action('jigoshop\user\account\secondary_panels', $customer); ?>
 </div>
 <?php do_action('jigoshop\user\account', $customer);
