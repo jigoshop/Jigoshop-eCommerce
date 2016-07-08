@@ -706,10 +706,10 @@ class Order implements OrderInterface
 	 */
 	public function addItem(Item $item)
 	{
+		$this->wp->doAction('jigoshop\order\add_item', $item, $this);
 		$this->items[$item->getKey()] = $item;
 		$this->productSubtotal += $item->getCost();
 		$this->subtotal += $item->getCost();
-		$this->wp->doAction('jigoshop\order\add_item', $item, $this);
 		$this->total += $item->getCost() + $item->getTax();
 		$this->totalTax = null;
 		$this->totalCombinedTax = null;

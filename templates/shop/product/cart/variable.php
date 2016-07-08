@@ -21,12 +21,12 @@ use Jigoshop\Helper\Product;
 	<?php endforeach; ?>
 	<div id="add-to-cart-buttons">
 		<p class="price"><?php _e('Current price:', 'jigoshop'); ?> <span></span></p>
-		<?php \Jigoshop\Helper\Forms::text(array(
+		<?php \Jigoshop\Helper\Forms::number(array(
 			'id' => 'product-quantity',
 			'name' => 'quantity',
-			'type' => 'number',
 			'label' => __('Quantity', 'jigoshop'),
 			'value' => 1,
+			'min' => 1,
 		)); ?>
 		<input type="hidden" name="variation_id" id="variation-id" value="" />
 		<button class="btn btn-primary" type="submit"><?php _e('Add to cart', 'jigoshop'); ?></button>

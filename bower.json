@@ -6,6 +6,7 @@
     "bootstrap-switch": "3.*",
     "highlight-js": "8.*",
     "select2": "3.5.*",
+    "bootstrap-tokenfield": "0.12.*",
     "bootstrap-datepicker": "1.*",
 	  "jquery-colorbox": "1.5.*"
   },
