@@ -132,7 +132,8 @@ class Settings implements PageInterface
 		// Workaround for PHP pre-5.4
 		$that = $this;
 		/** @var TabInterface $tab */
-		foreach ($tab->getSections() as $section) {
+		$sections = $this->wp->applyFilters('jigoshop/admin/settings/tab/' . $tab->getSlug(), $tab->getSections(), $tab);
+		foreach ($sections as $section) {
 			$this->wp->addSettingsSection($section['id'], $section['title'], function () use ($tab, $section, $that){
 				$that->displaySection($tab, $section);
 			}, self::NAME);

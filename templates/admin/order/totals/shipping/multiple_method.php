@@ -7,6 +7,6 @@ use Jigoshop\Helper\Product;
  * @var $order \Jigoshop\Entity\Order Order to display.
  */
 ?>
-<?php foreach ($method->getRates() as $rate): /** @var $rate \Jigoshop\Shipping\Rate */ ?>
+<?php foreach ($method->getRates($order) as $rate): /** @var $rate \Jigoshop\Shipping\Rate */ ?>
 	<?php \Jigoshop\Helper\Render::output('admin/order/totals/shipping/rate', array('method' => $method, 'rate' => $rate, 'order' => $order)); ?>
 <?php endforeach; ?>
