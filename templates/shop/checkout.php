@@ -224,4 +224,3 @@ use Jigoshop\Helper\Tax;
 	<button class="btn btn-success pull-right clearfix" name="action" value="purchase" type="submit"><?php _e('Purchase and pay', 'jigoshop'); ?></button>
 	<?php do_action('jigoshop\template\checkout\after', $cart); ?>
 </form>
-
