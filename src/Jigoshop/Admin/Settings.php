@@ -215,8 +215,10 @@ class Settings implements PageInterface
 				echo call_user_func($field['display'], $field);
 				break;
 			case 'text':
-			case 'number':
 				Forms::text($field);
+				break;
+			case 'number':
+				Forms::number($field);
 				break;
 			case 'select':
 				Forms::select($field);
