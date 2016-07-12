@@ -61,5 +61,6 @@ $orderTax = $order->getTax();
 			'size' => 12,
 			'value' => Product::formatPrice($order->getTotal())
 		)); ?>
+		<?php do_action('jigoshop\admin\order\totalsBox\after_total', $order); ?>
 	</div>
 </div>
