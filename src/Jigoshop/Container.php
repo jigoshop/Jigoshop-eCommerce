@@ -118,7 +118,7 @@ class Container
 
 		$triggers = $this->triggers->get($key);
 		foreach ($triggers as $trigger) {
-			$object = $this->get($trigger['instance']);
+			$object = $trigger['instance'] ? $this->get($trigger['instance']) : '';
 			$method = $trigger['method'];
 			$params = array();
 			foreach ($trigger['params'] as $param) {
