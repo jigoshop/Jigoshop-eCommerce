@@ -24,6 +24,7 @@ class MainConfiguration implements ConfigurationInterface
 	public function initServices(Services $services)
 	{
 		$services->setDatails('wpal', 'WPAL\Wordpress', array());
+		$services->setDatails('parsedown', 'Parsedown', array());
 		$services->setDatails('jigoshop.product_type.simple', 'Jigoshop\Core\Types\Product\Simple', array());
 		$services->setDatails('jigoshop.product_type.virtual', 'Jigoshop\Core\Types\Product\Virtual', array());
 		$services->setDatails('jigoshop.product_type.variable.initializer', 'Jigoshop\Core\Installer\Product\Variable', array());
