@@ -212,7 +212,7 @@ class Downloadable implements Type
 	 */
 	public function addProductMenu($menu)
 	{
-		$menu['downloads'] = array('label' => __('Downloads', 'jigoshop'), 'visible' => array(Product\Downloadable::TYPE));
+		$menu['download'] = array('label' => __('Downloads', 'jigoshop'), 'visible' => array(Product\Downloadable::TYPE));
 		$menu['advanced']['visible'][] = Product\Downloadable::TYPE;
 		$menu['stock']['visible'][] = Product\Downloadable::TYPE;
 		$menu['sales']['visible'][] = Product\Downloadable::TYPE;
@@ -230,7 +230,7 @@ class Downloadable implements Type
 	 */
 	public function addProductTab($tabs, $product)
 	{
-		$tabs['downloads'] = array(
+		$tabs['download'] = array(
 			'product' => $product,
 		);
 
