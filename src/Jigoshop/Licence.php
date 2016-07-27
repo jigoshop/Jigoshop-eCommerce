@@ -35,8 +35,6 @@ class Licence
 	 */
 	public function __construct($file, $identifier, $home_shop_url)
 	{
-		return;
-		//TODO uncomment this on release
 		/*$info = get_file_data($file, array('Title' => 'Plugin Name', 'Version' => 'Version', 'Url' => 'Plugin URI'), 'plugin');
 
 		$this->identifier = $identifier;
@@ -51,7 +49,7 @@ class Licence
 		$this->home_shop_url = $home_shop_url;
 
 //		if (is_ssl()) { // TODO: It should be enabled with proper options (i.e. require secure connection).
-		$this->home_shop_url = str_replace('http://', 'https://', $this->home_shop_url);
+		//$this->home_shop_url = str_replace('http://', 'https://', $this->home_shop_url);
 //		}
 		if ($this->home_shop_url[strlen($this->home_shop_url) - 1] !== '/') {
 			$this->home_shop_url .= '/';
@@ -104,7 +102,7 @@ class Licence
 
 		foreach ($_POST['licence_keys'] as $product_id => $licence_key) {
 			$licence_key = trim($licence_key);
-			$activation_email = (isset($_POST['licence_emails'][$product_id]) && is_email($_POST['licence_emails'][$product_id])) ?
+			$activation_email = isset($_POST['licence_emails'][$product_id]) && $_POST['licence_emails'][$product_id] ?
 				$_POST['licence_emails'][$product_id] : $this->get_current_user_email();
 			$licence_active = (isset($keys[$product_id]['status']) && $keys[$product_id]['status']);
 
@@ -140,8 +138,7 @@ class Licence
 					$keys[$product_id] = array(
 						'licence_key' => $licence_key,
 						'status' => true,
-						'email' => (isset($_POST['licence_emails'][$product_id]) && is_email($_POST['licence_emails'][$product_id])) ?
-							$_POST['licence_emails'][$product_id] : ''
+						'email' => $activation_email
 					);
 				} else {
 					$messages[] = array(
@@ -298,15 +295,14 @@ class Licence
 	public function isActive()
 	{
 		return true;
-		//TODO: uncomment this
-		/*$active = $this->is_active();
+		$active = $this->is_active();
 
 		if (!$active) {
 			add_action('admin_notices', array($this, 'displayWarnings'));
-			deactivate_plugins( plugin_basename( __FILE__ );
+			//deactivate_plugins( plugin_basename( __FILE__ ));
 		}
 
-		return $active;*/
+		return $active;
 	}
 
 	private function is_active()

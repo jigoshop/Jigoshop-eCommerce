@@ -49,10 +49,12 @@ class Api
 		$this->wp->addRewriteEndpoint(self::API_ENDPOINT, EP_ALL);
 	}
 
-	public function parseRequest()
+    /**
+     * @param \WP_Query $query
+     */
+	public function parseRequest($query)
 	{
-		$endpoint = isset($_GET[self::API_ENDPOINT]) ? strtolower(esc_attr($_GET[self::API_ENDPOINT])) : null;
-
+        $endpoint = isset($query->query_vars[self::API_ENDPOINT]) ? $query->query_vars[self::API_ENDPOINT] : null;
 		if (!empty($endpoint)) {
 			if ($this->di->services->exists('jigoshop.api.'.$endpoint)) {
 				ob_start();

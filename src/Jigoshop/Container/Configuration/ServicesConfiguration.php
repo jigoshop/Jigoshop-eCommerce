@@ -23,14 +23,14 @@ class ServicesConfiguration implements ConfigurationInterface
 	 */
 	public function initServices(Services $services)
 	{
-		$services->setDatails('jigoshop.service.order', 'Jigoshop\Service\OrderService', array());
-		$services->setDatails('jigoshop.service.product', 'Jigoshop\Service\ProductService', array());
-		$services->setDatails('jigoshop.service.product.variable', 'Jigoshop\Service\Product\VariableService', array());
-		$services->setDatails('jigoshop.service.tax', 'Jigoshop\Service\TaxService', array());
-		$services->setDatails('jigoshop.service.customer', 'Jigoshop\Service\CustomerService', array());
-		$services->setDatails('jigoshop.service.shipping', 'Jigoshop\Service\ShippingService', array());
-		$services->setDatails('jigoshop.service.payment', 'Jigoshop\Service\PaymentService', array());
-		$services->setDatails('jigoshop.service.cart', 'Jigoshop\Service\CartService', array(
+		$services->setDetails('jigoshop.service.order', 'Jigoshop\Service\OrderService', array());
+		$services->setDetails('jigoshop.service.product', 'Jigoshop\Service\ProductService', array());
+		$services->setDetails('jigoshop.service.product.variable', 'Jigoshop\Service\Product\VariableService', array());
+		$services->setDetails('jigoshop.service.tax', 'Jigoshop\Service\TaxService', array());
+		$services->setDetails('jigoshop.service.customer', 'Jigoshop\Service\CustomerService', array());
+		$services->setDetails('jigoshop.service.shipping', 'Jigoshop\Service\ShippingService', array());
+		$services->setDetails('jigoshop.service.payment', 'Jigoshop\Service\PaymentService', array());
+		$services->setDetails('jigoshop.service.cart', 'Jigoshop\Service\CartService', array(
 			'wpal',
 			'jigoshop.options',
 			'jigoshop.service.customer',
@@ -39,12 +39,12 @@ class ServicesConfiguration implements ConfigurationInterface
 			'jigoshop.service.payment',
 			'jigoshop.factory.order'
 		));
-		$services->setDatails('jigoshop.service.email', 'Jigoshop\Service\EmailService', array(
+		$services->setDetails('jigoshop.service.email', 'Jigoshop\Service\EmailService', array(
 			'wpal',
 			'jigoshop.options',
 			'jigoshop.factory.email'
 		));
-		$services->setDatails('jigoshop.service.coupon', 'Jigoshop\Service\CouponService', array(
+		$services->setDetails('jigoshop.service.coupon', 'Jigoshop\Service\CouponService', array(
 			'wpal',
 			'jigoshop.options',
 			'jigoshop.factory.coupon'

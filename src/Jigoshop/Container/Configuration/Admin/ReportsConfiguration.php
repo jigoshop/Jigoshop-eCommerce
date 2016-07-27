@@ -23,16 +23,16 @@ class ReportsConfiguration implements ConfigurationInterface
 	 */
 	public function initServices(Services $services)
 	{
-		$services->setDatails('jigoshop.admin.reports.sales', 'Jigoshop\Admin\Reports\SalesTab', array(
+		$services->setDetails('jigoshop.admin.reports.sales', 'Jigoshop\Admin\Reports\SalesTab', array(
 			'wpal',
 			'jigoshop.options'
 		));
-		$services->setDatails('jigoshop.admin.reports.customers', 'Jigoshop\Admin\Reports\CustomersTab', array(
+		$services->setDetails('jigoshop.admin.reports.customers', 'Jigoshop\Admin\Reports\CustomersTab', array(
 			'wpal',
 			'jigoshop.options',
 			'jigoshop.service.order',
 		));
-		$services->setDatails('jigoshop.admin.reports.stock', 'Jigoshop\Admin\Reports\StockTab', array(
+		$services->setDetails('jigoshop.admin.reports.stock', 'Jigoshop\Admin\Reports\StockTab', array(
 			'wpal',
 			'jigoshop.options'
 		));

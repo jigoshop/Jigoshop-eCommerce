@@ -23,26 +23,26 @@ class MigrationConfiguration implements ConfigurationInterface
 	 */
 	public function initServices(Services $services)
 	{
-		$services->setDatails('jigoshop.admin.migration.options', 'Jigoshop\Admin\Migration\Options', array(
+		$services->setDetails('jigoshop.admin.migration.options', 'Jigoshop\Admin\Migration\Options', array(
 			'wpal',
 			'jigoshop.options',
 			'jigoshop.service.tax'
 		));
-		$services->setDatails('jigoshop.admin.migration.coupons', 'Jigoshop\Admin\Migration\Coupons', array(
+		$services->setDetails('jigoshop.admin.migration.coupons', 'Jigoshop\Admin\Migration\Coupons', array(
 			'wpal',
 			'jigoshop.options'
 		));
-		$services->setDatails('jigoshop.admin.migration.emails', 'Jigoshop\Admin\Migration\Emails', array(
+		$services->setDetails('jigoshop.admin.migration.emails', 'Jigoshop\Admin\Migration\Emails', array(
 			'wpal',
 			'jigoshop.options'
 		));
-		$services->setDatails('jigoshop.admin.migration.products', 'Jigoshop\Admin\Migration\Products', array(
+		$services->setDetails('jigoshop.admin.migration.products', 'Jigoshop\Admin\Migration\Products', array(
 			'wpal',
 			'jigoshop.options',
 			'jigoshop.service.product',
 			'jigoshop.service.tax'
 		));
-		$services->setDatails('jigoshop.admin.migration.orders', 'Jigoshop\Admin\Migration\Orders', array(
+		$services->setDetails('jigoshop.admin.migration.orders', 'Jigoshop\Admin\Migration\Orders', array(
 			'wpal',
 			'jigoshop.options',
 			'jigoshop.messages',

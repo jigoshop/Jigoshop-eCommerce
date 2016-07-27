@@ -23,36 +23,36 @@ class SettingsConfiguration implements ConfigurationInterface
 	 */
 	public function initServices(Services $services)
 	{
-		$services->setDatails('jigoshop.admin.settings.general', 'Jigoshop\Admin\Settings\GeneralTab', array(
+		$services->setDetails('jigoshop.admin.settings.general', 'Jigoshop\Admin\Settings\GeneralTab', array(
 			'wpal',
 			'jigoshop.options',
 			'jigoshop.messages'
 		));
-		$services->setDatails('jigoshop.admin.settings.shopping', 'Jigoshop\Admin\Settings\ShoppingTab', array(
+		$services->setDetails('jigoshop.admin.settings.shopping', 'Jigoshop\Admin\Settings\ShoppingTab', array(
 			'wpal',
 			'jigoshop.options',
 			'jigoshop.messages'
 		));
-		$services->setDatails('jigoshop.admin.settings.products', 'Jigoshop\Admin\Settings\ProductsTab', array(
+		$services->setDetails('jigoshop.admin.settings.products', 'Jigoshop\Admin\Settings\ProductsTab', array(
 			'wpal',
 			'jigoshop.options',
 			'jigoshop.messages'
 		));
-		$services->setDatails('jigoshop.admin.settings.taxes', 'Jigoshop\Admin\Settings\TaxesTab', array(
+		$services->setDetails('jigoshop.admin.settings.taxes', 'Jigoshop\Admin\Settings\TaxesTab', array(
 			'wpal',
 			'jigoshop.options',
 			'jigoshop.service.tax',
 			'jigoshop.messages'
 		));
-		$services->setDatails('jigoshop.admin.settings.shipping', 'Jigoshop\Admin\Settings\ShippingTab', array(
+		$services->setDetails('jigoshop.admin.settings.shipping', 'Jigoshop\Admin\Settings\ShippingTab', array(
             'jigoshop.options',
             'jigoshop.service.shipping',
 		));
-		$services->setDatails('jigoshop.admin.settings.payment', 'Jigoshop\Admin\Settings\PaymentTab', array(
+		$services->setDetails('jigoshop.admin.settings.payment', 'Jigoshop\Admin\Settings\PaymentTab', array(
 			'jigoshop.options',
 			'jigoshop.service.payment'
 		));
-		$services->setDatails('jigoshop.admin.settings.advanced', 'Jigoshop\Admin\Settings\AdvancedTab', array(
+		$services->setDetails('jigoshop.admin.settings.advanced', 'Jigoshop\Admin\Settings\AdvancedTab', array(
 			'wpal',
 			'service_container',
 			'jigoshop.options',

@@ -23,21 +23,21 @@ class PaymentConfiguration implements ConfigurationInterface
 	 */
 	public function initServices(Services $services)
 	{
-		$services->setDatails('jigoshop.payment.cheque', 'Jigoshop\Payment\Cheque', array(
+		$services->setDetails('jigoshop.payment.cheque', 'Jigoshop\Payment\Cheque', array(
 			'wpal',
 			'jigoshop.options',
 		));
-		$services->setDatails('jigoshop.payment.on_delivery', 'Jigoshop\Payment\OnDelivery', array(
+		$services->setDetails('jigoshop.payment.on_delivery', 'Jigoshop\Payment\OnDelivery', array(
 			'wpal',
 			'jigoshop.options',
 		));
-		$services->setDatails('jigoshop.payment.paypal', 'Jigoshop\Payment\PayPal', array(
+		$services->setDetails('jigoshop.payment.paypal', 'Jigoshop\Payment\PayPal', array(
 			'wpal',
 			'service_container',
 			'jigoshop.options',
 			'jigoshop.messages',
 		));
-		$services->setDatails('jigoshop.payment.bank_transfer', 'Jigoshop\Payment\BankTransfer', array(
+		$services->setDetails('jigoshop.payment.bank_transfer', 'Jigoshop\Payment\BankTransfer', array(
 			'wpal',
 			'jigoshop.options',
 		));

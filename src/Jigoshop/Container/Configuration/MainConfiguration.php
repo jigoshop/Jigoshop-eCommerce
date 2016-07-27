@@ -23,106 +23,106 @@ class MainConfiguration implements ConfigurationInterface
 	 */
 	public function initServices(Services $services)
 	{
-		$services->setDatails('wpal', 'WPAL\Wordpress', array());
-		$services->setDatails('parsedown', 'Parsedown', array());
-		$services->setDatails('jigoshop.product_type.simple', 'Jigoshop\Core\Types\Product\Simple', array());
-		$services->setDatails('jigoshop.product_type.virtual', 'Jigoshop\Core\Types\Product\Virtual', array());
-		$services->setDatails('jigoshop.product_type.variable.initializer', 'Jigoshop\Core\Installer\Product\Variable', array());
-		$services->setDatails('jigoshop.product_type.external', 'Jigoshop\Core\Types\Product\External', array());
-		$services->setDatails('jigoshop', 'Jigoshop\Core', array(
+		$services->setDetails('wpal', 'WPAL\Wordpress', array());
+		$services->setDetails('parsedown', 'Parsedown', array());
+		$services->setDetails('jigoshop.product_type.simple', 'Jigoshop\Core\Types\Product\Simple', array());
+		$services->setDetails('jigoshop.product_type.virtual', 'Jigoshop\Core\Types\Product\Virtual', array());
+		$services->setDetails('jigoshop.product_type.variable.initializer', 'Jigoshop\Core\Installer\Product\Variable', array());
+		$services->setDetails('jigoshop.product_type.external', 'Jigoshop\Core\Types\Product\External', array());
+		$services->setDetails('jigoshop', 'Jigoshop\Core', array(
 			'wpal',
 			'jigoshop.options',
 			'jigoshop.messages',
 			'jigoshop.template',
 			'jigoshop.widget'
 		));
-		$services->setDatails('jigoshop.integration', 'Jigoshop\Integration', array(
+		$services->setDetails('jigoshop.integration', 'Jigoshop\Integration', array(
 			'di'
 		));
-		$services->setDatails('jigoshop.widget', 'Jigoshop\Widget', array(
+		$services->setDetails('jigoshop.widget', 'Jigoshop\Widget', array(
 			'di',
 			'wpal'
 		));
-		$services->setDatails('jigoshop.installer', 'Jigoshop\Core\Installer', array(
+		$services->setDetails('jigoshop.installer', 'Jigoshop\Core\Installer', array(
 			'wpal',
 			'jigoshop.options',
 			'jigoshop.cron',
 			'jigoshop.service.email'
 		));
-		$services->setDatails('jigoshop.options', 'Jigoshop\Core\Options', array(
+		$services->setDetails('jigoshop.options', 'Jigoshop\Core\Options', array(
 			'wpal'
 		));
-		$services->setDatails('jigoshop.cron', 'Jigoshop\Core\Cron', array(
+		$services->setDetails('jigoshop.cron', 'Jigoshop\Core\Cron', array(
 			'wpal',
 			'jigoshop.options',
 			'jigoshop.service.order',
 			'jigoshop.service.email'
 		));
-		$services->setDatails('jigoshop.emails', 'Jigoshop\Core\Emails', array(
+		$services->setDetails('jigoshop.emails', 'Jigoshop\Core\Emails', array(
 			'wpal',
 			'jigoshop.options',
 			'jigoshop.service.email'
 		));
-		$services->setDatails('jigoshop.api', 'Jigoshop\Api', array(
+		$services->setDetails('jigoshop.api', 'Jigoshop\Api', array(
 			'wpal',
 			'service_container'
 		));
-		$services->setDatails('jigoshop.messages', 'Jigoshop\Core\Messages', array(
+		$services->setDetails('jigoshop.messages', 'Jigoshop\Core\Messages', array(
 			'wpal'
 		));
-		$services->setDatails('jigoshop.types', 'Jigoshop\Core\Types', array(
+		$services->setDetails('jigoshop.types', 'Jigoshop\Core\Types', array(
 			'wpal'
 		));
-		$services->setDatails('jigoshop.roles', 'Jigoshop\Core\Roles', array(
+		$services->setDetails('jigoshop.roles', 'Jigoshop\Core\Roles', array(
 			'wpal'
 		));
 		/*$services->setDatails('jigoshop.assets', 'Jigoshop\Core\Assets', array(
 			'wpal',
 			'jigoshop.options'
 		));*/
-		$services->setDatails('jigoshop.template', 'Jigoshop\Core\Template', array(
+		$services->setDetails('jigoshop.template', 'Jigoshop\Core\Template', array(
 			'wpal',
 			'jigoshop.options'
 		));
-		$services->setDatails('jigoshop.permalinks', 'Jigoshop\Core\Permalinks', array(
+		$services->setDetails('jigoshop.permalinks', 'Jigoshop\Core\Permalinks', array(
 			'wpal',
 			'jigoshop.options'
 		));
-		$services->setDatails('jigoshop.post_type.product', 'Jigoshop\Core\Types\Product', array(
+		$services->setDetails('jigoshop.post_type.product', 'Jigoshop\Core\Types\Product', array(
 			'di',
 			'wpal',
 			'jigoshop.options',
 			'jigoshop.service.product'
 		));
-		$services->setDatails('jigoshop.post_type.email', 'Jigoshop\Core\Types\Email', array(
+		$services->setDetails('jigoshop.post_type.email', 'Jigoshop\Core\Types\Email', array(
 			'wpal'
 		));
-		$services->setDatails('jigoshop.post_type.coupon', 'Jigoshop\Core\Types\Coupon', array(
+		$services->setDetails('jigoshop.post_type.coupon', 'Jigoshop\Core\Types\Coupon', array(
 			'wpal',
 			'jigoshop.options'
 		));
-		$services->setDatails('jigoshop.post_type.order', 'Jigoshop\Core\Types\Order', array(
+		$services->setDetails('jigoshop.post_type.order', 'Jigoshop\Core\Types\Order', array(
 			'wpal'
 		));
-		$services->setDatails('jigoshop.taxonomy.product_category', 'Jigoshop\Core\Types\ProductCategory', array(
+		$services->setDetails('jigoshop.taxonomy.product_category', 'Jigoshop\Core\Types\ProductCategory', array(
 			'jigoshop.options'
 		));
-		$services->setDatails('jigoshop.taxonomy.product_tag', 'Jigoshop\Core\Types\ProductTag', array(
+		$services->setDetails('jigoshop.taxonomy.product_tag', 'Jigoshop\Core\Types\ProductTag', array(
 			'jigoshop.options'
 		));
-		$services->setDatails('jigoshop.product_type.variable', 'Jigoshop\Core\Types\Product\Variable', array(
+		$services->setDetails('jigoshop.product_type.variable', 'Jigoshop\Core\Types\Product\Variable', array(
 			'wpal',
 			'jigoshop.options',
 			'jigoshop.service.product',
 			'jigoshop.service.product.variable',
 			'jigoshop.factory.product.variable'
 		));
-		$services->setDatails('jigoshop.product_type.downloadable', 'Jigoshop\Core\Types\Product\Downloadable', array(
+		$services->setDetails('jigoshop.product_type.downloadable', 'Jigoshop\Core\Types\Product\Downloadable', array(
 			'wpal',
 			'jigoshop.options',
 			'jigoshop.messages'
 		));
-		$services->setDatails('jigoshop.product_type.downloadable.download_file', 'Jigoshop\Api\DownloadFile', array(
+		$services->setDetails('jigoshop.product_type.downloadable.download_file', 'Jigoshop\Api\DownloadFile', array(
 			'wpal',
 			'jigoshop.options',
 			'jigoshop.messages',
