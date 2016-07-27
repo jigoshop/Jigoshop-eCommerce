@@ -366,7 +366,7 @@ class Order implements OrderInterface
 	}
 
 	/**
-	 * @return array List of items bought.
+	 * @return Item[] List of items bought.
 	 */
 	public function getItems()
 	{

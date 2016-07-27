@@ -56,7 +56,7 @@ class Api
 	{
         $endpoint = isset($query->query_vars[self::API_ENDPOINT]) ? $query->query_vars[self::API_ENDPOINT] : null;
 		if (!empty($endpoint)) {
-			if ($this->di->services->exists('jigoshop.api.'.$endpoint)) {
+			if ($this->di->services->detailsExists('jigoshop.api.'.$endpoint)) {
 				ob_start();
 				$api = $this->di->get('jigoshop.api.'.$endpoint);
 

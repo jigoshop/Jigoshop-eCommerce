@@ -20,6 +20,7 @@ use Jigoshop\Helper\Product;
 		<strong><?php echo $product->getName(); ?></strong>
 		<?php do_action('jigoshop\shop\list\product\after_title', $product); ?>
 	</a>
+	<?php do_action('jigoshop\shop\list\product\before_button', $product); ?>
 	<span class="price"><?php echo Product::getPriceHtml($product); ?></span>
 	<?php Product::printAddToCartForm($product, 'list'); ?>
 	<?php do_action('jigoshop\shop\list\product\after', $product); ?>

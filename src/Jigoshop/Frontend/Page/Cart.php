@@ -472,6 +472,8 @@ class Cart implements PageInterface
 							}
 						}
 
+						do_action('jigoshop\cart\before_checkout', $cart);
+
 						$this->cartService->save($cart);
 						$this->messages->preserveMessages();
 						$this->wp->redirectTo($this->options->getPageId(Pages::CHECKOUT));
