@@ -54,7 +54,7 @@ class Api
 		$endpoint = isset($_GET[self::API_ENDPOINT]) ? strtolower(esc_attr($_GET[self::API_ENDPOINT])) : null;
 
 		if (!empty($endpoint)) {
-			if ($this->di->services->exists('jigoshop.api.'.$endpoint)) {
+			if ($this->di->services->detailsExists('jigoshop.api.'.$endpoint)) {
 				ob_start();
 				$api = $this->di->get('jigoshop.api.'.$endpoint);
 
