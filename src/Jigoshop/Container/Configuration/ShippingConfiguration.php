@@ -23,19 +23,19 @@ class ShippingConfiguration implements ConfigurationInterface
 	 */
 	public function initServices(Services $services)
 	{
-		$services->setDatails('jigoshop.shipping.flat_rate', 'Jigoshop\Shipping\FlatRate', array(
+		$services->setDetails('jigoshop.shipping.flat_rate', 'Jigoshop\Shipping\FlatRate', array(
 			'wpal',
 			'jigoshop.options',
 			'jigoshop.service.cart',
 			'jigoshop.messages'
 		));
-		$services->setDatails('jigoshop.shipping.free_shipping', 'Jigoshop\Shipping\FreeShipping', array(
+		$services->setDetails('jigoshop.shipping.free_shipping', 'Jigoshop\Shipping\FreeShipping', array(
 			'wpal',
 			'jigoshop.options',
 			'jigoshop.service.cart',
 			'jigoshop.messages'
 		));
-		$services->setDatails('jigoshop.shipping.local_pickup', 'Jigoshop\Shipping\LocalPickup', array(
+		$services->setDetails('jigoshop.shipping.local_pickup', 'Jigoshop\Shipping\LocalPickup', array(
 			'wpal',
 			'jigoshop.options',
 			'jigoshop.service.cart'

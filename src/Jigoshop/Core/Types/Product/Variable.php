@@ -517,6 +517,7 @@ class Variable implements Type
 
 			$product->addVariation($variation);
 			$this->productService->save($product);
+            $this->wp->updatePostMeta($variation->getProduct()->getId(), 'type', $_POST['product']['type']);
 
 			$types = array();
 			foreach ($this->allowedSubtypes as $type) {

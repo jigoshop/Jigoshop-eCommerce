@@ -6,6 +6,7 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'Parsedown' => array($vendorDir . '/erusev/parsedown'),
     'Jigoshop' => array($baseDir . '/src'),
     'JSMinPlus' => array($vendorDir . '/nitra/php-min/JSMinPlus'),
     'CssMin' => array($vendorDir . '/nitra/php-min/CssMin'),

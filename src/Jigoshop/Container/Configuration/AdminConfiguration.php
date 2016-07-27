@@ -22,49 +22,49 @@ class AdminConfiguration implements ConfigurationInterface
 	 */
 	public function initServices(Services $services)
 	{
-		$services->setDatails('jigoshop.admin', 'Jigoshop\Admin', array(
+		$services->setDetails('jigoshop.admin', 'Jigoshop\Admin', array(
 			'wpal',
 			'jigoshop.admin.dashboard',
 			'jigoshop.admin.permalinks'
 		));
-		$services->setDatails('jigoshop.admin.pages', 'Jigoshop\Admin\Pages', array(
+		$services->setDetails('jigoshop.admin.pages', 'Jigoshop\Admin\Pages', array(
 			'wpal',
 			'jigoshop.options'
 		));
-		$services->setDatails('jigoshop.admin.permalinks', 'Jigoshop\Admin\Permalinks', array(
+		$services->setDetails('jigoshop.admin.permalinks', 'Jigoshop\Admin\Permalinks', array(
 			'wpal',
 			'jigoshop.options'
 		));
-		$services->setDatails('jigoshop.admin.dashboard', 'Jigoshop\Admin\Dashboard', array(
+		$services->setDetails('jigoshop.admin.dashboard', 'Jigoshop\Admin\Dashboard', array(
 			'wpal',
 			'jigoshop.options',
 			'jigoshop.service.order',
 			'jigoshop.service.product'
 		));
-		$services->setDatails('jigoshop.admin.reports', 'Jigoshop\Admin\Reports', array(
+		$services->setDetails('jigoshop.admin.reports', 'Jigoshop\Admin\Reports', array(
 			'wpal',
 			'jigoshop.messages',
 			'jigoshop.service.order'
 		));
-		$services->setDatails('jigoshop.admin.settings', 'Jigoshop\Admin\Settings', array(
+		$services->setDetails('jigoshop.admin.settings', 'Jigoshop\Admin\Settings', array(
 			'wpal',
 			'jigoshop.options',
 			'jigoshop.messages'
 		));
-		$services->setDatails('jigoshop.admin.system_info', 'Jigoshop\Admin\SystemInfo', array(
+		$services->setDetails('jigoshop.admin.system_info', 'Jigoshop\Admin\SystemInfo', array(
 			'wpal'
 		));
-		$services->setDatails('jigoshop.admin.licences', 'Jigoshop\Admin\Licences', array(
+		$services->setDetails('jigoshop.admin.licences', 'Jigoshop\Admin\Licences', array(
 			'wpal',
 			'jigoshop.options',
 			'jigoshop.messages'
 		));
-		$services->setDatails('jigoshop.admin.migration', 'Jigoshop\Admin\Migration', array(
+		$services->setDetails('jigoshop.admin.migration', 'Jigoshop\Admin\Migration', array(
 			'wpal',
 			'jigoshop.options',
 			'jigoshop.messages'
 		));
-		$services->setDatails('jigoshop.admin.product.attributes', 'Jigoshop\Admin\Product\Attributes', array(
+		$services->setDetails('jigoshop.admin.product.attributes', 'Jigoshop\Admin\Product\Attributes', array(
 			'wpal',
 			'jigoshop.messages',
 			'jigoshop.service.product'

@@ -23,42 +23,42 @@ class PagesConfiguration implements ConfigurationInterface
 	 */
 	public function initServices(Services $services)
 	{
-		$services->setDatails('jigoshop.query.interceptor', 'Jigoshop\Query\Interceptor', array(
+		$services->setDetails('jigoshop.query.interceptor', 'Jigoshop\Query\Interceptor', array(
 			'wpal',
 			'jigoshop.options'
 		));
-		$services->setDatails('jigoshop.frontend.page_resolver', 'Jigoshop\Frontend\PageResolver', array(
+		$services->setDetails('jigoshop.frontend.page_resolver', 'Jigoshop\Frontend\PageResolver', array(
 			'wpal'
 		));
-		$services->setDatails('jigoshop.page.product_list', 'Jigoshop\Frontend\Page\ProductList', array(
+		$services->setDetails('jigoshop.page.product_list', 'Jigoshop\Frontend\Page\ProductList', array(
 			'wpal',
 			'jigoshop.options',
 			'jigoshop.service.product',
 			'jigoshop.service.cart',
 			'jigoshop.messages'
 		));
-		$services->setDatails('jigoshop.page.product_category_list', 'Jigoshop\Frontend\Page\ProductCategoryList', array(
+		$services->setDetails('jigoshop.page.product_category_list', 'Jigoshop\Frontend\Page\ProductCategoryList', array(
 			'wpal',
 			'jigoshop.options',
 			'jigoshop.service.product',
 			'jigoshop.service.cart',
 			'jigoshop.messages'
 		));
-		$services->setDatails('jigoshop.page.product_tag_list', 'Jigoshop\Frontend\Page\ProductTagList', array(
+		$services->setDetails('jigoshop.page.product_tag_list', 'Jigoshop\Frontend\Page\ProductTagList', array(
 			'wpal',
 			'jigoshop.options',
 			'jigoshop.service.product',
 			'jigoshop.service.cart',
 			'jigoshop.messages'
 		));
-		$services->setDatails('jigoshop.page.product', 'Jigoshop\Frontend\Page\Product', array(
+		$services->setDetails('jigoshop.page.product', 'Jigoshop\Frontend\Page\Product', array(
 			'wpal',
 			'jigoshop.options',
 			'jigoshop.service.product',
 			'jigoshop.service.cart',
 			'jigoshop.messages'
 		));
-		$services->setDatails('jigoshop.page.cart', 'Jigoshop\Frontend\Page\Cart', array(
+		$services->setDetails('jigoshop.page.cart', 'Jigoshop\Frontend\Page\Cart', array(
 			'wpal',
 			'jigoshop.options',
 			'jigoshop.messages',
@@ -69,7 +69,7 @@ class PagesConfiguration implements ConfigurationInterface
 			'jigoshop.service.shipping',
 			'jigoshop.service.coupon'
 		));
-		$services->setDatails('jigoshop.page.checkout', 'Jigoshop\Frontend\Page\Checkout', array(
+		$services->setDetails('jigoshop.page.checkout', 'Jigoshop\Frontend\Page\Checkout', array(
 			'wpal',
 			'jigoshop.options',
 			'jigoshop.messages',
@@ -79,39 +79,39 @@ class PagesConfiguration implements ConfigurationInterface
 			'jigoshop.service.payment',
 			'jigoshop.service.order'
 		));
-		$services->setDatails('jigoshop.page.checkout.thank_you', 'Jigoshop\Frontend\Page\Checkout\ThankYou', array(
+		$services->setDetails('jigoshop.page.checkout.thank_you', 'Jigoshop\Frontend\Page\Checkout\ThankYou', array(
 			'wpal',
 			'jigoshop.options',
 			'jigoshop.messages',
 			'jigoshop.service.order'
 		));
-		$services->setDatails('jigoshop.page.checkout.pay', 'Jigoshop\Frontend\Page\Checkout\Pay', array(
+		$services->setDetails('jigoshop.page.checkout.pay', 'Jigoshop\Frontend\Page\Checkout\Pay', array(
 			'wpal',
 			'jigoshop.options',
 			'jigoshop.messages',
 			'jigoshop.service.order',
 			'jigoshop.service.payment'
 		));
-		$services->setDatails('jigoshop.page.account', 'Jigoshop\Frontend\Page\Account', array(
+		$services->setDetails('jigoshop.page.account', 'Jigoshop\Frontend\Page\Account', array(
 			'wpal',
 			'jigoshop.options',
 			'jigoshop.service.customer',
 			'jigoshop.service.order',
 			'jigoshop.messages'
 		));
-		$services->setDatails('jigoshop.page.account.edit_address', 'Jigoshop\Frontend\Page\Account\EditAddress', array(
+		$services->setDetails('jigoshop.page.account.edit_address', 'Jigoshop\Frontend\Page\Account\EditAddress', array(
 			'wpal',
 			'jigoshop.options',
 			'jigoshop.service.customer',
 			'jigoshop.messages'
 		));
-		$services->setDatails('jigoshop.page.account.change_password', 'Jigoshop\Frontend\Page\Account\ChangePassword', array(
+		$services->setDetails('jigoshop.page.account.change_password', 'Jigoshop\Frontend\Page\Account\ChangePassword', array(
 			'wpal',
 			'jigoshop.options',
 			'jigoshop.service.customer',
 			'jigoshop.messages'
 		));
-		$services->setDatails('jigoshop.page.account.orders', 'Jigoshop\Frontend\Page\Account\Orders', array(
+		$services->setDetails('jigoshop.page.account.orders', 'Jigoshop\Frontend\Page\Account\Orders', array(
 			'wpal',
 			'jigoshop.options',
 			'jigoshop.service.customer',

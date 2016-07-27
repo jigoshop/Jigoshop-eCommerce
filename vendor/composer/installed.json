@@ -26,6 +26,57 @@
         "description": "WordPress Abstraction Layer"
     },
     {
+        "name": "nitra/php-min",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/nitra/PhpMin.git",
+            "reference": "f2d5e3f16ca837a20bbe11ebafe6143b59de3497"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/nitra/PhpMin/zipball/f2d5e3f16ca837a20bbe11ebafe6143b59de3497",
+            "reference": "f2d5e3f16ca837a20bbe11ebafe6143b59de3497",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3"
+        },
+        "time": "2013-03-02 05:59:09",
+        "type": "library",
+        "installation-source": "source",
+        "autoload": {
+            "psr-0": {
+                "CssMin": "CssMin/",
+                "JSMinPlus": "JSMinPlus/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Joe Scylla",
+                "email": "joe.scylla@gmail.com",
+                "homepage": "https://profiles.google.com/joe.scylla"
+            },
+            {
+                "name": "Tino Zijdel",
+                "email": "crisp@tweakers.net",
+                "homepage": "https://raw.github.com/mrclay/minify/master/min/lib/JSMinPlus.php"
+            }
+        ],
+        "description": "Minifying CSS, JS",
+        "homepage": "http://code.google.com/p/cssmin/",
+        "keywords": [
+            "cssmin",
+            "jsminplus",
+            "minify"
+        ]
+    },
+    {
         "name": "psr/log",
         "version": "dev-master",
         "version_normalized": "9999999-dev",
@@ -81,12 +132,12 @@
         "source": {
             "type": "git",
             "url": "https://github.com/Seldaek/monolog.git",
-            "reference": "39aeecefaeacb43b7315399f37aee63b34930ec1"
+            "reference": "55841909e2bcde01b5318c35f2b74f8ecc86e037"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/Seldaek/monolog/zipball/39aeecefaeacb43b7315399f37aee63b34930ec1",
-            "reference": "39aeecefaeacb43b7315399f37aee63b34930ec1",
+            "url": "https://api.github.com/repos/Seldaek/monolog/zipball/55841909e2bcde01b5318c35f2b74f8ecc86e037",
+            "reference": "55841909e2bcde01b5318c35f2b74f8ecc86e037",
             "shasum": ""
         },
         "require": {
@@ -122,7 +173,7 @@
             "ruflin/elastica": "Allow sending log messages to an Elastic Search server",
             "sentry/sentry": "Allow sending log messages to a Sentry server"
         },
-        "time": "2016-05-26 21:44:25",
+        "time": "2016-07-02 14:02:10",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -155,30 +206,29 @@
         ]
     },
     {
-        "name": "nitra/php-min",
+        "name": "erusev/parsedown",
         "version": "dev-master",
         "version_normalized": "9999999-dev",
         "source": {
             "type": "git",
-            "url": "https://github.com/nitra/PhpMin.git",
-            "reference": "f2d5e3f16ca837a20bbe11ebafe6143b59de3497"
+            "url": "https://github.com/erusev/parsedown.git",
+            "reference": "490a8f35a4163f59230f53c34f1fbb22a864c01e"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/nitra/PhpMin/zipball/f2d5e3f16ca837a20bbe11ebafe6143b59de3497",
-            "reference": "f2d5e3f16ca837a20bbe11ebafe6143b59de3497",
+            "url": "https://api.github.com/repos/erusev/parsedown/zipball/490a8f35a4163f59230f53c34f1fbb22a864c01e",
+            "reference": "490a8f35a4163f59230f53c34f1fbb22a864c01e",
             "shasum": ""
         },
         "require": {
-            "php": ">=5.3"
+            "php": ">=5.3.0"
         },
-        "time": "2013-03-02 05:59:09",
+        "time": "2016-03-09 17:02:39",
         "type": "library",
         "installation-source": "source",
         "autoload": {
             "psr-0": {
-                "CssMin": "CssMin/",
-                "JSMinPlus": "JSMinPlus/"
+                "Parsedown": ""
             }
         },
         "notification-url": "https://packagist.org/downloads/",
@@ -187,22 +237,16 @@
         ],
         "authors": [
             {
-                "name": "Joe Scylla",
-                "email": "joe.scylla@gmail.com",
-                "homepage": "https://profiles.google.com/joe.scylla"
-            },
-            {
-                "name": "Tino Zijdel",
-                "email": "crisp@tweakers.net",
-                "homepage": "https://raw.github.com/mrclay/minify/master/min/lib/JSMinPlus.php"
+                "name": "Emanuil Rusev",
+                "email": "hello@erusev.com",
+                "homepage": "http://erusev.com"
             }
         ],
-        "description": "Minifying CSS, JS",
-        "homepage": "http://code.google.com/p/cssmin/",
+        "description": "Parser for Markdown.",
+        "homepage": "http://parsedown.org",
         "keywords": [
-            "cssmin",
-            "jsminplus",
-            "minify"
+            "markdown",
+            "parser"
         ]
     }
 ]

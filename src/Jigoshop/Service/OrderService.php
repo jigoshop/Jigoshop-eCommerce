@@ -157,13 +157,13 @@ class OrderService implements OrderServiceInterface
 
         if (isset($fields['update_messages']) && !empty($fields['update_messages'])) {
             foreach ($fields['update_messages'] as $messages) {
-                $this->wp->doAction('jigoshop\order\\' . $messages['old_status'] . '_to_' . $messages['new_status'],
-                    $object);
                 if (($messages['old_status'] != Order\Status::COMPLETED && $messages['new_status'] == Order\Status::COMPLETED) ||
                     ($messages['old_status'] != Order\Status::REFUNDED && $messages['new_status'] == Order\Status::REFUNDED)
                 ) {
                     $this->wp->doAction('jigoshop\order\\' . $messages['new_status'], $object);
                 }
+                $this->wp->doAction('jigoshop\order\\' . $messages['old_status'] . '_to_' . $messages['new_status'],
+                    $object);
                 $this->addNote($object,
                     sprintf(__('%sOrder status changed from %s to %s.', 'jigoshop'), $messages['message'],
                         Order\Status::getName($messages['old_status']),

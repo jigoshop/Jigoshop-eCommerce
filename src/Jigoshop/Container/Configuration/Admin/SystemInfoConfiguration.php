@@ -23,15 +23,15 @@ class SystemInfoConfiguration implements ConfigurationInterface
 	 */
 	public function initServices(Services $services)
 	{
-		$services->setDatails('jigoshop.admin.system_info.system_status', 'Jigoshop\Admin\SystemInfo\SystemStatusTab', array(
+		$services->setDetails('jigoshop.admin.system_info.system_status', 'Jigoshop\Admin\SystemInfo\SystemStatusTab', array(
 			'wpal',
 			'jigoshop.options'
 		));
-		$services->setDatails('jigoshop.admin.system_info.tools', 'Jigoshop\Admin\SystemInfo\ToolsTab', array(
+		$services->setDetails('jigoshop.admin.system_info.tools', 'Jigoshop\Admin\SystemInfo\ToolsTab', array(
 			'wpal',
 			'jigoshop.options'
 		));
-		$services->setDatails('jigoshop.admin.system_info.logs', 'Jigoshop\Admin\SystemInfo\LogsTab', array());
+		$services->setDetails('jigoshop.admin.system_info.logs', 'Jigoshop\Admin\SystemInfo\LogsTab', array());
 	}
 
 	/**
