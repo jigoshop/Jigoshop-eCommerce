@@ -72,10 +72,8 @@ class Installer
 			$this->cron->clear();
 		}
 
-		$wp = $this->wp;
-        $this->wp->addAction('shutdown', function() use ($wp) {
-            $wp->flushRewriteRules();
-        });
+		// Flush rules on first Jigoshop init after activation.
+        update_option('jigoshop_force_flush_rewrite', false);
         $this->wp->updateSiteOption('jigoshop_database_version', self::DB_VERSION);
 	}
 
