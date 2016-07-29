@@ -97,7 +97,7 @@ class Order
 		);
 		$url = add_query_arg($args, get_permalink(self::$options->getPageId(Pages::CART)));
 
-		return apply_filters('jigoshop_get_cancel_order', $url);
+		return apply_filters('jigoshop\helper\order\cancel_url', $url);
 	}
 
 	/**
@@ -117,6 +117,27 @@ class Order
 	 */
 	public static function getPayLink($order)
 	{
-		return add_query_arg(array('key' => $order->getKey()), Api::getEndpointUrl('pay', $order->getId(), get_permalink(self::$options->getPageId(Pages::CHECKOUT))));
+	    $args = array(
+	        'key' => $order->getKey()
+        );
+        $url = add_query_arg($args, Api::getEndpointUrl('pay', $order->getId(), get_permalink(self::$options->getPageId(Pages::CHECKOUT))));
+
+		return apply_filters('jigoshop\helper\order\pay_url', $url);
 	}
+
+    /**
+     * @param $order \Jigoshop\Entity\Order Order to generate link for.
+     *
+     * @return string Payment link.
+     */
+	public static function getThankYouLink($order)
+    {
+        $args = array(
+            'order' => $order->getId(),
+            'key' => $order->getKey(),
+        );
+        $url = add_query_arg($args, get_permalink(self::$options->getPageId(Pages::CART)));
+
+        return apply_filters('jigoshop\helper\order\thank_you_url', $url);
+    }
 }
