@@ -2,7 +2,7 @@
 
 namespace Jigoshop\Helper;
 
-use Jigoshop\Core\Options;
+use Jigoshop\Core\Options as CoreOptions;
 
 /**
  * Address helper.
@@ -15,7 +15,7 @@ class Address
 	private static $options;
 
 	/**
-	 * @param Options $options Options object.
+	 * @param CoreOptions $options Options object.
 	 */
 	public static function setOptions($options)
 	{

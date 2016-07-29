@@ -2,7 +2,7 @@
 
 namespace Jigoshop\Helper;
 
-use Jigoshop\Core\Options;
+use Jigoshop\Core\Options as CoreOptions;
 
 /**
  * Available currencies.
@@ -12,7 +12,7 @@ use Jigoshop\Core\Options;
  */
 class Currency
 {
-	/** @var Options */
+	/** @var CoreOptions */
 	private static $options;
 	private static $symbol;
 	private static $code;
@@ -22,7 +22,7 @@ class Currency
 	private static $thousandsSeparator;
 
 	/**
-	 * @param Options $options Options object.
+	 * @param CoreOptions $options Options object.
 	 */
 	public static function setOptions($options)
 	{

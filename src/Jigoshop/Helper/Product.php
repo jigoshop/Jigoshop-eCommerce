@@ -2,17 +2,17 @@
 
 namespace Jigoshop\Helper;
 
-use Jigoshop\Core\Options;
+use Jigoshop\Core\Options as CoreOptions;
 use Jigoshop\Core\Types;
 use Jigoshop\Entity;
 
 class Product
 {
-    /** @var Options */
+    /** @var CoreOptions */
     private static $options;
 
     /**
-     * @param Options $options Options object.
+     * @param CoreOptions $options Options object.
      */
     public static function setOptions($options)
     {
@@ -202,7 +202,7 @@ class Product
      *
      * @return string
      */
-    public static function getFeaturedImage(Entity\Product $product, $size = Options::IMAGE_SMALL)
+    public static function getFeaturedImage(Entity\Product $product, $size = CoreOptions::IMAGE_SMALL)
     {
         if (self::hasFeaturedImage($product)) {
             $thumbnail = apply_filters('jigoshop\helper\product\get_featured_image',
@@ -234,7 +234,7 @@ class Product
      *
      * @return string
      */
-    public static function getImagePlaceholder($size = Options::IMAGE_SMALL)
+    public static function getImagePlaceholder($size = CoreOptions::IMAGE_SMALL)
     {
         $size = self::getImageSize($size);
 

@@ -2,18 +2,18 @@
 
 namespace Jigoshop\Helper;
 
-use Jigoshop\Core\Options;
+use Jigoshop\Core\Options as CoreOptions;
 use Jigoshop\Entity\Customer\Guest;
 use Jigoshop\Entity\Order\Status;
 use Jigoshop\Frontend\Pages;
 
 class Order
 {
-	/** @var Options */
+	/** @var CoreOptions */
 	private static $options;
 
 	/**
-	 * @param Options $options Options object.
+	 * @param CoreOptions $options Options object.
 	 */
 	public static function setOptions($options)
 	{
