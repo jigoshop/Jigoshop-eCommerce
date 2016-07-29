@@ -136,7 +136,7 @@ class Order
             'order' => $order->getId(),
             'key' => $order->getKey(),
         );
-        $url = add_query_arg($args, get_permalink(self::$options->getPageId(Pages::CART)));
+        $url = add_query_arg($args, get_permalink(self::$options->getPageId(Pages::THANK_YOU)));
 
         return apply_filters('jigoshop\helper\order\thank_you_url', $url);
     }
