@@ -72,8 +72,11 @@ class Installer
 			$this->cron->clear();
 		}
 
-		$this->wp->flushRewriteRules();
-		$this->wp->updateSiteOption('jigoshop_database_version', self::DB_VERSION);
+		$wp = $this->wp;
+        $this->wp->addAction('shutdown', function() use ($wp) {
+            $wp->flushRewriteRules();
+        });
+        $this->wp->updateSiteOption('jigoshop_database_version', self::DB_VERSION);
 	}
 
 	private function _createTables()
