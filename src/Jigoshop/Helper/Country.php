@@ -2,7 +2,7 @@
 
 namespace Jigoshop\Helper;
 
-use Jigoshop\Core\Options;
+use Jigoshop\Core\Options as CoreOptions;
 
 /**
  * Country helper.
@@ -898,12 +898,12 @@ class Country
 		'GB' => 'United Kingdom'
 	);
 
-	/** @var Options */
+	/** @var CoreOptions */
 	private static $options;
 	private static $cache = array();
 
 	/**
-	 * @param Options $options Options object.
+	 * @param CoreOptions $options Options object.
 	 */
 	public static function setOptions($options)
 	{

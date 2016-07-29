@@ -191,7 +191,6 @@ class Cart implements PageInterface
 							'price' => Product::formatPrice($rate->calculate($cart)),
 							'html' => Render::get('shop/cart/shipping/rate', array('method' => $method, 'rate' => $rate, 'cart' => $cart)),
 						);
-						$cart->setShippingMethod($method);
 					}
 				}
 			} else {
@@ -202,10 +201,6 @@ class Cart implements PageInterface
 						'html' => Render::get('shop/cart/shipping/method', array('method' => $method, 'cart' => $cart)),
 					);
 				}
-			}
-
-			if($cart->getShippingMethod() instanceof $method) {
-				$cart->setShippingMethod($method);
 			}
 		}
 

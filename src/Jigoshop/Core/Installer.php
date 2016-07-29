@@ -72,8 +72,9 @@ class Installer
 			$this->cron->clear();
 		}
 
-		$this->wp->flushRewriteRules();
-		$this->wp->updateSiteOption('jigoshop_database_version', self::DB_VERSION);
+		// Flush rules on first Jigoshop init after activation.
+        update_option('jigoshop_force_flush_rewrite', false);
+        $this->wp->updateSiteOption('jigoshop_database_version', self::DB_VERSION);
 	}
 
 	private function _createTables()

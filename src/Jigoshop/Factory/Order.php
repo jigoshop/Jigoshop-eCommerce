@@ -10,7 +10,7 @@ use Jigoshop\Entity\Customer as CustomerEntity;
 use Jigoshop\Entity\Order as Entity;
 use Jigoshop\Entity\OrderInterface;
 use Jigoshop\Exception;
-use Jigoshop\Helper\Product;
+use Jigoshop\Helper\Product as ProductHelper;
 use Jigoshop\Shipping\Method as ShippingMethod;
 use Jigoshop\Payment\Method as PaymentMethod;
 use Jigoshop\Service\CouponServiceInterface;
@@ -231,7 +231,7 @@ class Order implements EntityFactoryInterface
 
             if (isset($data['billing_address'])) {
                 $data['billing_address'] = array_merge(
-                    array_flip(array_keys(Product::getBasicBillingFields())),
+                    array_flip(array_keys(ProductHelper::getBasicBillingFields())),
                     $data['billing_address']
                 );
                 /** @var CustomerEntity $customer */
@@ -240,7 +240,7 @@ class Order implements EntityFactoryInterface
             }
             if (isset($data['shipping_address'])) {
                 $data['shipping_address'] = array_merge(
-                    array_flip(array_keys(Product::getBasicShippingFields())),
+                    array_flip(array_keys(ProductHelper::getBasicShippingFields())),
                     $data['shipping_address']
                 );
 
