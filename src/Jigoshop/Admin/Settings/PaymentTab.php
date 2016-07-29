@@ -110,7 +110,7 @@ class PaymentTab implements TabInterface
 	 *
 	 * @return array
 	 */
-	protected function getAvaibleGateway()
+	protected function getAvailableGateway()
 	{
 		$options = array();
 
@@ -133,7 +133,7 @@ class PaymentTab implements TabInterface
 	 */
 	public function getSections()
 	{
-		$options = $this->getAvaibleGateway();
+		$options = $this->getAvailableGateway();
 		return array_merge($this->getSectionGateway($options), $options);
 	}
 
