@@ -130,7 +130,7 @@ class Order
      *
      * @return string Payment link.
      */
-	public static function getThankYouLink($order)
+    public static function getThankYouLink($order)
     {
         $args = array(
             'order' => $order->getId(),
