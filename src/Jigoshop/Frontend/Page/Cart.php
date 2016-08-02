@@ -204,6 +204,11 @@ class Cart implements PageInterface
 			}
 		}
 
+		$shippingMethod = $cart->getShippingMethod();
+        if($shippingMethod) {
+            $cart->setShippingMethod($shippingMethod);
+        }
+
 		$productSubtotal = $this->options->get('tax.price_tax') == 'with_tax' ? $cart->getProductSubtotal() + $cart->getTotalTax() : $cart->getProductSubtotal();
 		$coupons = join(',', array_map(function ($coupon){
 			/** @var $coupon Coupon */
