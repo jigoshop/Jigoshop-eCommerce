@@ -73,6 +73,20 @@ class Order
 		));
 	}
 
+    /**
+     * @param \Jigoshop\Entity\Order $order
+     *
+     * @return string
+     */
+    public static function getStatusAfterCompletePayment(\Jigoshop\Entity\Order $order)
+    {
+        if($order->isShippingRequired()) {
+            return Status::PROCESSING;
+        }
+
+        return Status::COMPLETED;
+	}
+
 	public static function getUserLink($customer)
 	{
 		if ($customer instanceof Guest) {
