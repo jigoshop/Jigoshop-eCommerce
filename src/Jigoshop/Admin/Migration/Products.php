@@ -149,6 +149,7 @@ class Products implements Tool
 				// Add product types
 				$types = $this->wp->getTheTerms($product->ID, 'product_type');
 				$this->checkSql();
+                $productType = Product\Simple::TYPE;
 				if (is_array($types)) {
 					if (!in_array($types[0]->slug, array(
 						Product\Simple::TYPE,
@@ -166,6 +167,7 @@ class Products implements Tool
 							$product->ID));
 						$types[0]->slug = 'simple';
 					}
+                    $productType = $types[0]->slug;
 
 					$wpdb->query($wpdb->prepare("INSERT INTO {$wpdb->postmeta} VALUES (NULL, %d, %s, %s)",
 						array($product->ID, 'type', $types[0]->slug)));
@@ -199,7 +201,7 @@ class Products implements Tool
 								}
 
 								$changeLocalToGlobal = (isset($source['variation']) && $source['variation'] == true
-									&& $source['is_taxonomy'] != true);
+									&& $source['is_taxonomy'] != true && $productType == Product\Variable::TYPE);
 
 								$productAttributes[$product->ID]['attributes'][$slug] = array(
 									'is_visible' => $source['visible'],

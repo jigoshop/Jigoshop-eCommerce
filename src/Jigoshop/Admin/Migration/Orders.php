@@ -33,6 +33,8 @@ class Orders implements Tool
 	private $paymentService;
 	/** @var ProductServiceInterface */
 	private $productService;
+    /** @var  array  */
+    private $customer;
 
 	public function __construct(Wordpress $wp, \Jigoshop\Core\Options $options, Messages $messages, OrderServiceInterface $orderService, ShippingServiceInterface $shippingService,
 		PaymentServiceInterface $paymentService, ProductServiceInterface $productService)
@@ -178,8 +180,11 @@ class Orders implements Tool
 							$data = $this->_fetchOrderData($data);
 
 							// Migrate customer
-							$customer = $this->wp->getPostMeta($order->ID, 'customer', true);
-							$customer = $this->_migrateCustomer($customer, $data);
+                            if($this->customer == null) {
+                                $customer = $this->wp->getPostMeta($order->ID, 'customer', true);
+                                $customer = $this->_migrateCustomer($customer, $data);
+                                $this->customer = $customer;
+                            }
 							$wpdb->query($wpdb->prepare("INSERT INTO {$wpdb->postmeta} (post_id, meta_key, meta_value) VALUES (%d, %s, %s)",
 								$order->ID,
 								'customer',
@@ -253,7 +258,11 @@ class Orders implements Tool
 							$this->checkSql();*/
 							break;
 						case 'customer_user':
-							$customer = $this->wp->getPostMeta($order->ID, 'customer', true);
+						    if($this->customer == null) {
+						        $customer = $this->wp->getPostMeta($order->ID, 'customer', true);
+                            } else {
+                                $customer = $this->customer;
+                            }
 
 							if ($customer !== false)
 							{
@@ -291,6 +300,8 @@ class Orders implements Tool
 								'customer_id',
 								$userId
 							));
+
+                            $this->customer = $customer;
 
 							break;
 						case 'order_items':
