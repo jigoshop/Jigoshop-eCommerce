@@ -721,9 +721,9 @@ class Orders implements Tool
 			if($post) {
 				/** @var Product\Variable $product */
 				$product = $this->productService->find($post->post_parent);
-				if($product->getId()) {
-					$args['name'] = $product->getVariation($post->ID)->getTitle();
-				}
+                if($product->getId() && $product instanceof Product\Variable) {
+                    $args['name'] = $product->getVariation($post->ID)->getTitle();
+                }
 			}
 		}
 
