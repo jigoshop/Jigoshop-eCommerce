@@ -182,9 +182,9 @@ class Orders implements Tool
 							// Migrate customer
                             if($this->customer == null) {
                                 $customer = $this->wp->getPostMeta($order->ID, 'customer', true);
-                                $customer = $this->_migrateCustomer($customer, $data);
                                 $this->customer = $customer;
                             }
+                            $customer = $this->_migrateCustomer($this->customer, $data);
 							$wpdb->query($wpdb->prepare("INSERT INTO {$wpdb->postmeta} (post_id, meta_key, meta_value) VALUES (%d, %s, %s)",
 								$order->ID,
 								'customer',
@@ -471,7 +471,7 @@ class Orders implements Tool
 		}
 	}
 
-	private function _migrateCustomer(  $customer, $data)
+	private function _migrateCustomer($customer, $data)
 	{
 		$data = $this->_fetchCustomerData($data);
 		if (!$customer) {
