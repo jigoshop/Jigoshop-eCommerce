@@ -90,6 +90,15 @@ class Options implements Tool
             foreach ($transformations as $old => $new) {
                 if (array_key_exists($old, $options)) {
                     $value = $this->_transform($old, $options[$old]);
+
+                    if($old == 'jigoshop_default_country') {
+                        $tmp = explode(':', $value);
+                        if(count($tmp) > 1) {
+                            $this->options->update('general.state', $tmp[1]);
+                            $this->checkSql();
+                            $value = $tmp[0];
+                        }
+                    }
                 }
 
                 if ($value !== null) {
@@ -111,7 +120,7 @@ class Options implements Tool
                     'rate' => $tax['rate'],
                     'label' => empty($tax['label']) ? __('Tax', 'jigoshop') : $tax['label'],
                     // TODO: Check how other classes are used
-                    'class' => $tax[$i]['class'] == '*' ? 'standard' : $tax['class'],
+                    'class' => $tax['class'] == '*' ? 'standard' : $tax['class'],
                     'country' => $tax['country'],
                     'states' => isset($tax['is_all_states']) && $tax['is_all_states'] ? '' : $tax['state'],
                     'is_compound' => ($tax['compound'] == 'yes' ? 1 : 0),
