@@ -90,6 +90,15 @@ class Options implements Tool
             foreach ($transformations as $old => $new) {
                 if (array_key_exists($old, $options)) {
                     $value = $this->_transform($old, $options[$old]);
+
+                    if($old == 'jigoshop_default_country') {
+                        $tmp = explode(':', $value);
+                        if(count($tmp) > 1) {
+                            $this->options->update('general.state', $tmp[1]);
+                            $this->checkSql();
+                            $value = $tmp[0];
+                        }
+                    }
                 }
 
                 if ($value !== null) {
