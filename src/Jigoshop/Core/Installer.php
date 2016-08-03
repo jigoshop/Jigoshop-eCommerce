@@ -161,7 +161,7 @@ class Installer
 			CREATE TABLE IF NOT EXISTS {$wpdb->prefix}jigoshop_order_item_meta (
 				item_id INT,
 				meta_key VARCHAR(170) NOT NULL,
-				meta_value VARCHAR(255) NOT NULL,
+				meta_value TEXT NOT NULL,
 				PRIMARY KEY id (item_id, meta_key),
 				FOREIGN KEY order_item (item_id) REFERENCES {$wpdb->prefix}jigoshop_order_item (id) ON DELETE CASCADE
 			) {$collate};
@@ -226,7 +226,7 @@ class Installer
 			CREATE TABLE IF NOT EXISTS {$wpdb->prefix}jigoshop_product_attribute (
 				product_id BIGINT(20) UNSIGNED NOT NULL,
 				attribute_id INT(9) NOT NULL,
-				value VARCHAR(255) NOT NULL,
+				value TEXT NOT NULL,text
 				PRIMARY KEY id (product_id, attribute_id),
 				FOREIGN KEY attribute (attribute_id) REFERENCES {$wpdb->prefix}jigoshop_attribute (id) ON DELETE CASCADE,
 				FOREIGN KEY product (product_id) REFERENCES {$wpdb->posts} (ID) ON DELETE CASCADE
@@ -244,7 +244,7 @@ class Installer
 				product_id BIGINT(20) UNSIGNED NOT NULL,
 				attribute_id INT(9) NOT NULL,
 				meta_key VARCHAR(255) NOT NULL,
-				meta_value VARCHAR(255) NOT NULL,
+				meta_value TEXT NOT NULL,
 				PRIMARY KEY id (id),
 				FOREIGN KEY product_attribute (product_id, attribute_id) REFERENCES {$wpdb->prefix}jigoshop_product_attribute (product_id, attribute_id) ON DELETE CASCADE
 			) {$collate};
