@@ -20,7 +20,7 @@
  * Description:         Jigoshop, a WordPress eCommerce plugin that works.
  * Author:              Jigoshop
  * Author URI:          http://www.jigoshop.com
- * Version:             2.0-beta24
+ * Version:             2.0-beta24.1
  * Requires at least:   4.0
  * Tested up to:        4.5
  * Text Domain:         jigoshop
@@ -91,7 +91,7 @@ if (isset($memory[2])) {
 	switch ($memory[2]) {
 		/** @noinspection PhpMissingBreakStatementInspection */
 		case 'M':
-			$memory_limit *= 1024;
+			$memory_limit *= 1024 * 1024;
 		case 'K':
 			$memory_limit *= 1024;
 	}
@@ -113,7 +113,7 @@ if (isset($memory[2])) {
 	switch ($memory[2]) {
 		/** @noinspection PhpMissingBreakStatementInspection */
 		case 'M':
-			$memory_limit *= 1024;
+			$memory_limit *= 1024 * 1024;
 		case 'K':
 			$memory_limit *= 1024;
 	}
@@ -124,7 +124,7 @@ if($memory_limit < JIGOSHOP_REQUIRED_WP_MEMORY*1024*1024){
 	{
 		echo '<div class="error"><p>'.
 			sprintf(__('<strong>Warning!</strong> Jigoshop requires at least %sM of memory for WordPress! Your system currently has: %s. <a href="%s" target="_blank">How to change?</a>', 'jigoshop'),
-				JIGOSHOP_REQUIRED_MEMORY, WP_MEMORY_LIMIT, 'http://codex.wordpress.org/Editing_wp-config.php#Increasing_memory_allocated_to_PHP').
+                JIGOSHOP_REQUIRED_WP_MEMORY, WP_MEMORY_LIMIT, 'http://codex.wordpress.org/Editing_wp-config.php#Increasing_memory_allocated_to_PHP').
 			'</p></div>';
 	}
 	add_action('admin_notices', 'jigoshop_required_wp_memory_warning');
