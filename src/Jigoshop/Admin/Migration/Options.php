@@ -120,7 +120,7 @@ class Options implements Tool
                     'rate' => $tax['rate'],
                     'label' => empty($tax['label']) ? __('Tax', 'jigoshop') : $tax['label'],
                     // TODO: Check how other classes are used
-                    'class' => $tax[$i]['class'] == '*' ? 'standard' : $tax['class'],
+                    'class' => $tax['class'] == '*' ? 'standard' : $tax['class'],
                     'country' => $tax['country'],
                     'states' => isset($tax['is_all_states']) && $tax['is_all_states'] ? '' : $tax['state'],
                     'is_compound' => ($tax['compound'] == 'yes' ? 1 : 0),
