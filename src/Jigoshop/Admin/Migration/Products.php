@@ -115,13 +115,21 @@ class Products implements Tool
 			));
 			$this->checkSql();
 
-			// Update product_cat into product_category
-			$wpdb->query($wpdb->prepare("UPDATE {$wpdb->term_taxonomy} SET taxonomy = %s WHERE taxonomy = %s",
-				array('product_category', 'product_cat')));
-			$this->checkSql();
-			$wpdb->query($wpdb->prepare("UPDATE {$wpdb->postmeta} SET meta_value = %s WHERE meta_key = %s AND meta_value = %s",
-				array('product_category', '_menu_item_object', 'product_cat')));
-			$this->checkSql();
+            if($this->wp->getOption('jigoshop_migration_product_first', false) == false) {
+                // Update product_cat into product_category
+                $wpdb->query($wpdb->prepare("UPDATE {$wpdb->term_taxonomy} SET taxonomy = %s WHERE taxonomy = %s",
+                    array('product_category', 'product_cat')));
+                $this->checkSql();
+                $wpdb->query($wpdb->prepare("UPDATE {$wpdb->postmeta} SET meta_value = %s WHERE meta_key = %s AND meta_value = %s",
+                    array('product_category', '_menu_item_object', 'product_cat')));
+                $this->checkSql();
+
+                foreach($wpdb->get_results("SELECT * FROM {$wpdb->prefix}jigoshop_termmeta", ARRAY_A) as $termMeta) {
+                    $wpdb->insert($wpdb->prefix.'jigoshop_term_meta', $termMeta);
+                }
+
+                $this->wp->updateOption('jigoshop_migration_product_first', true);
+            }
 
 			$productIds = array();
 			$attributes = array();
