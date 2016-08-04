@@ -66,7 +66,7 @@ class CartService implements CartServiceInterface
 		} elseif (isset($_COOKIE[self::CART_ID])) {
 			$id = $_COOKIE[self::CART_ID];
 		} else {
-			$id = md5($_SERVER['HTTP_USER_AGENT'].time().$_SERVER['REMOTE_ADDR'].rand(1, 10000000));
+			$id = md5((isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : '') .time().$_SERVER['REMOTE_ADDR'].rand(1, 10000000));
 		}
 
 		if (!isset($_SESSION[self::CART_ID])) {
@@ -319,7 +319,7 @@ class CartService implements CartServiceInterface
 		if($cart->getShippingMethod() == null) {
 			$cart->setShippingMethod($this->shippingService->getCheapest($cart));
 		}
-		
+
 		$_SESSION[self::CART][$cart->getId()] = $cart->getStateToSave();
 	}
 
