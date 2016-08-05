@@ -226,7 +226,7 @@ class Installer
 			CREATE TABLE IF NOT EXISTS {$wpdb->prefix}jigoshop_product_attribute (
 				product_id BIGINT(20) UNSIGNED NOT NULL,
 				attribute_id INT(9) NOT NULL,
-				value TEXT NOT NULL
+				value TEXT NOT NULL,
 				PRIMARY KEY id (product_id, attribute_id),
 				FOREIGN KEY attribute (attribute_id) REFERENCES {$wpdb->prefix}jigoshop_attribute (id) ON DELETE CASCADE,
 				FOREIGN KEY product (product_id) REFERENCES {$wpdb->posts} (ID) ON DELETE CASCADE
