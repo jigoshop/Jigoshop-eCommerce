@@ -206,10 +206,14 @@ class Cart implements PageInterface
 
 		$shippingMethod = $cart->getShippingMethod();
         if($shippingMethod) {
-            $cart->setShippingMethod($shippingMethod);
+            try {
+                $cart->setShippingMethod($shippingMethod);
+            } catch(Exception $e) {
+                $cart->removeShippingMethod();
+            }
         }
 
-		$productSubtotal = $this->options->get('tax.price_tax') == 'with_tax' ? $cart->getProductSubtotal() + $cart->getTotalTax() : $cart->getProductSubtotal();
+        $productSubtotal = $this->options->get('tax.price_tax') == 'with_tax' ? $cart->getProductSubtotal() + $cart->getTotalTax() : $cart->getProductSubtotal();
 		$coupons = join(',', array_map(function ($coupon){
 			/** @var $coupon Coupon */
 			return $coupon->getCode();
@@ -381,7 +385,7 @@ class Cart implements PageInterface
 
 			// TODO: Support for "Prices includes tax"
 			$price = $this->options->get('tax.price_tax') == 'with_tax' ? $item->getPrice() + $item->getTax() / $item->getQuantity() : $item->getPrice();
-			$response = $this->getAjaxCartResponse($cart);
+            $response = $this->getAjaxCartResponse($cart);
 
 			// Add some additional fields
 			$response['item_price'] = $price;
