@@ -105,7 +105,7 @@ class CustomersTab implements TabInterface
 				return new Chart\CustomersVsGuests($this->wp, $this->options, $this->getCurrentRange());
 			case 'customer_list':
 				return new Table\CustomerList($this->wp, $this->options, $this->orderService);
-			default:
+            default:
                 return $this->wp->applyFilters('jigoshop\admin\reports\customers\custom', null, $this->getCurrentType());
 		}
 	}
