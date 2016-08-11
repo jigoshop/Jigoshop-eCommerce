@@ -357,7 +357,7 @@ class ByProduct extends Chart
 			$widgets[] = new Chart\Widget\TopEarners($topEarners);
 		}
 
-		return $this->wp->applyFilters('jigoshop/admin/reports/by_product/widgets', $widgets);
+		return $this->wp->applyFilters('jigoshop\admin\reports\by_product\widgets', $widgets);
 	}
 
 	public function getExportButton()
@@ -478,7 +478,7 @@ class ByProduct extends Chart
 
 	private function getChartColours()
 	{
-		$this->chartColours = $this->wp->applyFilters('jigoshop/admin/reports/by_product/chart_colours', array(
+		$this->chartColours = $this->wp->applyFilters('jigoshop\admin\reports\by_product\chart_colours', array(
 			'sales_amount' => '#3498db',
 			'item_count' => '#d4d9dc',
 			'item_quantity' => '#ecf0f1'

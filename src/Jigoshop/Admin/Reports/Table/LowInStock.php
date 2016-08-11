@@ -11,6 +11,7 @@ class LowInStock implements TableInterface
 {
 	const SLUG = 'low_in_stock';
 	private $wp;
+    private $options;
 	private $totalItems;
 	private $activePageNumber;
 	private $totalPages;
@@ -57,7 +58,7 @@ class LowInStock implements TableInterface
 			)
 		);
 
-		return $this->wp->applyFilters('jigoshop/admin/reports/table/low_in_stock/columns', $this->columns);
+		return $this->wp->applyFilters('jigoshop\admin\reports\table\low_in_stock\columns', $this->columns);
 	}
 
 	public function getSearch()
@@ -153,11 +154,11 @@ class LowInStock implements TableInterface
 						'action' => "view"
 					);
 				}
-				$actions = $this->wp->applyFilters('jigoshop/admin/reports/table/low_in_stock/user_actions', $actions, $item);
+				$actions = $this->wp->applyFilters('jigoshop\admin\reports\table\low_in_stock\user_actions', $actions, $item);
 
 				return $actions;
 			default:
-				return $this->wp->applyFilters('jigoshop/admin/reports/table/low_in_stock/row', '', $item, $columnKey);
+				return $this->wp->applyFilters('jigoshop\admin\reports\table\low_in_stock\row', '', $item, $columnKey);
 		}
 	}
 

@@ -193,7 +193,7 @@ class ByCategory extends Chart
 		$termIds[] = $categoryId;
 		$productIds = get_objects_in_term($termIds, 'product_category');
 
-		return array_unique($this->wp->applyFilters('jigoshop/admin/reports/by_category/products_in_category', $productIds, $categoryId));
+		return array_unique($this->wp->applyFilters('jigoshop\admin\reports\by_category\products_in_category', $productIds, $categoryId));
 	}
 
 	public function display()
@@ -238,7 +238,7 @@ class ByCategory extends Chart
 		$widgets[] = new Chart\Widget\CustomRange();
 		$widgets[] = new Chart\Widget\SelectCategories($this->showCategories, $allCategories);
 
-		return $this->wp->applyFilters('jigoshop/admin/reports/by_category/widgets', $widgets);
+		return $this->wp->applyFilters('jigoshop\admin\reports\by_category\widgets', $widgets);
 	}
 
 	public function getExportButton()
@@ -357,7 +357,7 @@ class ByCategory extends Chart
 
 	private function getChartColours()
 	{
-		$this->chartColours = $this->wp->applyFilters('jigoshop/admin/reports/by_category/chart_colours', array(
+		$this->chartColours = $this->wp->applyFilters('jigoshop\admin\reports\by_category\chart_colours', array(
 			'#3498db',
 			'#2ecc71',
 			'#f1c40f',

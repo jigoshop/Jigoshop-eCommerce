@@ -11,6 +11,7 @@ class MostStocked implements TableInterface
 {
 	const SLUG = 'most_stocked';
 	private $wp;
+    private $options;
 	private $totalItems;
 	private $activePageNumber;
 	private $totalPages;

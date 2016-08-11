@@ -300,7 +300,7 @@ abstract class Chart
 			'order_by' => '',
 			'filter_range' => false,
 		);
-		$args = $this->wp->applyFilters('jigoshop/admin/reports/chart/report_query_args', $args);
+		$args = $this->wp->applyFilters('jigoshop\admin\reports\chart\report_query_args', $args);
 		$args = wp_parse_args($args, $defaultArgs);
 
 		if (empty($args['select'])) {

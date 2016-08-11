@@ -449,7 +449,7 @@ class DiscountSummary extends Chart
 	 */
 	private function getChartColours()
 	{
-		$this->chartColours = $this->wp->applyFilters('jigoshop/admin/reports/discount_summary/chart_colours', array(
+		$this->chartColours = $this->wp->applyFilters('jigoshop\admin\reports\discount_summary\chart_colours', array(
 
 			'discount_amount' => '#3498db',
 			'coupon_count' => '#d4d9dc',

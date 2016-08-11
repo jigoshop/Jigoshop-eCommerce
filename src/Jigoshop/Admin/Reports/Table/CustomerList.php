@@ -86,7 +86,7 @@ class CustomerList implements TableInterface
 			)
 		);
 
-		return $this->wp->applyFilters('jigoshop/admin/reports/table/customer_list/columns', $this->columns);
+		return $this->wp->applyFilters('jigoshop\admin\reports\table\customer_list\columns', $this->columns);
 	}
 
 	public function getSearch()
@@ -204,11 +204,11 @@ class CustomerList implements TableInterface
 					'name' => __('Edit', 'jigoshop'),
 					'action' => 'edit'
 				);
-				$actions = $this->wp->applyFilters('jigoshop/admin/reports/table/customer_list/user_actions', $actions, $user);
+				$actions = $this->wp->applyFilters('jigoshop\admin\reports\table\customer_list\user_actions', $actions, $user);
 
 				return $actions;
 			default:
-				return $this->wp->applyFilters('jigoshop/admin/reports/table/customer_list/row', '', $user, $columnKey);
+				return $this->wp->applyFilters('jigoshop\admin\reports\table\customer_list\row', '', $user, $columnKey);
 		}
 	}
 

@@ -44,7 +44,7 @@ class StockTab implements TabInterface
 	 */
 	public function display()
 	{
-		Render::output('admin/reports/stock', array(
+		Render::output('admin\reports\stock', array(
 				'types' => $this->getTypes(),
 				'current_type' => $this->getCurrentType(),
 				'content' => $this->content
@@ -53,7 +53,7 @@ class StockTab implements TabInterface
 
 	private function getTypes()
 	{
-		return $this->wp->applyFilters('jigoshop/admin/reports/stock/types', array(
+		return $this->wp->applyFilters('jigoshop\admin\reports\stock\types', array(
 				'low_in_stock' => __('Low in Stock', 'jigoshop'),
 				'out_of_stock' => __('Out of Stock', 'jigoshop'),
 				'most_stocked' => __('Most Stocked', 'jigoshop'),
@@ -92,7 +92,7 @@ class StockTab implements TabInterface
 			case 'most_stocked':
 				return new Table\MostStocked($this->wp, $this->options);
 			default:
-				$this->wp->doAction('jigoshop/admin/reports/stock/custom_content', $this->getCurrentType(), $this->wp, $this->options);
+				$this->wp->doAction('jigoshop\admin\reports\stock\custom_content', $this->getCurrentType(), $this->wp, $this->options);
 		}
 	}
 
