@@ -109,7 +109,7 @@ class SalesTab implements TabInterface
 			case 'discount_summary':
 				return new Chart\DiscountSummary($this->wp, $this->options, $this->getCurrentRange());
 			default:
-				$this->wp->doAction('jigoshop\admin\reports\sales\custom_chart', $this->getCurrentType(), $this->wp, $this->options);
+                return $this->wp->applyFilters('jigoshop\admin\reports\sales\custom', null, $this->getCurrentType());
 		}
 	}
 }

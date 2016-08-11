@@ -106,7 +106,7 @@ class CustomersTab implements TabInterface
 			case 'customer_list':
 				return new Table\CustomerList($this->wp, $this->options, $this->orderService);
 			default:
-				$this->wp->doAction('jigoshop\admin\reports\customers\custom_content', $this->getCurrentType(), $this->wp, $this->options);
+                return $this->wp->applyFilters('jigoshop\admin\reports\customers\custom', null, $this->getCurrentType());
 		}
 	}
 }

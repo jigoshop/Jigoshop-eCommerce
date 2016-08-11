@@ -92,8 +92,7 @@ class StockTab implements TabInterface
 			case 'most_stocked':
 				return new Table\MostStocked($this->wp, $this->options);
 			default:
-				$this->wp->doAction('jigoshop\admin\reports\stock\custom_content', $this->getCurrentType(), $this->wp, $this->options);
+				return $this->wp->applyFilters('jigoshop\admin\reports\stock\custom', null, $this->getCurrentType());
 		}
 	}
-
 }
