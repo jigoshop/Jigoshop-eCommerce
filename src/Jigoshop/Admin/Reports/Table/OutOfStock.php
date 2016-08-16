@@ -54,7 +54,7 @@ class OutOfStock implements TableInterface
             )
         );
 
-        return $this->wp->applyFilters('jigoshop/admin/reports/table/out_of_stock/columns', $this->columns);
+        return $this->wp->applyFilters('jigoshop\admin\reports\table\out_of_stock\columns', $this->columns);
     }
 
     public function getSearch()
@@ -150,12 +150,12 @@ class OutOfStock implements TableInterface
                         'action' => "view"
                     );
                 }
-                $actions = $this->wp->applyFilters('jigoshop/admin/reports/table/out_of_stock/user_actions', $actions,
+                $actions = $this->wp->applyFilters('jigoshop\admin\reports\table\out_of_stock\user_actions', $actions,
                     $item);
 
                 return $actions;
             default:
-                return $this->wp->applyFilters('jigoshop/admin/reports/table/out_of_stock/row', '', $item, $columnKey);
+                return $this->wp->applyFilters('jigoshop\admin\reports\table\out_of_stock\row', '', $item, $columnKey);
         }
     }
 

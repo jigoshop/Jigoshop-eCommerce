@@ -54,7 +54,7 @@ class SalesTab implements TabInterface
 
 	private function getTypes()
 	{
-		return $this->wp->applyFilters('jigoshop/admin/reports/sales/types', array(
+		return $this->wp->applyFilters('jigoshop\admin\reports\sales\types', array(
 			'by_date' => __('By Date', 'jigoshop'),
 			'by_product' => __('By Product', 'jigoshop'),
 			'by_category' => __('By Category', 'jigoshop'),
@@ -109,7 +109,7 @@ class SalesTab implements TabInterface
 			case 'discount_summary':
 				return new Chart\DiscountSummary($this->wp, $this->options, $this->getCurrentRange());
 			default:
-				$this->wp->doAction('jigoshop/admin/reports/sales/custom_chart', $this->getCurrentType(), $this->wp, $this->options);
+                return $this->wp->applyFilters('jigoshop\admin\reports\sales\custom', null, $this->getCurrentType());
 		}
 	}
 }

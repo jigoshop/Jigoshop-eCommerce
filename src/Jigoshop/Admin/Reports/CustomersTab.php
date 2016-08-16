@@ -58,7 +58,7 @@ class CustomersTab implements TabInterface
 
 	private function getTypes()
 	{
-		return $this->wp->applyFilters('jigoshop/admin/reports/customers/types', array(
+		return $this->wp->applyFilters('jigoshop\admin\reports\customers\types', array(
 			'customers_vs_guests' => __('Customers vs Guests', 'jigoshop'),
 			'customer_list' => __('Customer List', 'jigoshop')
 		));
@@ -105,8 +105,8 @@ class CustomersTab implements TabInterface
 				return new Chart\CustomersVsGuests($this->wp, $this->options, $this->getCurrentRange());
 			case 'customer_list':
 				return new Table\CustomerList($this->wp, $this->options, $this->orderService);
-			default:
-				$this->wp->doAction('jigoshop/admin/reports/customers/custom_content', $this->getCurrentType(), $this->wp, $this->options);
+            default:
+                return $this->wp->applyFilters('jigoshop\admin\reports\customers\custom', null, $this->getCurrentType());
 		}
 	}
 }

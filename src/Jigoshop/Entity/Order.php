@@ -483,7 +483,7 @@ class Order implements OrderInterface
 
 		if ($currentStatus != $status) {
 			$this->updateMessages[] = array(
-				'message' => $message,
+				'message' => (!$message ? '' : $message . '<br />'),
 				'old_status' => $currentStatus,
 				'new_status' => $status,
 			);

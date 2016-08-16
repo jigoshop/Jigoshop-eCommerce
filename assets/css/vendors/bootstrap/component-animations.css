@@ -1,0 +1,1 @@
+.jigoshop .fade{opacity:0;-webkit-transition:opacity .15s linear;transition:opacity .15s linear}.jigoshop .fade.in{opacity:1}.jigoshop .collapse{display:none}.jigoshop .collapse.in{display:block}.jigoshop .collapsing{position:relative;height:0;overflow:hidden;-webkit-transition:height .35s ease;transition:height .35s ease}

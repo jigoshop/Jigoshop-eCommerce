@@ -11,5 +11,4 @@ interface TableInterface
 	public function getItems($columns);
 	public function noItems();
 	public function display();
-
 }

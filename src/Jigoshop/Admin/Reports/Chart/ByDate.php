@@ -377,7 +377,7 @@ class ByDate extends Chart
         $widgets[] = new Chart\Widget\CustomRange();
         $widgets[] = new Chart\Widget\OrderStatusFilter($this->orderStatus);
 
-        return $this->wp->applyFilters('jigoshop/admin/reports/by_date/widgets', $widgets);
+        return $this->wp->applyFilters('jigoshop\admin\reports\by_date\widgets', $widgets);
     }
 
     /**
@@ -622,7 +622,7 @@ class ByDate extends Chart
 
     private function getChartColours()
     {
-        $this->chartColours = $this->wp->applyFilters('jigoshop/admin/reports/by_date/chart_colours', array(
+        $this->chartColours = $this->wp->applyFilters('jigoshop\admin\reports\by_date\chart_colours', array(
             'sales_amount' => '#b1d4ea',
             'net_sales_amount' => '#3498db',
             'average' => '#95a5a6',
