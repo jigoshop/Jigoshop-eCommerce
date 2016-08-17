@@ -187,11 +187,15 @@ class Product
                     return $status;
                 }
 
-                return sprintf(_x('%s <strong>(%d available)</strong>', 'product', 'jigoshop'), $status,
+                $stock = sprintf(_x('%s <strong>(%d available)</strong>', 'product', 'jigoshop'), $status,
                     $product->getStock()->getStock());
+                break;
             default:
-                return apply_filters('jigoshop\helper\product\get_stock', '', $product);
+                $stock = apply_filters('jigoshop\helper\product\get_stock', '', $product);
+                break;
         }
+
+        return apply_filters('jigoshop\helper\product\get_stock\stock', $stock, $product);
     }
 
     /**
