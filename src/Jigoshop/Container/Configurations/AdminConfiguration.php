@@ -1,5 +1,5 @@
 <?php
-namespace Jigoshop\Container\Configuration;
+namespace Jigoshop\Container\Configurations;
 
 use Jigoshop\Container\Services;
 use Jigoshop\Container\Tags;

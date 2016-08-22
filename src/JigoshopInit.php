@@ -40,9 +40,20 @@ class JigoshopInit
 		$this->container->classLoader->addAutoloadPath('jigoshop', JIGOSHOP_DIR.'/src/');
 		$this->container->classLoader->addAutoloadPath('wpal', JIGOSHOP_DIR.'/vendor/megawebmaster/wpal/');
 
-		$configuration = new \Jigoshop\Container\Configuration();
-		$configuration->getConfigurations();
-		$configuration->init($this->container);
+		$configurations = new \Jigoshop\Container\Configurations();
+
+		$configurations->addConfigurations(new Jigoshop\Container\Configurations\AdminConfiguration());
+		$configurations->addConfigurations(new Jigoshop\Container\Configurations\FactoriesConfiguration());
+		$configurations->addConfigurations(new Jigoshop\Container\Configurations\MainConfiguration());
+		$configurations->addConfigurations(new Jigoshop\Container\Configurations\PagesConfiguration());
+		$configurations->addConfigurations(new Jigoshop\Container\Configurations\PaymentConfiguration());
+		$configurations->addConfigurations(new Jigoshop\Container\Configurations\ServicesConfiguration());
+		$configurations->addConfigurations(new Jigoshop\Container\Configurations\ShippingConfiguration());
+
+        foreach($extensions->getExtensions() as $extension) {
+            $configurations->addConfigurations($extension->getConfiguration());
+        }
+        $configurations->init($this->container);
 
 		$this->container->compiler->add(new \Jigoshop\Admin\CompilerPass());
 		$this->container->compiler->add(new \Jigoshop\Admin\Migration\CompilerPass());
@@ -59,6 +70,7 @@ class JigoshopInit
 		// Initialize Integration for plugins
 		$this->container->get('jigoshop.integration');
 		\Jigoshop\Integration::setClassLoader($classLoader);
+        $extensions->setClassLoader($classLoader);
 
 		add_filter('admin_footer_text', array($this, 'footer'));
 		add_action('admin_bar_menu', array($this, 'toolbar'), 35);
