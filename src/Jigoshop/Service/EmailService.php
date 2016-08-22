@@ -180,6 +180,7 @@ class EmailService implements EmailServiceInterface
 		}
 
 		$this->options->update('emails.templates', $templates);
+        $this->options->saveOptions();
 	}
 
 	/**
