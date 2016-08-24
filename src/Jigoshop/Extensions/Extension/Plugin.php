@@ -58,7 +58,7 @@ class Plugin
 
     private function getDataFromPluginDatafile()
     {
-        $file = $this->dir.'/jigoshop.json';
+        $file = $this->dir.'/plugin.json';
         if(file_exists($file)) {
             $defaults = array(
                 'id' => '',
