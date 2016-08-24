@@ -1,12 +1,11 @@
 <?php
-namespace Jigoshop\Container\Configuration\Admin;
+namespace Jigoshop\Container\Configurations\Admin;
 
-use Jigoshop\Container\Configuration\ConfigurationInterface;
+use Jigoshop\Container\Configurations\ConfigurationInterface;
 use Jigoshop\Container\Services;
 use Jigoshop\Container\Tags;
 use Jigoshop\Container\Triggers;
 use Jigoshop\Container\Factories;
-use Jigoshop\Container\ClassLoader;
 
 /**
  * Class SettingsConfiguration
@@ -21,7 +20,7 @@ class SettingsConfiguration implements ConfigurationInterface
 	 *
 	 * @return mixed
 	 */
-	public function initServices(Services $services)
+	public function addServices(Services $services)
 	{
 		$services->setDetails('jigoshop.admin.settings.general', 'Jigoshop\Admin\Settings\GeneralTab', array(
 			'wpal',
@@ -54,7 +53,7 @@ class SettingsConfiguration implements ConfigurationInterface
 		));
 		$services->setDetails('jigoshop.admin.settings.advanced', 'Jigoshop\Admin\Settings\AdvancedTab', array(
 			'wpal',
-			'service_container',
+			'di',
 			'jigoshop.options',
 			'jigoshop.messages'
 		));
@@ -65,7 +64,7 @@ class SettingsConfiguration implements ConfigurationInterface
 	 *
 	 * @return mixed
 	 */
-	public function initTags(Tags $tags)
+	public function addTags(Tags $tags)
 	{
 		$tags->add('jigoshop.admin.settings.tab', 'jigoshop.admin.settings.general');
 		$tags->add('jigoshop.admin.settings.tab', 'jigoshop.admin.settings.shopping');
@@ -81,7 +80,7 @@ class SettingsConfiguration implements ConfigurationInterface
 	 *
 	 * @return mixed
 	 */
-	public function initTriggers(Triggers $triggers)
+	public function addTriggers(Triggers $triggers)
 	{
 
 	}
@@ -91,17 +90,7 @@ class SettingsConfiguration implements ConfigurationInterface
 	 *
 	 * @return mixed
 	 */
-	public function initFactories(Factories $factories)
-	{
-
-	}
-
-	/**
-	 * @param ClassLoader $classLoader
-	 *
-	 * @return mixed
-	 */
-	public function initClassLoader(ClassLoader $classLoader)
+	public function addFactories(Factories $factories)
 	{
 
 	}

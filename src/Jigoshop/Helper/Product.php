@@ -242,7 +242,7 @@ class Product
     {
         $size = self::getImageSize($size);
 
-        return '<img src="' . JIGOSHOP_URL . '/assets/images/placeholder.png" alt="" width="' . $size['width'] . '" height="' . $size['height'] . '" />';
+        return '<img src="' . \Jigoshop::getUrl() . '/assets/images/placeholder.png" alt="" width="' . $size['width'] . '" height="' . $size['height'] . '" />';
     }
 
     /**

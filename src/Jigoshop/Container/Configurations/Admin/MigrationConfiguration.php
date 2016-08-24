@@ -1,12 +1,11 @@
 <?php
-namespace Jigoshop\Container\Configuration\Admin;
+namespace Jigoshop\Container\Configurations\Admin;
 
-use Jigoshop\Container\Configuration\ConfigurationInterface;
+use Jigoshop\Container\Configurations\ConfigurationInterface;
 use Jigoshop\Container\Services;
 use Jigoshop\Container\Tags;
 use Jigoshop\Container\Triggers;
 use Jigoshop\Container\Factories;
-use Jigoshop\Container\ClassLoader;
 
 /**
  * Class MigrationConfiguration
@@ -21,7 +20,7 @@ class MigrationConfiguration implements ConfigurationInterface
 	 *
 	 * @return mixed
 	 */
-	public function initServices(Services $services)
+	public function addServices(Services $services)
 	{
 		$services->setDetails('jigoshop.admin.migration.options', 'Jigoshop\Admin\Migration\Options', array(
 			'wpal',
@@ -58,7 +57,7 @@ class MigrationConfiguration implements ConfigurationInterface
 	 *
 	 * @return mixed
 	 */
-	public function initTags(Tags $tags)
+	public function addTags(Tags $tags)
 	{
 		$tags->add('jigoshop.admin.migration', 'jigoshop.admin.migration.options');
 		$tags->add('jigoshop.admin.migration', 'jigoshop.admin.migration.coupons');
@@ -72,7 +71,7 @@ class MigrationConfiguration implements ConfigurationInterface
 	 *
 	 * @return mixed
 	 */
-	public function initTriggers(Triggers $triggers)
+	public function addTriggers(Triggers $triggers)
 	{
 
 	}
@@ -82,17 +81,7 @@ class MigrationConfiguration implements ConfigurationInterface
 	 *
 	 * @return mixed
 	 */
-	public function initFactories(Factories $factories)
-	{
-
-	}
-
-	/**
-	 * @param ClassLoader $classLoader
-	 *
-	 * @return mixed
-	 */
-	public function initClassLoader(ClassLoader $classLoader)
+	public function addFactories(Factories $factories)
 	{
 
 	}

@@ -40,14 +40,23 @@
 
 // Define plugin directory for inclusions
 if (!defined('JIGOSHOP_DIR')) {
+    /**
+     * @deprecated 2.0:2.1 Use Jigoshop::getDir() instead
+     */
 	define('JIGOSHOP_DIR', dirname(__FILE__));
 }
 // Define plugin URL for assets
 if (!defined('JIGOSHOP_URL')) {
+    /**
+     * @deprecated 2.0:2.1 Use Jigoshop::getUrl() instead
+     */
 	define('JIGOSHOP_URL', plugins_url('', __FILE__));
 }
 // Define plugin base name
 if (!defined('JIGOSHOP_BASE_NAME')) {
+    /**
+     * @deprecated 2.0:2.1 Use Jigoshop::getBaseName() instead
+     */
 	define('JIGOSHOP_BASE_NAME', plugin_basename(__FILE__));
 }
 if (!defined('WP_DEBUG')) {
@@ -130,8 +139,8 @@ if($memory_limit < JIGOSHOP_REQUIRED_WP_MEMORY*1024*1024){
 	add_action('admin_notices', 'jigoshop_required_wp_memory_warning');
 }
 
-require_once(JIGOSHOP_DIR.'/src/JigoshopInit.php');
-$jigoshop = new JigoshopInit();
-add_action('plugins_loaded', array($jigoshop, 'load'), 20);
-add_action('init', array($jigoshop, 'init'), 0);
+require_once(__DIR__.'/src/Jigoshop.php');
+$jigoshop = new Jigoshop(__FILE__);
+add_action('plugins_loaded', array($jigoshop, 'onLoad'), 20);
+add_action('init', array($jigoshop, 'onInit'), 0);
 register_activation_hook(__FILE__, array($jigoshop, 'update'));

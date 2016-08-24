@@ -15,33 +15,21 @@ class Compiler
 	/**
 	 * @var array
 	 */
-	private $compilerPass = array();
+	private $compilerPasses = array();
 
 	/**
 	 * @param CompilerPassInterface $compilerPass
 	 */
 	public function add(CompilerPassInterface $compilerPass)
 	{
-		$this->compilerPass[] = $compilerPass;
+		$this->compilerPasses[] = $compilerPass;
 	}
 
 	/**
-	 * @return array
+	 * @return CompilerPassInterface[]
 	 */
-	public function get()
+	public function getAll()
 	{
-		return $this->compilerPass;
-	}
-
-	/**
-	 * @param Container $container
-	 */
-	public function compile(Container $container)
-	{
-		$compilerPass = $this->get();
-
-		foreach($compilerPass as $pass){
-			$pass->process($container);
-		}
+		return $this->compilerPasses;
 	}
 }

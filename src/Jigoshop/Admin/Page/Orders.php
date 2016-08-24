@@ -40,11 +40,11 @@ class Orders
 
 		$wp->addAction('admin_enqueue_scripts', function () use ($wp){
 			if ($wp->getPostType() == Types::ORDER) {
-				Styles::add('jigoshop.admin.orders', JIGOSHOP_URL.'/assets/css/admin/orders.css');
+				Styles::add('jigoshop.admin.orders', \Jigoshop::getUrl().'/assets/css/admin/orders.css');
 			}
 		});
 
-		Scripts::add('jigoshop.admin.page.orders_list', JIGOSHOP_URL.'/assets/js/admin/orders.js', array('jquery-blockui'));
+		Scripts::add('jigoshop.admin.page.orders_list', \Jigoshop::getUrl().'/assets/js/admin/orders.js', array('jquery-blockui'));
 		$wp->addAction('wp_ajax_jigoshop.admin.orders.change_status', array($this, 'ajaxChangeStatus'), 10, 0);
 	}
 

@@ -1,12 +1,11 @@
 <?php
-namespace Jigoshop\Container\Configuration\Admin;
+namespace Jigoshop\Container\Configurations\Admin;
 
-use Jigoshop\Container\Configuration\ConfigurationInterface;
+use Jigoshop\Container\Configurations\ConfigurationInterface;
 use Jigoshop\Container\Services;
 use Jigoshop\Container\Tags;
 use Jigoshop\Container\Triggers;
 use Jigoshop\Container\Factories;
-use Jigoshop\Container\ClassLoader;
 
 /**
  * Class SettingsConfiguration
@@ -21,7 +20,7 @@ class SystemInfoConfiguration implements ConfigurationInterface
 	 *
 	 * @return mixed
 	 */
-	public function initServices(Services $services)
+	public function addServices(Services $services)
 	{
 		$services->setDetails('jigoshop.admin.system_info.system_status', 'Jigoshop\Admin\SystemInfo\SystemStatusTab', array(
 			'wpal',
@@ -39,7 +38,7 @@ class SystemInfoConfiguration implements ConfigurationInterface
 	 *
 	 * @return mixed
 	 */
-	public function initTags(Tags $tags)
+	public function addTags(Tags $tags)
 	{
 		$tags->add('jigoshop.admin.system_info.tab', 'jigoshop.admin.system_info.system_status');
 		$tags->add('jigoshop.admin.system_info.tab', 'jigoshop.admin.system_info.tools');
@@ -51,7 +50,7 @@ class SystemInfoConfiguration implements ConfigurationInterface
 	 *
 	 * @return mixed
 	 */
-	public function initTriggers(Triggers $triggers)
+	public function addTriggers(Triggers $triggers)
 	{
 
 	}
@@ -61,17 +60,7 @@ class SystemInfoConfiguration implements ConfigurationInterface
 	 *
 	 * @return mixed
 	 */
-	public function initFactories(Factories $factories)
-	{
-
-	}
-
-	/**
-	 * @param ClassLoader $classLoader
-	 *
-	 * @return mixed
-	 */
-	public function initClassLoader(ClassLoader $classLoader)
+	public function addFactories(Factories $factories)
 	{
 
 	}

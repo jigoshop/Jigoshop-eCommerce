@@ -44,7 +44,7 @@ class Licences implements PageInterface
 				return;
 			}
 
-//			Styles::add('jigoshop.admin.licences', JIGOSHOP_URL.'/assets/css/admin/settings.css');
+//			Styles::add('jigoshop.admin.licences', \Jigoshop::getUrl().'/assets/css/admin/settings.css');
 		});
 	}
 

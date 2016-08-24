@@ -6,8 +6,6 @@ use Jigoshop\Container\Services;
 use Jigoshop\Container\Tags;
 use Jigoshop\Container\Triggers;
 use Jigoshop\Container\Factories;
-use Jigoshop\Container\ClassLoader;
-
 /**
  * Clas PagesConfiguration
  *
@@ -21,15 +19,16 @@ class PagesConfiguration implements ConfigurationInterface
 	 *
 	 * @return mixed
 	 */
-	public function initServices(Services $services)
+	public function addServices(Services $services)
 	{
 		$services->setDetails('jigoshop.query.interceptor', 'Jigoshop\Query\Interceptor', array(
 			'wpal',
 			'jigoshop.options'
 		));
-		$services->setDetails('jigoshop.frontend.page_resolver', 'Jigoshop\Frontend\PageResolver', array(
-			'wpal'
-		));
+		$services->setDetails('jigoshop.frontend', 'Jigoshop\Frontend', array());
+        $services->setDetails('jigoshop.frontend.page_resolver', 'Jigoshop\Frontend\PageResolver', array(
+            'wpal'
+        ));
 		$services->setDetails('jigoshop.page.product_list', 'Jigoshop\Frontend\Page\ProductList', array(
 			'wpal',
 			'jigoshop.options',
@@ -125,7 +124,7 @@ class PagesConfiguration implements ConfigurationInterface
 	 *
 	 * @return mixed
 	 */
-	public function initTags(Tags $tags)
+	public function addTags(Tags $tags)
 	{
 
 	}
@@ -135,9 +134,9 @@ class PagesConfiguration implements ConfigurationInterface
 	 *
 	 * @return mixed
 	 */
-	public function initTriggers(Triggers $triggers)
+	public function addTriggers(Triggers $triggers)
 	{
-
+        $triggers->add('jigoshop.frontend', 'jigoshop.frontend.page_resolver', 'resolve', array('di'));
 	}
 
 	/**
@@ -145,17 +144,7 @@ class PagesConfiguration implements ConfigurationInterface
 	 *
 	 * @return mixed
 	 */
-	public function initFactories(Factories $factories)
-	{
-
-	}
-
-	/**
-	 * @param ClassLoader $classLoader
-	 *
-	 * @return mixed
-	 */
-	public function initClassLoader(ClassLoader $classLoader)
+	public function addFactories(Factories $factories)
 	{
 
 	}

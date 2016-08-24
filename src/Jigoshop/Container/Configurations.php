@@ -16,31 +16,17 @@ class Configurations
     private $configurations = array();
 
     /**
-     * @param Container $container
+     * @param Container\Configurations\ConfigurationInterface $configuration
      */
-    public function init(Container $container)
-    {
-        foreach ($this->configurations as $configuration) {
-            $configuration->initClassLoader($container->classLoader);
-            $configuration->initServices($container->services);
-            $configuration->initTags($container->tags);
-            $configuration->initTriggers($container->triggers);
-            $configuration->initFactories($container->factories);
-        }
-    }
-
-    /**
-     * @param ConfigurationInterface $configuration
-     */
-    public function addConfigurations(ConfigurationInterface $configuration)
+    public function add(Container\Configurations\ConfigurationInterface $configuration)
     {
         $this->configurations[] = $configuration;
     }
 
     /**
-     * @return Configuration[]
+     * @return Container\Configurations\ConfigurationInterface[]
      */
-    public function getConfiguration()
+    public function getAll()
     {
         return $this->configurations;
     }

@@ -55,7 +55,7 @@ class TaxesTab implements TabInterface
 				Country::getAll()
 			);
 
-			Scripts::add('jigoshop.admin.settings.taxes', JIGOSHOP_URL.'/assets/js/admin/settings/taxes.js', array(
+			Scripts::add('jigoshop.admin.settings.taxes', \Jigoshop::getUrl().'/assets/js/admin/settings/taxes.js', array(
 				'jquery',
 			), array('page' => 'jigoshop_page_jigoshop_settings'));
 			Scripts::localize('jigoshop.admin.settings.taxes', 'jigoshop_admin_taxes', array(

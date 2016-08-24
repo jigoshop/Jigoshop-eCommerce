@@ -35,9 +35,9 @@ class ByDate extends Chart
             if ($screen->base != 'jigoshop_page_' . Reports::NAME) {
                 return;
             }
-            Styles::add('jigoshop.vendors.select2', JIGOSHOP_URL . '/assets/css/vendors/select2.css',
+            Styles::add('jigoshop.vendors.select2', \Jigoshop::getUrl() . '/assets/css/vendors/select2.css',
                 array('jigoshop.admin.reports'));
-            Scripts::add('jigoshop.vendors.select2', JIGOSHOP_URL . '/assets/js/vendors/select2.js',
+            Scripts::add('jigoshop.vendors.select2', \Jigoshop::getUrl() . '/assets/js/vendors/select2.js',
                 array('jigoshop.admin.reports'), array('in_footer' => true));
             Scripts::localize('jigoshop.reports.chart', 'chart_data', $this->getMainChart());
         });

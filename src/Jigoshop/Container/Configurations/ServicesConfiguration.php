@@ -6,7 +6,6 @@ use Jigoshop\Container\Services;
 use Jigoshop\Container\Tags;
 use Jigoshop\Container\Triggers;
 use Jigoshop\Container\Factories;
-use Jigoshop\Container\ClassLoader;
 
 /**
  * Class ServicesConfiguration
@@ -21,7 +20,7 @@ class ServicesConfiguration implements ConfigurationInterface
 	 *
 	 * @return mixed
 	 */
-	public function initServices(Services $services)
+	public function addServices(Services $services)
 	{
 		$services->setDetails('jigoshop.service.order', 'Jigoshop\Service\OrderService', array());
 		$services->setDetails('jigoshop.service.product', 'Jigoshop\Service\ProductService', array());
@@ -66,7 +65,7 @@ class ServicesConfiguration implements ConfigurationInterface
 	 *
 	 * @return mixed
 	 */
-	public function initTags(Tags $tags)
+	public function addTags(Tags $tags)
 	{
 
 	}
@@ -76,7 +75,7 @@ class ServicesConfiguration implements ConfigurationInterface
 	 *
 	 * @return mixed
 	 */
-	public function initTriggers(Triggers $triggers)
+	public function addTriggers(Triggers $triggers)
 	{
 		$triggers->add('jigoshop.service.cart', 'jigoshop.service.cart', 'init', array());
 	}
@@ -86,7 +85,7 @@ class ServicesConfiguration implements ConfigurationInterface
 	 *
 	 * @return mixed
 	 */
-	public function initFactories(Factories $factories)
+	public function addFactories(Factories $factories)
 	{
 		$factories->set('jigoshop.service.order', 'jigoshop.factory.order_service', 'getService');
 		$factories->set('jigoshop.service.product', 'jigoshop.factory.product_service', 'getService');
@@ -95,15 +94,5 @@ class ServicesConfiguration implements ConfigurationInterface
 		$factories->set('jigoshop.service.customer', 'jigoshop.factory.customer_service', 'getService');
 		$factories->set('jigoshop.service.shipping', 'jigoshop.factory.shipping_service', 'getService');
 		$factories->set('jigoshop.service.payment', 'jigoshop.factory.payment_service', 'getService');
-	}
-
-	/**
-	 * @param ClassLoader $classLoader
-	 *
-	 * @return mixed
-	 */
-	public function initClassLoader(ClassLoader $classLoader)
-	{
-
 	}
 }

@@ -104,6 +104,6 @@ class Simple implements Type
 
 	public function addAssets()
 	{
-		Scripts::add('jigoshop.admin.product.simple', JIGOSHOP_URL.'/assets/js/admin/product/simple.js', array('jquery'));
+		Scripts::add('jigoshop.admin.product.simple', \Jigoshop::getUrl().'/assets/js/admin/product/simple.js', array('jquery'));
 	}
 }

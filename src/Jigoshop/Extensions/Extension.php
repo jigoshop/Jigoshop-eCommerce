@@ -3,6 +3,7 @@
 namespace Jigoshop\Extensions;
 
 use Jigoshop\Container\Configurations\Configuration;
+use Jigoshop\Exception;
 use Jigoshop\Extensions;
 
 /**
@@ -16,18 +17,17 @@ abstract class Extension
     private static $instance;
     /** @var  Extensions\Extension\Plugin  */
     private $plugin;
-    /** @var  Extensions\Extension\Render  */
-    private $render;
+    /** @var  \ReflectionClass */
+    private $reflection;
 
     /**
      * Extension constructor.
-     * @param string $name
      * @param string $fileName
      */
-    public function __construct($name, $fileName)
+    public function __construct($fileName)
     {
-        $this->plugin = new Extensions\Extension\Plugin($name, $fileName);
-        $this->render = new Extensions\Extension\Render($this->getTemplateDirBaseName(), $this->getPlugin()->getDir());
+        $this->plugin = new Extensions\Extension\Plugin($fileName);
+        $this->reflection = new \ReflectionClass($this);
     }
 
     /**
@@ -54,6 +54,9 @@ abstract class Extension
         return $this->plugin;
     }
 
+    /**
+     * @return Extension\Render
+     */
     public function getRender()
     {
         return $this->render;
@@ -62,9 +65,9 @@ abstract class Extension
     /**
      * @return string
      */
-    public function getDir()
+    public function getPath()
     {
-        return __DIR__;
+        return dirname($this->reflection->getFileName()).'/'.$this->reflection->getShortName();
     }
 
     /**
@@ -72,7 +75,7 @@ abstract class Extension
      */
     public function getNamespace()
     {
-        return __NAMESPACE__;
+        return $this->reflection->getName();
     }
 
     /**

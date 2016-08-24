@@ -5,8 +5,6 @@ use Jigoshop\Container\Services;
 use Jigoshop\Container\Tags;
 use Jigoshop\Container\Triggers;
 use Jigoshop\Container\Factories;
-use Jigoshop\Container\ClassLoader;
-
 /**
  * Class AdminConfiguration
  *
@@ -20,7 +18,7 @@ class AdminConfiguration implements ConfigurationInterface
 	 *
 	 * @return mixed
 	 */
-	public function initServices(Services $services)
+	public function addServices(Services $services)
 	{
 		$services->setDetails('jigoshop.admin', 'Jigoshop\Admin', array(
 			'wpal',
@@ -76,7 +74,7 @@ class AdminConfiguration implements ConfigurationInterface
 	 *
 	 * @return mixed
 	 */
-	public function initTags(Tags $tags)
+	public function addTags(Tags $tags)
 	{
 		$tags->add('jigoshop.admin.page', 'jigoshop.admin.dashboard');
 		$tags->add('jigoshop.admin.page', 'jigoshop.admin.reports');
@@ -92,9 +90,9 @@ class AdminConfiguration implements ConfigurationInterface
 	 *
 	 * @return mixed
 	 */
-	public function initTriggers(Triggers $triggers)
+	public function addTriggers(Triggers $triggers)
 	{
-
+        $triggers->add('jigoshop.admin', 'jigoshop.admin.page_resolver', 'resolve', array('di'));
 	}
 
 	/**
@@ -102,17 +100,7 @@ class AdminConfiguration implements ConfigurationInterface
 	 *
 	 * @return mixed
 	 */
-	public function initFactories(Factories $factories)
-	{
-
-	}
-
-	/**
-	 * @param ClassLoader $classLoader
-	 *
-	 * @return mixed
-	 */
-	public function initClassLoader(ClassLoader $classLoader)
+	public function addFactories(Factories $factories)
 	{
 
 	}

@@ -105,7 +105,7 @@ class External implements Type
 
 	public function addAssets()
 	{
-		Scripts::add('jigoshop.admin.product.external', JIGOSHOP_URL.'/assets/js/admin/product/external.js', array(
+		Scripts::add('jigoshop.admin.product.external', \Jigoshop::getUrl().'/assets/js/admin/product/external.js', array(
 			'jquery',
 			'jigoshop.helpers'
 		));

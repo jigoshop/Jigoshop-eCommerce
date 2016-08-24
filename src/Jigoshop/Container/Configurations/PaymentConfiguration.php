@@ -6,7 +6,6 @@ use Jigoshop\Container\Services;
 use Jigoshop\Container\Tags;
 use Jigoshop\Container\Triggers;
 use Jigoshop\Container\Factories;
-use Jigoshop\Container\ClassLoader;
 
 /**
  * Class PaymentConfiguration
@@ -21,7 +20,7 @@ class PaymentConfiguration implements ConfigurationInterface
 	 *
 	 * @return mixed
 	 */
-	public function initServices(Services $services)
+	public function addServices(Services $services)
 	{
 		$services->setDetails('jigoshop.payment.cheque', 'Jigoshop\Payment\Cheque', array(
 			'wpal',
@@ -33,7 +32,7 @@ class PaymentConfiguration implements ConfigurationInterface
 		));
 		$services->setDetails('jigoshop.payment.paypal', 'Jigoshop\Payment\PayPal', array(
 			'wpal',
-			'service_container',
+			'di',
 			'jigoshop.options',
 			'jigoshop.messages',
 		));
@@ -48,7 +47,7 @@ class PaymentConfiguration implements ConfigurationInterface
 	 *
 	 * @return mixed
 	 */
-	public function initTags(Tags $tags)
+	public function addTags(Tags $tags)
 	{
 		$tags->add('jigoshop.payment.method', 'jigoshop.payment.cheque');
 		$tags->add('jigoshop.payment.method', 'jigoshop.payment.on_delivery');
@@ -61,7 +60,7 @@ class PaymentConfiguration implements ConfigurationInterface
 	 *
 	 * @return mixed
 	 */
-	public function initTriggers(Triggers $triggers)
+	public function addTriggers(Triggers $triggers)
 	{
 
 	}
@@ -71,17 +70,7 @@ class PaymentConfiguration implements ConfigurationInterface
 	 *
 	 * @return mixed
 	 */
-	public function initFactories(Factories $factories)
-	{
-
-	}
-
-	/**
-	 * @param ClassLoader $classLoader
-	 *
-	 * @return mixed
-	 */
-	public function initClassLoader(ClassLoader $classLoader)
+	public function addFactories(Factories $factories)
 	{
 
 	}

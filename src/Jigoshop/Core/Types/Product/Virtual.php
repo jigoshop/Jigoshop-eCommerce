@@ -104,6 +104,6 @@ class Virtual implements Type
 
 	public function addAssets()
 	{
-		Scripts::add('jigoshop.admin.product.virtual', JIGOSHOP_URL.'/assets/js/admin/product/virtual.js', array('jquery'));
+		Scripts::add('jigoshop.admin.product.virtual', \Jigoshop::getUrl().'/assets/js/admin/product/virtual.js', array('jquery'));
 	}
 }

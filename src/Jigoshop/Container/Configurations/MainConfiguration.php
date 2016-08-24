@@ -6,7 +6,6 @@ use Jigoshop\Container\Services;
 use Jigoshop\Container\Tags;
 use Jigoshop\Container\Triggers;
 use Jigoshop\Container\Factories;
-use Jigoshop\Container\ClassLoader;
 
 /**
  * Clas MainConfiguration
@@ -21,7 +20,7 @@ class MainConfiguration implements ConfigurationInterface
 	 *
 	 * @return mixed
 	 */
-	public function initServices(Services $services)
+	public function addServices(Services $services)
 	{
 		$services->setDetails('wpal', 'WPAL\Wordpress', array());
 		$services->setDetails('parsedown', 'Parsedown', array());
@@ -29,7 +28,7 @@ class MainConfiguration implements ConfigurationInterface
 		$services->setDetails('jigoshop.product_type.virtual', 'Jigoshop\Core\Types\Product\Virtual', array());
 		$services->setDetails('jigoshop.product_type.variable.initializer', 'Jigoshop\Core\Installer\Product\Variable', array());
 		$services->setDetails('jigoshop.product_type.external', 'Jigoshop\Core\Types\Product\External', array());
-		$services->setDetails('jigoshop', 'Jigoshop\Core', array(
+		$services->setDetails('jigoshop.core', 'Jigoshop\Core', array(
 			'wpal',
 			'jigoshop.options',
 			'jigoshop.messages',
@@ -65,7 +64,7 @@ class MainConfiguration implements ConfigurationInterface
 		));
 		$services->setDetails('jigoshop.api', 'Jigoshop\Api', array(
 			'wpal',
-			'service_container'
+			'di'
 		));
 		$services->setDetails('jigoshop.messages', 'Jigoshop\Core\Messages', array(
 			'wpal'
@@ -135,7 +134,7 @@ class MainConfiguration implements ConfigurationInterface
 	 *
 	 * @return mixed
 	 */
-	public function initTags(Tags $tags)
+	public function addTags(Tags $tags)
 	{
 		$tags->add('jigoshop.type.post', 'jigoshop.post_type.product');
 		$tags->add('jigoshop.type.post', 'jigoshop.post_type.email');
@@ -151,7 +150,7 @@ class MainConfiguration implements ConfigurationInterface
 	 *
 	 * @return mixed
 	 */
-	public function initTriggers(Triggers $triggers)
+	public function addTriggers(Triggers $triggers)
 	{
 		$triggers->add('jigoshop.factory.order', 'jigoshop.factory.order', 'init', array(
 			'jigoshop.service.customer',
@@ -167,17 +166,7 @@ class MainConfiguration implements ConfigurationInterface
 	 *
 	 * @return mixed
 	 */
-	public function initFactories(Factories $factories)
-	{
-
-	}
-
-	/**
-	 * @param ClassLoader $classLoader
-	 *
-	 * @return mixed
-	 */
-	public function initClassLoader(ClassLoader $classLoader)
+	public function addFactories(Factories $factories)
 	{
 
 	}

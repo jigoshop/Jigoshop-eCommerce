@@ -47,9 +47,9 @@ class Migration implements PageInterface
 				return;
 			}
 
-			Styles::add('jigoshop.admin.migration', JIGOSHOP_URL.'/assets/css/admin/migration.css');
+			Styles::add('jigoshop.admin.migration', \Jigoshop::getUrl().'/assets/css/admin/migration.css');
 
-			Scripts::add('jigoshop.admin.migration', JIGOSHOP_URL.'/assets/js/admin/migration.js');
+			Scripts::add('jigoshop.admin.migration', \Jigoshop::getUrl().'/assets/js/admin/migration.js');
 
 			$migration_title = __('Jigoshop &raquo; Migration Tool &raquo; ', 'jigoshop');
 			Scripts::localize('jigoshop.admin.migration', 'jigoshop_admin_migration', array(

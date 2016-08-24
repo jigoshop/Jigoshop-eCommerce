@@ -57,7 +57,7 @@ class LayeredNav extends \WP_Widget
 
 	public function assets()
 	{
-		Styles::add('jigoshop.widget.layered_nav', JIGOSHOP_URL.'/assets/css/widget/layered_nav.css');
+		Styles::add('jigoshop.widget.layered_nav', \Jigoshop::getUrl().'/assets/css/widget/layered_nav.css');
 	}
 
 	public function query($products)
