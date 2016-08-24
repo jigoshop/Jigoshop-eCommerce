@@ -2,6 +2,7 @@
 
 namespace Jigoshop\Extensions\Extension;
 
+use Jigoshop\Core;
 use Jigoshop\Exception;
 
 /**
@@ -44,6 +45,7 @@ class Plugin
         $this->url = plugins_url('', $filename);
         $this->basename = plugin_basename($filename);
         $data = $this->getDataFromPluginDatafile();
+        var_dump($data);
         $this->name = $data->name;
         $this->description = $data->description;
         $this->requiredVersion = $data->requiredVersion;
@@ -55,7 +57,19 @@ class Plugin
     {
         $file = $this->dir.'/jigoshop.json';
         if(file_exists($file)) {
-            return json_decode(file_get_contents($file));
+            $defaults = array(
+                'id' => '',
+                'name' => '',
+                'description' => '',
+                'requiredVersion' => Core::VERSION,
+                'version' => '1.0',
+                'author' => 'Jigoshop ltd',
+                'authorUrl' => 'https://www.jigoshop.com/',
+                'templateDir' => ''
+            );
+            $data = json_decode(file_get_contents($file), true);
+
+            return array_merge($defaults, $data);
         }
         throw new Exception(sprintf('Plugin datafile [%s] does not exist', $file));
     }
