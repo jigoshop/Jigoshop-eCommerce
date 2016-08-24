@@ -32,9 +32,9 @@ do_action('jigoshop_widget_login_before_form');
 	<p>
 		<a class="forgot" href="<?php echo $passwordUrl; ?>"><?php _e('Remind password', 'jigoshop'); ?></a>
 	</p>
-	<?php if (Jigoshop_Base::get_options()->get('jigoshop_enable_signup_form') == 'yes'): ?>
+	<?php if (\Jigoshop\Helper\Options::getOptions('shopping')['allow_registration']): ?>
 		<p class="register">
-			<?php echo wp_register(__('New user?', 'jigoshop').' ', ''); ?>
+			<?php wp_register(__('New user?', 'jigoshop') . ' ', '', true); ?>
 		</p>
 	<?php endif; ?>
 </form>
