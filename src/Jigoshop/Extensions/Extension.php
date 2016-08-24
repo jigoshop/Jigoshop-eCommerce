@@ -3,7 +3,7 @@
 namespace Jigoshop\Extensions;
 
 use Jigoshop\Container\Configurations\Configuration;
-use Jigoshop\Exception;
+use Jigoshop\Container\Configurations\ConfigurationInterface;
 use Jigoshop\Extensions;
 
 /**
@@ -79,7 +79,7 @@ abstract class Extension
     }
 
     /**
-     * @return Configuration
+     * @return ConfigurationInterface
      */
     abstract public function getConfiguration();
 }
