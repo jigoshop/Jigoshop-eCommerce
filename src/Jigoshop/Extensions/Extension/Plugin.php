@@ -45,12 +45,15 @@ class Plugin
         $this->url = plugins_url('', $filename);
         $this->basename = plugin_basename($filename);
         $data = $this->getDataFromPluginDatafile();
-        var_dump($data);
-        $this->name = $data->name;
-        $this->description = $data->description;
-        $this->requiredVersion = $data->requiredVersion;
-        $this->id = $data->id;
-        $this->version = $data->version;
+
+        $this->id = $data['id'];
+        $this->name = $data['name'];
+        $this->description = $data['description'];
+        $this->requiredVersion = $data['requiredVersion'];
+        $this->version = $data['version'];
+        $this->author = $data['author'];
+        $this->authorUrl = $data['authorUrl'];
+        $this->templateDir = $data['templateDir'];
     }
 
     private function getDataFromPluginDatafile()
@@ -136,5 +139,29 @@ class Plugin
     public function getVersion()
     {
         return $this->version;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAuthor()
+    {
+        return $this->author;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAuthorUrl()
+    {
+        return $this->authorUrl;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTemplateDir()
+    {
+        return $this->templateDir;
     }
 }

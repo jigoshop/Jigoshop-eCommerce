@@ -79,11 +79,6 @@ abstract class Extension
     }
 
     /**
-     * @return string
-     */
-    abstract public function getTemplateDirBaseName();
-
-    /**
      * @return Configuration
      */
     abstract public function getConfiguration();
