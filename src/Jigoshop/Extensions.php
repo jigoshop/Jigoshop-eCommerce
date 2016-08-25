@@ -52,7 +52,8 @@ class Extensions
         foreach (self::$extensions as $extension) {
             if ($this->validate($extension)) {
                 $classLoader->addPsr4($extension->getNamespace() . '\\', $extension->getPath());
-                $container->configurations->add($extension->getConfiguration());
+                $class = '\\'.$extension->getNamespace().'\\Configuration';
+                $container->configurations->add(new $class());
             }
         }
     }

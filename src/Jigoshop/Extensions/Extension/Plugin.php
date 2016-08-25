@@ -34,6 +34,8 @@ class Plugin
     private $url;
     /** @var string  */
     private $basename;
+    /** @var  array  */
+    private $data;
 
     /**
      * Plugin constructor.
@@ -44,16 +46,16 @@ class Plugin
         $this->dir = dirname($filename);
         $this->url = plugins_url('', $filename);
         $this->basename = plugin_basename($filename);
-        $data = $this->getDataFromPluginDatafile();
+        $this->data = $this->getDataFromPluginDatafile();
 
-        $this->id = $data['id'];
-        $this->name = $data['name'];
-        $this->description = $data['description'];
-        $this->requiredVersion = $data['requiredVersion'];
-        $this->version = $data['version'];
-        $this->author = $data['author'];
-        $this->authorUrl = $data['authorUrl'];
-        $this->templateDir = $data['templateDir'];
+        $this->id = $this->data['id'];
+        $this->name = $this->data['name'];
+        $this->description = $this->data['description'];
+        $this->requiredVersion = $this->data['requiredVersion'];
+        $this->version = $this->data['version'];
+        $this->author = $this->data['author'];
+        $this->authorUrl = $this->data['authorUrl'];
+        $this->templateDir = $this->data['templateDir'];
     }
 
     private function getDataFromPluginDatafile()
@@ -163,5 +165,13 @@ class Plugin
     public function getTemplateDir()
     {
         return $this->templateDir;
+    }
+
+    /**
+     * @return array
+     */
+    public function getData()
+    {
+        return $this->data;
     }
 }

@@ -77,9 +77,4 @@ abstract class Extension
     {
         return $this->reflection->getName();
     }
-
-    /**
-     * @return ConfigurationInterface
-     */
-    abstract public function getConfiguration();
 }
