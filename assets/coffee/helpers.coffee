@@ -3,6 +3,7 @@ class JigoshopHelpers
   params:
     assets: ''
     ajaxUrl: ''
+  api: ''
 
   constructor: (params) ->
     @params = params
@@ -15,6 +16,9 @@ class JigoshopHelpers
 
   getAjaxUrl: ->
     @params.ajaxUrl
+
+  getApi: ->
+    @api
 
   addMessage: (type, message, ms) ->
     $alert = jQuery(document.createElement('div')).attr('class', "alert alert-#{type}").html(message).hide()

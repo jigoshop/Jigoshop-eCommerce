@@ -92,6 +92,9 @@ abstract class Extension
         return null;
     }
 
+    /**
+     * @return InstallerInterface
+     */
     public function getInstaller()
     {
         $installer = '\\'.$this->getNamespace().'\\Installer';

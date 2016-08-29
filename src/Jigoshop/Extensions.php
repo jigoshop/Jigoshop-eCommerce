@@ -16,6 +16,8 @@ class Extensions
 {
     /** @var  Extension[] */
     private static $extensions = array();
+    /** @var  Extension */
+    private static $install;
     /** @var  License */
     private $license;
 
@@ -33,6 +35,15 @@ class Extensions
     public static function register(Extension $extension)
     {
         self::$extensions[] = $extension;
+    }
+
+    /**
+     * @param Extension $extension
+     */
+    public static function install(Extension $extension)
+    {
+        self::register($extension);
+        do_action('jigoshop\extensions\install', $extension);
     }
 
     /**

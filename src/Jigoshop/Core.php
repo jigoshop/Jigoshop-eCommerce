@@ -45,6 +45,7 @@ class Core
 		Scripts::register('jigoshop.helpers', \Jigoshop::getUrl().'/assets/js/helpers.js', array('jquery'));
 		Scripts::register('jigoshop.helpers.ajax_search', \Jigoshop::getUrl().'/assets/js/helpers/ajax_search.js', array('jigoshop.helpers'));
 		Scripts::register('jigoshop.helpers.payment', \Jigoshop::getUrl().'/assets/js/helpers/payment.js', array('jigoshop.helpers', 'jquery-blockui'));
+		Scripts::register('jigoshop.api', \Jigoshop::getUrl().'/assets/js/api.js', array('jigoshop.helpers'));
 		Scripts::register('jigoshop.media', \Jigoshop::getUrl().'/assets/js/media.js', array('jquery'));
 		Scripts::register('jigoshop.shop', \Jigoshop::getUrl().'/assets/js/shop.js', array(
 			'jquery',

@@ -55,6 +55,7 @@ class Jigoshop
 
         add_filter('admin_footer_text', array($this, 'footer'));
         add_action('admin_bar_menu', array($this, 'toolbar'), 35);
+        add_action('jigoshop\extensions\install', array($this, 'installExtension'));
     }
 
     /**
@@ -461,8 +462,6 @@ class Jigoshop
         // Require upgrade specific files
         require_once(ABSPATH.'/wp-admin/includes/upgrade.php');
 
-        $this->addConfigurations();
-        $this->addCompilers();
         $this->initConfigurations();
         $this->initCompilers();
 
@@ -485,5 +484,20 @@ class Jigoshop
             $installer->install();
         }
         switch_to_blog($blog);
+    }
+
+    /**
+     * @param \Jigoshop\Extensions\Extension $extension
+     */
+    public function installExtension($extension)
+    {
+        $installer = $extension->getInstaller();
+        if($installer && $installer instanceof \Jigoshop\Extensions\InstallerInterface) {
+            $this->initConfigurations();
+            $this->initCompilers();
+
+            $installer->init($this->container);
+            $installer->install();
+        }
     }
 }
