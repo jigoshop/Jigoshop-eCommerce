@@ -4,7 +4,7 @@ namespace Jigoshop;
 
 use Jigoshop\Api\Format;
 use Jigoshop\Api\InvalidResponseObject;
-use Jigoshop\Api\Processable;
+use Jigoshop\Api\Response\ResponseInterface;
 use Jigoshop\Api\ResponseClassNotFound;
 use Jigoshop\Api\Routing;
 use Jigoshop\Api\UnsupportedHttpMethod;
@@ -146,9 +146,10 @@ class Api
 
         $result = $routing->match($uri);
         list($className, $methodName) = explode('@', $result['action']);
-        //TODO: rename this 'Response';
         $response = $this->getResponseObject($className);
         $this->validateResponseObject($response, $methodName);
+
+        $response->init($this->di);
 
         return call_user_func_array(array($response, $methodName), $result['params']);
     }
@@ -176,6 +177,10 @@ class Api
         return $_SERVER['REQUEST_METHOD'];
     }
 
+    /**
+     * @param string $className
+     * @return ResponseInterface
+     */
     private function getResponseObject($className)
     {
         if(class_exists($className) == false) {
@@ -185,9 +190,13 @@ class Api
         return new $className();
     }
 
+    /**
+     * @param ResponseInterface $object
+     * @param $requiredMethod
+     */
     private function validateResponseObject($object, $requiredMethod)
     {
-        if(($object instanceof Processable) == false) {
+        if(($object instanceof ResponseInterface) == false) {
             throw new InvalidResponseObject(get_class($object));
         }
         if(method_exists($object, $requiredMethod) == false) {
@@ -195,6 +204,11 @@ class Api
         }
     }
 
+    /**
+     * @param $format
+     * @param $responseToFormat
+     * @return string
+     */
     private function getFormattedResponse($format, $responseToFormat)
     {
         $parser = new Format($format);

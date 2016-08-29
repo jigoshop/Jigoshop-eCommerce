@@ -1,8 +1,8 @@
 <?php
 
-namespace Jigoshop\Api\V1;
+namespace Jigoshop\Api\Response\V1;
 
-use Jigoshop\Api\Processable;
+use Jigoshop\Api\Response\ResponseInterface;
 use Jigoshop\Container;
 
 /**
@@ -10,14 +10,15 @@ use Jigoshop\Container;
  * @package Jigoshop\Api\V1;
  * @author Krzysztof Kasowski
  */
-class Test implements Processable
+class Test implements ResponseInterface
 {
+
     public function init(Container $di)
     {
 
     }
 
-    public function processResponse()
+    public function getTest()
     {
         return array('time' => microtime(1) - WP_START_TIME);
     }
