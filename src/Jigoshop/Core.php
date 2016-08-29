@@ -92,6 +92,10 @@ class Core
 
 		$container->get('jigoshop.permalinks');
 
+		/** @var \Jigoshop\ApiDeprecated $api */
+		$api = $container->get('jigoshop.api_deprecated');
+		$api->run();
+
 		/** @var \Jigoshop\Api $api */
 		$api = $container->get('jigoshop.api');
 		$api->run();

@@ -52,8 +52,10 @@ class Extensions
         foreach (self::$extensions as $extension) {
             if ($this->validate($extension)) {
                 $classLoader->addPsr4($extension->getNamespace() . '\\', $extension->getPath());
-                $class = '\\'.$extension->getNamespace().'\\Configuration';
-                $container->configurations->add(new $class());
+                $configuration = $this->getConfigurationFromExtension($extension);
+                if($configuration) {
+                    $container->configurations->add($configuration);
+                }
             }
         }
     }
@@ -125,5 +127,24 @@ class Extensions
                 echo '<div class="error"><p>' . $message . '</p></div>';
             });
         }
+    }
+
+    private function getConfigurationFromExtension(Extension $extension) {
+        $configuration = '\\'.$extension->getNamespace().'\\Configuration';
+        if(class_exists($configuration)) {
+            return new $configuration();
+        }
+
+        return null;
+    }
+
+    public function getRoutesFromExtension(Extension $extension)
+    {
+        $api = '\\'.$extension->getNamespace().'\\Api';
+        if(class_exists($api)) {
+            return new $api();
+        }
+
+        return null;
     }
 }

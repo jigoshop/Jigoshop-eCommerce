@@ -46,6 +46,8 @@ class Jigoshop
 
         $this->container = new \Jigoshop\Container();
         $this->extensions = new \Jigoshop\Extensions();
+        $this->container->getServices()->set('jigoshop.extensions', $this->extensions);
+        $this->container->getServices()->set('class_loader', $this->classLoader);
         \Jigoshop\Integration::setClassLoader($this->classLoader);
 
         $this->addConfigurations();
@@ -98,7 +100,7 @@ class Jigoshop
     public function onLoad()
     {
         $this->extensions->init($this->container, $this->classLoader);
-        
+
         $this->initConfigurations();
         $this->initCompilers();
         $this->initExtensionsTools();
@@ -458,6 +460,11 @@ class Jigoshop
     {
         // Require upgrade specific files
         require_once(ABSPATH.'/wp-admin/includes/upgrade.php');
+
+        $this->addConfigurations();
+        $this->addCompilers();
+        $this->initConfigurations();
+        $this->initCompilers();
 
         /** @var $wp \WPAL\Wordpress */
         $wp = $this->container->get('wpal');

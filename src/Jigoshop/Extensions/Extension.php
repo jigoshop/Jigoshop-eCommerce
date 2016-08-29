@@ -2,6 +2,7 @@
 
 namespace Jigoshop\Extensions;
 
+use Jigoshop\Api\Routing\ControllerInterface;
 use Jigoshop\Container\Configurations\Configuration;
 use Jigoshop\Container\Configurations\ConfigurationInterface;
 use Jigoshop\Extensions;
@@ -76,5 +77,42 @@ abstract class Extension
     public function getNamespace()
     {
         return $this->reflection->getName();
+    }
+
+    /**
+     * @return ConfigurationInterface
+     */
+    public function getConfiguration()
+    {
+        $configuration = '\\'.$this->getNamespace().'\\Configuration';
+        if(class_exists($configuration)) {
+            return new $configuration();
+        }
+
+        return null;
+    }
+
+    public function getInstaller()
+    {
+        $installer = '\\'.$this->getNamespace().'\\Installer';
+        if(class_exists($installer)) {
+            return new $installer();
+        }
+
+        return null;
+    }
+
+
+    /**
+     * @return ControllerInterface
+     */
+    public function getApiController()
+    {
+        $apiController = '\\'.$this->getNamespace().'\\ApiController';
+        if(class_exists($apiController)) {
+            return new $apiController();
+        }
+
+        return null;
     }
 }

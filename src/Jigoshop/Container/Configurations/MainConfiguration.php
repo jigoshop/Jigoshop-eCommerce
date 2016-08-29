@@ -62,10 +62,14 @@ class MainConfiguration implements ConfigurationInterface
 			'jigoshop.options',
 			'jigoshop.service.email'
 		));
-		$services->setDetails('jigoshop.api', 'Jigoshop\Api', array(
-			'wpal',
-			'di'
-		));
+		$services->setDetails('jigoshop.api_deprecated', 'Jigoshop\ApiDeprecated', array(
+            'wpal',
+            'di'
+        ));
+        $services->setDetails('jigoshop.api', 'Jigoshop\Api', array(
+            'wpal',
+            'di'
+        ));
 		$services->setDetails('jigoshop.messages', 'Jigoshop\Core\Messages', array(
 			'wpal'
 		));
@@ -75,10 +79,6 @@ class MainConfiguration implements ConfigurationInterface
 		$services->setDetails('jigoshop.roles', 'Jigoshop\Core\Roles', array(
 			'wpal'
 		));
-		/*$services->setDatails('jigoshop.assets', 'Jigoshop\Core\Assets', array(
-			'wpal',
-			'jigoshop.options'
-		));*/
 		$services->setDetails('jigoshop.template', 'Jigoshop\Core\Template', array(
 			'wpal',
 			'jigoshop.options'
