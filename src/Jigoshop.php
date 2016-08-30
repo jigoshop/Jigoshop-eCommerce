@@ -19,7 +19,6 @@ if (!defined('JIGOSHOP_LOG_DIR')) {
  */
 class Jigoshop
 {
-    private $ignore = 0;
     /** @var  string  */
     private static $dir;
     /** @var  string  */
@@ -274,7 +273,7 @@ class Jigoshop
         $this->container->get('jigoshop.core');
         // Initialize post types and roles
         $this->container->get('jigoshop.types');
-        $this->container->get('jigoshop.roles');
+        //$this->container->get('jigoshop.roles');
         // Initialize Cron
         $this->container->get('jigoshop.cron');
         if(is_admin()) {

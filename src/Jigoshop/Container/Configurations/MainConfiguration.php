@@ -76,9 +76,7 @@ class MainConfiguration implements ConfigurationInterface
 		$services->setDetails('jigoshop.types', 'Jigoshop\Core\Types', array(
 			'wpal'
 		));
-		$services->setDetails('jigoshop.roles', 'Jigoshop\Core\Roles', array(
-			'wpal'
-		));
+		$services->setDetails('jigoshop.roles.initializer', 'Jigoshop\Core\Installer\Roles', array());
 		$services->setDetails('jigoshop.template', 'Jigoshop\Core\Template', array(
 			'wpal',
 			'jigoshop.options'
@@ -143,6 +141,7 @@ class MainConfiguration implements ConfigurationInterface
 		$tags->add('jigoshop.type.taxonomy', 'jigoshop.taxonomy.product_category');
 		$tags->add('jigoshop.type.taxonomy', 'jigoshop.taxonomy.product_tag');
 		$tags->add('jigoshop.installer', 'jigoshop.product_type.variable.initializer');
+		$tags->add('jigoshop.installer', 'jigoshop.roles.initializer');
 	}
 
 	/**

@@ -1,7 +1,8 @@
 <?php
 
-namespace Jigoshop\Core;
+namespace Jigoshop\Core\Installer;
 
+use Jigoshop\Core\Types;
 use WPAL\Wordpress;
 
 /**
@@ -10,7 +11,7 @@ use WPAL\Wordpress;
  * @package Jigoshop\Core
  * @author  Amadeusz Starzykiewicz
  */
-class Roles
+class Roles implements Initializer
 {
 	/** @var \WPAL\Wordpress */
 	private $wp;
@@ -24,7 +25,7 @@ class Roles
 	 *
 	 * @param Wordpress $wp
 	 */
-	public function __construct(Wordpress $wp)
+	public function initialize(Wordpress $wp)
 	{
 		$this->wp = $wp;
 		$roles = $wp->getRoles();
@@ -35,6 +36,13 @@ class Roles
 			'edit_posts' => false,
 			'delete_posts' => false
 		)));
+
+        // Customer role
+        $wp->addRole('customer2', __('Customer2', 'jigoshop'), $wp->applyFilters('jigoshop\role\customer', array(
+            'read' => true,
+            'edit_posts' => false,
+            'delete_posts' => false
+        )));
 
 		// Shop manager role
 		$wp->addRole('shop_manager', __('Shop Manager', 'jigoshop'), $wp->applyFilters('jigoshop\role\shop_manager', array(
