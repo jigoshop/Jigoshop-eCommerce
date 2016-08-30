@@ -19,6 +19,7 @@ if (!defined('JIGOSHOP_LOG_DIR')) {
  */
 class Jigoshop
 {
+    private $ignore = 0;
     /** @var  string  */
     private static $dir;
     /** @var  string  */
@@ -491,11 +492,15 @@ class Jigoshop
      */
     public function installExtension($extension)
     {
+        $this->classLoader->addPsr4($extension->getNamespace() . '\\', $extension->getPath());
+
+        $configuration = $extension->getConfiguration();
+        if($configuration && $configuration instanceof \Jigoshop\Container\Configurations\ConfigurationInterface) {
+            $this->container->configurations->add($configuration);
+        }
+
         $installer = $extension->getInstaller();
         if($installer && $installer instanceof \Jigoshop\Extensions\InstallerInterface) {
-            $this->initConfigurations();
-            $this->initCompilers();
-
             $installer->init($this->container);
             $installer->install();
         }

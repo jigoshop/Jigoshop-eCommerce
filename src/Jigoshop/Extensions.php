@@ -42,7 +42,6 @@ class Extensions
      */
     public static function install(Extension $extension)
     {
-        self::register($extension);
         do_action('jigoshop\extensions\install', $extension);
     }
 
