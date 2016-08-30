@@ -73,7 +73,7 @@ class Installer
         }
 
         // Flush rules on first Jigoshop init after activation.
-        update_option('jigoshop_force_flush_rewrite', false);
+        update_option('jigoshop_force_flush_rewrite', 1);
         $this->wp->updateSiteOption('jigoshop_database_version', self::DB_VERSION);
     }
 

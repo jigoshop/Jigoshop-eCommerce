@@ -110,7 +110,7 @@ class Order implements OrderInterface
 	 */
 	public function getTitle()
 	{
-		return sprintf(__('Order %d', 'jigoshop'), $this->getNumber());
+		return sprintf(__('Order %s', 'jigoshop'), $this->getNumber());
 	}
 
 	/**

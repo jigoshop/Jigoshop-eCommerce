@@ -207,10 +207,10 @@ class Jigoshop
      */
     private function rewriteRules()
     {
-        if(get_option('jigoshop_force_flush_rewrite', true)) {
+        if(get_option('jigoshop_force_flush_rewrite', 1) == 1) {
             add_action('shutdown', function(){
                 flush_rewrite_rules();
-                update_option('jigoshop_force_flush_rewrite', false);
+                update_option('jigoshop_force_flush_rewrite', 2);
             });
         }
     }
