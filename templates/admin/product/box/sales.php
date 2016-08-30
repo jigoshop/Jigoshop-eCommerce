@@ -14,6 +14,11 @@ if ($product instanceof Product\Saleable) {
 	/** @var Product\Saleable $product */
 	$enabled = $product->getSales()->isEnabled();
 	$price = $product->getSales()->getPrice();
+
+	if($product->getSales()->getFrom()->getTimestamp() < time() && $product->getSales()->getTo()->getTimestamp() < time()) {
+		$product->getSales()->getFrom()->setTimestamp(time());
+		$product->getSales()->getTo()->setTimestamp(time());
+	}
 	$from = $product->getSales()->getFrom()->format('m/d/Y');
 	$to = $product->getSales()->getTo()->format('m/d/Y');
 }
