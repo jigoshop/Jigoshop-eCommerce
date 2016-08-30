@@ -19,17 +19,19 @@ $hasLabel = !empty($label);
 					<?php echo $label; ?>
 				</label>
 			<?php endif; ?>
-				<div class="col-xs-2 col-sm-1 text-right">
+			<div class="col-xs-12 col-sm-<?php echo $size ?> clearfix">
+				<div class="tooltip-inline-badge">
 					<?php if (!empty($tip)): ?>
 						<span data-toggle="tooltip" class="badge margin-top-bottom-9" data-placement="top" title="<?php echo $tip; ?>">?</span>
 					<?php endif; ?>
 				</div>
-				<div class="col-xs-<?php echo $size - 2 ?> col-sm-<?php echo $size - 1 ?>">
+				<div class="tooltip-inline-input">
 					<p class="form-control-static <?php echo join(' ', $classes); ?>" id="<?php echo $id; ?>"><?php echo $value; ?></p>
 					<?php if(!empty($description)): ?>
 						<span class="help-block"><?php echo $description; ?></span>
 					<?php endif; ?>
 				</div>
+			</div>
 		</div>
 	</div>
 </div>
