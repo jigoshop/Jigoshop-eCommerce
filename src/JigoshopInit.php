@@ -97,10 +97,11 @@ class JigoshopInit
 
 			return $value;
 		};
-		if(get_option('jigoshop_force_flush_rewrite', true)) {
-		    add_action('shutdown', function(){
+		if(get_option('jigoshop_force_flush_rewrite', 1) == 1) {
+            //exit;
+            add_action('shutdown', function(){
 		        flush_rewrite_rules();
-                update_option('jigoshop_force_flush_rewrite', false);
+                update_option('jigoshop_force_flush_rewrite', 2);
             });
         }
 		add_filter('index_rel_link', $disable);
