@@ -91,6 +91,8 @@ class Session implements EntityInterface
         if(isset($this->fields[$field])) {
             return $this->fields[$field];
         }
+
+        return '';
     }
 
     /**

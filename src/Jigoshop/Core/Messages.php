@@ -2,6 +2,8 @@
 
 namespace Jigoshop\Core;
 
+use Jigoshop\Entity\Session;
+use Jigoshop\Service\SessionServiceInterface;
 use WPAL\Wordpress;
 
 /**
@@ -19,20 +21,23 @@ class Messages
 	private $notices = array();
 	private $warnings = array();
 	private $errors = array();
+    /** @var  Session  */
+    private $session;
 
-	public function __construct(Wordpress $wp)
+	public function __construct(Wordpress $wp, SessionServiceInterface $sessionService)
 	{
-		if (isset($_SESSION[self::NOTICES])) {
-			$this->notices = $_SESSION[self::NOTICES];
+	    $this->session = $sessionService->get($sessionService->getCurrentKey());
+		if ($this->session->getField(self::NOTICES)) {
+			$this->notices = $this->session->getField(self::NOTICES);
 		}
-		if (isset($_SESSION[self::WARNINGS])) {
-			$this->warnings = $_SESSION[self::WARNINGS];
+		if ($this->session->getField(self::WARNINGS)) {
+            $this->session->getField(self::WARNINGS);
 		}
-		if (isset($_SESSION[self::ERRORS])) {
-			$this->errors = $_SESSION[self::ERRORS];
+		if ($this->session->getField(self::ERRORS)) {
+            $this->session->getField(self::ERRORS);
 		}
 
-		$wp->addAction('shutdown', array($this, 'preserveMessages'));
+		$wp->addAction('shutdown', array($this, 'preserveMessages'), 9);
 	}
 
 	/**
@@ -139,15 +144,15 @@ class Messages
 	 */
 	public function preserveMessages()
 	{
-		$_SESSION[self::NOTICES] = array_values(array_filter($this->notices, function ($item){
+        $this->session->getField(self::NOTICES, array_values(array_filter($this->notices, function ($item){
 			return $item['persistent'];
-		}));
-		$_SESSION[self::WARNINGS] = array_values(array_filter($this->warnings, function ($item){
+		})));
+        $this->session->getField(self::WARNINGS, array_values(array_filter($this->warnings, function ($item){
 			return $item['persistent'];
-		}));
-		$_SESSION[self::ERRORS] = array_values(array_filter($this->errors, function ($item){
+		})));
+		$this->session->getField(self::ERRORS, array_values(array_filter($this->errors, function ($item){
 			return $item['persistent'];
-		}));
+		})));
 	}
 
 	/**

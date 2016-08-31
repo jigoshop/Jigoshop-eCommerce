@@ -71,7 +71,8 @@ class MainConfiguration implements ConfigurationInterface
             'di'
         ));
 		$services->setDetails('jigoshop.messages', 'Jigoshop\Core\Messages', array(
-			'wpal'
+			'wpal',
+            'jigoshop.service.session'
 		));
 		$services->setDetails('jigoshop.types', 'Jigoshop\Core\Types', array(
 			'wpal'

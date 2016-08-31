@@ -36,6 +36,7 @@ class ServicesConfiguration implements ConfigurationInterface
 			'jigoshop.service.customer',
 			'jigoshop.service.product',
 			'jigoshop.service.shipping',
+			'jigoshop.service.session',
 			'jigoshop.service.payment',
 			'jigoshop.factory.order'
 		));

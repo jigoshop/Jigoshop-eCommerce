@@ -85,7 +85,7 @@ abstract class SessionService implements SessionServiceInterface
 
     private function generateSessionKey()
     {
-        $key = md5(microtime().rand());
+        $key = 'jigoshop_'.md5(microtime().rand());
         setcookie('jigoshop_session_key', $key, time() + (86400 * 30), "/");
 
         return $key;

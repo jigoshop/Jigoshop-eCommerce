@@ -51,7 +51,8 @@ class FactoriesConfiguration implements ConfigurationInterface
 		$services->setDetails('jigoshop.factory.customer_service', 'Jigoshop\Factory\CustomerService', array(
 			'wpal',
 			'jigoshop.options',
-			'jigoshop.factory.customer'
+			'jigoshop.factory.customer',
+            'jigoshop.service.session'
 		));
 		$services->setDetails('jigoshop.factory.product', 'Jigoshop\Factory\Product', array(
 			'wpal',
@@ -71,7 +72,8 @@ class FactoriesConfiguration implements ConfigurationInterface
 			'jigoshop.messages'
 		));
 		$services->setDetails('jigoshop.factory.customer', 'Jigoshop\Factory\Customer', array(
-			'wpal'
+			'wpal',
+            'jigoshop.service.session'
 		));
 		$services->setDetails('jigoshop.factory.shipping_service', 'Jigoshop\Factory\ShippingService', array(
 			'wpal',
