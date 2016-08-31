@@ -32,6 +32,11 @@ class FactoriesConfiguration implements ConfigurationInterface
 			'jigoshop.options',
 			'jigoshop.factory.product'
 		));
+        $services->setDetails('jigoshop.factory.session_service', 'Jigoshop\Factory\SessionService', array(
+            'wpal',
+            'jigoshop.options',
+            'jigoshop.factory.session'
+        ));
 		$services->setDetails('jigoshop.factory.variable_product_service', 'Jigoshop\Factory\Product\VariableService', array(
 			'wpal',
 			'jigoshop.options',
@@ -56,6 +61,10 @@ class FactoriesConfiguration implements ConfigurationInterface
 			'wpal',
 			'jigoshop.service.product'
 		));
+        $services->setDetails('jigoshop.factory.session', 'Jigoshop\Factory\Session', array(
+            'wpal',
+            'jigoshop.options'
+        ));
 		$services->setDetails('jigoshop.factory.order', 'Jigoshop\Factory\Order', array(
 			'wpal',
 			'jigoshop.options',
@@ -81,6 +90,7 @@ class FactoriesConfiguration implements ConfigurationInterface
 		));
 
 		$services->setLazyStaus('jigoshop.factory.product', true);
+		$services->setLazyStaus('jigoshop.factory.session', true);
 		$services->setLazyStaus('jigoshop.factory.product.variable', true);
 		$services->setLazyStaus('jigoshop.factory.order', true);
 		$services->setLazyStaus('jigoshop.factory.customer', true);

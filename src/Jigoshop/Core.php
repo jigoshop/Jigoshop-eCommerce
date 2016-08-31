@@ -2,7 +2,6 @@
 
 namespace Jigoshop;
 
-use Jigoshop\Container;
 use Jigoshop\Core\Messages;
 use Jigoshop\Core\Options;
 use Jigoshop\Core\Template;
@@ -63,7 +62,7 @@ class Core
 	/**
 	 * Starts Jigoshop extensions and Jigoshop itself.
 	 *
-	 * @param \Jigoshop\Container $container
+	 * @param Container $container
 	 */
 	public function run(Container $container)
 	{

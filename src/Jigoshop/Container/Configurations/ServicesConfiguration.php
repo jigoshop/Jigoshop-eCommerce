@@ -29,6 +29,7 @@ class ServicesConfiguration implements ConfigurationInterface
 		$services->setDetails('jigoshop.service.customer', 'Jigoshop\Service\CustomerService', array());
 		$services->setDetails('jigoshop.service.shipping', 'Jigoshop\Service\ShippingService', array());
 		$services->setDetails('jigoshop.service.payment', 'Jigoshop\Service\PaymentService', array());
+        $services->setDetails('jigoshop.service.session', 'Jigoshop\Service\SessionService', array());
 		$services->setDetails('jigoshop.service.cart', 'Jigoshop\Service\CartService', array(
 			'wpal',
 			'jigoshop.options',
@@ -56,6 +57,7 @@ class ServicesConfiguration implements ConfigurationInterface
 		$services->setLazyStaus('jigoshop.service.customer', true);
 		$services->setLazyStaus('jigoshop.service.shipping', true);
 		$services->setLazyStaus('jigoshop.service.payment', true);
+		$services->setLazyStaus('jigoshop.service.session', true);
 		$services->setLazyStaus('jigoshop.service.cart', true);
 		$services->setLazyStaus('jigoshop.service.coupon', true);
 	}
@@ -94,5 +96,6 @@ class ServicesConfiguration implements ConfigurationInterface
 		$factories->set('jigoshop.service.customer', 'jigoshop.factory.customer_service', 'getService');
 		$factories->set('jigoshop.service.shipping', 'jigoshop.factory.shipping_service', 'getService');
 		$factories->set('jigoshop.service.payment', 'jigoshop.factory.payment_service', 'getService');
+		$factories->set('jigoshop.service.session', 'jigoshop.factory.session_service', 'getService');
 	}
 }
