@@ -246,11 +246,16 @@ class Settings implements PageInterface
 	 */
 	public function validate($input)
 	{
-		$currentTab = $this->getCurrentTab();
-		/** @var TabInterface $tab */
-		$tab = $this->tabs[$currentTab];
-		$this->options->update($currentTab, $tab->validate($input));
-
+	    try {
+            $currentTab = $this->getCurrentTab();
+            /** @var TabInterface $tab */
+            $tab = $this->tabs[$currentTab];
+            $this->options->update($currentTab, $tab->validate($input));
+        } catch(Admin\Settings\ValidationException $e) {
+            $this->messages->addError($e->getMessage(), true);
+            $this->wp->wpSafeRedirect(admin_url(sprintf('admin.php?page=%s&tab=%s', self::NAME, $tab->getSlug())));
+            exit;
+        }
 		return $this->options->getAll();
 	}
 }
