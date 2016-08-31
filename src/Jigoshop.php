@@ -278,6 +278,9 @@ class Jigoshop
         $this->container->get('jigoshop.cron');
         if(is_admin()) {
             $this->container->get('jigoshop.admin');
+            if(defined('DOING_AJAX') && DOING_AJAX) {
+                $this->container->get('jigoshop.frontend.page_resolver')->resolve($this->container);
+            }
         } else {
             $this->container->get('jigoshop.frontend');
         }

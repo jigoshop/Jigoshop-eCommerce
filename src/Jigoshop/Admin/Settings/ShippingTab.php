@@ -97,6 +97,7 @@ class ShippingTab implements TabInterface
 			/** @var $method Method */
 			$options[] = array(
 				'title' => $method->getName(),
+                'description' => apply_filters('jigoshop\admin\settings\shipping\method\description', '', $method),
 				'id' => $method->getId(),
 				'fields' => $method->getOptions(),
 			);
