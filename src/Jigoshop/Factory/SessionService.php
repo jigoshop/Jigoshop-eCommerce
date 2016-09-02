@@ -39,7 +39,7 @@ class SessionService
      */
     public function getService()
     {
-        switch (/*$this->options->get('advanced.session_store_type')*/ 'php') {
+        switch ($this->options->get('advanced.session', 'php')) {
             case 'php':
                 $service = new Service\Session\Php($this->wp, $this->options, $this->factory);
                 break;

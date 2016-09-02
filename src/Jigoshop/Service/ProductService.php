@@ -129,13 +129,16 @@ class ProductService implements ProductServiceInterface
 	 */
 	public function findByQuery($query)
 	{
-		$results = $query->get_posts();
 		$products = array();
-
-		// TODO: Maybe it is good to optimize this to fetch all found products at once?
-		foreach ($results as $product) {
-			$products[$product->ID] = $this->findForPost($product);
-		}
+        if(isset($query->posts) && count($query->posts)) {
+            $results = $query->posts;
+        } else {
+            $results = $query->get_posts();
+        }
+        // TODO: Maybe it is good to optimize this to fetch all found products at once?
+        foreach ($results as $product) {
+            $products[$product->ID] = $this->findForPost($product);
+        }
 
 		return $this->wp->applyFilters('jigoshop\service\product\find_by_query', $products, $query);
 	}

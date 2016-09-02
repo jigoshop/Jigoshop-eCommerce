@@ -29,6 +29,8 @@ class AdvancedTab implements TabInterface
 	private $messages;
 	/** @var array */
 	private $caches;
+    /** @var array */
+	private $sessionTypes;
 	/** @var \Jigoshop\Container */
 	private $di;
 
@@ -43,6 +45,10 @@ class AdvancedTab implements TabInterface
 		$this->caches = array(
 			'simple' => _x('Simple', 'cache', 'jigoshop'),
 		);
+        $this->sessionTypes = array(
+            'php' => __('Php session', 'jigoshop'),
+            'transient' => __('Wordpress transient', 'jigoshop'),
+        );
 	}
 
 	/**
@@ -159,6 +165,14 @@ class AdvancedTab implements TabInterface
 						'value' => $this->settings['cache'],
 						'options' => $this->caches,
 					),
+                    array(
+                        'name' => '[session]',
+                        'title' => __('Session mechanism', 'jigoshop'),
+                        'description' => __('Decides which mechanism for session is used on the page.', 'jigoshop'),
+                        'type' => 'select',
+                        'value' => $this->settings['session'],
+                        'options' => $this->sessionTypes,
+                    ),
 					array(
 						'name' => '[install_emails]',
 						'title' => __('Create default emails', 'jigoshop'),

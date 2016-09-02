@@ -236,6 +236,12 @@ class FlatRate implements Method
 	 */
 	public function calculate(OrderInterface $order)
 	{
+        if($this->options['type'] == 'per_item') {
+            $quantity = array_sum(array_map(function($item) {
+                return $item->getQuantity();
+            }, $order->getItems()));
+            return (float)(($this->options['cost'] * $quantity) + $this->options['fee']);
+        }
 		return (float)($this->options['cost'] + $this->options['fee']);
 	}
 

@@ -24,10 +24,10 @@ class Transient extends SessionService
     {
         if (!isset($this->sessions[$key])) {
             $data = array('key' => $key);
-            if (isset($_SESSION[$key])) {
-                $data['fields'] = get_transient('jigoshop_session_'.$key);
+            $transient = get_transient('jigoshop_session_'.$key);
+            if($transient) {
+                $data['fields'] = $transient;
             }
-
             $this->sessions[$key] = $this->getFactory()->fetch($data);
             $this->sessions[$key]->setSessionService($this);
         }
