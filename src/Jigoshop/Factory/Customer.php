@@ -2,9 +2,8 @@
 
 namespace Jigoshop\Factory;
 
-use Jigoshop\Core\Types;
 use Jigoshop\Entity\Customer as Entity;
-use Jigoshop\Entity\Session;
+use Jigoshop\Entity\Session as SessionEntity;
 use Jigoshop\Service\SessionServiceInterface;
 use WPAL\Wordpress;
 
@@ -14,7 +13,7 @@ class Customer implements EntityFactoryInterface
 
 	/** @var \WPAL\Wordpress */
 	private $wp;
-    /** @var  Session */
+    /** @var  SessionEntity */
     private $session;
 
 	public function __construct(Wordpress $wp, SessionServiceInterface $sessionService)
