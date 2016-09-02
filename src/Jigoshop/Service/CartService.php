@@ -124,7 +124,6 @@ class CartService implements CartServiceInterface
 			}
 
 			// TODO: Support for transients?
-
 			$cart = $this->orderFactory->fill($cart, $state);
 			$this->carts[$id] = $this->wp->applyFilters('jigoshop\service\cart\get', $cart, $state);
 		}
