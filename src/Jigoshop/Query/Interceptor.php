@@ -82,7 +82,6 @@ class Interceptor
 
 	private function parseRequest($request)
 	{
-	    \WpDebugBar\Debugger::addMessage($request, 'req');
 		if ($this->isCart($request)) {
 			return $this->wp->applyFilters('jigoshop\query\cart', $request, $request);
 		}
