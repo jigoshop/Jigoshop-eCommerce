@@ -146,8 +146,7 @@ class AdvancedTab implements TabInterface
 					array(
 						'name' => '[products_list][variations_sku_stock]',
 						'title' => __('Show variation\'s SKU and stock', 'jigoshop'),
-						'description' => __("Show all variation's SKU and stock on products list page.", 'jigoshop'),
-						'tip' => __("Show all variation's SKU and stock on products list page.", 'jigoshop'),
+						'description' => __("Show all variation's SKU and stock on admin products list page.", 'jigoshop'),
 						'type' => 'checkbox',
 						'checked' => $this->settings['products_list']['variations_sku_stock'],
 						'classes' => array('switch-medium'),
@@ -173,6 +172,15 @@ class AdvancedTab implements TabInterface
                         'type' => 'select',
                         'value' => $this->settings['session'],
                         'options' => $this->sessionTypes,
+                    ),
+                    array(
+                        'name' => '[ignore_meta_queries]',
+                        'title' => __('Ignore meta queries on product list', 'jigoshop'),
+                        'description' => __('Ignores products\' visibility to enhance the loading time.
+Warning : This will result in showing "out of stock" products on the catalog page, as well as making all products visible in the catalog and search pages.', 'jigoshop'),
+                        'type' => 'checkbox',
+                        'checked' => $this->settings['ignore_meta_queries'],
+                        'classes' => array('switch-medium'),
                     ),
 					array(
 						'name' => '[install_emails]',
@@ -273,6 +281,7 @@ class AdvancedTab implements TabInterface
 			$this->messages->addWarning(sprintf(__('Invalid cache mechanism: "%s". Value set to %s.', 'jigoshop'), $settings['cache'], $this->caches['simple']));
 			$settings['cache'] = 'simple';
 		}
+		$settings['ignore_meta_queries'] = $settings['ignore_meta_queries'] == 'on';
 
 		$pages = $this->_getPages();
 

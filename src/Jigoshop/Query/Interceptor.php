@@ -138,24 +138,27 @@ class Interceptor
 			'posts_per_page' => $options['catalog_per_page'],
 			'paged' => isset($request['paged']) ? $request['paged'] : 1,
 			'orderby' => $options['catalog_order_by'],
-			'order' => $options['catalog_order'],
-			'meta_query' => array(
-				array(
-					'key' => 'visibility',
-					'value' => array(Product::VISIBILITY_CATALOG, Product::VISIBILITY_PUBLIC),
-					'compare' => 'IN'
-				)
-			),
+			'order' => $options['catalog_order']
 		);
-		if($options['hide_out_of_stock'] == 'on'){
-			$result['meta_query'][] = array(
-				array(
-					'key' => 'stock_status',
-					'value' => 1,
-					'compare' => '='
-				),
-			);
-		}
+
+        if($this->options->get('advanced.ignore_meta_queries', false) == true) {
+            $result['meta_query'] = array(
+                array(
+                    'key' => 'visibility',
+                    'value' => array(Product::VISIBILITY_CATALOG, Product::VISIBILITY_PUBLIC),
+                    'compare' => 'IN'
+                )
+            );
+            if ($options['hide_out_of_stock'] == 'on') {
+                $result['meta_query'][] = array(
+                    array(
+                        'key' => 'stock_status',
+                        'value' => 1,
+                        'compare' => '='
+                    ),
+                );
+            }
+        }
 
 		// Support for search queries
 		if (isset($request['s'])) {
