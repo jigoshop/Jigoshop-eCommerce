@@ -110,7 +110,7 @@ class CartService implements CartServiceInterface
 	public function get($id)
 	{
 		if (!isset($this->carts[$id])) {
-			$cart = new Cart($this->wp, $this->options->get('tax.classes'));
+			$cart = new Cart($this->options->get('tax.classes'));
 			$cart->setCustomer($this->customerService->getCurrent());
 			$cart->getCustomer()
 				->selectTaxAddress($this->options->get('taxes.shipping') ? 'shipping' : 'billing');
@@ -354,7 +354,7 @@ class CartService implements CartServiceInterface
 	 */
 	public function createFromOrder($cartId, $order)
 	{
-		$cart = new \Jigoshop\Entity\Cart($this->wp, $this->options->get('tax.classes'));
+		$cart = new \Jigoshop\Entity\Cart($this->options->get('tax.classes'));
 
 		$cart->setId($cartId);
 		$cart->setCustomer($order->getCustomer());
