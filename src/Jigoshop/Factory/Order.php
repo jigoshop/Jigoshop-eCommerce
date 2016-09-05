@@ -123,7 +123,7 @@ class Order implements EntityFactoryInterface
      */
     public function fetch($post)
     {
-        $order = new Entity($this->wp, $this->options->get('tax.classes'));
+        $order = new Entity($this->options->get('tax.classes'));
         /** @var Entity $order */
         $order = $this->wp->applyFilters('jigoshop\factory\order\fetch\before', $order);
         $state = array();
@@ -326,7 +326,7 @@ class Order implements EntityFactoryInterface
 
     public function fromCart(\Jigoshop\Entity\Cart $cart)
     {
-        $order = new \Jigoshop\Entity\Order($this->wp, $this->options->get('tax.classes'));
+        $order = new \Jigoshop\Entity\Order($this->options->get('tax.classes'));
         $state = $cart->getStateToSave();
         $state['items'] = unserialize($state['items']);
         $state['customer'] = unserialize($state['customer']);

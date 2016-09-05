@@ -2,7 +2,6 @@
 
 namespace Jigoshop\Entity;
 
-use Jigoshop\Core\Types;
 use Jigoshop\Entity\Customer\Guest;
 use Jigoshop\Entity\Order\Item;
 use Jigoshop\Entity\Order\Status;
@@ -10,7 +9,6 @@ use Jigoshop\Exception;
 use Jigoshop\Payment;
 use Jigoshop\Shipping;
 use Monolog\Registry;
-use WPAL\Wordpress;
 
 /**
  * Order class.
@@ -20,8 +18,6 @@ use WPAL\Wordpress;
  */
 class Order implements OrderInterface
 {
-	/** @var \WPAL\Wordpress */
-	protected $wp;
 	/** @var int */
 	private $id;
 	/** @var string */
@@ -73,10 +69,8 @@ class Order implements OrderInterface
 	/** @var array */
 	private $updateMessages = array();
 
-	public function __construct(Wordpress $wp, array $taxClasses)
+	public function __construct(array $taxClasses)
 	{
-		$this->wp = $wp;
-
 		$this->customer = new Guest();
 		$this->createdAt = new \DateTime();
 		$this->updatedAt = new \DateTime();
@@ -415,8 +409,8 @@ class Order implements OrderInterface
 		$this->shippingMethod = $method;
 		$this->shippingPrice = $method->calculate($this);
 		$this->subtotal += $this->shippingPrice;
-		$this->shippingTax = $this->wp->applyFilters('jigoshop\order\shipping_tax', $this->shippingTax, $method, $this);
-		$this->total += $this->wp->applyFilters('jigoshop\order\shipping_price', $this->shippingPrice, $method, $this);
+		$this->shippingTax = apply_filters('jigoshop\order\shipping_tax', $this->shippingTax, $method, $this);
+		$this->total += apply_filters('jigoshop\order\shipping_price', $this->shippingPrice, $method, $this);
 		$this->totalCombinedTax = null;
 	}
 
@@ -687,7 +681,7 @@ class Order implements OrderInterface
 			// TODO: Support for "Price includes tax"
 			/** @var Item $item */
 			$item = $this->items[$key];
-			$this->wp->doAction('jigoshop\order\remove_item', $item, $this);
+			do_action('jigoshop\order\remove_item', $item, $this);
 			$this->total -= $item->getCost() + $item->getTax();
 			$this->subtotal -= $item->getCost();
 			$this->productSubtotal -= $item->getCost();
@@ -706,7 +700,7 @@ class Order implements OrderInterface
 	 */
 	public function addItem(Item $item)
 	{
-		$this->wp->doAction('jigoshop\order\add_item', $item, $this);
+		do_action('jigoshop\order\add_item', $item, $this);
 		$this->items[$item->getKey()] = $item;
 		$this->productSubtotal += $item->getCost();
 		$this->subtotal += $item->getCost();
