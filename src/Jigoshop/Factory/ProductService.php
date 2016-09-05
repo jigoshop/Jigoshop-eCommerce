@@ -4,6 +4,7 @@ namespace Jigoshop\Factory;
 
 use Jigoshop\Core\Options;
 use Jigoshop\Factory\Product as ProductFactory;
+use Jigoshop\Service\Cache\Product\PhpFastCache;
 use Jigoshop\Service\Cache\Product\Simple as SimpleCache;
 use Jigoshop\Service\ProductService as Service;
 use Jigoshop\Service\ProductServiceInterface;
@@ -37,6 +38,9 @@ class ProductService
 			case 'simple':
 				$service = new SimpleCache($service);
 				break;
+            case 'php_fast_cache':
+                $service = new SimpleCache($service);
+                break;
 			default:
 				$service = $this->wp->applyFilters('jigoshop\core\get_product_service', $service);
 		}

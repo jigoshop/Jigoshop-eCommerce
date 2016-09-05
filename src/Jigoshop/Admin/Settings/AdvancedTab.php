@@ -44,6 +44,7 @@ class AdvancedTab implements TabInterface
 
 		$this->caches = array(
 			'simple' => _x('Simple', 'cache', 'jigoshop'),
+			'php_fast_cache' => _x('Php Fast Cache', 'cache', 'jigoshop'),
 		);
         $this->sessionTypes = array(
             'php' => __('Php session', 'jigoshop'),

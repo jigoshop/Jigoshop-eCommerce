@@ -27,7 +27,8 @@
 		"megawebmaster/wpal": "*",
 		"monolog/monolog": "~1.11@dev",
 		"nitra/php-min": "dev-master",
-		"erusev/parsedown": "*"
+		"erusev/parsedown": "*",
+		"phpfastcache/phpfastcache": "*"
 	},
 	"require-dev": {
 		"phpunit/phpunit": "4.1.*",

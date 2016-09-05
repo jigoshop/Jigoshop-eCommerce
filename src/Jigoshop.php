@@ -43,6 +43,7 @@ class Jigoshop
         $this->classLoader = $this->getClassLoader();
         $this->classLoader->addPsr4('WPAL\\', array(self::getDir().'/vendor/megawebmaster/wpal/WPAL'));
         $this->initLoggers();
+        $this->initCache();
 
         $this->container = new \Jigoshop\Container();
         $this->extensions = new \Jigoshop\Extensions();
@@ -321,6 +322,16 @@ class Jigoshop
         $logger->pushProcessor(new \Monolog\Processor\IntrospectionProcessor());
         $logger->pushProcessor(new \Monolog\Processor\WebProcessor());
         \Monolog\Registry::addLogger($logger);
+    }
+
+    /**
+     *
+     */
+    private function initCache()
+    {
+        \phpFastCache\CacheManager::setDefaultConfig(array(
+            'path' => Jigoshop::getLogDir(),
+        ));
     }
 
     /**

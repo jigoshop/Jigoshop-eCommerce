@@ -3,7 +3,6 @@
 namespace Jigoshop\Entity\Product;
 
 use Jigoshop\Entity\Product;
-use WPAL\Wordpress;
 
 class Simple extends Product implements Purchasable, Shippable, Saleable
 {
@@ -18,9 +17,9 @@ class Simple extends Product implements Purchasable, Shippable, Saleable
 	/** @var Product\Attributes\StockStatus */
 	private $stock;
 
-	public function __construct(Wordpress $wp)
+	public function __construct()
 	{
-		parent::__construct($wp);
+	    parent::__construct();
 		$this->sales = new Attributes\Sales();
 		$this->stock = new Product\Attributes\StockStatus();
 	}
@@ -46,7 +45,7 @@ class Simple extends Product implements Purchasable, Shippable, Saleable
 		}
 
 		// TODO: Improve code to calculate price single time only
-		return $this->wp->applyFilters('jigoshop\product\get_price', $this->calculatePrice(), $this);
+		return apply_filters('jigoshop\product\get_price', $this->calculatePrice(), $this);
 	}
 
 	/**
@@ -57,7 +56,7 @@ class Simple extends Product implements Purchasable, Shippable, Saleable
 	 */
 	public function setStock(Product\Attributes\StockStatus $stock)
 	{
-		$stock = $this->wp->applyFilters('jigoshop\product\set_stock', $stock, $this);
+		$stock = apply_filters('jigoshop\product\set_stock', $stock, $this);
 
 		if ($stock !== false) {
 			$this->stock = $stock;
@@ -106,7 +105,7 @@ class Simple extends Product implements Purchasable, Shippable, Saleable
 	 */
 	public function setSales(Attributes\Sales $sales)
 	{
-		$sales = $this->wp->applyFilters('jigoshop\product\set_sales', $sales, $this);
+		$sales = apply_filters('jigoshop\product\set_sales', $sales, $this);
 
 		if ($sales !== false) {
 			$this->sales = $sales;

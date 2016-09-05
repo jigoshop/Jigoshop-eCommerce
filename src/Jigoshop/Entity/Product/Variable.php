@@ -5,7 +5,6 @@ namespace Jigoshop\Entity\Product;
 use Jigoshop\Entity\Order\Item;
 use Jigoshop\Entity\Product;
 use Jigoshop\Entity\Product\Attribute;
-use WPAL\Wordpress;
 
 class Variable extends Product implements Shippable, Saleable
 {
@@ -15,10 +14,10 @@ class Variable extends Product implements Shippable, Saleable
 	/** @var Attributes\Sales */
 	private $sales;
 
-	public function __construct(Wordpress $wp)
+	public function __construct()
 	{
-		parent::__construct($wp);
-		$this->sales = new Attributes\Sales();
+        parent::__construct();
+        $this->sales = new Attributes\Sales();
 	}
 
 	/**
@@ -146,7 +145,7 @@ class Variable extends Product implements Shippable, Saleable
 	 */
 	public function setSales(Attributes\Sales $sales)
 	{
-		$sales = $this->wp->applyFilters('jigoshop\product\set_sales', $sales, $this);
+		$sales = apply_filters('jigoshop\product\set_sales', $sales, $this);
 
 		if ($sales !== false) {
 			$this->sales = $sales;
