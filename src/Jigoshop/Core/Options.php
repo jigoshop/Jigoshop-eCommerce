@@ -178,9 +178,9 @@ class Options
 			'cache' => 'simple',
             'session' => 'php',
             'ignore_meta_queries' => false,
-			'wos' => array(
-				'enabled' => true,
-			),
+			'api' => array(
+			    'keys' => array()
+            ),
 			'pages' => array(
 				'shop' => 0,
 				'cart' => 0,
