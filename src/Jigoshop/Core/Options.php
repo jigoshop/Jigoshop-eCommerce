@@ -176,6 +176,8 @@ class Options
 				'variations_sku_stock' => false,
 			),
 			'cache' => 'simple',
+            'session' => 'php',
+            'ignore_meta_queries' => false,
 			'wos' => array(
 				'enabled' => true,
 			),
