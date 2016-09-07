@@ -2,6 +2,7 @@
 
 namespace Jigoshop\Admin\Settings;
 
+use Jigoshop\Api\Validation\Permission;
 use Jigoshop\Container;
 use Jigoshop\Core\Messages;
 use Jigoshop\Core\Options;
@@ -222,21 +223,11 @@ Warning : This will result in showing "out of stock" products on the catalog pag
                         'value' => $this->settings['api']['keys'],
                         'description' => __('Logged users don\'t need to use api keys, guest can see products and manage their carts', 'jigoshop'),
                         'display' => function ($field) {
-                            \WpDebugBar\Debugger::addMessage($field, 'field');
                             Render::output('admin/settings/api_keys', array(
                                 'name' => $field['name'],
                                 'values' => $field['value'],
                                 'description' => $field['description'],
-                                'availablePermissions' => $this->wp->applyFilters('jigoshop\settings\api\available_permissions', array(
-                                    'read_orders' => __('Read orders', 'jigoshop'),
-                                    'manage_orders' => __('Manage orders', 'jigoshop'),
-                                    'read_coupons' => __('Read coupons', 'jigoshop'),
-                                    'manage_coupons' => __('Manage coupons', 'jigoshop'),
-                                    'read_customers' => __('Read Customers', 'jigoshop'),
-                                    'manage_customers' => __('Manage Customers', 'jigoshop'),
-                                    'manage_products' => __('Manage products', 'jigoshop'),
-                                    'manage_emails' => __('Manage Emails', 'jigoshop'),
-                                )),
+                                'availablePermissions' => Permission::getPermisions(),
                             ));
                         }
                     ),

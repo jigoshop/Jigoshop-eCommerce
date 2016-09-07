@@ -8,6 +8,7 @@ use Jigoshop\Api\Response\ResponseInterface;
 use Jigoshop\Api\ResponseClassNotFound;
 use Jigoshop\Api\Routing;
 use Jigoshop\Api\UnsupportedHttpMethod;
+use Jigoshop\Api\Validation;
 use WPAL\Wordpress;
 
 /**
@@ -125,6 +126,7 @@ class Api
     private function route($version, $uri)
     {
         $routing = new Routing();
+        $validation = new Validation($this->di->get('jigoshop.options'));
         $action = '';
         if($this->getHttpMethod() == 'GET') {
             $action = 'onGet';
