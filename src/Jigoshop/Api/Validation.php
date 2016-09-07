@@ -2,8 +2,9 @@
 
 namespace Jigoshop\Api;
 
+use Jigoshop\Api\Validation\InvalidKey;
+use Jigoshop\Api\Validation\InvalidUserId;
 use Jigoshop\Api\Validation\Permission;
-use Jigoshop\Core\Options;
 
 /**
  * Class Validation
@@ -12,20 +13,40 @@ use Jigoshop\Core\Options;
  */
 class Validation
 {
-    /** @var  \WP_User */
-    private $user;
-    /** @var Options  */
-    private $options;
+    /** @var array[] */
+    private $keys;
+    /** @var string[] */
+    private $headers;
+    /** @var mixed[] */
+    private $currentKeyData;
 
     /**
      * Validation constructor.
-     * @param Options $options
+     * @param mixed[] $keys
+     * @param string[] $headers
      */
-    public function __construct(Options $options, $apiKey)
+    public function __construct($keys, $headers)
     {
-        $this->options = $options;
-        $this->apiKey = '';
-        $this->user = wp_get_current_user();
+        $this->keys = $keys;
+        $this->headers = $headers;
+    }
+
+    public function checkRequest($method, $uri)
+    {
+        if (isset($this->headers['JIGOSHOP-API-USER-ID'], $this->headers['JIGOSHOP-API-SIGNATURE'], $this->headers['JIGOSHOP-API-TIMESTAMP'])) {
+            $keyData = $this->getCurrentKeyData();
+            if(time() - $this->headers['JIGOSHOP-API-TIMESTAMP'] > 5) {
+                //throw
+                return false;
+            }
+
+            if(hash('sha256', $keyData['key'].$this->headers['JIGOSHOP-API-TIMESTAMP'].$method.$uri) != $this->headers['JIGOSHOP-API-SIGNATURE']) {
+                //throw
+                return false;
+            }
+        }
+
+        return true;
     }
 
     /**
@@ -33,29 +54,53 @@ class Validation
      */
     public function getPermissions()
     {
-        $permissions = apply_filters('jigoshop\api\validation\default_permissions', array(
+        $default = apply_filters('jigoshop\api\validation\default_permissions', array(
             Permission::MANAGE_CART,
             Permission::READ_CART,
             Permission::READ_PRODUCTS,
         ));
-        if($this->user->ID) {
-            if(in_array('manage_jigoshop', $this->user->get_role_caps())) {
+        $permissions = array_merge($default, $this->getCurrentUserPermissions(), $this->getKeyPermissions());
+
+        return apply_filters('jigoshop\api\validation\permissions', $permissions);
+    }
+
+    private function getCurrentUserPermissions()
+    {
+        $user = wp_get_current_user();
+        if ($user->ID) {
+            if (in_array('manage_jigoshop', $user->get_role_caps())) {
                 return array_keys(Permission::getPermisions());
             }
         }
+    }
 
-        if($this->apiKey) {
-            $allKeys = $this->options->get('advanced.api.keys', array());
-            foreach($allKeys as $keyData) {
-                if($keyData['key'] == $this->apiKey) {
-                    if(empty($keyData['permissions'])) {
-                        return array_keys(Permission::getPermisions());
+    /**
+     * @return string[]
+     */
+    private function getKeyPermissions()
+    {
+        $keyData = $this->getCurrentKeyData();
+
+        return !empty($keyData) ? $keyData['permissions'] : [];
+    }
+
+    /**
+     * @return mixed[]
+     */
+    private function getCurrentKeyData()
+    {
+        if($this->currentKeyData == null) {
+            if (isset($this->headers['JIGOSHOP-API-USER-ID'])) {
+                foreach ($this->keys as $keyData) {
+                    if ($keyData['user_id'] == $this->headers['JIGOSHOP-API-USER-ID']) {
+                        return $keyData;
                     }
-                    $permissions = array_merge($permissions, $keyData['permissions']);
                 }
+            } else {
+                $this->currentKeyData = [];
             }
         }
 
-        return $permissions;
+        return $this->currentKeyData;
     }
 }

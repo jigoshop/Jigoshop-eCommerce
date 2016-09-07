@@ -68,6 +68,7 @@ class MainConfiguration implements ConfigurationInterface
         ));
         $services->setDetails('jigoshop.api', 'Jigoshop\Api', array(
             'wpal',
+            'jigoshop.options',
             'di'
         ));
 		$services->setDetails('jigoshop.messages', 'Jigoshop\Core\Messages', array(

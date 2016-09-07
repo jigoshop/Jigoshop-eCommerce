@@ -7,8 +7,8 @@ use Jigoshop\Api\InvalidResponseObject;
 use Jigoshop\Api\Response\ResponseInterface;
 use Jigoshop\Api\ResponseClassNotFound;
 use Jigoshop\Api\Routing;
-use Jigoshop\Api\UnsupportedHttpMethod;
 use Jigoshop\Api\Validation;
+use Jigoshop\Core\Options;
 use WPAL\Wordpress;
 
 /**
@@ -23,17 +23,21 @@ class Api
 
     /** @var Wordpress */
     private $wp;
-    /** @var Container */
+    /** @var Options */
+    private $options;
+    /** @var Container  */
     private $di;
 
     /**
      * Api constructor.
      * @param Wordpress $wp
+     * @param Options $options
      * @param Container $di
      */
-    public function __construct(Wordpress $wp, Container $di)
+    public function __construct(Wordpress $wp, Options $options, Container $di)
     {
         $this->wp = $wp;
+        $this->options = $options;
         $this->di = $di;
     }
 
@@ -83,50 +87,40 @@ class Api
         $format = trim($format, '.');
 
         if ($version && $uri && $format) {
-            $response = '';
-            $status = true;
-            try {
-                $response = $this->route($version, $uri);
-            } catch(Api\Routing\NotFound $e) {
-                $status = false;
-            } catch(UnsupportedHttpMethod $e) {
-                $status = false;
-                $response = sprintf(__('Unsupported Http Method: %s', 'jigoshop'), $e->getMessage());
-            } catch(Api\ResponseClassNotFound $e) {
-                $status = false;
-                $response = sprintf(__('Response class not found: %s', 'jigoshop'), $e->getMessage());
-            } catch(InvalidResponseObject $e) {
-                $status = false;
-                if($e->getMethodName()) {
-                    $response = sprintf(
-                        __('Class `%s` does not have method: %s', 'jigoshop'),
-                        $e->getMessage(), $e->getMethodName()
-                    );
-                } else {
-                    $response = sprintf(__('Invalid object: %s', 'jigoshop'), $e->getMessage());
-                }
-            } catch(Exception $e) {
-                $status = false;
-                $response = $e->getMessage();
-            }
-
-            echo $this->getFormattedResponse($format, array('status' => $status, 'data' => $response));
+            echo $this->getFormattedResponse($format, $this->getResponse($version, $uri));
             exit;
         }
     }
 
+    private function getResponse($version, $uri)
+    {
+        $response = '';
+        $status = true;
+        try {
+            $validation = new Validation($this->options->get('advanced.api.keys', array()), getallheaders());
+            if($validation->checkRequest($this->getHttpMethod(), $uri)) {
+                $this->route($version, $uri, $validation->getPermissions());
+            }
+        } catch(Exception $e) {
+            $status = false;
+            $response = $e->getMessage();
+        }
+
+        return array('status' => $status, 'data' => $response);
+    }
+
     /**
-     * @param $version
-     * @param $uri
+     * @param string $version
+     * @param string $uri
+     * @param string[] $permissions
      *
      * @throws Api\RouteNotFound
      *
      * @return string
      */
-    private function route($version, $uri)
+    private function route($version, $uri, $permissions)
     {
         $routing = new Routing();
-        $validation = new Validation($this->di->get('jigoshop.options'));
         $action = '';
         if($this->getHttpMethod() == 'GET') {
             $action = 'onGet';
@@ -151,7 +145,7 @@ class Api
         $response = $this->getResponseObject($className);
         $this->validateResponseObject($response, $methodName);
 
-        $response->init($this->di);
+        $response->init($this->di, $permissions);
 
         return call_user_func_array(array($response, $methodName), $result['params']);
     }
