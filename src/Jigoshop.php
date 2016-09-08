@@ -50,6 +50,7 @@ class Jigoshop
         $this->container->getServices()->set('jigoshop.extensions', $this->extensions);
         $this->container->getServices()->set('class_loader', $this->classLoader);
         \Jigoshop\Integration::setClassLoader($this->classLoader);
+        \Jigoshop\Integration::setContainer($this->container);
 
         $this->addConfigurations();
         $this->addCompilers();

@@ -97,10 +97,8 @@ class Api
         $response = '';
         $status = true;
         try {
-            $validation = new Validation($this->options->get('advanced.api.keys', array()), getallheaders());
-            if($validation->checkRequest($this->getHttpMethod(), $uri)) {
-                $this->route($version, $uri, $validation->getPermissions());
-            }
+            $permissions = $this->validate($uri);
+            $response = $this->route($version, $uri, $permissions);
         } catch(Exception $e) {
             $status = false;
             $response = $e->getMessage();
@@ -109,6 +107,18 @@ class Api
         return array('status' => $status, 'data' => $response);
     }
 
+    /**
+     * @param string $uri
+     *
+     * @return string[]
+     */
+    private function validate($uri)
+    {
+        $validation = new Validation($this->options->get('advanced.api.keys', array()), getallheaders());
+        $validation->checkRequest($this->getHttpMethod(), $uri);
+
+        return $validation->getPermissions();
+    }
     /**
      * @param string $version
      * @param string $uri
@@ -133,7 +143,7 @@ class Api
         }
 
         if(empty($action)) {
-            throw new UnsupportedHttpMethodException($this->getHttpMethod());
+            throw new Exception(__('Unsupported Http Method: %s', 'jigoshop'), $this->getHttpMethod());
         }
 
         foreach($this->getControllers() as $controller) {
@@ -180,7 +190,7 @@ class Api
     private function getResponseObject($className)
     {
         if(class_exists($className) == false) {
-            throw new ResponseClassNotFound($className);
+            throw new Exception(__('Response class not found: %s', 'jigoshop'), $className);
         }
 
         return new $className();
@@ -193,10 +203,10 @@ class Api
     private function validateResponseObject($object, $requiredMethod)
     {
         if(($object instanceof ResponseInterface) == false) {
-            throw new InvalidResponseObject(get_class($object));
+            throw new Exception(sprintf(__('Invalid object: %s', 'jigoshop'), get_class($object)));
         }
         if(method_exists($object, $requiredMethod) == false) {
-            throw new InvalidResponseObject(get_class($object), 0, null, $requiredMethod);
+            throw new Exception(__('Class `%s` does not have method: %s', 'jigoshop'), $object, $requiredMethod);
         }
     }
 

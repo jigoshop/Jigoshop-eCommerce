@@ -3,6 +3,7 @@
 namespace Jigoshop\Api;
 
 use Jigoshop\Api\Routing\NotFound;
+use Jigoshop\Exception;
 
 /**
  * Class Routing
@@ -54,7 +55,7 @@ class Routing
                     return in_array($item, $keys);
                 }));
                 if(empty($validKeys)) {
-                    throw new NotFound($uri);
+                    throw new Exception(sprintf(__('Routing not found: %s', 'jigoshop'), $uri));
                 } else {
                     $params[] = $dividedUri[$i];
                     $routes = $routes[$validKeys[0]];
@@ -63,7 +64,7 @@ class Routing
         }
 
         if(!isset($routes[self::RESERVED_INDEX])) {
-            throw new NotFound($uri);
+            throw new Exception(sprintf(__('Routing not found: %s', 'jigoshop'), $uri));
         }
 
         return array(

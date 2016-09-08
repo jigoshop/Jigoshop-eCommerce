@@ -5,6 +5,7 @@ namespace Jigoshop\Api;
 use Jigoshop\Api\Validation\InvalidKey;
 use Jigoshop\Api\Validation\InvalidUserId;
 use Jigoshop\Api\Validation\Permission;
+use Jigoshop\Exception;
 
 /**
  * Class Validation
@@ -31,18 +32,19 @@ class Validation
         $this->headers = $headers;
     }
 
+    /**
+     * @param string $method
+     * @param string $uri
+     *
+     * @return bool
+     */
     public function checkRequest($method, $uri)
     {
-        if (isset($this->headers['JIGOSHOP-API-USER-ID'], $this->headers['JIGOSHOP-API-SIGNATURE'], $this->headers['JIGOSHOP-API-TIMESTAMP'])) {
+        //TODO: add more secure auth
+        if (isset($this->headers['JIGOSHOP-API-KEY'])) {
             $keyData = $this->getCurrentKeyData();
-            if(time() - $this->headers['JIGOSHOP-API-TIMESTAMP'] > 5) {
-                //throw
-                return false;
-            }
-
-            if(hash('sha256', $keyData['key'].$this->headers['JIGOSHOP-API-TIMESTAMP'].$method.$uri) != $this->headers['JIGOSHOP-API-SIGNATURE']) {
-                //throw
-                return false;
+            if(empty($keyData)) {
+                throw new Exception(sprintf(__('Invalid key: %s', 'jigoshop'),$this->headers['JIGOSHOP-API-KEY']));
             }
         }
 
@@ -90,9 +92,9 @@ class Validation
     private function getCurrentKeyData()
     {
         if($this->currentKeyData == null) {
-            if (isset($this->headers['JIGOSHOP-API-USER-ID'])) {
+            if (isset($this->headers['JIGOSHOP-API-KEY'])) {
                 foreach ($this->keys as $keyData) {
-                    if ($keyData['user_id'] == $this->headers['JIGOSHOP-API-USER-ID']) {
+                    if ($keyData['key'] == $this->headers['JIGOSHOP-API-KEY']) {
                         return $keyData;
                     }
                 }
