@@ -65,11 +65,11 @@ class ProductCategories extends \WP_Widget
 		$cache = get_transient(Core::WIDGET_CACHE);
 
 		// If cached get from the cache
-//		if (isset($cache[$args['widget_id']])) {
-//			echo $cache[$args['widget_id']];
-//
-//			return;
-//		}
+		if (isset($cache[$args['widget_id']])) {
+			echo $cache[$args['widget_id']];
+
+			return;
+		}
 
 		// Otherwise Start buffering and output the Widget
 		ob_start();

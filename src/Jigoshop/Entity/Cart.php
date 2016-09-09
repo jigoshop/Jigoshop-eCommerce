@@ -9,16 +9,15 @@ use Jigoshop\Entity\Product\Attributes\StockStatus;
 use Jigoshop\Exception;
 use Jigoshop\Frontend\NotEnoughStockException;
 use Jigoshop\Helper\Product as ProductHelper;
-use WPAL\Wordpress;
 
 class Cart extends Order
 {
 	/** @var array */
 	private $couponData = array();
 
-	public function __construct(Wordpress $wp, array $taxClasses)
+	public function __construct(array $taxClasses)
 	{
-		parent::__construct($wp, $taxClasses);
+		parent::__construct($taxClasses);
 	}
 
 	/**
@@ -96,12 +95,12 @@ class Cart extends Order
 			throw new NotEnoughStockException($product->getStock()->getStock());
 		}
 
-		$isValid = $this->wp->applyFilters('jigoshop\cart\validate_new_item', true, $product->getId(), $item->getQuantity());
+		$isValid = apply_filters('jigoshop\cart\validate_new_item', true, $product->getId(), $item->getQuantity());
 		if (!$isValid) {
 			throw new Exception(__('Could not add to cart.', 'jigoshop'));
 		}
 
-		$item = $this->wp->applyFilters('jigoshop\cart\new_item', $item);
+		$item = apply_filters('jigoshop\cart\new_item', $item);
 		parent::addItem($item);
 	}
 

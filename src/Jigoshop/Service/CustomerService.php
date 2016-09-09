@@ -6,6 +6,7 @@ use Jigoshop\Core\Options;
 use Jigoshop\Entity\Customer as Entity;
 use Jigoshop\Entity\EntityInterface;
 use Jigoshop\Entity\Order;
+use Jigoshop\Entity\Session;
 use Jigoshop\Exception;
 use Jigoshop\Factory\Customer as Factory;
 use Jigoshop\Helper\Country;
@@ -25,12 +26,15 @@ class CustomerService implements CustomerServiceInterface
 	private $factory;
 	/** @var Options */
 	private $options;
+    /** @var  Session */
+    private $session;
 
-	public function __construct(Wordpress $wp, Factory $factory, Options $options)
+	public function __construct(Wordpress $wp, Factory $factory, Options $options, SessionServiceInterface $sessionService)
 	{
 		$this->wp = $wp;
 		$this->factory = $factory;
 		$this->options = $options;
+        $this->session = $sessionService->get($sessionService->getCurrentKey());
 	}
 
 	/**
@@ -106,7 +110,7 @@ class CustomerService implements CustomerServiceInterface
 		}
 
 		if ($object instanceof Entity\Guest) {
-			$_SESSION[Factory::CUSTOMER] = $fields;
+			$this->session->setField(Factory::CUSTOMER, $fields);
 
 			return;
 		}

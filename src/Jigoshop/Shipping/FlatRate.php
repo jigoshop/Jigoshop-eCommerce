@@ -59,7 +59,7 @@ class FlatRate implements Method
 				return;
 			}
 
-			Scripts::add('jigoshop.admin.shipping.flat_rate', JIGOSHOP_URL.'/assets/js/admin/shipping/flat_rate.js', array(
+			Scripts::add('jigoshop.admin.shipping.flat_rate', \Jigoshop::getUrl().'/assets/js/admin/shipping/flat_rate.js', array(
 				'jquery',
 				'jigoshop.admin'
 			));
@@ -236,6 +236,12 @@ class FlatRate implements Method
 	 */
 	public function calculate(OrderInterface $order)
 	{
+        if($this->options['type'] == 'per_item') {
+            $quantity = array_sum(array_map(function($item) {
+                return $item->getQuantity();
+            }, $order->getItems()));
+            return (float)(($this->options['cost'] * $quantity) + $this->options['fee']);
+        }
 		return (float)($this->options['cost'] + $this->options['fee']);
 	}
 

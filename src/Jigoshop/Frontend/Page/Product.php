@@ -38,9 +38,9 @@ class Product implements PageInterface
 		$this->cartService = $cartService;
 		$this->messages = $messages;
 
-		Styles::add('jigoshop.vendors.colorbox', JIGOSHOP_URL.'/assets/css/vendors/colorbox.css');
-		Styles::add('jigoshop.vendors.select2', JIGOSHOP_URL.'/assets/css/vendors/select2.css');
-		Styles::add('jigoshop.shop.product', JIGOSHOP_URL.'/assets/css/shop/product.css', array(
+		Styles::add('jigoshop.vendors.colorbox', \Jigoshop::getUrl().'/assets/css/vendors/colorbox.css');
+		Styles::add('jigoshop.vendors.select2', \Jigoshop::getUrl().'/assets/css/vendors/select2.css');
+		Styles::add('jigoshop.shop.product', \Jigoshop::getUrl().'/assets/css/shop/product.css', array(
 			'jigoshop.shop',
 			'jigoshop.vendors.select2',
 			'jigoshop.vendors.colorbox',
@@ -48,15 +48,15 @@ class Product implements PageInterface
 
 		if($this->options->get('products.related'))
 		{
-			Styles::add('jigoshop.shop.related_products', JIGOSHOP_URL . '/assets/css/shop/related_products.css', array(
+			Styles::add('jigoshop.shop.related_products', \Jigoshop::getUrl() . '/assets/css/shop/related_products.css', array(
 				'jigoshop.shop',
 			));
 		}
 
-		Scripts::add('jigoshop.vendors.select2', JIGOSHOP_URL.'/assets/js/vendors/select2.js', array('jquery'));
-		Scripts::add('jigoshop.vendors.colorbox', JIGOSHOP_URL.'/assets/js/vendors/colorbox.js', array('jquery'));
-		Scripts::add('jigoshop.vendors.bs_tab_trans_tooltip_collapse', JIGOSHOP_URL.'/assets/js/vendors/bs_tab_trans_tooltip_collapse.js', array('jquery'));
-		Scripts::add('jigoshop.shop.product', JIGOSHOP_URL.'/assets/js/shop/product.js', array(
+		Scripts::add('jigoshop.vendors.select2', \Jigoshop::getUrl().'/assets/js/vendors/select2.js', array('jquery'));
+		Scripts::add('jigoshop.vendors.colorbox', \Jigoshop::getUrl().'/assets/js/vendors/colorbox.js', array('jquery'));
+		Scripts::add('jigoshop.vendors.bs_tab_trans_tooltip_collapse', \Jigoshop::getUrl().'/assets/js/vendors/bs_tab_trans_tooltip_collapse.js', array('jquery'));
+		Scripts::add('jigoshop.shop.product', \Jigoshop::getUrl().'/assets/js/shop/product.js', array(
 			'jquery',
 			'jigoshop.shop',
 			'jigoshop.vendors.select2',

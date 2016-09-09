@@ -9,7 +9,7 @@ use Jigoshop\Helper\Product;
 <li class="product">
 	<?php do_action('jigoshop\shop\list\product\before', $product); ?>
 	<a class="image" href="<?php echo $product->getLink(); ?>">
-		<?php do_action('jigoshop\shop\list\product\before_title', $product); ?>
+		<?php do_action('jigoshop\shop\list\product\before_thumbnail', $product); ?>
 		<?php if (Product::isOnSale($product)): ?>
 			<span class="on-sale"><?php echo apply_filters('jigoshop\shop\list\product\sale_text', __('Sale!', 'jigoshop'), $product) ?></span>
 		<?php endif; ?>

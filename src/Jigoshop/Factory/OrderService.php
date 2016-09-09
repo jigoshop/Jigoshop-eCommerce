@@ -3,9 +3,11 @@
 namespace Jigoshop\Factory;
 
 use Jigoshop\Core\Options;
+use Jigoshop\Service\Cache\Order\PhpFastCache;
 use Jigoshop\Service\Cache\Order\Simple as SimpleCache;
 use Jigoshop\Service\OrderService as Service;
 use Jigoshop\Service\OrderServiceInterface;
+use Jigoshop\Service\Session\Php;
 use WPAL\Wordpress;
 
 class OrderService
@@ -37,6 +39,9 @@ class OrderService
 			case 'simple':
 				$service = new SimpleCache($service);
 				break;
+            case 'php_fast_cache':
+                $service = new PhpFastCache($service);
+                break;
 			default:
 				$service = $this->wp->applyFilters('jigoshop\core\get_order_service', $service);
 		}

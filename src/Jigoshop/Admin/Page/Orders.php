@@ -40,11 +40,11 @@ class Orders
 
 		$wp->addAction('admin_enqueue_scripts', function () use ($wp){
 			if ($wp->getPostType() == Types::ORDER) {
-				Styles::add('jigoshop.admin.orders', JIGOSHOP_URL.'/assets/css/admin/orders.css');
+				Styles::add('jigoshop.admin.orders', \Jigoshop::getUrl().'/assets/css/admin/orders.css');
 			}
 		});
 
-		Scripts::add('jigoshop.admin.page.orders_list', JIGOSHOP_URL.'/assets/js/admin/orders.js', array('jquery-blockui'));
+		Scripts::add('jigoshop.admin.page.orders_list', \Jigoshop::getUrl().'/assets/js/admin/orders.js', array('jquery-blockui'));
 		$wp->addAction('wp_ajax_jigoshop.admin.orders.change_status', array($this, 'ajaxChangeStatus'), 10, 0);
 	}
 
@@ -150,7 +150,7 @@ class Orders
 		if ($post->post_type == Types::ORDER) {
 			/** @var Entity $order */
 			$order = $this->orderService->findForPost($post);
-			$title = sprintf(__('Order #%d', 'jigoshop'), $order->getNumber());
+			$title = sprintf(__('Order #%s', 'jigoshop'), $order->getNumber());
 		}
 
 		return $title;

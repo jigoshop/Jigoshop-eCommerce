@@ -20,8 +20,6 @@ class Integration
      */
     public function __construct(Container $di)
     {
-        self::$di = $di;
-
         add_action('jigoshop\page_resolver\before', function (){
             Integration::initializeGateways();
             Integration::initializeShipping();
@@ -250,5 +248,10 @@ class Integration
     public static function setClassLoader($classLoader)
     {
         self::$classLoader = $classLoader;
+    }
+
+    public static function setContainer($container)
+    {
+        self::$di = $container;
     }
 }

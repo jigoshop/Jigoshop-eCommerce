@@ -72,11 +72,10 @@ class Interceptor
 
 	public function intercept($request)
 	{
-		if ($this->intercepted || $this->wp->isAdmin()) {
-			return $request;
-		}
-
-		$this->intercepted = true;
+        if ($this->intercepted || $this->wp->isAdmin()) {
+            return $request;
+        }
+        $this->intercepted = true;
 
 		return $this->parseRequest($request);
 	}
@@ -87,20 +86,21 @@ class Interceptor
 			return $this->wp->applyFilters('jigoshop\query\cart', $request, $request);
 		}
 
-		if ($this->isProductCategory($request)) {
-			return $this->getProductCategoryListQuery($request);
-		}
 
-		if ($this->isProductTag($request)) {
-			return $this->getProductTagListQuery($request);
-		}
+        if ($this->isProductCategory($request)) {
+            return $this->getProductCategoryListQuery($request);
+        }
 
-		if ($this->isProductList($request)) {
-			return $this->getProductListQuery($request);
-		}
+        if ($this->isProductTag($request)) {
+            return $this->getProductTagListQuery($request);
+        }
 
-		if ($this->isProduct($request)) {
-			return $this->getProductQuery($request);
+        if ($this->isProductList($request)) {
+            return $this->getProductListQuery($request);
+        }
+
+        if ($this->isProduct($request)) {
+            return $this->getProductQuery($request);
 		}
 
 		if ($this->isAccount($request)) {
@@ -138,24 +138,27 @@ class Interceptor
 			'posts_per_page' => $options['catalog_per_page'],
 			'paged' => isset($request['paged']) ? $request['paged'] : 1,
 			'orderby' => $options['catalog_order_by'],
-			'order' => $options['catalog_order'],
-			'meta_query' => array(
-				array(
-					'key' => 'visibility',
-					'value' => array(Product::VISIBILITY_CATALOG, Product::VISIBILITY_PUBLIC),
-					'compare' => 'IN'
-				)
-			),
+			'order' => $options['catalog_order']
 		);
-		if($options['hide_out_of_stock'] == 'on'){
-			$result['meta_query'][] = array(
-				array(
-					'key' => 'stock_status',
-					'value' => 1,
-					'compare' => '='
-				),
-			);
-		}
+
+        if($this->options->get('advanced.ignore_meta_queries', false) == true) {
+            $result['meta_query'] = array(
+                array(
+                    'key' => 'visibility',
+                    'value' => array(Product::VISIBILITY_CATALOG, Product::VISIBILITY_PUBLIC),
+                    'compare' => 'IN'
+                )
+            );
+            if ($options['hide_out_of_stock'] == 'on') {
+                $result['meta_query'][] = array(
+                    array(
+                        'key' => 'stock_status',
+                        'value' => 1,
+                        'compare' => '='
+                    ),
+                );
+            }
+        }
 
 		// Support for search queries
 		if (isset($request['s'])) {
@@ -180,7 +183,7 @@ class Interceptor
 
 	private function isProductList($request)
 	{
-		return !isset($request['product']) && (
+		return !isset($request['product']) && !isset($request['preview']) && (
 			(isset($request['pagename']) && $request['pagename'] == Pages::SHOP) ||
 			(isset($request['post_type']) && $request['post_type'] == Types::PRODUCT)
 		);
@@ -195,17 +198,22 @@ class Interceptor
 
 	private function isProduct($request)
 	{
-		return isset($request['post_type']) && $request['post_type'] == Types::PRODUCT && isset($request['product']);
+		return isset($request['post_type']) && $request['post_type'] == Types::PRODUCT;
 	}
 
 	private function getProductQuery($request)
 	{
 		$result = array(
-			'name' => $request['product'],
+			'name' => isset($request['product']) ? $request['product'] : '',
 			'post_type' => Types::PRODUCT,
 			'post_status' => 'publish',
 			'posts_per_page' => 1,
 		);
+
+        if(isset($request['p'], $request['preview']) && $request['preview'] == "true") {
+            $result = array_merge($result, $request);
+            unset($result['post_status']);
+        }
 
 		return $this->wp->applyFilters('jigoshop\query\product', $result, $request);
 	}

@@ -134,7 +134,7 @@ class Order
 	    $args = array(
 	        'key' => $order->getKey()
         );
-        $url = add_query_arg($args, Api::getEndpointUrl('pay', $order->getId(), get_permalink(self::$options->getPageId(Pages::CHECKOUT))));
+        $url = add_query_arg($args, Api::getEndpointUrl('pay', $order->getId(), get_permalink(self::$options->getPageId(Pages::SHOP))));
 
 		return apply_filters('jigoshop\helper\order\pay_url', $url);
 	}

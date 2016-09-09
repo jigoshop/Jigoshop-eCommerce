@@ -33,13 +33,13 @@ class ProductTags
 
 		$wp->addAction('admin_enqueue_scripts', function () use ($wp){
 			$wp->wpEnqueueMedia();
-			Scripts::add('jigoshop.admin.product_tags', JIGOSHOP_URL.'/assets/js/admin/product_tags.js', array(
+			Scripts::add('jigoshop.admin.product_tags', \Jigoshop::getUrl().'/assets/js/admin/product_tags.js', array(
 				'jquery',
 				'jigoshop.media'
 			));
 			Scripts::localize('jigoshop.admin.product_tags', 'jigoshop_admin_product_tags', array(
 				'tag_name' => Types::PRODUCT_TAG,
-				'placeholder' => JIGOSHOP_URL.'/assets/images/placeholder.png',
+				'placeholder' => \Jigoshop::getUrl().'/assets/images/placeholder.png',
 			));
 
 			$wp->doAction('jigoshop\admin\product_tags\assets', $wp);

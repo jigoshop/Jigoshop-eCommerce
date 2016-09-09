@@ -2,9 +2,6 @@
 
 namespace Jigoshop\Entity\Product;
 
-use Jigoshop\Entity\Product;
-use WPAL\Wordpress;
-
 class Downloadable extends Simple
 {
 	const TYPE = 'downloadable';
@@ -14,11 +11,10 @@ class Downloadable extends Simple
 	/** @var int */
 	private $limit;
 
-	public function __construct(Wordpress $wp)
-	{
-		parent::__construct($wp);
-	}
-
+    public function __construct()
+    {
+        parent::__construct();
+    }
 	/**
 	 * @return string Product type.
 	 */

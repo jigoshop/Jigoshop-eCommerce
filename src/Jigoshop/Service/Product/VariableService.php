@@ -2,6 +2,7 @@
 
 namespace Jigoshop\Service\Product;
 
+use Jigoshop\Core\Types\Product\Variable;
 use Jigoshop\Entity\EntityInterface;
 use Jigoshop\Entity\Product;
 use Jigoshop\Factory\Product\Variable as Factory;
@@ -95,7 +96,7 @@ class VariableService implements VariableServiceInterface
 		if (empty($ids)) {
 			$ids = '0';
 		}
-		$query = $wpdb->prepare("DELETE FROM {$wpdb->posts} WHERE ID NOT IN ({$ids}) AND post_parent = %d", array($productId));
+		$query = $wpdb->prepare("DELETE FROM {$wpdb->posts} WHERE ID NOT IN ({$ids}) AND post_parent = %d AND post_type = %s", array($productId, Variable::TYPE));
 		$wpdb->query($query);
 	}
 

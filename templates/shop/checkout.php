@@ -35,6 +35,7 @@ use Jigoshop\Helper\Tax;
 	<div class="panel panel-default">
 		<div class="panel-heading">
 			<h3 class="panel-title"><?php _e('Billing address', 'jigoshop'); ?></h3>
+			<?php do_action('jigoshop\template\checkout\billing_address\head', $cart); ?>
 		</div>
 		<div class="panel-body">
 			<div class="row clearfix" id="billing-address">
@@ -61,6 +62,7 @@ use Jigoshop\Helper\Tax;
 	<div id="shipping-address" class="panel panel-default <?php !$differentShipping && !$alwaysShowShipping and print ' not-active'; ?>">
 		<div class="panel-heading">
 			<h3 class="panel-title"><?php _e('Shipping address', 'jigoshop'); ?></h3>
+			<?php do_action('jigoshop\template\checkout\shipping_address\head', $cart); ?>
 		</div>
 		<div class="panel-body">
 			<div class="row clearfix" >

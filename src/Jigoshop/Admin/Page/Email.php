@@ -35,7 +35,7 @@ class Email
 
 		$wp->addAction('admin_enqueue_scripts', function () use ($wp){
 			if ($wp->getPostType() == Types::EMAIL) {
-				Scripts::add('jigoshop.admin.email', JIGOSHOP_URL.'/assets/js/admin/email.js', array(
+				Scripts::add('jigoshop.admin.email', \Jigoshop::getUrl().'/assets/js/admin/email.js', array(
 					'jquery',
 					'jigoshop.helpers'
 				));

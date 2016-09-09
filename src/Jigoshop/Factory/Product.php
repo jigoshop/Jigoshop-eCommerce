@@ -69,7 +69,7 @@ class Product implements EntityFactoryInterface
 
 		$class = $this->types[$type];
 		/** @var \Jigoshop\Entity\Product $instance */
-		$instance = new $class($this->wp);
+		$instance = new $class();
 
 		if ($instance instanceof Purchasable) {
 			/** @var \Jigoshop\Entity\Product\Purchasable $instance */

@@ -118,10 +118,11 @@ class PaymentTab implements TabInterface
 		{
 			/** @var $method Method */
 			$options[] = array(
-				'title'  => $method->getName(),
-				'id'     => $method->getId(),
+				'title' => $method->getName(),
+                'description' => apply_filters('jigoshop\admin\settings\payment\method\description', '', $method),
+				'id' => $method->getId(),
 				'fields' => $method->getOptions(),
-				'enabled' => $method->isEnabled(),
+				//'enabled' => $method->isEnabled(),
 			);
 		}
 

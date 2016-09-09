@@ -62,15 +62,15 @@ class Checkout implements PageInterface
 		$this->paymentService = $paymentService;
 		$this->orderService = $orderService;
 
-		Styles::add('jigoshop.vendors.select2', JIGOSHOP_URL.'/assets/css/vendors/select2.css');
-		Styles::add('jigoshop.checkout', JIGOSHOP_URL.'/assets/css/shop/checkout.css', array(
+		Styles::add('jigoshop.vendors.select2', \Jigoshop::getUrl().'/assets/css/vendors/select2.css');
+		Styles::add('jigoshop.checkout', \Jigoshop::getUrl().'/assets/css/shop/checkout.css', array(
 			'jigoshop.shop',
 			'jigoshop.vendors.select2'
 		));
 
-		Scripts::add('jigoshop.vendors.select2', JIGOSHOP_URL.'/assets/js/vendors/select2.js', array('jquery'));
-		Scripts::add('jigoshop.vendors.bs_tab_trans_tooltip_collapse', JIGOSHOP_URL.'/assets/js/vendors/bs_tab_trans_tooltip_collapse.js', array('jquery'));
-		Scripts::add('jigoshop.checkout', JIGOSHOP_URL.'/assets/js/shop/checkout.js', array(
+		Scripts::add('jigoshop.vendors.select2', \Jigoshop::getUrl().'/assets/js/vendors/select2.js', array('jquery'));
+		Scripts::add('jigoshop.vendors.bs_tab_trans_tooltip_collapse', \Jigoshop::getUrl().'/assets/js/vendors/bs_tab_trans_tooltip_collapse.js', array('jquery'));
+		Scripts::add('jigoshop.checkout', \Jigoshop::getUrl().'/assets/js/shop/checkout.js', array(
 			'jquery',
 			'jquery-blockui',
 			'jigoshop.helpers',
@@ -78,7 +78,7 @@ class Checkout implements PageInterface
 			'jigoshop.vendors.bs_tab_trans_tooltip_collapse',
 		));
 		Scripts::localize('jigoshop.checkout', 'jigoshop_checkout', array(
-			'assets' => JIGOSHOP_URL.'/assets',
+			'assets' => \Jigoshop::getUrl().'/assets',
 			'i18n' => array(
 				'loading' => __('Loading...', 'jigoshop'),
 			),

@@ -176,9 +176,11 @@ class Options
 				'variations_sku_stock' => false,
 			),
 			'cache' => 'simple',
-			'wos' => array(
-				'enabled' => true,
-			),
+            'session' => 'php',
+            'ignore_meta_queries' => false,
+			'api' => array(
+			    'keys' => array()
+            ),
 			'pages' => array(
 				'shop' => 0,
 				'cart' => 0,

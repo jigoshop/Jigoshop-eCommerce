@@ -41,19 +41,19 @@ class Admin
 		$wp->addAction('admin_menu', array($this, 'afterMenu'), 50);
 
 		//TODO do wyrzucenia, przeniesienia do osobnych widokow
-		Scripts::add('jigoshop.vendors.bs_tab_trans_tooltip_collapse', JIGOSHOP_URL.'/assets/js/vendors/bs_tab_trans_tooltip_collapse.js', array('jquery'));
-		Styles::add('jigoshop.vendors.select2', JIGOSHOP_URL.'/assets/css/vendors/select2.css');
-		Scripts::add('jigoshop.vendors.select2', JIGOSHOP_URL.'/assets/js/vendors/select2.js', array('jquery'));
+		Scripts::add('jigoshop.vendors.bs_tab_trans_tooltip_collapse', \Jigoshop::getUrl().'/assets/js/vendors/bs_tab_trans_tooltip_collapse.js', array('jquery'));
+		Styles::add('jigoshop.vendors.select2', \Jigoshop::getUrl().'/assets/css/vendors/select2.css');
+		Scripts::add('jigoshop.vendors.select2', \Jigoshop::getUrl().'/assets/js/vendors/select2.js', array('jquery'));
 
 
-		Styles::add('jigoshop.admin', JIGOSHOP_URL . '/assets/css/admin.css');
+		Styles::add('jigoshop.admin', \Jigoshop::getUrl() . '/assets/css/admin.css');
 
-		Scripts::add('jigoshop.admin', JIGOSHOP_URL.'/assets/js/admin.js', array(
+		Scripts::add('jigoshop.admin', \Jigoshop::getUrl().'/assets/js/admin.js', array(
 			'jquery',
 			'jigoshop.helpers',
 			'jigoshop.vendors.bs_tab_trans_tooltip_collapse'
 		));
-		Scripts::add('jigoshop.vendors.bs_tab_trans_tooltip_collapse', JIGOSHOP_URL . '/assets/js/vendors/bs_tab_trans_tooltip_collapse.js', array(
+		Scripts::add('jigoshop.vendors.bs_tab_trans_tooltip_collapse', \Jigoshop::getUrl() . '/assets/js/vendors/bs_tab_trans_tooltip_collapse.js', array(
 			'jquery',
 		), array('in_footer' => true));
 	}

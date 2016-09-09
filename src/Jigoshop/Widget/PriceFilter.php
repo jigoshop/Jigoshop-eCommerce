@@ -47,7 +47,7 @@ class PriceFilter extends \WP_Widget
 			wp_enqueue_script('jquery-ui-slider');
 		}
 
-		Styles::add('jigoshop.widget.price_filter', JIGOSHOP_URL.'/assets/css/widget/price_filter.css');
+		Styles::add('jigoshop.widget.price_filter', \Jigoshop::getUrl().'/assets/css/widget/price_filter.css');
 	}
 
 	public function query($products)

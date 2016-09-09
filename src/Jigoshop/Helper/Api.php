@@ -15,7 +15,7 @@ class Api
 	 */
 	public static function getUrl($value, $permalink = null)
 	{
-		return self::getEndpointUrl(\Jigoshop\Api::API_ENDPOINT, $value, $permalink);
+		return self::getEndpointUrl(\Jigoshop\ApiDeprecated::API_ENDPOINT, $value, $permalink);
 	}
 
 	/**
@@ -33,10 +33,6 @@ class Api
 		if (!$permalink) {
 			$permalink = get_permalink();
 		}
-
-		// Map endpoint to options
-//		$endpoint = isset(WC()->query->query_vars[$endpoint]) ? WC()->query->query_vars[$endpoint] : $endpoint;
-//		$value = ('edit-address' == $endpoint) ? wc_edit_address_i18n($value) : $value;
 
 		if (get_option('permalink_structure')) {
 			if (strstr($permalink, '?')) {

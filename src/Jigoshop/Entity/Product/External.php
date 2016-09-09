@@ -4,7 +4,6 @@ namespace Jigoshop\Entity\Product;
 
 use Jigoshop\Entity\Product;
 use Jigoshop\Exception;
-use WPAL\Wordpress;
 
 class External extends Product implements Purchasable, Saleable
 {
@@ -21,10 +20,10 @@ class External extends Product implements Purchasable, Saleable
 	/** @var Product\Attributes\StockStatus */
 	private $stock;
 
-	public function __construct(Wordpress $wp)
+	public function __construct()
 	{
-		parent::__construct($wp);
-		$this->sales = new Attributes\Sales();
+        parent::__construct();
+        $this->sales = new Attributes\Sales();
 		$this->stock = new Product\Attributes\StockStatus();
 	}
 
@@ -45,7 +44,7 @@ class External extends Product implements Purchasable, Saleable
 	public function getPrice()
 	{
 		// TODO: Improve code to calculate price single time only
-		return $this->wp->applyFilters('jigoshop\product\get_price', $this->calculatePrice(), $this);
+		return apply_filters('jigoshop\product\get_price', $this->calculatePrice(), $this);
 	}
 
 	/**
@@ -116,7 +115,7 @@ class External extends Product implements Purchasable, Saleable
 	 */
 	public function setSales(Attributes\Sales $sales)
 	{
-		$sales = $this->wp->applyFilters('jigoshop\product\set_sales', $sales, $this);
+		$sales = apply_filters('jigoshop\product\set_sales', $sales, $this);
 
 		if ($sales !== false) {
 			$this->sales = $sales;

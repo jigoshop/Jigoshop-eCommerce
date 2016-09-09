@@ -2,8 +2,8 @@
 
 namespace Jigoshop;
 
-use Jigoshop\Container\ClassLoader;
 use Jigoshop\Container\Compiler;
+use Jigoshop\Container\Configurations;
 use Jigoshop\Container\Factories;
 use Jigoshop\Container\Services;
 use Jigoshop\Container\Tags;
@@ -17,8 +17,6 @@ use Jigoshop\Container\Triggers;
  */
 class Container
 {
-	/** @var ClassLoader */
-	public $classLoader;
 	/** @var Services */
 	public $services;
 	/** @var Tags */
@@ -29,17 +27,19 @@ class Container
 	public $factories;
 	/** @var Compiler */
 	public $compiler;
+    /** @var Configurations */
+    public $configurations;
 
 	public function __construct()
 	{
-		$this->classLoader = new ClassLoader();
 		$this->services = new Services();
 		$this->tags = new Tags();
 		$this->triggers = new Triggers();
 		$this->factories = new Factories();
 		$this->compiler = new Compiler();
+        $this->configurations = new Configurations();
 
-		$this->services->set('service_container', $this);
+		$this->services->set('di', $this);
 	}
 
 	/**
@@ -52,10 +52,6 @@ class Container
 		if (!$this->services->exists($key)) {
 			if (!$this->services->detailsExists($key)) {
 				throw new Exception(sprintf('Service "%s", does not exist.', $key));
-			}
-
-			if (!$this->classLoader->exists($key, $this->services->getClassName($key))) {
-				throw new Exception(sprintf('Class %s does not exist.', $key));
 			}
 
 			$params = $this->initServiceParams($key);
@@ -140,4 +136,52 @@ class Container
 
 		return $instance;
 	}
+
+    /**
+     * @return Services
+     */
+    public function getServices()
+    {
+        return $this->services;
+    }
+
+    /**
+     * @return Tags
+     */
+    public function getTags()
+    {
+        return $this->tags;
+    }
+
+    /**
+     * @return Triggers
+     */
+    public function getTriggers()
+    {
+        return $this->triggers;
+    }
+
+    /**
+     * @return Factories
+     */
+    public function getFactories()
+    {
+        return $this->factories;
+    }
+
+    /**
+     * @return Configurations
+     */
+    public function getConfigurations()
+    {
+        return $this->configurations;
+    }
+
+    /**
+     * @return Compiler
+     */
+    public function getCompiler()
+    {
+        return $this->compiler;
+    }
 }

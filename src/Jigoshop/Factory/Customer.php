@@ -2,8 +2,9 @@
 
 namespace Jigoshop\Factory;
 
-use Jigoshop\Core\Types;
 use Jigoshop\Entity\Customer as Entity;
+use Jigoshop\Entity\Session as SessionEntity;
+use Jigoshop\Service\SessionServiceInterface;
 use WPAL\Wordpress;
 
 class Customer implements EntityFactoryInterface
@@ -12,10 +13,13 @@ class Customer implements EntityFactoryInterface
 
 	/** @var \WPAL\Wordpress */
 	private $wp;
+    /** @var  SessionEntity */
+    private $session;
 
-	public function __construct(Wordpress $wp)
+	public function __construct(Wordpress $wp, SessionServiceInterface $sessionService)
 	{
 		$this->wp = $wp;
+        $this->session = $sessionService->get($sessionService->getCurrentKey());
 	}
 
 	/**
@@ -47,8 +51,8 @@ class Customer implements EntityFactoryInterface
 		if ($user->ID == 0) {
 			$customer = new Entity\Guest();
 
-			if (isset($_SESSION[self::CUSTOMER])) {
-				$customer->restoreState($_SESSION[self::CUSTOMER]);
+			if ($this->session->getField(self::CUSTOMER)) {
+				$customer->restoreState($this->session->getField(self::CUSTOMER));
 			}
 		} else {
 			$customer = new Entity();

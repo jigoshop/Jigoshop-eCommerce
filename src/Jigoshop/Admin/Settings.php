@@ -51,19 +51,19 @@ class Settings implements PageInterface
 				return;
 			}
 
-			Styles::add('jigoshop.admin.settings', JIGOSHOP_URL.'/assets/css/admin/settings.css', array('jigoshop.admin'));
-			Styles::add('jigoshop.vendors.select2', JIGOSHOP_URL.'/assets/css/vendors/select2.css', array('jigoshop.admin'));
-			Styles::add('jigoshop.vendors.datepicker', JIGOSHOP_URL.'/assets/css/vendors/datepicker.css', array('jigoshop.admin'));
-			Styles::add('jigoshop.vendors.bs_switch', JIGOSHOP_URL.'/assets/css/vendors/bs_switch.css', array('jigoshop.admin'));
+			Styles::add('jigoshop.admin.settings', \Jigoshop::getUrl().'/assets/css/admin/settings.css', array('jigoshop.admin'));
+			Styles::add('jigoshop.vendors.select2', \Jigoshop::getUrl().'/assets/css/vendors/select2.css', array('jigoshop.admin'));
+			Styles::add('jigoshop.vendors.datepicker', \Jigoshop::getUrl().'/assets/css/vendors/datepicker.css', array('jigoshop.admin'));
+			Styles::add('jigoshop.vendors.bs_switch', \Jigoshop::getUrl().'/assets/css/vendors/bs_switch.css', array('jigoshop.admin'));
 
-			Scripts::add('jigoshop.admin.settings', JIGOSHOP_URL . '/assets/js/admin/settings.js', array('jigoshop.admin'), array('page' => 'jigoshop_page_jigoshop_settings', 'in_footer' => true));
-			Scripts::add('jigoshop.vendors.select2', JIGOSHOP_URL . '/assets/js/vendors/select2.js', array(
+			Scripts::add('jigoshop.admin.settings', \Jigoshop::getUrl() . '/assets/js/admin/settings.js', array('jigoshop.admin'), array('page' => 'jigoshop_page_jigoshop_settings', 'in_footer' => true));
+			Scripts::add('jigoshop.vendors.select2', \Jigoshop::getUrl() . '/assets/js/vendors/select2.js', array(
 				'jigoshop.admin.settings',
 			), array('page' => 'jigoshop_page_jigoshop_settings', 'in_footer' => true));
-			Scripts::add('jigoshop.vendors.bs_tab_trans_tooltip_collapse', JIGOSHOP_URL . '/assets/js/vendors/bs_tab_trans_tooltip_collapse.js', array(
+			Scripts::add('jigoshop.vendors.bs_tab_trans_tooltip_collapse', \Jigoshop::getUrl() . '/assets/js/vendors/bs_tab_trans_tooltip_collapse.js', array(
 				'jigoshop.admin.settings',
 			), array('page' => 'jigoshop_page_jigoshop_settings', 'in_footer' => true));
-			Scripts::add('jigoshop.vendors.bs_switch', JIGOSHOP_URL . '/assets/js/vendors/bs_switch.js', array(
+			Scripts::add('jigoshop.vendors.bs_switch', \Jigoshop::getUrl() . '/assets/js/vendors/bs_switch.js', array(
 				'jigoshop.admin.settings',
 			), array('page' => 'jigoshop_page_jigoshop_settings', 'in_footer' => true));
 		});
@@ -246,11 +246,16 @@ class Settings implements PageInterface
 	 */
 	public function validate($input)
 	{
-		$currentTab = $this->getCurrentTab();
-		/** @var TabInterface $tab */
-		$tab = $this->tabs[$currentTab];
-		$this->options->update($currentTab, $tab->validate($input));
-
+	    try {
+            $currentTab = $this->getCurrentTab();
+            /** @var TabInterface $tab */
+            $tab = $this->tabs[$currentTab];
+            $this->options->update($currentTab, $tab->validate($input));
+        } catch(Admin\Settings\ValidationException $e) {
+            $this->messages->addError($e->getMessage(), true);
+            $this->wp->wpSafeRedirect(admin_url(sprintf('admin.php?page=%s&tab=%s', self::NAME, $tab->getSlug())));
+            exit;
+        }
 		return $this->options->getAll();
 	}
 }

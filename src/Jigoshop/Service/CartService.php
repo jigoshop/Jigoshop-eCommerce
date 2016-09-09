@@ -7,6 +7,7 @@ use Jigoshop\Entity\Cart;
 use Jigoshop\Entity\Customer\Address;
 use Jigoshop\Entity\Order;
 use Jigoshop\Entity\OrderInterface;
+use Jigoshop\Entity\Session;
 use Jigoshop\Exception;
 use Jigoshop\Factory\Order as OrderFactory;
 use Jigoshop\Frontend\Pages;
@@ -27,9 +28,11 @@ class CartService implements CartServiceInterface
 	private $customerService;
 	/** @var ProductServiceInterface */
 	private $productService;
-	/** @var ShippingServiceInterface */
+    /** @var ShippingServiceInterface */
 	private $shippingService;
-	/** @var PaymentServiceInterface */
+    /** @var  Session */
+    private $session;
+    /** @var PaymentServiceInterface */
 	private $paymentService;
 	/** @var OrderFactory */
 	private $orderFactory;
@@ -40,18 +43,19 @@ class CartService implements CartServiceInterface
 
 	public function __construct(Wordpress $wp, Options $options, CustomerServiceInterface $customerService,
 		ProductServiceInterface $productService, ShippingServiceInterface $shippingService,
-		PaymentServiceInterface $paymentService, OrderFactory $orderFactory)
+		SessionServiceInterface $sessionService, PaymentServiceInterface $paymentService, OrderFactory $orderFactory)
 	{
 		$this->wp = $wp;
 		$this->options = $options;
 		$this->customerService = $customerService;
 		$this->productService = $productService;
 		$this->shippingService = $shippingService;
+        $this->session = $sessionService->get($sessionService->getCurrentKey());
 		$this->paymentService = $paymentService;
 		$this->orderFactory = $orderFactory;
 
-		if (!isset($_SESSION[self::CART])) {
-			$_SESSION[self::CART] = array();
+		if ($this->session->getField(self::CART) == '') {
+			$this->session->setField(self::CART, array());
 		}
 
 		$this->currentUserCartId = $this->generateCartId();
@@ -61,16 +65,16 @@ class CartService implements CartServiceInterface
 	{
 		if ($this->wp->getCurrentUserId() > 0) {
 			$id = $this->wp->getCurrentUserId();
-		} elseif (isset($_SESSION[self::CART_ID])) {
-			$id = $_SESSION[self::CART_ID];
+		} elseif ($this->session->getField(self::CART_ID)) {
+			$id = $this->session->getField(self::CART_ID);
 		} elseif (isset($_COOKIE[self::CART_ID])) {
 			$id = $_COOKIE[self::CART_ID];
 		} else {
 			$id = md5((isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : '') .time().$_SERVER['REMOTE_ADDR'].rand(1, 10000000));
 		}
 
-		if (!isset($_SESSION[self::CART_ID])) {
-			$_SESSION[self::CART_ID] = $id;
+		if ($this->session->getField(self::CART_ID) == '') {
+            $this->session->setField(self::CART_ID, $id);
 		}
 		if (!isset($_COOKIE[self::CART_ID])) {
 			setcookie(self::CART_ID, $id, null, '/', null, null, true);
@@ -106,7 +110,7 @@ class CartService implements CartServiceInterface
 	public function get($id)
 	{
 		if (!isset($this->carts[$id])) {
-			$cart = new Cart($this->wp, $this->options->get('tax.classes'));
+			$cart = new Cart($this->options->get('tax.classes'));
 			$cart->setCustomer($this->customerService->getCurrent());
 			$cart->getCustomer()
 				->selectTaxAddress($this->options->get('taxes.shipping') ? 'shipping' : 'billing');
@@ -120,7 +124,6 @@ class CartService implements CartServiceInterface
 			}
 
 			// TODO: Support for transients?
-
 			$cart = $this->orderFactory->fill($cart, $state);
 			$this->carts[$id] = $this->wp->applyFilters('jigoshop\service\cart\get', $cart, $state);
 		}
@@ -132,8 +135,10 @@ class CartService implements CartServiceInterface
 	{
 		$state = array();
 
-		if (isset($_SESSION[self::CART][$id])) {
-			$state = $_SESSION[self::CART][$id];
+        $session = $this->session->getField(self::CART);
+
+        if (isset($session[$id])) {
+            $state = $session[$id];
 
 			if (isset($state['customer'])) {
 				// Customer must be unserialized twice "thanks" to WordPress second serialization.
@@ -320,7 +325,9 @@ class CartService implements CartServiceInterface
 			$cart->setShippingMethod($this->shippingService->getCheapest($cart));
 		}
 
-		$_SESSION[self::CART][$cart->getId()] = $cart->getStateToSave();
+        $session = $this->session->getField(self::CART);
+        $session[$cart->getId()] = $cart->getStateToSave();
+        $this->session->setField(self::CART, $session);
 	}
 
 	/**
@@ -330,9 +337,10 @@ class CartService implements CartServiceInterface
 	 */
 	public function remove(Cart $cart)
 	{
-		// TODO: Support for transients?
-		if (isset($_SESSION[self::CART][$cart->getId()])) {
-			unset($_SESSION[self::CART][$cart->getId()]);
+        $session = $this->session->getField(self::CART);
+		if (isset($session[$cart->getId()])) {
+			unset($session[self::CART][$cart->getId()]);
+            $this->session->setField(self::CART, $session);
 		}
 	}
 
@@ -346,7 +354,7 @@ class CartService implements CartServiceInterface
 	 */
 	public function createFromOrder($cartId, $order)
 	{
-		$cart = new \Jigoshop\Entity\Cart($this->wp, $this->options->get('tax.classes'));
+		$cart = new \Jigoshop\Entity\Cart($this->options->get('tax.classes'));
 
 		$cart->setId($cartId);
 		$cart->setCustomer($order->getCustomer());

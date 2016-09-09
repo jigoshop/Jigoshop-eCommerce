@@ -5,6 +5,7 @@ namespace Jigoshop\Factory;
 use Jigoshop\Core\Options;
 use Jigoshop\Service\Cache\Customer\Simple as SimpleCache;
 use Jigoshop\Service\CustomerService as Service;
+use Jigoshop\Service\SessionServiceInterface;
 use WPAL\Wordpress;
 
 class CustomerService
@@ -15,12 +16,15 @@ class CustomerService
 	private $options;
 	/** @var Customer */
 	private $factory;
+    /** @var  SessionServiceInterface */
+    private $sessionService;
 
-	public function __construct(Wordpress $wp, Options $options, Customer $factory)
+	public function __construct(Wordpress $wp, Options $options, Customer $factory, SessionServiceInterface $sessionService)
 	{
 		$this->wp = $wp;
 		$this->options = $options;
 		$this->factory = $factory;
+        $this->sessionService = $sessionService;
 	}
 
 	/**
@@ -29,7 +33,7 @@ class CustomerService
 	 */
 	public function getService()
 	{
-		$service = new Service($this->wp, $this->factory, $this->options);
+		$service = new Service($this->wp, $this->factory, $this->options, $this->sessionService);
 
 		switch ($this->options->get('advanced.cache')) {
 			case 'simple':

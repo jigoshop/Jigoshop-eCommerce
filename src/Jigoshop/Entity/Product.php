@@ -2,8 +2,6 @@
 
 namespace Jigoshop\Entity;
 
-use WPAL\Wordpress;
-
 /**
  * Product class.
  *
@@ -39,12 +37,8 @@ abstract class Product implements EntityInterface, Product\Taxable
 
 	protected $dirtyFields = array();
 
-	/** @var \WPAL\Wordpress */
-	protected $wp;
-
-	public function __construct(Wordpress $wp)
+	public function __construct()
 	{
-		$this->wp = $wp;
 		$this->size = new Product\Attributes\Size();
 	}
 
@@ -265,7 +259,7 @@ abstract class Product implements EntityInterface, Product\Taxable
 	 */
 	public function setSize(Product\Attributes\Size $size)
 	{
-		$size = $this->wp->applyFilters('jigoshop\product\set_size', $size, $this);
+		$size = apply_filters('jigoshop\product\set_size', $size, $this);
 
 		if ($size !== false) {
 			$this->size = $size;
@@ -290,7 +284,7 @@ abstract class Product implements EntityInterface, Product\Taxable
 	 */
 	public function addAttribute(Product\Attribute $attribute)
 	{
-		$attribute = $this->wp->applyFilters('jigoshop\product\add_attribute', $attribute, $this);
+		$attribute = apply_filters('jigoshop\product\add_attribute', $attribute, $this);
 
 		if ($attribute !== false) {
 			$this->attributes[$attribute->getId()] = $attribute;
@@ -311,7 +305,7 @@ abstract class Product implements EntityInterface, Product\Taxable
 			$attribute = $attribute->getId();
 		}
 
-		$key = $this->wp->applyFilters('jigoshop\product\delete_attribute', $attribute, $this);
+		$key = apply_filters('jigoshop\product\delete_attribute', $attribute, $this);
 
 		if ($key !== false) {
 			$attribute = $this->attributes[$key];
@@ -515,7 +509,7 @@ abstract class Product implements EntityInterface, Product\Taxable
 	 */
 	public function restoreState(array $state)
 	{
-		$state = $this->wp->applyFilters('jigoshop\product\restore_state', $state);
+		$state = apply_filters('jigoshop\product\restore_state', $state);
 
 		if (isset($state['id'])) {
 			$this->id = $state['id'];
@@ -597,7 +591,7 @@ abstract class Product implements EntityInterface, Product\Taxable
 	 */
 	public function getLink()
 	{
-		return $this->wp->getPermalink($this->getId());
+		return get_permalink($this->getId());
 	}
 
 	/**

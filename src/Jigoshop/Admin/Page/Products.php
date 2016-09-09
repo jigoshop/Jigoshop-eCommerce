@@ -41,12 +41,12 @@ class Products
 
 		$wp->addAction('admin_enqueue_scripts', function () use ($wp){
 			if ($wp->getPostType() == Types::PRODUCT) {
-				Scripts::add('jigoshop.admin.products', JIGOSHOP_URL.'/assets/js/admin/products.js', array(
+				Scripts::add('jigoshop.admin.products', \Jigoshop::getUrl().'/assets/js/admin/products.js', array(
 					'jquery',
 					'jigoshop.helpers'
 				));
 
-				Styles::add('jigoshop.admin.products_list', JIGOSHOP_URL.'/assets/css/admin/products_list.css', array('jigoshop.admin'));
+				Styles::add('jigoshop.admin.products_list', \Jigoshop::getUrl().'/assets/css/admin/products_list.css', array('jigoshop.admin'));
 
 				$wp->doAction('jigoshop\admin\products\assets', $wp);
 			}
