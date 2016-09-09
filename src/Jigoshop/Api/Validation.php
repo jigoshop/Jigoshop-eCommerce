@@ -74,6 +74,8 @@ class Validation
                 return array_keys(Permission::getPermisions());
             }
         }
+
+        return array();
     }
 
     /**
@@ -83,7 +85,7 @@ class Validation
     {
         $keyData = $this->getCurrentKeyData();
 
-        return !empty($keyData) ? $keyData['permissions'] : [];
+        return !empty($keyData) && !empty($keyData['permissions']) ? $keyData['permissions'] : array_keys(Permission::getPermisions());
     }
 
     /**

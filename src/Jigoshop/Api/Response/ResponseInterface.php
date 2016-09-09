@@ -12,6 +12,7 @@ interface ResponseInterface
 {
     /**
      * @param Container $di
+     * @param array $permissions
      */
-    public function init(Container $di);
+    public function init(Container $di, array $permissions);
 }

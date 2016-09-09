@@ -17,9 +17,10 @@ class Controller implements ControllerInterface
      */
     public function onGet(Routing $routing, $version)
     {
-//        if($version == 1) {
-//            $routing->add('/test', 'Jigoshop\Api\Response\V1\Test@processResponse');
-//        }
+        if($version == 1) {
+            $routing->add('/products', 'Jigoshop\Api\Response\V1\Products@getList');
+            $routing->add('/products/{int}', 'Jigoshop\Api\Response\V1\Products@getSingle');
+        }
     }
 
     /**
