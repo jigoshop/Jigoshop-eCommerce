@@ -58,11 +58,7 @@ class Products implements ResponseInterface
         );
         foreach ($products as $product) {
             /** @var Product $product */
-            $response['products']['product'][] = array(
-                    'id' => $product->getId(),
-                    'type' => $product->getType(),
-                    'name' => $product->getName(),
-            );
+            $response['products']['product'][] = $this->getProductBasicData($product);
         }
 
         return $response;
@@ -78,12 +74,58 @@ class Products implements ResponseInterface
         $product = $this->productService->find($id);
 
         $response = [];
-        $response['product'] = array(
+        $response['product'] = $this->getProductBasicData($product);
+
+        return $response;
+    }
+
+    /**
+     * @param Product $product
+     *
+     * @return array
+     */
+    private function getProductBasicData($product)
+    {
+        $data = array(
             'id' => $product->getId(),
             'type' => $product->getType(),
             'name' => $product->getName(),
+            'description' => $product->getDescription(),
+            'sku' => $product->getSku(),
+            'brand' => $product->getBrand(),
+            'mpn' => $product->getMpn(),
+            'gtin' => $product->getGtin(),
+            'visibility' => $product->getVisibility(),
+            'tax_classes' => array(
+                'tax_class' => $product->getTaxClasses()
+            ),
+            'size' => array(
+                'height' => $product->getSize()->getHeight(),
+                'length' => $product->getSize()->getLength(),
+                'width' => $product->getSize()->getWidth(),
+                'weight' => $product->getSize()->getWeight()
+            ),
+            'link' => $product->getLink(),
         );
 
-        return $response;
+        if($product instanceof Product\Simple) {
+            $data = array_merge($data, array(
+                'regular_price' => $product->getRegularPrice(),
+                'sale' => array(
+                    'enabled' => $product->getSales()->isEnabled(),
+                    'price' => $product->getSales()->getPrice(),
+                    'from' => array(
+                        'timestamp' => $product->getSales()->getFrom()->getTimestamp(),
+                        'date' => $product->getSales()->getFrom()->format('Y-m-d'),
+                    ),
+                    'to' => array(
+                        'timestamp' => $product->getSales()->getTo()->getTimestamp(),
+                        'date' => $product->getSales()->getTo()->format('Y-m-d'),
+                    ),
+                ),
+            ));
+        }
+
+        return $data;
     }
 }
