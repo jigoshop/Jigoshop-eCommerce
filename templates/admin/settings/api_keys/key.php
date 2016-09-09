@@ -15,10 +15,9 @@
                 <?php \Jigoshop\Admin\Helper\Forms::number(array(
                     'label' => __('User Id', 'jigoshop'),
                     'name' => sprintf('%s[%s][user_id]', $name, $index),
-                    'type' => 'text',
                     'value' => $userId,
-                    'min' => 10000000,
-                    'max' => 99999999,
+                    'min' => 1000000000,
+                    'max' => 9999999999,
                     'placeholder' => __('User Id', 'jigoshop'),
                     'classes' => array('user-id'),
                 )); ?>

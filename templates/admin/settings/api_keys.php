@@ -13,6 +13,7 @@
                     <?php \Jigoshop\Helper\Render::output('admin/settings/api_keys/key', array(
                         'index' => $i,
                         'name' => $name,
+                        'userId' => $keyData['user_id'],
                         'key' => $keyData['key'],
                         'permissions' => $keyData['permissions'],
                         'availablePermissions' => $availablePermissions,
@@ -23,6 +24,7 @@
                 <?php \Jigoshop\Helper\Render::output('admin/settings/api_keys/key', array(
                     'index' => 0,
                     'name' => $name,
+                    'userId' => '',
                     'key' => '',
                     'permissions' => array(),
                     'availablePermissions' => $availablePermissions,
@@ -37,6 +39,7 @@
     <?php echo preg_replace('/<script\b[^>]*>(.*?)<\/script>/is', '', \Jigoshop\Helper\Render::get('admin/settings/api_keys/key', array(
         'index' => '{{{ data.id }}}',
         'name' => $name,
+        'userId' => '',
         'key' => '',
         'permissions' => array(),
         'availablePermissions' => $availablePermissions,

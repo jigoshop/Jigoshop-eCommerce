@@ -70,7 +70,7 @@ class Api
     public function addRewrite()
     {
         $this->wp->addRewriteRule(
-            $this->wp->getRewrite()->root.'API/V([0-9])/([0-9a-zA-Z/]+)(\.json|\.xml)?$',
+            $this->wp->getRewrite()->root.'api/v([0-9])/([0-9a-zA-Z/]+)(\.json|\.xml)?$',
             sprintf('index.php?%s=$matches[1]&%s=/$matches[2]&%s=$matches[3]', self::QUERY_VERSION, self::QUERY_URI, self::QUERY_FORMAT),
             'top'
         );

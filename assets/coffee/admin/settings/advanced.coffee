@@ -7,7 +7,7 @@ class AdvancedSettings
     jQuery('#api-keys').on 'click', '.generate', @generate
     jQuery('#api-keys').on 'click', '.toggle', @toggleGroupItem
     jQuery('#api-keys').on 'click', '.remove', @removeGroupItem
-    jQuery('#api-keys').on 'keyup', 'input', @updateListHeader
+    jQuery('#api-keys').on 'keyup', '.user-id', @updateListHeader
     jQuery('#api-keys').on 'click', '.add-key', @addGroupItem
 
 
@@ -31,16 +31,18 @@ class AdvancedSettings
 
   generate: (event) =>
     event.preventDefault()
-    id = @generateUniqueI()
-    key = @generateHexString(256)
+    id = @generateUniqueId()
+    key = @generateHexString(52)
     $item = jQuery event.target
-    $item.parent().parent().find('input.user-id').val(id)
-    $item.parent().parent().find('input.key').val(key)
-    $item.closest('li').find('.title').html(key)
+    $item.closest('fieldset').find('input.user-id').val(id).trigger 'change'
+    $item.closest('fieldset').find('input.key').val(key).trigger 'change'
+    $item.closest('li').find('.title').html(id)
 
   generateUniqueId: () ->
-    id = Math.round(Math.random()*100000000)
-    if jQuery('#api-keys input[value="' + id + '"].user-id').length > 0
+    id = Math.round(Math.random() * 10000000000)
+    if jQuery('#api-keys .user-id').filter((i, element) ->
+      (parseInt(jQuery(element).val()) is id)
+    ).length > 0
       id = @generateUniqueId()
     id
 
