@@ -18,17 +18,7 @@ class Xml implements FormatInterface
         return $this->arrayToXML($response);
     }
 
-    private function arrayToXML($array, $xml = false){
-        if($xml === false){
-            $xml = new \SimpleXMLElement('<document/>');
-        }
-        foreach($array as $key => $value){
-            if(is_array($value)){
-                $this->arrayToXML($value, $xml->addChild($key));
-            }else{
-                $xml->addChild($key, $value);
-            }
-        }
-        return $xml->asXML();
+    private function arrayToXML($array){
+        return \Spatie\ArrayToXml\ArrayToXml::convert($array);
     }
 }

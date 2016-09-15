@@ -8,6 +8,7 @@ $baseDir = dirname($vendorDir);
 return array(
     'phpssdb\\' => array($vendorDir . '/phpfastcache/phpssdb/src/phpssdb'),
     'phpFastCache\\' => array($vendorDir . '/phpfastcache/phpfastcache/src/phpFastCache'),
+    'Spatie\\ArrayToXml\\' => array($vendorDir . '/spatie/array-to-xml/src'),
     'Psr\\Log\\' => array($vendorDir . '/psr/log/Psr/Log'),
     'Psr\\Cache\\' => array($vendorDir . '/psr/cache/src'),
     'Predis\\' => array($vendorDir . '/predis/predis/src'),

@@ -13,6 +13,8 @@ use Jigoshop\Factory\Order as OrderFactory;
 use Jigoshop\Frontend\Pages;
 use Jigoshop\Helper\Country;
 use Jigoshop\Helper\Validation;
+use Jigoshop\Shipping\Dummy;
+use Jigoshop\Shipping\Method;
 use WPAL\Wordpress;
 
 class CartService implements CartServiceInterface
@@ -322,8 +324,22 @@ class CartService implements CartServiceInterface
 		// TODO: Support for transients?
 		$cart->recalculateCoupons();
 		if($cart->getShippingMethod() == null) {
-			$cart->setShippingMethod($this->shippingService->getCheapest($cart));
-		}
+            $method = $this->shippingService->getCheapest($cart);
+            if($method instanceof Method) {
+                $cart->setShippingMethod($method);
+            }
+        } else {
+            try {
+                $cart->setShippingMethod($cart->getShippingMethod());
+            } catch(\Exception $e) {
+                $method = $this->shippingService->getCheapest($cart);
+                if($method instanceof Method) {
+                    $cart->setShippingMethod($method);
+                } else {
+                    $cart->removeShippingMethod();
+                }
+            }
+        }
 
         $session = $this->session->getField(self::CART);
         $session[$cart->getId()] = $cart->getStateToSave();
