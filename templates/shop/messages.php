@@ -13,4 +13,5 @@
 	<?php foreach ($messages->getNotices() as $notice): ?>
 		<div class="alert alert-success" role="alert"><?php echo $notice; ?></div>
 	<?php endforeach; ?>
+	<?php do_action('jigoshop\template\shop\messages'); ?>
 </div>
