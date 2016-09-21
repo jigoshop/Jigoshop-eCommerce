@@ -1,3 +1,0 @@
-# phpssdb
-
-Readme will be completed coming soon...
