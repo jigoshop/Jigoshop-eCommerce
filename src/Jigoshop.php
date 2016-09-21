@@ -108,7 +108,6 @@ class Jigoshop
         $this->initCompilers();
         $this->initExtensionsTools();
         $this->loadTextDomain();
-        $this->loadTextDomain();
         $this->initSession();
         $this->disableRelationLinks();
         $this->rewriteRules();

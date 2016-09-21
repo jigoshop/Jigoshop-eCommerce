@@ -1,0 +1,15 @@
+{
+	"name": "megawebmaster/wpal",
+	"description": "WordPress Abstraction Layer",
+	"license": "MIT",
+	"authors": [
+		{
+			"name": "Amadeusz Starzykiewicz",
+			"email": "megawebmaster@gmail.com"
+		}
+	],
+	"minimum-stability": "dev",
+	"require": {
+		"php": ">= 5.3.3"
+	}
+}

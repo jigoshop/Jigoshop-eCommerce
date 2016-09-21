@@ -1,0 +1,1 @@
+var CheckoutPay;CheckoutPay=function(){function e(e){this.params=e,jQuery("#payment-methods").on("change","li input[type=radio]",function(){return jQuery("#payment-methods li > div").slideUp(),jQuery("div",jQuery(this).closest("li")).slideDown()})}return e}(),jQuery(function(){return new CheckoutPay});

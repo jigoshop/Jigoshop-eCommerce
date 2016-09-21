@@ -1,11 +1,6 @@
 log
 compatibility/*
 vendor/
-dist/
-composer.lock
-deploy.sh
-node_modules
-assets/bower
 assets/css/*
 !assets/css/prettyPhoto.css
 assets/js/*

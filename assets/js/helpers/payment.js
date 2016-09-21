@@ -1,0 +1,1 @@
+JigoshopHelpers.prototype.payment=function(e,r){var o;return o=jQuery.extend({redirect:"Redirecting...",message:"Thank you for your order. We are now redirecting you to make payment.",overlayCss:{opacity:.01}},r),this.block(jQuery(document.body),o),e.submit()};

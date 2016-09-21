@@ -1,0 +1,1 @@
+var ProductSearch;ProductSearch=function(){function r(){jigoshop.ajaxSearch(jQuery("#jigoshop_find_products"),{action:"jigoshop.admin.product.find"})}return r}(),jQuery(function(){return new ProductSearch});
