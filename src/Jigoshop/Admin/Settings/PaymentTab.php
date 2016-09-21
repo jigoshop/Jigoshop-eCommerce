@@ -122,7 +122,7 @@ class PaymentTab implements TabInterface
                 'description' => apply_filters('jigoshop\admin\settings\payment\method\description', '', $method),
 				'id' => $method->getId(),
 				'fields' => $method->getOptions(),
-				//'enabled' => $method->isEnabled(),
+				'enabled' => $method->isEnabled(),
 			);
 		}
 
@@ -179,3 +179,4 @@ class PaymentTab implements TabInterface
 		return $settings;
 	}
 }
+//1609868399312862

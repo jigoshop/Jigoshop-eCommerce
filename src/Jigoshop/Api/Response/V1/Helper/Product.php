@@ -2,7 +2,7 @@
 
 namespace Jigoshop\Api\Response\V1\Helper;
 
-use Jigoshop\Entity\Product as EntityProduct;
+use Jigoshop\Entity\Product as ProductEntity;
 
 /**
  * Class Products
@@ -11,7 +11,7 @@ use Jigoshop\Entity\Product as EntityProduct;
 class Product
 {
     /**
-     * @param EntityProduct $product
+     * @param ProductEntity $product
      *
      * @return array
      */
@@ -37,7 +37,7 @@ class Product
             'link' => $product->getLink(),
         );
 
-        if($product instanceof EntityProduct\Simple || $product instanceof EntityProduct\Downloadable || $product instanceof EntityProduct\External) {
+        if($product instanceof ProductEntity\Simple || $product instanceof ProductEntity\Downloadable || $product instanceof ProductEntity\External) {
             $data = array_merge($data, array(
                 'regular_price' => $product->getRegularPrice(),
                 'sale' => array(
@@ -55,20 +55,20 @@ class Product
             ));
         }
 
-        if($product instanceof EntityProduct\Downloadable) {
+        if($product instanceof ProductEntity\Downloadable) {
             $data = array_merge($data, array(
                 'url' => $product->getUrl(),
                 'download_limit' => $product->getLimit(),
             ));
         }
 
-        if($product instanceof EntityProduct\External) {
+        if($product instanceof ProductEntity\External) {
             $data = array_merge($data, array(
                 'url' => $product->getUrl()
             ));
         }
 
-        if($product instanceof EntityProduct\Variable) {
+        if($product instanceof ProductEntity\Variable) {
             $data = array_merge($data, array(
                 'sale' => array(
                     'enabled' => $product->getSales()->isEnabled(),
@@ -85,12 +85,12 @@ class Product
                 'lowest_price' => $product->getLowestPrice(),
                 'highest_price' => $product->getHighestPrice(),
                 'variations' => array_values(array_map(function($variation) {
-                    /** @var EntityProduct\Variable\Variation $variation*/
+                    /** @var ProductEntity\Variable\Variation $variation*/
                     return array(
                         'id' => $variation->getId(),
                         'name' => $variation->getTitle(),
                         'attributes' => array_values(array_map(function($attribute) {
-                            /** @var EntityProduct\Variable\Attribute $attribute */
+                            /** @var ProductEntity\Variable\Attribute $attribute */
                             return array(
                                 'slug' => $attribute->getAttribute()->getSlug(),
                                 'value' => $attribute->getValue()
@@ -105,7 +105,7 @@ class Product
     }
 
     /**
-     * @param $product EntityProduct
+     * @param $product ProductEntity
      *
      * @return array
      */
@@ -113,14 +113,14 @@ class Product
     {
         return array(
             'attributes' => array_values(array_map(function($attribute) {
-                /** @var EntityProduct\Attribute $attribute */
+                /** @var ProductEntity\Attribute $attribute */
                 return array(
                     'id' => $attribute->getId(),
                     'slug' => $attribute->getSlug(),
                     'type' => $attribute->getType(),
                     'label' => $attribute->getLabel(),
                     'options' => array_values(array_map(function($option) {
-                        /** @var EntityProduct\Attribute\Option $option */
+                        /** @var ProductEntity\Attribute\Option $option */
                         return array(
                             'id' => $option->getId(),
                             'label' => $option->getLabel(),
@@ -134,7 +134,7 @@ class Product
     }
 
     /**
-     * @param $product EntityProduct
+     * @param $product ProductEntity
      *
      * @return array
      */
@@ -153,7 +153,7 @@ class Product
     }
 
     /**
-     * @param $product EntityProduct
+     * @param $product ProductEntity
      *
      * @return array
      */
@@ -172,7 +172,7 @@ class Product
     }
 
     /**
-     * @param $product EntityProduct
+     * @param $product ProductEntity
      *
      * @return array
      */
