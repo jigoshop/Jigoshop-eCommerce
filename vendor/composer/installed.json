@@ -76,18 +76,18 @@
         "source": {
             "type": "git",
             "url": "https://github.com/php-fig/log.git",
-            "reference": "d8e60a5619fff77f9669da8997697443ef1a1d7e"
+            "reference": "5277094ed527a1c4477177d102fe4c53551953e0"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/php-fig/log/zipball/d8e60a5619fff77f9669da8997697443ef1a1d7e",
-            "reference": "d8e60a5619fff77f9669da8997697443ef1a1d7e",
+            "url": "https://api.github.com/repos/php-fig/log/zipball/5277094ed527a1c4477177d102fe4c53551953e0",
+            "reference": "5277094ed527a1c4477177d102fe4c53551953e0",
             "shasum": ""
         },
         "require": {
             "php": ">=5.3.0"
         },
-        "time": "2016-01-06 21:40:42",
+        "time": "2016-09-19 16:02:08",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -125,12 +125,12 @@
         "source": {
             "type": "git",
             "url": "https://github.com/Seldaek/monolog.git",
-            "reference": "f42fbdfd53e306bda545845e4dbfd3e72edb4952"
+            "reference": "dacec2fe1ead778f90d0149caa8f047a0856571b"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/Seldaek/monolog/zipball/f42fbdfd53e306bda545845e4dbfd3e72edb4952",
-            "reference": "f42fbdfd53e306bda545845e4dbfd3e72edb4952",
+            "url": "https://api.github.com/repos/Seldaek/monolog/zipball/dacec2fe1ead778f90d0149caa8f047a0856571b",
+            "reference": "dacec2fe1ead778f90d0149caa8f047a0856571b",
             "shasum": ""
         },
         "require": {
@@ -166,7 +166,7 @@
             "ruflin/elastica": "Allow sending log messages to an Elastic Search server",
             "sentry/sentry": "Allow sending log messages to a Sentry server"
         },
-        "time": "2016-07-29 03:23:52",
+        "time": "2016-09-18 16:07:11",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -408,12 +408,12 @@
         "source": {
             "type": "git",
             "url": "https://github.com/PHPSocialNetwork/phpfastcache.git",
-            "reference": "961ae7ca366fc110f90ed4157991b59483cb1f26"
+            "reference": "f952e34bf419b113792ec1fc302bb6dd4a248809"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/PHPSocialNetwork/phpfastcache/zipball/961ae7ca366fc110f90ed4157991b59483cb1f26",
-            "reference": "961ae7ca366fc110f90ed4157991b59483cb1f26",
+            "url": "https://api.github.com/repos/PHPSocialNetwork/phpfastcache/zipball/f952e34bf419b113792ec1fc302bb6dd4a248809",
+            "reference": "f952e34bf419b113792ec1fc302bb6dd4a248809",
             "shasum": ""
         },
         "require": {
@@ -433,7 +433,7 @@
             "ext-redis": "*",
             "ext-sqlite": "*"
         },
-        "time": "2016-08-28 20:27:06",
+        "time": "2016-09-16 23:02:18",
         "type": "library",
         "installation-source": "source",
         "autoload": {
