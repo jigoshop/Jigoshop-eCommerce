@@ -137,6 +137,7 @@ class Options implements Tool
                     }
 
                     $i++;
+                    $tax = isset($options['jigoshop_tax_rates'][$i]) ?  $options['jigoshop_tax_rates'][$i] : '';
                 }
 
                 $this->taxService->save($rateDate);

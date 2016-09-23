@@ -141,7 +141,9 @@ class Order implements EntityFactoryInterface
                 if($state['customer'] instanceof CustomerEntity &&
                     !($state['customer'] instanceof CustomerEntity\Guest) &&
                     $state['customer_id'] > 0) {
-                    $state['customer'] = $this->customerService->find($state['customer_id']);
+                    $customer = $this->customerService->find($state['customer_id']);
+                    $customer->setBillingAddress($state['customer']->getBillingAddress());
+                    $customer->setShippingAddress($state['customer']->getShippingAddress());
                 }
             }
             $state['customer_note'] = $post->post_excerpt;

@@ -184,11 +184,11 @@ class Orders implements Tool
                                 $customer = $this->wp->getPostMeta($order->ID, 'customer', true);
                                 $this->customer = $customer;
                             }
-                            $customer = $this->_migrateCustomer($this->customer, $data);
+                            $this->customer = $this->_migrateCustomer($this->customer, $data);
 							$wpdb->query($wpdb->prepare("INSERT INTO {$wpdb->postmeta} (post_id, meta_key, meta_value) VALUES (%d, %s, %s)",
 								$order->ID,
 								'customer',
-								serialize(serialize($customer))
+								serialize(serialize($this->customer))
 							));
 							$this->checkSql();
 
