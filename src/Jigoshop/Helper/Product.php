@@ -69,22 +69,18 @@ class Product
      */
     public static function getPriceHtml(Entity\Product $product)
     {
-        if (!$product instanceof Entity\Product\Purchasable) {
-            return '';
-        }
-
-        $price = $product->getRegularPrice();
-        if (empty($price)) {
-            return apply_filters('jigoshop\helper\product\get_price_html', __('Price not announced', 'jigoshop'), '',
-                $product);
-        }
-
+        $price = 0;
         switch ($product->getType()) {
             case Entity\Product\Simple::TYPE:
             case Entity\Product\External::TYPE:
             case Entity\Product\Downloadable::TYPE:
                 /** @var $product Entity\Product\Simple */
                 if (self::isOnSale($product)) {
+                    $price = $product->getRegularPrice();
+                    if (empty($price)) {
+                        return apply_filters('jigoshop\helper\product\get_price_html', __('Price not announced', 'jigoshop'), '',
+                            $product);
+                    }
                     if (strpos($product->getSales()->getPrice(), '%') !== false) {
                         return '<del>' . self::formatPrice($price) . '</del>' . self::formatPrice($product->getPrice()) . '
 						<ins>' . sprintf(__('%s off!', 'jigoshop'), $product->getSales()->getPrice()) . '</ins>';
@@ -100,9 +96,8 @@ class Product
                 /** @var $product Entity\Product\Variable */
                 $price = $product->getLowestPrice();
                 $formatted = self::formatPrice($price);
-                // TODO: If every variation has the same price - do not add "From: ..."
 
-                if ($price !== '') {
+                if ($price !== '' && $product->getLowestPrice() < $product->getHighestPrice()) {
                     $result = sprintf(__('From: %s', 'jigoshop'), $formatted);
                 } else {
                     $result = $formatted;
