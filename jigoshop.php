@@ -97,7 +97,7 @@ $ini_memory_limit = ini_get('memory_limit');
 preg_match('/^(\d+)(\w*)?$/', $ini_memory_limit, $memory);
 $memory_limit = $memory[1];
 if (isset($memory[2])) {
-	switch ($memory[2]) {
+	switch (strtoupper($memory[2])) {
 		/** @noinspection PhpMissingBreakStatementInspection */
 		case 'M':
 			$memory_limit *= 1024 * 1024;
@@ -119,7 +119,7 @@ if($memory_limit < JIGOSHOP_REQUIRED_MEMORY*1024*1024){
 preg_match('/^(\d+)(\w*)?$/', WP_MEMORY_LIMIT, $memory);
 $memory_limit = $memory[1];
 if (isset($memory[2])) {
-	switch ($memory[2]) {
+	switch (strtoupper($memory[2])) {
 		/** @noinspection PhpMissingBreakStatementInspection */
 		case 'M':
 			$memory_limit *= 1024 * 1024;
