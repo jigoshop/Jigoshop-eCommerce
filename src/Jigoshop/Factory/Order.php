@@ -144,6 +144,7 @@ class Order implements EntityFactoryInterface
                     $customer = $this->customerService->find($state['customer_id']);
                     $customer->setBillingAddress($state['customer']->getBillingAddress());
                     $customer->setShippingAddress($state['customer']->getShippingAddress());
+                    $state['customer'] = $customer;
                 }
             }
             $state['customer_note'] = $post->post_excerpt;
