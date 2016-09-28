@@ -1,11 +1,6 @@
 class AdminProducts
-  params:
-    i18n:
-      saved: ''
-      confirm_remove: ''
-      attribute_removed: ''
 
-  constructor: (@params) ->
+  constructor: () ->
     jQuery('.product-featured').on 'click', @featureProduct
 
   featureProduct: (event) ->
@@ -25,4 +20,4 @@ class AdminProducts
         jigoshop.addMessage('danger', data.error, 6000)
 
 jQuery ->
-  new AdminProducts(jigoshop_admin_products)
+  new AdminProducts()

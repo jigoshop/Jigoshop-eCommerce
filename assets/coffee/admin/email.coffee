@@ -20,4 +20,4 @@ class AdminEmail
         jigoshop.addMessage('danger', data.error, 6000)
 
 jQuery ->
-  new AdminEmail(jigoshop_admin_email)
+  new AdminEmail()
