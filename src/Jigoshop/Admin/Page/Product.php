@@ -85,7 +85,7 @@ class Product
 
                 $wp->doAction('jigoshop\admin\product\assets', $wp);
             }
-        });
+        }, 5);
     }
 
     /**
