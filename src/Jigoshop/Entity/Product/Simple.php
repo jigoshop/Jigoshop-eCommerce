@@ -126,7 +126,7 @@ class Simple extends Product implements Purchasable, Shippable, Saleable
 				$discount = trim($this->sales->getPrice(), '%');
 				$sale = $this->regularPrice * (1 - $discount / 100);
 			} else {
-				$sale = $this->regularPrice - $this->sales->getPrice();
+				$sale = $this->sales->getPrice();
 			}
 
 			if ($sale < $price) {
