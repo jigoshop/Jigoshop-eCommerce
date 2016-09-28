@@ -322,7 +322,7 @@ class Installer
 						SET sale_price = regular_price * (1 - sale_price / 100);
 					ELSE
 						SET sale_price = CAST(sale_price_value AS DECIMAL(12,4));
-						SET sale_price = regular_price - sale_price;
+						SET sale_price = 1 * sale_price;
 					END IF;
 				END IF;
 				IF sale_price > 0 AND sale_price < regular_price THEN
