@@ -4,6 +4,8 @@ namespace Jigoshop\Frontend\Page;
 
 use Jigoshop\Core\Messages;
 use Jigoshop\Core\Options;
+use Jigoshop\Exception;
+use Jigoshop\Frontend\NotEnoughStockException;
 use Jigoshop\Frontend\Pages;
 use Jigoshop\Service\CartService;
 use Jigoshop\Service\CartServiceInterface;
