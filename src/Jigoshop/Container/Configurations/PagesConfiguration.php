@@ -117,6 +117,13 @@ class PagesConfiguration implements ConfigurationInterface
 			'jigoshop.service.order',
 			'jigoshop.messages'
 		));
+        $services->setDetails('jigoshop.page.dummy', 'Jigoshop\Frontend\Page\Dummy', array(
+            'wpal',
+            'jigoshop.options',
+            'jigoshop.service.product',
+            'jigoshop.service.cart',
+            'jigoshop.messages'
+        ));
 	}
 
 	/**
