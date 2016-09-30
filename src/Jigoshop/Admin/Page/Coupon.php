@@ -45,16 +45,16 @@ class Coupon
 
 		$wp->addAction('admin_enqueue_scripts', function () use ($wp){
 			if ($wp->getPostType() == Types::COUPON) {
-				Styles::add('jigoshop.admin.coupon', \Jigoshop::getUrl().'/assets/css/admin/coupon.css', array('jigoshop.admin'));
-				Scripts::add('jigoshop.admin.coupon', \Jigoshop::getUrl().'/assets/js/admin/coupon.js', array(
+				Styles::add('jigoshop.admin.coupon', \JigoshopInit::getUrl().'/assets/css/admin/coupon.css', array('jigoshop.admin'));
+				Scripts::add('jigoshop.admin.coupon', \JigoshopInit::getUrl().'/assets/js/admin/coupon.js', array(
 					'jquery',
 					'jigoshop.admin',
 					'jigoshop.helpers.ajax_search',
 				));
-				Styles::add('jigoshop.vendors.select2', \Jigoshop::getUrl().'/assets/css/vendors/select2.css', array('jigoshop.admin.coupon'));
-				Scripts::add('jigoshop.vendors.select2', \Jigoshop::getUrl() . '/assets/js/vendors/select2.js', array('jigoshop.admin.coupon'), array('in_footer' => true));
-				Styles::add('jigoshop.vendors.datepicker', \Jigoshop::getUrl().'/assets/css/vendors/datepicker.css', array('jigoshop.admin.coupon'));
-				Scripts::add('jigoshop.vendors.datepicker', \Jigoshop::getUrl() . '/assets/js/vendors/datepicker.js', array('jquery', 'jigoshop.admin.coupon'));
+				Styles::add('jigoshop.vendors.select2', \JigoshopInit::getUrl().'/assets/css/vendors/select2.css', array('jigoshop.admin.coupon'));
+				Scripts::add('jigoshop.vendors.select2', \JigoshopInit::getUrl() . '/assets/js/vendors/select2.js', array('jigoshop.admin.coupon'), array('in_footer' => true));
+				Styles::add('jigoshop.vendors.datepicker', \JigoshopInit::getUrl().'/assets/css/vendors/datepicker.css', array('jigoshop.admin.coupon'));
+				Scripts::add('jigoshop.vendors.datepicker', \JigoshopInit::getUrl() . '/assets/js/vendors/datepicker.js', array('jquery', 'jigoshop.admin.coupon'));
 				$wp->doAction('jigoshop\admin\coupon\assets', $wp);
 			}
 		});

@@ -39,7 +39,7 @@ class GeneralTab implements TabInterface
 				}
 			}
 
-			Scripts::add('jigoshop.admin.settings.general', \Jigoshop::getUrl().'/assets/js/admin/settings/general.js', array('jquery'), array('page' => 'jigoshop_page_jigoshop_settings'));
+			Scripts::add('jigoshop.admin.settings.general', \JigoshopInit::getUrl().'/assets/js/admin/settings/general.js', array('jquery'), array('page' => 'jigoshop_page_jigoshop_settings'));
 			Scripts::localize('jigoshop.admin.settings.general', 'jigoshop_admin_general', array(
 				'states' => $states,
 			));

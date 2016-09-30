@@ -17,13 +17,13 @@ class ProductCategory
 	{
 		if (empty($id)) {
 			return array(
-				'image' => \Jigoshop::getUrl().'/assets/images/placeholder.png',
+				'image' => \JigoshopInit::getUrl().'/assets/images/placeholder.png',
 				'thumbnail_id' => false,
 			);
 		}
 
 		$thumbnail = get_metadata(Core::TERMS, $id, 'thumbnail_id', true);
-		$image = $thumbnail ? wp_get_attachment_url($thumbnail) : \Jigoshop::getUrl().'/assets/images/placeholder.png';
+		$image = $thumbnail ? wp_get_attachment_url($thumbnail) : \JigoshopInit::getUrl().'/assets/images/placeholder.png';
 
 		return array(
 			'image' => $image,

@@ -138,8 +138,8 @@ if($memory_limit < JIGOSHOP_REQUIRED_WP_MEMORY*1024*1024){
 	}
 	add_action('admin_notices', 'jigoshop_required_wp_memory_warning');
 }
-require_once(__DIR__.'/src/Jigoshop.php');
-$jigoshop = new Jigoshop(__FILE__);
+require_once(__DIR__.'/src/JigoshopInit.php');
+$jigoshop = new JigoshopInit(__FILE__);
 add_action('plugins_loaded', array($jigoshop, 'onLoad'), 20);
 add_action('init', array($jigoshop, 'onInit'), 0);
 register_activation_hook(__FILE__, array($jigoshop, 'update'));

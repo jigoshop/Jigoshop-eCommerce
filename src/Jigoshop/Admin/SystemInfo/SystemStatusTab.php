@@ -46,7 +46,7 @@ class SystemStatusTab implements TabInterface
 				return;
 			}
 
-			Scripts::add('jigoshop.admin.system_info.system_status', \Jigoshop::getUrl().'/assets/js/admin/system_info/system_status.js', array('jquery'));
+			Scripts::add('jigoshop.admin.system_info.system_status', \JigoshopInit::getUrl().'/assets/js/admin/system_info/system_status.js', array('jquery'));
 			Scripts::localize('jigoshop.admin.system_info.system_status', 'system_data', $this->getSystemData());
 		});
 	}
@@ -826,7 +826,7 @@ class SystemStatusTab implements TabInterface
 	 */
 	private function getOverrides()
 	{
-		$templatePaths = $this->wp->applyFilters('jigoshop\admin\system_info\system_status\overrides_scan_paths', array('jigoshop' => \Jigoshop::getDir().'/templates/'));
+		$templatePaths = $this->wp->applyFilters('jigoshop\admin\system_info\system_status\overrides_scan_paths', array('jigoshop' => \JigoshopInit::getDir().'/templates/'));
 		$scannedFiles = array();
 		$foundFiles = array();
 
@@ -839,7 +839,7 @@ class SystemStatusTab implements TabInterface
 				$themeFile = $this->getTemplateFile($file);
 
 				if (!empty($themeFile)) {
-					$coreVersion = $this->getFileVersion(\Jigoshop::getDir().'/templates/'.$file);
+					$coreVersion = $this->getFileVersion(\JigoshopInit::getDir().'/templates/'.$file);
 					$themeVersion = $this->getFileVersion($themeFile);
 
 					if ($coreVersion && (empty($themeVersion) || version_compare($themeVersion, $coreVersion, '<'))) {

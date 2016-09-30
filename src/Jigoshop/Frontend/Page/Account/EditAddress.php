@@ -35,12 +35,12 @@ class EditAddress implements PageInterface
 		$this->customerService = $customerService;
 		$this->messages = $messages;
 
-		Styles::add('jigoshop.vendors.select2', \Jigoshop::getUrl().'/assets/css/vendors/select2.css');
-		Styles::add('jigoshop.user.account', \Jigoshop::getUrl().'/assets/css/user/account.css', array('jigoshop.vendors.select2'));
-		Styles::add('jigoshop.user.account.edit_address', \Jigoshop::getUrl().'/assets/css/user/account/edit_address.css', array('jigoshop.user.account'));
+		Styles::add('jigoshop.vendors.select2', \JigoshopInit::getUrl().'/assets/css/vendors/select2.css');
+		Styles::add('jigoshop.user.account', \JigoshopInit::getUrl().'/assets/css/user/account.css', array('jigoshop.vendors.select2'));
+		Styles::add('jigoshop.user.account.edit_address', \JigoshopInit::getUrl().'/assets/css/user/account/edit_address.css', array('jigoshop.user.account'));
 
-		Scripts::add('jigoshop.vendors.select2', \Jigoshop::getUrl().'/assets/js/vendors/select2.js', array('jquery'));
-		Scripts::add('jigoshop.vendors.bs_tab_trans_tooltip_collapse', \Jigoshop::getUrl().'/assets/js/vendors/bs_tab_trans_tooltip_collapse.js', array('jquery'));
+		Scripts::add('jigoshop.vendors.select2', \JigoshopInit::getUrl().'/assets/js/vendors/select2.js', array('jquery'));
+		Scripts::add('jigoshop.vendors.bs_tab_trans_tooltip_collapse', \JigoshopInit::getUrl().'/assets/js/vendors/bs_tab_trans_tooltip_collapse.js', array('jquery'));
 		$this->wp->doAction('jigoshop\account\assets', $wp);
 	}
 

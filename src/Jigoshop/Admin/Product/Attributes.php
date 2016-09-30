@@ -46,8 +46,8 @@ class Attributes implements PageInterface
 				return;
 			}
 
-			Styles::add('jigoshop.admin.product_attributes', \Jigoshop::getUrl().'/assets/css/admin/product_attributes.css');
-			Scripts::add('jigoshop.admin.product_attributes', \Jigoshop::getUrl().'/assets/js/admin/product_attributes.js', array(
+			Styles::add('jigoshop.admin.product_attributes', \JigoshopInit::getUrl().'/assets/css/admin/product_attributes.css');
+			Scripts::add('jigoshop.admin.product_attributes', \JigoshopInit::getUrl().'/assets/js/admin/product_attributes.js', array(
 				'jquery',
 				'jigoshop.helpers'
 			));

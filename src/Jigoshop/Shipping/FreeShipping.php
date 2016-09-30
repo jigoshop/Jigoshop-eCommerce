@@ -55,7 +55,7 @@ class FreeShipping implements Method
 				return;
 			}
 
-			Scripts::add('jigoshop.admin.shipping.free_shipping', \Jigoshop::getUrl().'/assets/js/admin/shipping/free_shipping.js', array(
+			Scripts::add('jigoshop.admin.shipping.free_shipping', \JigoshopInit::getUrl().'/assets/js/admin/shipping/free_shipping.js', array(
 				'jquery',
 				'jigoshop.admin'
 			));

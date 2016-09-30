@@ -38,23 +38,23 @@ class Core
 
 		// Register main Jigoshop scripts
 		$wp->wpEnqueueScript('jquery');
-		Styles::register('jigoshop.shop', \Jigoshop::getUrl().'/assets/css/shop.css');
-		Styles::register('prettyphoto', \Jigoshop::getUrl().'/assets/css/prettyPhoto.css');
-		Styles::register('tokenfield', \Jigoshop::getUrl().'/assets/css/vendors/tokenfield.css');
-		Scripts::register('jigoshop.helpers', \Jigoshop::getUrl().'/assets/js/helpers.js', array('jquery'));
-		Scripts::register('jigoshop.helpers.ajax_search', \Jigoshop::getUrl().'/assets/js/helpers/ajax_search.js', array('jigoshop.helpers'));
-		Scripts::register('jigoshop.helpers.payment', \Jigoshop::getUrl().'/assets/js/helpers/payment.js', array('jigoshop.helpers', 'jquery-blockui'));
-		Scripts::register('jigoshop.api', \Jigoshop::getUrl().'/assets/js/api.js', array('jigoshop.helpers'));
-		Scripts::register('jigoshop.media', \Jigoshop::getUrl().'/assets/js/media.js', array('jquery'));
-		Scripts::register('jigoshop.shop', \Jigoshop::getUrl().'/assets/js/shop.js', array(
+		Styles::register('jigoshop.shop', \JigoshopInit::getUrl().'/assets/css/shop.css');
+		Styles::register('prettyphoto', \JigoshopInit::getUrl().'/assets/css/prettyPhoto.css');
+		Styles::register('tokenfield', \JigoshopInit::getUrl().'/assets/css/vendors/tokenfield.css');
+		Scripts::register('jigoshop.helpers', \JigoshopInit::getUrl().'/assets/js/helpers.js', array('jquery'));
+		Scripts::register('jigoshop.helpers.ajax_search', \JigoshopInit::getUrl().'/assets/js/helpers/ajax_search.js', array('jigoshop.helpers'));
+		Scripts::register('jigoshop.helpers.payment', \JigoshopInit::getUrl().'/assets/js/helpers/payment.js', array('jigoshop.helpers', 'jquery-blockui'));
+		Scripts::register('jigoshop.api', \JigoshopInit::getUrl().'/assets/js/api.js', array('jigoshop.helpers'));
+		Scripts::register('jigoshop.media', \JigoshopInit::getUrl().'/assets/js/media.js', array('jquery'));
+		Scripts::register('jigoshop.shop', \JigoshopInit::getUrl().'/assets/js/shop.js', array(
 			'jquery',
 			'jigoshop.helpers'
 		));
 		Scripts::register('jquery-blockui', '//cdnjs.cloudflare.com/ajax/libs/jquery.blockUI/2.66.0-2013.10.09/jquery.blockUI.min.js', array('jquery'));
-		Scripts::register('prettyphoto', \Jigoshop::getUrl().'/assets/js/jquery.prettyPhoto.js');
-		Scripts::register('tokenfield', \Jigoshop::getUrl().'/assets/js/vendors/tokenfield.js', array('jquery'));
+		Scripts::register('prettyphoto', \JigoshopInit::getUrl().'/assets/js/jquery.prettyPhoto.js');
+		Scripts::register('tokenfield', \JigoshopInit::getUrl().'/assets/js/vendors/tokenfield.js', array('jquery'));
 		Scripts::localize('jigoshop.helpers', 'jigoshop_helpers', array(
-			'assets' => \Jigoshop::getUrl().'/assets',
+			'assets' => \JigoshopInit::getUrl().'/assets',
 			'ajaxUrl' => admin_url('admin-ajax.php'),
 		));
 	}

@@ -79,7 +79,7 @@ class Template
 			$template = 'woothemes';
 		}
 
-		if (!file_exists(\Jigoshop::getDir().'/templates/layout/'.$template.'.php')) {
+		if (!file_exists(\JigoshopInit::getDir().'/templates/layout/'.$template.'.php')) {
 			$template = 'default';
 		}
 

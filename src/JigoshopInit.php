@@ -17,7 +17,7 @@ if (!defined('JIGOSHOP_LOG_DIR')) {
  * Class Jigoshop
  * @author Krzysztof Kasowski
  */
-class Jigoshop
+class JigoshopInit
 {
     /** @var  string  */
     private static $dir;
@@ -330,7 +330,7 @@ class Jigoshop
     private function initCache()
     {
         \phpFastCache\CacheManager::setDefaultConfig(array(
-            'path' => Jigoshop::getLogDir(),
+            'path' => JigoshopInit::getLogDir(),
         ));
     }
 
