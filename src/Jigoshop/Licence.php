@@ -49,7 +49,7 @@ class Licence
 		$this->home_shop_url = $home_shop_url;
 
 //		if (is_ssl()) { // TODO: It should be enabled with proper options (i.e. require secure connection).
-		//$this->home_shop_url = str_replace('http://', 'https://', $this->home_shop_url);
+		$this->home_shop_url = str_replace('http://', 'https://', $this->home_shop_url);
 //		}
 		if ($this->home_shop_url[strlen($this->home_shop_url) - 1] !== '/') {
 			$this->home_shop_url .= '/';
