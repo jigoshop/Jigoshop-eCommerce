@@ -199,7 +199,7 @@ class EmailService implements EmailServiceInterface
 		}
 
 		$templates = $this->options->get('emails.templates');
-		if (!$templates[$hook]) {
+		if (!isset($templates[$hook]) || empty($templates[$hook])) {
 			return;
 		}
 		foreach ($templates[$hook] as $postId) {
