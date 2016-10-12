@@ -144,13 +144,13 @@ class Messages
 	 */
 	public function preserveMessages()
 	{
-        $this->session->getField(self::NOTICES, array_values(array_filter($this->notices, function ($item){
+        $this->session->setField(self::NOTICES, array_values(array_filter($this->notices, function ($item){
 			return $item['persistent'];
 		})));
-        $this->session->getField(self::WARNINGS, array_values(array_filter($this->warnings, function ($item){
+        $this->session->setField(self::WARNINGS, array_values(array_filter($this->warnings, function ($item){
 			return $item['persistent'];
 		})));
-		$this->session->getField(self::ERRORS, array_values(array_filter($this->errors, function ($item){
+		$this->session->setField(self::ERRORS, array_values(array_filter($this->errors, function ($item){
 			return $item['persistent'];
 		})));
 	}
