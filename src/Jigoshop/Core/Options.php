@@ -164,6 +164,18 @@ class Options
 				'test_mode' => true,
 				'test_email' => '',
 			),
+            'bank_transfer' => [
+                'enabled' => false,
+                'title' => '',
+                'description' => '',
+                'bank_name' => '',
+                'account_number' => '',
+                'account_holder' => '',
+                'sort_code' => '',
+                'iban' => '',
+                'bic' => '',
+                'additional_info' => '',
+            ],
 		),
 		'advanced' => array(
 			'automatic_complete' => false,
