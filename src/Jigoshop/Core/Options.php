@@ -166,8 +166,8 @@ class Options
 			),
             'bank_transfer' => [
                 'enabled' => false,
-                'title' => '',
-                'description' => '',
+                'title' => 'Bank Transfer',
+                'description' => 'Please use the details below to transfer the payment for your order, once payment is received your order will be processed.',
                 'bank_name' => '',
                 'account_number' => '',
                 'account_holder' => '',
