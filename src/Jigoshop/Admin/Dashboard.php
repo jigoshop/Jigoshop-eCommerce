@@ -50,12 +50,8 @@ class Dashboard implements PageInterface
 				return;
 			}
 
-			Styles::add('jigoshop.admin.dashboard', \Jigoshop::getUrl().'/assets/css/admin/dashboard.css');
-			Scripts::add('jigoshop.flot', \Jigoshop::getUrl().'/assets/js/flot/jquery.flot.min.js', array('jquery'));
-			Scripts::add('jigoshop.flot.time', \Jigoshop::getUrl().'/assets/js/flot/jquery.flot.time.min.js', array(
-				'jquery',
-				'jigoshop.flot'
-			));
+			Styles::add('jigoshop.admin.dashboard', \JigoshopInit::getUrl().'/assets/css/admin/dashboard.css');
+            Scripts::add('jigoshop.vendors.flot', \JigoshopInit::getUrl().'/assets/js/vendors/flot.js', array('jquery'));
 		});
 	}
 

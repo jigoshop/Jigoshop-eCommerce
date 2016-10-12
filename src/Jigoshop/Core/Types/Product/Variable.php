@@ -300,8 +300,8 @@ class Variable implements Type
 	public function addAdminAssets(Wordpress $wp)
 	{
 		$wp->wpEnqueueMedia();
-		Styles::add('jigoshop.admin.product.variable', \Jigoshop::getUrl().'/assets/css/admin/product/variable.css');
-		Scripts::add('jigoshop.admin.product.variable', \Jigoshop::getUrl().'/assets/js/admin/product/variable.js', array(
+		Styles::add('jigoshop.admin.product.variable', \JigoshopInit::getUrl().'/assets/css/admin/product/variable.css');
+		Scripts::add('jigoshop.admin.product.variable', \JigoshopInit::getUrl().'/assets/js/admin/product/variable.js', array(
 			'jquery',
 			'jigoshop.media'
 		));
@@ -339,8 +339,8 @@ class Variable implements Type
 				}
 			}
 
-			Styles::add('jigoshop.product.variable', \Jigoshop::getUrl().'/assets/css/shop/product/variable.css');
-			Scripts::add('jigoshop.product.variable', \Jigoshop::getUrl().'/assets/js/shop/product/variable.js', array('jquery'));
+			Styles::add('jigoshop.product.variable', \JigoshopInit::getUrl().'/assets/css/shop/product/variable.css');
+			Scripts::add('jigoshop.product.variable', \JigoshopInit::getUrl().'/assets/js/shop/product/variable.js', array('jquery'));
 			Scripts::localize('jigoshop.product.variable', 'jigoshop_product_variable', array(
 				'variations' => $variations,
 			));
@@ -442,7 +442,7 @@ class Variable implements Type
 			if ($_POST['image_id'] > 0) {
 				$url = $this->wp->wpGetAttachmentImageSrc($_POST['image_id'], Options::IMAGE_SMALL);
 			} else {
-				$url = \Jigoshop::getUrl().'/assets/images/placeholder.png';
+				$url = \JigoshopInit::getUrl().'/assets/images/placeholder.png';
 			}
 
 			echo json_encode(array(

@@ -51,7 +51,7 @@ class Render
 	{
 		$file = locate_template(array('jigoshop/'.$template.'.php'), false, false);
 		if (empty($file)) {
-			$file = \Jigoshop::getDir().'/templates/'.$template.'.php';
+			$file = \JigoshopInit::getDir().'/templates/'.$template.'.php';
 		}
 
 		return $file;

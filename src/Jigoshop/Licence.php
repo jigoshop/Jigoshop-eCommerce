@@ -35,7 +35,7 @@ class Licence
 	 */
 	public function __construct($file, $identifier, $home_shop_url)
 	{
-		/*$info = get_file_data($file, array('Title' => 'Plugin Name', 'Version' => 'Version', 'Url' => 'Plugin URI'), 'plugin');
+		$info = get_file_data($file, array('Title' => 'Plugin Name', 'Version' => 'Version', 'Url' => 'Plugin URI'), 'plugin');
 
 		$this->identifier = $identifier;
 		$this->file = $file;
@@ -49,7 +49,7 @@ class Licence
 		$this->home_shop_url = $home_shop_url;
 
 //		if (is_ssl()) { // TODO: It should be enabled with proper options (i.e. require secure connection).
-		//$this->home_shop_url = str_replace('http://', 'https://', $this->home_shop_url);
+		$this->home_shop_url = str_replace('http://', 'https://', $this->home_shop_url);
 //		}
 		if ($this->home_shop_url[strlen($this->home_shop_url) - 1] !== '/') {
 			$this->home_shop_url .= '/';
@@ -72,7 +72,7 @@ class Licence
 		// define the alternative API for updating checking
 		add_filter('pre_set_site_transient_update_plugins', array($this, 'checkUpdates'));
 		add_action('in_plugin_update_message-'.$this->plugin_slug, array($this, 'updateMessage'), 10, 2);
-		add_action('admin_init', '\Jigoshop\Licence::activateKeys');*/
+		add_action('admin_init', '\Jigoshop\Licence::activateKeys');
 	}
 
 	public static function activateKeys()
@@ -294,7 +294,6 @@ class Licence
 	 */
 	public function isActive()
 	{
-		return true;
 		$active = $this->is_active();
 
 		if (!$active) {

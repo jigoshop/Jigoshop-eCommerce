@@ -197,7 +197,7 @@ class Downloadable implements Type
 
 	public function addAssets()
 	{
-		Scripts::add('jigoshop.admin.product.downloadable', \Jigoshop::getUrl().'/assets/js/admin/product/downloadable.js', array(
+		Scripts::add('jigoshop.admin.product.downloadable', \JigoshopInit::getUrl().'/assets/js/admin/product/downloadable.js', array(
 			'jquery',
 			'jigoshop.helpers'
 		));

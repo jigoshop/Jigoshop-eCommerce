@@ -21,7 +21,8 @@ if ($title) {
 		<label class="assistive-text" for="s"><?php _e('Search for:', 'jigoshop'); ?></label>
 		<input type="text" value="<?php echo get_search_query(); ?>" name="s" id="s" placeholder="<?php _e('Search for products', 'jigoshop'); ?>" />
 		<input type="submit" id="searchsubmit" value="<?php _e('Search', 'jigoshop'); ?>" />
-		<?php \Jigoshop\Helper\Forms::printHiddenFields($fields, array('s')); ?>
+		<input type="hidden" value="product" name="post_type"/>
+		<?php \Jigoshop\Helper\Forms::printHiddenFields($fields, array('s', 'post_type')); ?>
 	</div>
 </form>
 <?php echo $after_widget;

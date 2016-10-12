@@ -59,7 +59,7 @@ class FlatRate implements Method
 				return;
 			}
 
-			Scripts::add('jigoshop.admin.shipping.flat_rate', \Jigoshop::getUrl().'/assets/js/admin/shipping/flat_rate.js', array(
+			Scripts::add('jigoshop.admin.shipping.flat_rate', \JigoshopInit::getUrl().'/assets/js/admin/shipping/flat_rate.js', array(
 				'jquery',
 				'jigoshop.admin'
 			));

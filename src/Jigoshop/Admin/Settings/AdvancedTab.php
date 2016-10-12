@@ -58,7 +58,7 @@ class AdvancedTab implements TabInterface
             if (!isset($_GET['tab']) || $_GET['tab'] != AdvancedTab::SLUG) {
                 return;
             }
-            Scripts::add('jigoshop.admin.settings.taxes', \Jigoshop::getUrl().'/assets/js/admin/settings/advanced.js',
+            Scripts::add('jigoshop.admin.settings.taxes', \JigoshopInit::getUrl().'/assets/js/admin/settings/advanced.js',
                 array('jquery', 'wp-util'), array('page' => 'jigoshop_page_jigoshop_settings'));
         });
     }

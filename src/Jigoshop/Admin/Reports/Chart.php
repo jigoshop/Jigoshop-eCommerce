@@ -53,13 +53,13 @@ abstract class Chart
 			if ($screen->base != 'jigoshop_page_'.Reports::NAME) {
 				return;
 			}
-			Scripts::add('jigoshop.vendors.flot', \Jigoshop::getUrl().'/assets/js/vendors/flot.js', array('jquery'));
+			Scripts::add('jigoshop.vendors.flot', \JigoshopInit::getUrl().'/assets/js/vendors/flot.js', array('jquery'));
 			/*Scripts::add('jigoshop.vendors.flot', \Jigoshop::getUrl().'/assets/js/flot/jquery.flot.min.js', array('jquery'));
 			Scripts::add('jigoshop.vendors.flot2', \Jigoshop::getUrl().'/assets/js/flot/jquery.flot.stack.min.js', array('jquery'));
 			Scripts::add('jigoshop.vendors.flot3', \Jigoshop::getUrl().'/assets/js/flot/jquery.flot.pie.min.js', array('jquery'));
 			Scripts::add('jigoshop.vendors.flot4', \Jigoshop::getUrl().'/assets/js/flot/jquery.flot.resize.min.js', array('jquery'));
 			Scripts::add('jigoshop.vendors.flot5', \Jigoshop::getUrl().'/assets/js/flot/jquery.flot.time.min.js', array('jquery'));*/
-			Scripts::add('jigoshop.reports.chart', \Jigoshop::getUrl().'/assets/js/admin/reports/chart.js', array(
+			Scripts::add('jigoshop.reports.chart', \JigoshopInit::getUrl().'/assets/js/admin/reports/chart.js', array(
 					'jquery',
 					'jigoshop.vendors.flot'
 			));

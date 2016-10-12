@@ -42,7 +42,7 @@ class PageResolver
 	public function getPage(Container $container)
 	{
 		if (!Pages::isJigoshop() && !Pages::isAjax()) {
-			return null;
+            return $container->get('jigoshop.page.dummy');
 		}
 
 		$this->wp->doAction('jigoshop\page_resolver\before');

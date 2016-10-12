@@ -15,12 +15,12 @@
  *  //////////////////////////////////
  *   `//////////////////////////////`
  *
- * Plugin Name:         Jigoshop
+ * Plugin Name:         Jigoshop eCommerce
  * Plugin URI:          http://www.jigoshop.com/
  * Description:         Jigoshop, a WordPress eCommerce plugin that works.
  * Author:              Jigoshop
  * Author URI:          http://www.jigoshop.com
- * Version:             2.0-beta28
+ * Version:             2.0-beta29
  * Requires at least:   4.0
  * Tested up to:        4.5
  * Text Domain:         jigoshop
@@ -97,7 +97,7 @@ $ini_memory_limit = ini_get('memory_limit');
 preg_match('/^(\d+)(\w*)?$/', $ini_memory_limit, $memory);
 $memory_limit = $memory[1];
 if (isset($memory[2])) {
-	switch ($memory[2]) {
+	switch (strtoupper($memory[2])) {
 		/** @noinspection PhpMissingBreakStatementInspection */
 		case 'M':
 			$memory_limit *= 1024 * 1024;
@@ -119,7 +119,7 @@ if($memory_limit < JIGOSHOP_REQUIRED_MEMORY*1024*1024){
 preg_match('/^(\d+)(\w*)?$/', WP_MEMORY_LIMIT, $memory);
 $memory_limit = $memory[1];
 if (isset($memory[2])) {
-	switch ($memory[2]) {
+	switch (strtoupper($memory[2])) {
 		/** @noinspection PhpMissingBreakStatementInspection */
 		case 'M':
 			$memory_limit *= 1024 * 1024;
@@ -138,8 +138,8 @@ if($memory_limit < JIGOSHOP_REQUIRED_WP_MEMORY*1024*1024){
 	}
 	add_action('admin_notices', 'jigoshop_required_wp_memory_warning');
 }
-require_once(__DIR__.'/src/Jigoshop.php');
-$jigoshop = new Jigoshop(__FILE__);
+require_once(__DIR__.'/src/JigoshopInit.php');
+$jigoshop = new JigoshopInit(__FILE__);
 add_action('plugins_loaded', array($jigoshop, 'onLoad'), 20);
 add_action('init', array($jigoshop, 'onInit'), 0);
 register_activation_hook(__FILE__, array($jigoshop, 'update'));
