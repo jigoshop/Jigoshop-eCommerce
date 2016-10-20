@@ -79,11 +79,9 @@ class Order
 			$wp->addMetaBox('jigoshop-order-data', $order->getTitle(), array($that, 'dataBox'), Types::ORDER, 'normal', 'high');
 			$wp->addMetaBox('jigoshop-order-items', __('Order Items', 'jigoshop'), array($that, 'itemsBox'), Types::ORDER, 'normal', 'high');
 			$wp->addMetaBox('jigoshop-order-totals', __('Order Totals', 'jigoshop'), array($that, 'totalsBox'), Types::ORDER, 'normal', 'high');
-//			add_meta_box('jigoshop-order-attributes', __('Order Variation Attributes / Addons', 'jigoshop'), array($that, 'itemsBox'), Types::ORDER, 'side', 'default');
-
-//			$wp->addMetaBox('jigoshop-order-actions', __('Order Actions', 'jigoshop'), array($that, 'actionsBox'), Types::ORDER, 'side', 'default');
-			// Remove discussion and add comments meta box
+			$wp->addMetaBox('jigoshop-order-actions', __('Order Actions', 'jigoshop'), array($that, 'actionsBox'), Types::ORDER, 'side', 'default');
 			$wp->removeMetaBox('commentstatusdiv', null, 'normal');
+			$wp->removeMetaBox('submitdiv', Types::ORDER, 'side');
 			$wp->addMetaBox('commentsdiv', __('Comments'), 'post_comment_meta_box', null, 'normal', 'core');
 		});
 	}
@@ -608,6 +606,22 @@ class Order
 
 	public function actionsBox()
 	{
-		//
+        $post = $this->wp->getGlobalPost();
+        /** @var \Jigoshop\Entity\Order $order */
+        $order = $this->orderService->findForPost($post);
+
+        $delete_text = '';
+        if (current_user_can( "delete_post", $post->ID) ) {
+            if (!EMPTY_TRASH_DAYS) {
+                $delete_text = __('Delete Permanently');
+            } else {
+                $delete_text = __('Move to Trash');
+            }
+        }
+
+        Render::output('admin/order/actionsBox', array(
+            'order' => $order,
+            'delete_text' => $delete_text,
+        ));
 	}
 }
