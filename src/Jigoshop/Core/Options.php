@@ -164,6 +164,18 @@ class Options
 				'test_mode' => true,
 				'test_email' => '',
 			),
+            'bank_transfer' => [
+                'enabled' => false,
+                'title' => 'Bank Transfer',
+                'description' => 'Please use the details below to transfer the payment for your order, once payment is received your order will be processed.',
+                'bank_name' => '',
+                'account_number' => '',
+                'account_holder' => '',
+                'sort_code' => '',
+                'iban' => '',
+                'bic' => '',
+                'additional_info' => '',
+            ],
 		),
 		'advanced' => array(
 			'automatic_complete' => false,

@@ -32,6 +32,7 @@ class ProductService implements ProductServiceInterface
 		$this->factory = $factory;
 		$wp->addAction('save_post_'.Types\Product::NAME, array($this, 'savePost'), 10);
 		$wp->addAction('jigoshop\product\sold', array($this, 'addSoldQuantity'), 10, 2);
+		$wp->addAction('jigoshop\product\restore', array($this, 'restoreQuantity'), 10, 2);
 	}
 
 	/**
@@ -54,6 +55,16 @@ class ProductService implements ProductServiceInterface
 	public function addSoldQuantity($product, $quantity)
 	{
 		$product->getStock()->addSoldQuantity($quantity);
+		$this->save($product);
+	}
+
+	/**
+	 * @param $product  \Jigoshop\Entity\Product|Purchasable The product.
+	 * @param $quantity int Quantity to add.
+	 */
+	public function restoreQuantity($product, $quantity)
+	{
+		$product->getStock()->restoreStock($quantity);
 		$this->save($product);
 	}
 

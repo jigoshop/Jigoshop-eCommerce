@@ -64,6 +64,15 @@ class StockStatus implements \Serializable
 		}
 	}
 
+    /**
+     * @param $quantity Number of products to restore.
+     */
+    public function restoreStock($quantity)
+    {
+        $this->soldQuantity = $this->soldQuantity - (int)$quantity > 0 ? $this->soldQuantity - (int)$quantity : 0;
+        $this->modifyStock((int)$quantity);
+	}
+
 	/**
 	 * Sets product status.
 	 * Please use provided constants:

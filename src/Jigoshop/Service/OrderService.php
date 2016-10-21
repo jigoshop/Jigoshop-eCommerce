@@ -72,6 +72,14 @@ class OrderService implements OrderServiceInterface
         if (!isset($_GET['action'])) {
             $order = $this->factory->create($id);
             $this->save($order);
+
+            if(isset($_POST['reduce_stock'])) {
+                $this->reduceItemsStock($order);
+            } elseif (isset($_POST['restore_stock'])) {
+                $this->restoreItemsStock($order);
+            } elseif (isset($_POST['invoice'])) {
+                $this->sendInvoice($order);
+            }
         }
     }
 
@@ -259,6 +267,50 @@ class OrderService implements OrderServiceInterface
          * TODO: If configured - send emails on backorders
          * $this->wp->addAction('jigoshop\product\backorders', array($this, 'productBackorders'));
          */
+    }
+
+    /**
+     * @param EntityInterface $object
+     */
+    private function reduceItemsStock(EntityInterface $object)
+    {
+        foreach ($object->getItems() as $item) {
+            /** @var \Jigoshop\Entity\Order\Item $item */
+            $product = $item->getProduct();
+            if ($product instanceof Variable) {
+                $product = $product->getVariation($item->getMeta('variation_id')->getValue())->getProduct();
+            }
+
+            if ($product->getStock()->getManage()) {
+                $this->wp->doAction('jigoshop\product\sold', $product, $item->getQuantity(), $item);
+            }
+        }
+    }
+
+    /**
+     * @param EntityInterface $object
+     */
+    private function restoreItemsStock(EntityInterface $object)
+    {
+        foreach ($object->getItems() as $item) {
+            /** @var \Jigoshop\Entity\Order\Item $item */
+            $product = $item->getProduct();
+            if ($product instanceof Variable) {
+                $product = $product->getVariation($item->getMeta('variation_id')->getValue())->getProduct();
+            }
+
+            if ($product->getStock()->getManage()) {
+                $this->wp->doAction('jigoshop\product\restore', $product, $item->getQuantity(), $item);
+            }
+        }
+    }
+
+    /**
+     * @param EntityInterface $object
+     */
+    private function sendInvoice(EntityInterface $object)
+    {
+        //
     }
 
     private function getNextOrderNumber()

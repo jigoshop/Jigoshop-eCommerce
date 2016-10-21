@@ -11,6 +11,9 @@ use Jigoshop\Helper\Render;
 	<?php settings_errors(); ?>
 	<?php Render::output('shop/messages', array('messages' => $messages)); ?>
 	<p class="alert alert-info"><?php _e('This panel allows you to update your old Jigoshop plugin data to new format.', 'jigoshop'); ?><br />
+	<?php if(!defined('PHP_VERSION_ID') || PHP_VERSION_ID < 50600) : ?>
+		<p class="alert alert-info"><?php _e('Your PHP version is below 5.6, you might experience issues while migrating to/using <strong>Jigoshop eCommerce</strong><strong>We strongly recommend updating your PHP version</strong>', 'jigoshop'); ?><br />
+	<?php endif; ?>
 	<?php _e('Migration is a lengthy process and depends on how much items you have in your store. Please keep patient until the process is finished.', 'jigoshop'); ?></p>
 	<p class="alert alert-danger no-remove"><?php printf(__('Please create a database backup in case of any error! <a href="%s">Here you can find instruction how to do this</a>', 'jigoshop'), 'http://codex.wordpress.org/Backing_Up_Your_Database'); ?></p>
 	<div class="row">

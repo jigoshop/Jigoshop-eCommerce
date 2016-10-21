@@ -297,6 +297,11 @@ class Orders implements Tool
                                 $userId = $orders[$i]->meta_value;
                             } else {
                                 $userId = 0;
+                                $guest = new Customer\Guest();
+                                $guest->setBillingAddress($this->customer->getBillingAddress());
+                                $guest->setShippingAddress($this->customer->getShippingAddress());
+
+                                $this->customer = $guest;
                             }
 
                             $wpdb->query($wpdb->prepare("INSERT INTO {$wpdb->postmeta} (post_id, meta_key, meta_value) VALUES (%d, %s, %d)",
