@@ -110,10 +110,11 @@ class Product implements EntityFactoryInterface
 			if (!isset($_POST['product']['tax_classes'])) {
 				$_POST['product']['tax_classes'] = array();
 			}
-
-			$_POST['product']['attribute_order'] = array_keys($_POST['product']['attributes']);
-			unset($_POST['product']['attributes']);
-
+			
+			if(isset($_POST['product']['attributes']) && is_array($_POST['product']['attributes'])){
+				$_POST['product']['attribute_order'] = array_keys($_POST['product']['attributes']);
+				unset($_POST['product']['attributes']);
+			}
 			if(isset($_POST['product']['stock_manage']))
 			{
 				$_POST['product']['stock_manage'] = $_POST['product']['stock_manage'] == 'on';
