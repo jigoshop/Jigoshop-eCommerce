@@ -138,6 +138,10 @@ class Product
      */
     public static function formatPrice($price)
     {
+        if ($price === 0) {
+            return __('Free', 'jigoshop');
+        }
+
         if ($price !== '') {
             return sprintf(Currency::format(), Currency::symbol(), Currency::code(), self::formatNumericPrice($price));
         }
