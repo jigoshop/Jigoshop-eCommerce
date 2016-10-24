@@ -306,6 +306,12 @@ Warning : This will result in showing "out of stock" products on the catalog pag
      */
     public function validate($settings)
     {
+        // This is required when installin emails this function is used twice,
+        // once for advanced settings and once for all jigoshop settings.
+        if (isset($settings['general']) && is_array($settings['general'])) {
+            return $settings;
+        }
+
         if (isset($settings['install_emails'])) {
             unset($settings['install_emails']);
             // TODO add this to WPAL
