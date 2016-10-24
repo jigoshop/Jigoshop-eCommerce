@@ -67,7 +67,7 @@ $hasLabel = !empty($label);
 <script type="text/javascript">
     /*<![CDATA[*/
     jQuery(function ($) {
-        $("select#<?php echo $id; ?>").select2();
+        $("select#<?php echo $id; ?>").select2(<?php echo json_encode($args); ?>);
         $("label[for='<?php echo $id; ?>']").click(function () {
             if (!$("#<?php echo $id; ?>").select2("open")) {
                 $("#<?php echo $id; ?>").select2("close");

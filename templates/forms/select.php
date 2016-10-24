@@ -46,7 +46,7 @@ use Jigoshop\Helper\Render;
 <script type="text/javascript">
 	/*<![CDATA[*/
 	jQuery(function($){
-		$("select#<?php echo $id; ?>").select2();
+		$("select#<?php echo $id; ?>").select2(<?php echo json_encode($args); ?>);
 	});
 	/*]]>*/
 </script>
