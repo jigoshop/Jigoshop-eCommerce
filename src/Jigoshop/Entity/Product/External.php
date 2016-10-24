@@ -184,7 +184,7 @@ class External extends Product implements Purchasable, Saleable
 			$this->price = (float)$state['price'];
 		}
 		if (isset($state['regular_price'])) {
-			$this->regularPrice = (float)$state['regular_price'];
+			$this->regularPrice = $state['regular_price'] !== '' ? (float)$state['regular_price'] : '';
 		}
 		if (isset($state['url'])) {
 			$this->url = $state['url'];

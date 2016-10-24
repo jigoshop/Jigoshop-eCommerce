@@ -40,10 +40,6 @@ class Virtual extends Product implements Purchasable, Shippable, Saleable
 	 */
 	public function getPrice()
 	{
-		if (empty($this->regularPrice)) {
-			return '';
-		}
-
 		// TODO: Improve code to calculate price single time only
 		return apply_filters('jigoshop\product\get_price', $this->calculatePrice(), $this);
 	}
@@ -176,7 +172,7 @@ class Virtual extends Product implements Purchasable, Shippable, Saleable
 			$this->price = (float)$state['price'];
 		}
 		if (isset($state['regular_price'])) {
-			$this->regularPrice = !empty($state['regular_price']) ? (float)$state['regular_price'] : '';
+			$this->regularPrice = $state['regular_price'] !== '' ? (float)$state['regular_price'] : '';
 		}
 		if (isset($state['sales_enabled'])) {
 			$this->sales->setEnabled((bool)$state['sales_enabled']);

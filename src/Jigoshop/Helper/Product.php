@@ -138,7 +138,7 @@ class Product
      */
     public static function formatPrice($price)
     {
-        if ($price === 0) {
+        if ($price === 0.00) {
             return __('Free', 'jigoshop');
         }
 
