@@ -14,7 +14,7 @@ use Jigoshop\Helper\Product as ProductHelper;
 		'name' => 'product[regular_price]',
 		'label' => __('Price', 'jigoshop').' ('.Currency::symbol().')',
 		'placeholder' => __('Price not announced', 'jigoshop'),
-		'classes' => array('product-simple', ($product instanceof Product\Simple || $product instanceof Product\Virtual) ? '' : 'not-active'),
+		'classes' => array('product-simple', (!($product instanceof Product\Variable)) ? '' : 'not-active'),
 		'value' => $product instanceof Product\Simple ? $product->getRegularPrice() : 0,
 	));
 	Forms::text(array(
