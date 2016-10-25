@@ -23,13 +23,14 @@
 		"psr-0": { "Jigoshop": "src/" }
 	},
 	"require": {
-		"php": ">= 5.3.3",
+		"php": ">= 5.5.0",
 		"megawebmaster/wpal": "*",
 		"monolog/monolog": "~1.11@dev",
 		"nitra/php-min": "dev-master",
 		"erusev/parsedown": "*",
 		"phpfastcache/phpfastcache": "*",
-		"spatie/array-to-xml": "*"
+		"spatie/array-to-xml": "*",
+		"slim/slim": "^3.1"
 	},
 	"require-dev": {
 		"phpunit/phpunit": "4.1.*",
