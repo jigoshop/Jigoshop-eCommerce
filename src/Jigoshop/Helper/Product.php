@@ -90,7 +90,8 @@ class Product
                     }
                 }
 
-                $result = self::formatPrice($product->getPrice());
+                $price = $product->getPrice();
+                $result = self::formatPrice($price);
                 break;
             case Entity\Product\Variable::TYPE:
                 /** @var $product Entity\Product\Variable */
