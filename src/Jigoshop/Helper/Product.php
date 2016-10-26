@@ -90,7 +90,8 @@ class Product
                     }
                 }
 
-                $result = self::formatPrice($product->getPrice());
+                $price = $product->getPrice();
+                $result = self::formatPrice($price);
                 break;
             case Entity\Product\Variable::TYPE:
                 /** @var $product Entity\Product\Variable */
@@ -138,7 +139,7 @@ class Product
      */
     public static function formatPrice($price)
     {
-        if ($price === 0) {
+        if ($price === 0.00) {
             return __('Free', 'jigoshop');
         }
 

@@ -303,7 +303,7 @@ class Options implements Tool
             'jigoshop_currency' => 'general.currency',
             'jigoshop_allowed_countries' => 'shopping.restrict_selling_locations',
             'jigoshop_specific_allowed_countries' => 'shopping.selling_locations',
-            'jigoshop_demo_store' => 'general.show_message',
+            'jigoshop_demo_store' => 'general.demo_store',
             'jigoshop_company_name' => 'general.company_name',
             'jigoshop_tax_number' => 'general.company_tax_number',
             'jigoshop_address_1' => 'general.company_address_1',

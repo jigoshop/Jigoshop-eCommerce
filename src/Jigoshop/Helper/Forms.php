@@ -277,6 +277,7 @@ class Forms
 			'options' => array(),
 			'hidden' => false,
 			'size' => 12,
+            'args' => array(),
 		);
 		$field = wp_parse_args($field, $defaults);
 

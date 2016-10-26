@@ -15,6 +15,7 @@ namespace phpFastCache\Core\Pool;
 
 use phpFastCache\Exceptions\phpFastCacheDriverException;
 use phpFastCache\Core\Item\ExtendedCacheItemInterface;
+use phpFastCache\Util\Directory;
 
 
 /**
@@ -39,7 +40,7 @@ trait DriverBaseTrait
      * @var mixed Instance of driver service
      */
     protected $instance;
-    
+
     /**
      * @param $config_name
      * @param string $value
@@ -62,33 +63,6 @@ trait DriverBaseTrait
     public function getConfig()
     {
         return $this->config;
-    }
-
-    /**
-     * @param $file
-     * @return string
-     * @throws \Exception
-     */
-    protected function readfile($file)
-    {
-        if (function_exists('file_get_contents')) {
-            return file_get_contents($file);
-        } else {
-            $string = '';
-
-            $file_handle = @fopen($file, 'r');
-            if (!$file_handle) {
-                throw new phpFastCacheDriverException("Can't Read File", 96);
-
-            }
-            while (!feof($file_handle)) {
-                $line = fgets($file_handle);
-                $string .= $line;
-            }
-            fclose($file_handle);
-
-            return $string;
-        }
     }
 
     /**

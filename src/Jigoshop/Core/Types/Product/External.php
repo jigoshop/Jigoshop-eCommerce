@@ -97,7 +97,13 @@ class External implements Type
 	public function addToCart($value, $product)
 	{
 		if ($product instanceof Entity) {
-			return null;
+            $item = new Item();
+            $item->setName($product->getName());
+            $item->setPrice($product->getPrice());
+            $item->setQuantity(1);
+            $item->setProduct($product);
+
+            return $item;
 		}
 
 		return $value;
