@@ -79,7 +79,7 @@ class External extends Product implements Purchasable, Saleable
 	public function setRegularPrice($regularPrice)
 	{
 		$this->regularPrice = $regularPrice;
-		$this->dirtyFields[] = 'regularPrice';
+		$this->dirtyFields[] = 'regular_price';
 	}
 
 	/**

@@ -82,7 +82,7 @@ class Virtual extends Product implements Purchasable, Shippable, Saleable
 	public function setRegularPrice($regularPrice)
 	{
 		$this->regularPrice = $regularPrice;
-		$this->dirtyFields[] = 'regularPrice';
+		$this->dirtyFields[] = 'regular_price';
 	}
 
 	/**
