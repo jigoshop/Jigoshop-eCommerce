@@ -2,13 +2,13 @@
 
 namespace Jigoshop;
 
-use Jigoshop\Api\Format;
-use Jigoshop\Api\InvalidResponseObject;
-use Jigoshop\Api\Response\ResponseInterface;
-use Jigoshop\Api\ResponseClassNotFound;
-use Jigoshop\Api\Routing;
-use Jigoshop\Api\Validation;
 use Jigoshop\Core\Options;
+use Jigoshop\Extensions\Extension;
+use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
+use Slim\App;
+use Slim\Container as SlimContainer;
+use Slim\Http\Environment;
 use WPAL\Wordpress;
 
 /**
@@ -17,15 +17,14 @@ use WPAL\Wordpress;
  */
 class Api
 {
-    const QUERY_URI = 'jigoshop_rest';
-    const QUERY_VERSION = 'rest_version';
-    const QUERY_FORMAT = 'rest_format';
+    const QUERY_URI = 'jigoshop_rest_uri';
+    const QUERY_VERSION = 'jigoshop_rest_version';
 
     /** @var Wordpress */
     private $wp;
     /** @var Options */
     private $options;
-    /** @var Container  */
+    /** @var Container */
     private $di;
 
     /**
@@ -59,7 +58,6 @@ class Api
     {
         $vars[] = self::QUERY_URI;
         $vars[] = self::QUERY_VERSION;
-        $vars[] = self::QUERY_FORMAT;
 
         return $vars;
     }
@@ -70,8 +68,8 @@ class Api
     public function addRewrite()
     {
         $this->wp->addRewriteRule(
-            $this->wp->getRewrite()->root.'api/v([0-9])/([0-9a-zA-Z/]+)(\.json|\.xml)?$',
-            sprintf('index.php?%s=$matches[1]&%s=/$matches[2]&%s=$matches[3]', self::QUERY_VERSION, self::QUERY_URI, self::QUERY_FORMAT),
+            $this->wp->getRewrite()->root . 'api/v([0-9])([0-9a-zA-Z/]+)?$',
+            sprintf('index.php?%s=$matches[1]&%s=/$matches[2]', self::QUERY_VERSION, self::QUERY_URI),
             'top'
         );
     }
@@ -83,11 +81,80 @@ class Api
     {
         $version = isset($query->query_vars[self::QUERY_VERSION]) ? $query->query_vars[self::QUERY_VERSION] : null;
         $uri = isset($query->query_vars[self::QUERY_URI]) ? $query->query_vars[self::QUERY_URI] : null;
-        $format = isset($query->query_vars[self::QUERY_FORMAT]) && $query->query_vars[self::QUERY_FORMAT] ? $query->query_vars[self::QUERY_FORMAT] : '.json';
-        $format = trim($format, '.');
 
-        if ($version && $uri && $format) {
-            $app = new \Slim\App();
+        if ($version && $uri) {
+            $app = new App($this->getSlimContainer($uri));
+            $this->addMiddlewares($app);
+            $this->addRoutes($app);
+
+            $app->run();
+            exit;
         }
+    }
+
+    /**
+     * @param $uri
+     *
+     * @return SlimContainer
+     */
+    private function getSlimContainer($uri)
+    {
+        $di = $this->di;
+        $container = new SlimContainer([
+            'environment' => function () use ($uri) {
+                $server = $_SERVER;
+                $server['REQUEST_URI'] = $uri;
+                return new Environment($server);
+            },
+            'di' => function () use ($di) {
+                return $di;
+            }
+        ]);
+
+        return $container;
+    }
+
+    /**
+     * @param App $app
+     */
+    private function addMiddlewares(App $app)
+    {
+
+    }
+
+    /**
+     * @param App $app
+     */
+    private function addRoutes(App $app)
+    {
+        /** @var Extensions $extensions */
+        $extensions = $this->di->get('jigoshop.extensions');
+        $this->initDefaultHandlers($app);
+        $this->initDefaultRoutes($app);
+
+        array_map(function (Extension $extension) use ($app) {
+            $extension->getApi()->init($app);
+        }, $extensions->getExtensions());
+    }
+
+    /**
+     * @param App $app
+     */
+    private function initDefaultHandlers(App $app)
+    {
+        $container = $app->getContainer();
+        $container['notFoundHandler'] = function ($container) {
+            return function () use ($container) {
+                return $container['response']->withStatus(404)->withJson([
+                    'success' => false,
+                    'error' => __('Resource not found', 'jigoshop')
+                ]);
+            };
+        };
+    }
+
+    private function initDefaultRoutes(App $app)
+    {
+        $app->any('/', __CLASS__.'\Controller\Index');
     }
 }
