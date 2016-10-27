@@ -5,3 +5,11 @@ node_modules
 assets/bower
 compiler.sh
 *.idea/*
+vendor/erusev/parsedown/test/*
+vendor/monolog/monolog/doc/*
+vendor/monolog/monolog/tests/*
+vendor/nikic/fast-route/test/*
+vendor/phpfastcache/phpfastcache/tests/*
+vendor/predis/predis/tests/*
+vendor/slim/slim/tests/*
+vendor/spatie/array-to-xml/tests/*
