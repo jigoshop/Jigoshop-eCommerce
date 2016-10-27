@@ -111,7 +111,7 @@ gulp.task 'clean-deploy', ->
 gulp.task 'dist', ['clean-deploy', 'default'], ->
   gulp.src ['./assets/**/*', '!assets/{bower,coffee,less}', '!assets/{bower,coffee,less}/**', './cache', './integration/**/*',
             './config/**/*', './languages/**/*', './src/**/*', './templates/**/*', './log', './vendor/**/*', './CHANGELOG.md',
-            './CONTRIBUTING.md', 'LICENSE.md', 'README.md', 'jigoshop.php'], {base: './'}
+            './CONTRIBUTING.md', 'LICENSE.md', 'README.md', 'jigoshop.php', 'readme.txt'], {base: './'}
     .pipe gulp.dest('dist/')
 
 gulp.task 'default', defaultTask
