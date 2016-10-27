@@ -3,8 +3,8 @@ Contributors: Jigoshop
 Tags: ecommerce, wordpress ecommerce, store, shop, shopping, cart, checkout, widgets, reports, shipping, tax, paypal, jigowatt, shipping, inventory, stock, online, sell, sales, weights, dimensions, configurable, variable, downloadable, external, affiliate, download, virtual, physical
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=paypal@jigowatt.co.uk&item_name=Donation+for+Jigoshop
 
-Requires at least: 3.8
-Tested up to: 4.5
+Requires at least: 4.0
+Tested up to: 4.6.1
 Stable tag: 2.0
 
 A feature-packed eCommerce plugin built upon WordPress core functionality ensuring excellent performance and customizability.
@@ -25,7 +25,7 @@ With the option to create a multitude of product types and apply detailed attrib
 * Variable products (eg, offer `Size: S,M,L` for one product)
 * Affiliate (External) products (ie, link your `Add to cart` button off-site)
 * Grouped products
-
+https://web.skype.com/en/#
 = DETAILED REPORTS =
 
 Inside the custom dashboard you get sortable sales graphs, incoming order / review notifications as well as stats on your stores performance.
@@ -56,8 +56,8 @@ http://www.jigoshop.com/
 
 = Requirements =
 
-* WordPress 3.8 or greater
-* PHP version 5.3 or greater
+* WordPress 4.0 or greater
+* PHP version 5.6 or greater
 * MySQL version 5.0 or greater
 * The mod_rewrite Apache module (for permalinks)
 * Some payment gateways require fsockopen support (for IPN access)
@@ -114,5 +114,5 @@ However, if you want priority, dedicated support from Jigoshop staff, we dp offe
 
 == Changelog ==
 
-= 2.0-ALPHA =
+= 2.0-BETA =
 * Full rewrite of core
