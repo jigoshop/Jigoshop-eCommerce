@@ -9,5 +9,4 @@ compiler.sh
 composer.lock
 dist/
 node_modules
-log
 vendor/

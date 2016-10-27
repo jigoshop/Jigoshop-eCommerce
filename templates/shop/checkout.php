@@ -188,10 +188,10 @@ use Jigoshop\Helper\Tax;
 			<?php foreach($paymentMethods as $method): /** @var $method \Jigoshop\Payment\Method */ ?>
 				<li class="list-group-item" id="payment-<?php echo $method->getId(); ?>">
 					<label>
-						<input type="radio" name="jigoshop_order[payment_method]" value="<?php echo $method->getId(); ?>"<?php echo $method->getId() == $defaultGateway ? ' checked' : ''; ?>/>
+						<input type="radio" name="jigoshop_order[payment_method]" value="<?php echo $method->getId(); ?>"<?php checked($method->getId(), $defaultGateway); ?>/>
 						<?php echo $method->getName(); ?>
 					</label>
-					<div class="well well-sm">
+					<div class="well well-sm" <?php echo $method->getId() == $defaultGateway ? 'style="display:block"' : ''; ?>>
 						<?php $method->render(); ?>
 					</div>
 				</li>
