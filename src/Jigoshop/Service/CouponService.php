@@ -143,10 +143,10 @@ class CouponService implements CouponServiceInterface
 				return false;
 			}
 
-			if ($coupon->getFrom() !== null && $coupon->getFrom()->getTimestamp() < $time) {
+			if ($coupon->getFrom() !== null && $coupon->getFrom()->getTimestamp() > $time) {
 				return false;
 			}
-			if ($coupon->getTo() !== null && $coupon->getTo()->getTimestamp() > $time) {
+			if ($coupon->getTo() !== null && $coupon->getTo()->getTimestamp() < $time) {
 				return false;
 			}
 
@@ -175,10 +175,10 @@ class CouponService implements CouponServiceInterface
 			$coupon = $results[0];
 			$time = time();
 
-			if ($coupon->getFrom() !== null && $coupon->getFrom()->getTimestamp() < $time) {
+			if ($coupon->getFrom() !== null && $coupon->getFrom()->getTimestamp() > $time) {
 				return null;
 			}
-			if ($coupon->getTo() !== null && $coupon->getTo()->getTimestamp() > $time) {
+			if ($coupon->getTo() !== null && $coupon->getTo()->getTimestamp() < $time) {
 				return null;
 			}
 
