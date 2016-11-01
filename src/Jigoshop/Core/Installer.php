@@ -245,11 +245,11 @@ class Installer
 				meta_key VARCHAR(255) NOT NULL,
 				meta_value TEXT NOT NULL,
 				PRIMARY KEY id (id),
-				FOREIGN KEY product_attribute (product_id, attribute_id) REFERENCES {$wpdb->prefix}jigoshop_product_attribute (product_id, attribute_id) ON DELETE CASCADE
+				FOREIGN KEY product_attribute_ND (product_id, attribute_id) REFERENCES {$wpdb->prefix}jigoshop_product_attribute (product_id, attribute_id) ON DELETE CASCADE
 			) {$collate};
 		";
         if (!$wpdb->query($query)) {
-            Registry::getInstance(JIGOSHOP_LOGGER)->addCritical(sprintf('Unable to create table "%s". Error: "%s".', 'jigoshop_product_attribute_meta', $wpdb->last_error));
+            Registry::getInstance()->addCritical(sprintf('Unable to create table "%s". Error: "%s".', 'jigoshop_product_attribute_meta', $wpdb->last_error));
             echo __('Unable to create Jigoshop tables.', 'jigoshop');
             exit;
         }
