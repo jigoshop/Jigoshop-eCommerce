@@ -72,7 +72,7 @@ class Interceptor
 
 	public function intercept($request)
 	{
-        if ($this->intercepted || $this->wp->isAdmin()) {
+        if ($this->intercepted) {
             return $request;
         }
         $this->intercepted = true;
@@ -82,30 +82,39 @@ class Interceptor
 
 	private function parseRequest($request)
 	{
-		if ($this->isCart($request)) {
-			return $this->wp->applyFilters('jigoshop\query\cart', $request, $request);
-		}
+        if(is_admin() == false) {
+            if ($this->isCart($request)) {
+                return $this->wp->applyFilters('jigoshop\query\cart', $request, $request);
+            }
 
+            if ($this->isProductCategory($request)) {
+                return $this->getProductCategoryListQuery($request);
+            }
 
-        if ($this->isProductCategory($request)) {
-            return $this->getProductCategoryListQuery($request);
+            if ($this->isProductTag($request)) {
+                return $this->getProductTagListQuery($request);
+            }
+
+            if ($this->isProductList($request)) {
+                return $this->getProductListQuery($request);
+            }
+
+            if ($this->isProduct($request)) {
+                return $this->getProductQuery($request);
+            }
+
+            if ($this->isAccount($request)) {
+                return $this->wp->applyFilters('jigoshop\query\account', $request, $request);
+            }
+        } else {
+            if ($this->isAdminOrderList($request)) {
+                return $this->getAdminOrderListQuery($request);
+            }
+
+            if ($this->isAdminProductList($request)) {
+                return $this->getAdminProductListQuery($request);
+            }
         }
-
-        if ($this->isProductTag($request)) {
-            return $this->getProductTagListQuery($request);
-        }
-
-        if ($this->isProductList($request)) {
-            return $this->getProductListQuery($request);
-        }
-
-        if ($this->isProduct($request)) {
-            return $this->getProductQuery($request);
-		}
-
-		if ($this->isAccount($request)) {
-			return $this->wp->applyFilters('jigoshop\query\account', $request, $request);
-		}
 
 		return $request;
 	}
@@ -222,4 +231,51 @@ class Interceptor
 	{
 		return isset($request['pagename']) && $request['pagename'] == Pages::SHOP;
 	}
+
+	private function isAdminOrderList($request)
+    {
+        return $this->wp->getPageNow() == 'edit.php' && isset($request['post_type']) && $request['post_type'] == Types::ORDER;
+    }
+
+    private function getAdminOrderListQuery($request)
+    {
+        if(isset($request['s'])) {
+            $wpdb = $this->wp->getWPDB();
+            $ids = $wpdb->get_results($wpdb->prepare("SELECT posts.ID as ID FROM {$wpdb->posts} as posts
+                INNER JOIN {$wpdb->postmeta} as meta ON (meta.post_id = posts.ID AND meta.meta_key = 'number')
+                INNER JOIN {$wpdb->postmeta} as meta2 ON (meta2.post_id = posts.ID AND meta2.meta_key = 'customer')
+                WHERE meta.meta_value LIKE %s OR meta2.meta_value LIKE %s OR posts.ID = %d",
+                '%'.$request['s'].'%', '%:"%'.$request['s'].'%";%', $request['s']), ARRAY_A);
+
+            unset($request['s']);
+            unset($request['m']);
+            $request['post__in'] = array_map(function($item){ return $item['ID']; }, $ids);
+            $request['post__in'] = count($request['post__in']) ? $request['post__in'] : [0];
+        }
+
+        return $request;
+    }
+
+    private function isAdminProductList($request)
+    {
+        return $this->wp->getPageNow() == 'edit.php' && isset($request['post_type']) && $request['post_type'] == Types::PRODUCT;
+    }
+
+    private function getAdminProductListQuery($request)
+    {
+        if(isset($request['s'])) {
+            $wpdb = $this->wp->getWPDB();
+            $ids = $wpdb->get_results($wpdb->prepare("SELECT posts.ID as ID FROM {$wpdb->posts} as posts
+                INNER JOIN {$wpdb->postmeta} as meta ON (meta.post_id = posts.ID AND meta.meta_key = 'sku')
+                WHERE meta.meta_value LIKE %s OR posts.post_title LIKE %s OR posts.post_content LIKE %s OR posts.ID = %d",
+                '%'.$request['s'].'%', '%'.$request['s'].'%', '%'.$request['s'].'%', $request['s']), ARRAY_A);
+
+            unset($request['s']);
+            unset($request['m']);
+            $request['post__in'] = array_map(function($item){ return $item['ID']; }, $ids);
+            $request['post__in'] = count($request['post__in']) ? $request['post__in'] : [0];
+        }
+
+        return $request;
+    }
 }

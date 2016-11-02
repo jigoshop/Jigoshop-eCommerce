@@ -1,11 +1,11 @@
 === Jigoshop eCommerce ===
-Contributors: Jigoshop
+Contributors: jigoshop
 Tags: ecommerce, wordpress ecommerce, store, shop, shopping, cart, checkout, widgets, reports, shipping, tax, paypal, jigowatt, shipping, inventory, stock, online, sell, sales, weights, dimensions, configurable, variable, downloadable, external, affiliate, download, virtual, physical
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=paypal@jigowatt.co.uk&item_name=Donation+for+Jigoshop
 
 Requires at least: 4.0
 Tested up to: 4.6.1
-Stable tag: 2.0
+Stable tag: 2.0.1
 
 A feature-packed eCommerce plugin built upon WordPress core functionality ensuring excellent performance and customizability.
 
@@ -113,5 +113,17 @@ However, if you want priority, dedicated support from Jigoshop staff, we dp offe
 
 == Changelog ==
 
-= 2.0-BETA =
+= 2.0.1: =
+* Fix: Migration alert message.
+* Fix: Updated Jigoshop logotypes.
+* Fix: Admin Order and Product list search.
+* Fix: Fatal error on admin order item variable template.
+* Fix: Paypal response handling.
+* Fix: Duplicatd foregin keys.
+* Fix: Show add to cart button for free products.
+* Fix: Change order status if payment is not required.
+* Fix: Properly clear cart after checkout.
+* Fix: Stock reports.
+* Fix: Ajax product search.
+= 2.0 =
 * Full rewrite of core

@@ -7,8 +7,8 @@
 	<form action="admin-post.php" method="post">
 		<h3><?php _e('Jigoshop Dashboard', 'jigoshop'); ?></h3>
 
-		<p id="wp-version-message"><?php _e('You are using', 'jigoshop'); ?>
-			<strong>Jigoshop <?php echo \Jigoshop\Core::VERSION; ?></strong>
+		<p id="wp-version-message"><?php _e('You are using version:	', 'jigoshop'); ?>
+			<strong><?php echo \Jigoshop\Core::VERSION; ?></strong>
 		</p>
 
 		<?php wp_nonce_field('jigoshop-metaboxes-main'); ?>

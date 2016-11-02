@@ -386,7 +386,10 @@ class Checkout implements PageInterface
 				$url = '';
 				if ($isPaymentRequired) {
 					$url = $payment->process($order);
-				}
+				} else {
+                    $order->setStatus(\Jigoshop\Helper\Order::getStatusAfterCompletePayment($order));
+                    $this->orderService->save($order);
+                }
 
 				// Redirect to thank you page
 				if (empty($url)) {
