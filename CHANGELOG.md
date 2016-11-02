@@ -1,6 +1,6 @@
 ## Changelog
 
-* 2.0.1:
+* 2.0.1 - 2016.11.2:
     * Fix: Migration alert message.
     * Fix: Updated Jigoshop logotypes.
     * Fix: Admin Order and Product list search.
