@@ -293,7 +293,7 @@ class Product
     {
         if ($product instanceof Entity\Product\Purchasable) {
             $price = $product->getRegularPrice();
-            if (empty($price)) {
+            if ($price === '') {
                 return;
             }
         }

@@ -7,5 +7,6 @@
     * Fix: Fatal error on admin order item variable template.
     * Fix: Paypal response handling.
     * Fix: Duplicatd foregin keys.
+    * Fix: Show add to cart button for free products.
 * 2.0.0 - 2016.10.27:
     * Full rewrite of core.
