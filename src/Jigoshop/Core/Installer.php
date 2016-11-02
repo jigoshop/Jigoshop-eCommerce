@@ -260,7 +260,7 @@ class Installer
 				attachment_id BIGINT(20) UNSIGNED NOT NULL,
 				type VARCHAR(50) NOT NULL,
 				FOREIGN KEY attachment (attachment_id) REFERENCES  {$wpdb->posts} (ID) ON DELETE CASCADE,
-				FOREIGN KEY product (product_id) REFERENCES {$wpdb->posts} (ID) ON DELETE CASCADE
+				FOREIGN KEY product_nd (product_id) REFERENCES {$wpdb->posts} (ID) ON DELETE CASCADE
 			) {$collate};
 		";
 
