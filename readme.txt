@@ -5,7 +5,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=paypal@j
 
 Requires at least: 4.0
 Tested up to: 4.6.1
-Stable tag: 2.0.1
+Stable tag: 2.0.2
 
 A feature-packed eCommerce plugin built upon WordPress core functionality ensuring excellent performance and customizability.
 
