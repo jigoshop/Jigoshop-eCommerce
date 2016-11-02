@@ -2,6 +2,7 @@
 
 * 2.0.2:
     * Fix: Paypal response url.
+    * Fix: Shipping totals in reports by date.
 * 2.0.1 - 2016.11.2:
     * Fix: Migration alert message.
     * Fix: Updated Jigoshop logotypes.
