@@ -355,7 +355,7 @@ class CartService implements CartServiceInterface
 	{
         $session = $this->session->getField(self::CART);
 		if (isset($session[$cart->getId()])) {
-			unset($session[self::CART][$cart->getId()]);
+			unset($session[$cart->getId()]);
             $this->session->setField(self::CART, $session);
 		}
 	}
