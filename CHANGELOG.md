@@ -11,5 +11,6 @@
     * Fix: Change order status if payment is not required.
     * Fix: Properly clear cart after checkout.
     * Fix: Stock reports.
+    * Fix: Ajax product search.
 * 2.0.0 - 2016.10.27:
     * Full rewrite of core.

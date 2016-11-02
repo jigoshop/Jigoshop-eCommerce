@@ -47,7 +47,8 @@ class ByProduct extends Chart
 			Scripts::add('jigoshop.vendors.select2', \JigoshopInit::getUrl().'/assets/js/vendors/select2.js', array('jigoshop.admin'), array('in_footer' => true));
 			Scripts::add('jigoshop.admin.reports.widget.product_search', \JigoshopInit::getUrl().'/assets/js/admin/reports/widget/product_search.js', array(
 				'jquery',
-				'jigoshop.vendors.select2'
+				'jigoshop.vendors.select2',
+                'jigoshop.helpers.ajax_search'
 			), array('in_footer' => true));
 			Scripts::localize('jigoshop.reports.chart', 'chart_data', $this->getMainChart());
 		});
