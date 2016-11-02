@@ -10,5 +10,6 @@
     * Fix: Show add to cart button for free products.
     * Fix: Change order status if payment is not required.
     * Fix: Properly clear cart after checkout.
+    * Fix: Stock reports.
 * 2.0.0 - 2016.10.27:
     * Full rewrite of core.

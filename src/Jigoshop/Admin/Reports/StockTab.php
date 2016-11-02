@@ -44,7 +44,7 @@ class StockTab implements TabInterface
 	 */
 	public function display()
 	{
-		Render::output('admin\reports\stock', array(
+		Render::output('admin/reports/stock', array(
 				'types' => $this->getTypes(),
 				'current_type' => $this->getCurrentType(),
 				'content' => $this->content
