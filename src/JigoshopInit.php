@@ -19,15 +19,15 @@ if (!defined('JIGOSHOP_LOG_DIR')) {
  */
 class JigoshopInit
 {
-    /** @var  string  */
+    /** @var  string */
     private static $dir;
-    /** @var  string  */
+    /** @var  string */
     private static $url;
-    /** @var  string  */
+    /** @var  string */
     private static $baseName;
-    /** @var  string  */
+    /** @var  string */
     private static $logger;
-    /** @var  string  */
+    /** @var  string */
     private static $logDir;
     /** @var \Jigoshop\Container */
     private $container;
@@ -38,10 +38,10 @@ class JigoshopInit
 
     public function __construct($file)
     {
-        require_once __DIR__.'/functions.php';
+        require_once __DIR__ . '/functions.php';
         $this->setStaticVariables($file);
         $this->classLoader = $this->getClassLoader();
-        $this->classLoader->addPsr4('WPAL\\', array(self::getDir().'/vendor/megawebmaster/wpal/WPAL'));
+        $this->classLoader->addPsr4('WPAL\\', array(self::getDir() . '/vendor/megawebmaster/wpal/WPAL'));
         $this->initLoggers();
         $this->initCache();
 
@@ -112,7 +112,7 @@ class JigoshopInit
         $this->disableRelationLinks();
         $this->rewriteRules();
 
-        add_filter('plugin_action_links_'.self::getBaseName(), array($this, 'pluginLinks'));
+        add_filter('plugin_action_links_' . self::getBaseName(), array($this, 'pluginLinks'));
     }
 
     /**
@@ -132,7 +132,7 @@ class JigoshopInit
      */
     private function initConfigurations()
     {
-        foreach($this->container->getConfigurations()->getAll() as $configuration) {
+        foreach ($this->container->getConfigurations()->getAll() as $configuration) {
             $configuration->addServices($this->container->getServices());
             $configuration->addTags($this->container->getTags());
             $configuration->addTriggers($this->container->getTriggers());
@@ -145,7 +145,7 @@ class JigoshopInit
      */
     private function initCompilers()
     {
-        foreach($this->container->getCompiler()->getAll() as $compiler) {
+        foreach ($this->container->getCompiler()->getAll() as $compiler) {
             $compiler->process($this->container);
         }
     }
@@ -164,8 +164,8 @@ class JigoshopInit
      */
     private function loadTextDomain()
     {
-        load_textdomain('jigoshop', WP_LANG_DIR.'/jigoshop/'.get_locale().'.mo');
-        load_plugin_textdomain('jigoshop', false, basename(self::getDir()).'/languages/');
+        load_textdomain('jigoshop', WP_LANG_DIR . '/jigoshop/' . get_locale() . '.mo');
+        load_plugin_textdomain('jigoshop', false, basename(self::getDir()) . '/languages/');
     }
 
     /**
@@ -177,7 +177,7 @@ class JigoshopInit
             session_start();
             session_register_shutdown();
         }
-        add_action('wp_logout', function (){
+        add_action('wp_logout', function () {
             session_destroy();
             session_regenerate_id();
         });
@@ -188,7 +188,7 @@ class JigoshopInit
      */
     private function disableRelationLinks()
     {
-        $disable = function ($value){
+        $disable = function ($value) {
             if (\Jigoshop\Frontend\Pages::isProduct()) {
                 return false;
             }
@@ -208,8 +208,8 @@ class JigoshopInit
      */
     private function rewriteRules()
     {
-        if(get_option('jigoshop_force_flush_rewrite', 1) == 1) {
-            add_action('shutdown', function(){
+        if (get_option('jigoshop_force_flush_rewrite', 1) == 1) {
+            add_action('shutdown', function () {
                 flush_rewrite_rules();
                 update_option('jigoshop_force_flush_rewrite', 2);
             });
@@ -225,9 +225,10 @@ class JigoshopInit
 
         if (!($interceptor instanceof Jigoshop\Query\Interceptor)) {
             if (is_admin()) {
-                add_action('admin_notices', function (){
+                add_action('admin_notices', function () {
                     echo '<div class="error"><p>';
-                    echo __('Invalid query interceptor instance in Jigoshop. The shop will remain inactive until configured properly.', 'jigoshop');
+                    echo __('Invalid query interceptor instance in Jigoshop. The shop will remain inactive until configured properly.',
+                        'jigoshop');
                     echo '</p></div>';
                 });
             }
@@ -277,9 +278,9 @@ class JigoshopInit
         //$this->container->get('jigoshop.roles');
         // Initialize Cron
         $this->container->get('jigoshop.cron');
-        if(is_admin()) {
+        if (is_admin()) {
             $this->container->get('jigoshop.admin');
-            if(defined('DOING_AJAX') && DOING_AJAX) {
+            if (defined('DOING_AJAX') && DOING_AJAX) {
                 $this->container->get('jigoshop.frontend.page_resolver')->resolve($this->container);
             }
         } else {
@@ -294,7 +295,7 @@ class JigoshopInit
     {
         self::$dir = dirname($file);
         self::$url = plugins_url('', $file);
-        self::$baseName =plugin_basename($file);
+        self::$baseName = plugin_basename($file);
         self::$logger = 'jigoshop';
         self::$logDir = self::$dir . '/log';
     }
@@ -313,12 +314,16 @@ class JigoshopInit
     private function initLoggers()
     {
         $logger = new \Monolog\Logger(self::$logger);
+        $formatter = new Monolog\Formatter\LineFormatter('[%datetime%] %channel%.%level_name%: %message% %context%\n %extra%\n',
+            'Y-m-d H:i:s');
         if (WP_DEBUG) {
-            $logger->pushHandler(new \Monolog\Handler\StreamHandler(self::$logDir . '/jigoshop.debug.log',
-                \Monolog\Logger::DEBUG));
+            $stream = new \Monolog\Handler\StreamHandler(self::$logDir . '/jigoshop.debug.log', \Monolog\Logger::DEBUG);
+            $stream->setFormatter($formatter);
+            $logger->pushHandler();
         }
-        $logger->pushHandler(new \Monolog\Handler\StreamHandler(self::$logDir . '/jigoshop.log',
-            \Monolog\Logger::WARNING));
+        $stream = new \Monolog\Handler\StreamHandler(self::$logDir . '/jigoshop.log', \Monolog\Logger::WARNING);
+        $stream->setFormatter($formatter);
+        $logger->pushHandler($stream);
         $logger->pushProcessor(new \Monolog\Processor\IntrospectionProcessor());
         $logger->pushProcessor(new \Monolog\Processor\WebProcessor());
         \Monolog\Registry::addLogger($logger);
@@ -377,7 +382,9 @@ class JigoshopInit
     {
         $screen = get_current_screen();
 
-        if (strpos($screen->base, 'jigoshop') === false && strpos($screen->parent_base, 'jigoshop') === false && !in_array($screen->post_type, array('product', 'shop_order'))) {
+        if (strpos($screen->base, 'jigoshop') === false && strpos($screen->parent_base,
+                'jigoshop') === false && !in_array($screen->post_type, array('product', 'shop_order'))
+        ) {
             return $text;
         }
 
@@ -460,9 +467,9 @@ class JigoshopInit
     public function pluginLinks($links)
     {
         return array_merge(array(
-            '<a href="'.admin_url('admin.php?page=jigoshop_settings').'">'.__('Settings', 'jigoshop').'</a>',
-            '<a href="https://www.jigoshop.com/documentation/">'.__('Docs', 'jigoshop').'</a>',
-            '<a href="https://www.jigoshop.com/support/">'.__('Support', 'jigoshop').'</a>',
+            '<a href="' . admin_url('admin.php?page=jigoshop_settings') . '">' . __('Settings', 'jigoshop') . '</a>',
+            '<a href="https://www.jigoshop.com/documentation/">' . __('Docs', 'jigoshop') . '</a>',
+            '<a href="https://www.jigoshop.com/support/">' . __('Support', 'jigoshop') . '</a>',
         ), $links);
     }
 
@@ -474,7 +481,7 @@ class JigoshopInit
     public function update($network_wide = false)
     {
         // Require upgrade specific files
-        require_once(ABSPATH.'/wp-admin/includes/upgrade.php');
+        require_once(ABSPATH . '/wp-admin/includes/upgrade.php');
 
         $this->initConfigurations();
         $this->initCompilers();
@@ -508,12 +515,12 @@ class JigoshopInit
         $this->classLoader->addPsr4($extension->getNamespace() . '\\', $extension->getPath());
 
         $configuration = $extension->getConfiguration();
-        if($configuration && $configuration instanceof \Jigoshop\Container\Configurations\ConfigurationInterface) {
+        if ($configuration && $configuration instanceof \Jigoshop\Container\Configurations\ConfigurationInterface) {
             $this->container->configurations->add($configuration);
         }
 
         $installer = $extension->getInstaller();
-        if($installer && $installer instanceof \Jigoshop\Extensions\InstallerInterface) {
+        if ($installer && $installer instanceof \Jigoshop\Extensions\InstallerInterface) {
             $installer->init($this->container);
             $installer->install();
         }

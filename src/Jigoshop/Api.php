@@ -2,14 +2,24 @@
 
 namespace Jigoshop;
 
+//use Jigoshop\Api\OAuth2;
+use Firebase\JWT\JWT;
 use Jigoshop\Core\Options;
 use Jigoshop\Extensions\Extension;
+use Monolog\Logger;
+use Monolog\Registry;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Slim\App;
 use Slim\Container as SlimContainer;
 use Slim\Http\Environment;
 use WPAL\Wordpress;
+
+use Chadicus\Slim\OAuth2\Middleware;
+use OAuth2;
+use OAuth2\Storage;
+use OAuth2\GrantType;
+use Slim;
 
 /**
  * Class Api
@@ -68,7 +78,7 @@ class Api
     public function addRewrite()
     {
         $this->wp->addRewriteRule(
-            $this->wp->getRewrite()->root . 'api/v([0-9])([0-9a-zA-Z/]+)?$',
+            $this->wp->getRewrite()->root . 'api/v([0-9])([0-9a-zA-Z\-_/]+)?$',
             sprintf('index.php?%s=$matches[1]&%s=/$matches[2]', self::QUERY_VERSION, self::QUERY_URI),
             'top'
         );
@@ -119,7 +129,13 @@ class Api
      */
     private function addMiddlewares(App $app)
     {
-
+        $app->add(new \Slim\Middleware\JwtAuthentication([
+            "secret" => "supersecretkeyyoushouldnotcommittogithub2",
+            "environment" => ["HTTP_AUTHORIZATION", "REDIRECT_HTTP_AUTHORIZATION"],
+            "secure" => true,
+            "relaxed" => ["localhost", "jigoshop2.dev"],
+            "logger" => Registry::getInstance(\JigoshopInit::getLogger()),
+        ]));
     }
 
     /**
@@ -156,5 +172,8 @@ class Api
     private function initDefaultRoutes(App $app)
     {
         $app->any('/', __CLASS__.'\Controller\Index');
+        $app->post('/token', function($request,ResponseInterface $response, $args) {
+            return  $response->withJson(["token" => 'asdasdasdasdw', "detail1" => 'asd']);
+        });
     }
 }
