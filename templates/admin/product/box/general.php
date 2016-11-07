@@ -10,16 +10,12 @@ use Jigoshop\Helper\Product as ProductHelper;
 ?>
 <fieldset>
 	<?php
-	$regular_price = 0;
-	if ($product instanceof Product\Simple || $product instanceof Product\Virtual || $product instanceof Product\External) {
-		$regular_price = $product->getRegularPrice();
-	}
 	Forms::text(array(
 		'name' => 'product[regular_price]',
 		'label' => __('Price', 'jigoshop').' ('.Currency::symbol().')',
 		'placeholder' => __('Price not announced', 'jigoshop'),
-		'classes' => array('product-simple', (!($product instanceof Product\Variable)) ? '' : 'not-active'),
-		'value' => $regular_price,
+		'classes' => array('product-simple', ($product instanceof Product\Purchasable) ? '' : 'not-active'),
+		'value' => $product instanceof Product\Purchasable ? $product->getRegularPrice() : 0
 	));
 	Forms::text(array(
 		'name' => 'product[sku]',
