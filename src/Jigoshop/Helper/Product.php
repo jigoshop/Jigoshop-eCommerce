@@ -72,6 +72,7 @@ class Product
         $price = 0;
         switch ($product->getType()) {
             case Entity\Product\Simple::TYPE:
+            case Entity\Product\Virtual::TYPE:
             case Entity\Product\External::TYPE:
             case Entity\Product\Downloadable::TYPE:
                 /** @var $product Entity\Product\Simple */
@@ -123,6 +124,7 @@ class Product
         $status = false;
         switch ($product->getType()) {
             case Entity\Product\Simple::TYPE:
+            case Entity\Product\Virtual::TYPE:
             case Entity\Product\External::TYPE:
             case Entity\Product\Downloadable::TYPE:
                 /** @var $product Entity\Product\Simple */
@@ -177,6 +179,7 @@ class Product
         /**@var $product Entity\Product */
         switch ($product->getType()) {
             case Entity\Product\Simple::TYPE:
+            case Entity\Product\Virtual::TYPE:
             case Entity\Product\Downloadable::TYPE:
                 /** @var $product Entity\Product\Simple */
                 $status = $product->getStock()->getStatus() == Entity\Product\Attributes\StockStatus::IN_STOCK ?
@@ -317,6 +320,7 @@ class Product
     {
         switch ($type) {
             case Entity\Product\Simple::TYPE:
+            case Entity\Product\Virtual::TYPE:
                 Render::output("shop/{$template}/cart/simple", array('product' => $product));
                 break;
             case Entity\Product\Downloadable::TYPE:
