@@ -96,7 +96,7 @@ class Product implements EntityFactoryInterface
 		$product = $this->get($type);
 		$product->setId($id);
 
-		if (defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE) {
+		if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
 			return $product;
 		}
 
