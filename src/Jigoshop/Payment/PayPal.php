@@ -420,7 +420,7 @@ class PayPal implements Method, Processable
 								exit;
 							}
 
-							$order->setStatus(Order\Status::PROCESSING, __('PayPal payment completed', 'jigoshop'));
+							$order->setStatus(OrderHelper::getStatusAfterCompletePayment($order), __('PayPal payment completed', 'jigoshop'));
 							break;
 						case 'denied':
 						case 'expired':
