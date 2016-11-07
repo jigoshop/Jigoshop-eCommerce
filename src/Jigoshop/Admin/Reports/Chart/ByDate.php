@@ -323,11 +323,121 @@ class ByDate extends Chart
             'order_by' => 'order_report.post_date ASC'
         ));
 
+        $shippingQuery = $this->prepareQuery(array(
+            'select' => array(
+                'posts' => array(
+                    array(
+                        'field' => 'post_date',
+                        'function' => '',
+                        'name' => 'post_date',
+                    ),
+                ),
+                'meta1' => array(
+                    array(
+                        'field' => 'meta_value',
+                        'function' => '',
+                        'name' => 'shipping_price',
+                    ),
+                ),
+                'meta2' => array(
+                    array(
+                        'field' => 'meta_value',
+                        'function' => '',
+                        'name' => 'shipping_tax',
+                    ),
+                )
+            ),
+            'from' => array(
+                'posts' => $wpdb->posts,
+            ),
+            'join' => array(
+                'meta1' => array(
+                    'table' => $wpdb->postmeta,
+                    'on' => array(
+                        array(
+                            'key' => 'post_id',
+                            'value' => 'posts.ID',
+                            'compare' => '=',
+                        ),
+                        array(
+                            'key' => 'meta_key',
+                            'value' => '"shipping"',
+                            'compare' => '=',
+                        ),
+                    ),
+                ),
+                'meta2' => array(
+                    'table' => $wpdb->postmeta,
+                    'on' => array(
+                        array(
+                            'key' => 'post_id',
+                            'value' => 'posts.ID',
+                            'compare' => '=',
+                        ),
+                        array(
+                            'key' => 'meta_key',
+                            'value' => '"shipping_tax"',
+                            'compare' => '=',
+                        ),
+                    ),
+                ),
+            ),
+            'where' => array(
+                array(
+                    'key' => 'posts.post_type',
+                    'value' => '"shop_order"',
+                    'compare' => '='
+                ),
+                array(
+                    'key' => 'posts.post_status',
+                    'value' => sprintf('("%s")', implode('","', $this->orderStatus)),
+                    'compare' => 'IN',
+                )
+            ),
+            'order_by' => 'posts.post_date ASC',
+            'filter_range' => true
+        ));
+
+        $shippingData = $this->getOrderReportData($shippingQuery);
+        $shippingData = array_map(function($shipping) {
+            $shippingData = unserialize($shipping->shipping_price);
+            return array(
+                'post_date' => $shipping->post_date,
+                'shipping_price' => $shippingData['price'],
+                'shipping_tax' => array_sum((array)unserialize($shipping->shipping_tax)),
+            );
+        }, $shippingData);
+
+        $groupedShippingData = array();
+        $pattern = "Y.m";
+        if($this->chartGroupBy == 'day') {
+            $pattern = "Y.m.d";
+        } elseif ($this->chartGroupBy == 'hour') {
+            $pattern = "Y.m.d.h";
+        }
+
+        foreach($shippingData as $data) {
+            $date = date($pattern, strtotime($data['post_date']));
+            if (isset($groupedShippingData[$date])) {
+                $groupedShippingData[$date]['shipping_price'] += $data['shipping_price'];
+                $groupedShippingData[$date]['shipping_tax'] += $data['shipping_tax'];
+            } else {
+                $groupedShippingData[$date] = $data;
+            }
+        }
+
         $this->reportData->orders = $this->getOrderReportData($query);
+
+        $groupedShippingData = array_values($groupedShippingData);
+        for($i = 0; $i < count($groupedShippingData); $i++) {
+            $this->reportData->orders[$i]->total_shipping = $groupedShippingData[$i]['shipping_price'];
+            $this->reportData->orders[$i]->total_shipping_tax = $groupedShippingData[$i]['shipping_tax'];
+        }
+
         $this->reportData->totalSales = array_sum(wp_list_pluck($this->reportData->orders, 'total_sales'));
         $this->reportData->totalTax = array_sum(wp_list_pluck($this->reportData->orders, 'total_tax'));
-        $this->reportData->totalShipping = 0;//array_sum(wp_list_pluck($this->reportData->orders, 'total_shipping'));
-        $this->reportData->totalShippingTax = 0;//array_sum(wp_list_pluck($this->reportData->orders, 'total_shipping_tax'));
+        $this->reportData->totalShipping = array_sum(wp_list_pluck($this->reportData->orders, 'total_shipping'));
+        $this->reportData->totalShippingTax = array_sum(wp_list_pluck($this->reportData->orders, 'total_shipping_tax'));
         $this->reportData->totalCoupons = array_sum(wp_list_pluck($this->reportData->orders, 'discount_amount'));
         $this->reportData->totalOrders = absint(array_sum(wp_list_pluck($this->reportData->orders, 'count')));
         $this->reportData->totalItems = absint(array_sum(wp_list_pluck($this->reportData->orders, 'order_item_count')));
@@ -411,10 +521,8 @@ class ByDate extends Chart
             $this->chartInterval, $this->range['start'], $this->chartGroupBy);
         $couponAmounts = $this->prepareChartData($this->reportData->orders, 'post_date', 'discount_amount',
             $this->chartInterval, $this->range['start'], $this->chartGroupBy);
-        //$shippingAmounts = $this->prepareChartData($this->reportData->orders, 'post_date', 'total_shipping', $this->chartInterval, $this->range['start'], $this->chartGroupBy);
-        //$shippingTaxAmounts = $this->prepareChartData($this->reportData->orders, 'post_date', 'total_shipping_tax', $this->chartInterval, $this->range['start'], $this->chartGroupBy);
-        $shippingAmounts = array();
-        $shippingTaxAmounts = array();
+        $shippingAmounts = $this->prepareChartData($this->reportData->orders, 'post_date', 'total_shipping', $this->chartInterval, $this->range['start'], $this->chartGroupBy);
+        $shippingTaxAmounts = $this->prepareChartData($this->reportData->orders, 'post_date', 'total_shipping_tax', $this->chartInterval, $this->range['start'], $this->chartGroupBy);
         $taxAmounts = $this->prepareChartData($this->reportData->orders, 'post_date', 'total_tax', $this->chartInterval,
             $this->range['start'], $this->chartGroupBy);
 
@@ -422,7 +530,7 @@ class ByDate extends Chart
 
         foreach ($orderAmounts as $orderAmountKey => $orderAmountValue) {
             $netOrderAmounts[$orderAmountKey] = $orderAmountValue;
-            $netOrderAmounts[$orderAmountKey][1] = $netOrderAmounts[$orderAmountKey][1] /*- $shippingAmounts[$orderAmountKey][1] - $shippingTaxAmounts[$orderAmountKey][1]*/ - $taxAmounts[$orderAmountKey][1];
+            $netOrderAmounts[$orderAmountKey][1] = $netOrderAmounts[$orderAmountKey][1] - $shippingAmounts[$orderAmountKey][1] - $shippingTaxAmounts[$orderAmountKey][1] - $taxAmounts[$orderAmountKey][1];
         }
 
         $data = array();
@@ -457,103 +565,103 @@ class ByDate extends Chart
             'shadowSize' => 0,
             'hoverable' => false
         ));
-               $data['series'][] = $this->arrayToObject(array(
-                   'label' => esc_js(__('Average sales amount', 'jigoshop')),
-                   'data' => array(
-                       array(min(array_keys($orderAmounts)), $this->reportData->averageSales),
-                       array(max(array_keys($orderAmounts)), $this->reportData->averageSales),
-                   ),
-                   'yaxis' => 2,
-                   'color' => $this->chartColours['average'],
-                   'points' => $this->arrayToObject(array('show' => false)),
-                   'lines' => $this->arrayToObject(array(
-                       'show' => true,
-                       'lineWidth' => 2,
-                       'fill' => false
-                   )),
-                   'shadowSize' => 0,
-                   'hoverable' => false
-               ));
-               $data['series'][] = $this->arrayToObject(array(
-                   'label' => esc_js(__('Coupon amount', 'jigoshop')),
-                   'data' => array_map(array($this, 'roundChartTotals'), array_values($couponAmounts)),
-                   'yaxis' => 2,
-                   'color' => $this->chartColours['coupon_amount'],
-                   'points' => $this->arrayToObject(array(
-                       'show' => true,
-                       'radius' => 5,
-                       'lineWidth' => 2,
-                       'fillColor' => '#fff',
-                       'fill' => true
-                   )),
-                   'lines' => $this->arrayToObject(array(
-                       'show' => true,
-                       'lineWidth' => 2,
-                       'fill' => false
-                   )),
-                   'shadowSize' => 0,
-                   'append_tooltip' => Currency::symbol(),
-               ));
-               $data['series'][] = $this->arrayToObject(array(
-                   'label' => esc_js(__('Shipping amount', 'jigoshop')),
-                   'data' => array_map(array($this, 'roundChartTotals'), array_values($shippingAmounts)),
-                   'yaxis' => 2,
-                   'color' => $this->chartColours['shipping_amount'],
-                   'points' => $this->arrayToObject(array(
-                       'show' => true,
-                       'radius' => 5,
-                       'lineWidth' => 2,
-                       'fillColor' => '#fff',
-                       'fill' => true
-                   )),
-                   'lines' => $this->arrayToObject(array(
-                       'show' => true,
-                       'lineWidth' => 2,
-                       'fill' => false
-                   )),
-                   'shadowSize' => 0,
-                   'append_tooltip' => Currency::symbol(),
-               ));
-               $data['series'][] = $this->arrayToObject(array(
-                   'label' => esc_js(__('Gross Sales amount', 'jigoshop')),
-                   'data' => array_map(array($this, 'roundChartTotals'), array_values($orderAmounts)),
-                   'yaxis' => 2,
-                   'color' => $this->chartColours['sales_amount'],
-                   'points' => $this->arrayToObject(array(
-                       'show' => true,
-                       'radius' => 5,
-                       'lineWidth' => 2,
-                       'fillColor' => '#fff',
-                       'fill' => true
-                   )),
-                   'lines' => $this->arrayToObject(array(
-                       'show' => true,
-                       'lineWidth' => 2,
-                       'fill' => false
-                   )),
-                   'shadowSize' => 0,
-                   'append_tooltip' => Currency::symbol(),
-               ));
-               $data['series'][] = $this->arrayToObject(array(
-                   'label' => esc_js(__('Net Sales amount', 'jigoshop')),
-                   'data' => array_map(array($this, 'roundChartTotals'), array_values($netOrderAmounts)),
-                   'yaxis' => 2,
-                   'color' => $this->chartColours['net_sales_amount'],
-                   'points' => $this->arrayToObject(array(
-                       'show' => true,
-                       'radius' => 6,
-                       'lineWidth' => 4,
-                       'fillColor' => '#fff',
-                       'fill' => true
-                   )),
-                   'lines' => $this->arrayToObject(array(
-                       'show' => true,
-                       'lineWidth' => 5,
-                       'fill' => false
-                   )),
-                   'shadowSize' => 0,
-                   'append_tooltip' => Currency::symbol(),
-               ));
+        $data['series'][] = $this->arrayToObject(array(
+            'label' => esc_js(__('Average sales amount', 'jigoshop')),
+            'data' => array(
+                array(min(array_keys($orderAmounts)), $this->reportData->averageSales),
+                array(max(array_keys($orderAmounts)), $this->reportData->averageSales),
+            ),
+            'yaxis' => 2,
+            'color' => $this->chartColours['average'],
+            'points' => $this->arrayToObject(array('show' => false)),
+            'lines' => $this->arrayToObject(array(
+                'show' => true,
+                'lineWidth' => 2,
+                'fill' => false
+            )),
+            'shadowSize' => 0,
+            'hoverable' => false
+        ));
+        $data['series'][] = $this->arrayToObject(array(
+            'label' => esc_js(__('Coupon amount', 'jigoshop')),
+            'data' => array_map(array($this, 'roundChartTotals'), array_values($couponAmounts)),
+            'yaxis' => 2,
+            'color' => $this->chartColours['coupon_amount'],
+            'points' => $this->arrayToObject(array(
+                'show' => true,
+                'radius' => 5,
+                'lineWidth' => 2,
+                'fillColor' => '#fff',
+                'fill' => true
+            )),
+            'lines' => $this->arrayToObject(array(
+                'show' => true,
+                'lineWidth' => 2,
+                'fill' => false
+            )),
+            'shadowSize' => 0,
+            'append_tooltip' => Currency::symbol(),
+        ));
+        $data['series'][] = $this->arrayToObject(array(
+            'label' => esc_js(__('Shipping amount', 'jigoshop')),
+            'data' => array_map(array($this, 'roundChartTotals'), array_values($shippingAmounts)),
+            'yaxis' => 2,
+            'color' => $this->chartColours['shipping_amount'],
+            'points' => $this->arrayToObject(array(
+                'show' => true,
+                'radius' => 5,
+                'lineWidth' => 2,
+                'fillColor' => '#fff',
+                'fill' => true
+            )),
+            'lines' => $this->arrayToObject(array(
+                'show' => true,
+                'lineWidth' => 2,
+                'fill' => false
+            )),
+            'shadowSize' => 0,
+            'append_tooltip' => Currency::symbol(),
+        ));
+        $data['series'][] = $this->arrayToObject(array(
+            'label' => esc_js(__('Gross Sales amount', 'jigoshop')),
+            'data' => array_map(array($this, 'roundChartTotals'), array_values($orderAmounts)),
+            'yaxis' => 2,
+            'color' => $this->chartColours['sales_amount'],
+            'points' => $this->arrayToObject(array(
+                'show' => true,
+                'radius' => 5,
+                'lineWidth' => 2,
+                'fillColor' => '#fff',
+                'fill' => true
+            )),
+            'lines' => $this->arrayToObject(array(
+                'show' => true,
+                'lineWidth' => 2,
+                'fill' => false
+            )),
+            'shadowSize' => 0,
+            'append_tooltip' => Currency::symbol(),
+        ));
+        $data['series'][] = $this->arrayToObject(array(
+            'label' => esc_js(__('Net Sales amount', 'jigoshop')),
+            'data' => array_map(array($this, 'roundChartTotals'), array_values($netOrderAmounts)),
+            'yaxis' => 2,
+            'color' => $this->chartColours['net_sales_amount'],
+            'points' => $this->arrayToObject(array(
+                'show' => true,
+                'radius' => 6,
+                'lineWidth' => 4,
+                'fillColor' => '#fff',
+                'fill' => true
+            )),
+            'lines' => $this->arrayToObject(array(
+                'show' => true,
+                'lineWidth' => 5,
+                'fill' => false
+            )),
+            'shadowSize' => 0,
+            'append_tooltip' => Currency::symbol(),
+        ));
 
         $data['options'] = $this->arrayToObject(array(
             'legend' => $this->arrayToObject(array('show' => false)),

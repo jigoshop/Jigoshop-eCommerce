@@ -31,7 +31,7 @@ class Api
 	public static function getEndpointUrl($endpoint, $value = '', $permalink = null)
 	{
 		if (!$permalink) {
-			$permalink = get_permalink();
+			$permalink = home_url('/');
 		}
 
 		if (get_option('permalink_structure')) {

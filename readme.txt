@@ -11,11 +11,11 @@ A feature-packed eCommerce plugin built upon WordPress core functionality ensuri
 
 == Description ==
 
-Jigoshop, a WordPress eCommerce plugin developed by professionals with years of experience delivering online shops for global brands.
+Jigoshop eCommerce, a WordPress eCommerce plugin developed by professionals with years of experience delivering online shops for global brands.
 
 = SETUP IN MINUTES =
 
-Complete your shop in minutes with physical and downloadable products or even services. Jigoshop provides you with the features necessary to set up an eCommerce web site lickety-split.
+Complete your shop in minutes with physical and downloadable products or even services. Jigoshop eCommerce provides you with the features necessary to set up an eCommerce web site lickety-split.
 
 With the option to create a multitude of product types and apply detailed attributes customers can easily refine your catalog, ensuring they find what they're looking for in just a couple of clicks.
 
@@ -25,7 +25,7 @@ With the option to create a multitude of product types and apply detailed attrib
 * Variable products (eg, offer `Size: S,M,L` for one product)
 * Affiliate (External) products (ie, link your `Add to cart` button off-site)
 * Grouped products
-https://web.skype.com/en/#
+
 = DETAILED REPORTS =
 
 Inside the custom dashboard you get sortable sales graphs, incoming order / review notifications as well as stats on your stores performance.
@@ -36,13 +36,10 @@ Manage your stock levels and customer orders easily. Jigoshop has been engineere
 
 = EXTEND YOUR SHOP =
 
-Extend Jigoshop with Payment Gateways, Shipping Methods, and various other plugins:
+Extend Jigoshop eCommerce with Payment Gateways, Shipping Methods, and various other plugins:
 
 http://www.jigoshop.com/product-category/extensions/
 
-Premium themes optimised for Jigoshop:
-
-http://www.jigoshop.com/product-category/themes/
 
 = MORE INFO =
 
@@ -63,12 +60,10 @@ http://www.jigoshop.com/
 
 = Installation =
 
-1.  Download the Jigoshop plugin file
+1.  Download the Jigoshop eCommerce plugin file
 2.  Unzip the file into a folder to your computer
 3.  Upload the `/jigoshop/` folder to the `/wp-content/plugins/` folder on your site
 4.  Visit the plugins page in WordPress Admin to activate the Jigoshop plugin
-
-You can also navigate to the <a href="http://forum.jigoshop.com/kb/getting-started/installation">more in-depth installation or upgrade</a> guides.
 
 = Setting up Jigoshop =
 
@@ -76,28 +71,24 @@ Take a look through our <a href="http://forum.jigoshop.com/kb/" title="Jigoshop 
 
 == Frequently Asked Questions ==
 
-= Will Jigoshop work with X theme? =
+= Will Jigoshop eCommerce work with X theme? =
 
-Jigoshop will in theory work with any theme, but of course, certain parts may need to be styled using CSS to make them match up. We've added default styling for Twenty Ten (the WordPress default theme) and we also offer <a href="http://www.jigoshop.com/product-category/themes/">premium themes optimised for Jigoshop</a>.
+Jigoshop eCommerce will in theory work with any theme, but of course, certain parts may need to be styled using CSS to make them match up. We've added default styling for Twenty Thirteen,Twenty Fourteen,Twenty Fifteen,Twenty Sixteen and...WooThemes. We're developing custom themes for the plugin - they should be available soon!
 
-If you need a theme built, or have a theme that needs styling, <a href="http://jigowatt.co.uk/contact/">give us a shout</a> and we may be able to assist.
+If you need a theme built, or have a theme that needs styling, <a href="http://www.jigoshop.com/contact/">give us a shout</a> and we may be able to assist.
 
-= Can I have Jigoshop in my language =
+= Can I have Jigoshop eCommerce in my language =
 
-Jigoshop comes with a .po file and is localisation ready in over 10 languages.
-You can also <a href="http://forum.jigoshop.com/kb/customize-jigoshop/languages">create your own translations</a> for Jigoshop.
+Jigoshop eCommerce comes with a .po file and is localisation ready in over 10 languages.
+You can also <a href="http://forum.jigoshop.com/kb/customize-jigoshop/languages">create your own translations</a> for Jigoshop eCommerce.
 
 = Which payment gateways do you have? =
 
-Take a look through <a href="http://forum.jigoshop.com/kb/jigoshop-settings/payment-gateways">our list of payment gateways</a>. There are some free ones that are included with Jigoshop, and even more are available <a href="http://www.jigoshop.com/product-category/extensions/">on jigoshop.com</a>.
+Take a look through <a href="http://forum.jigoshop.com/kb/jigoshop-settings/payment-gateways">our list of payment gateways</a>. There are some free ones that are included with Jigoshop eCommerce, and even more are available <a href="http://www.jigoshop.com/product-category/extensions/">on jigoshop.com</a>.
 
 = Will tax settings work in my country? =
 
-Jigoshop has a flexible tax rule system which allows you to define tax rates per country - it should allow you to do what you want.
-
-= I need hosting! =
-
-You're in luck! We offer <a href="http://jigowatt.co.uk">optimised hosting packages</a> starting from 10 GBP per month.
+Jigoshop eCommerce has a flexible tax rule system which allows you to define tax rates per country - it should allow you to do what you want.
 
 = I need help! =
 
@@ -113,7 +104,12 @@ However, if you want priority, dedicated support from Jigoshop staff, we dp offe
 
 == Changelog ==
 
-= 2.0.1: =
+= 2.0.2 - 2016.11.7 =
+* Fix: Paypal response url.
+* Fix: Shipping totals in reports by date.
+* Fix: Fatal error when order has no shipping method.
+* Fix: Order status after completed Paypal payment.
+= 2.0.1 - 2016.11.2 =
 * Fix: Migration alert message.
 * Fix: Updated Jigoshop logotypes.
 * Fix: Admin Order and Product list search.
@@ -125,5 +121,5 @@ However, if you want priority, dedicated support from Jigoshop staff, we dp offe
 * Fix: Properly clear cart after checkout.
 * Fix: Stock reports.
 * Fix: Ajax product search.
-= 2.0 =
+= 2.0 - 2016.10.27 =
 * Full rewrite of core

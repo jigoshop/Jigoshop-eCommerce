@@ -9,12 +9,8 @@ return array(
     'phpssdb\\' => array($vendorDir . '/phpfastcache/phpssdb/src/phpssdb'),
     'phpFastCache\\' => array($vendorDir . '/phpfastcache/phpfastcache/src/phpFastCache'),
     'Spatie\\ArrayToXml\\' => array($vendorDir . '/spatie/array-to-xml/src'),
-    'Slim\\' => array($vendorDir . '/slim/slim/Slim'),
     'Psr\\Log\\' => array($vendorDir . '/psr/log/Psr/Log'),
-    'Psr\\Http\\Message\\' => array($vendorDir . '/psr/http-message/src'),
     'Psr\\Cache\\' => array($vendorDir . '/psr/cache/src'),
     'Predis\\' => array($vendorDir . '/predis/predis/src'),
     'Monolog\\' => array($vendorDir . '/monolog/monolog/src/Monolog'),
-    'Interop\\Container\\' => array($vendorDir . '/container-interop/container-interop/src/Interop/Container'),
-    'FastRoute\\' => array($vendorDir . '/nikic/fast-route/src'),
 );

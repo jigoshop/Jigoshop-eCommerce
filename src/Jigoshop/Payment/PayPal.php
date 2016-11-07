@@ -216,8 +216,6 @@ class PayPal implements Method, Processable
 			);
 		}
 
-		// filter redirect page
-		$thankYouPage = $this->wp->applyFilters('jigoshop\checkout\redirect_page_id', $this->options->getPageId(Pages::THANK_YOU));
 		$args = array_merge(
 			array(
 				'cmd' => '_cart',
@@ -227,12 +225,12 @@ class PayPal implements Method, Processable
 				'charset' => 'UTF-8',
 				'rm' => 2,
 				'upload' => 1,
-				'return' => $this->wp->getHelpers()->addQueryArg(array('order' => $order->getId(), 'key' => $order->getKey()), $this->wp->getPermalink($thankYouPage)),
+				'return' => OrderHelper::getThankYouLink($order),
 				'cancel_return' => OrderHelper::getCancelLink($order),
 				// Order key
 				'custom' => $order->getId(),
 				// IPN
-				'notify_url' => Api::getUrl('paypal'),
+				'notify_url' => Api::getUrl(self::ID),
 				// Address info
 				'first_name' => $billingAddress->getFirstName(),
 				'last_name' => $billingAddress->getLastName(),
@@ -422,7 +420,7 @@ class PayPal implements Method, Processable
 								exit;
 							}
 
-							$order->setStatus(Order\Status::PROCESSING, __('PayPal payment completed', 'jigoshop'));
+							$order->setStatus(OrderHelper::getStatusAfterCompletePayment($order), __('PayPal payment completed', 'jigoshop'));
 							break;
 						case 'denied':
 						case 'expired':

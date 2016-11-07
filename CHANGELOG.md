@@ -1,5 +1,10 @@
 ## Changelog
 
+* 2.0.2 - 2016.11.7:
+    * Fix: Paypal response url.
+    * Fix: Shipping totals in reports by date.
+    * Fix: Fatal error when order has no shipping method.
+    * Fix: Order status after completed Paypal payment.
 * 2.0.1 - 2016.11.2:
     * Fix: Migration alert message.
     * Fix: Updated Jigoshop logotypes.
