@@ -178,7 +178,7 @@ class Emails
 			'shipping' => ProductHelper::formatPrice($order->getShippingPrice()),
 			'shipping_cost' => ProductHelper::formatPrice($order->getShippingPrice()),
 			'shipping_cost_raw' => $order->getShippingPrice(),
-			'shipping_method' => $order->getShippingMethod()->getName(),
+			'shipping_method' => $order->getShippingMethod()  ? $order->getShippingMethod()->getName() : '',
 			'discount' => ProductHelper::formatPrice($order->getDiscount()),
 			'total_tax' => ProductHelper::formatPrice($order->getTotalTax()),
 			'total' => ProductHelper::formatPrice($order->getTotal()),
@@ -268,7 +268,7 @@ class Emails
 
 				foreach ($variation->getAttributes() as $attribute) {
 					/** @var $attribute \Jigoshop\Entity\Product\Variable\Attribute */
-					$itemResult .= $attribute->getAttribute()->getLabel().': '.$attribute->printValue($item).', ';
+					$itemResult .= $attribute->getAttribute()->getLabel().': '.$attribute->getItemValue($item).', ';
 				}
 
 				$itemResult = rtrim($itemResult, ',');
