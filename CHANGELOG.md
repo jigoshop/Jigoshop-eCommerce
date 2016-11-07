@@ -1,6 +1,6 @@
 ## Changelog
 
-* 2.0.2:
+* 2.0.2 - 2016.11.7:
     * Fix: Paypal response url.
     * Fix: Shipping totals in reports by date.
     * Fix: Fatal error when order has no shipping method.
