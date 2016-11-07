@@ -72,6 +72,7 @@ class Product
         $price = 0;
         switch ($product->getType()) {
             case Entity\Product\Simple::TYPE:
+            case Entity\Product\Virtual::TYPE:
             case Entity\Product\External::TYPE:
             case Entity\Product\Downloadable::TYPE:
                 /** @var $product Entity\Product\Simple */
@@ -83,10 +84,10 @@ class Product
                     }
                     if (strpos($product->getSales()->getPrice(), '%') !== false) {
                         return '<del>' . self::formatPrice($price) . '</del>' . self::formatPrice($product->getPrice()) . '
-						<ins>' . sprintf(__('%s off!', 'jigoshop'), $product->getSales()->getPrice()) . '</ins>';
+                        <ins>' . sprintf(__('%s off!', 'jigoshop'), $product->getSales()->getPrice()) . '</ins>';
                     } else {
                         return '<del>' . self::formatPrice($price) . '</del>
-						<ins>' . self::formatPrice($product->getPrice()) . '</ins>';
+                        <ins>' . self::formatPrice($product->getPrice()) . '</ins>';
                     }
                 }
 
@@ -123,6 +124,7 @@ class Product
         $status = false;
         switch ($product->getType()) {
             case Entity\Product\Simple::TYPE:
+            case Entity\Product\Virtual::TYPE:
             case Entity\Product\External::TYPE:
             case Entity\Product\Downloadable::TYPE:
                 /** @var $product Entity\Product\Simple */
@@ -177,6 +179,7 @@ class Product
         /**@var $product Entity\Product */
         switch ($product->getType()) {
             case Entity\Product\Simple::TYPE:
+            case Entity\Product\Virtual::TYPE:
             case Entity\Product\Downloadable::TYPE:
                 /** @var $product Entity\Product\Simple */
                 $status = $product->getStock()->getStatus() == Entity\Product\Attributes\StockStatus::IN_STOCK ?
@@ -317,6 +320,7 @@ class Product
     {
         switch ($type) {
             case Entity\Product\Simple::TYPE:
+            case Entity\Product\Virtual::TYPE:
                 Render::output("shop/{$template}/cart/simple", array('product' => $product));
                 break;
             case Entity\Product\Downloadable::TYPE:
@@ -388,21 +392,21 @@ class Product
 
         // TODO: Join count and ratings query
         $count = $wpdb->get_var($wpdb->prepare("
-			SELECT COUNT(meta_value) FROM $wpdb->commentmeta
-			LEFT JOIN $wpdb->comments ON $wpdb->commentmeta.comment_id = $wpdb->comments.comment_ID
-			WHERE meta_key = 'rating'
-			AND comment_post_ID = %d
-			AND comment_approved = '1'
-			AND meta_value > 0
-		", $product->getId()));
+            SELECT COUNT(meta_value) FROM $wpdb->commentmeta
+            LEFT JOIN $wpdb->comments ON $wpdb->commentmeta.comment_id = $wpdb->comments.comment_ID
+            WHERE meta_key = 'rating'
+            AND comment_post_ID = %d
+            AND comment_approved = '1'
+            AND meta_value > 0
+        ", $product->getId()));
 
         $ratings = $wpdb->get_var($wpdb->prepare("
-			SELECT SUM(meta_value) FROM $wpdb->commentmeta
-			LEFT JOIN $wpdb->comments ON $wpdb->commentmeta.comment_id = $wpdb->comments.comment_ID
-			WHERE meta_key = 'rating'
-			AND comment_post_ID = %d
-			AND comment_approved = '1'
-		", $product->getId()));
+            SELECT SUM(meta_value) FROM $wpdb->commentmeta
+            LEFT JOIN $wpdb->comments ON $wpdb->commentmeta.comment_id = $wpdb->comments.comment_ID
+            WHERE meta_key = 'rating'
+            AND comment_post_ID = %d
+            AND comment_approved = '1'
+        ", $product->getId()));
 
         // If we don't have any posts
         if (!(bool)$count) {
