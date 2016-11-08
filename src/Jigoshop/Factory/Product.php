@@ -96,6 +96,10 @@ class Product implements EntityFactoryInterface
 		$product = $this->get($type);
 		$product->setId($id);
 
+		if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
+			return $product;
+		}
+
 		if (!empty($_POST)) {
 			$helpers = $this->wp->getHelpers();
 			$product->setName($helpers->sanitizeTitle($_POST['post_title']));
