@@ -182,12 +182,12 @@ class Product
             case Entity\Product\Virtual::TYPE:
             case Entity\Product\Downloadable::TYPE:
                 /** @var $product Entity\Product\Simple */
-                $status = $product->getStock()->getStatus() == Entity\Product\Attributes\StockStatus::IN_STOCK ?
+                $stock = $product->getStock()->getStatus() == Entity\Product\Attributes\StockStatus::IN_STOCK ?
                     _x('In stock', 'product', 'jigoshop') :
                     '<strong class="attention">' . _x('Out of stock', 'product', 'jigoshop') . '</strong>';
 
                 if (!self::$options->get('products.show_stock') || !$product->getStock()->getManage()) {
-                    return $status;
+                    break;
                 }
 
                 $stock = sprintf(_x('%s <strong>(%d available)</strong>', 'product', 'jigoshop'), $status,
