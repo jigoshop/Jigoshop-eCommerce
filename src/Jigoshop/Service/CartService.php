@@ -344,6 +344,8 @@ class CartService implements CartServiceInterface
         $session = $this->session->getField(self::CART);
         $session[$cart->getId()] = $cart->getStateToSave();
         $this->session->setField(self::CART, $session);
+
+		do_action('jigoshop\cart\save', $cart);
 	}
 
 	/**
