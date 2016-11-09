@@ -2,6 +2,7 @@
 
 * 2.0.3:
     * Fix: Product and Order filtering on admin.
+    * Fix: Sending stock emails when product has no stock managing
 * 2.0.2 - 2016.11.7:
     * Fix: Paypal response url.
     * Fix: Shipping totals in reports by date.

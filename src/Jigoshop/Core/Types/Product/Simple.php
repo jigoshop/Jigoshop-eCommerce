@@ -66,8 +66,9 @@ class Simple implements Type
 		if ($item->getType() == Entity::TYPE) {
 			/** @var Entity $product */
 			$product = $item->getProduct();
-
-			return $product->getStock()->getStock();
+            if($product->getStock()->getManage()) {
+                return $product->getStock()->getStock();
+            }
 		}
 
 		return $stock;

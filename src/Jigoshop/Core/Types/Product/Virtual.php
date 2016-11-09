@@ -67,7 +67,9 @@ class Virtual implements Type
 			/** @var Entity $product */
 			$product = $item->getProduct();
 
-			return $product->getStock()->getStock();
+            if($product->getStock()->getManage()) {
+                return $product->getStock()->getStock();
+            }
 		}
 
 		return $stock;
