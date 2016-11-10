@@ -453,18 +453,18 @@ class Installer
             $post_id = $this->wp->wpInsertPost($post_data);
             $this->wp->updatePostMeta($post_id, 'subject', $title);
             if ($email == 'new_order_admin_notification') {
-                $this->emailService->addTemplate($post_id, array(
-                    'admin_order_status_pending_to_processing',
-                    'admin_order_status_pending_to_completed',
-                    'admin_order_status_pending_to_on_hold'
-                ));
+//                $this->emailService->addTemplate($post_id, array(
+//                    'admin_order_status_pending_to_processing',
+//                    'admin_order_status_pending_to_completed',
+//                    'admin_order_status_pending_to_on_hold'
+//                ));
                 $this->wp->updatePostMeta($post_id, 'actions', array(
                     'admin_order_status_pending_to_processing',
                     'admin_order_status_pending_to_completed',
                     'admin_order_status_pending_to_on_hold'
                 ));
             } else {
-                $this->emailService->addTemplate($post_id, array($email));
+//                $this->emailService->addTemplate($post_id, array($email));
                 $this->wp->updatePostMeta($post_id, 'actions', array($email));
             }
         }

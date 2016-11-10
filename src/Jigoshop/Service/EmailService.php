@@ -25,13 +25,15 @@ class EmailService implements EmailServiceInterface
 	private $factory;
 	/** @var bool */
 	private $suppress = false;
+    /** @var array  */
+    private $templates = array();
 
 	public function __construct(Wordpress $wp, Options $options, Factory $factory)
 	{
-		$this->wp = $wp;
-		$this->options = $options;
-		$this->factory = $factory;
-		$wp->addAction('save_post_'.Types\Email::NAME, array($this, 'savePost'), 10);
+        $this->wp = $wp;
+        $this->options = $options;
+        $this->factory = $factory;
+        $wp->addAction('save_post_'.Types\Email::NAME, array($this, 'savePost'), 10);
 	}
 
 	/**
@@ -115,8 +117,8 @@ class EmailService implements EmailServiceInterface
 		foreach ($fields as $field => $value) {
 			$this->wp->updatePostMeta($object->getId(), $field, $value);
 		}
-
-		$this->addTemplate($object->getId(), $object->getActions());
+        //
+		//$this->addTemplate($object->getId(), $object->getActions());
 		$this->wp->doAction('jigoshop\service\email\save', $object);
 	}
 
@@ -198,7 +200,7 @@ class EmailService implements EmailServiceInterface
 			return;
 		}
 
-		$templates = $this->options->get('emails.templates');
+		$templates = $this->getTemplates();
 		if (!isset($templates[$hook]) || empty($templates[$hook])) {
 			return;
 		}
@@ -217,6 +219,7 @@ class EmailService implements EmailServiceInterface
 				$footer = $this->options->get('general.emails.footer');
 				$post->post_content = $footer ? $post->post_content.'<br/><br/>'.$footer : $post->post_content;
 
+                error_log($post->post_title);
 				$this->wp->wpMail(
 					$to,
 					$post->post_title,
@@ -248,4 +251,33 @@ class EmailService implements EmailServiceInterface
 
 		return $post;
 	}
+
+    /**
+     * @return array
+     */
+	public function getTemplates()
+    {
+        if(count($this->templates) == 0) {
+            $wpdb = $this->wp->getWPDB();
+            $templates = $wpdb->get_results($wpdb->prepare("
+SELECT posts.ID as id, meta.meta_value as actions FROM {$wpdb->posts} as posts
+JOIN {$wpdb->postmeta} as meta ON (meta.post_id = posts.ID AND meta.meta_key = %s)
+WHERE posts.post_type = %s", 'actions', Types\Email::NAME), ARRAY_A);
+
+            foreach($templates as $template) {
+                $actions = maybe_unserialize($template['actions']);
+                if(is_array($actions) && count($actions)) {
+                    foreach($actions as $action) {
+                        if(!isset($this->templates[$action])) {
+                            $this->templates[$action] = [$template['id']];
+                        } else {
+                            $this->templates[$action][] = $template['id'];
+                        }
+                    }
+                }
+            }
+        }
+
+        return $this->templates;
+    }
 }
