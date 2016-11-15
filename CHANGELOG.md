@@ -6,6 +6,7 @@
     * Fix: Use only meta to store email template actions, to prevent issues with option field.
     * Fix: Permalinks in my account.
     * Fix: Properly change state and postcode on checkout.
+    * Fix: Fix typo in default email action name.
 * 2.0.2 - 2016.11.7:
     * Fix: Paypal response url.
     * Fix: Shipping totals in reports by date.
