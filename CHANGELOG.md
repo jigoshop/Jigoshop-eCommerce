@@ -11,6 +11,7 @@
     * Fix: Not displaying persistent warrnings and errors.
     * Fix: Fatal error durring order migration when product variation does not exists.
     * Fix: Typo in reports filter button.
+    * Fix: Allow to change order date.
 * 2.0.2 - 2016.11.7:
     * Fix: Paypal response url.
     * Fix: Shipping totals in reports by date.
