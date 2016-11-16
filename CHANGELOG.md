@@ -9,6 +9,7 @@
     * Fix: Fix typo in default email action name.
     * Fix: Duplicated customer role.
     * Fix: Not displaying persistent warrnings and errors.
+    * Fix: Fatal error durring order migration when product variation does not exists.
 * 2.0.2 - 2016.11.7:
     * Fix: Paypal response url.
     * Fix: Shipping totals in reports by date.

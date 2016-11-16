@@ -388,7 +388,7 @@ class Orders implements Tool
                                         /** @var Product\Variable\Variation $variationProduct */
                                         /** @var Product\Variable $product */
                                         $variationProduct = $product->getVariation($itemData['variation_id']);
-                                        if (is_array($itemData['variation'])) {
+                                        if (is_array($itemData['variation']) && $variationProduct && $variationProduct instanceof Product\Variable\Variation) {
                                             foreach ($itemData['variation'] as $variation => $variationValue) {
                                                 $variation = str_replace('tax_', '', $variation);
                                                 $attribute = $this->getAttribute($variationProduct, $variation);
@@ -668,7 +668,7 @@ class Orders implements Tool
         return $this->_fetchData($defaults, $args);
     }
 
-    protected function _fetchOrderData($args)
+    protected function _fetchOrderData($args) 
     {
         $defaults = array(
             'shipping_method' => '',
