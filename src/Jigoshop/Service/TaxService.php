@@ -2,6 +2,7 @@
 
 namespace Jigoshop\Service;
 
+use Jigoshop\Entity\Cart;
 use Jigoshop\Entity\Customer;
 use Jigoshop\Entity\Order;
 use Jigoshop\Entity\Order\Item;
@@ -50,16 +51,19 @@ class TaxService implements TaxServiceInterface
 			// Fetch definitions for the order
 			$wpdb = $wp->getWPDB();
 			$tax = array();
-			$results = $wpdb->get_results($wpdb->prepare("SELECT * FROM {$wpdb->prefix}jigoshop_order_tax jot WHERE jot.order_id = %d", array($order->getId())));
+            if($order instanceof Cart) {
+                $results = $wpdb->get_results($wpdb->prepare("SELECT * FROM {$wpdb->prefix}jigoshop_order_tax jot WHERE jot.order_id = %d",
+                    array($order->getId())));
 
-			foreach ($results as $result) {
-				$tax[$result->tax_class] = array(
-					'label' => $result->label,
-					'rate' => (float)$result->rate,
-					'is_compound' => $result->is_compound,
-					'class' => $result->tax_class,
-				);
-			}
+                foreach ($results as $result) {
+                    $tax[$result->tax_class] = array(
+                        'label' => $result->label,
+                        'rate' => (float)$result->rate,
+                        'is_compound' => $result->is_compound,
+                        'class' => $result->tax_class,
+                    );
+                }
+            }
 
 			foreach ($definitions as $class => $definition) {
 				if (!isset($tax[$class])) {
