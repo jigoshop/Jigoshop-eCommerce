@@ -219,7 +219,6 @@ class EmailService implements EmailServiceInterface
 				$footer = $this->options->get('general.emails.footer');
 				$post->post_content = $footer ? $post->post_content.'<br/><br/>'.$footer : $post->post_content;
 
-                error_log($post->post_title);
 				$this->wp->wpMail(
 					$to,
 					$post->post_title,
