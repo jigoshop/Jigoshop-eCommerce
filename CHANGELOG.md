@@ -13,6 +13,8 @@
     * Fix: Typo in reports filter button.
     * Fix: Allow to change order date.
     * Fix: Cart tax calculation for logged users.
+    * Fix: Do not create product when doing an autosave. 
+    * Fix: Various fixes for virtual products.
 * 2.0.2 - 2016.11.7:
     * Fix: Paypal response url.
     * Fix: Shipping totals in reports by date.

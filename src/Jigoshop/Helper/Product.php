@@ -72,6 +72,7 @@ class Product
         $price = 0;
         switch ($product->getType()) {
             case Entity\Product\Simple::TYPE:
+            case Entity\Product\Virtual::TYPE:
             case Entity\Product\External::TYPE:
             case Entity\Product\Downloadable::TYPE:
                 /** @var $product Entity\Product\Simple */
@@ -123,6 +124,7 @@ class Product
         $status = false;
         switch ($product->getType()) {
             case Entity\Product\Simple::TYPE:
+            case Entity\Product\Virtual::TYPE:
             case Entity\Product\External::TYPE:
             case Entity\Product\Downloadable::TYPE:
                 /** @var $product Entity\Product\Simple */
@@ -177,17 +179,18 @@ class Product
         /**@var $product Entity\Product */
         switch ($product->getType()) {
             case Entity\Product\Simple::TYPE:
+            case Entity\Product\Virtual::TYPE:
             case Entity\Product\Downloadable::TYPE:
                 /** @var $product Entity\Product\Simple */
-                $status = $product->getStock()->getStatus() == Entity\Product\Attributes\StockStatus::IN_STOCK ?
+                $stock = $product->getStock()->getStatus() == Entity\Product\Attributes\StockStatus::IN_STOCK ?
                     _x('In stock', 'product', 'jigoshop') :
                     '<strong class="attention">' . _x('Out of stock', 'product', 'jigoshop') . '</strong>';
 
                 if (!self::$options->get('products.show_stock') || !$product->getStock()->getManage()) {
-                    return $status;
+                    break;
                 }
 
-                $stock = sprintf(_x('%s <strong>(%d available)</strong>', 'product', 'jigoshop'), $status,
+                $stock = sprintf(_x('%s <strong>(%d available)</strong>', 'product', 'jigoshop'), $stock,
                     $product->getStock()->getStock());
                 break;
             default:
@@ -324,6 +327,9 @@ class Product
                 break;
             case Entity\Product\External::TYPE:
                 Render::output("shop/{$template}/cart/external", array('product' => $product));
+                break;
+            case Entity\Product\Virtual::TYPE:
+                Render::output("shop/{$template}/cart/virtual", array('product' => $product));
                 break;
             case Entity\Product\Variable::TYPE:
                 /** @var $product Entity\Product\Variable */
