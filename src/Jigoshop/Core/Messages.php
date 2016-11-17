@@ -31,10 +31,10 @@ class Messages
 			$this->notices = $this->session->getField(self::NOTICES);
 		}
 		if ($this->session->getField(self::WARNINGS)) {
-            $this->session->getField(self::WARNINGS);
+            $this->warnings = $this->session->getField(self::WARNINGS);
 		}
 		if ($this->session->getField(self::ERRORS)) {
-            $this->session->getField(self::ERRORS);
+            $this->errors = $this->session->getField(self::ERRORS);
 		}
 
 		$wp->addAction('shutdown', array($this, 'preserveMessages'), 9);

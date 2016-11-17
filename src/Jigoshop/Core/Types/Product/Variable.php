@@ -142,7 +142,9 @@ class Variable implements Type
 			$product = $item->getProduct();
 			$variation = $product->getVariation($item->getMeta('variation_id')->getValue());
 
-			return $variation->getProduct()->getStock()->getStock();
+            if($variation->getProduct()->getStock()->getManage()) {
+                return $variation->getProduct()->getStock()->getStock();
+            }
 		}
 
 		return $stock;

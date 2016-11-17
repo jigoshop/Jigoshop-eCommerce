@@ -43,7 +43,7 @@ use Jigoshop\Admin\Reports;
 					<div class="content<?php $widget->isVisible() and print ' visible'; ?>"><?php $widget->display(); ?></div>
 				</div>
 			<?php endforeach; ?>
-			<button type="submit" class="btn btn-primary btn-block"><?php _e('Fiter Report') ?></button>
+			<button type="submit" class="btn btn-primary btn-block"><?php _e('Filter Report', 'jigoshop') ?></button>
 		</form>
 	</div>
 </div>

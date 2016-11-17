@@ -247,13 +247,13 @@ class Checkout implements PageInterface
 		$customer = $this->customerService->getCurrent();
 
 		switch ($_POST['field']) {
-			case 'shipping':
+			case 'shipping_address':
 				$customer->getShippingAddress()->setState($_POST['value']);
 				if ($customer->getBillingAddress()->getState() == null) {
 					$customer->getBillingAddress()->setState($_POST['value']);
 				}
 				break;
-			case 'billing':
+			case 'billing_address':
 				$customer->getBillingAddress()->setState($_POST['value']);
 				if ($_POST['differentShipping'] === 'false') {
 					$customer->getShippingAddress()->setState($_POST['value']);
@@ -279,7 +279,7 @@ class Checkout implements PageInterface
 		$customer = $this->customerService->getCurrent();
 
 		switch ($_POST['field']) {
-			case 'shipping':
+			case 'shipping_address':
 				if ($this->options->get('shopping.validate_zip') && !Validation::isPostcode($_POST['value'], $customer->getShippingAddress()->getCountry())) {
 					echo json_encode(array(
 						'success' => false,
@@ -293,7 +293,7 @@ class Checkout implements PageInterface
 					$customer->getBillingAddress()->setPostcode($_POST['value']);
 				}
 				break;
-			case 'billing':
+			case 'billing_address':
 				if ($this->options->get('shopping.validate_zip') && !Validation::isPostcode($_POST['value'], $customer->getBillingAddress()->getCountry())) {
 					echo json_encode(array(
 						'success' => false,

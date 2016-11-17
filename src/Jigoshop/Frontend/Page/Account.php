@@ -68,16 +68,17 @@ class Account implements PageInterface
 			),
 		));
 		$orders = $this->orderService->findByQuery($query);
+        $permalink = get_permalink();
 
 		return Render::get('user/account', array(
 			'content' => $content,
 			'messages' => $this->messages,
 			'customer' => $customer,
 			'unpaidOrders' => $orders,
-			'editBillingAddressUrl' => Api::getEndpointUrl('edit-address', 'billing'),
-			'editShippingAddressUrl' => Api::getEndpointUrl('edit-address', 'shipping'),
-			'changePasswordUrl' => Api::getEndpointUrl('change-password'),
-			'myOrdersUrl' => Api::getEndpointUrl('orders'),
+			'editBillingAddressUrl' => Api::getEndpointUrl('edit-address', 'billing', $permalink),
+			'editShippingAddressUrl' => Api::getEndpointUrl('edit-address', 'shipping', $permalink),
+			'changePasswordUrl' => Api::getEndpointUrl('change-password', '', $permalink),
+			'myOrdersUrl' => Api::getEndpointUrl('orders', '', $permalink),
 		));
 	}
 }

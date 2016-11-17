@@ -405,7 +405,7 @@ class Installer
                     $title = '[[shop_name]] Order Received';
                     $message = 'Thank you, we are now processing your order. Your order\'s details are below:<br/>'.$invoice;
                     break;
-                case 'customer_order_status_on_hold_to_processing' :
+                case 'customer_order_status_on-hold_to_processing' :
                     $post_title = 'Customer order status on-hold to processing';
                     $title = '[[shop_name]] Order Received';
                     $message = 'Thank you, we are now processing your order. Your order\'s details are below:<br/>'.$invoice;
@@ -453,18 +453,18 @@ class Installer
             $post_id = $this->wp->wpInsertPost($post_data);
             $this->wp->updatePostMeta($post_id, 'subject', $title);
             if ($email == 'new_order_admin_notification') {
-                $this->emailService->addTemplate($post_id, array(
-                    'admin_order_status_pending_to_processing',
-                    'admin_order_status_pending_to_completed',
-                    'admin_order_status_pending_to_on_hold'
-                ));
+//                $this->emailService->addTemplate($post_id, array(
+//                    'admin_order_status_pending_to_processing',
+//                    'admin_order_status_pending_to_completed',
+//                    'admin_order_status_pending_to_on_hold'
+//                ));
                 $this->wp->updatePostMeta($post_id, 'actions', array(
                     'admin_order_status_pending_to_processing',
                     'admin_order_status_pending_to_completed',
                     'admin_order_status_pending_to_on_hold'
                 ));
             } else {
-                $this->emailService->addTemplate($post_id, array($email));
+//                $this->emailService->addTemplate($post_id, array($email));
                 $this->wp->updatePostMeta($post_id, 'actions', array($email));
             }
         }

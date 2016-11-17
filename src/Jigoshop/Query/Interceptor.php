@@ -239,7 +239,7 @@ class Interceptor
 
     private function getAdminOrderListQuery($request)
     {
-        if(isset($request['s'])) {
+        if(isset($request['s']) && $request['s']) {
             $wpdb = $this->wp->getWPDB();
             $ids = $wpdb->get_results($wpdb->prepare("SELECT posts.ID as ID FROM {$wpdb->posts} as posts
                 INNER JOIN {$wpdb->postmeta} as meta ON (meta.post_id = posts.ID AND meta.meta_key = 'number')
@@ -263,7 +263,7 @@ class Interceptor
 
     private function getAdminProductListQuery($request)
     {
-        if(isset($request['s'])) {
+        if(isset($request['s']) && $request['s']) {
             $wpdb = $this->wp->getWPDB();
             $ids = $wpdb->get_results($wpdb->prepare("SELECT posts.ID as ID FROM {$wpdb->posts} as posts
                 INNER JOIN {$wpdb->postmeta} as meta ON (meta.post_id = posts.ID AND meta.meta_key = 'sku')
