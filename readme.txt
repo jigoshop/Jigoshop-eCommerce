@@ -1,7 +1,7 @@
 === Jigoshop eCommerce ===
 Contributors: jigoshop
 Tags: ecommerce, wordpress ecommerce, store, shop, shopping, cart, checkout, widgets, reports, shipping, tax, paypal, jigowatt, shipping, inventory, stock, online, sell, sales, weights, dimensions, configurable, variable, downloadable, external, affiliate, download, virtual, physical
-Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=paypal@jigowatt.co.uk&item_name=Donation+for+Jigoshop
+Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=XTG9C24KAA7VA
 
 Requires at least: 4.0
 Tested up to: 4.6.1
@@ -104,6 +104,23 @@ However, if you want priority, dedicated support from Jigoshop staff, we dp offe
 
 == Changelog ==
 
+= 2.0.3 - 2016.11.17 =
+* Fix: Product and Order filtering on admin.
+* Fix: Sending stock emails when product has no stock managing.
+* Fix: Use only meta to store email template actions, to prevent issues with option field.
+* Fix: Permalinks in my account.
+* Fix: Properly change state and postcode on checkout.
+* Fix: Fix typo in default email action name.
+* Fix: Duplicated customer role.
+* Fix: Not displaying persistent warrnings and errors.
+* Fix: Fatal error durring order migration when product variation does not exists.
+* Fix: Typo in reports filter button.
+* Fix: Allow to change order date.
+* Fix: Cart tax calculation for logged users.
+* Fix: Do not create product when doing an autosave.
+* Fix: Various fixes for virtual products.
+* Fix: Properly display price field for every product type.
+* Fix: Properly display url field for external product.
 = 2.0.2 - 2016.11.7 =
 * Fix: Paypal response url.
 * Fix: Shipping totals in reports by date.
