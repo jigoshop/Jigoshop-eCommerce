@@ -77,6 +77,8 @@ class OrderService implements OrderServiceInterface
                 $this->reduceItemsStock($order);
             } elseif (isset($_POST['restore_stock'])) {
                 $this->restoreItemsStock($order);
+            } elseif (isset($_POST['recalculate_tax'])) {
+                $this->recalculateTax($order);
             } elseif (isset($_POST['invoice'])) {
                 $this->sendInvoice($order);
             }
@@ -303,6 +305,17 @@ class OrderService implements OrderServiceInterface
                 $this->wp->doAction('jigoshop\product\restore', $product, $item->getQuantity(), $item);
             }
         }
+    }
+
+    /**
+     * @param EntityInterface $object
+     */
+    private function recalculateTax(EntityInterface $object)
+    {
+        /** @var Order $order */
+        $order = new Order(array());
+        $order = $this->factory->fill($order, $object->getStateToSave());
+        $object->setTaxDefinitions($order->getTaxDefinitions());
     }
 
     /**
