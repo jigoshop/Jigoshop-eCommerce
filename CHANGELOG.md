@@ -4,6 +4,7 @@
     * Fix: Display dates in dashboard report chart.
     * Fix: Allow to recalculate taxes for existing order.
     * Fix: Add missing templates for external and virtual products.
+    * Fix: Allow to search product list by SKU.
 * 2.0.3 - 2016.11.17:
     * Fix: Product and Order filtering on admin.
     * Fix: Sending stock emails when product has no stock managing.
