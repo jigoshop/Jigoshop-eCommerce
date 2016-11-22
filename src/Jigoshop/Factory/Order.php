@@ -253,8 +253,6 @@ class Order implements EntityFactoryInterface
             }
 
         }
-        /** @var OrderInterface $order */
-        $order = $this->wp->applyFilters('jigoshop\factory\order\fetch\after_customer', $order);
 
         if (isset($data['items'])) {
             $order->removeItems();
@@ -272,6 +270,9 @@ class Order implements EntityFactoryInterface
         }
 
         $order->restoreState($data);
+
+        /** @var OrderInterface $order */
+        $order = $this->wp->applyFilters('jigoshop\factory\order\fetch\after_customer', $order);
 
         if ($coupons) {
             $coupons = $this->wp->getHelpers()->maybeUnserialize($coupons);
