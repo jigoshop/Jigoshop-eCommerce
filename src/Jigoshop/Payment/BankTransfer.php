@@ -5,6 +5,7 @@ namespace Jigoshop\Payment;
 use Jigoshop\Core\Options;
 use Jigoshop\Entity\Order;
 use Jigoshop\Exception;
+use Jigoshop\Service\OrderServiceInterface;
 use WPAL\Wordpress;
 
 class BankTransfer implements Method
@@ -15,11 +16,14 @@ class BankTransfer implements Method
 	private $wp;
 	/** @var array */
 	private $options;
+    /** @var OrderServiceInterface */
+    private $orderService;
 
-	public function __construct(Wordpress $wp, Options $options)
+	public function __construct(Wordpress $wp, Options $options, OrderServiceInterface $orderService)
 	{
 		$this->wp = $wp;
 		$this->options = $options->get('payment.' . self::ID);
+        $this->orderService = $orderService;
 	}
 
 	/**
@@ -171,7 +175,8 @@ class BankTransfer implements Method
 	 */
 	public function process($order)
 	{
-		$order->setStatus(Order\Status::PENDING, __('We are waiting for the confirmation of your bank transfer.', 'jigoshop'));
+		$order->setStatus(Order\Status::ON_HOLD, __('Waiting for the confirmation of the bank transfer.', 'jigoshop'));
+        $this->orderService->save($order);
 
 		return '';
 	}

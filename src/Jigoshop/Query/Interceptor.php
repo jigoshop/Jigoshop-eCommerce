@@ -169,9 +169,20 @@ class Interceptor
             }
         }
 
-		// Support for search queries
-		if (isset($request['s'])) {
-			$result['s'] = $request['s'];
+        // Support for search queries
+        if (isset($request['s'])) {
+            $wpdb = $this->wp->getWPDB();
+
+            $query = $wpdb->prepare("SELECT posts.ID as ID FROM {$wpdb->posts} as posts
+                INNER JOIN {$wpdb->postmeta} as meta ON (meta.post_id = posts.ID AND meta.meta_key = 'sku')
+                WHERE meta.meta_value LIKE %s OR posts.post_title LIKE %s OR posts.post_content LIKE %s",
+                '%'.$request['s'].'%', '%'.$request['s'].'%', '%'.$request['s'].'%');
+
+            $query = $this->wp->applyFilters('jigoshop\query\product_list_base\search', $query, $request);
+            $ids = $wpdb->get_results($query, ARRAY_A);
+
+            $result['post__in'] = array_map(function($item){ return $item['ID']; }, $ids);
+            $result['post__in'] = count($result['post__in']) ? $result['post__in'] : [0];
 		}
 
 		return $this->wp->applyFilters('jigoshop\query\product_list_base', $result, $request);

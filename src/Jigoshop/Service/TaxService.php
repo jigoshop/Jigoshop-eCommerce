@@ -51,7 +51,7 @@ class TaxService implements TaxServiceInterface
 			// Fetch definitions for the order
 			$wpdb = $wp->getWPDB();
 			$tax = array();
-            if($order instanceof Cart) {
+            if(!$order instanceof Cart && $order->getId()) {
                 $results = $wpdb->get_results($wpdb->prepare("SELECT * FROM {$wpdb->prefix}jigoshop_order_tax jot WHERE jot.order_id = %d",
                     array($order->getId())));
 

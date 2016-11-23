@@ -5,7 +5,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 
 Requires at least: 4.0
 Tested up to: 4.6.1
-Stable tag: 2.0.3
+Stable tag: 2.0.4
 
 A feature-packed eCommerce plugin built upon WordPress core functionality ensuring excellent performance and customizability.
 
@@ -104,6 +104,14 @@ However, if you want priority, dedicated support from Jigoshop staff, we dp offe
 
 == Changelog ==
 
+= 2.0.4 - 2016.11.23 =
+* Fix: Display dates in dashboard report chart.
+* Fix: Allow to recalculate taxes for existing order.
+* Fix: Add missing templates for external and virtual products.
+* Fix: Allow to search product list by SKU.
+* Fix: Properly calculate tax for saved orders.
+* Fix: Show only assigned options for variable products.
+* Fix: Properly change order status after bank transfer/cheque/COD payment.
 = 2.0.3 - 2016.11.17 =
 * Fix: Product and Order filtering on admin.
 * Fix: Sending stock emails when product has no stock managing.

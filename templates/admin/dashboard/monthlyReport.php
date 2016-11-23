@@ -46,10 +46,12 @@
 
 				var d = <?php echo json_encode($orderCounts); ?>;
 				// TODO: Think if this adding is required
-//				for (var i = 0; i < d.length; ++i) d[i][0] += 60 * 60 * 1000;
+				//for (var i = 0; i < d.length; ++i) d[i][0] += 60 * 60 * 1000;
+				for (var i = 0; i < d.length; ++i) d[i][0] *= 1000;
 				var d2 = <?php echo json_encode($orderAmounts); ?>;
 				// TODO: Think if this adding is required
-//				for (var i = 0; i < d2.length; ++i) d2[i][0] += 60 * 60 * 1000;
+				//for (var i = 0; i < d2.length; ++i) d2[i][0] += 60 * 60 * 1000;
+				for (var i = 0; i < d2.length; ++i) d2[i][0] *= 1000;
 				var $plot = $("#jigoshop-monthly-report");
 				$.plot(
 					$plot,

@@ -10,6 +10,7 @@ class Variable extends Product implements Shippable, Saleable
 {
 	const TYPE = 'variable';
 
+    /** @var Product\Variable\Variation[] */
 	private $variations = array();
 	/** @var Attributes\Sales */
 	private $sales;
@@ -162,6 +163,27 @@ class Variable extends Product implements Shippable, Saleable
 			/** @var $item Product\Attribute\Variable */
 			return $item instanceof Product\Attribute\Variable && $item->isVariable();
 		});
+	}
+
+    /**
+     * @return array
+     */
+    public function getAssignedVariableAttributes()
+    {
+        $attributes = [];
+        foreach($this->variations as $variation) {
+            foreach($variation->getAttributes() as $attribute) {
+                if(!isset($attributes[$attribute->getAttribute()->getId()])) {
+                    $attributes[$attribute->getAttribute()->getId()] = [
+                        'label' => $attribute->getAttribute()->getLabel(),
+                        'options' => []
+                    ];
+                }
+                $attributes[$attribute->getAttribute()->getId()]['options'][$attribute->getValue()] = $attribute->getAttribute()->getOption($attribute->getValue())->getLabel();
+            }
+        }
+
+        return $attributes;
 	}
 
 	/**

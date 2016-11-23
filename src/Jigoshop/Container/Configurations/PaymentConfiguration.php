@@ -25,11 +25,13 @@ class PaymentConfiguration implements ConfigurationInterface
 		$services->setDetails('jigoshop.payment.cheque', 'Jigoshop\Payment\Cheque', array(
 			'wpal',
 			'jigoshop.options',
+            'jigoshop.service.order'
 		));
 		$services->setDetails('jigoshop.payment.on_delivery', 'Jigoshop\Payment\OnDelivery', array(
 			'wpal',
 			'jigoshop.options',
-		));
+            'jigoshop.service.order'
+        ));
 		$services->setDetails('jigoshop.payment.paypal', 'Jigoshop\Payment\PayPal', array(
 			'wpal',
 			'di',
@@ -45,7 +47,8 @@ class PaymentConfiguration implements ConfigurationInterface
 		$services->setDetails('jigoshop.payment.bank_transfer', 'Jigoshop\Payment\BankTransfer', array(
 			'wpal',
 			'jigoshop.options',
-		));
+            'jigoshop.service.order'
+        ));
 	}
 
 	/**
