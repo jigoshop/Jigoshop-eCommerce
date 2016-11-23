@@ -308,12 +308,12 @@
         "source": {
             "type": "git",
             "url": "https://github.com/nrk/predis.git",
-            "reference": "6ab10b2b705ea5121f2c1ea87a290f6871c32ebd"
+            "reference": "98ec0cc27efc1efab32b369962f97e29ecc0464a"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/nrk/predis/zipball/6ab10b2b705ea5121f2c1ea87a290f6871c32ebd",
-            "reference": "6ab10b2b705ea5121f2c1ea87a290f6871c32ebd",
+            "url": "https://api.github.com/repos/nrk/predis/zipball/98ec0cc27efc1efab32b369962f97e29ecc0464a",
+            "reference": "98ec0cc27efc1efab32b369962f97e29ecc0464a",
             "shasum": ""
         },
         "require": {
@@ -326,7 +326,7 @@
             "ext-curl": "Allows access to Webdis when paired with phpiredis",
             "ext-phpiredis": "Allows faster serialization and deserialization of the Redis protocol"
         },
-        "time": "2016-06-18 19:51:10",
+        "time": "2016-11-22 14:32:30",
         "type": "library",
         "installation-source": "source",
         "autoload": {
@@ -408,12 +408,12 @@
         "source": {
             "type": "git",
             "url": "https://github.com/PHPSocialNetwork/phpfastcache.git",
-            "reference": "5c8cc0d8f661bafe97c50a794509ed72dee97fab"
+            "reference": "768f69b6b3c0362159050317b78b30af37b5f3d0"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/PHPSocialNetwork/phpfastcache/zipball/5c8cc0d8f661bafe97c50a794509ed72dee97fab",
-            "reference": "5c8cc0d8f661bafe97c50a794509ed72dee97fab",
+            "url": "https://api.github.com/repos/PHPSocialNetwork/phpfastcache/zipball/768f69b6b3c0362159050317b78b30af37b5f3d0",
+            "reference": "768f69b6b3c0362159050317b78b30af37b5f3d0",
             "shasum": ""
         },
         "require": {
@@ -433,7 +433,7 @@
             "ext-redis": "*",
             "ext-sqlite": "*"
         },
-        "time": "2016-11-14 21:56:47",
+        "time": "2016-11-19 20:43:20",
         "type": "library",
         "installation-source": "source",
         "autoload": {

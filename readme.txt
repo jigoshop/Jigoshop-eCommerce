@@ -5,7 +5,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 
 Requires at least: 4.0
 Tested up to: 4.6.1
-Stable tag: 2.0.4
+Stable tag: 2.0.4.1
 
 A feature-packed eCommerce plugin built upon WordPress core functionality ensuring excellent performance and customizability.
 
@@ -104,6 +104,8 @@ However, if you want priority, dedicated support from Jigoshop staff, we dp offe
 
 == Changelog ==
 
+= 2.0.4.1 - 2016.11.23 =
+* Fix: Tax calculation.
 = 2.0.4 - 2016.11.23 =
 * Fix: Display dates in dashboard report chart.
 * Fix: Allow to recalculate taxes for existing order.
