@@ -1,6 +1,6 @@
 ## Changelog
 
-* 2.0.4:
+* 2.0.4 - 2016.11.23:
     * Fix: Display dates in dashboard report chart.
     * Fix: Allow to recalculate taxes for existing order.
     * Fix: Add missing templates for external and virtual products.
