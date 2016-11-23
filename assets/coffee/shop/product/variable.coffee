@@ -9,6 +9,7 @@ class ProductVariable
 
   constructor: (@params) ->
     jQuery('select.product-attribute').on 'change', @updateAttributes
+    jQuery('select.product-attribute').trigger 'change'
   updateAttributes: (event) =>
     $buttons = jQuery('#add-to-cart-buttons')
     $messages = jQuery('#add-to-cart-messages')

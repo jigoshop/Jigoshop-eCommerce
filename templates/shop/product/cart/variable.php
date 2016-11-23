@@ -4,17 +4,16 @@ use Jigoshop\Helper\Product;
 /**
  * @var $product \Jigoshop\Entity\Product\Variable Product to add.
  */
-
 ?>
 <form action="" method="post" class="form" role="form">
 	<input type="hidden" name="action" value="add-to-cart" />
 	<?php do_action('jigoshop\template\product\before_cart', $product); ?>
-	<?php foreach ($product->getVariableAttributes() as $attribute): /** @var $attribute \Jigoshop\Entity\Product\Attribute */ ?>
+	<?php foreach ($product->getAssignedVariableAttributes() as $id => $attribute): /** @var $attribute \Jigoshop\Entity\Product\Attribute */ ?>
 		<?php \Jigoshop\Helper\Forms::select(array(
-			'name' => 'attributes['.$attribute->getId().']',
+			'name' => 'attributes['.$id.']',
 			'classes' => array('product-attribute'),
-			'label' => $attribute->getLabel(),
-			'options' => Product::getSelectOption($attribute->getOptions(), ''),
+			'label' => $attribute['label'],
+			'options' => $attribute['options'],
 			// TODO: Default selections
 			'placeholder' => __('Please select…', 'jigoshop'),
 		)); ?>
