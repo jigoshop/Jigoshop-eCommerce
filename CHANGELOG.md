@@ -7,6 +7,7 @@
     * Fix: Allow to search product list by SKU.
     * Fix: Properly calculate tax for saved orders.
     * Fix: Show only assigned options for variable products.
+    * Fix: Properly change order status after bank transfer/cheque/COD payment.
 * 2.0.3 - 2016.11.17:
     * Fix: Product and Order filtering on admin.
     * Fix: Sending stock emails when product has no stock managing.
