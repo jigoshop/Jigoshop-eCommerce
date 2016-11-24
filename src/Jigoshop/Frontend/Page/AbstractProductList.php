@@ -95,7 +95,6 @@ abstract class AbstractProductList implements PageInterface
 					$this->wp->wpRedirect($url);
 					exit;
 				}
-				$this->wp->applyFilters('jigoshop\cart\save_after', null, $product);
 			} catch (NotEnoughStockException $e) {
 				if ($e->getStock() == 0) {
 					$message = sprintf(__('Sorry, we do not have "%s" in stock.', 'jigoshop'), $product->getName());
