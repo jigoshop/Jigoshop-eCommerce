@@ -104,6 +104,9 @@ However, if you want priority, dedicated support from Jigoshop staff, we dp offe
 
 == Changelog ==
 
+= 2.0.5 - 2016.11.24 =
+* Fix: Updating customer on checkout page.
+* Fix: Removed unnecessary filter.
 = 2.0.4.1 - 2016.11.23 =
 * Fix: Tax calculation.
 = 2.0.4 - 2016.11.23 =
