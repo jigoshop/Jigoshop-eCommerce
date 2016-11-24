@@ -1,5 +1,7 @@
 ## Changelog
 
+* 2.0.5 - 2016.11.24:
+    * Fix: Updating customer on checkout page.
 * 2.0.4.1 - 2016.11.23:
     * Fix: Tax calculation.
 * 2.0.4 - 2016.11.23:

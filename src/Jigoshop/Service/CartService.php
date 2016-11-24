@@ -121,6 +121,7 @@ class CartService implements CartServiceInterface
 			$cart->setId($id);
 
 			$state = $this->getStateFromSession($id);
+            unset($state['customer']);
 			if (isset($_POST['jigoshop_order']) && Pages::isCheckout()) {
 				$state = $this->getStateFromCheckout($state);
 			}
