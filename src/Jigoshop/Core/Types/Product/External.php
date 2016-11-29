@@ -5,6 +5,7 @@ namespace Jigoshop\Core\Types\Product;
 use Jigoshop\Entity\Order\Item;
 use Jigoshop\Entity\Product;
 use Jigoshop\Entity\Product\External as Entity;
+use Jigoshop\Exception;
 use Jigoshop\Helper\Render;
 use Jigoshop\Helper\Scripts;
 use WPAL\Wordpress;
@@ -50,8 +51,7 @@ class External implements Type
 	 */
 	public function initialize(Wordpress $wp, array $enabledTypes)
 	{
-        //External products can't be added to cart
-		//$wp->addFilter('jigoshop\cart\add', array($this, 'addToCart'), 10, 2);
+		$wp->addFilter('jigoshop\cart\add', array($this, 'addToCart'), 10, 2);
 		$wp->addFilter('jigoshop\core\types\variable\subtypes', array($this, 'addVariableSubtype'), 10, 1);
 
 		$wp->addAction('jigoshop\admin\product\assets', array($this, 'addAssets'), 10, 0);
@@ -98,13 +98,7 @@ class External implements Type
 	public function addToCart($value, $product)
 	{
 		if ($product instanceof Entity) {
-            $item = new Item();
-            $item->setName($product->getName());
-            $item->setPrice($product->getPrice());
-            $item->setQuantity(1);
-            $item->setProduct($product);
-
-            return $item;
+            throw new Exception(__('The external product cannot be added to cart', 'jigoshop'));
 		}
 
 		return $value;

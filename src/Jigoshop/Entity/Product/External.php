@@ -159,8 +159,8 @@ class External extends Product implements Purchasable, Saleable
 				case 'regular_price':
 					$toSave['regular_price'] = $this->regularPrice;
 					break;
-				case 'url':
-					$toSave['url'] = $this->url;
+				case 'external_url':
+					$toSave['external_url'] = $this->url;
 					break;
 			}
 		}
@@ -186,8 +186,8 @@ class External extends Product implements Purchasable, Saleable
 		if (isset($state['regular_price'])) {
 			$this->regularPrice = $state['regular_price'] !== '' ? (float)$state['regular_price'] : '';
 		}
-		if (isset($state['url'])) {
-			$this->url = $state['url'];
+		if (isset($state['external_url'])) {
+			$this->url = $state['external_url'];
 		}
 		if (isset($state['sales_enabled'])) {
 			$this->sales->setEnabled((bool)$state['sales_enabled']);
