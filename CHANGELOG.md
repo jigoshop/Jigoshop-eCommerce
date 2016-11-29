@@ -1,5 +1,7 @@
 ## Changelog
 
+* 2.0.6:
+    * Fix: Do not allow to add external products to cart.
 * 2.0.5 - 2016.11.24:
     * Fix: Updating customer on checkout page.
     * Fix: Removed unnecessary filter.

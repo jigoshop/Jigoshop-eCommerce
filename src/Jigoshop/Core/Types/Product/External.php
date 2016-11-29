@@ -50,7 +50,8 @@ class External implements Type
 	 */
 	public function initialize(Wordpress $wp, array $enabledTypes)
 	{
-		$wp->addFilter('jigoshop\cart\add', array($this, 'addToCart'), 10, 2);
+        //External products can't be added to cart
+		//$wp->addFilter('jigoshop\cart\add', array($this, 'addToCart'), 10, 2);
 		$wp->addFilter('jigoshop\core\types\variable\subtypes', array($this, 'addVariableSubtype'), 10, 1);
 
 		$wp->addAction('jigoshop\admin\product\assets', array($this, 'addAssets'), 10, 0);
