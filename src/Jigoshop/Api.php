@@ -3,16 +3,17 @@
 namespace Jigoshop;
 
 use Firebase\JWT\JWT;
+use Jigoshop\Admin\Dashboard;
+use Jigoshop\Api\Routes;
 use Jigoshop\Core\Options;
 use Jigoshop\Extensions\Extension;
 use Monolog\Logger;
 use Monolog\Registry;
-use Psr\Http\Message\RequestInterface;
-use Psr\Http\Message\ResponseInterface;
 use Slim;
 use Slim\App;
 use Slim\Container as SlimContainer;
 use Slim\Http\Environment;
+use Tuupola\Base62;
 use WPAL\Wordpress;
 
 /**
@@ -73,7 +74,7 @@ class Api
     {
         $this->wp->addRewriteRule(
             $this->wp->getRewrite()->root . 'api/v([0-9])([0-9a-zA-Z\-_/]+)?$',
-            sprintf('index.php?%s=$matches[1]&%s=$matches[2]', self::QUERY_VERSION, self::QUERY_URI),
+            sprintf('index.php?%s=$matches[1]&%s=/$matches[2]', self::QUERY_VERSION, self::QUERY_URI),
             'top'
         );
     }
@@ -84,12 +85,12 @@ class Api
     public function parseRequest($query)
     {
         $version = isset($query->query_vars[self::QUERY_VERSION]) ? $query->query_vars[self::QUERY_VERSION] : null;
-        $uri = isset($query->query_vars[self::QUERY_URI]) ? $query->query_vars[self::QUERY_URI] : null;
+        $uri = isset($query->query_vars[self::QUERY_URI]) ? str_replace('//', '/', $query->query_vars[self::QUERY_URI]) : null;
 
         if ($version && $uri) {
             $app = new App($this->getSlimContainer($uri));
             $this->addMiddlewares($app);
-            $this->addRoutes($app);
+            $this->addRoutes($app, $version);
 
             $app->run();
             exit;
@@ -142,8 +143,8 @@ class Api
             'secure' => false,
             'relaxed' => ['localhost', 'jigoshop2.dev'],
             'logger' => Registry::getInstance(\JigoshopInit::getLogger()),
-            'callback' => function ($request, $response, $arguments) use ($container) {
-                $container['token']->hydrate($arguments['decoded']);
+            'callback' => function ($request, $response, $args) use ($container) {
+                $container->token->hydrate($args['decoded']);
             }
         ]));
     }
@@ -151,15 +152,15 @@ class Api
     /**
      * @param App $app
      */
-    private function addRoutes(App $app)
+    private function addRoutes(App $app, $version)
     {
         /** @var Extensions $extensions */
         $extensions = $this->di->get('jigoshop.extensions');
         $this->initDefaultHandlers($app);
-        $this->initDefaultRoutes($app);
+        (new Routes())->init($app, $version);
 
-        array_map(function (Extension $extension) use ($app) {
-            $extension->getApi()->init($app);
+        array_map(function (Extension $extension) use ($app, $version) {
+            $extension->getApi()->init($app, $version);
         }, $extensions->getExtensions());
     }
 
@@ -177,13 +178,5 @@ class Api
                 ]);
             };
         };
-    }
-
-    private function initDefaultRoutes(App $app)
-    {
-        $app->any('/', __CLASS__ . '\Controller\Index');
-        $app->post('/token', function ($request, ResponseInterface $response, $args) {
-            return $response->withJson(["token" => 'asdasdasdasdw', "detail1" => 'asd']);
-        });
     }
 }

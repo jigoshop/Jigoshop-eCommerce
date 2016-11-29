@@ -101,6 +101,14 @@ class Simple implements ProductServiceInterface
 		return $this->queries[$hash];
 	}
 
+    /**
+     * @return int
+     */
+    public function getProductsCount()
+    {
+        return $this->service->getProductsCount();
+	}
+
 	/**
 	 * Saves entity to database.
 	 *
