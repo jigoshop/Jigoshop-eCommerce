@@ -85,14 +85,19 @@ class Api
     public function parseRequest($query)
     {
         $version = isset($query->query_vars[self::QUERY_VERSION]) ? $query->query_vars[self::QUERY_VERSION] : null;
-        $uri = isset($query->query_vars[self::QUERY_URI]) ? str_replace('//', '/', $query->query_vars[self::QUERY_URI]) : null;
+        $uri = isset($query->query_vars[self::QUERY_URI]) ? str_replace('//', '/',
+            $query->query_vars[self::QUERY_URI]) : null;
 
         if ($version && $uri) {
             $app = new App($this->getSlimContainer($uri));
             $this->addMiddlewares($app);
             $this->addRoutes($app, $version);
 
-            $app->run();
+            try {
+                $app->run();
+            } catch (Exception $e) {
+
+            }
             exit;
         }
     }
@@ -114,7 +119,7 @@ class Api
             'di' => function () use ($di) {
                 return $di;
             },
-            'token' => function() {
+            'token' => function () {
                 return new Api\Token();
             }
         ]);
@@ -175,6 +180,14 @@ class Api
                 return $container['response']->withStatus(404)->withJson([
                     'success' => false,
                     'error' => __('Resource not found', 'jigoshop')
+                ]);
+            };
+        };
+        $container['errorHandler'] = function ($container) {
+            return function ($request, $response, $exception) use ($container) {
+                return $container['response']->withStatus(500)->withJson([
+                    'success' => false,
+                    'error' => $exception->getMessage()
                 ]);
             };
         };
