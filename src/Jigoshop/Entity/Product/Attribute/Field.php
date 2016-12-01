@@ -4,7 +4,7 @@ namespace Jigoshop\Entity\Product\Attribute;
 
 use Jigoshop\Entity\Product\Attribute;
 
-class Field
+class Field implements \JsonSerializable
 {
 	/** @var int */
 	private $id;
@@ -84,4 +84,18 @@ class Field
 	{
 		$this->value = $value;
 	}
+
+    /**
+     * Used by json_encode method to proprly
+     *
+     * @return array
+     */
+    public function jsonSerialize()
+    {
+        return [
+            'id' => $this->id,
+            'key' => $this->key,
+            'value' => $this->value,
+        ];
+    }
 }

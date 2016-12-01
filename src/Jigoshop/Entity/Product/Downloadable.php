@@ -113,4 +113,19 @@ class Downloadable extends Simple
 	{
 		return false;
 	}
+
+    /**
+     * Used by json_encode method to proprly
+     *
+     * @return array
+     */
+    public function jsonSerialize()
+    {
+        $state = parent::jsonSerialize();
+        $state['url'] = $this->url;
+        $state['stock'] = $this->getStock();
+        $state['download_limit'] = $this->limit;
+
+        return $state;
+	}
 }

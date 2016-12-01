@@ -64,4 +64,17 @@ class Guest extends Customer
 
 		return $state;
 	}
+
+    /**
+     * Used by json_encode method to proprly
+     *
+     * @return array
+     */
+    public function jsonSerialize()
+    {
+        $state = parent::jsonSerialize();
+        unset($state['id'], $state['login'], $state['email'], $state['name']);
+
+        return $state;
+    }
 }

@@ -185,7 +185,7 @@ class Api
         };
         $container['errorHandler'] = function ($container) {
             return function ($request, $response, $exception) use ($container) {
-                return $container['response']->withStatus(500)->withJson([
+                return $container['response']->withStatus($exception->getCode())->withJson([
                     'success' => false,
                     'error' => $exception->getMessage()
                 ]);

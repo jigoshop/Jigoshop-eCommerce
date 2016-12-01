@@ -8,7 +8,7 @@ namespace Jigoshop\Entity\Product\Attributes;
  * @package Jigoshop\Entity\Product\Attributes
  * @author  Amadeusz Starzykiewicz
  */
-class Size implements \Serializable
+class Size implements \Serializable, \JsonSerializable
 {
 	/** @var float */
 	private $width = 0.0;
@@ -114,4 +114,19 @@ class Size implements \Serializable
 		$this->height = (float)$data['height'];
 		$this->length = (float)$data['length'];
 	}
+
+    /**
+     * Used by json_encode method to proprly
+     *
+     * @return array
+     */
+    public function jsonSerialize()
+    {
+        return [
+            'weight' => $this->weight,
+            'width' => $this->width,
+            'height' => $this->height,
+            'length' => $this->length,
+        ];
+    }
 }

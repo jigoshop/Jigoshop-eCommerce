@@ -13,7 +13,7 @@ use Monolog\Registry;
  * @package Jigoshop\Entity\Order
  * @author  Amadeusz Starzykiewicz
  */
-class Item implements Product\Purchasable, Product\Taxable, \Serializable
+class Item implements Product\Purchasable, Product\Taxable, \Serializable, \JsonSerializable
 {
 	/** @var int */
 	private $id;
@@ -339,4 +339,25 @@ class Item implements Product\Purchasable, Product\Taxable, \Serializable
 	{
 		throw new Exception(__('Items do not have stock.', 'jigoshop'));
 	}
+
+    /**
+     * Used by json_encode method to proprly
+     *
+     * @return array
+     */
+    public function jsonSerialize()
+    {
+        return [
+            'id' => $this->id,
+            'key' => $this->key,
+            'name' => $this->name,
+            'type' => $this->type,
+            'quantity' => $this->quantity,
+            'price' => $this->price,
+            'tax' => $this->tax,
+            'tax_classes' => $this->taxClasses,
+            'product' => $this->product->getId(),
+            'meta' => array_values($this->meta),
+        ];
+    }
 }

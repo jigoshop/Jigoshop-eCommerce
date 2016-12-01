@@ -245,4 +245,19 @@ class Simple extends Product implements Purchasable, Shippable, Saleable
 	{
 		return true;
 	}
+
+    /**
+     * Used by json_encode method to proprly
+     *
+     * @return array
+     */
+    public function jsonSerialize()
+    {
+        $state = parent::jsonSerialize();
+        $state['regular_price'] = $this->regularPrice;
+        $state['stock'] = $this->stock;
+        $state['sale'] = $this->sales;
+
+        return $state;
+	}
 }

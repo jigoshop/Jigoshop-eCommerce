@@ -222,4 +222,20 @@ class Variable extends Product implements Shippable, Saleable
 			'id' => $this->getId(),
 		);
 	}
+
+    /**
+     * Used by json_encode method to proprly
+     *
+     * @return array
+     */
+    public function jsonSerialize()
+    {
+        $state = parent::jsonSerialize();
+        $state['sale'] = $this->sales;
+        $state['lowest_price'] = $this->getLowestPrice();
+        $state['highest_price'] = $this->getHighestPrice();
+        $state['variations'] = $this->variations;
+
+        return $state;
+    }
 }

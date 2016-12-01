@@ -123,6 +123,10 @@ class Order implements EntityFactoryInterface
      */
     public function fetch($post)
     {
+        if($post->post_type != Types::ORDER) {
+            return null;
+        }
+
         $order = new Entity($this->options->get('tax.classes'));
         /** @var Entity $order */
         $order = $this->wp->applyFilters('jigoshop\factory\order\fetch\before', $order);
