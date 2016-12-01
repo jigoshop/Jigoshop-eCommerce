@@ -4,6 +4,7 @@
     * Fix: Do not allow to add external products to cart.
     * Fix: Fix external product url.
     * Fix: Checkout fields validation.
+    * Fix: Checkout registration.
 * 2.0.5 - 2016.11.24:
     * Fix: Updating customer on checkout page.
     * Fix: Removed unnecessary filter.

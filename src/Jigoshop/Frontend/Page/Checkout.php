@@ -454,19 +454,21 @@ class Checkout implements PageInterface
 		$this->wp->wpUpdateUser(array(
 			'ID' => $id,
 			'role' => 'customer',
-			'first_name' => $_POST['jigoshop_order']['billing']['first_name'],
-			'last_name' => $_POST['jigoshop_order']['billing']['last_name'],
+			'first_name' => $_POST['jigoshop_order']['billing_address']['first_name'],
+			'last_name' => $_POST['jigoshop_order']['billing_address']['last_name'],
 		));
 		$this->wp->doAction('jigoshop\checkout\created_account', $id);
 
 		// send the user a confirmation and their login details
 		if ($this->wp->applyFilters('jigoshop\checkout\new_user_notification', true, $id)) {
-			$this->wp->wpNewUserNotification($id, $password);
+			$this->wp->wpNewUserNotification($id);
 		}
 
 		$this->wp->wpSetAuthCookie($id, true, $this->wp->isSsl());
-		$customer = $this->cartService->getCurrent()->getCustomer();
-		$customer->setId($id);
+        $cart = $this->cartService->getCurrent();
+        $customer = $this->customerService->find($id);
+        $customer->restoreState($cart->getCustomer()->getStateToSave());
+        $cart->setCustomer($customer);
 	}
 
 	/**
