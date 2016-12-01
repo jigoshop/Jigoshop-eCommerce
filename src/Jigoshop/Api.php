@@ -93,11 +93,7 @@ class Api
             $this->addMiddlewares($app);
             $this->addRoutes($app, $version);
 
-            try {
-                $app->run();
-            } catch (Exception $e) {
-
-            }
+            $app->run();
             exit;
         }
     }
