@@ -423,7 +423,7 @@ class Checkout implements PageInterface
 			return;
 		}
 
-		$email = $_POST['jigoshop_order']['billing']['email'];
+		$email = $_POST['jigoshop_order']['billing_address']['email'];
 		$errors = new \WP_Error();
 		$this->wp->doAction('register_post', $email, $email, $errors);
 
