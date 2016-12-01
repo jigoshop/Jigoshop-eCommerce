@@ -5,6 +5,7 @@
     * Fix: Fix external product url.
     * Fix: Checkout fields validation.
     * Fix: Checkout registration.
+    * Fix: Remove usage of `price` meta from purchasable products.
 * 2.0.5 - 2016.11.24:
     * Fix: Updating customer on checkout page.
     * Fix: Removed unnecessary filter.

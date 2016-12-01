@@ -180,9 +180,6 @@ class External extends Product implements Purchasable, Saleable
 	{
 		parent::restoreState($state);
 
-		if (isset($state['price'])) {
-			$this->price = (float)$state['price'];
-		}
 		if (isset($state['regular_price'])) {
 			$this->regularPrice = $state['regular_price'] !== '' ? (float)$state['regular_price'] : '';
 		}
