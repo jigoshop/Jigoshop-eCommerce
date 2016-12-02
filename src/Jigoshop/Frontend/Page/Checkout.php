@@ -451,6 +451,13 @@ class Checkout implements PageInterface
 			));
 		}
 
+ 		if (is_wp_error($id)){
+ 			throw new Exception(sprintf(
+				__("<strong>Error</strong> Account creation failed: %s", 'jigoshop'),
+				$id->get_error_message($id->get_error_code())
+			));
+		}
+
 		$this->wp->wpUpdateUser(array(
 			'ID' => $id,
 			'role' => 'customer',
