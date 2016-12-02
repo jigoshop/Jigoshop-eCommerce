@@ -1,6 +1,6 @@
 ## Changelog
 
-* 2.0.6:
+* 2.0.6 - 2016.12.2:
     * Fix: Do not allow to add external products to cart.
     * Fix: Fix external product url.
     * Fix: Checkout fields validation.
