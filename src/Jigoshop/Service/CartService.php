@@ -9,6 +9,7 @@ use Jigoshop\Entity\Order;
 use Jigoshop\Entity\OrderInterface;
 use Jigoshop\Entity\Session;
 use Jigoshop\Exception;
+use Jigoshop\Factory\Customer;
 use Jigoshop\Factory\Order as OrderFactory;
 use Jigoshop\Frontend\Pages;
 use Jigoshop\Helper\Country;
@@ -114,14 +115,12 @@ class CartService implements CartServiceInterface
 		if (!isset($this->carts[$id])) {
 			$cart = new Cart($this->options->get('tax.classes'));
 			$cart->setCustomer($this->customerService->getCurrent());
-			$cart->getCustomer()
-				->selectTaxAddress($this->options->get('taxes.shipping') ? 'shipping' : 'billing');
+			$cart->getCustomer()->selectTaxAddress($this->options->get('taxes.shipping') ? 'shipping' : 'billing');
 
 			// Fetch data from session if available
 			$cart->setId($id);
 
 			$state = $this->getStateFromSession($id);
-            unset($state['customer']);
 			if (isset($_POST['jigoshop_order']) && Pages::isCheckout()) {
 				$state = $this->getStateFromCheckout($state);
 			}
@@ -143,10 +142,7 @@ class CartService implements CartServiceInterface
         if (isset($session[$id])) {
             $state = $session[$id];
 
-			if (isset($state['customer'])) {
-				// Customer must be unserialized twice "thanks" to WordPress second serialization.
-				$state['customer'] = unserialize($state['customer']);
-			}
+            $state['customer'] = $this->customerService->getCurrent();
 
 			if (isset($state['items'])) {
 				$productService = $this->productService;

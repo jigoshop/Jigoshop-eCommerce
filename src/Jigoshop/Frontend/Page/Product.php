@@ -66,7 +66,9 @@ class Product implements PageInterface
 
 		$wp->addFilter('jigoshop\cart\add', function ($item) use ($productService){
 			/** @var $item Item */
-			$item->setKey($productService->generateItemKey($item));
+			if($item instanceof Item) {
+                $item->setKey($productService->generateItemKey($item));
+            }
 
 			return $item;
 		});

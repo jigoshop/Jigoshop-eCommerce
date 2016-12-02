@@ -5,6 +5,7 @@ namespace Jigoshop\Core\Types\Product;
 use Jigoshop\Entity\Order\Item;
 use Jigoshop\Entity\Product;
 use Jigoshop\Entity\Product\External as Entity;
+use Jigoshop\Exception;
 use Jigoshop\Helper\Render;
 use Jigoshop\Helper\Scripts;
 use WPAL\Wordpress;
@@ -97,13 +98,7 @@ class External implements Type
 	public function addToCart($value, $product)
 	{
 		if ($product instanceof Entity) {
-            $item = new Item();
-            $item->setName($product->getName());
-            $item->setPrice($product->getPrice());
-            $item->setQuantity(1);
-            $item->setProduct($product);
-
-            return $item;
+            throw new Exception(__('The external product cannot be added to cart', 'jigoshop'));
 		}
 
 		return $value;

@@ -9,7 +9,7 @@ use Jigoshop\Entity\Product;
 <fieldset class="<?php echo $product instanceof Product\External ? '' : 'not-active'; ?>">
 	<?php
 	Forms::text(array(
-		'name' => 'product[url]',
+		'name' => 'product[external_url]',
 		'label' => __('Product URL', 'jigoshop'),
 		'classes' => array('product-external'),
 		'placeholder' => __('Enter external product URL...', 'jigoshop'),

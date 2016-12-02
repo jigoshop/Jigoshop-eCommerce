@@ -423,7 +423,7 @@ class Checkout implements PageInterface
 			return;
 		}
 
-		$email = $_POST['jigoshop_order']['billing']['email'];
+		$email = $_POST['jigoshop_order']['billing_address']['email'];
 		$errors = new \WP_Error();
 		$this->wp->doAction('register_post', $email, $email, $errors);
 
@@ -451,22 +451,31 @@ class Checkout implements PageInterface
 			));
 		}
 
+ 		if (is_wp_error($id)){
+ 			throw new Exception(sprintf(
+				__("<strong>Error</strong> Account creation failed: %s", 'jigoshop'),
+				$id->get_error_message($id->get_error_code())
+			));
+		}
+
 		$this->wp->wpUpdateUser(array(
 			'ID' => $id,
 			'role' => 'customer',
-			'first_name' => $_POST['jigoshop_order']['billing']['first_name'],
-			'last_name' => $_POST['jigoshop_order']['billing']['last_name'],
+			'first_name' => $_POST['jigoshop_order']['billing_address']['first_name'],
+			'last_name' => $_POST['jigoshop_order']['billing_address']['last_name'],
 		));
 		$this->wp->doAction('jigoshop\checkout\created_account', $id);
 
 		// send the user a confirmation and their login details
 		if ($this->wp->applyFilters('jigoshop\checkout\new_user_notification', true, $id)) {
-			$this->wp->wpNewUserNotification($id, $password);
+			$this->wp->wpNewUserNotification($id);
 		}
 
 		$this->wp->wpSetAuthCookie($id, true, $this->wp->isSsl());
-		$customer = $this->cartService->getCurrent()->getCustomer();
-		$customer->setId($id);
+        $cart = $this->cartService->getCurrent();
+        $customer = $this->customerService->find($id);
+        $customer->restoreState($cart->getCustomer()->getStateToSave());
+        $cart->setCustomer($customer);
 	}
 
 	/**

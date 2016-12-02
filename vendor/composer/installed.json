@@ -132,12 +132,12 @@
         "source": {
             "type": "git",
             "url": "https://github.com/Seldaek/monolog.git",
-            "reference": "3c782662f9d29c02eb3f200a02dafc8288e28a9e"
+            "reference": "bad29cb8d18ab0315e6c477751418a82c850d558"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/Seldaek/monolog/zipball/3c782662f9d29c02eb3f200a02dafc8288e28a9e",
-            "reference": "3c782662f9d29c02eb3f200a02dafc8288e28a9e",
+            "url": "https://api.github.com/repos/Seldaek/monolog/zipball/bad29cb8d18ab0315e6c477751418a82c850d558",
+            "reference": "bad29cb8d18ab0315e6c477751418a82c850d558",
             "shasum": ""
         },
         "require": {
@@ -173,7 +173,7 @@
             "ruflin/elastica": "Allow sending log messages to an Elastic Search server",
             "sentry/sentry": "Allow sending log messages to a Sentry server"
         },
-        "time": "2016-11-17 11:01:44",
+        "time": "2016-11-26 00:15:39",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -402,18 +402,69 @@
         ]
     },
     {
+        "name": "spatie/array-to-xml",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/spatie/array-to-xml.git",
+            "reference": "06e2e7b256f02672a35f1811385f1d98239c1464"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/spatie/array-to-xml/zipball/06e2e7b256f02672a35f1811385f1d98239c1464",
+            "reference": "06e2e7b256f02672a35f1811385f1d98239c1464",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.0"
+        },
+        "require-dev": {
+            "mockery/mockery": "0.9.*",
+            "phpunit/phpunit": "4.*",
+            "scrutinizer/ocular": "~1.1"
+        },
+        "time": "2016-07-29 15:10:32",
+        "type": "library",
+        "installation-source": "source",
+        "autoload": {
+            "psr-4": {
+                "Spatie\\ArrayToXml\\": "src"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Freek Van der Herten",
+                "email": "freek@spatie.be",
+                "homepage": "https://murze.be",
+                "role": "Developer"
+            }
+        ],
+        "description": "Convert an array to xml",
+        "homepage": "https://github.com/spatie/array-to-xml",
+        "keywords": [
+            "array",
+            "convert",
+            "xml"
+        ]
+    },
+    {
         "name": "phpfastcache/phpfastcache",
         "version": "6.x-dev",
         "version_normalized": "6.9999999.9999999.9999999-dev",
         "source": {
             "type": "git",
             "url": "https://github.com/PHPSocialNetwork/phpfastcache.git",
-            "reference": "768f69b6b3c0362159050317b78b30af37b5f3d0"
+            "reference": "de48dc3b91799ab915785e103a9726a03b544dd7"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/PHPSocialNetwork/phpfastcache/zipball/768f69b6b3c0362159050317b78b30af37b5f3d0",
-            "reference": "768f69b6b3c0362159050317b78b30af37b5f3d0",
+            "url": "https://api.github.com/repos/PHPSocialNetwork/phpfastcache/zipball/de48dc3b91799ab915785e103a9726a03b544dd7",
+            "reference": "de48dc3b91799ab915785e103a9726a03b544dd7",
             "shasum": ""
         },
         "require": {
@@ -433,7 +484,7 @@
             "ext-redis": "*",
             "ext-sqlite": "*"
         },
-        "time": "2016-11-19 20:43:20",
+        "time": "2016-11-30 19:16:22",
         "type": "library",
         "installation-source": "source",
         "autoload": {
@@ -487,57 +538,6 @@
             "zend disk cache",
             "zend memory cache",
             "zend server"
-        ]
-    },
-    {
-        "name": "spatie/array-to-xml",
-        "version": "dev-master",
-        "version_normalized": "9999999-dev",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/spatie/array-to-xml.git",
-            "reference": "06e2e7b256f02672a35f1811385f1d98239c1464"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/spatie/array-to-xml/zipball/06e2e7b256f02672a35f1811385f1d98239c1464",
-            "reference": "06e2e7b256f02672a35f1811385f1d98239c1464",
-            "shasum": ""
-        },
-        "require": {
-            "php": ">=5.3.0"
-        },
-        "require-dev": {
-            "mockery/mockery": "0.9.*",
-            "phpunit/phpunit": "4.*",
-            "scrutinizer/ocular": "~1.1"
-        },
-        "time": "2016-07-29 15:10:32",
-        "type": "library",
-        "installation-source": "source",
-        "autoload": {
-            "psr-4": {
-                "Spatie\\ArrayToXml\\": "src"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Freek Van der Herten",
-                "email": "freek@spatie.be",
-                "homepage": "https://murze.be",
-                "role": "Developer"
-            }
-        ],
-        "description": "Convert an array to xml",
-        "homepage": "https://github.com/spatie/array-to-xml",
-        "keywords": [
-            "array",
-            "convert",
-            "xml"
         ]
     }
 ]

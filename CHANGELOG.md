@@ -1,5 +1,12 @@
 ## Changelog
 
+* 2.0.6 - 2016.12.2:
+    * Fix: Do not allow to add external products to cart.
+    * Fix: Fix external product url.
+    * Fix: Checkout fields validation.
+    * Fix: Checkout registration.
+    * Fix: Remove usage of `price` meta from purchasable products.
+    * Fix: Properly handle account creation errors on checkout.
 * 2.0.5 - 2016.11.24:
     * Fix: Updating customer on checkout page.
     * Fix: Removed unnecessary filter.
