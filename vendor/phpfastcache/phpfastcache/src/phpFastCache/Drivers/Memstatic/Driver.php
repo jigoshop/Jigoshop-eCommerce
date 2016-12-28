@@ -12,12 +12,10 @@
  *
  */
 
-namespace phpFastCache\Drivers\Apcu;
+namespace phpFastCache\Drivers\Memstatic;
 
-use phpFastCache\Core\DriverAbstract;
 use phpFastCache\Core\Pool\DriverBaseTrait;
 use phpFastCache\Core\Pool\ExtendedCacheItemPoolInterface;
-use phpFastCache\Core\StandardPsr6StructureTrait;
 use phpFastCache\Entities\driverStatistic;
 use phpFastCache\Exceptions\phpFastCacheDriverCheckException;
 use phpFastCache\Exceptions\phpFastCacheDriverException;
@@ -30,7 +28,12 @@ use Psr\Cache\CacheItemInterface;
 class Driver implements ExtendedCacheItemPoolInterface
 {
     use DriverBaseTrait;
-    
+
+  /**
+   * @var array
+   */
+    protected $staticStack = [];
+
     /**
      * Driver constructor.
      * @param array $config
@@ -50,11 +53,7 @@ class Driver implements ExtendedCacheItemPoolInterface
      */
     public function driverCheck()
     {
-        if (extension_loaded('apcu') && ini_get('apc.enabled')) {
-            return true;
-        } else {
-            return false;
-        }
+        return true;
     }
 
     /**
@@ -68,9 +67,7 @@ class Driver implements ExtendedCacheItemPoolInterface
          * Check for Cross-Driver type confusion
          */
         if ($item instanceof Item) {
-            $ttl = $item->getExpirationDate()->getTimestamp() - time();
-
-            return apcu_store($item->getKey(), $this->driverPreWrap($item), ($ttl > 0 ? $ttl : 0));
+            return $this->staticStack[md5($item->getKey())] = $this->driverPreWrap($item);
         } else {
             throw new \InvalidArgumentException('Cross-Driver type confusion detected');
         }
@@ -78,16 +75,19 @@ class Driver implements ExtendedCacheItemPoolInterface
 
     /**
      * @param \Psr\Cache\CacheItemInterface $item
-     * @return mixed
+     * @return array [
+     *      'd' => 'THE ITEM DATA'
+     *      't' => 'THE ITEM DATE EXPIRATION'
+     *      'g' => 'THE ITEM TAGS'
+     * ]
      */
     protected function driverRead(CacheItemInterface $item)
     {
-        $data = apcu_fetch($item->getKey(), $success);
-        if ($success === false) {
-            return null;
+        $key = md5($item->getKey());
+        if(isset($this->staticStack[$key])){
+          return $this->staticStack[$key];
         }
-
-        return $data;
+        return null;
     }
 
     /**
@@ -101,7 +101,12 @@ class Driver implements ExtendedCacheItemPoolInterface
          * Check for Cross-Driver type confusion
          */
         if ($item instanceof Item) {
-            return apcu_delete($item->getKey());
+          $key = md5($item->getKey());
+          if(isset($this->staticStack[$key])){
+              unset($this->staticStack[$key]);
+              return true;
+          }
+          return false;
         } else {
             throw new \InvalidArgumentException('Cross-Driver type confusion detected');
         }
@@ -112,7 +117,9 @@ class Driver implements ExtendedCacheItemPoolInterface
      */
     protected function driverClear()
     {
-        return @apcu_clear_cache() && @apcu_clear_cache('user');
+      unset($this->staticStack);
+      $this->staticStack = [];
+      return true;
     }
 
     /**
@@ -134,13 +141,12 @@ class Driver implements ExtendedCacheItemPoolInterface
      */
     public function getStats()
     {
-        $stats = (array) apcu_cache_info('user');
-        $date = (new \DateTime())->setTimestamp($stats[ 'start_time' ]);
-
-        return (new driverStatistic())
+        $stat = new driverStatistic();
+        $stat->setInfo('[Memstatic] A memory static driver')
+          ->setSize(mb_strlen(serialize($this->staticStack)))
           ->setData(implode(', ', array_keys($this->itemInstances)))
-          ->setInfo(sprintf("The APCU cache is up since %s, and have %d item(s) in cache.\n For more information see RawData.", $date->format(DATE_RFC2822), $stats[ 'num_entries' ]))
-          ->setRawData($stats)
-          ->setSize($stats[ 'mem_size' ]);
+          ->setRawData($this->staticStack);
+
+        return $stat;
     }
 }
