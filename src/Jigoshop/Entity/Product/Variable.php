@@ -179,7 +179,14 @@ class Variable extends Product implements Shippable, Saleable
                         'options' => []
                     ];
                 }
-                $attributes[$attribute->getAttribute()->getId()]['options'][$attribute->getValue()] = $attribute->getAttribute()->getOption($attribute->getValue())->getLabel();
+
+                if($attribute->getValue()) {
+                    $attributes[$attribute->getAttribute()->getId()]['options'][$attribute->getValue()] = $attribute->getAttribute()->getOption($attribute->getValue())->getLabel();
+                } else {
+                    foreach($attribute->getAttribute()->getOptions() as $option) {
+                        $attributes[$attribute->getAttribute()->getId()]['options'][$option->getId()] = $option->getLabel();
+                    }
+                }
             }
         }
 
