@@ -28,7 +28,7 @@ use Jigoshop\Helper\Render;
 					<?php if ($unpaid): ?>
 						<a href="<?php echo Order::getPayLink($order); ?>" class="btn btn-success pull-right"><?php _e('Pay', 'jigoshop'); ?></a>
 					<?php endif; ?>
-					<a href="<?php echo Api::getEndpointUrl('orders', $order->getId()); ?>" class="btn btn-primary pull-right"><?php _e('View', 'jigoshop'); ?></span></a>
+					<a href="<?php echo Api::getEndpointUrl('orders', $order->getId(), get_permalink()); ?>" class="btn btn-primary pull-right"><?php _e('View', 'jigoshop'); ?></span></a>
 				</h4>
 				<dl class="dl-horizontal list-group-item-text">
 					<dt><?php _e('Date', 'jigoshop'); ?></dt>

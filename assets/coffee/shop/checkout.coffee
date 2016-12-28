@@ -117,7 +117,7 @@ class Checkout
         @_updateTotals(result.html.total, result.html.subtotal)
         @_updateDiscount(result)
         @_updateTaxes(result.tax, result.html.tax)
-        @_updateShipping(result.shipping_address, result.html.shipping_address)
+        @_updateShipping(result.shipping, result.html.shipping)
         stateClass = '#' + jQuery(event.target).attr('id').replace(/country/, 'state')
 
         if result.has_states
@@ -168,7 +168,7 @@ class Checkout
         @_updateTotals(result.html.total, result.html.subtotal)
         @_updateDiscount(result)
         @_updateTaxes(result.tax, result.html.tax)
-        @_updateShipping(result.shipping_address, result.html.shipping_address)
+        @_updateShipping(result.shipping, result.html.shipping)
       else
         jigoshop.addMessage('danger', result.error, 6000)
       @unblock()
@@ -190,7 +190,7 @@ class Checkout
         @_updateTotals(result.html.total, result.html.subtotal)
         @_updateDiscount(result)
         @_updateTaxes(result.tax, result.html.tax)
-        @_updateShipping(result.shipping_address, result.html.shipping_address)
+        @_updateShipping(result.shipping, result.html.shipping)
       else
         jigoshop.addMessage('danger', result.error, 6000)
       @unblock()
@@ -211,22 +211,22 @@ class Checkout
       if data.html.coupons?
         jigoshop.addMessage('warning', data.html.coupons)
 
-  _updateShipping: (shipping_address, html) ->
-    for own shipping_addressClass, value of shipping_address
-      $method = jQuery(".shipping_address-#{shipping_addressClass}")
+  _updateShipping: (shipping, html) ->
+    for own shippingClass, value of shipping
+      $method = jQuery(".shipping-#{shippingClass}")
       $method.addClass('existing')
       if $method.length > 0
         if value > -1
-          $item = jQuery(html[shipping_addressClass].html).addClass('existing')
+          $item = jQuery(html[shippingClass].html).addClass('existing')
           $method.replaceWith($item)
         else
           $method.slideUp -> jQuery(this).remove()
-      else if html[shipping_addressClass]?
-        $item = jQuery(html[shipping_addressClass].html)
-        $item.hide().addClass('existing').appendTo(jQuery('#shipping_address-methods')).slideDown()
+      else if html[shippingClass]?
+        $item = jQuery(html[shippingClass].html)
+        $item.hide().addClass('existing').appendTo(jQuery('#shipping-methods')).slideDown()
     # Remove non-existent methods
-    jQuery('#shipping_address-methods > li:not(.existing)').slideUp -> jQuery(this).remove()
-    jQuery('#shipping_address-methods > li').removeClass('existing')
+    jQuery('#shipping-methods > li:not(.existing)').slideUp -> jQuery(this).remove()
+    jQuery('#shipping-methods > li').removeClass('existing')
 
   _updateTaxes: (taxes, html) ->
     for own taxClass, tax of html
