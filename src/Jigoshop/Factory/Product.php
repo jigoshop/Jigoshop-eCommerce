@@ -139,7 +139,9 @@ class Product implements EntityFactoryInterface
 						);
 					}
 				}
-			}
+			} else {
+                $_POST['product']['attachments'] = array();
+            }
 
 			$product->restoreState($_POST['product']);
 			$product->markAsDirty($_POST['product']);

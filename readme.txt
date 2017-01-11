@@ -5,7 +5,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 
 Requires at least: 4.0
 Tested up to: 4.6.1
-Stable tag: 2.0.6
+Stable tag: 2.0.8
 
 A feature-packed eCommerce plugin built upon WordPress core functionality ensuring excellent performance and customizability.
 
@@ -104,6 +104,13 @@ However, if you want priority, dedicated support from Jigoshop staff, we dp offe
 
 == Changelog ==
 
+= 2.0.8:
+* Fix: Allow to remove all attachments.
+= 2.0.7 - 2016.12.28 =
+* Fix: Downloadable email link.
+* Fix: Updating shipping methods in checkout.
+* Fix: Order link in my account.
+* Fix: Fatal error on product page.
 = 2.0.6 - 2016.12.2 =
 * Fix: Do not allow to add external products to cart.
 * Fix: Fix external product url.

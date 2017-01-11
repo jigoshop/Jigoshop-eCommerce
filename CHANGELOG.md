@@ -1,5 +1,7 @@
 ## Changelog
 
+* 2.0.8:
+    * Fix: Allow to remove all attachments.
 * 2.0.7 - 2016.12.28:
     * Fix: Downloadable email link.
     * Fix: Updating shipping methods in checkout.
