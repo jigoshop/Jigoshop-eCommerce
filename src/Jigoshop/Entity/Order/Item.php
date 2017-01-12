@@ -191,6 +191,10 @@ class Item implements Product\Purchasable, Product\Taxable, \Serializable
         if(empty($this->taxClasses)) {
             $this->taxClasses = $product->getTaxClasses();
         }
+        // Due to backward compatibility with database version 1.
+        if(empty($this->type)) {
+            $this->type = $product->getType();
+        }
 	}
 
     /**
