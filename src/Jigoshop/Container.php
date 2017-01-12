@@ -73,6 +73,8 @@ class Container
 	 * @param string $key
 	 *
 	 * @throws Container\Exception
+     *
+     * @return array
 	 */
 	public function getTaggedServices($key)
 	{
@@ -82,6 +84,8 @@ class Container
 				$services[] = $this->get($serviceKey);
 			}
 		}
+
+		return $services;
 	}
 
 	/**

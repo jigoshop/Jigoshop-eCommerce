@@ -187,8 +187,18 @@ class Item implements Product\Purchasable, Product\Taxable, \Serializable
 	{
 		$this->productId = $product->getId();
 		$this->product = $product;
-		$this->type = $product->getType();
-		$this->taxClasses = $product->getTaxClasses();
+        // Due to backward compatibility with database version 1.
+        if(empty($this->taxClasses)) {
+            $this->taxClasses = $product->getTaxClasses();
+        }
+	}
+
+    /**
+     * @param string $type Product type
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
 	}
 
 	/**
@@ -211,10 +221,14 @@ class Item implements Product\Purchasable, Product\Taxable, \Serializable
 	 * Allows to override tax classes added by setProduct().
 	 * @see Jigoshop\Core\Types\Product\Variable::addToCart() Used to set tax classes for single variable
 	 *
-	 * @param array $taxClasses.
+	 * @param mixed $taxClasses.
 	 */
 	public function setTaxClasses($taxClasses)
 	{
+        if(is_string($taxClasses)) {
+            $taxClasses = $taxClasses ? explode(',', $taxClasses) : [];
+        }
+
 		$this->taxClasses = $taxClasses;
 	}
 

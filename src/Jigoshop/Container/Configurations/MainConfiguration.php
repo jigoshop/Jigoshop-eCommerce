@@ -127,6 +127,11 @@ class MainConfiguration implements ConfigurationInterface
 			'jigoshop.messages',
 			'jigoshop.service.order'
 		));
+        $services->setDetails('jigoshop.upgrade', 'Jigoshop\Core\Upgrade', [
+            'di',
+            'wpal'
+        ]);
+        $services->setDetails('jigoshop.upgrade.add_tax_classes_to_order_items', 'Jigoshop\Core\Upgrade\AddTaxClassesToOrderItems', []);
 	}
 
 	/**
@@ -144,6 +149,7 @@ class MainConfiguration implements ConfigurationInterface
 		$tags->add('jigoshop.type.taxonomy', 'jigoshop.taxonomy.product_tag');
 		$tags->add('jigoshop.installer', 'jigoshop.product_type.variable.initializer');
 		$tags->add('jigoshop.installer', 'jigoshop.roles.initializer');
+        $tags->add('jigoshop.upgrade.2', 'jigoshop.upgrade.add_tax_classes_to_order_items');
 	}
 
 	/**

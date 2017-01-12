@@ -198,6 +198,7 @@ class OrderService implements OrderServiceInterface
                     'product_id' => $item->getProduct() ? $item->getProduct()->getId() : null,
                     'product_type' => $item->getType(),
                     'title' => $item->getName(),
+                    'tax_classes' => join(',', $item->getTaxClasses()),
                     'price' => $item->getPrice(),
                     'tax' => $item->getTax(),
                     'quantity' => $item->getQuantity(),

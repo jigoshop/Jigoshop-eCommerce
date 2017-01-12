@@ -193,7 +193,9 @@ class Order implements EntityFactoryInterface
             $product = $this->productService->find($results[$i]['product_id']);
             $item = new Entity\Item();
             $item->setId($results[$i]['item_id']);
+            $item->setType($results[$i]['type']);
             $item->setName($results[$i]['title']);
+            $item->setTaxClasses($results[$i]['tax_classes']);
             $item->setQuantity($results[$i]['quantity']);
             $item->setPrice($results[$i]['price']);
             $item->setTax($results[$i]['tax']);

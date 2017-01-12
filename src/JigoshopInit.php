@@ -111,6 +111,7 @@ class JigoshopInit
         $this->initSession();
         $this->disableRelationLinks();
         $this->rewriteRules();
+        $this->upgrade();
 
         add_filter('plugin_action_links_'.self::getBaseName(), array($this, 'pluginLinks'));
     }
@@ -214,6 +215,11 @@ class JigoshopInit
                 update_option('jigoshop_force_flush_rewrite', 2);
             });
         }
+    }
+
+    private function upgrade()
+    {
+        $this->container->get('jigoshop.upgrade')->run();
     }
 
     /**

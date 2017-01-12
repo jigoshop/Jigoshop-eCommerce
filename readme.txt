@@ -108,6 +108,7 @@ However, if you want priority, dedicated support from Jigoshop staff, we dp offe
 * Fix: Allow to remove all attachments.
 * Fix: Do not recalculate discounts for placed orders.
 * Fix: Allow to change attribute option value.
+* Fix: Add tax classes column to order item table.
 = 2.0.7 - 2016.12.28 =
 * Fix: Downloadable email link.
 * Fix: Updating shipping methods in checkout.
