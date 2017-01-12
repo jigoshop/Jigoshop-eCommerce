@@ -25,6 +25,8 @@ class EmailService implements EmailServiceInterface
 	private $factory;
 	/** @var bool */
 	private $suppress = false;
+    /** @var bool */
+    private $suppressForWholeRequest = false;
     /** @var array  */
     private $templates = array();
 
@@ -42,6 +44,14 @@ class EmailService implements EmailServiceInterface
 	public function suppressNextEmail()
 	{
 		$this->suppress = true;
+	}
+
+    /**
+     * Suppresses sending emails for whole request.
+     */
+    public function suppressEmailForWholeRequest()
+    {
+        $this->suppressForWholeRequest = true;
 	}
 
 	/**
@@ -199,6 +209,10 @@ class EmailService implements EmailServiceInterface
 
 			return;
 		}
+
+		if ($this->suppressForWholeRequest) {
+            return;
+        }
 
 		$templates = $this->getTemplates();
 		if (!isset($templates[$hook]) || empty($templates[$hook])) {
