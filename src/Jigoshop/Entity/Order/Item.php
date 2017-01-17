@@ -160,7 +160,6 @@ class Item implements Product\Purchasable, Product\Taxable, \Serializable
 	 */
 	public function getCost()
 	{
-		// TODO: Support for "Price includes tax"
 		return $this->price * $this->quantity;
 	}
 

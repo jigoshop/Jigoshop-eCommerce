@@ -110,6 +110,8 @@ However, if you want priority, dedicated support from Jigoshop staff, we dp offe
 * Fix: Allow to change attribute option value.
 * Fix: Add tax classes column to order item table.
 * Fix: Allow to suppress all emails for current request.
+* Fix: Do not use new tax definitions for saved orders.
+* Fix: Allow to use prices including tax.
 = 2.0.7 - 2016.12.28 =
 * Fix: Downloadable email link.
 * Fix: Updating shipping methods in checkout.

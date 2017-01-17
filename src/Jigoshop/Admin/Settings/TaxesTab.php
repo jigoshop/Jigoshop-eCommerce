@@ -101,13 +101,12 @@ class TaxesTab implements TabInterface
 				'title' => __('Main', 'jigoshop'),
 				'id' => 'main',
 				'fields' => array(
-					// TODO: Add support for tax included in prices
-//					array(
-//						'name' => '[included]',
-//						'title' => __('Included in product price?', 'jigoshop'),
-//						'type' => 'checkbox',
-//						'checked' => $this->options['included'],
-//					),
+					array(
+						'name' => '[included]',
+						'title' => __('Included in product price?', 'jigoshop'),
+						'type' => 'checkbox',
+						'checked' => $this->options['included'],
+					),
 					array(
 						'name' => '[price_tax]',
 						'title' => __('Show prices', 'jigoshop'),

@@ -68,6 +68,8 @@ class Order implements OrderInterface
 	private $customerNote;
 	/** @var array */
 	private $updateMessages = array();
+    /** @var bool  */
+    private $taxIncluded = false;
 
 	public function __construct(array $taxClasses)
 	{
@@ -678,7 +680,6 @@ class Order implements OrderInterface
 	public function removeItem($key)
 	{
 		if (isset($this->items[$key])) {
-			// TODO: Support for "Price includes tax"
 			/** @var Item $item */
 			$item = $this->items[$key];
 			do_action('jigoshop\order\remove_item', $item, $this);
@@ -746,8 +747,25 @@ class Order implements OrderInterface
 			'shipping_tax' => $this->shippingTax,
 			'status' => $this->status,
 			'update_messages' => $this->updateMessages,
+            'tax_included' => $this->taxIncluded
 		);
 	}
+
+    /**
+     * @param bool $taxIncluded
+     */
+    public function setTaxIncluded($taxIncluded)
+    {
+        $this->taxIncluded = $taxIncluded;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isTaxIncluded()
+    {
+        return $this->taxIncluded;
+    }
 
 	/**
 	 * @param array $state State to restore entity to.
@@ -828,5 +846,8 @@ class Order implements OrderInterface
 			+ array_reduce($this->shippingTax, function ($value, $item){
 				return $value + $item;
 			}, 0.0) - $this->discount;
+        if (isset($state['price_includes_tax'])) {
+            $this->taxIncluded = (bool)$state['price_includes_tax'];
+        }
 	}
 }
