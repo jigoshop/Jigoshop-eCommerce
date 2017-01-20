@@ -2,6 +2,7 @@
 
 namespace Jigoshop\Api\Routes\V1;
 
+use Jigoshop\Api\Permission;
 use Jigoshop\Core\Types;
 use Jigoshop\Entity\Customer\Guest;
 use Jigoshop\Entity\Order as OrderEntity;
@@ -34,6 +35,10 @@ class Orders
 
     public function getOrders(Request $request, Response $response, $args)
     {
+        if(!$this->app->getContainer()->token->hasPermission(Permission::READ_ORDERS)) {
+            throw new Exception('You have no permissions to access to this page.', 401);
+        }
+
         /** @var OrderService $service */
         $service = $this->app->getContainer()->di->get('jigoshop.service.order');
         $queryParams = $request->getParams();
@@ -69,6 +74,10 @@ class Orders
 
     public function getOrder(Request $request, Response $response, $args)
     {
+        if(!$this->app->getContainer()->token->hasPermission(Permission::READ_ORDERS)) {
+            throw new Exception('You have no permissions to access to this page.', 401);
+        }
+
         if(!isset($args['id']) || empty($args['id'])) {
             throw new Exception(__('Product ID was not provided', 'jigoshop'), 404);
         }

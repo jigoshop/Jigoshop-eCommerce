@@ -1,14 +1,15 @@
 class AdvancedSettings
-  keysCount: 0
+  usersCount: 0
   template: ''
 
   constructor: ->
-    @keysCount = jQuery('#api-keys li').length
-    jQuery('#api-keys').on 'click', '.generate', @generate
-    jQuery('#api-keys').on 'click', '.toggle', @toggleGroupItem
-    jQuery('#api-keys').on 'click', '.remove', @removeGroupItem
-    jQuery('#api-keys').on 'keyup', '.user-id', @updateListHeader
-    jQuery('#api-keys').on 'click', '.add-key', @addGroupItem
+    @usersCount = jQuery('#api-users li').length
+    jQuery('#api-users').on 'click', '.generate', @generateUserDetails
+    jQuery('#api-users').on 'click', '.toggle', @toggleGroupItem
+    jQuery('#api-users').on 'click', '.remove', @removeGroupItem
+    jQuery('#api-users').on 'keyup', '.login', @updateListHeader
+    jQuery('#api-users').on 'click', '.add-user', @addGroupItem
+    jQuery('#api-secret').on 'click', '.generate', @generateSecret
 
 
   toggleGroupItem: (event) ->
@@ -22,31 +23,28 @@ class AdvancedSettings
   addGroupItem: (event) =>
     event.preventDefault()
     template = @getTemplate()
-    jQuery('#api-keys .list-group').append(template(
-      id: @keysCount
+    jQuery('#api-users .list-group').append(template(
+      id: @usersCount
     ))
-    @keysCount++
-    jQuery('#api-keys select').last().select2()
-    jQuery('#api-keys .generate').last().trigger('click')
+    @usersCount++
+    jQuery('#api-users select').last().select2()
+    jQuery('#api-users .generate').last().trigger('click')
 
-  generate: (event) =>
+  generateUserDetails: (event) =>
     event.preventDefault()
-    id = @generateUniqueId()
-    key = @generateHexString(52)
+    login = @generateString(16)
+    password = @generateString(52)
     $item = jQuery event.target
-    $item.closest('fieldset').find('input.user-id').val(id).trigger 'change'
-    $item.closest('fieldset').find('input.key').val(key).trigger 'change'
-    $item.closest('li').find('.title').html(id)
+    $item.closest('fieldset').find('input.login').val(login).trigger 'change'
+    $item.closest('fieldset').find('input.password').val(password).trigger 'change'
+    $item.closest('li').find('.title').html(login)
 
-  generateUniqueId: () ->
-    id = Math.round(Math.random() * 10000000000)
-    if jQuery('#api-keys .user-id').filter((i, element) ->
-      (parseInt(jQuery(element).val()) is id)
-    ).length > 0
-      id = @generateUniqueId()
-    id
+  generateSecret: (event) =>
+    event.preventDefault()
+    $item = jQuery event.target
+    $item.closest('div').find('input').val(@generateString(52)).trigger 'change'
 
-  generateHexString: (length) ->
+  generateString: (length) ->
     ret = ''
     while ret.length < length
       ret += Math.random().toString(16).substring(2)
@@ -58,7 +56,7 @@ class AdvancedSettings
 
   getTemplate: () ->
     if @template == ''
-      @template = wp.template('api-key')
+      @template = wp.template('api-user')
     @template
 jQuery ->
   new AdvancedSettings()

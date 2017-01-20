@@ -129,23 +129,30 @@ class Api
     private function addMiddlewares(App $app)
     {
         $container = $app->getContainer();
+        $users = [];
+        foreach($this->options->get('advanced.api.users', []) as $user) {
+            $users[$user['login']] = $user['password'];
+        }
+        $secret = $this->options->get('advanced.api.secret', '');
+        if(empty($users) || empty($secret)) {
+            throw new Exception('Users or secret key was not set up.', 500);
+        }
+
         $app->add(new Slim\Middleware\HttpBasicAuthentication([
             'path' => '/token',
             'relaxed' => ['localhost', 'jigoshop2.dev'],
             'secure' => false,
-            'users' => [
-                'test' => 'test',
-            ]
+            'users' => $users
         ]));
         $app->add(new Slim\Middleware\JwtAuthentication([
             'path' => '/',
             'passthrough' => ['/token', '/ping'],
-            'secret' => 'supersecretkeyyoushouldnotcommittogithub2',
+            'secret' => $secret,
             'secure' => false,
             'relaxed' => ['localhost', 'jigoshop2.dev'],
             'logger' => Registry::getInstance(\JigoshopInit::getLogger()),
             'callback' => function ($request, $response, $args) use ($container) {
-                $container->token->hydrate($args['decoded']);
+                $container->token->restoreState($args['decoded']);
             }
         ]));
     }
@@ -158,7 +165,7 @@ class Api
         /** @var Extensions $extensions */
         $extensions = $this->di->get('jigoshop.extensions');
         $this->initDefaultHandlers($app);
-        (new Routes())->init($app, $version);
+        (new Routes($this->options))->init($app, $version);
 
         array_map(function (Extension $extension) use ($app, $version) {
             $extension->getApi()->init($app, $version);

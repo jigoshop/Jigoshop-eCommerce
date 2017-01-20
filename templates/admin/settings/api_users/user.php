@@ -5,7 +5,7 @@
 ?>
 <li class="list-group-item">
     <h4 class="list-group-item-heading clearfix">
-        <span class="title"><?php echo $userId; ?></span>
+        <span class="title"><?php echo $login; ?></span>
         <button type="button" class="remove btn btn-default pull-right" title="<?php _e('Remove', 'jigoshop'); ?>"><span class="glyphicon glyphicon-remove"></span></button>
         <button type="button" class="toggle btn btn-default pull-right" title="<?php _e('Expand', 'jigoshop'); ?>"><span class="glyphicon glyphicon-collapse-down"></span></button>
     </h4>
@@ -13,24 +13,23 @@
         <fieldset>
             <div class="col-sm-6">
                 <?php \Jigoshop\Admin\Helper\Forms::text(array(
-                    'label' => __('User Id', 'jigoshop'),
-                    'name' => sprintf('%s[%s][user_login]', $name, $index),
-                    'value' => $userLogin,
-                    'placeholder' => __('User Login', 'jigoshop'),
-                    'classes' => array('user-login'),
+                    'label' => __('Login', 'jigoshop'),
+                    'name' => sprintf('%s[%s][login]', $name, $index),
+                    'value' => $login,
+                    'placeholder' => __('Login', 'jigoshop'),
+                    'classes' => array('login'),
                 )); ?>
                 <div class="col-xs-12">
-                    <a href="#" class="btn btn-default pull-right generate">Generate</a>
+                    <a href="#" class="btn btn-default pull-right generate"><?php _e('Generate', 'jigoshop'); ?></a>
                 </div>
             </div>
             <div class="col-sm-6">
                 <?php \Jigoshop\Admin\Helper\Forms::text(array(
-                    'label' => __('Key', 'jigoshop'),
-                    'name' => sprintf('%s[%s][user_password]', $name, $index),
-                    'type' => 'text',
-                    'value' => $userPassword,
+                    'label' => __('Password', 'jigoshop'),
+                    'name' => sprintf('%s[%s][password]', $name, $index),
+                    'value' => $password,
                     'placeholder' => __('Key', 'jigoshop'),
-                    'classes' => array('user-password'),
+                    'classes' => array('password'),
                 )); ?>
                 <?php \Jigoshop\Admin\Helper\Forms::select(array(
                     'label' => __('Permissions', 'jigoshop'),
