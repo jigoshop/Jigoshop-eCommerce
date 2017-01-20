@@ -12,14 +12,12 @@
     <div class="list-group-item-text"<?php $active == false and print ' style="display: none"'?>>
         <fieldset>
             <div class="col-sm-6">
-                <?php \Jigoshop\Admin\Helper\Forms::number(array(
+                <?php \Jigoshop\Admin\Helper\Forms::text(array(
                     'label' => __('User Id', 'jigoshop'),
-                    'name' => sprintf('%s[%s][user_id]', $name, $index),
-                    'value' => $userId,
-                    'min' => 1000000000,
-                    'max' => 9999999999,
-                    'placeholder' => __('User Id', 'jigoshop'),
-                    'classes' => array('user-id'),
+                    'name' => sprintf('%s[%s][user_login]', $name, $index),
+                    'value' => $userLogin,
+                    'placeholder' => __('User Login', 'jigoshop'),
+                    'classes' => array('user-login'),
                 )); ?>
                 <div class="col-xs-12">
                     <a href="#" class="btn btn-default pull-right generate">Generate</a>
@@ -28,11 +26,11 @@
             <div class="col-sm-6">
                 <?php \Jigoshop\Admin\Helper\Forms::text(array(
                     'label' => __('Key', 'jigoshop'),
-                    'name' => sprintf('%s[%s][key]', $name, $index),
+                    'name' => sprintf('%s[%s][user_password]', $name, $index),
                     'type' => 'text',
-                    'value' => $key,
+                    'value' => $userPassword,
                     'placeholder' => __('Key', 'jigoshop'),
-                    'classes' => array('key'),
+                    'classes' => array('user-password'),
                 )); ?>
                 <?php \Jigoshop\Admin\Helper\Forms::select(array(
                     'label' => __('Permissions', 'jigoshop'),
