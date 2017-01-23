@@ -85,4 +85,17 @@ class Multiselect extends Attribute implements Variable
 			$this->variable = $data['is_variable'];
 		}
 	}
+
+    /**
+     * Used by json_encode method to proprly
+     *
+     * @return array
+     */
+    public function jsonSerialize()
+    {
+        $state = parent::jsonSerialize();
+        $state['variable'] = $this->variable;
+
+        return $state;
+	}
 }

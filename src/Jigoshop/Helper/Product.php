@@ -609,4 +609,30 @@ class Product
         return $fields;
     }
 
+    public static function getAttachmentsData(Entity\Product $product)
+    {
+        $attachments = array();
+        $types = array_unique(array_map(function($attachment) {
+            return $attachment['type'];
+        }, $product->getAttachments()));
+        $uploadDir = wp_upload_dir(null, false);
+        $uploadDir = $uploadDir['baseurl'];
+        foreach($types as $type) {
+            $attachments[$type] = array_values(array_map(function($attachment) use ($uploadDir) {
+                $meta = get_post_meta($attachment['id'], '_wp_attachment_metadata', true);
+                $meta['file'] = $uploadDir . '/' . $meta['file'];
+                if(isset($meta['sizes'])) {
+                    $meta['sizes'] = array_map(function($size) use ($uploadDir) {
+                        $size['file'] = $uploadDir . '/' . $size['file'];
+                        return $size;
+                    }, $meta['sizes']);
+                }
+                return $meta;
+            }, array_filter($product->getAttachments(), function($attachment) use ($type) {
+                return $attachment['type'] == $type;
+            })));
+        }
+
+        return $attachments;
+    }
 }

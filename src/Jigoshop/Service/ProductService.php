@@ -154,6 +154,17 @@ class ProductService implements ProductServiceInterface
 		return $this->wp->applyFilters('jigoshop\service\product\find_by_query', $products, $query);
 	}
 
+    /**
+     * @return int
+     */
+    public function getProductsCount()
+    {
+        $wpdb = $this->wp->getWPDB();
+        return (int)$wpdb->get_var($wpdb->prepare("
+            SELECT COUNT(*) FROM {$wpdb->posts} 
+            WHERE post_status = 'publish' AND post_type = %s", Types::PRODUCT));
+	}
+
 	/**
 	 * Saves product to database.
 	 *

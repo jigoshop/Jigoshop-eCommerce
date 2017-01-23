@@ -2,7 +2,7 @@
 
 namespace Jigoshop\Admin\Settings;
 
-use Jigoshop\Api\Validation\Permission;
+use Jigoshop\Api\Permission;
 use Jigoshop\Container;
 use Jigoshop\Core\Messages;
 use Jigoshop\Core\Options;
@@ -217,13 +217,27 @@ Warning : This will result in showing "out of stock" products on the catalog pag
                 'description' => __('API DESC', 'jigoshop'),
                 'fields' => array(
                     array(
-                        'name' => '[api][keys]',
-                        'title' => __('Keys', 'jigoshop'),
+                        'name' => '[api][secret]',
+                        'title' => __('Secret key', 'jigoshop'),
                         'type' => 'user_defined',
-                        'value' => $this->settings['api']['keys'],
-                        'description' => __('Logged users don\'t need to use api keys, guest can see products and manage their carts', 'jigoshop'),
+                        'value' => $this->settings['api']['secret'],
+                        'desctiption' => __('', 'jigoshop'),
+                        'display' => function($field) {
+                            Render::output('admin/settings/api_key', array(
+                                'name' => $field['name'],
+                                'value' => $field['value'],
+                                'description' => $field['description'],
+                            ));
+                        }
+                    ),
+                    array(
+                        'name' => '[api][users]',
+                        'title' => __('Users', 'jigoshop'),
+                        'type' => 'user_defined',
+                        'value' => $this->settings['api']['users'],
+                        'description' => '',
                         'display' => function ($field) {
-                            Render::output('admin/settings/api_keys', array(
+                            Render::output('admin/settings/api_users', array(
                                 'name' => $field['name'],
                                 'values' => $field['value'],
                                 'description' => $field['description'],

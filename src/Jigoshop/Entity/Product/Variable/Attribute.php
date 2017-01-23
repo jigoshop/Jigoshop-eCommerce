@@ -9,7 +9,7 @@ use Jigoshop\Entity\Order\Item;
  *
  * @package Jigoshop\Entity\Product\Variable
  */
-class Attribute
+class Attribute implements \JsonSerializable
 {
 	const VARIATION_ATTRIBUTE_EXISTS = true;
 
@@ -114,4 +114,18 @@ class Attribute
 	{
 		echo $this->getItemValue($item);
 	}
+
+    /**
+     * Used by json_encode method to proprly
+     *
+     * @return array
+     */
+    public function jsonSerialize()
+    {
+        return [
+            'value' => $this->value,
+            'attribute' => $this->getAttribute()->getId(),
+            'exists' => $this->exists
+        ];
+    }
 }

@@ -123,4 +123,18 @@ class CompanyAddress extends Address
 		$this->vatNumber = $data['euvatno'];
 		parent::unserialize($data['parent']);
 	}
+
+    /**
+     * Used by json_encode method to proprly
+     *
+     * @return array
+     */
+    public function jsonSerialize()
+    {
+        return [
+            'company' => $this->company,
+            'euvatno' => $this->vatNumber,
+            'parent' => parent::jsonSerialize(),
+        ];
+	}
 }

@@ -8,7 +8,7 @@ namespace Jigoshop\Entity\Product\Attributes;
  * @package Jigoshop\Entity\Product\Attributes
  * @author  Amadeusz Starzykiewicz
  */
-class Sales implements \Serializable
+class Sales implements \Serializable, \JsonSerializable
 {
 	/** @var boolean */
 	private $enabled = false;
@@ -152,4 +152,25 @@ class Sales implements \Serializable
 		$this->to->setTimestamp((int)$data['to']);
 		$this->price = $data['price'];
 	}
+
+    /**
+     * Used by json_encode method to proprly
+     *
+     * @return array
+     */
+    public function jsonSerialize()
+    {
+        return [
+            'enabled' => $this->enabled,
+            'price' => $this->price,
+            'from' => array(
+                'timestamp' => $this->from->getTimestamp(),
+                'date' => $this->from->format('Y-m-d'),
+            ),
+            'to' => array(
+                'timestamp' => $this->to->getTimestamp(),
+                'date' => $this->to->format('Y-m-d'),
+            ),
+        ];
+    }
 }

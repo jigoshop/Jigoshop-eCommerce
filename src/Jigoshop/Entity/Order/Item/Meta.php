@@ -4,7 +4,7 @@ namespace Jigoshop\Entity\Order\Item;
 
 use Jigoshop\Entity\Order\Item;
 
-class Meta implements \Serializable
+class Meta implements \Serializable, \JsonSerializable
 {
 	/** @var Item */
 	private $item;
@@ -101,4 +101,17 @@ class Meta implements \Serializable
 		$this->key = $data['key'];
 		$this->value = $data['value'];
 	}
+
+    /**
+     * Used by json_encode method to proprly
+     *
+     * @return array
+     */
+    public function jsonSerialize()
+    {
+        return [
+            'key' => $this->key,
+            'value' => $this->value,
+        ];
+    }
 }

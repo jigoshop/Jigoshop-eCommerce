@@ -159,6 +159,10 @@ class Product implements EntityFactoryInterface
 	 */
 	public function fetch($post)
 	{
+        if(!in_array($post->post_type, [Types::PRODUCT, Types\Product\Variable::TYPE])) {
+            return null;
+        }
+
 		$type = $post ? $this->wp->getPostMeta($post->ID, 'type', true) : '';
 		if (empty($type)) {
 			$type = Simple::TYPE;

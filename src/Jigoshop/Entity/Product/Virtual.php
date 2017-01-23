@@ -233,4 +233,20 @@ class Virtual extends Product implements Purchasable, Shippable, Saleable
 	{
 		return false;
 	}
+
+    /**
+     * Used by json_encode method to proprly
+     *
+     * @return array
+     */
+    public function jsonSerialize()
+    {
+        $state = parent::jsonSerialize();
+        $state['regular_price'] = $this->regularPrice;
+        $state['sale'] = $this->sales;
+        $state['stock'] = $this->stock;
+        $state['url'] = $this->url;
+
+        return $state;
+    }
 }

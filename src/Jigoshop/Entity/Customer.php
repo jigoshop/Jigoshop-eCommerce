@@ -10,7 +10,7 @@ use Monolog\Registry;
  *
  * @package Jigoshop\Entity
  */
-class Customer implements EntityInterface
+class Customer implements EntityInterface, \JsonSerializable
 {
 	private $id;
 	private $login;
@@ -214,4 +214,22 @@ class Customer implements EntityInterface
 			$this->setShippingAddress(unserialize($state['shipping']));
 		}
 	}
+
+    /**
+     * Used by json_encode method to proprly
+     *
+     * @return array
+     */
+    public function jsonSerialize()
+    {
+        return array(
+            'id' => $this->id,
+            'login' => $this->login,
+            'email' => $this->email,
+            'name' => $this->name,
+            'billing' => $this->billingAddress,
+            'shipping' => $this->shippingAddress,
+            'taxAddres' => $this->taxAddress
+        );
+    }
 }

@@ -16,7 +16,7 @@ use Monolog\Registry;
  * @package Jigoshop\Entity
  * @author  Amadeusz Starzykiewicz
  */
-class Order implements OrderInterface
+class Order implements OrderInterface, \JsonSerializable
 {
 	/** @var int */
 	private $id;
@@ -850,4 +850,59 @@ class Order implements OrderInterface
             $this->taxIncluded = (bool)$state['price_includes_tax'];
         }
 	}
+
+    /**
+     * Used by json_encode method to proprly
+     *
+     * @return array
+     */
+    public function jsonSerialize()
+    {
+        $shipping = false;
+        if (is_object($this->shippingMethod)) {
+            $shipping = $this->shippingMethod->getState();
+        }
+        $payment = false;
+        if (is_object($this->paymentMethod)) {
+            $payment = $this->paymentMethod->getId();
+        }
+        $completedAt = false;
+        if (is_object($this->completedAt) && $this->completedAt->getTimestamp()) {
+            $completedAt = [
+                'timestamp' => $this->completedAt->getTimestamp(),
+                'format' => $this->completedAt->format('Y-m-d H:i:s')
+            ];
+        }
+
+       return [
+           'id' => $this->id,
+           'number' => $this->number,
+           'created_at' => [
+               'timestamp' => $this->createdAt->getTimestamp(),
+               'format' => $this->createdAt->format('Y-m-d H:i:s')
+           ],
+           'updated_at' => [
+               'timestamp' => $this->updatedAt->getTimestamp(),
+               'format' => $this->updatedAt->format('Y-m-d H:i:s')
+           ],
+           'completed_at' => $completedAt,
+           'items' => array_values($this->items),
+           'customer' => $this->customer,
+           'shipping' => [
+               'method' => $shipping,
+               'price' => $this->shippingPrice,
+               'rate' => $this->shippingMethodRate,
+           ],
+           'payment' => $payment,
+           'customer_note' => $this->customerNote,
+           'total' => $this->total,
+           'tax' => $this->tax,
+           'shipping_tax' => $this->shippingTax,
+           'subtotal' => $this->subtotal,
+           'discount' => $this->discount,
+           'coupons' => $this->coupons,
+           'status' => $this->status,
+           'update_messages' => $this->updateMessages,
+       ];
+    }
 }

@@ -1,6 +1,6 @@
 <?php
+namespace Jigoshop\Api;
 
-namespace Jigoshop\Api\Validation;
 /**
  * Class Permissions
  * @author Krzysztof Kasowski
@@ -12,6 +12,7 @@ class Permission
     const READ_ORDERS = 'read_orders';
     const READ_COUPONS = 'read_coupons';
     const READ_CUSTOMERS = 'read_customers';
+    const READ_REPORTS = 'read_reports';
     const MANAGE_PRODUCTS = 'manage_products';
     const MANAGE_CART = 'manage_cart';
     const MANAGE_ORDERS = 'manage_orders';
@@ -19,6 +20,7 @@ class Permission
     const MANAGE_CUSTOMERS = 'manage_customers';
     const MANAGE_EMAILS = 'manage_emails';
 
+    /** @var  array  */
     private static $permissions;
 
     /**
@@ -27,12 +29,13 @@ class Permission
     public static function getPermisions()
     {
         if(self::$permissions == null) {
-            self::$permissions = apply_filters('jigoshop\api\validation\permission\get_permissions', array(
+            self::$permissions = apply_filters('jigoshop\api\permission\get_permissions', array(
                 self::READ_PRODUCTS => __('Read products', 'jigoshop'),
                 self::READ_CART => __('Read cart', 'jigoshop'),
                 self::READ_ORDERS => __('Read orders', 'jigoshop'),
                 self::READ_COUPONS => __('Read coupons', 'jigoshop'),
                 self::READ_CUSTOMERS => __('Read customers', 'jigoshop'),
+                self::READ_REPORTS => __('Read reports', 'jigoshop'),
                 self::MANAGE_PRODUCTS => __('Manage products', 'jigoshop'),
                 self::MANAGE_CART => __('Manage cart', 'jigoshop'),
                 self::MANAGE_ORDERS => __('Manage orders', 'jigoshop'),
@@ -46,11 +49,11 @@ class Permission
     }
 
     /**
-     * Checks if selected status exists.
+     * Checks if selected permission exists.
      *
-     * @param $permission string Status name.
+     * @param $permission string Permission name.
      *
-     * @return bool Does status exists?
+     * @return bool Does permission exists?
      */
     public static function exists($permission)
     {
@@ -60,11 +63,9 @@ class Permission
     }
 
     /**
-     * Checks if selected status exists.
+     * @param $permission string Permission name.
      *
-     * @param $permission string Status name.
-     *
-     * @return bool Does status exists?
+     * @return string Translated Permission name
      */
     public static function getName($permission)
     {

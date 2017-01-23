@@ -2,13 +2,18 @@
 
 namespace Jigoshop;
 
-use Jigoshop\Api\Format;
-use Jigoshop\Api\InvalidResponseObject;
-use Jigoshop\Api\Response\ResponseInterface;
-use Jigoshop\Api\ResponseClassNotFound;
-use Jigoshop\Api\Routing;
-use Jigoshop\Api\Validation;
+use Firebase\JWT\JWT;
+use Jigoshop\Admin\Dashboard;
+use Jigoshop\Api\Routes;
 use Jigoshop\Core\Options;
+use Jigoshop\Extensions\Extension;
+use Monolog\Logger;
+use Monolog\Registry;
+use Slim;
+use Slim\App;
+use Slim\Container as SlimContainer;
+use Slim\Http\Environment;
+use Tuupola\Base62;
 use WPAL\Wordpress;
 
 /**
@@ -17,15 +22,14 @@ use WPAL\Wordpress;
  */
 class Api
 {
-    const QUERY_URI = 'jigoshop_rest';
-    const QUERY_VERSION = 'rest_version';
-    const QUERY_FORMAT = 'rest_format';
+    const QUERY_URI = 'jigoshop_rest_uri';
+    const QUERY_VERSION = 'jigoshop_rest_version';
 
     /** @var Wordpress */
     private $wp;
     /** @var Options */
     private $options;
-    /** @var Container  */
+    /** @var Container */
     private $di;
 
     /**
@@ -59,7 +63,6 @@ class Api
     {
         $vars[] = self::QUERY_URI;
         $vars[] = self::QUERY_VERSION;
-        $vars[] = self::QUERY_FORMAT;
 
         return $vars;
     }
@@ -70,8 +73,8 @@ class Api
     public function addRewrite()
     {
         $this->wp->addRewriteRule(
-            $this->wp->getRewrite()->root.'api/v([0-9])/([0-9a-zA-Z/]+)(\.json|\.xml)?$',
-            sprintf('index.php?%s=$matches[1]&%s=/$matches[2]&%s=$matches[3]', self::QUERY_VERSION, self::QUERY_URI, self::QUERY_FORMAT),
+            $this->wp->getRewrite()->root . 'api/v([0-9])([0-9a-zA-Z\-_/]+)?$',
+            sprintf('index.php?%s=$matches[1]&%s=/$matches[2]', self::QUERY_VERSION, self::QUERY_URI),
             'top'
         );
     }
@@ -82,143 +85,114 @@ class Api
     public function parseRequest($query)
     {
         $version = isset($query->query_vars[self::QUERY_VERSION]) ? $query->query_vars[self::QUERY_VERSION] : null;
-        $uri = isset($query->query_vars[self::QUERY_URI]) ? $query->query_vars[self::QUERY_URI] : null;
-        $format = isset($query->query_vars[self::QUERY_FORMAT]) && $query->query_vars[self::QUERY_FORMAT] ? $query->query_vars[self::QUERY_FORMAT] : '.json';
-        $format = trim($format, '.');
+        $uri = isset($query->query_vars[self::QUERY_URI]) ? str_replace('//', '/',
+            $query->query_vars[self::QUERY_URI]) : null;
 
-        if ($version && $uri && $format) {
-            echo $this->getFormattedResponse($format, $this->getResponse($version, $uri));
+        if ($version && $uri) {
+            $app = new App($this->getSlimContainer($uri));
+            $this->addMiddlewares($app);
+            $this->addRoutes($app, $version);
+
+            $app->run();
             exit;
         }
     }
 
-    private function getResponse($version, $uri)
+    /**
+     * @param $uri
+     *
+     * @return SlimContainer
+     */
+    private function getSlimContainer($uri)
     {
-        $response = '';
-        $status = true;
-        try {
-            $permissions = $this->validate($uri);
-            $response = $this->route($version, $uri, $permissions);
-        } catch(Exception $e) {
-            $status = false;
-            $response = $e->getMessage();
-        }
+        $di = $this->di;
+        $container = new SlimContainer([
+            'environment' => function () use ($uri) {
+                $server = $_SERVER;
+                $server['REQUEST_URI'] = $uri;
+                return new Environment($server);
+            },
+            'di' => function () use ($di) {
+                return $di;
+            },
+            'token' => function () {
+                return new Api\Token();
+            }
+        ]);
 
-        return array('status' => $status, 'data' => $response);
+        return $container;
     }
 
     /**
-     * @param string $uri
-     *
-     * @return string[]
+     * @param App $app
      */
-    private function validate($uri)
+    private function addMiddlewares(App $app)
     {
-        $validation = new Validation($this->options->get('advanced.api.keys', array()), getallheaders());
-        $validation->checkRequest($this->getHttpMethod(), $uri);
-
-        return $validation->getPermissions();
-    }
-    /**
-     * @param string $version
-     * @param string $uri
-     * @param string[] $permissions
-     *
-     * @throws Api\RouteNotFound
-     *
-     * @return string
-     */
-    private function route($version, $uri, $permissions)
-    {
-        $routing = new Routing();
-        $action = '';
-        if($this->getHttpMethod() == 'GET') {
-            $action = 'onGet';
-        } elseif($this->getHttpMethod() == 'PUT') {
-            $action = 'onPut';
-        } elseif($this->getHttpMethod() == 'POST') {
-            $action = 'onPost';
-        } elseif ($this->getHttpMethod() == 'DELETE') {
-            $action = 'onDelete';
+        $container = $app->getContainer();
+        $users = [];
+        foreach($this->options->get('advanced.api.users', []) as $user) {
+            $users[$user['login']] = $user['password'];
+        }
+        $secret = $this->options->get('advanced.api.secret', '');
+        if(empty($users) || empty($secret)) {
+            throw new Exception('Users or secret key was not set up.', 500);
         }
 
-        if(empty($action)) {
-            throw new Exception(__('Unsupported Http Method: %s', 'jigoshop'), $this->getHttpMethod());
-        }
-
-        foreach($this->getControllers() as $controller) {
-            $controller->$action($routing, $version);
-        }
-
-        $result = $routing->match($uri);
-        list($className, $methodName) = explode('@', $result['action']);
-        $response = $this->getResponseObject($className);
-        $this->validateResponseObject($response, $methodName);
-
-        $response->init($this->di, $permissions);
-
-        return call_user_func_array(array($response, $methodName), $result['params']);
+        $app->add(new Slim\Middleware\HttpBasicAuthentication([
+            'path' => '/token',
+            'relaxed' => ['localhost', 'jigoshop2.dev'],
+            'secure' => false,
+            'users' => $users
+        ]));
+        $app->add(new Slim\Middleware\JwtAuthentication([
+            'path' => '/',
+            'passthrough' => ['/token', '/ping'],
+            'secret' => $secret,
+            'secure' => false,
+            'relaxed' => ['localhost', 'jigoshop2.dev'],
+            'logger' => Registry::getInstance(\JigoshopInit::getLogger()),
+            'callback' => function ($request, $response, $args) use ($container) {
+                $container->token->restoreState($args['decoded']);
+            }
+        ]));
     }
 
     /**
-     * @return Routing\ControllerInterface[]
+     * @param App $app
      */
-    private function getControllers()
+    private function addRoutes(App $app, $version)
     {
         /** @var Extensions $extensions */
         $extensions = $this->di->get('jigoshop.extensions');
-        $controllers = array(new Routing\Controller());
-        foreach($extensions->getExtensions() as $extension) {
-            $controllers[] = $extension->getApiController();
-        }
+        $this->initDefaultHandlers($app);
+        (new Routes($this->options))->init($app, $version);
 
-        return array_filter($controllers);
+        array_map(function (Extension $extension) use ($app, $version) {
+            $extension->getApi()->init($app, $version);
+        }, $extensions->getExtensions());
     }
 
     /**
-     * @return string
+     * @param App $app
      */
-    private function getHttpMethod()
+    private function initDefaultHandlers(App $app)
     {
-        return $_SERVER['REQUEST_METHOD'];
-    }
-
-    /**
-     * @param string $className
-     * @return ResponseInterface
-     */
-    private function getResponseObject($className)
-    {
-        if(class_exists($className) == false) {
-            throw new Exception(__('Response class not found: %s', 'jigoshop'), $className);
-        }
-
-        return new $className();
-    }
-
-    /**
-     * @param ResponseInterface $object
-     * @param $requiredMethod
-     */
-    private function validateResponseObject($object, $requiredMethod)
-    {
-        if(($object instanceof ResponseInterface) == false) {
-            throw new Exception(sprintf(__('Invalid object: %s', 'jigoshop'), get_class($object)));
-        }
-        if(method_exists($object, $requiredMethod) == false) {
-            throw new Exception(__('Class `%s` does not have method: %s', 'jigoshop'), $object, $requiredMethod);
-        }
-    }
-
-    /**
-     * @param $format
-     * @param $responseToFormat
-     * @return string
-     */
-    private function getFormattedResponse($format, $responseToFormat)
-    {
-        $parser = new Format($format);
-
-        return $parser->get($responseToFormat);
+        $container = $app->getContainer();
+        $container['notFoundHandler'] = function ($container) {
+            return function () use ($container) {
+                return $container['response']->withStatus(404)->withJson([
+                    'success' => false,
+                    'error' => __('Resource not found', 'jigoshop')
+                ]);
+            };
+        };
+        $container['errorHandler'] = function ($container) {
+            return function ($request, $response, $exception) use ($container) {
+                return $container['response']->withStatus($exception->getCode())->withJson([
+                    'success' => false,
+                    'error' => $exception->getMessage()
+                ]);
+            };
+        };
     }
 }
