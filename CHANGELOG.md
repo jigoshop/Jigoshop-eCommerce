@@ -8,6 +8,9 @@
     * Fix: Allow to suppress all emails for current request.
     * Fix: Do not use new tax definitions for saved orders.
     * Fix: Allow to use prices including tax.
+    * Fix: Use Slim 3 instead of handmade framework.
+    * Fix: Rewrite ApiDeprecated class to Endpoint.
+    * Fix: File downloading.
 * 2.0.7 - 2016.12.28:
     * Fix: Downloadable email link.
     * Fix: Updating shipping methods in checkout.

@@ -24,6 +24,7 @@ class Api
 {
     const QUERY_URI = 'jigoshop_rest_uri';
     const QUERY_VERSION = 'jigoshop_rest_version';
+    const URL_PATTERN = 'api/v([0-9])([0-9a-zA-Z\-_/]+)';
 
     /** @var Wordpress */
     private $wp;
@@ -73,7 +74,7 @@ class Api
     public function addRewrite()
     {
         $this->wp->addRewriteRule(
-            $this->wp->getRewrite()->root . 'api/v([0-9])([0-9a-zA-Z\-_/]+)?$',
+            $this->wp->getRewrite()->root . self::URL_PATTERN . '?$',
             sprintf('index.php?%s=$matches[1]&%s=/$matches[2]', self::QUERY_VERSION, self::QUERY_URI),
             'top'
         );

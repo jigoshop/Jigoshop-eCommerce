@@ -62,7 +62,7 @@ class MainConfiguration implements ConfigurationInterface
 			'jigoshop.options',
 			'jigoshop.service.email'
 		));
-		$services->setDetails('jigoshop.api_deprecated', 'Jigoshop\ApiDeprecated', array(
+		$services->setDetails('jigoshop.endpoint', 'Jigoshop\Endpoint', array(
             'wpal',
             'di'
         ));
@@ -121,7 +121,7 @@ class MainConfiguration implements ConfigurationInterface
 			'jigoshop.options',
 			'jigoshop.messages'
 		));
-		$services->setDetails('jigoshop.product_type.downloadable.download_file', 'Jigoshop\Api\DownloadFile', array(
+		$services->setDetails('jigoshop.endpoint.download_file', 'Jigoshop\Endpoint\DownloadFile', array(
 			'wpal',
 			'jigoshop.options',
 			'jigoshop.messages',

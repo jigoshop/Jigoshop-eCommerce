@@ -38,7 +38,7 @@ class PaymentConfiguration implements ConfigurationInterface
 			'jigoshop.options',
 			'jigoshop.messages',
 		));
-        $services->setDetails('jigoshop.api.paypal', 'Jigoshop\Payment\PayPal', array(
+        $services->setDetails('jigoshop.endpoint.paypal', 'Jigoshop\Payment\PayPal', array(
             'wpal',
             'di',
             'jigoshop.options',

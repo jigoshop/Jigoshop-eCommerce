@@ -2,7 +2,7 @@
 
 namespace Jigoshop\Payment;
 
-use Jigoshop\Api\Processable;
+use Jigoshop\Endpoint\Processable;
 use Jigoshop\Container;
 use Jigoshop\Core;
 use Jigoshop\Core\Messages;
@@ -10,7 +10,6 @@ use Jigoshop\Core\Options;
 use Jigoshop\Entity\Customer\CompanyAddress;
 use Jigoshop\Entity\Order;
 use Jigoshop\Entity\Product;
-use Jigoshop\Frontend\Pages;
 use Jigoshop\Helper\Api;
 use Jigoshop\Helper\Currency;
 use Jigoshop\Helper\Order as OrderHelper;

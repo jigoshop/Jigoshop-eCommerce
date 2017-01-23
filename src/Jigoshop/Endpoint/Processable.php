@@ -1,11 +1,11 @@
 <?php
 
-namespace Jigoshop\Api;
+namespace Jigoshop\Endpoint;
 
 /**
- * @package Jigoshop\Api;
+ * Interface Processable
+ * @package Jigoshop\Endpoint;
  * @author Krzysztof Kasowski
- * @deprecated
  */
 interface Processable
 {
