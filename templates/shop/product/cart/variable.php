@@ -15,7 +15,7 @@ use Jigoshop\Helper\Product;
 			'label' => $attribute['label'],
 			'options' => $attribute['options'],
 			// TODO: Default selections
-			'placeholder' => __('Please select…', 'jigoshop'),
+			'placeholder' => __('Please select...', 'jigoshop'),
 		)); ?>
 	<?php endforeach; ?>
 	<div id="add-to-cart-buttons">
