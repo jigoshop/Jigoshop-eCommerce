@@ -39,6 +39,6 @@
 	"require-dev": {
 		"phpunit/phpunit": "4.1.*",
 		"mockery/mockery": "0.9.*",
-		"kkasowski/wpdebugbar": "*"
+		"symfony/var-dumper": "*"
 	}
 }

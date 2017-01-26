@@ -11,6 +11,7 @@
     * Fix: Use Slim 3 instead of handmade framework.
     * Fix: Rewrite ApiDeprecated class to Endpoint.
     * Fix: File downloading.
+    * Fix: Allow to select default variation.
 * 2.0.7 - 2016.12.28:
     * Fix: Downloadable email link.
     * Fix: Updating shipping methods in checkout.

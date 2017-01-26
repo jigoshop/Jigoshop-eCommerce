@@ -2,6 +2,7 @@
 @import '../bower/bootstrap/less/glyphicons';
 @import '../bower/bootstrap/less/mixins';
 @import 'admin/icons';
+@import 'variables';
 
 .jigoshop {
   @import '../bower/bootstrap/less/normalize';
@@ -121,6 +122,44 @@
     width: calc(~"100% - 30px");
     float: right;
   }
+
+  .animated {
+    padding: 0 10px;
+  }
+  .animated span {
+    line-height: 30px!important;
+    vertical-align: top;
+  }
+  .animated input[type="radio"],
+  .animated input[type="checkbox"] { display: none; }
+  .animated input[type="radio"] + i:before,
+  .animated input[type="checkbox"] + i:before {
+    font-size: 28px;
+    height: 25px;
+    width: 25px;
+    display: inline-block;
+  }
+  .animated input[type="radio"]:checked + i,
+  .animated input[type="checkbox"]:checked + i {
+    position: relative;
+    -webkit-animation: icon-beat 0.5s ease;
+    animation: icon-beat 0.5s ease;
+  }
+  .animated input[type="radio"] + i:before,
+  .animated input[type="checkbox"] + i:before {
+    content: "\e157";
+  }
+  .animated input[type="radio"]:checked + i:before,
+  .animated input[type="checkbox"]:checked + i:before{
+    content: "\e067";
+  }
+  .animated input[type="radio"]:checked + i,
+  .animated input[type="radio"]:checked + i:before,
+  .animated input[type="checkbox"]:checked + i,
+  .animated input[type="checkbox"]:checked + i:before{
+    color: @order-completed-color;
+    text-shadow: 1px 1px darken(@order-completed-color, 5%);
+  }
 }
 
 .sr-only {
@@ -132,4 +171,32 @@
   overflow: hidden;
   clip: rect(0,0,0,0);
   border: 0;
+}
+
+@-webkit-keyframes
+icon-beat {
+  0% {
+    -webkit-transform: scale(1.2);
+    -ms-transform: scale(1.2);
+    transform: scale(1.2);
+  }
+  100% {
+    -webkit-transform: scale(1);
+    -ms-transform: scale(1);
+    transform: scale(1);
+  }
+}
+
+@keyframes
+icon-beat {
+  0% {
+    -webkit-transform: scale(1.2);
+    -ms-transform: scale(1.2);
+    transform: scale(1.2);
+  }
+  100% {
+    -webkit-transform: scale(1);
+    -ms-transform: scale(1);
+    transform: scale(1);
+  }
 }

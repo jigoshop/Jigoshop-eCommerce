@@ -4,6 +4,7 @@ use Jigoshop\Helper\Product;
 /**
  * @var $product \Jigoshop\Entity\Product\Variable Product to add.
  */
+$defaultAttributesValues = Product::getVariationAttributes($product, $product->getVariation($product->getDefaultVariationId()));
 ?>
 <form action="" method="post" class="form" role="form">
 	<input type="hidden" name="action" value="add-to-cart" />
@@ -14,7 +15,7 @@ use Jigoshop\Helper\Product;
 			'classes' => array('product-attribute'),
 			'label' => $attribute['label'],
 			'options' => $attribute['options'],
-			// TODO: Default selections
+			'value' => isset($defaultAttributesValues[$id]) ? $defaultAttributesValues[$id] : '',
 			'placeholder' => __('Please select...', 'jigoshop'),
 		)); ?>
 	<?php endforeach; ?>

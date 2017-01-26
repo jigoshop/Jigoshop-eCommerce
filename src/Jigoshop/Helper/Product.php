@@ -2,6 +2,7 @@
 
 namespace Jigoshop\Helper;
 
+use Jigoshop\Admin\Page\ProductCategories;
 use Jigoshop\Core\Options as CoreOptions;
 use Jigoshop\Core\Types;
 use Jigoshop\Entity;
@@ -634,5 +635,43 @@ class Product
         }
 
         return $attachments;
+    }
+
+    /**
+     * @param Entity\Product\Variable $product
+     * @param Entity\Product\Variable\Variation $variation
+     * @return array
+     */
+    public static function getVariationAttributes($product, $variation)
+    {
+        $attributes = [];
+
+        if($product instanceof Entity\Product\Variable && $variation instanceof Entity\Product\Variable\Variation) {
+            foreach ($variation->getAttributes() as $attribute) {
+                /** @var Entity\Product\Variable\Attribute $attribute */
+                if($attribute->getValue()) {
+                    $attributes[$attribute->getAttribute()->getId()] = $attribute->getValue();
+                } else {
+                    //For 'any of' use first option
+                    $unusedOptions = array_filter($attribute->getAttribute()->getOptions(), function($option) use ($product, $attribute) {
+                        foreach($product->getVariations() as $_variation) {
+                            /** @var  Entity\Product\Variable\Variation $_variation*/
+                            if($_variation->getAttribute($attribute->getAttribute()->getId())->getValue() == $option->getId()) {
+                                return false;
+                            }
+                        }
+
+                        return true;
+                    });
+
+                    if(count($unusedOptions)) {
+                        $unusedOption = array_shift($unusedOptions);
+                        $attributes[$attribute->getAttribute()->getId()] = $unusedOption->getId();
+                    }
+                }
+            }
+        }
+
+        return $attributes;
     }
 }

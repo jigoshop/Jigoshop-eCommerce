@@ -15,6 +15,13 @@ $product = $variation->getProduct();
 	<h4 class="list-group-item-heading clearfix">
 		<button type="button" class="remove-variation btn btn-default pull-right" title="<?php _e('Remove', 'jigoshop'); ?>"><span class="glyphicon glyphicon-remove"></span></button>
 		<button type="button" class="show-variation btn btn-default pull-right" title="<?php _e('Expand', 'jigoshop'); ?>"><span class="glyphicon glyphicon-collapse-down"></span></button>
+		<label for="default_variation_<?php echo $variation->getId(); ?>" class="animated pull-right">
+			<span data-toggle="tooltip" data-placement="top" title="" data-original-title="This variation will be pre-selected on product page.">
+				<span class="small">Is default?</span>
+				<input id="default_variation_<?php echo $variation->getId(); ?>" name="product[default_variation_id]" type="radio" value="<?php echo $variation->getId(); ?>" <?php echo Forms::checked($variation->getParent()->getDefaultVariationId(), $variation->getId()); ?>">
+				<i class="glyphicon"></i>
+			</span>
+		</label>
 		<?php foreach($attributes as $attribute): /** @var $attribute Attribute */ $value = $variation->getAttribute($attribute->getId());?>
 			<?php Forms::select(array(
 				'name' => 'product[variation]['.$variation->getId().'][attribute]['.$attribute->getId().']',
