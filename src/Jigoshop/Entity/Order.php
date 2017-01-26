@@ -887,6 +887,7 @@ class Order implements OrderInterface, \JsonSerializable
            ],
            'completed_at' => $completedAt,
            'items' => array_values($this->items),
+           'price_includes_tax' => $this->taxIncluded,
            'customer' => $this->customer,
            'shipping' => [
                'method' => $shipping,

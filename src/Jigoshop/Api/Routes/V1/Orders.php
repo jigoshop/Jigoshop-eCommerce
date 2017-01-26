@@ -36,7 +36,7 @@ class Orders
     public function getOrders(Request $request, Response $response, $args)
     {
         if(!$this->app->getContainer()->token->hasPermission(Permission::READ_ORDERS)) {
-            throw new Exception('You have no permissions to access to this page.', 401);
+            throw new Exception('You have no permissions to access to this page.', 403);
         }
 
         /** @var OrderService $service */
@@ -75,18 +75,18 @@ class Orders
     public function getOrder(Request $request, Response $response, $args)
     {
         if(!$this->app->getContainer()->token->hasPermission(Permission::READ_ORDERS)) {
-            throw new Exception('You have no permissions to access to this page.', 401);
+            throw new Exception('You have no permissions to access to this page.', 403);
         }
 
         if(!isset($args['id']) || empty($args['id'])) {
-            throw new Exception(__('Product ID was not provided', 'jigoshop'), 404);
+            throw new Exception(__('Order ID was not provided', 'jigoshop'), 404);
         }
         /** @var OrderService $service */
         $service = $this->app->getContainer()->di->get('jigoshop.service.order');
         $order = $service->find($args['id']);
 
         if(!$order instanceof OrderEntity) {
-            throw new Exception(__('Product not found.', 'jigoshop'), 404);
+            throw new Exception(__('Order not found.', 'jigoshop'), 404);
         }
 
         return $response->withJson([

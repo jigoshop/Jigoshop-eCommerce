@@ -33,7 +33,7 @@ class Reports
     public function getReports(Request $request, Response $response, $args)
     {
         if(!$this->app->getContainer()->token->hasPermission(Permission::READ_REPORTS)) {
-            throw new Exception('You have no permissions to access to this page.', 401);
+            throw new Exception('You have no permissions to access to this page.', 403);
         }
 
         /** @var SalesTab $sales */
