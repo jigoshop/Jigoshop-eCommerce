@@ -11,7 +11,7 @@ use WPAL\Wordpress;
  */
 class Endpoint
 {
-	const ENDPOINT = 'jigoshop_api';
+	const ENDPOINT = 'jigoshop_endpoint';
 
 	/** @var Wordpress */
 	private $wp;
@@ -59,7 +59,6 @@ class Endpoint
 	public function parseRequest($query)
 	{
         $endpoint = isset($query->query_vars[self::ENDPOINT]) ? $query->query_vars[self::ENDPOINT] : null;
-        var_dump($endpoint);
 		if (!empty($endpoint)) {
             if ($this->di->services->detailsExists('jigoshop.api.'.$endpoint) || $this->di->services->detailsExists('jigoshop.endpoint.'.$endpoint)) {
                 ob_start();
