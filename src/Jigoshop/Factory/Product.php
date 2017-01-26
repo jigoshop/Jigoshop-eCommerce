@@ -201,6 +201,10 @@ class Product implements EntityFactoryInterface
 				}
 				$state['attributes'] = $attributes;
 			}
+
+			if (!isset($state['default_variation_id'])) {
+                $state['default_variation_id'] = '';
+            }
 			
 			$product->restoreState($state);
 		}

@@ -18,7 +18,12 @@ $product = $variation->getProduct();
 		<label for="default_variation_<?php echo $variation->getId(); ?>" class="animated pull-right">
 			<span data-toggle="tooltip" data-placement="top" title="" data-original-title="This variation will be pre-selected on product page.">
 				<span class="small">Is default?</span>
-				<input id="default_variation_<?php echo $variation->getId(); ?>" name="product[default_variation_id]" type="radio" value="<?php echo $variation->getId(); ?>" <?php echo Forms::checked($variation->getParent()->getDefaultVariationId(), $variation->getId()); ?>">
+				<input id="default_variation_<?php echo $variation->getId(); ?>"
+					   class="default_variation"
+					   name="product[default_variation_id]"
+					   type="checkbox"
+					   value="<?php echo $variation->getId(); ?>"
+				<?php echo Forms::checked($variation->getParent()->getDefaultVariationId(), $variation->getId()); ?>>
 				<i class="glyphicon"></i>
 			</span>
 		</label>

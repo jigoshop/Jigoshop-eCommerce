@@ -17,7 +17,10 @@ class AdminProductVariable
       .on 'change', '.list-group-item-text input.form-control, .list-group-item-text select.form-control', @updateVariation
       .on 'click', '.set_variation_image', @setImage
       .on 'click', '.remove_variation_image', @removeImage
+      .on 'change', 'input[type="checkbox"].default_variation', (event) ->
+        jQuery('input[type="checkbox"].default_variation').not(jQuery(event.target)).prop 'checked', false
     jQuery('.set_variation_image').each @connectImage
+    jQuery('#product-variations')
 
   removeParameters: (event) ->
     $item = jQuery(event.target)
