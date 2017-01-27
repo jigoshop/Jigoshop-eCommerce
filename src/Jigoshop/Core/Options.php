@@ -191,6 +191,7 @@ class Options
             'session' => 'php',
             'ignore_meta_queries' => false,
 			'api' => array(
+			    'enable' => false,
 			    'secret' => '',
 			    'users' => array()
             ),

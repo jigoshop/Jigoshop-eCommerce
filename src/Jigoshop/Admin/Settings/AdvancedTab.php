@@ -117,21 +117,6 @@ class AdvancedTab implements TabInterface
                     ),
                 ),
             ),
-//			Tak na przyszłość, jak będziemy chcieli wrócić, coś dorobić
-//			array(
-//				'title' => __('Enforcing', 'jigoshop'),
-//				'id' => 'enforcing',
-//				'fields' => array(
-//					array(
-//						'name' => '[force_ssl]',
-//						'title' => __('Force SSL on checkout', 'jigoshop'),
-//						'description' => __('Enforces WordPress to use SSL on checkout pages.', 'jigoshop'),
-//						'type' => 'checkbox',
-//						'checked' => $this->settings['force_ssl'],
-//						'classes' => array('switch-medium'),
-//					),
-//				),
-//			),
             array(
                 'title' => __('Integration', 'jigoshop'),
                 'id' => 'integration',
@@ -214,8 +199,15 @@ Warning : This will result in showing "out of stock" products on the catalog pag
             array(
                 'title' => __('API', 'jigoshop'),
                 'id' => 'api',
-                'description' => __('API DESC', 'jigoshop'),
+                'description' => __('', 'jigoshop'),
                 'fields' => array(
+                    array(
+                        'name' => '[api][enable]',
+                        'title' => __('Enable', 'jigoshop'),
+                        'type' => 'checkbox',
+                        'checked' => $this->settings['api']['enable'],
+                        'classes' => array('switch-medium'),
+                    ),
                     array(
                         'name' => '[api][secret]',
                         'title' => __('Secret key', 'jigoshop'),
@@ -345,14 +337,7 @@ Warning : This will result in showing "out of stock" products on the catalog pag
         }
         $settings['ignore_meta_queries'] = $settings['ignore_meta_queries'] == 'on';
 
-        if(isset($settings['api'], $settings['api']['keys'])) {
-            $settings['api']['keys'] = array_filter($settings['api']['keys'], function($item) {
-                return !empty($item['key']);
-            });
-            $settings['api']['keys'] = array_map(function($item) {
-                return array_merge(array('key' => '', 'permissions' => array()), $item);
-            }, $settings['api']['keys']);
-        }
+        $settings['api']['enable'] = $settings['api']['enable'] == 'on';
 
         $pages = $this->_getPages();
 

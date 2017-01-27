@@ -96,9 +96,11 @@ class Core
 		$endpoint = $container->get('jigoshop.endpoint');
 		$endpoint->run();
 
-		/** @var \Jigoshop\Api $api */
-		$api = $container->get('jigoshop.api');
-		$api->run();
+		if($this->options->get('advanced.api.enable', false)) {
+			/** @var \Jigoshop\Api $api */
+			$api = $container->get('jigoshop.api');
+			$api->run();
+		}
 
 		/** @var \Jigoshop\Service\TaxServiceInterface $tax */
 		$tax = $container->get('jigoshop.service.tax');
