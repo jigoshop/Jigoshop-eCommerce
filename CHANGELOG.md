@@ -12,6 +12,7 @@
     * Fix: Rewrite ApiDeprecated class to Endpoint.
     * Fix: File downloading.
     * Fix: Allow to select default variation.
+    * Fix: Variation sale datepickers.
 * 2.0.7 - 2016.12.28:
     * Fix: Downloadable email link.
     * Fix: Updating shipping methods in checkout.
