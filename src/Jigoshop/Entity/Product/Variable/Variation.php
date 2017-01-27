@@ -18,7 +18,7 @@ class Variation implements \JsonSerializable
 	private $parent;
 	/** @var Product|Product\Purchasable */
 	private $product;
-	/** @var array */
+	/** @var Attribute[] */
 	private $attributes = array();
 	/** @var string Cache for title */
 	private $title;
@@ -130,7 +130,7 @@ class Variation implements \JsonSerializable
 	}
 
 	/**
-	 * @return array
+	 * @return Attribute[]
 	 */
 	public function getAttributes()
 	{

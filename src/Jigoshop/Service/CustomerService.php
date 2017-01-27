@@ -66,7 +66,7 @@ class CustomerService implements CustomerServiceInterface
 	/**
 	 * Finds and fetches all available WordPress users.
 	 *
-	 * @return array List of all available users.
+	 * @return Entity[] List of all available users.
 	 */
 	public function findAll()
 	{
@@ -162,7 +162,7 @@ class CustomerService implements CustomerServiceInterface
 	 *
 	 * @param $query \WP_Query WordPress query.
 	 *
-	 * @return array Collection of found items.
+	 * @return null Collection of found items.
 	 */
 	public function findByQuery($query)
 	{

@@ -31,7 +31,7 @@ abstract class Attribute implements \JsonSerializable
 	private $visible;
 	/** @var bool */
 	private $exists;
-	/** @var array */
+	/** @var Option[] */
 	protected $options = array();
 	/** @var mixed */
 	protected $value;
@@ -123,7 +123,7 @@ abstract class Attribute implements \JsonSerializable
 	}
 
 	/**
-	 * @return array List of available options for attribute.
+	 * @return Option[] List of available options for attribute.
 	 */
 	public function getOptions()
 	{

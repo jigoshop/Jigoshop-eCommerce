@@ -119,7 +119,7 @@ class ProductService implements ProductServiceInterface
 	 *
 	 * @param $name string Post name to match.
 	 *
-	 * @return array List of matched products.
+	 * @return Product[] List of matched products.
 	 */
 	public function findLike($name)
 	{
@@ -136,7 +136,7 @@ class ProductService implements ProductServiceInterface
 	 *
 	 * @param $query \WP_Query WordPress query.
 	 *
-	 * @return array Collection of found items.
+	 * @return Product[] Collection of found items.
 	 */
 	public function findByQuery($query)
 	{
@@ -310,7 +310,7 @@ class ProductService implements ProductServiceInterface
 	/**
 	 * @param $number int Number of products to find.
 	 *
-	 * @return array List of products that are out of stock.
+	 * @return Product[] List of products that are out of stock.
 	 */
 	public function findOutOfStock($number)
 	{
@@ -339,7 +339,7 @@ class ProductService implements ProductServiceInterface
 	 * @param $threshold int Threshold where to assume product is low in stock.
 	 * @param $number    int Number of products to find.
 	 *
-	 * @return array List of products that are low in stock.
+	 * @return Product[] List of products that are low in stock.
 	 */
 	public function findLowStock($threshold, $number)
 	{
@@ -426,7 +426,7 @@ class ProductService implements ProductServiceInterface
 	/**
 	 * Finds and returns list of available attributes.
 	 *
-	 * @return array List of available product attributes
+	 * @return Attribute[] List of available product attributes
 	 */
 	public function findAllAttributes()
 	{
@@ -487,7 +487,7 @@ class ProductService implements ProductServiceInterface
 	 *
 	 * @param $productId int Product ID.
 	 *
-	 * @return array List of attributes attached to selected product.
+	 * @return Attribute[] List of attributes attached to selected product.
 	 */
 	public function getAttributes($productId)
 	{

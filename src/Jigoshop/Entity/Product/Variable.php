@@ -91,7 +91,7 @@ class Variable extends Product implements Shippable, Saleable
 	}
 
 	/**
-	 * @return array List of all assigned variations.
+	 * @return Product\Variable\Variation[] List of all assigned variations.
 	 */
 	public function getVariations()
 	{

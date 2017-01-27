@@ -32,7 +32,7 @@ class Order implements OrderInterface, \JsonSerializable
 	private $completedAt;
 	/** @var Customer */
 	private $customer;
-	/** @var array */
+	/** @var Item[] */
 	private $items = array();
 	/** @var Shipping\Method */
 	private $shippingMethod;

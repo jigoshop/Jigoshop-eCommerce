@@ -2,6 +2,8 @@
 
 namespace Jigoshop\Entity;
 
+use Jigoshop\Entity\Product\Attribute;
+
 /**
  * Product class.
  *
@@ -31,6 +33,7 @@ abstract class Product implements EntityInterface, Product\Taxable, \JsonSeriali
 
     private $visibility = self::VISIBILITY_PUBLIC;
     private $featured;
+    /** @var  Attribute[] */
     private $attributes;
     private $attributeOrder;
     private $attachments;
@@ -346,7 +349,7 @@ abstract class Product implements EntityInterface, Product\Taxable, \JsonSeriali
     }
 
     /**
-     * @return array List of product attributes.
+     * @return Attribute[] List of product attributes.
      */
     public function getAttributes()
     {
@@ -354,7 +357,7 @@ abstract class Product implements EntityInterface, Product\Taxable, \JsonSeriali
     }
 
     /**
-     * @return array List of product attributes.
+     * @return Attribute[] List of product attributes.
      */
     public function getVisibleAttributes()
     {

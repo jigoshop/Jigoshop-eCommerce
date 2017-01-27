@@ -5,7 +5,9 @@ namespace Jigoshop\Service;
 use Jigoshop\Core\Options;
 use Jigoshop\Core\Types;
 use Jigoshop\Entity\Coupon as Entity;
+use Jigoshop\Entity\Coupon;
 use Jigoshop\Entity\EntityInterface;
+use Jigoshop\Entity\Product;
 use Jigoshop\Factory\Coupon as Factory;
 use WPAL\Wordpress;
 
@@ -40,7 +42,7 @@ class CouponService implements CouponServiceInterface
 	 *
 	 * @param $id int The ID.
 	 *
-	 * @return EntityInterface
+	 * @return Product
 	 */
 	public function find($id)
 	{
@@ -126,7 +128,7 @@ class CouponService implements CouponServiceInterface
 	/**
 	 * @param array $codes List of codes to find.
 	 *
-	 * @return array Found coupons.
+	 * @return Coupon[] Found coupons.
 	 */
 	public function getByCodes(array $codes)
 	{
@@ -193,7 +195,7 @@ class CouponService implements CouponServiceInterface
 	 *
 	 * @param $query \WP_Query WordPress query.
 	 *
-	 * @return array Collection of found items.
+	 * @return Coupon[] Collection of found items.
 	 */
 	public function findByQuery($query)
 	{

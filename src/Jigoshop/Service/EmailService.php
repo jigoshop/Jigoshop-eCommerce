@@ -4,6 +4,7 @@ namespace Jigoshop\Service;
 
 use Jigoshop\Core\Options;
 use Jigoshop\Core\Types;
+use Jigoshop\Entity\Email;
 use Jigoshop\Entity\EntityInterface;
 use Jigoshop\Factory\Email as Factory;
 use WPAL\Wordpress;
@@ -89,7 +90,7 @@ class EmailService implements EmailServiceInterface
 	 *
 	 * @param $query \WP_Query WordPress query.
 	 *
-	 * @return array Collection of found items.
+	 * @return Email[] Collection of found items.
 	 */
 	public function findByQuery($query)
 	{

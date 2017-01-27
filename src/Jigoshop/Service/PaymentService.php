@@ -48,7 +48,7 @@ class PaymentService implements PaymentServiceInterface
 	/**
 	 * Returns list of available shipping methods.
 	 *
-	 * @return array List of available shipping methods.
+	 * @return Method[] List of available shipping methods.
 	 */
 	public function getAvailable()
 	{
@@ -58,7 +58,7 @@ class PaymentService implements PaymentServiceInterface
 	/**
 	 * Returns list of enabled shipping methods.
 	 *
-	 * @return array List of enabled shipping methods.
+	 * @return Method[] List of enabled shipping methods.
 	 */
 	public function getEnabled()
 	{

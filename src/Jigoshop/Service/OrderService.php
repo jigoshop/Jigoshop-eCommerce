@@ -509,7 +509,7 @@ class OrderService implements OrderServiceInterface
     }
 
     /**
-     * @return array List of orders that are too long in Pending status.
+     * @return Order[] List of orders that are too long in Pending status.
      */
     public function findOldPending()
     {
@@ -527,7 +527,7 @@ class OrderService implements OrderServiceInterface
     }
 
     /**
-     * @return array List of orders that are too long in Processing status.
+     * @return Order[] List of orders that are too long in Processing status.
      */
     public function findOldProcessing()
     {
@@ -560,7 +560,7 @@ class OrderService implements OrderServiceInterface
      *
      * @param $userId int User ID.
      *
-     * @return array Orders found.
+     * @return Order[] Orders found.
      */
     public function findForUser($userId)
     {
