@@ -193,13 +193,13 @@ class AdminProduct
       selection.map (attachment) =>
         attachment = attachment.toJSON()
         if attachment.id?
-          if element == 'gallery'
+          if element == 'image'
             options = {
               template_name: 'product-gallery'
               insert_before: '.empty-gallery'
               attachment_class: '.gallery-image'
             }
-          else if element == 'downloads'
+          else if element == 'datafile'
             options = {
               template_name: 'product-downloads'
               insert_before: '.empty-downloads'
@@ -210,15 +210,13 @@ class AdminProduct
     wpMedia.open()
 
   initAttachments: =>
-    if @params.attachments.gallery?
-      template = wp.template 'product-gallery'
-      for attachment in @params.attachments.gallery
+    for attachment in @params.attachments
+      if attachment.type == 'image'
+        template = wp.template 'product-gallery'
         jQuery('.empty-gallery').before template(attachment)
         @addHooks '', jQuery('.gallery-image').last()
-
-    if @params.attachments.downloads?
-      template = wp.template 'product-downloads'
-      for attachment in @params.attachments.downloads
+      else if attachment.type == 'datafile'
+        template = wp.template 'product-downloads'
         jQuery('.empty-downloads').before template(attachment)
         @addHooks '', jQuery('.downloads-file').last()
 

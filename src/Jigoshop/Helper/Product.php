@@ -674,4 +674,16 @@ class Product
 
         return $attributes;
     }
+
+    /**
+     * @param Entity\Product\Attachment[] $attachments
+     * @param string $type
+     * @return Entity\Product\Attachment[]
+     */
+    public static function filterAttachments($attachments, $type)
+    {
+        return array_filter($attachments, function($attachment) use ($type) {
+            return $attachment->getType() == $type;
+        });
+    }
 }

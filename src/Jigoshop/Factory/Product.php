@@ -4,6 +4,7 @@ namespace Jigoshop\Factory;
 
 use Jigoshop\Core\Options;
 use Jigoshop\Core\Types;
+use Jigoshop\Entity\Product\Attachment;
 use Jigoshop\Entity\Product\Attribute;
 use Jigoshop\Entity\Product\Purchasable;
 use Jigoshop\Entity\Product\Simple;
@@ -373,5 +374,21 @@ class Product implements EntityFactoryInterface
 			default:
 				return $this->wp->applyFilters('jigoshop\factory\product\create_attribute', null, $type, $exists);
 		}
+	}
+
+    /**
+     * @param $type
+     * @return Attachment
+     */
+    public function createAttachment($type)
+    {
+        switch ($type) {
+            case Attachment\Image::TYPE:
+                return new Attachment\Image();
+            case Attachment\Datafile::TYPE;
+                return new Attachment\Datafile();
+            default:
+                return $this->wp->applyFilters('jigoshop\factory\product\create_attachment', null, $type);
+        }
 	}
 }

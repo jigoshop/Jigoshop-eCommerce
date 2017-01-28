@@ -387,11 +387,6 @@ class ProductService implements ProductServiceInterface
 		$uploadUrl = $this->wp->wpUploadDir()['baseurl'];
 		$wpdb = $this->wp->getWPDB();
 
-		$attachments = $this->wp->applyFilters('jigoshop\service\product\attachments\types', array(
-			'gallery' => array(),
-			'downloads' => array(),
-		));
-
 		$query = $wpdb->prepare("SELECT post.ID as id, post.post_title as title, post.guid as url, meta.meta_value as meta, attachment.type
 				FROM {$wpdb->prefix}jigoshop_product_attachment as attachment
 				LEFT JOIN {$wpdb->posts} as post ON (attachment.attachment_id = post.ID)
@@ -400,24 +395,31 @@ class ProductService implements ProductServiceInterface
 		$results = $wpdb->get_results($query, ARRAY_A);
 
 		foreach($results as $attachment) {
-			$attachment['meta'] = unserialize($attachment['meta']);
-			if (isset($attachment['meta']['sizes']) && isset($attachment['meta']['sizes'][$size])) {
-				$thumbUrl = $uploadUrl . '/' . str_replace(
-					basename($attachment['meta']['file']),
-					basename($attachment['meta']['sizes'][$size]['file']),
-					$attachment['meta']['file']
-				);
-			} else {
-				$thumbUrl = $uploadUrl . '/' . $attachment['meta']['file'];
-			}
+            $entity = $this->factory->createAttachment($attachment['type']);
+            if($entity instanceof Product\Attachment) {
+                $state = [
+                    'id' => $attachment['id'],
+                    'title' => $attachment['title'],
+                    'url' => isset($attachment['meta']['file']) ? $uploadUrl . '/' . $attachment['meta']['file'] : $attachment['url'],
+                ];
 
-			$attachments[$attachment['type']][] = array(
-				'id' => $attachment['id'],
-				'title' => $attachment['title'],
-				'url' => isset($attachment['meta']['file']) ? $uploadUrl . '/' . $attachment['meta']['file'] : $attachment['url'],
-				'thumbnail' => $thumbUrl,
-				'image' => $this->wp->wpGetAttachmentImage($attachment['id'], $size),
-			);
+                if ($entity instanceof Product\Attachment\Image) {
+                    $attachment['meta'] = unserialize($attachment['meta']);
+                    if (isset($attachment['meta']['sizes'], $attachment['meta']['sizes'][$size])) {
+                        $state['thumbnail'] = $uploadUrl . '/' . str_replace(
+                                basename($attachment['meta']['file']),
+                                basename($attachment['meta']['sizes'][$size]['file']),
+                                $attachment['meta']['file']
+                            );
+                    } else {
+                        $state['thumbnail'] = $uploadUrl . '/' . $attachment['meta']['file'];
+                    }
+                    $state['image'] = $this->wp->wpGetAttachmentImage($attachment['id'], $size);
+                }
+                $entity->restoreState($state);
+
+                $attachments[] = $entity;
+            }
 		}
 
 		return $attachments;
