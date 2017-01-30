@@ -84,11 +84,13 @@ class Product
                             $product);
                     }
                     if (strpos($product->getSales()->getPrice(), '%') !== false) {
-                        return '<del>' . self::formatPrice($price) . '</del>' . self::formatPrice($product->getPrice()) . '
+                        $result = '<del>' . self::formatPrice($price) . '</del>' . self::formatPrice($product->getPrice()) . '
 						<ins>' . sprintf(__('%s off!', 'jigoshop'), $product->getSales()->getPrice()) . '</ins>';
+                        break;
                     } else {
-                        return '<del>' . self::formatPrice($price) . '</del>
+                        $result = '<del>' . self::formatPrice($price) . '</del>
 						<ins>' . self::formatPrice($product->getPrice()) . '</ins>';
+                        break;
                     }
                 }
 
