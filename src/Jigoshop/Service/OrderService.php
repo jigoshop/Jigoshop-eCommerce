@@ -34,7 +34,7 @@ class OrderService implements OrderServiceInterface
         $this->factory = $factory;
 
         $wp->addAction('save_post_' . Types\Order::NAME, array($this, 'savePost'), 10);
-        $wp->addAction('jigoshop\order\add_item', [$this, 'priceIncludingTax']);
+        //$wp->addAction('jigoshop\order\add_item', [$this, 'priceIncludingTax']);
     }
 
     /**

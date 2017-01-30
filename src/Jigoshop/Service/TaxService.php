@@ -125,7 +125,7 @@ class TaxService implements TaxServiceInterface
                     $item->setPrice(($item->getPrice()/((1 + $standardRate) * (1 + $compoundRate))));
                 }
             }
-        });
+        }, 10 ,2);
 		$wp->addAction('jigoshop\order\add_item', function ($item, $order) use ($service){
 			/** @var $item Order\Item */
 			/** @var $order Order */
