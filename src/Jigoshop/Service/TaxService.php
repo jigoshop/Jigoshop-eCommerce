@@ -99,7 +99,7 @@ class TaxService implements TaxServiceInterface
             /** @var $order Order */
             if($item->getProduct() && $item->getProduct()->isTaxable() && $order->isTaxIncluded()) {
                 if($item->getProduct() instanceof Variable) {
-                    $price = $item->getProduct()->getVariation($item->getMeta('variation_id')->getValue())->getPrice();
+                    $price = $item->getProduct()->getVariation($item->getMeta('variation_id')->getValue())->getProduct()->getPrice();
                 } else {
                     $price = $item->getProduct()->getPrice();
                 }

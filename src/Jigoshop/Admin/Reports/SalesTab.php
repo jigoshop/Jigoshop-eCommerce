@@ -23,8 +23,7 @@ class SalesTab implements TabInterface
 		$this->options = $options;
 
         if (in_array($this->wp->getPageNow(), array('admin.php', 'options.php')) &&
-            isset($_GET['page']) && $_GET['page'] == Reports::NAME &&
-            isset($_GET['tab']) && $_GET['tab'] == self::SLUG
+            isset($_GET['page']) && $_GET['page'] == Reports::NAME
         ) {
             $this->chart = $this->getChart();
         }

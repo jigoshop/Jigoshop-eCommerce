@@ -394,6 +394,8 @@ class ProductService implements ProductServiceInterface
 				WHERE product_id = %d", $product->getId());
 		$results = $wpdb->get_results($query, ARRAY_A);
 
+        $attachments = [];
+
 		foreach($results as $attachment) {
             $entity = $this->factory->createAttachment($attachment['type']);
             if($entity instanceof Product\Attachment) {

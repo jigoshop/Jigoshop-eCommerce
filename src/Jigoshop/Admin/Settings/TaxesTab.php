@@ -106,6 +106,7 @@ class TaxesTab implements TabInterface
 						'title' => __('Included in product price?', 'jigoshop'),
 						'type' => 'checkbox',
 						'checked' => $this->options['included'],
+                        'classes' => array('switch-medium'),
 					),
 					array(
 						'name' => '[price_tax]',
@@ -210,8 +211,7 @@ class TaxesTab implements TabInterface
 	 */
 	public function validate($settings)
 	{
-		// TODO: Re-enable
-//		$settings['included'] = $settings['included'] == 'on';
+		$settings['included'] = $settings['included'] == 'on';
 		$settings['shipping'] = $settings['shipping'] == 'on';
 		$classes = $settings['classes'];
 		$settings['classes'] = array();
