@@ -325,7 +325,7 @@ class JigoshopInit
         if (WP_DEBUG) {
             $stream = new \Monolog\Handler\StreamHandler(self::$logDir . '/jigoshop.debug.log', \Monolog\Logger::DEBUG);
             $stream->setFormatter($formatter);
-            $logger->pushHandler();
+            $logger->pushHandler($stream);
         }
         $stream = new \Monolog\Handler\StreamHandler(self::$logDir . '/jigoshop.log', \Monolog\Logger::WARNING);
         $stream->setFormatter($formatter);
