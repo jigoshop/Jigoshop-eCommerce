@@ -20,7 +20,7 @@ class Endpoint
      */
     public static function getUrl($value, $permalink = null)
     {
-        return self::getEndpointUrl(\Jigoshop\Endpoint::API_ENDPOINT, $value, $permalink);
+        return self::getEndpointUrl(\Jigoshop\Endpoint::ENDPOINT, $value, $permalink);
     }
 
     /**

@@ -17,6 +17,7 @@
     * Fix: Do shortcodes in product description. 
     * Fix: Bank transfer fields values.
     * Fix: Improve cart RWD.
+    * Fix: Downloadable product should be a child of simple product.
 * 2.0.7 - 2016.12.28:
     * Fix: Downloadable email link.
     * Fix: Updating shipping methods in checkout.

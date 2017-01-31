@@ -7,6 +7,7 @@ use Jigoshop\Core\Messages;
 use Jigoshop\Core\Options;
 use Jigoshop\Core\Types;
 use Jigoshop\Entity\OrderInterface;
+use Jigoshop\Entity\Product\Shippable;
 use Jigoshop\Helper\Country;
 use Jigoshop\Helper\Scripts;
 use Jigoshop\Service\CartServiceInterface;
@@ -238,7 +239,7 @@ class FlatRate implements Method
 	{
         if($this->options['type'] == 'per_item') {
             $quantity = array_sum(array_map(function($item) {
-                return $item->getQuantity();
+                return $item->getProduct() && $item->getProduct() instanceof Shippable ? $item->getQuantity() : 0;
             }, $order->getItems()));
             return (float)(($this->options['cost'] * $quantity) + $this->options['fee']);
         }
