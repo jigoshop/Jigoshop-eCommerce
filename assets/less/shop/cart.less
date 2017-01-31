@@ -18,6 +18,26 @@
   @import '../../bower/bootstrap/less/type.less';
 
   #cart {
+    #mobile {
+      display: none;
+      margin-left: 0;
+      margin-right: 0;
+      .buttons {
+        padding-left: 15px;
+        width: auto;
+        .product-remove {
+          width: auto;
+        }
+      }
+      @media screen and (max-width: @screen-sm) {
+        display: block;
+      }
+    }
+    table.table-hover {
+      @media screen and (max-width: @screen-sm) {
+        display: none;
+      }
+    }
     td {
       vertical-align: middle;
     }
@@ -101,6 +121,9 @@
         th {
           text-align: right;
           width: 30%;
+        }
+        @media screen and (max-width: @screen-sm) {
+          width: 100%;
         }
       }
     }

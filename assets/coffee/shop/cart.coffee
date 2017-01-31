@@ -8,6 +8,11 @@ class Cart
     jQuery('#cart')
       .on 'change', '.product-quantity input', @updateQuantity
       .on 'click', '.product-remove a', @removeItem
+    jQuery('#mobile')
+      .on 'click', '.show-product', (event) ->
+        $item = jQuery(event.target)
+        jQuery('.list-group-item-text', $item.closest('li')).slideToggle ->
+          jQuery('span', $item).toggleClass('glyphicon-collapse-down').toggleClass('glyphicon-collapse-up')
     jQuery('#shipping-calculator')
       .on 'click', '#change-destination', @changeDestination
       .on 'click', '.close', @changeDestination
@@ -126,12 +131,14 @@ class Cart
   removeItem: (e) =>
     # TODO: Ask nicely if client is sure?
     e.preventDefault()
-    $item = jQuery(e.target).closest('tr')
+    $item = jQuery(e.target).closest('tr, li')
     jQuery('.product-quantity', $item).val(0)
     @updateQuantity(e)
 
   updateQuantity: (e) =>
-    $item = jQuery(e.target).closest('tr')
+    $item = jQuery(e.target).closest('tr, li')
+    jQuery('span.product-quantity', $item).html(jQuery(e.target).val())
+    jQuery('input.product-quantity', $item).html(jQuery(e.target).val())
     @block()
     jQuery.ajax(
       url: jigoshop.getAjaxUrl()
