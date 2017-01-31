@@ -108,9 +108,11 @@ class TaxService implements TaxServiceInterface
                     $taxDefinitions = $order->getTaxDefinitions();
                     $standard = $compound = [];
                     foreach ($taxClasses as $class) {
-                        $standard[$class] = $taxDefinitions[$class];
-                        if (isset($taxDefinitions['__compound__'.$class])) {
-                            $compound[$class] = $taxDefinitions['__compound__'.$class];
+                        if(isset($taxDefinitions[$class])) {
+                            $standard[$class] = $taxDefinitions[$class];
+                            if (isset($taxDefinitions['__compound__' . $class])) {
+                                $compound[$class] = $taxDefinitions['__compound__' . $class];
+                            }
                         }
                     }
 

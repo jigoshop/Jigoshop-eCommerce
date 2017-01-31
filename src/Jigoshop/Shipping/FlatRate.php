@@ -239,7 +239,8 @@ class FlatRate implements Method
 	{
         if($this->options['type'] == 'per_item') {
             $quantity = array_sum(array_map(function($item) {
-                return $item->getProduct() && $item->getProduct() instanceof Shippable ? $item->getQuantity() : 0;
+                $product = $item->getProduct();
+                return $product && $product instanceof Shippable && $product->isShippable() ? $item->getQuantity() : 0;
             }, $order->getItems()));
             return (float)(($this->options['cost'] * $quantity) + $this->options['fee']);
         }
