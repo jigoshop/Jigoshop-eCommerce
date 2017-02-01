@@ -1,6 +1,6 @@
 ## Changelog
 
-* 2.0.8:
+* 2.0.8 - 2017.02.01:
     * Fix: Allow to remove all attachments.
     * Fix: Do not recalculate discounts for placed orders.
     * Fix: Allow to change attribute option value.
@@ -18,6 +18,8 @@
     * Fix: Bank transfer fields values.
     * Fix: Improve cart RWD.
     * Fix: Downloadable product should be a child of simple product.
+    * Fix: Flat rate shipping should ignore non shippable products.
+    * Fix: Force rewrite permaling on every Jigoshop eCommerce update.
 * 2.0.7 - 2016.12.28:
     * Fix: Downloadable email link.
     * Fix: Updating shipping methods in checkout.
