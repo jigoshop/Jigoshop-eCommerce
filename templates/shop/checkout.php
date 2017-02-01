@@ -83,6 +83,29 @@ use Jigoshop\Helper\Tax;
 		<div class="panel-heading">
 			<h3 class="panel-title"><?php _e('Your order', 'jigoshop'); ?></h3>
 		</div>
+		<ul id="checkout-mobile">
+			<?php foreach($cart->getItems() as $key => $item): /** @var \Jigoshop\Entity\Order\Item $item */ ?>
+				<?php Render::output('shop/checkout/mobile/'.$item->getType(), array('cart' => $cart, 'key' => $key, 'item' => $item, 'showWithTax' => $showWithTax)); ?>
+			<?php endforeach; ?>
+		</ul>
+		<div class="mobile-coupons-product-subtotal">
+		<div class="pull-left">
+			<?php \Jigoshop\Helper\Forms::text(array(
+				'id' => 'jigoshop_coupons',
+				'name' => 'jigoshop_coupons',
+				'placeholder' => __('Enter coupons...', 'jigoshop'),
+				'value' => join(',', array_map(function ($coupon){
+					/** @var $coupon \Jigoshop\Entity\Coupon */
+					return $coupon->getCode();
+				}, $cart->getCoupons())),
+			)); ?>
+		</div>
+		<div class="pull-right">
+			<?php $productSubtotal = $showWithTax ? $cart->getProductSubtotal() + $cart->getTotalTax() : $cart->getProductSubtotal(); ?>
+			<div class="pull-left mobile-products-subtotal"><?php _e('Products subtotal', 'jigoshop'); ?></div>
+			<div class="pull-left product-subtotal" class="pull-right"><?php echo Product::formatPrice($productSubtotal); ?></div>
+		</div>
+		</div>
 		<table class="table table-hover">
 			<thead>
 			<tr>

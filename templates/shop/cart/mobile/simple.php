@@ -52,7 +52,7 @@ $price = $showWithTax ? $item->getPrice() + $item->getTax() / $item->getQuantity
 			<fieldset>
 				<div class="form-group">
 					<label class="margin-top-bottom-9">
-						Unit Price
+						<?php _e('Unit Price', 'jigoshop'); ?>
 					</label>
 					<div class="clearfix product-price">
 						<?php echo apply_filters('jigoshop\template\shop\cart\product_price', \Jigoshop\Helper\Product::formatPrice($price), $price, $product, $item); ?>
@@ -61,7 +61,7 @@ $price = $showWithTax ? $item->getPrice() + $item->getTax() / $item->getQuantity
 				<div class="form-group product_quantity_field padding-bottom-5">
 					<div class="row">
 						<label for="product_quantity" class="margin-top-bottom-9">
-							Quantity
+							<?php _e('Quantity', 'jigoshop'); ?>
 						</label>
 						<div class="clearfix">
 							<div class="tooltip-inline-badge">
@@ -76,7 +76,7 @@ $price = $showWithTax ? $item->getPrice() + $item->getTax() / $item->getQuantity
 				<div class="form-group product_regular_price_field ">
 					<div class="row">
 						<label for="product_regular_price" class="margin-top-bottom-9">
-							Price
+							<?php _e('Price', 'jigoshop'); ?>
 						</label>
 						<div class="clearfix product-subtotal">
 							<?php echo apply_filters('jigoshop\template\shop\cart\product_subtotal', \Jigoshop\Helper\Product::formatPrice($item->getQuantity() * $price), $item->getQuantity() * $price, $product, $item); ?>

@@ -8,6 +8,11 @@ class Checkout
     @_prepareStateField("#jigoshop_order_billing_address_state")
     @_prepareStateField("#jigoshop_order_shipping_address_state")
 
+    jQuery('#checkout-mobile')
+    .on 'click', '.show-product', (event) ->
+      $item = jQuery(event.target)
+      jQuery('.list-group-item-text', $item.closest('li')).slideToggle ->
+        jQuery('span', $item).toggleClass('glyphicon-collapse-down').toggleClass('glyphicon-collapse-up')
     jQuery('#jigoshop-login').on 'click', (event) ->
       event.preventDefault()
       jQuery('#jigoshop-login-form').slideToggle()
