@@ -4,7 +4,7 @@ namespace Jigoshop\Entity\Product;
 
 use Jigoshop\Entity\Product;
 
-class Virtual extends Product implements Purchasable, Shippable, Saleable
+class Virtual extends Product implements Purchasable, Saleable
 {
 	const TYPE = 'virtual';
 
@@ -222,16 +222,6 @@ class Virtual extends Product implements Purchasable, Shippable, Saleable
 			'type' => $this->getType(),
 			'id' => $this->getId(),
 		);
-	}
-
-	/**
-	 * Checks whether the product requires shipping.
-	 *
-	 * @return bool Whether the product requires shipping.
-	 */
-	public function isShippable()
-	{
-		return false;
 	}
 
     /**
