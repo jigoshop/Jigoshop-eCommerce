@@ -62,7 +62,7 @@ class MainConfiguration implements ConfigurationInterface
 			'jigoshop.options',
 			'jigoshop.service.email'
 		));
-		$services->setDetails('jigoshop.api_deprecated', 'Jigoshop\ApiDeprecated', array(
+		$services->setDetails('jigoshop.endpoint', 'Jigoshop\Endpoint', array(
             'wpal',
             'di'
         ));
@@ -121,12 +121,18 @@ class MainConfiguration implements ConfigurationInterface
 			'jigoshop.options',
 			'jigoshop.messages'
 		));
-		$services->setDetails('jigoshop.product_type.downloadable.download_file', 'Jigoshop\Api\DownloadFile', array(
+		$services->setDetails('jigoshop.endpoint.download_file', 'Jigoshop\Endpoint\DownloadFile', array(
 			'wpal',
 			'jigoshop.options',
 			'jigoshop.messages',
 			'jigoshop.service.order'
 		));
+        $services->setDetails('jigoshop.upgrade', 'Jigoshop\Core\Upgrade', [
+            'di',
+            'wpal'
+        ]);
+        $services->setDetails('jigoshop.upgrade.add_tax_classes_to_order_items', 'Jigoshop\Core\Upgrade\AddTaxClassesToOrderItems', []);
+        $services->setDetails('jigoshop.upgrade.replace_attachment_types', 'Jigoshop\Core\Upgrade\ReplaceAttachmentTypes', []);
 	}
 
 	/**
@@ -144,6 +150,8 @@ class MainConfiguration implements ConfigurationInterface
 		$tags->add('jigoshop.type.taxonomy', 'jigoshop.taxonomy.product_tag');
 		$tags->add('jigoshop.installer', 'jigoshop.product_type.variable.initializer');
 		$tags->add('jigoshop.installer', 'jigoshop.roles.initializer');
+        $tags->add('jigoshop.upgrade.2', 'jigoshop.upgrade.add_tax_classes_to_order_items');
+        $tags->add('jigoshop.upgrade.2', 'jigoshop.upgrade.replace_attachment_types');
 	}
 
 	/**
@@ -153,13 +161,7 @@ class MainConfiguration implements ConfigurationInterface
 	 */
 	public function addTriggers(Triggers $triggers)
 	{
-		$triggers->add('jigoshop.factory.order', 'jigoshop.factory.order', 'init', array(
-			'jigoshop.service.customer',
-			'jigoshop.service.product',
-			'jigoshop.service.shipping',
-			'jigoshop.service.payment',
-			'jigoshop.service.coupon'
-		));
+
 	}
 
 	/**

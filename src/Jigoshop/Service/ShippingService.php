@@ -53,8 +53,6 @@ class ShippingService implements ShippingServiceInterface
 	public function get($id)
 	{
 		if (!isset($this->methods[$id])) {
-			Registry::getInstance(JIGOSHOP_LOGGER)->addWarning(sprintf(__('Shipping method "%s" does not exists', 'jigoshop'), $id));
-
 			return new Dummy($id);
 		}
 
@@ -66,7 +64,7 @@ class ShippingService implements ShippingServiceInterface
 	 *
 	 * @param \Jigoshop\Entity\Cart $cart Cart to calculate method prices for.
 	 *
-	 * @return string ID of cheapest shipping method.
+	 * @return Method cheapest shipping method.
 	 */
 	public function getCheapest(Cart $cart)
 	{
@@ -92,7 +90,7 @@ class ShippingService implements ShippingServiceInterface
 	/**
 	 * Returns list of enabled shipping methods.
 	 *
-	 * @return array List of enabled shipping methods.
+	 * @return Method[] List of enabled shipping methods.
 	 */
 	public function getEnabled()
 	{
@@ -105,7 +103,7 @@ class ShippingService implements ShippingServiceInterface
 	/**
 	 * Returns list of available shipping methods.
 	 *
-	 * @return array List of available shipping methods.
+	 * @return Method[] List of available shipping methods.
 	 */
 	public function getAvailable()
 	{

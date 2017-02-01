@@ -123,6 +123,10 @@ class Order implements EntityFactoryInterface
      */
     public function fetch($post)
     {
+        if($post->post_type != Types::ORDER) {
+            return null;
+        }
+
         $order = new Entity($this->options->get('tax.classes'));
         /** @var Entity $order */
         $order = $this->wp->applyFilters('jigoshop\factory\order\fetch\before', $order);
@@ -193,7 +197,9 @@ class Order implements EntityFactoryInterface
             $product = $this->productService->find($results[$i]['product_id']);
             $item = new Entity\Item();
             $item->setId($results[$i]['item_id']);
+            $item->setType($results[$i]['product_type']);
             $item->setName($results[$i]['title']);
+            $item->setTaxClasses($results[$i]['tax_classes']);
             $item->setQuantity($results[$i]['quantity']);
             $item->setPrice($results[$i]['price']);
             $item->setTax($results[$i]['tax']);
@@ -262,40 +268,7 @@ class Order implements EntityFactoryInterface
             $order->removeItems();
         }
 
-        //We do not want to add coupons and from directly, without validation.
-        $coupons = null;
-        if (isset($data['coupons'])) {
-            $coupons = $data['coupons'];
-            unset($data['coupons']);
-        }
-
-        if (isset($data['discount'])) {
-            unset($data['discount']);
-        }
-
         $order->restoreState($data);
-
-
-
-        if ($coupons) {
-            $coupons = $this->wp->getHelpers()->maybeUnserialize($coupons);
-            if (isset($coupons[0]) && is_array($coupons[0])) {
-                $codes = array_map(function ($coupon) {
-                    return $coupon['code'];
-                }, $coupons);
-            } else {
-                $codes = $coupons;
-            }
-            $coupons = $this->couponService->getByCodes($codes);
-            foreach ($coupons as $coupon) {
-                /** @var Coupon $coupon */
-                try {
-                    $order->addCoupon($coupon);
-                } catch (Exception $e) {
-                    $this->messages->addWarning($e->getMessage(), false);
-                }
-            }
-        }
 
         return $this->wp->applyFilters('jigoshop\factory\order\fill', $order);
     }

@@ -13,7 +13,7 @@ use Jigoshop\Entity\Product\Attribute\Text;
  * @package Jigoshop\Entity\Product\Attributes
  * @author  Amadeusz Starzykiewicz
  */
-abstract class Attribute
+abstract class Attribute implements \JsonSerializable
 {
 	const PRODUCT_ATTRIBUTE_EXISTS = true;
 
@@ -31,7 +31,7 @@ abstract class Attribute
 	private $visible;
 	/** @var bool */
 	private $exists;
-	/** @var array */
+	/** @var Option[] */
 	protected $options = array();
 	/** @var mixed */
 	protected $value;
@@ -123,7 +123,7 @@ abstract class Attribute
 	}
 
 	/**
-	 * @return array List of available options for attribute.
+	 * @return Option[] List of available options for attribute.
 	 */
 	public function getOptions()
 	{
@@ -261,6 +261,26 @@ abstract class Attribute
 			$this->visible = $data['is_visible'];
 		}
 	}
+
+    /**
+     * Used by json_encode method to proprly
+     *
+     * @return array
+     */
+    public function jsonSerialize()
+    {
+        return [
+            'id' => $this->id,
+            'type' => $this->getType(),
+            'local' => $this->local,
+            'slug' => $this->slug,
+            'label' => $this->label,
+            'visible' => $this->visible,
+            'exists' => $this->exists,
+            'options' => array_values($this->options),
+            'value' => $this->value,
+        ];
+    }
 
 	/**
 	 * @return int Type of attribute.

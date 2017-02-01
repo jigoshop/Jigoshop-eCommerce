@@ -2,14 +2,14 @@
 
 namespace Jigoshop\Core\Types\Product;
 
-use Jigoshop\Api\DownloadFile;
 use Jigoshop\Core\Messages;
 use Jigoshop\Core\Options;
+use Jigoshop\Endpoint\DownloadFile;
 use Jigoshop\Entity\Order;
 use Jigoshop\Entity\Order\Item;
 use Jigoshop\Entity\Product;
 use Jigoshop\Entity\Product\Downloadable as Entity;
-use Jigoshop\Helper\Api;
+use Jigoshop\Helper\Endpoint;
 use Jigoshop\Helper\Render;
 use Jigoshop\Helper\Scripts;
 use WPAL\Wordpress;
@@ -186,7 +186,7 @@ class Downloadable implements Type
 	{
 		$product = $item->getProduct();
 		if ($product instanceof Product\Downloadable && in_array($order->getStatus(), array(Order\Status::COMPLETED, Order\Status::PROCESSING))) {
-			$url = $this->wp->getHelpers()->addQueryArg(array('file' => $order->getKey().'.'.$order->getId().'.'.$item->getKey()), Api::getUrl(DownloadFile::NAME));
+			$url = $this->wp->getHelpers()->addQueryArg(array('file' => $order->getKey().'.'.$order->getId().'.'.$item->getKey()), Endpoint::getUrl(DownloadFile::NAME));
 			$result .= PHP_EOL.__('Your download link for this file is:', 'jigoshop');
 			$result .= PHP_EOL.' - '.$url;
 		}

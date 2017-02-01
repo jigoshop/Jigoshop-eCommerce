@@ -117,7 +117,7 @@ class FactoriesConfiguration implements ConfigurationInterface
 	 */
 	public function addTriggers(Triggers $triggers)
 	{
-		$triggers->add('jigoshop.factory.order', 'jigoshop.factory.order', 'init', array(
+		$triggers->add('jigoshop.service.order', 'jigoshop.factory.order', 'init', array(
 			'jigoshop.service.customer',
 			'jigoshop.service.product',
 			'jigoshop.service.shipping',

@@ -34,6 +34,7 @@ class OrderService implements OrderServiceInterface
         $this->factory = $factory;
 
         $wp->addAction('save_post_' . Types\Order::NAME, array($this, 'savePost'), 10);
+        //$wp->addAction('jigoshop\order\add_item', [$this, 'priceIncludingTax']);
     }
 
     /**
@@ -198,6 +199,7 @@ class OrderService implements OrderServiceInterface
                     'product_id' => $item->getProduct() ? $item->getProduct()->getId() : null,
                     'product_type' => $item->getType(),
                     'title' => $item->getName(),
+                    'tax_classes' => join(',', $item->getTaxClasses()),
                     'price' => $item->getPrice(),
                     'tax' => $item->getTax(),
                     'quantity' => $item->getQuantity(),
@@ -507,7 +509,7 @@ class OrderService implements OrderServiceInterface
     }
 
     /**
-     * @return array List of orders that are too long in Pending status.
+     * @return Order[] List of orders that are too long in Pending status.
      */
     public function findOldPending()
     {
@@ -525,7 +527,7 @@ class OrderService implements OrderServiceInterface
     }
 
     /**
-     * @return array List of orders that are too long in Processing status.
+     * @return Order[] List of orders that are too long in Processing status.
      */
     public function findOldProcessing()
     {
@@ -558,7 +560,7 @@ class OrderService implements OrderServiceInterface
      *
      * @param $userId int User ID.
      *
-     * @return array Orders found.
+     * @return Order[] Orders found.
      */
     public function findForUser($userId)
     {

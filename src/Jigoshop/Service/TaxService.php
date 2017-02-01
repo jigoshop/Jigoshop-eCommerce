@@ -8,6 +8,7 @@ use Jigoshop\Entity\Order;
 use Jigoshop\Entity\Order\Item;
 use Jigoshop\Entity\OrderInterface;
 use Jigoshop\Entity\Product\Attributes;
+use Jigoshop\Entity\Product\Variable;
 use Jigoshop\Shipping\Method;
 use Monolog\Registry;
 use WPAL\Wordpress;
@@ -23,16 +24,14 @@ class TaxService implements TaxServiceInterface
 	private $wp;
 	/** @var \Jigoshop\Service\CustomerServiceInterface */
 	private $customers;
-	private $taxIncludedInPrice;
 	private $taxClasses = array();
 	private $rules;
 
-	public function __construct(Wordpress $wp, array $classes, CustomerServiceInterface $customers, $taxIncludedInPrice)
+	public function __construct(Wordpress $wp, array $classes, CustomerServiceInterface $customers)
 	{
 		$this->wp = $wp;
 		$this->taxClasses = $classes;
 		$this->customers = $customers;
-		$this->taxIncludedInPrice = $taxIncludedInPrice;
 	}
 
 	/**
@@ -63,17 +62,17 @@ class TaxService implements TaxServiceInterface
                         'class' => $result->tax_class,
                     );
                 }
+            } else {
+                foreach ($definitions as $class => $definition) {
+                    if (!isset($tax[$class])) {
+                        $tax[$class] = $definition;
+                    }
+                }
             }
 
-			foreach ($definitions as $class => $definition) {
-				if (!isset($tax[$class])) {
-					$tax[$class] = $definition;
-				}
-			}
+            $order->setTaxDefinitions($tax);
 
-			$order->setTaxDefinitions($tax);
-
-			return $order;
+            return $order;
 		}, 10, 1);
 		$wp->addFilter('jigoshop\factory\order\create', function ($order) use ($service){
 			/** @var $order OrderInterface */
@@ -95,12 +94,46 @@ class TaxService implements TaxServiceInterface
 				$wpdb->replace($wpdb->prefix.'jigoshop_order_tax', $data);
 			};
 		}, 10, 1);
+        $wp->addAction('jigoshop\order\add_item', function($item, $order) {
+            /** @var $item Order\Item */
+            /** @var $order Order */
+            if($item->getProduct() && $item->getProduct()->isTaxable() && $order->isTaxIncluded()) {
+                if($item->getProduct() instanceof Variable) {
+                    $price = $item->getProduct()->getVariation($item->getMeta('variation_id')->getValue())->getProduct()->getPrice();
+                } else {
+                    $price = $item->getProduct()->getPrice();
+                }
+                if($price == $item->getPrice()) {
+                    $taxClasses = $item->getTaxClasses();
+                    $taxDefinitions = $order->getTaxDefinitions();
+                    $standard = $compound = [];
+                    foreach ($taxClasses as $class) {
+                        if(isset($taxDefinitions[$class])) {
+                            $standard[$class] = $taxDefinitions[$class];
+                            if (isset($taxDefinitions['__compound__' . $class])) {
+                                $compound[$class] = $taxDefinitions['__compound__' . $class];
+                            }
+                        }
+                    }
+
+                    $standardRate = 0;
+                    foreach ($standard as $class => $definition) {
+                        $standardRate += $definition['rate'] / 100;
+                    }
+                    $compoundRate = 0;
+                    foreach ($compound as $class => $definition) {
+                        $compoundRate += $definition['rate'] / 100;
+                    }
+                    $item->setPrice(($item->getPrice()/((1 + $standardRate) * (1 + $compoundRate))));
+                }
+            }
+        }, 10 ,2);
 		$wp->addAction('jigoshop\order\add_item', function ($item, $order) use ($service){
 			/** @var $item Order\Item */
 			/** @var $order Order */
 			if ($item->getProduct()->isTaxable()) {
-				$item->setTax($service->calculateForOrder($item, $order));
-				$order->updateTaxes($service->getForOrder($item, $order));
+                $item->setTax($service->calculateForOrder($item, $order));
+                $order->updateTaxes($service->getForOrder($item, $order));
 			}
 
 			return $item;
@@ -338,13 +371,11 @@ class TaxService implements TaxServiceInterface
 		}
 
 		foreach ($standard as $class => $definition) {
-			// TODO: Support for prices included in tax
 			$tax[$class] = $definition['rate'] * $cost / 100;
 		}
 
 		$cost += array_sum($tax);
 		foreach ($compound as $class => $definition) {
-			// TODO: Support for prices included in tax
 			$tax['__compound__'.$class] += $definition['rate'] * $cost / 100;
 		}
 

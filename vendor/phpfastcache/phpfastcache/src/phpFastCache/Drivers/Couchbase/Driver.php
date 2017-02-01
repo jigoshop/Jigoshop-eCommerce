@@ -20,6 +20,7 @@ use phpFastCache\Core\Pool\ExtendedCacheItemPoolInterface;
 use phpFastCache\Entities\driverStatistic;
 use phpFastCache\Exceptions\phpFastCacheDriverCheckException;
 use phpFastCache\Exceptions\phpFastCacheDriverException;
+use phpFastCache\Exceptions\phpFastCacheInvalidArgumentException;
 use Psr\Cache\CacheItemInterface;
 
 /**
@@ -72,7 +73,7 @@ class Driver implements ExtendedCacheItemPoolInterface
     /**
      * @param \Psr\Cache\CacheItemInterface $item
      * @return mixed
-     * @throws \InvalidArgumentException
+     * @throws phpFastCacheInvalidArgumentException
      */
     protected function driverWrite(CacheItemInterface $item)
     {
@@ -82,7 +83,7 @@ class Driver implements ExtendedCacheItemPoolInterface
         if ($item instanceof Item) {
             return $this->getBucket()->upsert($item->getKey(), $this->encode($this->driverPreWrap($item)), ['expiry' => $item->getTtl()]);
         } else {
-            throw new \InvalidArgumentException('Cross-Driver type confusion detected');
+            throw new phpFastCacheInvalidArgumentException('Cross-Driver type confusion detected');
         }
     }
 
@@ -105,7 +106,7 @@ class Driver implements ExtendedCacheItemPoolInterface
     /**
      * @param \Psr\Cache\CacheItemInterface $item
      * @return bool
-     * @throws \InvalidArgumentException
+     * @throws phpFastCacheInvalidArgumentException
      */
     protected function driverDelete(CacheItemInterface $item)
     {
@@ -115,7 +116,7 @@ class Driver implements ExtendedCacheItemPoolInterface
         if ($item instanceof Item) {
             return $this->getBucket()->remove($item->getKey());
         } else {
-            throw new \InvalidArgumentException('Cross-Driver type confusion detected');
+            throw new phpFastCacheInvalidArgumentException('Cross-Driver type confusion detected');
         }
     }
 
@@ -138,7 +139,6 @@ class Driver implements ExtendedCacheItemPoolInterface
 
 
             $host = isset($this->config[ 'host' ]) ? $this->config[ 'host' ] : '127.0.0.1';
-            //$port = isset($server[ 'port' ]) ? $server[ 'port' ] : '11211';
             $password = isset($this->config[ 'password' ]) ? $this->config[ 'password' ] : '';
             $username = isset($this->config[ 'username' ]) ? $this->config[ 'username' ] : '';
             $buckets = isset($this->config[ 'buckets' ]) ? $this->config[ 'buckets' ] : [
@@ -148,13 +148,15 @@ class Driver implements ExtendedCacheItemPoolInterface
               ],
             ];
 
-            $this->instance = $this->instance ?: new CouchbaseClient("couchbase://{$host}", $username, $password);
+            $this->instance = new CouchbaseClient("couchbase://{$host}", $username, $password);
 
             foreach ($buckets as $bucket) {
                 $this->bucketCurrent = $this->bucketCurrent ?: $bucket[ 'bucket' ];
                 $this->setBucket($bucket[ 'bucket' ], $this->instance->openBucket($bucket[ 'bucket' ], $bucket[ 'password' ]));
             }
         }
+
+        return true;
     }
 
     /**

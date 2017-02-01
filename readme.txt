@@ -4,8 +4,8 @@ Tags: ecommerce, wordpress ecommerce, store, shop, shopping, cart, checkout, wid
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=XTG9C24KAA7VA
 
 Requires at least: 4.0
-Tested up to: 4.7
-Stable tag: 2.0.7
+Tested up to: 4.7.2
+Stable tag: 2.0.8
 
 A feature-packed eCommerce plugin built upon WordPress core functionality ensuring excellent performance and customizability.
 
@@ -104,6 +104,26 @@ However, if you want priority, dedicated support from Jigoshop staff, we dp offe
 
 == Changelog ==
 
+= 2.0.8 - 2017.02.01 =
+* Fix: Allow to remove all attachments.
+* Fix: Do not recalculate discounts for placed orders.
+* Fix: Allow to change attribute option value.
+* Fix: Add tax classes column to order item table.
+* Fix: Allow to suppress all emails for current request.
+* Fix: Do not use new tax definitions for saved orders.
+* Fix: Allow to use prices including tax.
+* Fix: Use Slim 3 instead of handmade framework.
+* Fix: Rewrite ApiDeprecated class to Endpoint.
+* Fix: File downloading.
+* Fix: Allow to select default variation.
+* Fix: Variation sale datepickers.
+* Fix: Improve attachments structure.
+* Fix: Do shortcodes in product description.
+* Fix: Bank transfer fields values.
+* Fix: Improve cart RWD.
+* Fix: Downloadable product should be a child of simple product.
+* Fix: Flat rate shipping should ignore non shippable products.
+* Fix: Force rewrite permaling on every Jigoshop eCommerce update.
 = 2.0.7 - 2016.12.28 =
 * Fix: Downloadable email link.
 * Fix: Updating shipping methods in checkout.

@@ -13,6 +13,11 @@ interface EmailServiceInterface extends ServiceInterface
 	 */
 	public function suppressNextEmail();
 
+    /**
+     * Suppresses sending emails for whole request.
+     */
+    public function suppressEmailForWholeRequest();
+
 	/**
 	 * @return array List of registered mails with accepted arguments.
 	 */

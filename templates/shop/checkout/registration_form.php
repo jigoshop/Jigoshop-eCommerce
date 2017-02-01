@@ -40,7 +40,7 @@ use Jigoshop\Helper\Forms;
 			)); ?>
 			<?php if ($showRegistrationForm): ?>
 				<?php Forms::checkbox(array(
-					'label' => __('I agree to account creation', 'jigoshop'),
+					'description' => __('I agree to account creation', 'jigoshop'),
 					'name' => 'jigoshop_account[create]',
 					'size' => 9
 				)); ?>

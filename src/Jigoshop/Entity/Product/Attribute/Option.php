@@ -4,7 +4,7 @@ namespace Jigoshop\Entity\Product\Attribute;
 
 use Jigoshop\Entity\Product\Attribute;
 
-class Option
+class Option implements \JsonSerializable
 {
 	/** @var int */
 	private $id;
@@ -78,4 +78,18 @@ class Option
 	{
 		$this->attribute = $attribute;
 	}
+
+    /**
+     * Used by json_encode method to proprly
+     *
+     * @return array
+     */
+    public function jsonSerialize()
+    {
+        return [
+            'id' => $this->id,
+            'label' => $this->label,
+            'value' => $this->value,
+        ];
+    }
 }

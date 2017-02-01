@@ -140,7 +140,7 @@ use Jigoshop\Helper\Tax;
 		</div>
 		<table class="table">
 			<tbody>
-			<?php if ($cart->isShippingRequired()): ?>
+			<?php if ($cart->isShippingRequired() && count($shippingMethods)): ?>
 				<tr id="shipping-calculator">
 					<th scope="row"><?php _e('Shipping', 'jigoshop'); ?></th>
 					<td>

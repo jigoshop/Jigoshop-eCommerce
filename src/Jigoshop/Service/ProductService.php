@@ -119,7 +119,7 @@ class ProductService implements ProductServiceInterface
 	 *
 	 * @param $name string Post name to match.
 	 *
-	 * @return array List of matched products.
+	 * @return Product[] List of matched products.
 	 */
 	public function findLike($name)
 	{
@@ -136,7 +136,7 @@ class ProductService implements ProductServiceInterface
 	 *
 	 * @param $query \WP_Query WordPress query.
 	 *
-	 * @return array Collection of found items.
+	 * @return Product[] Collection of found items.
 	 */
 	public function findByQuery($query)
 	{
@@ -152,6 +152,17 @@ class ProductService implements ProductServiceInterface
         }
 
 		return $this->wp->applyFilters('jigoshop\service\product\find_by_query', $products, $query);
+	}
+
+    /**
+     * @return int
+     */
+    public function getProductsCount()
+    {
+        $wpdb = $this->wp->getWPDB();
+        return (int)$wpdb->get_var($wpdb->prepare("
+            SELECT COUNT(*) FROM {$wpdb->posts} 
+            WHERE post_status = 'publish' AND post_type = %s", Types::PRODUCT));
 	}
 
 	/**
@@ -299,7 +310,7 @@ class ProductService implements ProductServiceInterface
 	/**
 	 * @param $number int Number of products to find.
 	 *
-	 * @return array List of products that are out of stock.
+	 * @return Product[] List of products that are out of stock.
 	 */
 	public function findOutOfStock($number)
 	{
@@ -328,7 +339,7 @@ class ProductService implements ProductServiceInterface
 	 * @param $threshold int Threshold where to assume product is low in stock.
 	 * @param $number    int Number of products to find.
 	 *
-	 * @return array List of products that are low in stock.
+	 * @return Product[] List of products that are low in stock.
 	 */
 	public function findLowStock($threshold, $number)
 	{
@@ -376,11 +387,6 @@ class ProductService implements ProductServiceInterface
 		$uploadUrl = $this->wp->wpUploadDir()['baseurl'];
 		$wpdb = $this->wp->getWPDB();
 
-		$attachments = $this->wp->applyFilters('jigoshop\service\product\attachments\types', array(
-			'gallery' => array(),
-			'downloads' => array(),
-		));
-
 		$query = $wpdb->prepare("SELECT post.ID as id, post.post_title as title, post.guid as url, meta.meta_value as meta, attachment.type
 				FROM {$wpdb->prefix}jigoshop_product_attachment as attachment
 				LEFT JOIN {$wpdb->posts} as post ON (attachment.attachment_id = post.ID)
@@ -388,25 +394,34 @@ class ProductService implements ProductServiceInterface
 				WHERE product_id = %d", $product->getId());
 		$results = $wpdb->get_results($query, ARRAY_A);
 
-		foreach($results as $attachment) {
-			$attachment['meta'] = unserialize($attachment['meta']);
-			if (isset($attachment['meta']['sizes']) && isset($attachment['meta']['sizes'][$size])) {
-				$thumbUrl = $uploadUrl . '/' . str_replace(
-					basename($attachment['meta']['file']),
-					basename($attachment['meta']['sizes'][$size]['file']),
-					$attachment['meta']['file']
-				);
-			} else {
-				$thumbUrl = $uploadUrl . '/' . $attachment['meta']['file'];
-			}
+        $attachments = [];
 
-			$attachments[$attachment['type']][] = array(
-				'id' => $attachment['id'],
-				'title' => $attachment['title'],
-				'url' => isset($attachment['meta']['file']) ? $uploadUrl . '/' . $attachment['meta']['file'] : $attachment['url'],
-				'thumbnail' => $thumbUrl,
-				'image' => $this->wp->wpGetAttachmentImage($attachment['id'], $size),
-			);
+		foreach($results as $attachment) {
+            $entity = $this->factory->createAttachment($attachment['type']);
+            if($entity instanceof Product\Attachment) {
+                $state = [
+                    'id' => $attachment['id'],
+                    'title' => $attachment['title'],
+                    'url' => isset($attachment['meta']['file']) ? $uploadUrl . '/' . $attachment['meta']['file'] : $attachment['url'],
+                ];
+
+                if ($entity instanceof Product\Attachment\Image) {
+                    $attachment['meta'] = unserialize($attachment['meta']);
+                    if (isset($attachment['meta']['sizes'], $attachment['meta']['sizes'][$size])) {
+                        $state['thumbnail'] = $uploadUrl . '/' . str_replace(
+                                basename($attachment['meta']['file']),
+                                basename($attachment['meta']['sizes'][$size]['file']),
+                                $attachment['meta']['file']
+                            );
+                    } else {
+                        $state['thumbnail'] = $uploadUrl . '/' . $attachment['meta']['file'];
+                    }
+                    $state['image'] = $this->wp->wpGetAttachmentImage($attachment['id'], $size);
+                }
+                $entity->restoreState($state);
+
+                $attachments[] = $entity;
+            }
 		}
 
 		return $attachments;
@@ -415,7 +430,7 @@ class ProductService implements ProductServiceInterface
 	/**
 	 * Finds and returns list of available attributes.
 	 *
-	 * @return array List of available product attributes
+	 * @return Attribute[] List of available product attributes
 	 */
 	public function findAllAttributes()
 	{
@@ -476,7 +491,7 @@ class ProductService implements ProductServiceInterface
 	 *
 	 * @param $productId int Product ID.
 	 *
-	 * @return array List of attributes attached to selected product.
+	 * @return Attribute[] List of attributes attached to selected product.
 	 */
 	public function getAttributes($productId)
 	{

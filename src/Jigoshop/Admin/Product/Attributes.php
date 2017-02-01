@@ -168,7 +168,7 @@ class Attributes implements PageInterface
 
 		$option->setLabel(trim(htmlspecialchars(strip_tags($_POST['label']))));
 
-		if (isset($_POST['slug']) && !empty($_POST['slug'])) {
+		if (isset($_POST['value']) && !empty($_POST['value'])) {
 			$option->setValue(trim(htmlspecialchars(strip_tags($_POST['value']))));
 		} else {
 			$option->setValue($this->wp->getHelpers()->sanitizeTitle($option->getLabel()));

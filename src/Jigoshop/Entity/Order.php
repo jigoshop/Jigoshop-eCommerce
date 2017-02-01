@@ -16,7 +16,7 @@ use Monolog\Registry;
  * @package Jigoshop\Entity
  * @author  Amadeusz Starzykiewicz
  */
-class Order implements OrderInterface
+class Order implements OrderInterface, \JsonSerializable
 {
 	/** @var int */
 	private $id;
@@ -32,7 +32,7 @@ class Order implements OrderInterface
 	private $completedAt;
 	/** @var Customer */
 	private $customer;
-	/** @var array */
+	/** @var Item[] */
 	private $items = array();
 	/** @var Shipping\Method */
 	private $shippingMethod;
@@ -68,6 +68,8 @@ class Order implements OrderInterface
 	private $customerNote;
 	/** @var array */
 	private $updateMessages = array();
+    /** @var bool  */
+    private $taxIncluded = false;
 
 	public function __construct(array $taxClasses)
 	{
@@ -678,7 +680,6 @@ class Order implements OrderInterface
 	public function removeItem($key)
 	{
 		if (isset($this->items[$key])) {
-			// TODO: Support for "Price includes tax"
 			/** @var Item $item */
 			$item = $this->items[$key];
 			do_action('jigoshop\order\remove_item', $item, $this);
@@ -746,8 +747,25 @@ class Order implements OrderInterface
 			'shipping_tax' => $this->shippingTax,
 			'status' => $this->status,
 			'update_messages' => $this->updateMessages,
+            'tax_included' => $this->taxIncluded
 		);
 	}
+
+    /**
+     * @param bool $taxIncluded
+     */
+    public function setTaxIncluded($taxIncluded)
+    {
+        $this->taxIncluded = $taxIncluded;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isTaxIncluded()
+    {
+        return $this->taxIncluded;
+    }
 
 	/**
 	 * @param array $state State to restore entity to.
@@ -828,5 +846,64 @@ class Order implements OrderInterface
 			+ array_reduce($this->shippingTax, function ($value, $item){
 				return $value + $item;
 			}, 0.0) - $this->discount;
+        if (isset($state['price_includes_tax'])) {
+            $this->taxIncluded = (bool)$state['price_includes_tax'];
+        }
 	}
+
+    /**
+     * Used by json_encode method to proprly
+     *
+     * @return array
+     */
+    public function jsonSerialize()
+    {
+        $shipping = false;
+        if (is_object($this->shippingMethod)) {
+            $shipping = $this->shippingMethod->getState();
+        }
+        $payment = false;
+        if (is_object($this->paymentMethod)) {
+            $payment = $this->paymentMethod->getId();
+        }
+        $completedAt = false;
+        if (is_object($this->completedAt) && $this->completedAt->getTimestamp()) {
+            $completedAt = [
+                'timestamp' => $this->completedAt->getTimestamp(),
+                'format' => $this->completedAt->format('Y-m-d H:i:s')
+            ];
+        }
+
+       return [
+           'id' => $this->id,
+           'number' => $this->number,
+           'created_at' => [
+               'timestamp' => $this->createdAt->getTimestamp(),
+               'format' => $this->createdAt->format('Y-m-d H:i:s')
+           ],
+           'updated_at' => [
+               'timestamp' => $this->updatedAt->getTimestamp(),
+               'format' => $this->updatedAt->format('Y-m-d H:i:s')
+           ],
+           'completed_at' => $completedAt,
+           'items' => array_values($this->items),
+           'price_includes_tax' => $this->taxIncluded,
+           'customer' => $this->customer,
+           'shipping' => [
+               'method' => $shipping,
+               'price' => $this->shippingPrice,
+               'rate' => $this->shippingMethodRate,
+           ],
+           'payment' => $payment,
+           'customer_note' => $this->customerNote,
+           'total' => $this->total,
+           'tax' => $this->tax,
+           'shipping_tax' => $this->shippingTax,
+           'subtotal' => $this->subtotal,
+           'discount' => $this->discount,
+           'coupons' => $this->coupons,
+           'status' => $this->status,
+           'update_messages' => $this->updateMessages,
+       ];
+    }
 }

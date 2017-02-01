@@ -4,6 +4,7 @@ namespace Jigoshop\Service;
 
 use Jigoshop\Core\Options;
 use Jigoshop\Core\Types;
+use Jigoshop\Entity\Email;
 use Jigoshop\Entity\EntityInterface;
 use Jigoshop\Factory\Email as Factory;
 use WPAL\Wordpress;
@@ -25,6 +26,8 @@ class EmailService implements EmailServiceInterface
 	private $factory;
 	/** @var bool */
 	private $suppress = false;
+    /** @var bool */
+    private $suppressForWholeRequest = false;
     /** @var array  */
     private $templates = array();
 
@@ -42,6 +45,14 @@ class EmailService implements EmailServiceInterface
 	public function suppressNextEmail()
 	{
 		$this->suppress = true;
+	}
+
+    /**
+     * Suppresses sending emails for whole request.
+     */
+    public function suppressEmailForWholeRequest()
+    {
+        $this->suppressForWholeRequest = true;
 	}
 
 	/**
@@ -79,7 +90,7 @@ class EmailService implements EmailServiceInterface
 	 *
 	 * @param $query \WP_Query WordPress query.
 	 *
-	 * @return array Collection of found items.
+	 * @return Email[] Collection of found items.
 	 */
 	public function findByQuery($query)
 	{
@@ -199,6 +210,10 @@ class EmailService implements EmailServiceInterface
 
 			return;
 		}
+
+		if ($this->suppressForWholeRequest) {
+            return;
+        }
 
 		$templates = $this->getTemplates();
 		if (!isset($templates[$hook]) || empty($templates[$hook])) {

@@ -2,6 +2,7 @@
 
 namespace Jigoshop\Helper;
 
+use Jigoshop\Admin\Page\ProductCategories;
 use Jigoshop\Core\Options as CoreOptions;
 use Jigoshop\Core\Types;
 use Jigoshop\Entity;
@@ -83,11 +84,13 @@ class Product
                             $product);
                     }
                     if (strpos($product->getSales()->getPrice(), '%') !== false) {
-                        return '<del>' . self::formatPrice($price) . '</del>' . self::formatPrice($product->getPrice()) . '
+                        $result = '<del>' . self::formatPrice($price) . '</del>' . self::formatPrice($product->getPrice()) . '
 						<ins>' . sprintf(__('%s off!', 'jigoshop'), $product->getSales()->getPrice()) . '</ins>';
+                        break;
                     } else {
-                        return '<del>' . self::formatPrice($price) . '</del>
+                        $result = '<del>' . self::formatPrice($price) . '</del>
 						<ins>' . self::formatPrice($product->getPrice()) . '</ins>';
+                        break;
                     }
                 }
 
@@ -609,4 +612,80 @@ class Product
         return $fields;
     }
 
+    public static function getAttachmentsData(Entity\Product $product)
+    {
+        $attachments = array();
+        $types = array_unique(array_map(function($attachment) {
+            return $attachment['type'];
+        }, $product->getAttachments()));
+        $uploadDir = wp_upload_dir(null, false);
+        $uploadDir = $uploadDir['baseurl'];
+        foreach($types as $type) {
+            $attachments[$type] = array_values(array_map(function($attachment) use ($uploadDir) {
+                $meta = get_post_meta($attachment['id'], '_wp_attachment_metadata', true);
+                $meta['file'] = $uploadDir . '/' . $meta['file'];
+                if(isset($meta['sizes'])) {
+                    $meta['sizes'] = array_map(function($size) use ($uploadDir) {
+                        $size['file'] = $uploadDir . '/' . $size['file'];
+                        return $size;
+                    }, $meta['sizes']);
+                }
+                return $meta;
+            }, array_filter($product->getAttachments(), function($attachment) use ($type) {
+                return $attachment['type'] == $type;
+            })));
+        }
+
+        return $attachments;
+    }
+
+    /**
+     * @param Entity\Product\Variable $product
+     * @param Entity\Product\Variable\Variation $variation
+     * @return array
+     */
+    public static function getVariationAttributes($product, $variation)
+    {
+        $attributes = [];
+
+        if($product instanceof Entity\Product\Variable && $variation instanceof Entity\Product\Variable\Variation) {
+            foreach ($variation->getAttributes() as $attribute) {
+                /** @var Entity\Product\Variable\Attribute $attribute */
+                if($attribute->getValue()) {
+                    $attributes[$attribute->getAttribute()->getId()] = $attribute->getValue();
+                } else {
+                    //For 'any of' use first option
+                    $unusedOptions = array_filter($attribute->getAttribute()->getOptions(), function($option) use ($product, $attribute) {
+                        foreach($product->getVariations() as $_variation) {
+                            /** @var  Entity\Product\Variable\Variation $_variation*/
+                            if($_variation->getAttribute($attribute->getAttribute()->getId())->getValue() == $option->getId()) {
+                                return false;
+                            }
+                        }
+
+                        return true;
+                    });
+
+                    if(count($unusedOptions)) {
+                        $unusedOption = array_shift($unusedOptions);
+                        $attributes[$attribute->getAttribute()->getId()] = $unusedOption->getId();
+                    }
+                }
+            }
+        }
+
+        return $attributes;
+    }
+
+    /**
+     * @param Entity\Product\Attachment[] $attachments
+     * @param string $type
+     * @return Entity\Product\Attachment[]
+     */
+    public static function filterAttachments($attachments, $type)
+    {
+        return array_filter($attachments, function($attachment) use ($type) {
+            return $attachment->getType() == $type;
+        });
+    }
 }

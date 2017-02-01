@@ -114,6 +114,7 @@ class CartService implements CartServiceInterface
 	{
 		if (!isset($this->carts[$id])) {
 			$cart = new Cart($this->options->get('tax.classes'));
+            $cart->setTaxIncluded($this->options->get('tax.included'));
 			$cart->setCustomer($this->customerService->getCurrent());
 			$cart->getCustomer()->selectTaxAddress($this->options->get('taxes.shipping') ? 'shipping' : 'billing');
 

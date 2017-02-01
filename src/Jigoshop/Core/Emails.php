@@ -231,20 +231,8 @@ class Emails
 	 */
 	private function formatItems($order)
 	{
-//		$inc_tax = $this->options->get('tax.included');
 
 		$result = '';
-		// validate if any item has cost less than 0. If that's the case, we can't use price including tax
-		// TODO: Support for "price includes tax"
-//		$use_inc_tax = $inc_tax;
-//		if ($inc_tax) {
-//			foreach ($this->items as $item) {
-//				$use_inc_tax = ($item['cost_inc_tax'] >= 0);
-//				if (!$use_inc_tax) {
-//					break;
-//				}
-//			}
-//		}
 
 		foreach ($order->getItems() as $item) {
 			/** @var $item Order\Item */
@@ -255,12 +243,8 @@ class Emails
 			if ($product->getSku()) {
 				$itemResult .= ' (#'.$product->getSku().')';
 			}
-			// TODO: Support for "price includes tax"
-//			if ($use_inc_tax && $item['cost_inc_tax'] >= 0) {
-//				$return .= ' - '.html_entity_decode(strip_tags(jigoshop_price($item['cost_inc_tax'] * $item['qty'], array('ex_tax_label' => 0))), ENT_COMPAT, 'UTF-8');
-//			} else {
+
 			$itemResult .= ' - '.ProductHelper::formatPrice($item->getCost());
-//			}
 
 			if ($product instanceof Product\Variable) {
 				$variation = $product->getVariation($item->getMeta('variation_id')->getValue());

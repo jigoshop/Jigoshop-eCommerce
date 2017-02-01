@@ -8,7 +8,7 @@ use Jigoshop\Helper\Render;
  */
 ?>
 <div class="clearfix">
-	<button type="button" class="btn btn-default pull-right" id="add-variation"><span class="glyphicon glyphicon-plus"></span> <?php _e('Add', 'jigoshop'); ?></button>
+    <button type="button" class="btn btn-default pull-right" id="add-variation"><span class="glyphicon glyphicon-plus"></span> <?php _e('Add', 'jigoshop'); ?></button>
 </div>
 <ul id="product-variations" class="list-group">
 	<?php if ($product instanceof Product\Variable): ?>

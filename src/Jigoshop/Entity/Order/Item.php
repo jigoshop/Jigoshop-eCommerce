@@ -13,7 +13,7 @@ use Monolog\Registry;
  * @package Jigoshop\Entity\Order
  * @author  Amadeusz Starzykiewicz
  */
-class Item implements Product\Purchasable, Product\Taxable, \Serializable
+class Item implements Product\Purchasable, Product\Taxable, \Serializable, \JsonSerializable
 {
 	/** @var int */
 	private $id;
@@ -160,7 +160,6 @@ class Item implements Product\Purchasable, Product\Taxable, \Serializable
 	 */
 	public function getCost()
 	{
-		// TODO: Support for "Price includes tax"
 		return $this->price * $this->quantity;
 	}
 
@@ -187,8 +186,22 @@ class Item implements Product\Purchasable, Product\Taxable, \Serializable
 	{
 		$this->productId = $product->getId();
 		$this->product = $product;
-		$this->type = $product->getType();
-		$this->taxClasses = $product->getTaxClasses();
+        // Due to backward compatibility with database version 1.
+        if(empty($this->taxClasses)) {
+            $this->taxClasses = $product->getTaxClasses();
+        }
+        // Due to backward compatibility with database version 1.
+        if(empty($this->type)) {
+            $this->type = $product->getType();
+        }
+	}
+
+    /**
+     * @param string $type Product type
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
 	}
 
 	/**
@@ -211,10 +224,14 @@ class Item implements Product\Purchasable, Product\Taxable, \Serializable
 	 * Allows to override tax classes added by setProduct().
 	 * @see Jigoshop\Core\Types\Product\Variable::addToCart() Used to set tax classes for single variable
 	 *
-	 * @param array $taxClasses.
+	 * @param mixed $taxClasses.
 	 */
 	public function setTaxClasses($taxClasses)
 	{
+        if(is_string($taxClasses)) {
+            $taxClasses = $taxClasses ? explode(',', $taxClasses) : [];
+        }
+
 		$this->taxClasses = $taxClasses;
 	}
 
@@ -339,4 +356,25 @@ class Item implements Product\Purchasable, Product\Taxable, \Serializable
 	{
 		throw new Exception(__('Items do not have stock.', 'jigoshop'));
 	}
+
+    /**
+     * Used by json_encode method to proprly
+     *
+     * @return array
+     */
+    public function jsonSerialize()
+    {
+        return [
+            'id' => $this->id,
+            'key' => $this->key,
+            'name' => $this->name,
+            'type' => $this->type,
+            'quantity' => $this->quantity,
+            'price' => $this->price,
+            'tax' => $this->tax,
+            'tax_classes' => $this->taxClasses,
+            'product' => $this->product->getId(),
+            'meta' => array_values($this->meta),
+        ];
+    }
 }

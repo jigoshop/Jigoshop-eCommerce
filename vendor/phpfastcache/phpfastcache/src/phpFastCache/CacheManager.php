@@ -11,11 +11,11 @@
  * @author Georges.L (Geolim4)  <contact@geolim4.com>
  *
  */
-
 namespace phpFastCache;
 
 use phpFastCache\Core\Pool\ExtendedCacheItemPoolInterface;
 use phpFastCache\Exceptions\phpFastCacheDriverCheckException;
+use phpFastCache\Exceptions\phpFastCacheInvalidArgumentException;
 
 /**
  * Class CacheManager
@@ -56,18 +56,18 @@ class CacheManager
      * @var ExtendedCacheItemPoolInterface[]
      */
     protected static $config = [
-      'itemDetailedDate' => false,// Specify if the item must provide detailed creation/modification dates
-      'autoTmpFallback' => false,// Automatically attempt to fallback to temporary directory if the cache fails to write on the specified directory
-      'secureFileManipulation' => false,// Provide a secure file manipulation mechanism, on intensive usage the performance can be affected.
-      'ignoreSymfonyNotice' => false,// Ignore Symfony notice for Symfony project which do not makes use of PhpFastCache's Symfony Bundle
-      'defaultTtl' => 900,// Default time-to-live in second
-      'securityKey' => 'auto',// The securityKey that will be used to create sub-directory
-      'htaccess' => true,// Auto-generate .htaccess if tit is missing
-      'default_chmod' => 0777, // 0777 recommended
-      'path' => '',// if not set will be the value of sys_get_temp_dir()
-      'fallback' => false, //Fall back when old driver is not support
-      'limited_memory_each_object' => 4096, // maximum size (bytes) of object store in memory
-      'compress_data' => false, // compress stored data, if the backend supports it
+      'itemDetailedDate' => false, // Specify if the item must provide detailed creation/modification dates
+      'autoTmpFallback' => false, // Automatically attempt to fallback to the temporary directory if the cache fails to write to the specified directory
+      'secureFileManipulation' => false, // Provide a secure file manipulation mechanism; on intensive usage the performance can be negatively affected.
+      'ignoreSymfonyNotice' => false, // Ignore Symfony notices for Symfony projects that do not makes use of PhpFastCache's Symfony Bundle
+      'defaultTtl' => 900, // Default time-to-live in seconds
+      'securityKey' => 'auto', // The securityKey that will be used to create the sub-directory
+      'htaccess' => true, // Auto-generate .htaccess if it is missing
+      'default_chmod' => 0777, // 0777 is recommended
+      'path' => '', // If not set will be the value of sys_get_temp_dir()
+      'fallback' => false, // Fall back when old driver is not supported
+      'limited_memory_each_object' => 4096, // Maximum size (bytes) of object store in memory
+      'compress_data' => false, // Compress stored data if the backend supports it
     ];
 
     /**
@@ -219,21 +219,9 @@ class CacheManager
     }
 
     /**
-     * @param $name
-     * @param string $value
-     * @deprecated Method "setup" is deprecated and will be removed in V6. Use method "setDefaultConfig" instead.
-     * @throws \InvalidArgumentException
-     */
-    public static function setup($name, $value = '')
-    {
-        trigger_error('Method "setup" is deprecated and will be removed in V6 Use method "setDefaultConfig" instead.');
-        self::setDefaultConfig($name, $value);
-    }
-
-    /**
      * @param $name string|array
      * @param mixed $value
-     * @throws \InvalidArgumentException
+     * @throws phpFastCacheInvalidArgumentException
      */
     public static function setDefaultConfig($name, $value = null)
     {
@@ -242,7 +230,7 @@ class CacheManager
         } else if (is_string($name)){
             self::$config[ $name ] = $value;
         }else{
-            throw new \InvalidArgumentException('Invalid variable type: $name');
+            throw new phpFastCacheInvalidArgumentException('Invalid variable type: $name');
         }
     }
 
@@ -262,6 +250,7 @@ class CacheManager
         return [
           'Apc',
           'Apcu',
+          'Cassandra',
           'Couchbase',
           'Devnull',
           'Files',

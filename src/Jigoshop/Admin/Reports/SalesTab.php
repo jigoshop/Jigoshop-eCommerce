@@ -15,13 +15,18 @@ class SalesTab implements TabInterface
 	private $wp;
 	/** @var  options */
 	private $options;
-	private $chart;
+    private $chart;
 
 	public function __construct(Wordpress $wp, Options $options)
 	{
 		$this->wp = $wp;
 		$this->options = $options;
-		$this->chart = $this->getChart();
+
+        if (in_array($this->wp->getPageNow(), array('admin.php', 'options.php')) &&
+            isset($_GET['page']) && $_GET['page'] == Reports::NAME
+        ) {
+            $this->chart = $this->getChart();
+        }
 	}
 
 	/**
@@ -85,20 +90,8 @@ class SalesTab implements TabInterface
 		return $range;
 	}
 
-	private function getChart()
+	public function getChart()
 	{
-		if (!in_array($this->wp->getPageNow(), array('admin.php', 'options.php'))) {
-			return null;
-		}
-
-		if (!isset($_GET['page']) || $_GET['page'] != Reports::NAME) {
-			return null;
-		}
-
-		if(isset($_GET['tab']) && $_GET['tab'] != self::SLUG) {
-			return null;
-		}
-
 		switch($this->getCurrentType()){
 			case 'by_date':
 				return new Chart\ByDate($this->wp, $this->options, $this->getCurrentRange());

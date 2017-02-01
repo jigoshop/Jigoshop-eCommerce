@@ -4,6 +4,7 @@ namespace Jigoshop\Factory;
 
 use Jigoshop\Core\Options;
 use Jigoshop\Core\Types;
+use Jigoshop\Entity\Product\Attachment;
 use Jigoshop\Entity\Product\Attribute;
 use Jigoshop\Entity\Product\Purchasable;
 use Jigoshop\Entity\Product\Simple;
@@ -139,7 +140,9 @@ class Product implements EntityFactoryInterface
 						);
 					}
 				}
-			}
+			} else {
+                $_POST['product']['attachments'] = array();
+            }
 
 			$product->restoreState($_POST['product']);
 			$product->markAsDirty($_POST['product']);
@@ -157,6 +160,10 @@ class Product implements EntityFactoryInterface
 	 */
 	public function fetch($post)
 	{
+        if(!in_array($post->post_type, [Types::PRODUCT, Types\Product\Variable::TYPE])) {
+            return null;
+        }
+
 		$type = $post ? $this->wp->getPostMeta($post->ID, 'type', true) : '';
 		if (empty($type)) {
 			$type = Simple::TYPE;
@@ -195,6 +202,10 @@ class Product implements EntityFactoryInterface
 				}
 				$state['attributes'] = $attributes;
 			}
+
+			if (!isset($state['default_variation_id'])) {
+                $state['default_variation_id'] = '';
+            }
 			
 			$product->restoreState($state);
 		}
@@ -363,5 +374,21 @@ class Product implements EntityFactoryInterface
 			default:
 				return $this->wp->applyFilters('jigoshop\factory\product\create_attribute', null, $type, $exists);
 		}
+	}
+
+    /**
+     * @param $type
+     * @return Attachment
+     */
+    public function createAttachment($type)
+    {
+        switch ($type) {
+            case Attachment\Image::TYPE:
+                return new Attachment\Image();
+            case Attachment\Datafile::TYPE;
+                return new Attachment\Datafile();
+            default:
+                return $this->wp->applyFilters('jigoshop\factory\product\create_attachment', null, $type);
+        }
 	}
 }

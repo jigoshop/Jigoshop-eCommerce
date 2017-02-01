@@ -6,6 +6,8 @@ use Jigoshop\Core\Messages;
 use Jigoshop\Core\Options;
 use Jigoshop\Core\Types;
 use Jigoshop\Entity\Order\Item;
+use Jigoshop\Entity\Product\Attachment\Datafile;
+use Jigoshop\Entity\Product\Attachment\Image;
 use Jigoshop\Exception;
 use Jigoshop\Frontend\NotEnoughStockException;
 use Jigoshop\Frontend\Pages;
@@ -197,13 +199,13 @@ class Product implements PageInterface
 		$imageClasses = apply_filters('jigoshop\product\image_classes', array('featured-image'), $product);
 		$featured = ProductHelper::getFeaturedImage($product, Options::IMAGE_LARGE);
 		$featuredUrl = ProductHelper::hasFeaturedImage($product) ? $this->wp->wpGetAttachmentUrl($this->wp->getPostThumbnailId($product->getId())) : '';
-		$thumbnails = $this->productService->getAttachments($product, Options::IMAGE_THUMBNAIL)['gallery'];
+		$thumbnails = ProductHelper::filterAttachments($this->productService->getAttachments($product, Options::IMAGE_THUMBNAIL), Image::TYPE);
 
 		Render::output('shop/product/images', array(
 			'product' => $product,
 			'featured' => $featured,
 			'featuredUrl' => $featuredUrl,
-			'thumbnails' => is_array($thumbnails) ? $thumbnails : array(),
+			'thumbnails' => $thumbnails,
 			'imageClasses' => $imageClasses,
 		));
 	}
@@ -277,7 +279,7 @@ class Product implements PageInterface
 		Render::output('shop/product/downloads', array(
 			'product' => $product,
 			'currentTab' => $currentTab,
-			'attachments' => $this->productService->getAttachments($product)['downloads'],
+			'attachments' => ProductHelper::filterAttachments($this->productService->getAttachments($product), Datafile::TYPE),
 		));
 	}
 }

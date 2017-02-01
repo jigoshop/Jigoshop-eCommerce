@@ -8,7 +8,7 @@ namespace Jigoshop\Entity\Product\Attributes;
  * @package Jigoshop\Entity\Product\Attributes
  * @author  Amadeusz Starzykiewicz
  */
-class StockStatus implements \Serializable
+class StockStatus implements \Serializable, \JsonSerializable
 {
 	const OUT_STOCK = 0;
 	const IN_STOCK = 1;
@@ -189,4 +189,19 @@ class StockStatus implements \Serializable
 		$this->allowBackorders = $data['allow_backorders'];
 		$this->stock = (int)$data['stock'];
 	}
+
+    /**
+     * Used by json_encode method to proprly
+     *
+     * @return array
+     */
+    public function jsonSerialize()
+    {
+        return [
+            'manage' => $this->manage,
+            'status' => $this->status,
+            'allow_backorders' => $this->allowBackorders,
+            'stock' => $this->stock,
+        ];
+    }
 }

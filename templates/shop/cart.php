@@ -24,6 +24,10 @@ use Jigoshop\Helper\Tax;
 	<?php Render::output('shop/cart/empty', array('shopUrl' => $shopUrl)); ?>
 <?php else: ?>
 	<form id="cart" role="form" action="" method="post">
+		<?php Render::output('shop/cart/mobile', [
+			'cart' => $cart,
+			'showWithTax' => $showWithTax
+		]); ?>
 		<table class="table table-hover">
 			<thead>
 				<tr>

@@ -26,7 +26,6 @@ class Products implements Tool
 	private $options;
 	/** @var ProductServiceInterface */
 	private $productService;
-	private $taxes = array();
 	private $taxClasses = array();
 
 	public function __construct(Wordpress $wp, \Jigoshop\Core\Options $options, ProductServiceInterface $productService, TaxServiceInterface $taxService) {
@@ -34,14 +33,6 @@ class Products implements Tool
 		$this->wp = $wp;
 		$this->options = $options;
 		$this->productService = $productService;
-
-		if ($this->options->get('tax.included')) {
-			$address = new Customer\Address();
-			$address->setCountry($this->options->get('general.country'));
-			$address->setState($this->options->get('general.state'));
-
-			$this->taxes = $taxService->getDefinitions($address);
-		}
 
 		$wp->addAction('wp_ajax_jigoshop.admin.migration.products', array($this, 'ajaxMigrationProducts'), 10, 0);
 	}
@@ -285,30 +276,6 @@ class Products implements Tool
 
 					$i++;
 				} while ($i < $endI && $products[$i]->ID == $product->ID);
-
-				// Update regular price if it includes tax
-				if (!empty($this->taxes)) {
-					$taxClasses = maybe_unserialize($taxClasses);
-
-					foreach ($taxClasses as $taxClass) {
-						if (isset($this->taxes['__compound__' . $taxClass])) {
-							$regularPrice = $regularPrice / (100 + $this->taxes['__compound__' . $taxClass]['rate']) * 100;
-						}
-					}
-					foreach ($taxClasses as $taxClass) {
-						if (isset($this->taxes[$taxClass])) {
-							$regularPrice = $regularPrice / (100 + $this->taxes[$taxClass]['rate']) * 100;
-						}
-					}
-
-					$wpdb->query($wpdb->prepare("UPDATE {$wpdb->postmeta} SET meta_value = %s WHERE meta_key = %s AND post_id = %d",
-						array(
-							$regularPrice,
-							'regular_price',
-							$product->ID,
-						)));
-					$this->checkSql();
-				}
 			}
 
 			foreach ($globalAttributes as $slug => $attributeData) {

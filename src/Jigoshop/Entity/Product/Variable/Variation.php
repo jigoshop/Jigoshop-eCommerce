@@ -10,7 +10,7 @@ use Jigoshop\Entity\Product\Variable;
  *
  * @package Jigoshop\Entity\Product\Variable
  */
-class Variation
+class Variation implements \JsonSerializable
 {
 	/** @var int */
 	private $id;
@@ -18,7 +18,7 @@ class Variation
 	private $parent;
 	/** @var Product|Product\Purchasable */
 	private $product;
-	/** @var array */
+	/** @var Attribute[] */
 	private $attributes = array();
 	/** @var string Cache for title */
 	private $title;
@@ -130,10 +130,25 @@ class Variation
 	}
 
 	/**
-	 * @return array
+	 * @return Attribute[]
 	 */
 	public function getAttributes()
 	{
 		return $this->attributes;
 	}
+
+    /**
+     * Used by json_encode method to proprly
+     *
+     * @return array
+     */
+    public function jsonSerialize()
+    {
+        return [
+            'id' => $this->id,
+            'title' => $this->getTitle(),
+            'product' => $this->product,
+            'attributes' => array_values($this->attributes),
+        ];
+    }
 }

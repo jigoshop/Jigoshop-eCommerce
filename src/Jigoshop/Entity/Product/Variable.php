@@ -14,6 +14,8 @@ class Variable extends Product implements Shippable, Saleable
 	private $variations = array();
 	/** @var Attributes\Sales */
 	private $sales;
+    /** @var int */
+    private $defaultVariationId;
 
 	public function __construct()
 	{
@@ -89,7 +91,7 @@ class Variable extends Product implements Shippable, Saleable
 	}
 
 	/**
-	 * @return array List of all assigned variations.
+	 * @return Product\Variable\Variation[] List of all assigned variations.
 	 */
 	public function getVariations()
 	{
@@ -193,6 +195,22 @@ class Variable extends Product implements Shippable, Saleable
         return $attributes;
 	}
 
+    /**
+     * @param int $defaultVariationId
+     */
+    public function setDefaultVariation($defaultVariationId)
+    {
+        $this->defaultVariationId = $defaultVariationId;
+	}
+
+    /**
+     * @return int
+     */
+    public function getDefaultVariationId()
+    {
+        return $this->defaultVariationId;
+	}
+
 	/**
 	 * @return array List of fields to update with according values.
 	 */
@@ -204,6 +222,7 @@ class Variable extends Product implements Shippable, Saleable
 		$toSave['sales_from'] = $this->sales->getFrom()->getTimestamp();
 		$toSave['sales_to'] = $this->sales->getTo()->getTimestamp();
 		$toSave['sales_price'] = $this->sales->getPrice();
+        $toSave['default_variation_id'] = $this->defaultVariationId;
 
 		return $toSave;
 	}
@@ -227,6 +246,9 @@ class Variable extends Product implements Shippable, Saleable
 		if (isset($state['sales_price'])) {
 			$this->sales->setPrice($state['sales_price']);
 		}
+		if (isset($state['default_variation_id'])) {
+            $this->defaultVariationId = (int)$state['default_variation_id'];
+        }
 	}
 
 	/**
@@ -251,4 +273,21 @@ class Variable extends Product implements Shippable, Saleable
 			'id' => $this->getId(),
 		);
 	}
+
+    /**
+     * Used by json_encode method to proprly
+     *
+     * @return array
+     */
+    public function jsonSerialize()
+    {
+        $state = parent::jsonSerialize();
+        $state['sale'] = $this->sales;
+        $state['lowest_price'] = $this->getLowestPrice();
+        $state['highest_price'] = $this->getHighestPrice();
+        $state['variations'] = $this->variations;
+        $state['default_variable_attributes_values'] = $this->defaultVariationId;
+
+        return $state;
+    }
 }

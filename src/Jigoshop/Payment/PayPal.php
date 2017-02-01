@@ -2,7 +2,7 @@
 
 namespace Jigoshop\Payment;
 
-use Jigoshop\Api\Processable;
+use Jigoshop\Endpoint\Processable;
 use Jigoshop\Container;
 use Jigoshop\Core;
 use Jigoshop\Core\Messages;
@@ -10,7 +10,6 @@ use Jigoshop\Core\Options;
 use Jigoshop\Entity\Customer\CompanyAddress;
 use Jigoshop\Entity\Order;
 use Jigoshop\Entity\Product;
-use Jigoshop\Frontend\Pages;
 use Jigoshop\Helper\Api;
 use Jigoshop\Helper\Currency;
 use Jigoshop\Helper\Order as OrderHelper;
@@ -273,40 +272,6 @@ class PayPal implements Method, Processable
 			$args['address_override'] = 0;
 		}
 
-		// If prices include tax, send the whole order as a single item
-		// TODO: Price includes tax
-//		$priceIncludesTax = $this->options->get('tax.included');
-//		if($priceIncludesTax){
-//			// Discount
-//			//$args['discount_amount_cart'] = number_format($order->getDiscount(), $this->decimals);
-//
-//			// Don't pass items - PayPal breaks tax due to catalog prices include tax.
-//			// PayPal has no option for tax inclusive pricing.
-//			// Pass 1 item for the order items overall
-//			$item_names = array();
-//
-//			foreach($order->items as $item){
-//				$_product = $order->get_product_from_item($item);
-//				$title = $_product->get_title();
-//
-//				//if variation, insert variation details into product title
-//				if($_product instanceof jigoshop_product_variation){
-//					$title .= ' ('.jigoshop_get_formatted_variation($_product, $item['variation'], true).')';
-//				}
-//
-//				$item_names[] = $title.' x '.$item['qty'];
-//			}
-//
-//			$args['item_name_1'] = sprintf(__('Order %s', 'jigoshop'), $order->get_order_number()).' - '.implode(', ', $item_names);
-//			$args['quantity_1'] = 1;
-//			$args['amount_1'] = number_format($order->order_total - $order->order_shipping - $order->order_shipping_tax + $order->order_discount, $this->decimals, '.', '');
-//
-//			if(($order->order_shipping + $order->order_shipping_tax) > 0){
-//				$args['item_name_2'] = __('Shipping cost', 'jigoshop');
-//				$args['quantity_2'] = '1';
-//				$args['amount_2'] = number_format($order->order_shipping + $order->order_shipping_tax, $this->decimals, '.', '');
-//			}
-//		} else {
 		// Cart Contents
 		$item_loop = 0;
 		foreach ($order->getItems() as $item) {
@@ -354,7 +319,6 @@ class PayPal implements Method, Processable
 			$args['quantity_'.$item_loop] = '1';
 			$args['amount_'.$item_loop] = 0.01;
 		}
-//		}
 
 		$args = $this->wp->applyFilters('jigoshop\paypal\args', $args);
 		$order->setStatus(Order\Status::PENDING, __('Waiting for PayPal payment.', 'jigoshop'));

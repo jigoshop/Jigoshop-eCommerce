@@ -124,6 +124,14 @@ class PhpFastCache implements ProductServiceInterface
     }
 
     /**
+     * @return int
+     */
+    public function getProductsCount()
+    {
+        return $this->service->getProductsCount();
+    }
+
+    /**
      * Saves entity to database.
      *
      * @param $object EntityInterface Entity to save.

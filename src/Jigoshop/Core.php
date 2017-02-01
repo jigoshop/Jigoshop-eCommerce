@@ -13,7 +13,7 @@ use WPAL\Wordpress;
 
 class Core
 {
-	const VERSION = '2.0.7';
+	const VERSION = '2.0.8';
 	const WIDGET_CACHE = 'jigoshop_widget_cache';
 	const TERMS = 'jigoshop_term';
 
@@ -92,13 +92,15 @@ class Core
 
 		$container->get('jigoshop.permalinks');
 
-		/** @var \Jigoshop\ApiDeprecated $api */
-		$api = $container->get('jigoshop.api_deprecated');
-		$api->run();
+		/** @var \Jigoshop\Endpoint $api */
+		$endpoint = $container->get('jigoshop.endpoint');
+		$endpoint->run();
 
-		/** @var \Jigoshop\Api $api */
-		$api = $container->get('jigoshop.api');
-		$api->run();
+		if($this->options->get('advanced.api.enable', false)) {
+			/** @var \Jigoshop\Api $api */
+			$api = $container->get('jigoshop.api');
+			$api->run();
+		}
 
 		/** @var \Jigoshop\Service\TaxServiceInterface $tax */
 		$tax = $container->get('jigoshop.service.tax');

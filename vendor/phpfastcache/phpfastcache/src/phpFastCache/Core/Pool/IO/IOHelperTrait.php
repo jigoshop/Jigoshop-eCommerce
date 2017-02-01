@@ -14,10 +14,20 @@
 
 namespace phpFastCache\Core\Pool\IO;
 
+use phpFastCache\Core\Item\ExtendedCacheItemInterface;
 use phpFastCache\Core\Pool\ExtendedCacheItemPoolInterface;
+use phpFastCache\Entities\driverStatistic;
+use phpFastCache\EventManager;
 use phpFastCache\Exceptions\phpFastCacheIOException;
 use phpFastCache\Util\Directory;
 
+/**
+ * Trait IOHelperTrait
+ * @package phpFastCache\Core\Pool\IO
+ * @property array $config The configuration array passed via DriverBaseTrait
+ * @property ExtendedCacheItemInterface[] $itemInstances The item instance passed via CacheItemPoolTrait
+ * @property EventManager $eventManager The event manager passed via CacheItemPoolTrait
+ */
 trait IOHelperTrait
 {
     /**
@@ -88,9 +98,9 @@ trait IOHelperTrait
         }else{
             if (!isset($this->tmp[ $full_path_hash ]) || (!@file_exists($full_path) || !@is_writable($full_path))) {
                 if (!@file_exists($full_path)) {
-                    @mkdir($full_path, $this->setChmodAuto(), true);
+                    @mkdir($full_path, $this->getDefaultChmod(), true);
                 }else if (!@is_writable($full_path)) {
-                    if (!@chmod($full_path, $this->setChmodAuto()) && $this->config[ 'autoTmpFallback' ])
+                    if (!@chmod($full_path, $this->getDefaultChmod()) && $this->config[ 'autoTmpFallback' ])
                     {
                         /**
                          * Switch back to tmp dir
@@ -98,7 +108,7 @@ trait IOHelperTrait
                          */
                         $full_path = $full_path_tmp;
                         if (!@file_exists($full_path)) {
-                            @mkdir($full_path, $this->setChmodAuto(), true);
+                            @mkdir($full_path, $this->getDefaultChmod(), true);
                         }
                     }
                 }
@@ -127,7 +137,7 @@ trait IOHelperTrait
      * @return string
      * @throws phpFastCacheIOException
      */
-    private function getFilePath($keyword, $skip = false)
+    protected function getFilePath($keyword, $skip = false)
     {
         $path = $this->getPath();
 
@@ -142,10 +152,10 @@ trait IOHelperTrait
         /**
          * Skip Create Sub Folders;
          */
-        if ($skip == false) {
+        if (!$skip) {
             if (!file_exists($path)) {
-                if (@!mkdir($path, $this->setChmodAuto(), true)) {
-                    throw new phpFastCacheIOException('PLEASE CHMOD ' . $path . ' - ' . $this->setChmodAuto() . ' OR ANY WRITABLE PERMISSION!');
+                if (@!mkdir($path, $this->getDefaultChmod(), true)) {
+                    throw new phpFastCacheIOException('PLEASE CHMOD ' . $path . ' - ' . $this->getDefaultChmod() . ' OR ANY WRITABLE PERMISSION!');
                 }
             }
         }
@@ -165,20 +175,10 @@ trait IOHelperTrait
     }
 
     /**
-     * @return bool
-     */
-    public function isExpired()
-    {
-        trigger_error(__FUNCTION__ . '() is deprecated, use ExtendedCacheItemInterface::isExpired() instead.', E_USER_DEPRECATED);
-
-        return true;
-    }
-
-    /**
      * @param $this ->config
      * @return int
      */
-    public function setChmodAuto()
+    protected function getDefaultChmod()
     {
         if (!isset($this->config[ 'default_chmod' ]) || $this->config[ 'default_chmod' ] == '' || is_null($this->config[ 'default_chmod' ])) {
             return 0777;
@@ -306,5 +306,36 @@ HTACCESS;
         }
 
         return $octetWritten !== false;
+    }
+
+    /********************
+     *
+     * PSR-6 Extended Methods
+     *
+     *******************/
+
+    /**
+     * Provide a generic getStats() method
+     * for files-based drivers
+     * @return driverStatistic
+     * @throws \phpFastCache\Exceptions\phpFastCacheIOException
+     */
+    public function getStats()
+    {
+        $stat = new driverStatistic();
+        $path = $this->getFilePath(false);
+
+        if (!is_dir($path)) {
+            throw new phpFastCacheIOException("Can't read PATH:" . $path);
+        }
+
+        $stat->setData(implode(', ', array_keys($this->itemInstances)))
+          ->setRawData([
+            'tmp' => $this->tmp
+          ])
+          ->setSize(Directory::dirSize($path))
+          ->setInfo('Number of files used to build the cache: ' . Directory::getFileCount($path));
+
+        return $stat;
     }
 }
