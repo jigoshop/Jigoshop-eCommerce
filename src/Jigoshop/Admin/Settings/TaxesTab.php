@@ -110,7 +110,7 @@ class TaxesTab implements TabInterface
 					),
 					array(
 						'name' => '[price_tax]',
-						'title' => __('Show prices', 'jigoshop'),
+						'title' => __('Show prices in cart and checkout', 'jigoshop'),
 						'type' => 'select',
 						'value' => $this->options['price_tax'],
 						'options' => array(
