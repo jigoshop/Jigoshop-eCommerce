@@ -3,6 +3,7 @@
 namespace Jigoshop\Core;
 
 use Jigoshop\Container;
+use Jigoshop\Core;
 use Jigoshop\Core\Upgrade\Upgrader;
 use WPAL\Wordpress;
 
@@ -46,6 +47,13 @@ class Upgrade
             // Flush rules on first Jigoshop init after upgrade.
             $this->wp->updateOption('jigoshop_force_flush_rewrite', 1);
             $this->wp->updateSiteOption('jigoshop_database_version', Installer::DB_VERSION);
+        }
+
+        $version = $this->wp->getOption('jigoshop_version');
+        if($version == false || $version != Core::VERSION) {
+            // Flush rules on first Jigoshop init after upgrade.
+            $this->wp->updateOption('jigoshop_force_flush_rewrite', 1);
+            $this->wp->updateSiteOption('jigoshop_version', Core::VERSION);
         }
     }
 }
