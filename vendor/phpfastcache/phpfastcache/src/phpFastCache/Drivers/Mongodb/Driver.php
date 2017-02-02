@@ -17,6 +17,7 @@ namespace phpFastCache\Drivers\Mongodb;
 use LogicException;
 use MongoBinData;
 use MongoClient as MongodbClient;
+use MongoCollection;
 use MongoConnectionException;
 use MongoCursorException;
 use MongoDate;
@@ -25,7 +26,6 @@ use phpFastCache\Core\Pool\ExtendedCacheItemPoolInterface;
 use phpFastCache\Entities\driverStatistic;
 use phpFastCache\Exceptions\phpFastCacheDriverCheckException;
 use phpFastCache\Exceptions\phpFastCacheDriverException;
-use phpFastCache\Exceptions\phpFastCacheInvalidArgumentException;
 use Psr\Cache\CacheItemInterface;
 
 /**
@@ -73,7 +73,7 @@ class Driver implements ExtendedCacheItemPoolInterface
     /**
      * @param \Psr\Cache\CacheItemInterface $item
      * @return mixed
-     * @throws phpFastCacheInvalidArgumentException
+     * @throws \InvalidArgumentException
      */
     protected function driverWrite(CacheItemInterface $item)
     {
@@ -99,7 +99,7 @@ class Driver implements ExtendedCacheItemPoolInterface
 
             return isset($result[ 'ok' ]) ? $result[ 'ok' ] == 1 : true;
         } else {
-            throw new phpFastCacheInvalidArgumentException('Cross-Driver type confusion detected');
+            throw new \InvalidArgumentException('Cross-Driver type confusion detected');
         }
     }
 
@@ -127,7 +127,7 @@ class Driver implements ExtendedCacheItemPoolInterface
     /**
      * @param \Psr\Cache\CacheItemInterface $item
      * @return bool
-     * @throws phpFastCacheInvalidArgumentException
+     * @throws \InvalidArgumentException
      */
     protected function driverDelete(CacheItemInterface $item)
     {
@@ -139,7 +139,7 @@ class Driver implements ExtendedCacheItemPoolInterface
 
             return (int) $deletionResult[ 'ok' ] === 1 && !$deletionResult[ 'err' ];
         } else {
-            throw new phpFastCacheInvalidArgumentException('Cross-Driver type confusion detected');
+            throw new \InvalidArgumentException('Cross-Driver type confusion detected');
         }
     }
 
@@ -194,18 +194,6 @@ class Driver implements ExtendedCacheItemPoolInterface
      * PSR-6 Extended Methods
      *
      *******************/
-
-    /**
-     * @return string
-     */
-    public function getHelp()
-    {
-        return <<<HELP
-<p>
-This driver rely on php's Mongo (http://php.net/manual/fr/class.mongo.php) extension, not php's MongoDb (http://php.net/manual/fr/class.mongodb.php) extension.
-</p>
-HELP;
-    }
 
     /**
      * @return driverStatistic

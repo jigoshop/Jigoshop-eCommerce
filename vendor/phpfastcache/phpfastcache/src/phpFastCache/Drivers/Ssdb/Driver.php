@@ -19,8 +19,8 @@ use phpFastCache\Core\Pool\ExtendedCacheItemPoolInterface;
 use phpFastCache\Entities\driverStatistic;
 use phpFastCache\Exceptions\phpFastCacheDriverCheckException;
 use phpFastCache\Exceptions\phpFastCacheDriverException;
-use phpFastCache\Exceptions\phpFastCacheInvalidArgumentException;
 use phpssdb\Core\SimpleSSDB;
+use phpssdb\Core\SSDB;
 use phpssdb\Core\SSDBException;
 use Psr\Cache\CacheItemInterface;
 
@@ -69,7 +69,7 @@ class Driver implements ExtendedCacheItemPoolInterface
     /**
      * @param \Psr\Cache\CacheItemInterface $item
      * @return mixed
-     * @throws phpFastCacheInvalidArgumentException
+     * @throws \InvalidArgumentException
      */
     protected function driverWrite(CacheItemInterface $item)
     {
@@ -77,9 +77,18 @@ class Driver implements ExtendedCacheItemPoolInterface
          * Check for Cross-Driver type confusion
          */
         if ($item instanceof Item) {
-            return $this->instance->setx($item->getEncodedKey(), $this->encode($this->driverPreWrap($item)), $item->getTtl());
+            /*            if (isset($this->config[ 'skipExisting' ]) && $this->config[ 'skipExisting' ] == true) {
+                            $x = $this->instance->get($item->getKey());
+                            if ($x === false) {
+                                return false;
+                            } elseif (!is_null($x)) {
+                                return true;
+                            }
+                        }*/
+
+            return $this->instance->setx($item->getKey(), $this->encode($this->driverPreWrap($item)), $item->getTtl());
         } else {
-            throw new phpFastCacheInvalidArgumentException('Cross-Driver type confusion detected');
+            throw new \InvalidArgumentException('Cross-Driver type confusion detected');
         }
     }
 
@@ -89,7 +98,7 @@ class Driver implements ExtendedCacheItemPoolInterface
      */
     protected function driverRead(CacheItemInterface $item)
     {
-        $val = $this->instance->get($item->getEncodedKey());
+        $val = $this->instance->get($item->getKey());
         if ($val == false) {
             return null;
         } else {
@@ -100,7 +109,7 @@ class Driver implements ExtendedCacheItemPoolInterface
     /**
      * @param \Psr\Cache\CacheItemInterface $item
      * @return bool
-     * @throws phpFastCacheInvalidArgumentException
+     * @throws \InvalidArgumentException
      */
     protected function driverDelete(CacheItemInterface $item)
     {
@@ -108,9 +117,9 @@ class Driver implements ExtendedCacheItemPoolInterface
          * Check for Cross-Driver type confusion
          */
         if ($item instanceof Item) {
-            return $this->instance->del($item->getEncodedKey());
+            return $this->instance->del($item->get());
         } else {
-            throw new phpFastCacheInvalidArgumentException('Cross-Driver type confusion detected');
+            throw new \InvalidArgumentException('Cross-Driver type confusion detected');
         }
     }
 

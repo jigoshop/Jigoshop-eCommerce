@@ -1,0 +1,9 @@
+/node_modules/
+/vendor/
+/demo/vendor/
+/demo/.vagrant/
+/report/
+.DS_Store
+composer.lock
+phpunit.xml
+/tests/_output/

@@ -14,13 +14,11 @@
 
 namespace phpFastCache\Exceptions;
 
-use Psr\Cache\CacheException;
-
 /**
  * Class phpFastCacheRootException
  * @package phpFastCache\Exceptions
  */
-class phpFastCacheRootException extends \Exception implements CacheException
+class phpFastCacheRootException extends \Exception
 {
 
 }

@@ -13,11 +13,10 @@
 
 namespace phpFastCache\Drivers\Zenddisk;
 
-use phpFastCache\Core\Item\ExtendedCacheItemInterface;
-use phpFastCache\Core\Item\ItemBaseTrait;
-use phpFastCache\Core\Pool\ExtendedCacheItemPoolInterface;
+use phpFastCache\Cache\ExtendedCacheItemInterface;
+use phpFastCache\Cache\ExtendedCacheItemPoolInterface;
+use phpFastCache\Cache\ItemBaseTrait;
 use phpFastCache\Drivers\Zenddisk\Driver as ZendDiskDriver;
-use phpFastCache\Exceptions\phpFastCacheInvalidArgumentException;
 
 /**
  * Class Item
@@ -31,7 +30,7 @@ class Item implements ExtendedCacheItemInterface
      * Item constructor.
      * @param \phpFastCache\Drivers\Zenddisk\Driver $driver
      * @param $key
-     * @throws phpFastCacheInvalidArgumentException
+     * @throws \InvalidArgumentException
      */
     public function __construct(ZendDiskDriver $driver, $key)
     {
@@ -41,13 +40,13 @@ class Item implements ExtendedCacheItemInterface
             $this->driver->setItem($this);
             $this->expirationDate = new \DateTime();
         } else {
-            throw new phpFastCacheInvalidArgumentException(sprintf('$key must be a string, got type "%s" instead.', gettype($key)));
+            throw new \InvalidArgumentException(sprintf('$key must be a string, got type "%s" instead.', gettype($key)));
         }
     }
 
     /**
      * @param ExtendedCacheItemPoolInterface $driver
-     * @throws phpFastCacheInvalidArgumentException
+     * @throws \InvalidArgumentException
      * @return static
      */
     public function setDriver(ExtendedCacheItemPoolInterface $driver)
@@ -57,7 +56,7 @@ class Item implements ExtendedCacheItemInterface
 
             return $this;
         } else {
-            throw new phpFastCacheInvalidArgumentException('Invalid driver instance');
+            throw new \InvalidArgumentException('Invalid driver instance');
         }
     }
 }

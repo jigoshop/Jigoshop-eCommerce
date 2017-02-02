@@ -19,7 +19,6 @@ use phpFastCache\Core\Pool\ExtendedCacheItemPoolInterface;
 use phpFastCache\Entities\driverStatistic;
 use phpFastCache\Exceptions\phpFastCacheDriverCheckException;
 use phpFastCache\Exceptions\phpFastCacheDriverException;
-use phpFastCache\Exceptions\phpFastCacheInvalidArgumentException;
 use Psr\Cache\CacheItemInterface;
 
 /**
@@ -69,7 +68,7 @@ class Driver implements ExtendedCacheItemPoolInterface
     /**
      * @param \Psr\Cache\CacheItemInterface $item
      * @return mixed
-     * @throws phpFastCacheInvalidArgumentException
+     * @throws \InvalidArgumentException
      */
     protected function driverWrite(CacheItemInterface $item)
     {
@@ -87,7 +86,7 @@ class Driver implements ExtendedCacheItemPoolInterface
 
             return setcookie($keyword, $v, $item->getExpirationDate()->getTimestamp(), '/');
         } else {
-            throw new phpFastCacheInvalidArgumentException('Cross-Driver type confusion detected');
+            throw new \InvalidArgumentException('Cross-Driver type confusion detected');
         }
     }
 
@@ -102,7 +101,7 @@ class Driver implements ExtendedCacheItemPoolInterface
         // return null if no caching
         // return value if in caching
         $keyword = self::PREFIX . $item->getKey();
-        $x = isset($_COOKIE[ $keyword ]) ? json_decode($_COOKIE[ $keyword ], true) : false;
+        $x = isset($_COOKIE[ $keyword ]) ? $this->decode(json_decode($_COOKIE[ $keyword ], true)) : false;
 
         if ($x == false) {
             return null;
@@ -131,7 +130,7 @@ class Driver implements ExtendedCacheItemPoolInterface
     /**
      * @param \Psr\Cache\CacheItemInterface $item
      * @return bool
-     * @throws phpFastCacheInvalidArgumentException
+     * @throws \InvalidArgumentException
      */
     protected function driverDelete(CacheItemInterface $item)
     {
@@ -145,7 +144,7 @@ class Driver implements ExtendedCacheItemPoolInterface
 
             return @setcookie($keyword, null, -10);
         } else {
-            throw new phpFastCacheInvalidArgumentException('Cross-Driver type confusion detected');
+            throw new \InvalidArgumentException('Cross-Driver type confusion detected');
         }
     }
 

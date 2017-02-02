@@ -16,12 +16,15 @@ namespace phpFastCache\Drivers\Sqlite;
 
 use PDO;
 use PDOException;
+use phpFastCache\Core\Item\ExtendedCacheItemInterface;
 use phpFastCache\Core\Pool\DriverBaseTrait;
 use phpFastCache\Core\Pool\ExtendedCacheItemPoolInterface;
 use phpFastCache\Core\Pool\IO\IOHelperTrait;
+use phpFastCache\Entities\driverStatistic;
 use phpFastCache\Exceptions\phpFastCacheDriverCheckException;
-use phpFastCache\Exceptions\phpFastCacheInvalidArgumentException;
+use phpFastCache\Exceptions\phpFastCacheDriverException;
 use phpFastCache\Exceptions\phpFastCacheIOException;
+use phpFastCache\Util\Directory;
 use Psr\Cache\CacheItemInterface;
 
 /**
@@ -74,7 +77,7 @@ class Driver implements ExtendedCacheItemPoolInterface
         if (!$this->driverCheck()) {
             throw new phpFastCacheDriverCheckException(sprintf(self::DRIVER_CHECK_FAILURE, $this->getDriverName()));
         } else {
-            if (!file_exists($this->getSqliteDir()) && !@mkdir($this->getSqliteDir(), $this->getDefaultChmod(), true)) {
+            if (!file_exists($this->getSqliteDir()) && !@mkdir($this->getSqliteDir(), $this->setChmodAuto(), true)) {
                 throw new phpFastCacheIOException(sprintf('Sqlite cannot write in "%s", aborting...', $this->getPath()));
             } else {
                 $this->driverConnect();
@@ -96,7 +99,7 @@ class Driver implements ExtendedCacheItemPoolInterface
      */
     public function driverCheck()
     {
-        return extension_loaded('pdo_sqlite') && (is_writable($this->getSqliteDir()) || @mkdir($this->getSqliteDir(), $this->getDefaultChmod(), true));
+        return extension_loaded('pdo_sqlite') && (is_writable($this->getSqliteDir()) || @mkdir($this->getSqliteDir(), $this->setChmodAuto(), true));
     }
 
     /**
@@ -244,7 +247,7 @@ class Driver implements ExtendedCacheItemPoolInterface
     /**
      * @param \Psr\Cache\CacheItemInterface $item
      * @return mixed
-     * @throws phpFastCacheInvalidArgumentException
+     * @throws \InvalidArgumentException
      */
     protected function driverWrite(CacheItemInterface $item)
     {
@@ -295,7 +298,7 @@ class Driver implements ExtendedCacheItemPoolInterface
 
             return false;
         } else {
-            throw new phpFastCacheInvalidArgumentException('Cross-Driver type confusion detected');
+            throw new \InvalidArgumentException('Cross-Driver type confusion detected');
         }
     }
 
@@ -338,7 +341,7 @@ class Driver implements ExtendedCacheItemPoolInterface
     /**
      * @param \Psr\Cache\CacheItemInterface $item
      * @return bool
-     * @throws phpFastCacheInvalidArgumentException
+     * @throws \InvalidArgumentException
      */
     protected function driverDelete(CacheItemInterface $item)
     {
@@ -360,7 +363,7 @@ class Driver implements ExtendedCacheItemPoolInterface
                 return false;
             }
         } else {
-            throw new phpFastCacheInvalidArgumentException('Cross-Driver type confusion detected');
+            throw new \InvalidArgumentException('Cross-Driver type confusion detected');
         }
     }
 
@@ -389,14 +392,41 @@ class Driver implements ExtendedCacheItemPoolInterface
     protected function driverConnect()
     {
         if (!file_exists($this->getPath() . '/' . self::FILE_DIR)) {
-            if (!mkdir($this->getPath() . '/' . self::FILE_DIR, $this->getDefaultChmod(), true)
+            if (!mkdir($this->getPath() . '/' . self::FILE_DIR, $this->setChmodAuto(), true)
             ) {
                 $this->fallback = true;
             }
         }
         $this->SqliteDir = $this->getPath() . '/' . self::FILE_DIR;
+    }
 
-        return true;
+    /********************
+     *
+     * PSR-6 Extended Methods
+     *
+     *******************/
+
+    /**
+     * @return driverStatistic
+     * @throws phpFastCacheIOException
+     */
+    public function getStats()
+    {
+        $stat = new driverStatistic();
+        $path = $this->getFilePath(false);
+
+        if (!is_dir($path)) {
+            throw new phpFastCacheIOException("Can't read PATH:" . $path);
+        }
+
+        $stat->setData(implode(', ', array_keys($this->itemInstances)))
+          ->setRawData([
+            'tmp' => $this->tmp
+          ])
+          ->setSize(Directory::dirSize($path))
+          ->setInfo('Number of files used to build the cache: ' . Directory::getFileCount($path));
+
+        return $stat;
     }
 
     /**

@@ -18,9 +18,10 @@ use LevelDB as LeveldbClient;
 use phpFastCache\Core\Pool\DriverBaseTrait;
 use phpFastCache\Core\Pool\ExtendedCacheItemPoolInterface;
 use phpFastCache\Core\Pool\IO\IOHelperTrait;
+use phpFastCache\Entities\driverStatistic;
 use phpFastCache\Exceptions\phpFastCacheDriverCheckException;
 use phpFastCache\Exceptions\phpFastCacheDriverException;
-use phpFastCache\Exceptions\phpFastCacheInvalidArgumentException;
+use phpFastCache\Util\Directory;
 use Psr\Cache\CacheItemInterface;
 
 /**
@@ -74,7 +75,7 @@ class Driver implements ExtendedCacheItemPoolInterface
     /**
      * @param \Psr\Cache\CacheItemInterface $item
      * @return mixed
-     * @throws phpFastCacheInvalidArgumentException
+     * @throws \InvalidArgumentException
      */
     protected function driverWrite(CacheItemInterface $item)
     {
@@ -84,7 +85,7 @@ class Driver implements ExtendedCacheItemPoolInterface
         if ($item instanceof Item) {
             return $this->instance->set($item->getKey(), $this->encode($this->driverPreWrap($item)));
         } else {
-            throw new phpFastCacheInvalidArgumentException('Cross-Driver type confusion detected');
+            throw new \InvalidArgumentException('Cross-Driver type confusion detected');
         }
     }
 
@@ -105,7 +106,7 @@ class Driver implements ExtendedCacheItemPoolInterface
     /**
      * @param \Psr\Cache\CacheItemInterface $item
      * @return bool
-     * @throws phpFastCacheInvalidArgumentException
+     * @throws \InvalidArgumentException
      */
     protected function driverDelete(CacheItemInterface $item)
     {
@@ -115,7 +116,7 @@ class Driver implements ExtendedCacheItemPoolInterface
         if ($item instanceof Item) {
             return $this->instance->delete($item->getKey());
         } else {
-            throw new phpFastCacheInvalidArgumentException('Cross-Driver type confusion detected');
+            throw new \InvalidArgumentException('Cross-Driver type confusion detected');
         }
     }
 
@@ -128,7 +129,7 @@ class Driver implements ExtendedCacheItemPoolInterface
             $this->instance->close();
             $this->instance = null;
         }
-        $result = (bool) LeveldbClient::destroy($this->getLeveldbFile());
+        $result = LeveldbClient::destroy($this->getLeveldbFile());
         $this->driverConnect();
 
         return $result;
@@ -144,8 +145,23 @@ class Driver implements ExtendedCacheItemPoolInterface
         } else {
             $this->instance = $this->instance ?: new LeveldbClient($this->getLeveldbFile());
         }
+    }
 
-        return true;
+    /********************
+     *
+     * PSR-6 Extended Methods
+     *
+     *******************/
+
+    /**
+     * @return driverStatistic
+     */
+    public function getStats()
+    {
+        return (new driverStatistic())
+          ->setData(implode(', ', array_keys($this->itemInstances)))
+          ->setInfo('Number of files used to build the cache: ' . Directory::getFileCount($this->getLeveldbFile()))
+          ->setSize(Directory::dirSize($this->getLeveldbFile()));
     }
 
     /**

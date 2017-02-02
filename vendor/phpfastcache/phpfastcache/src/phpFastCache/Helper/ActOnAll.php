@@ -1,16 +1,4 @@
 <?php
-/**
- *
- * This file is part of phpFastCache.
- *
- * @license MIT License (MIT)
- *
- * For full copyright and license information, please see the docs/CREDITS.txt file.
- *
- * @author Khoa Bui (khoaofgod)  <khoaofgod@gmail.com> http://www.phpfastcache.com
- * @author Georges.L (Geolim4)  <contact@geolim4.com>
- *
- */
 namespace phpFastCache\Helper;
 
 use phpFastCache\CacheManager;
@@ -24,9 +12,8 @@ use Psr\Cache\CacheItemInterface;
  */
 class ActOnAll implements ExtendedCacheItemPoolInterface
 {
-
     /**
-     * @var ExtendedCacheItemPoolInterface[]
+     * @var array|\phpFastCache\Core\Pool\ExtendedCacheItemPoolInterface[]
      */
     protected $instances = [];
 
@@ -128,16 +115,6 @@ class ActOnAll implements ExtendedCacheItemPoolInterface
     }
 
     /**
-     * @param array ...$items
-     * @return mixed
-     */
-    public function saveMultiple(...$items)
-    {
-        $callback = $this->getGenericCallback();
-        return $callback(__FUNCTION__, func_get_args());
-    }
-
-    /**
      * @return mixed
      */
     public function commit()
@@ -209,7 +186,7 @@ class ActOnAll implements ExtendedCacheItemPoolInterface
     /**
      * @return mixed
      */
-    public function getHelp()
+    public function clean()
     {
         $callback = $this->getGenericCallback();
         return $callback(__FUNCTION__, func_get_args());
@@ -359,70 +336,6 @@ class ActOnAll implements ExtendedCacheItemPoolInterface
      * @return mixed
      */
     public function prependItemsByTags(array $tagNames, $data)
-    {
-        $callback = $this->getGenericCallback();
-        return $callback(__FUNCTION__, func_get_args());
-    }
-
-    /**
-     * @param array $tagNames
-     * @return mixed
-     */
-    public function getItemsByTagsAll(array $tagNames)
-    {
-        $callback = $this->getGenericCallback();
-        return $callback(__FUNCTION__, func_get_args());
-    }
-
-    /**
-     * @param array $tagNames
-     * @return mixed
-     */
-    public function deleteItemsByTagsAll(array $tagNames)
-    {
-        $callback = $this->getGenericCallback();
-        return $callback(__FUNCTION__, func_get_args());
-    }
-
-    /**
-     * @param array $tagNames
-     * @param int $step
-     * @return mixed
-     */
-    public function incrementItemsByTagsAll(array $tagNames, $step = 1)
-    {
-        $callback = $this->getGenericCallback();
-        return $callback(__FUNCTION__, func_get_args());
-    }
-
-    /**
-     * @param array $tagNames
-     * @param int $step
-     * @return mixed
-     */
-    public function decrementItemsByTagsAll(array $tagNames, $step = 1)
-    {
-        $callback = $this->getGenericCallback();
-        return $callback(__FUNCTION__, func_get_args());
-    }
-
-    /**
-     * @param array $tagNames
-     * @param array|string $data
-     * @return mixed
-     */
-    public function appendItemsByTagsAll(array $tagNames, $data)
-    {
-        $callback = $this->getGenericCallback();
-        return $callback(__FUNCTION__, func_get_args());
-    }
-
-    /**
-     * @param array $tagNames
-     * @param array|string $data
-     * @return mixed
-     */
-    public function prependItemsByTagsAll(array $tagNames, $data)
     {
         $callback = $this->getGenericCallback();
         return $callback(__FUNCTION__, func_get_args());

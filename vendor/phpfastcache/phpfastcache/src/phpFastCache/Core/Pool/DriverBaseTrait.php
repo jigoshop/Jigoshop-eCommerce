@@ -13,8 +13,9 @@
  */
 namespace phpFastCache\Core\Pool;
 
+use phpFastCache\Exceptions\phpFastCacheDriverException;
 use phpFastCache\Core\Item\ExtendedCacheItemInterface;
-use phpFastCache\Exceptions\phpFastCacheInvalidArgumentException;
+use phpFastCache\Util\Directory;
 
 
 /**
@@ -304,12 +305,12 @@ trait DriverBaseTrait
      * @param string $optionName
      * @param mixed $optionValue
      * @return bool
-     * @throws phpFastCacheInvalidArgumentException
+     * @throws \InvalidArgumentException
      */
     public static function isValidOption($optionName, $optionValue)
     {
         if (!is_string($optionName)) {
-            throw new phpFastCacheInvalidArgumentException('$optionName must be a string');
+            throw new \InvalidArgumentException('$optionName must be a string');
         }
 
         return true;

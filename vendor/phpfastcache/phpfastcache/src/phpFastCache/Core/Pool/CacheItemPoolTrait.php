@@ -18,7 +18,6 @@ use phpFastCache\Core\Item\ExtendedCacheItemInterface;
 use phpFastCache\CacheManager;
 use phpFastCache\EventManager;
 use phpFastCache\Exceptions\phpFastCacheCoreException;
-use phpFastCache\Exceptions\phpFastCacheInvalidArgumentException;
 use Psr\Cache\CacheItemInterface;
 use phpFastCache\Util\ClassNamespaceResolverTrait;
 
@@ -30,11 +29,6 @@ use phpFastCache\Util\ClassNamespaceResolverTrait;
 trait CacheItemPoolTrait
 {
     use ClassNamespaceResolverTrait;
-
-    /**
-     * @var string
-     */
-    protected static $unsupportedKeyChars = '{}()/\@:';
 
     /**
      * @var array
@@ -54,16 +48,13 @@ trait CacheItemPoolTrait
     /**
      * @param string $key
      * @return \phpFastCache\Core\Item\ExtendedCacheItemInterface
-     * @throws phpFastCacheInvalidArgumentException
+     * @throws \InvalidArgumentException
      * @throws \LogicException
      * @throws phpFastCacheCoreException
      */
     public function getItem($key)
     {
         if (is_string($key)) {
-            if (preg_match('~([' . preg_quote(self::$unsupportedKeyChars, '~') . ']+)~', $key, $matches)){
-                throw new phpFastCacheInvalidArgumentException('Unsupported key character detected: "' . $matches[1] . '". Please check: https://github.com/PHPSocialNetwork/phpfastcache/wiki/%5BV6%5D-Unsupported-characters-in-key-identifiers');
-            }
             if (!array_key_exists($key, $this->itemInstances)) {
 
                 /**
@@ -112,7 +103,7 @@ trait CacheItemPoolTrait
 
             }
         } else {
-            throw new phpFastCacheInvalidArgumentException(sprintf('$key must be a string, got type "%s" instead.', gettype($key)));
+            throw new \InvalidArgumentException(sprintf('$key must be a string, got type "%s" instead.', gettype($key)));
         }
 
         /**
@@ -128,7 +119,7 @@ trait CacheItemPoolTrait
     /**
      * @param \Psr\Cache\CacheItemInterface $item
      * @return $this
-     * @throws phpFastCacheInvalidArgumentException
+     * @throws \InvalidArgumentException
      */
     public function setItem(CacheItemInterface $item)
     {
@@ -137,14 +128,14 @@ trait CacheItemPoolTrait
 
             return $this;
         } else {
-            throw new phpFastCacheInvalidArgumentException(sprintf('Invalid Item Class "%s" for this driver.', get_class($item)));
+            throw new \InvalidArgumentException(sprintf('Invalid Item Class "%s" for this driver.', get_class($item)));
         }
     }
 
     /**
      * @param array $keys
      * @return CacheItemInterface[]
-     * @throws phpFastCacheInvalidArgumentException
+     * @throws \InvalidArgumentException
      */
     public function getItems(array $keys = [])
     {
@@ -159,7 +150,7 @@ trait CacheItemPoolTrait
     /**
      * @param string $key
      * @return bool
-     * @throws phpFastCacheInvalidArgumentException
+     * @throws \InvalidArgumentException
      */
     public function hasItem($key)
     {
@@ -189,7 +180,7 @@ trait CacheItemPoolTrait
     /**
      * @param string $key
      * @return bool
-     * @throws phpFastCacheInvalidArgumentException
+     * @throws \InvalidArgumentException
      */
     public function deleteItem($key)
     {
@@ -220,7 +211,7 @@ trait CacheItemPoolTrait
     /**
      * @param array $keys
      * @return bool
-     * @throws phpFastCacheInvalidArgumentException
+     * @throws \InvalidArgumentException
      */
     public function deleteItems(array $keys)
     {
@@ -238,7 +229,7 @@ trait CacheItemPoolTrait
     /**
      * @param \Psr\Cache\CacheItemInterface $item
      * @return mixed
-     * @throws phpFastCacheInvalidArgumentException
+     * @throws \InvalidArgumentException
      * @throws \RuntimeException
      */
     public function save(CacheItemInterface $item)
@@ -295,7 +286,7 @@ trait CacheItemPoolTrait
 
     /**
      * @return mixed|null
-     * @throws phpFastCacheInvalidArgumentException
+     * @throws \InvalidArgumentException
      */
     public function commit()
     {

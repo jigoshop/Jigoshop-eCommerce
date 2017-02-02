@@ -17,7 +17,6 @@ namespace phpFastCache\Core\Pool;
 use InvalidArgumentException;
 use phpFastCache\Core\Item\ExtendedCacheItemInterface;
 use phpFastCache\EventManager;
-use phpFastCache\Exceptions\phpFastCacheInvalidArgumentException;
 use Psr\Cache\CacheItemInterface;
 
 
@@ -26,25 +25,46 @@ trait ExtendedCacheItemPoolTrait
     use CacheItemPoolTrait;
 
     /**
-     * @inheritdoc
+     * Deletes all items in the pool.
+     * @deprecated Use clear() instead
+     * Will be removed in 5.1
+     *
+     * @return bool
+     *   True if the pool was successfully cleared. False if there was an error.
+     */
+    public function clean()
+    {
+        trigger_error('Cache clean() method is deprecated, use clear() method instead', E_USER_DEPRECATED);
+        return $this->clear();
+    }
+
+    /**
+     * @param array $keys
+     * An indexed array of keys of items to retrieve.
+     * @param int $option json_encode() options
+     * @param int $depth json_encode() depth
+     * @return string
+     * @throws \InvalidArgumentException
      */
     public function getItemsAsJsonString(array $keys = [], $option = 0, $depth = 512)
     {
-        $callback = function (CacheItemInterface $item) {
+        $callback = function(CacheItemInterface $item){
             return $item->get();
         };
         return json_encode(array_map($callback, array_values($this->getItems($keys))), $option, $depth);
     }
 
     /**
-     * @inheritdoc
+     * @param string $tagName
+     * @return \phpFastCache\Core\Item\ExtendedCacheItemInterface[]
+     * @throws InvalidArgumentException
      */
     public function getItemsByTag($tagName)
     {
         if (is_string($tagName)) {
             $driverResponse = $this->getItem($this->getTagKey($tagName));
             if ($driverResponse->isHit()) {
-                $items = (array)$driverResponse->get();
+                $items = (array) $driverResponse->get();
 
                 /**
                  * getItems() may provides expired item(s)
@@ -56,7 +76,7 @@ trait ExtendedCacheItemPoolTrait
                  *
                  * #headache
                  */
-                return array_filter($this->getItems(array_unique(array_keys($items))), function (ExtendedCacheItemInterface $item) {
+                return array_filter($this->getItems(array_unique(array_keys($items))), function(ExtendedCacheItemInterface $item){
                     return $item->isHit();
                 });
             } else {
@@ -68,46 +88,37 @@ trait ExtendedCacheItemPoolTrait
     }
 
     /**
-     * @inheritdoc
+     * @param array $tagNames
+     * @return \phpFastCache\Core\Item\ExtendedCacheItemInterface[]
+     * @throws InvalidArgumentException
      */
     public function getItemsByTags(array $tagNames)
     {
         $items = [];
         foreach (array_unique($tagNames) as $tagName) {
-            if(is_string($tagName)){
-                $items = array_merge($items, $this->getItemsByTag($tagName));
-            }else{
-                throw new InvalidArgumentException('$tagName must be a a string');
-            }
+            $items = array_merge($items, $this->getItemsByTag($tagName));
         }
 
         return $items;
     }
 
-
     /**
-     * @inheritdoc
-     */
-    public function getItemsByTagsAll(array $tagNames)
-    {
-        $items = $this->getItemsByTags($tagNames);
-
-        foreach ($items as $key => $item) {
-            if (array_diff($tagNames, $item->getTags())) {
-                unset($items[ $key ]);
-            }
-        }
-
-        return $items;
-    }
-
-
-    /**
-     * @inheritdoc
+     * Returns A json string that represents an array of items by tags-based.
+     *
+     * @param array $tagNames
+     * An indexed array of keys of items to retrieve.
+     * @param int $option json_encode() options
+     * @param int $depth json_encode() depth
+     *
+     * @throws InvalidArgumentException
+     *   If any of the keys in $keys are not a legal value a \Psr\Cache\InvalidArgumentException
+     *   MUST be thrown.
+     *
+     * @return string
      */
     public function getItemsByTagsAsJsonString(array $tagNames, $option = 0, $depth = 512)
     {
-        $callback = function (CacheItemInterface $item) {
+        $callback = function(CacheItemInterface $item){
             return $item->get();
         };
 
@@ -115,7 +126,9 @@ trait ExtendedCacheItemPoolTrait
     }
 
     /**
-     * @inheritdoc
+     * @param string $tagName
+     * @return bool|null
+     * @throws InvalidArgumentException
      */
     public function deleteItemsByTag($tagName)
     {
@@ -135,31 +148,15 @@ trait ExtendedCacheItemPoolTrait
     }
 
     /**
-     * @inheritdoc
+     * @param array $tagNames
+     * @return bool|null
+     * @throws InvalidArgumentException
      */
     public function deleteItemsByTags(array $tagNames)
     {
         $return = null;
         foreach ($tagNames as $tagName) {
             $result = $this->deleteItemsByTag($tagName);
-            if ($return !== false) {
-                $return = $result;
-            }
-        }
-
-        return $return;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function deleteItemsByTagsAll(array $tagNames)
-    {
-        $return = null;
-        $items = $this->getItemsByTagsAll($tagNames);
-
-        foreach ($items as $key => $item) {
-            $result = $this->deleteItem($item->getKey());
             if ($return !== false) {
                 $return = $result;
             }
@@ -204,24 +201,6 @@ trait ExtendedCacheItemPoolTrait
     /**
      * @inheritdoc
      */
-    public function incrementItemsByTagsAll(array $tagNames, $step = 1)
-    {
-        if (is_int($step)) {
-            $items = $this->getItemsByTagsAll($tagNames);
-
-            foreach ($items as $key => $item) {
-                $item->increment($step);
-                $this->saveDeferred($item);
-            }
-            return $this->commit();
-        } else {
-            throw new InvalidArgumentException('$step must be an integer');
-        }
-    }
-
-    /**
-     * @inheritdoc
-     */
     public function decrementItemsByTag($tagName, $step = 1)
     {
         if (is_string($tagName) && is_int($step)) {
@@ -255,24 +234,6 @@ trait ExtendedCacheItemPoolTrait
     /**
      * @inheritdoc
      */
-    public function decrementItemsByTagsAll(array $tagNames, $step = 1)
-    {
-        if (is_int($step)) {
-            $items = $this->getItemsByTagsAll($tagNames);
-
-            foreach ($items as $key => $item) {
-                $item->decrement($step);
-                $this->saveDeferred($item);
-            }
-            return $this->commit();
-        } else {
-            throw new InvalidArgumentException('$step must be an integer');
-        }
-    }
-
-    /**
-     * @inheritdoc
-     */
     public function appendItemsByTag($tagName, $data)
     {
         if (is_string($tagName)) {
@@ -294,31 +255,13 @@ trait ExtendedCacheItemPoolTrait
     {
         $return = null;
         foreach ($tagNames as $tagName) {
-            $result = $this->appendItemsByTag($tagName, $data);
+            $result = $this->decrementItemsByTag($tagName, $data);
             if ($return !== false) {
                 $return = $result;
             }
         }
 
         return $return;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function appendItemsByTagsAll(array $tagNames, $data)
-    {
-        if (is_scalar($data)) {
-            $items = $this->getItemsByTagsAll($tagNames);
-
-            foreach ($items as $key => $item) {
-                $item->append($data);
-                $this->saveDeferred($item);
-            }
-            return $this->commit();
-        } else {
-            throw new InvalidArgumentException('$data must be scalar');
-        }
     }
 
     /**
@@ -345,7 +288,7 @@ trait ExtendedCacheItemPoolTrait
     {
         $return = null;
         foreach ($tagNames as $tagName) {
-            $result = $this->prependItemsByTag($tagName, $data);
+            $result = $this->decrementItemsByTag($tagName, $data);
             if ($return !== false) {
                 $return = $result;
             }
@@ -355,36 +298,18 @@ trait ExtendedCacheItemPoolTrait
     }
 
     /**
-     * @inheritdoc
-     */
-    public function prependItemsByTagsAll(array $tagNames, $data)
-    {
-        if (is_scalar($data)) {
-            $items = $this->getItemsByTagsAll($tagNames);
-
-            foreach ($items as $key => $item) {
-                $item->prepend($data);
-                $this->saveDeferred($item);
-            }
-            return $this->commit();
-        } else {
-            throw new InvalidArgumentException('$data must be scalar');
-        }
-    }
-
-    /**
      * @param \Psr\Cache\CacheItemInterface $item
      * @return void
      */
     public function detachItem(CacheItemInterface $item)
     {
-        if (isset($this->itemInstances[ $item->getKey() ])) {
+        if(isset($this->itemInstances[$item->getKey()])){
             $this->deregisterItem($item);
         }
     }
 
     /**
-     * @inheritdoc
+     * @return void
      */
     public function detachAllItems()
     {
@@ -394,14 +319,16 @@ trait ExtendedCacheItemPoolTrait
     }
 
     /**
-     * @inheritdoc
+     * @param \Psr\Cache\CacheItemInterface $item
+     * @return void
+     * @throws \LogicException
      */
     public function attachItem(CacheItemInterface $item)
     {
-        if (isset($this->itemInstances[ $item->getKey() ]) && spl_object_hash($item) !== spl_object_hash($this->itemInstances[ $item->getKey() ])) {
+        if(isset($this->itemInstances[$item->getKey()]) && spl_object_hash($item) !== spl_object_hash($this->itemInstances[ $item->getKey() ])){
             throw new \LogicException('The item already exists and cannot be overwritten because the Spl object hash mismatches ! You probably tried to re-attach a detached item which has been already retrieved from cache.');
-        } else {
-            $this->itemInstances[ $item->getKey() ] = $item;
+        }else{
+            $this->itemInstances[$item->getKey()] = $item;
         }
     }
 
@@ -409,19 +336,19 @@ trait ExtendedCacheItemPoolTrait
     /**
      * @internal This method de-register an item from $this->itemInstances
      * @param CacheItemInterface|string $item
-     * @throws phpFastCacheInvalidArgumentException
+     * @throws \InvalidArgumentException
      */
     protected function deregisterItem($item)
     {
-        if ($item instanceof CacheItemInterface) {
+        if($item instanceof CacheItemInterface){
             unset($this->itemInstances[ $item->getKey() ]);
 
-        } else if (is_string($item)) {
+        }else if(is_string($item)){
             unset($this->itemInstances[ $item ]);
-        } else {
-            throw new phpFastCacheInvalidArgumentException('Invalid type for $item variable');
+        }else{
+            throw new \InvalidArgumentException('Invalid type for $item variable');
         }
-        if (gc_enabled()) {
+        if(gc_enabled()){
             gc_collect_cycles();
         }
     }
@@ -437,7 +364,7 @@ trait ExtendedCacheItemPoolTrait
      */
     public function isAttached(CacheItemInterface $item)
     {
-        if (isset($this->itemInstances[ $item->getKey() ])) {
+        if(isset($this->itemInstances[$item->getKey()])){
             return spl_object_hash($item) === spl_object_hash($this->itemInstances[ $item->getKey() ]);
         }
         return null;
@@ -453,32 +380,6 @@ trait ExtendedCacheItemPoolTrait
         $this->eventManager = $em;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function saveMultiple(...$items)
-    {
-        if (isset($items[ 0 ]) && is_array($items[ 0 ])) {
-            foreach ($items[ 0 ] as $item) {
-                $this->save($item);
-            }
-            return true;
-        } else if (is_array($items)) {
-            foreach ($items as $item) {
-                $this->save($item);
-            }
-            return true;
-        }
-        return false;
-    }
-
-    /**
-     * @return string
-     */
-    public function getHelp()
-    {
-        return '';
-    }
 
     /**
      * Driver-related methods

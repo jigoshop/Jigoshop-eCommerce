@@ -15,7 +15,6 @@
 namespace phpFastCache\Core\Item;
 
 use phpFastCache\EventManager;
-use phpFastCache\Exceptions\phpFastCacheInvalidArgumentException;
 use Psr\Cache\CacheItemInterface;
 use phpFastCache\Core\Pool\ExtendedCacheItemPoolInterface;
 
@@ -26,21 +25,12 @@ use phpFastCache\Core\Pool\ExtendedCacheItemPoolInterface;
 interface ExtendedCacheItemInterface extends CacheItemInterface, \JsonSerializable
 {
     /**
-     * Returns the encoded key for the current cache item.
-     * Usually as a MD5 hash
-     *
-     * @return string
-     *   The encoded key string for this cache item.
-     */
-    public function getEncodedKey();
-
-    /**
      * @return mixed
      */
     public function getUncommittedData();
 
     /**
-     * @return \DateTimeInterface
+     * @return \DateTimeInterface|null
      */
     public function getExpirationDate();
 
@@ -95,7 +85,7 @@ interface ExtendedCacheItemInterface extends CacheItemInterface, \JsonSerializab
     public function isExpired();
 
     /**
-     * @param \phpFastCache\Core\Pool\ExtendedCacheItemPoolInterface $driver
+     * @param \phpFastCache\Cache\Pool\ExtendedCacheItemPoolInterface $driver
      * @return mixed
      */
     public function setDriver(ExtendedCacheItemPoolInterface $driver);
@@ -103,42 +93,42 @@ interface ExtendedCacheItemInterface extends CacheItemInterface, \JsonSerializab
     /**
      * @param bool $isHit
      * @return $this
-     * @throws phpFastCacheInvalidArgumentException
+     * @throws \InvalidArgumentException
      */
     public function setHit($isHit);
 
     /**
      * @param int $step
      * @return $this
-     * @throws phpFastCacheInvalidArgumentException
+     * @throws \InvalidArgumentException
      */
     public function increment($step = 1);
 
     /**
      * @param int $step
      * @return $this
-     * @throws phpFastCacheInvalidArgumentException
+     * @throws \InvalidArgumentException
      */
     public function decrement($step = 1);
 
     /**
      * @param array|string $data
      * @return $this
-     * @throws phpFastCacheInvalidArgumentException
+     * @throws \InvalidArgumentException
      */
     public function append($data);
 
     /**
      * @param array|string $data
      * @return $this
-     * @throws phpFastCacheInvalidArgumentException
+     * @throws \InvalidArgumentException
      */
     public function prepend($data);
 
     /**
      * @param string $tagName
      * @return $this
-     * @throws phpFastCacheInvalidArgumentException
+     * @throws \InvalidArgumentException
      */
     public function addTag($tagName);
 
@@ -152,7 +142,7 @@ interface ExtendedCacheItemInterface extends CacheItemInterface, \JsonSerializab
     /**
      * @param array $tags
      * @return $this
-     * @throws phpFastCacheInvalidArgumentException
+     * @throws \InvalidArgumentException
      */
     public function setTags(array $tags);
 

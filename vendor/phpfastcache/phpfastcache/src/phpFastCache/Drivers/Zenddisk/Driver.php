@@ -13,12 +13,11 @@
 
 namespace phpFastCache\Drivers\Zenddisk;
 
-use phpFastCache\Core\Pool\DriverBaseTrait;
-use phpFastCache\Core\Pool\ExtendedCacheItemPoolInterface;
+use phpFastCache\Core\DriverAbstract;
+use phpFastCache\Core\StandardPsr6StructureTrait;
 use phpFastCache\Entities\driverStatistic;
 use phpFastCache\Exceptions\phpFastCacheDriverCheckException;
 use phpFastCache\Exceptions\phpFastCacheDriverException;
-use phpFastCache\Exceptions\phpFastCacheInvalidArgumentException;
 use Psr\Cache\CacheItemInterface;
 
 /**
@@ -26,9 +25,8 @@ use Psr\Cache\CacheItemInterface;
  * Requires Zend Data Cache Functions from ZendServer
  * @package phpFastCache\Drivers
  */
-class Driver implements ExtendedCacheItemPoolInterface
+class Driver extends DriverAbstract
 {
-    use DriverBaseTrait;
     /**
      * Driver constructor.
      * @param array $config
@@ -58,7 +56,7 @@ class Driver implements ExtendedCacheItemPoolInterface
     /**
      * @param \Psr\Cache\CacheItemInterface $item
      * @return mixed
-     * @throws phpFastCacheInvalidArgumentException
+     * @throws \InvalidArgumentException
      */
     protected function driverWrite(CacheItemInterface $item)
     {
@@ -70,7 +68,7 @@ class Driver implements ExtendedCacheItemPoolInterface
 
             return zend_disk_cache_store($item->getKey(), $this->driverPreWrap($item), ($ttl > 0 ? $ttl : 0));
         } else {
-            throw new phpFastCacheInvalidArgumentException('Cross-Driver type confusion detected');
+            throw new \InvalidArgumentException('Cross-Driver type confusion detected');
         }
     }
 
@@ -91,7 +89,7 @@ class Driver implements ExtendedCacheItemPoolInterface
     /**
      * @param \Psr\Cache\CacheItemInterface $item
      * @return bool
-     * @throws phpFastCacheInvalidArgumentException
+     * @throws \InvalidArgumentException
      */
     protected function driverDelete(CacheItemInterface $item)
     {
@@ -101,7 +99,7 @@ class Driver implements ExtendedCacheItemPoolInterface
         if ($item instanceof Item) {
             return zend_disk_cache_delete($item->getKey());
         } else {
-            throw new phpFastCacheInvalidArgumentException('Cross-Driver type confusion detected');
+            throw new \InvalidArgumentException('Cross-Driver type confusion detected');
         }
     }
 
@@ -126,18 +124,6 @@ class Driver implements ExtendedCacheItemPoolInterface
      * PSR-6 Extended Methods
      *
      *******************/
-
-    /**
-     * @return string
-     */
-    public function getHelp()
-    {
-        return <<<HELP
-<p>
-This driver rely on Zend Server 8.5+, see: http://www.zend.com/en/products/zend_server
-</p>
-HELP;
-    }
 
     /**
      * @return driverStatistic

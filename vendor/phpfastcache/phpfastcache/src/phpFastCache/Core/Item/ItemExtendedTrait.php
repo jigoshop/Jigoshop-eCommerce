@@ -15,7 +15,6 @@
 namespace phpFastCache\Core\Item;
 
 use phpFastCache\EventManager;
-use phpFastCache\Exceptions\phpFastCacheInvalidArgumentException;
 
 /**
  * Class ItemExtendedTrait
@@ -33,14 +32,6 @@ trait ItemExtendedTrait
      * @var EventManager
      */
     protected $eventManager;
-
-    /**
-     * @return string
-     */
-    public function getEncodedKey()
-    {
-        return md5($this->getKey());
-    }
 
     /**
      * @return mixed
@@ -74,6 +65,7 @@ trait ItemExtendedTrait
     {
         return $this->expiresAt($expiration);
     }
+
 
     /**
      * @return \DateTimeInterface
@@ -127,7 +119,7 @@ trait ItemExtendedTrait
             $this->modificationDate = $date;
             return $this;
         }else{
-            throw new \LogicException('Cannot access to the modification date when the "itemDetailedDate" configuration is disabled.');
+            throw new \LogicException('Cannot access to the creation date when the "itemDetailedDate" configuration is disabled.');
         }
     }
 
@@ -155,7 +147,7 @@ trait ItemExtendedTrait
     /**
      * @param int $step
      * @return $this
-     * @throws phpFastCacheInvalidArgumentException
+     * @throws \InvalidArgumentException
      */
     public function increment($step = 1)
     {
@@ -163,7 +155,7 @@ trait ItemExtendedTrait
             $this->fetched = true;
             $this->data += $step;
         } else {
-            throw new phpFastCacheInvalidArgumentException('$step must be numeric.');
+            throw new \InvalidArgumentException('$step must be numeric.');
         }
 
         return $this;
@@ -172,7 +164,7 @@ trait ItemExtendedTrait
     /**
      * @param int $step
      * @return $this
-     * @throws phpFastCacheInvalidArgumentException
+     * @throws \InvalidArgumentException
      */
     public function decrement($step = 1)
     {
@@ -180,7 +172,7 @@ trait ItemExtendedTrait
             $this->fetched = true;
             $this->data -= $step;
         } else {
-            throw new phpFastCacheInvalidArgumentException('$step must be numeric.');
+            throw new \InvalidArgumentException('$step must be numeric.');
         }
 
         return $this;
@@ -189,7 +181,7 @@ trait ItemExtendedTrait
     /**
      * @param array|string $data
      * @return $this
-     * @throws phpFastCacheInvalidArgumentException
+     * @throws \InvalidArgumentException
      */
     public function append($data)
     {
@@ -198,7 +190,7 @@ trait ItemExtendedTrait
         } else if (is_string($data)) {
             $this->data .= (string) $data;
         } else {
-            throw new phpFastCacheInvalidArgumentException('$data must be either array nor string.');
+            throw new \InvalidArgumentException('$data must be either array nor string.');
         }
 
         return $this;
@@ -208,7 +200,7 @@ trait ItemExtendedTrait
     /**
      * @param array|string $data
      * @return $this
-     * @throws phpFastCacheInvalidArgumentException
+     * @throws \InvalidArgumentException
      */
     public function prepend($data)
     {
@@ -217,7 +209,7 @@ trait ItemExtendedTrait
         } else if (is_string($data)) {
             $this->data = (string) $data . $this->data;
         } else {
-            throw new phpFastCacheInvalidArgumentException('$data must be either array nor string.');
+            throw new \InvalidArgumentException('$data must be either array nor string.');
         }
 
         return $this;
@@ -226,7 +218,7 @@ trait ItemExtendedTrait
     /**
      * @param $tagName
      * @return $this
-     * @throws phpFastCacheInvalidArgumentException
+     * @throws \InvalidArgumentException
      */
     public function addTag($tagName)
     {
@@ -235,7 +227,7 @@ trait ItemExtendedTrait
 
             return $this;
         } else {
-            throw new phpFastCacheInvalidArgumentException('$tagName must be a string');
+            throw new \InvalidArgumentException('$tagName must be a string');
         }
     }
 
@@ -255,7 +247,7 @@ trait ItemExtendedTrait
     /**
      * @param array $tags
      * @return $this
-     * @throws phpFastCacheInvalidArgumentException
+     * @throws \InvalidArgumentException
      */
     public function setTags(array $tags)
     {
@@ -263,7 +255,7 @@ trait ItemExtendedTrait
             if (array_filter($tags, 'is_string')) {
                 $this->tags = $tags;
             } else {
-                throw new phpFastCacheInvalidArgumentException('$tagName must be an array of string');
+                throw new \InvalidArgumentException('$tagName must be an array of string');
             }
         }
 

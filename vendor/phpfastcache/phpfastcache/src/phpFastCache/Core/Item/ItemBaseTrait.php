@@ -14,8 +14,7 @@
 
 namespace phpFastCache\Core\Item;
 
-use phpFastCache\Core\Pool\ExtendedCacheItemPoolInterface;
-use phpFastCache\Exceptions\phpFastCacheInvalidArgumentException;
+use phpFastCache\Proxy\phpFastCacheAbstractProxy;
 
 trait ItemBaseTrait
 {
@@ -27,7 +26,7 @@ trait ItemBaseTrait
     protected $fetched = false;
 
     /**
-     * @var ExtendedCacheItemPoolInterface
+     * @var phpFastCacheAbstractProxy
      */
     protected $driver;
 
@@ -120,6 +119,7 @@ trait ItemBaseTrait
 
     /**
      * @return bool
+     * @throws \InvalidArgumentException
      */
     public function isHit()
     {
@@ -129,7 +129,7 @@ trait ItemBaseTrait
     /**
      * @param bool $isHit
      * @return $this
-     * @throws phpFastCacheInvalidArgumentException
+     * @throws \InvalidArgumentException
      */
     public function setHit($isHit)
     {
@@ -138,14 +138,14 @@ trait ItemBaseTrait
 
             return $this;
         } else {
-            throw new phpFastCacheInvalidArgumentException('$isHit must be a boolean');
+            throw new \InvalidArgumentException('$isHit must be a boolean');
         }
     }
 
     /**
      * @param \DateTimeInterface $expiration
      * @return $this
-     * @throws phpFastCacheInvalidArgumentException
+     * @throws \InvalidArgumentException
      */
     public function expiresAt($expiration)
     {
@@ -158,7 +158,7 @@ trait ItemBaseTrait
             $this->eventManager->dispatch('CacheItemExpireAt', $this, $expiration);
             $this->expirationDate = $expiration;
         } else {
-            throw new phpFastCacheInvalidArgumentException('$expiration must be an object implementing the DateTimeInterface');
+            throw new \InvalidArgumentException('$expiration must be an object implementing the DateTimeInterface');
         }
 
         return $this;
@@ -167,7 +167,7 @@ trait ItemBaseTrait
     /**
      * @param \DateInterval|int $time
      * @return $this
-     * @throws phpFastCacheInvalidArgumentException
+     * @throws \InvalidArgumentException
      */
     public function expiresAfter($time)
     {
@@ -198,7 +198,7 @@ trait ItemBaseTrait
 
             $this->expirationDate = (new \DateTime())->add($time);
         } else {
-            throw new phpFastCacheInvalidArgumentException('Invalid date format');
+            throw new \InvalidArgumentException('Invalid date format');
         }
 
         return $this;
