@@ -209,6 +209,7 @@ class Product
      *
      * @param Entity\Product $product
      * @param string $size
+	 * @param array $attributes
      *
      * @return string
      */
