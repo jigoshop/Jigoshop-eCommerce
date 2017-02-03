@@ -209,14 +209,15 @@ class Product
      *
      * @param Entity\Product $product
      * @param string $size
+	 * @param array $attributes
      *
      * @return string
      */
-    public static function getFeaturedImage(Entity\Product $product, $size = CoreOptions::IMAGE_SMALL)
+    public static function getFeaturedImage(Entity\Product $product, $size = CoreOptions::IMAGE_SMALL, $attributes = [])
     {
         if (self::hasFeaturedImage($product)) {
             $thumbnail = apply_filters('jigoshop\helper\product\get_featured_image',
-                get_the_post_thumbnail($product->getId(), $size), $product, $size);
+                get_the_post_thumbnail($product->getId(), $size, $attributes), $product, $size);
             if ($thumbnail) {
                 return $thumbnail;
             }
