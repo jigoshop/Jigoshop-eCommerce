@@ -142,3 +142,4 @@ require_once(__DIR__.'/src/JigoshopInit.php');
 $jigoshop = new JigoshopInit(__FILE__);
 add_action('plugins_loaded', array($jigoshop, 'onLoad'), 20);
 add_action('init', array($jigoshop, 'onInit'), 0);
+register_activation_hook(__FILE__, array($jigoshop, 'update'));

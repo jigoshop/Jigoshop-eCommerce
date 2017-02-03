@@ -141,7 +141,7 @@ class Installer
 				product_id BIGINT(20) UNSIGNED,
 				product_type VARCHAR(255) NOT NULL,
 				title VARCHAR(255) NOT NULL,
-				tax_classes VARCHAR(170) NOT NULL
+				tax_classes VARCHAR(170) NOT NULL,
 				price DECIMAL(12,4) NOT NULL,
 				tax DECIMAL(12,4) NOT NULL,
 				quantity INT NOT NULL DEFAULT 1,
