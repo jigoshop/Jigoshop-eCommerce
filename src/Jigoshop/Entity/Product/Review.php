@@ -9,5 +9,7 @@ namespace Jigoshop\Entity\Product;
  */
 class Review
 {
-
+    private $rate;
+    /** @var  \WP_Comment */
+    private $comment;
 }
