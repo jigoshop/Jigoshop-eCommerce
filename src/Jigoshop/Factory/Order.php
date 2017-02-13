@@ -9,6 +9,7 @@ use Jigoshop\Entity\Coupon;
 use Jigoshop\Entity\Customer as CustomerEntity;
 use Jigoshop\Entity\Order as Entity;
 use Jigoshop\Entity\OrderInterface;
+use Jigoshop\Entity\Product as ProductEntity;
 use Jigoshop\Exception;
 use Jigoshop\Helper\Product as ProductHelper;
 use Jigoshop\Shipping\Method as ShippingMethod;
@@ -194,7 +195,6 @@ class Order implements EntityFactoryInterface
 
         for ($i = 0, $endI = count($results); $i < $endI;) {
             $id = $results[$i]['id'];
-            $product = $this->productService->find($results[$i]['product_id']);
             $item = new Entity\Item();
             $item->setId($results[$i]['item_id']);
             $item->setType($results[$i]['product_type']);
@@ -203,6 +203,13 @@ class Order implements EntityFactoryInterface
             $item->setQuantity($results[$i]['quantity']);
             $item->setPrice($results[$i]['price']);
             $item->setTax($results[$i]['tax']);
+
+            $product = $this->productService->find($results[$i]['product_id']);
+            $product = $this->wp->applyFilters('jigoshop\factory\order\find_product', $product, $item);
+            if($product == null || !$product instanceof ProductEntity) {
+                $product = new ProductEntity\Simple();
+                $product->setId($results[$i]['product_id']);
+            }
 
             while ($i < $endI && $results[$i]['id'] == $id) {
 //				Securing against empty meta's, but still no piece of code does not add the meta.
@@ -214,8 +221,6 @@ class Order implements EntityFactoryInterface
                 }
                 $i++;
             }
-
-            $product = $this->wp->applyFilters('jigoshop\factory\order\find_product', $product, $item);
             $item->setProduct($product);
             $item->setKey($this->productService->generateItemKey($item));
             $items[] = $item;
