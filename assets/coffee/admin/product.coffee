@@ -65,6 +65,14 @@ class AdminProduct
       .on 'click', @updateAttachments
     jQuery(document)
       .ready @initAttachments
+    jigoshop.ajaxSearch jQuery('#product_cross_sells'), {
+      action: 'jigoshop.admin.product.find'
+      only_parent: true
+    }
+    jigoshop.ajaxSearch jQuery('#product_up_sells'), {
+      action: 'jigoshop.admin.product.find'
+      only_parent: true
+    }
 
   changeProductType: (event) =>
     type = jQuery(event.target).val()

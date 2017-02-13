@@ -31,6 +31,7 @@ class ProductService implements ProductServiceInterface
 		$this->wp = $wp;
 		$this->factory = $factory;
 		$wp->addAction('save_post_'.Types\Product::NAME, array($this, 'savePost'), 10);
+		$wp->addAction('comment_post', array($this, 'saveReview'), 10, 2);
 		$wp->addAction('jigoshop\product\sold', array($this, 'addSoldQuantity'), 10, 2);
 		$wp->addAction('jigoshop\product\restore', array($this, 'restoreQuantity'), 10, 2);
 	}
@@ -373,6 +374,40 @@ class ProductService implements ProductServiceInterface
 	{
 		$product = $this->factory->create($id);
 		$this->save($product);
+	}
+
+    public function saveReview($id, $approvew)
+    {
+        if(!isset($_POST['rating'])) {
+            throw new Exception('');
+        }
+
+        update_comment_meta($id, 'rating', (int)$_POST['rating']);
+	}
+
+    /**
+     * @param Product $product
+     * @return array
+     */
+    public function getReviews(Product $product)
+    {
+        $reviews = [];
+        /** @var \WP_Comment[] $comments */
+        $comments = get_comments([
+            'post_id' => $product->getId(),
+            'order_by' => 'comment_date',
+            'order' => 'ASC',
+        ]);
+
+        foreach($comments as $comment) {
+            $rating = get_comment_meta($comment->comment_ID, 'rating', true);
+            $review = new Product\Review();
+            $review->setRating($rating);
+            $review->setComment($comment);
+            $reviews[] = $review;
+        }
+
+        return $reviews;
 	}
 
 	/**

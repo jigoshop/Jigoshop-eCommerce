@@ -13,6 +13,7 @@ use Jigoshop\Helper\Tax;
  * @var $shippingMethods array List of available shipping methods.
  * @var $shopUrl string Url to shop (product list).
  * @var $showWithTax bool Whether to show product price with or without tax.
+ * @var $suffix string
  * @var $showShippingCalculator bool Whether to show shipping calculator.
  * @var $termsUrl string Url to terms and conditions page.
  */
@@ -23,10 +24,12 @@ use Jigoshop\Helper\Tax;
 <?php if ($cart->isEmpty()): ?>
 	<?php Render::output('shop/cart/empty', array('shopUrl' => $shopUrl)); ?>
 <?php else: ?>
+    <?php do_action('jigoshop\template\cart\form\before'); ?>
 	<form id="cart" role="form" action="" method="post">
 		<?php Render::output('shop/cart/mobile', [
 			'cart' => $cart,
-			'showWithTax' => $showWithTax
+			'showWithTax' => $showWithTax,
+            'suffix' => $suffix,
 		]); ?>
 		<table class="table table-hover">
 			<thead>
@@ -42,7 +45,7 @@ use Jigoshop\Helper\Tax;
 			</thead>
 			<tbody>
 				<?php foreach($cart->getItems() as $key => $item): /** @var $item \Jigoshop\Entity\Order\Item */ ?>
-					<?php Render::output('shop/cart/item/'.$item->getType(), array('cart' => $cart, 'key' => $key, 'item' => $item, 'showWithTax' => $showWithTax)); ?>
+					<?php Render::output('shop/cart/item/'.$item->getType(), array('cart' => $cart, 'key' => $key, 'item' => $item, 'showWithTax' => $showWithTax, 'suffix' => $suffix)); ?>
 				<?php endforeach; ?>
 				<?php do_action('jigoshop\cart\table_body', $cart); ?>
 			</tbody>
@@ -58,7 +61,7 @@ use Jigoshop\Helper\Tax;
 					</td>
 					<?php $productSubtotal = $showWithTax ? $cart->getProductSubtotal() + $cart->getTotalTax() : $cart->getProductSubtotal(); ?>
 					<th scope="row" class="text-right"><?php _e('Products subtotal', 'jigoshop'); ?></th>
-					<td id="product-subtotal"><?php echo Product::formatPrice($productSubtotal); ?></td>
+					<td id="product-subtotal"><?php printf('%s %s', Product::formatPrice($productSubtotal), $suffix); ?></td>
 				</tr>
 				<noscript>
 				<tr>
@@ -261,4 +264,5 @@ use Jigoshop\Helper\Tax;
 		<button class="btn btn-primary pull-right" name="action" value="checkout"><?php _e('Proceed to checkout &rarr;', 'jigoshopp'); ?></button>
 		<div class="clear"></div>
 	</form>
+    <?php do_action('jigoshop\template\cart\form\after'); ?>
 <?php endif; ?>

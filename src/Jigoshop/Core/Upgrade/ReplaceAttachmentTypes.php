@@ -2,6 +2,7 @@
 
 namespace Jigoshop\Core\Upgrade;
 
+use Jigoshop\Container;
 use WPAL\Wordpress;
 
 /**
@@ -14,8 +15,9 @@ class ReplaceAttachmentTypes implements Upgrader
 
     /**
      * @param Wordpress $wp
+     * @param Container $di
      */
-    public function up(Wordpress $wp)
+    public function up(Wordpress $wp, Container $di)
     {
         $wpdb = $wp->getWPDB();
         $wpdb->update($wpdb->prefix.'jigoshop_product_attachment', [
@@ -32,8 +34,9 @@ class ReplaceAttachmentTypes implements Upgrader
 
     /**
      * @param Wordpress $wp
+     * @param Container $di
      */
-    public function down(Wordpress $wp)
+    public function down(Wordpress $wp, Container $di)
     {
         $wpdb = $wp->getWPDB();
         $wpdb->update($wpdb->prefix.'jigoshop_product_attachment', [

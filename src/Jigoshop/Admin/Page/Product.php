@@ -66,7 +66,7 @@ class Product
                 Scripts::add('jigoshop.vendors.datepicker', \JigoshopInit::getUrl() . '/assets/js/vendors/datepicker.js', array('jquery', 'jigoshop.admin.product'));
                 Scripts::add('jigoshop.admin.product', \JigoshopInit::getUrl() . '/assets/js/admin/product.js', array(
                     'jquery',
-                    'jigoshop.helpers',
+                    'jigoshop.helpers.ajax_search',
                     'jquery-ui-sortable'
                 ));
                 Scripts::localize('jigoshop.admin.product', 'jigoshop_admin_product', array(
@@ -307,7 +307,7 @@ class Product
 
             $result = array(
                 'success' => true,
-                'results' => $this->prepareResults($products),
+                'results' => $this->prepareResults($products, isset($_POST['only_parent'])),
             );
         } catch (Exception $e) {
             $result = array(
@@ -324,10 +324,11 @@ class Product
      * Get id and name product from different products types
      *
      * @param array $products Products list
+     * @param bool  $onlyParent
      *
      * @return array
      */
-    public function prepareResults($products)
+    public function prepareResults($products, $onlyParent = false)
     {
         $preparedProducts = array();
         if (count($products) > 0)
@@ -336,7 +337,7 @@ class Product
             /** @var \Jigoshop\Entity\Product\Variable\Variation $variation */
             foreach ($products as $product)
             {
-                if ($product->getType() == Variable::TYPE)
+                if ($product->getType() == Variable::TYPE && $onlyParent == false)
                 {
                     foreach ($product->getVariations() as $variation)
                     {

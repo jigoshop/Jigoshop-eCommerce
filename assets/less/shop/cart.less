@@ -18,6 +18,9 @@
   @import '../../bower/bootstrap/less/type.less';
 
   #cart {
+    .jigoshop_coupons_field {
+      max-width: 300px;
+    }
     #mobile {
       display: none;
       margin-left: 0;
@@ -125,6 +128,85 @@
         @media screen and (max-width: @screen-sm) {
           width: 100%;
         }
+      }
+    }
+  }
+
+  .product-list {
+    .product {
+      position: relative;
+      vertical-align: bottom;
+      width: 160px;
+
+      .on-sale {
+        top: 0;
+        right: 0;
+        left: auto;
+        margin: -6px -6px 0 0;
+      }
+      a {
+        text-decoration: none;
+        display: inline;
+
+        &:hover {
+          text-decoration: underline;
+        }
+
+        strong {
+          color: #555555;
+        }
+      }
+      a.image {
+        display: block;
+
+        &:hover {
+          text-decoration: none;
+
+          img {
+            border: 1px solid #bbbbbb;
+          }
+          .on-sale {
+            color: #ffff00;
+          }
+        }
+
+        img {
+          max-width: 150px !important;
+          max-height: 150px !important;
+          display: block;
+          margin: 0 auto 8px !important;
+          border: 1px solid #dddddd;
+        }
+      }
+      .price {
+        color: green;
+        display: inline-block;
+        float: right;
+        font-weight: normal;
+        text-align: right;
+        font-size: @font-size-large;
+        line-height: @line-height-base;
+
+        del {
+          font-size: @font-size-small;
+          display: inline-block;
+          color: #aaaaaa;
+        }
+        ins {
+          display: inline-block;
+          font-size: @font-size-base;
+        }
+        .from {
+          font-size: 10px;
+          line-height: 10px;
+          margin: -2px 0 0 0;
+          display: block;
+          color: #aaaaaa;
+          padding-bottom: 3px;
+        }
+      }
+      .cart {
+        .clearfix();
       }
     }
   }

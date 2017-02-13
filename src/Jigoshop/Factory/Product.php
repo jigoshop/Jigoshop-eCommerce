@@ -144,6 +144,13 @@ class Product implements EntityFactoryInterface
                 $_POST['product']['attachments'] = array();
             }
 
+            if (isset($_POST['product']['cross_sells']) && $_POST['product']['cross_sells']) {
+                $_POST['product']['cross_sells'] = explode(',', $_POST['product']['cross_sells']);
+            }
+            if (isset($_POST['product']['up_sells']) && $_POST['product']['up_sells']) {
+                $_POST['product']['up_sells'] = explode(',', $_POST['product']['up_sells']);
+            }
+
 			$product->restoreState($_POST['product']);
 			$product->markAsDirty($_POST['product']);
 		}
@@ -202,6 +209,15 @@ class Product implements EntityFactoryInterface
 				}
 				$state['attributes'] = $attributes;
 			}
+			
+			if (isset($state['cross_sells'])) {
+			    $state['cross_sells'] = maybe_unserialize($state['cross_sells']);
+                $state['cross_sells'] = empty($state['cross_sells']) ? [] : $state['cross_sells'];
+            }
+            if (isset($state['up_sells'])) {
+                $state['up_sells'] = maybe_unserialize($state['up_sells']);
+                $state['up_sells'] = empty($state['up_sells']) ? [] : $state['up_sells'];
+            }
 
 			if (!isset($state['default_variation_id'])) {
                 $state['default_variation_id'] = '';

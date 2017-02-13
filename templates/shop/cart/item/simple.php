@@ -7,6 +7,7 @@ use Jigoshop\Helper\Product;
  * @var $key string Cart item key.
  * @var $item \Jigoshop\Entity\Order\Item Cart item to display.
  * @var $showWithTax bool Whether to show product price with or without tax.
+ * @var $suffix string
  */
 ?>
 <?php
@@ -25,5 +26,5 @@ $price = $showWithTax ? $item->getPrice() + $item->getTax() / $item->getQuantity
 	</td>
 	<td class="product-price"><?php echo apply_filters('jigoshop\template\shop\cart\product_price', Product::formatPrice($price), $price, $product, $item); ?></td>
 	<td class="product-quantity"><input type="number" name="cart[<?php echo $key; ?>]" value="<?php echo $item->getQuantity(); ?>" /></td>
-	<td class="product-subtotal"><?php echo apply_filters('jigoshop\template\shop\cart\product_subtotal', Product::formatPrice($item->getQuantity() * $price), $item->getQuantity() * $price, $product, $item); ?></td>
+    <td class="product-subtotal"><?php echo apply_filters('jigoshop\template\shop\cart\product_subtotal', Product::formatPrice($item->getQuantity() * $price, $suffix), $item->getQuantity() * $price, $product, $item); ?></td>
 </tr>

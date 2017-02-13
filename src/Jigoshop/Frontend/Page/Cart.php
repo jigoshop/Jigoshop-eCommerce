@@ -102,6 +102,8 @@ class Cart implements PageInterface
 		$wp->addAction('wp_ajax_nopriv_jigoshop_cart_change_state', array($this, 'ajaxChangeState'));
 		$wp->addAction('wp_ajax_jigoshop_cart_change_postcode', array($this, 'ajaxChangePostcode'));
 		$wp->addAction('wp_ajax_nopriv_jigoshop_cart_change_postcode', array($this, 'ajaxChangePostcode'));
+
+        $wp->addAction('jigoshop\template\cart\form\before', [$this, 'crossSells']);
 	}
 
 	/**
@@ -213,7 +215,9 @@ class Cart implements PageInterface
             }
         }
 
-        $productSubtotal = $this->options->get('tax.price_tax') == 'with_tax' ? $cart->getProductSubtotal() + $cart->getTotalTax() : $cart->getProductSubtotal();
+        $showWithTax = $this->options->get('tax.item_prices', 'excluding_tax') == 'including_tax';
+        $suffix = $showWithTax ? $this->options->get('tax.suffix_for_included', '') : $this->options->get('tax.suffix_for_excluded', '');
+        $productSubtotal = $showWithTax ? $cart->getProductSubtotal() + $cart->getTotalTax() : $cart->getProductSubtotal();
 		$coupons = join(',', array_map(function ($coupon){
 			/** @var $coupon Coupon */
 			return $coupon->getCode();
@@ -231,7 +235,7 @@ class Cart implements PageInterface
 				'shipping' => $shippingHtml,
 				'discount' => Product::formatPrice($cart->getDiscount()),
 				'subtotal' => Product::formatPrice($cart->getSubtotal()),
-				'product_subtotal' => Product::formatPrice($productSubtotal),
+				'product_subtotal' => Product::formatPrice($productSubtotal, $suffix),
 				'tax' => $tax,
 				'total' => Product::formatPrice($cart->getTotal()),
 			),
@@ -383,15 +387,16 @@ class Cart implements PageInterface
 				throw new Exception(__('Item not found.', 'jigoshop'));
 			}
 
-			// TODO: Support for "Prices includes tax"
-			$price = $this->options->get('tax.price_tax') == 'with_tax' ? $item->getPrice() + $item->getTax() / $item->getQuantity() : $item->getPrice();
+            $showWithTax = $this->options->get('tax.item_prices', 'excluding_tax') == 'including_tax';
+            $suffix = $showWithTax ? $this->options->get('tax.suffix_for_included', '') : $this->options->get('tax.suffix_for_excluded', '');
+			$price = $showWithTax ? $item->getPrice() + $item->getTax() / $item->getQuantity() : $item->getPrice();
             $response = $this->getAjaxCartResponse($cart);
 
 			// Add some additional fields
 			$response['item_price'] = $price;
 			$response['item_subtotal'] = $price * $item->getQuantity();
 			$response['html']['item_price'] = Product::formatPrice($price);
-			$response['html']['item_subtotal'] = Product::formatPrice($price * $item->getQuantity());
+			$response['html']['item_subtotal'] = Product::formatPrice($price * $item->getQuantity(), $suffix);
 		} catch (NotEnoughStockException $e) {
 			$response = array(
 				'success' => false,
@@ -544,6 +549,9 @@ class Cart implements PageInterface
 			$termsUrl = $this->wp->getPermalink($termsPage);
 		}
 
+        $showWithTax = $this->options->get('tax.item_prices', 'excluding_tax') == 'including_tax';
+        $suffix = $showWithTax ? $this->options->get('tax.suffix_for_included', '') : $this->options->get('tax.suffix_for_excluded', '');
+
 		return Render::get('shop/cart', array(
 			'content' => $content,
 			'cart' => $cart,
@@ -552,9 +560,40 @@ class Cart implements PageInterface
 			'customer' => $this->customerService->getCurrent(),
 			'shippingMethods' => $this->shippingService->getEnabled(),
 			'shopUrl' => $this->wp->getPermalink($this->options->getPageId(Pages::SHOP)),
-			'showWithTax' => $this->options->get('tax.price_tax') == 'with_tax',
+			'showWithTax' => $showWithTax,
+            'suffix' => $suffix,
 			'showShippingCalculator' => $this->options->get('shipping.calculator'),
 			'termsUrl' => $termsUrl,
 		));
+	}
+
+    public function crossSells()
+    {
+        $ids = [];
+        $inCart = [];
+        $cart = $this->cartService->getCurrent();
+
+        foreach ($cart->getItems() as $item) {
+            $ids = array_merge($item->getProduct()->getCrossSells(), $ids);
+            $inCart[] = $item->getProductId();
+        }
+
+        $ids = array_diff($ids, $inCart);
+        shuffle($ids);
+        if (!empty($ids)) {
+            $products = array();
+            $limit = $this->options->get('shopping.cross_sells_product_limit', 3);
+            foreach ($ids as $id) {
+                if (sizeof($products) >= $limit) {
+                    break;
+                }
+                $products[] = $this->productService->find($id);
+            }
+            if(count($products)) {
+                Render::output('shop/cart/cross_sells', [
+                    'products' => $products,
+                ]);
+            }
+        }
 	}
 }

@@ -87,4 +87,18 @@ use Jigoshop\Helper\Product as ProductHelper;
 	));
 	?>
 </fieldset>
+<fieldset>
+    <?php
+    Forms::text([
+        'name' => 'product[cross_sells]',
+        'label' => __('Cross Sells', 'jigoshop'),
+        'value' => join(',', $product->getCrossSells())
+    ]);
+    Forms::text([
+        'name' => 'product[up_sells]',
+        'label' => __('Up Sells', 'jigoshop'),
+        'value' => join(',', $product->getUpSells())
+    ]);
+    ?>
+</fieldset>
 <?php do_action('jigoshop\product\tabs\general', $product); ?>

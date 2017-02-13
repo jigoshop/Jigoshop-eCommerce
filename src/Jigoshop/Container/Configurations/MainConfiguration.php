@@ -66,6 +66,10 @@ class MainConfiguration implements ConfigurationInterface
             'wpal',
             'di'
         ));
+        $services->setDetails('jigoshop.ajax', 'Jigoshop\Ajax', array(
+            'wpal',
+            'di'
+        ));
         $services->setDetails('jigoshop.api', 'Jigoshop\Api', array(
             'wpal',
             'jigoshop.options',
@@ -133,6 +137,7 @@ class MainConfiguration implements ConfigurationInterface
         ]);
         $services->setDetails('jigoshop.upgrade.add_tax_classes_to_order_items', 'Jigoshop\Core\Upgrade\AddTaxClassesToOrderItems', []);
         $services->setDetails('jigoshop.upgrade.replace_attachment_types', 'Jigoshop\Core\Upgrade\ReplaceAttachmentTypes', []);
+        $services->setDetails('jigoshop.upgrade.change_up_sells_cross_sells_meta_names', 'Jigoshop\Core\Upgrade\ChangeUpSellsCrossSellsMetaNames', []);
 	}
 
 	/**
@@ -152,6 +157,7 @@ class MainConfiguration implements ConfigurationInterface
 		$tags->add('jigoshop.installer', 'jigoshop.roles.initializer');
         $tags->add('jigoshop.upgrade.2', 'jigoshop.upgrade.add_tax_classes_to_order_items');
         $tags->add('jigoshop.upgrade.2', 'jigoshop.upgrade.replace_attachment_types');
+        $tags->add('jigoshop.upgrade.3', 'jigoshop.upgrade.change_up_sells_cross_sells_meta_names');
 	}
 
 	/**

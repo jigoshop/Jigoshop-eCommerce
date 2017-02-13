@@ -10,6 +10,7 @@ class TaxSettings
     jQuery('#tax-rules')
       .on('click', 'button.remove-tax-rule', @removeItem)
       .on('change', 'select.tax-rule-country', @updateStateField)
+    jQuery('select#default_country').on('change', @updateDefaultStateField)
     @updateFields()
 
   removeItem: ->
@@ -35,6 +36,14 @@ class TaxSettings
     $states = jQuery('input.tax-rule-states', $parent)
     $country = jQuery('select.tax-rule-country', $parent)
     country = $country.val()
+    if @params.states[country]?
+      @_attachSelectField($states, @params.states[country])
+    else
+      @_attachTextField($states)
+
+  updateDefaultStateField: (event) =>
+    $states = jQuery('select#default_state')
+    country = jQuery('slelect#default_country').val()
     if @params.states[country]?
       @_attachSelectField($states, @params.states[country])
     else

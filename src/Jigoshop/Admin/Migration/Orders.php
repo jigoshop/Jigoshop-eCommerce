@@ -363,7 +363,7 @@ class Orders implements Tool
                                     'order_id' => $order->ID,
                                     'product_type' => $productGetType,
                                     'title' => $itemData['name'],
-                                    'tax_classes' => 'standard',
+                                    'tax_classes' => '',
                                     'price' => $price,
                                     'tax' => $tax,
                                     'quantity' => $itemData['qty'],

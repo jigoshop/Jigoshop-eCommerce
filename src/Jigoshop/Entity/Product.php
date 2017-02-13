@@ -37,6 +37,8 @@ abstract class Product implements EntityInterface, Product\Taxable, \JsonSeriali
     private $attributes;
     private $attributeOrder;
     private $attachments;
+    private $crossSells = [];
+    private $upSells = [];
 
     protected $dirtyFields = array();
 
@@ -458,6 +460,40 @@ abstract class Product implements EntityInterface, Product\Taxable, \JsonSeriali
     }
 
     /**
+     * @return array
+     */
+    public function getCrossSells()
+    {
+        return $this->crossSells;
+    }
+
+    /**
+     * @param array $crossSells
+     */
+    public function setCrossSells($crossSells)
+    {
+        $this->crossSells = $crossSells;
+        $this->dirtyFields[] = 'cross_sells';
+    }
+
+    /**
+     * @return array
+     */
+    public function getUpSells()
+    {
+        return $this->upSells;
+    }
+
+    /**
+     * @param array $upSells
+     */
+    public function setUpSells($upSells)
+    {
+        $this->upSells = $upSells;
+        $this->dirtyFields[] = 'up_sells';
+    }
+
+    /**
      * @return array List of fields to update with according values.
      */
     public function getStateToSave()
@@ -492,6 +528,12 @@ abstract class Product implements EntityInterface, Product\Taxable, \JsonSeriali
                     break;
                 case 'tax_classes':
                     $toSave['tax_classes'] = $this->taxClasses;
+                    break;
+                case 'cross_sells':
+                    $toSave['cross_sells'] = $this->crossSells;
+                    break;
+                case 'up_sells':
+                    $toSave['up_sells'] = $this->upSells;
                     break;
             }
         }
@@ -575,6 +617,12 @@ abstract class Product implements EntityInterface, Product\Taxable, \JsonSeriali
         if (isset($state['attachments'])) {
             $this->attachments = $state['attachments'];
         }
+        if (isset($state['cross_sells'])) {
+            $this->crossSells = $state['cross_sells'];
+        }
+        if (isset($state['up_sells'])) {
+            $this->upSells = $state['up_sells'];
+        }
     }
 
     /**
@@ -644,6 +692,8 @@ abstract class Product implements EntityInterface, Product\Taxable, \JsonSeriali
                 ];
             }, $this->tags)),
             'link' => $this->getLink(),
+            'cross_sells' => $this->crossSells,
+            'up_sells' => $this->upSells
         ];
     }
 }

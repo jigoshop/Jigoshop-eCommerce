@@ -362,6 +362,9 @@ class JigoshopInit
         $this->container->getConfigurations()->add(new Jigoshop\Container\Configurations\Admin\PagesConfiguration());
         $this->container->getConfigurations()->add(new Jigoshop\Container\Configurations\Admin\SettingsConfiguration());
         $this->container->getConfigurations()->add(new Jigoshop\Container\Configurations\Admin\SystemInfoConfiguration());
+        if(defined('DOING_AJAX') && DOING_AJAX) {
+            $this->container->getConfigurations()->add(new Jigoshop\Container\Configurations\Ajax());
+        }
     }
 
     /**

@@ -44,6 +44,7 @@ class SettingsConfiguration implements ConfigurationInterface
 			'jigoshop.messages'
 		));
 		$services->setDetails('jigoshop.admin.settings.shipping', 'Jigoshop\Admin\Settings\ShippingTab', array(
+		    'wpal',
             'jigoshop.options',
             'jigoshop.service.shipping',
 		));

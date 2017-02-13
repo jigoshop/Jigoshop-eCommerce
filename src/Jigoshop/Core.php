@@ -101,11 +101,16 @@ class Core
 			$api = $container->get('jigoshop.api');
 			$api->run();
 		}
+		if(defined('DOING_AJAX') && DOING_AJAX) {
+		    /** @var Ajax $ajax */
+		    $ajax = $container->get('jigoshop.ajax');
+		    $ajax->run();
+        }
 
 		/** @var \Jigoshop\Service\TaxServiceInterface $tax */
 		$tax = $container->get('jigoshop.service.tax');
 		$tax->register();
-		Tax::setService($tax);
+		Tax::setTaxService($tax);
 
 		$container->get('jigoshop.emails');
 

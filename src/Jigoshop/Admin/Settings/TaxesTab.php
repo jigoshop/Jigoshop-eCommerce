@@ -97,37 +97,100 @@ class TaxesTab implements TabInterface
 		}
 
 		return array(
-			array(
+			[
 				'title' => __('Main', 'jigoshop'),
 				'id' => 'main',
-				'fields' => array(
-					array(
-						'name' => '[included]',
-						'title' => __('Included in product price?', 'jigoshop'),
-						'type' => 'checkbox',
-						'checked' => $this->options['included'],
-                        'classes' => array('switch-medium'),
-					),
-					array(
-						'name' => '[price_tax]',
-						'title' => __('Show prices in cart and checkout', 'jigoshop'),
-						'type' => 'select',
-						'value' => $this->options['price_tax'],
-						'options' => array(
-							'with_tax' => __('With tax', 'jigoshop'),
-							'without_tax' => __('Without tax', 'jigoshop'),
-						)
-					),
-					array(
+				'fields' => [
+//                    [
+//                        'id' => 'default_country',
+//                        'name' => '[default_country]',
+//                        'title' => __('Default country', 'jigoshop'),
+//                        'type' => 'select',
+//                        'value' => $this->options['country'],
+//                        'options' => Country::getAll(),
+//                    ],
+//                    [
+//                        'id' => 'default_state',
+//                        'name' => '[default_state]',
+//                        'title' => __('Default state', 'jigoshop'),
+//                        'type' => 'text',
+//                        'value' => $this->options['state'],
+//                    ],
+//                    [
+//                        'id' => 'default_postcode',
+//                        'name' => '[default_postcode]',
+//                        'title' => __('Default postcode', 'jigoshop'),
+//                        'type' => 'text',
+//                        'value' => $this->options['postcode'],
+//                    ],
+					[
 						'name' => '[shipping]',
 						'title' => __('Taxes based on shipping country?', 'jigoshop'),
 						'type' => 'checkbox',
 						'description' => __('By default, taxes based on billing country.', 'jigoshop'),
 						'checked' => $this->options['shipping'],
-						'classes' => array('switch-medium'),
-					),
-				),
-			),
+						'classes' => ['switch-medium'],
+					],
+				],
+			],
+            [
+                'title' => __('Prices', 'jigoshop'),
+                'id' => 'prices',
+                'fields' => [
+                    [
+                        'name' => '[prices_entered]',
+                        'title' => __('Entered prices tax status', 'jigoshop'),
+                        'type' => 'select',
+                        'value' => $this->options['prices_entered'],
+                        'options' => [
+                            'without_tax' => __('I will enter prices without tax', 'jigoshop'),
+                            'with_tax' => __('I will enter prices with tax included', 'jigoshop'),
+                        ]
+                    ],
+                    [
+                        'name' => '[item_prices]',
+                        'title' => __('Show prices in cart and checkout', 'jigoshop'),
+                        'type' => 'select',
+                        'value' => $this->options['item_prices'],
+                        'options' => [
+                            'including_tax' => __('Including tax', 'jigoshop'),
+                            'excluding_tax' => __('Excluding tax', 'jigoshop'),
+                        ]
+                    ],
+                    [
+                        'name' => '[product_prices]',
+                        'title' => __('Show product prices', 'jigoshop'),
+                        'type' => 'select',
+                        'value' => $this->options['product_prices'],
+                        'options' => [
+                            'including_tax' => __('Including tax', 'jigoshop'),
+                            'excluding_tax' => __('Excluding tax', 'jigoshop'),
+                        ]
+                    ],
+                    [
+                        'name' => '[show_suffix]',
+                        'title' => __('Show tax suffix', 'jigoshop'),
+                        'type' => 'select',
+                        'value' => $this->options['show_suffix'],
+                        'options' => [
+                            'in_cart_totals' => __('In cart totals', 'jigoshop'),
+                            'everywhere' => __('Everywhere', 'jigoshop'),
+                        ]
+                    ],
+                    [
+                        'name' => '[suffix_for_included]',
+                        'title' => __('Suffix for prices with tax included', 'jigoshop'),
+                        'type' => 'text',
+                        'value' => $this->options['suffix_for_included'],
+                    ],
+                    [
+                        'name' => '[suffix_for_excluded]',
+                        'title' => __('Suffix for prices without tax', 'jigoshop'),
+                        'type' => 'text',
+                        'value' => $this->options['suffix_for_excluded'],
+                    ],
+                ]
+            ],
 			array(
 				'title' => __('Classes', 'jigoshop'),
 				'id' => 'classes',
@@ -252,10 +315,10 @@ class TaxesTab implements TabInterface
 		}
 		unset($settings['rules']);
 
-		if (!in_array($settings['price_tax'], array('with_tax', 'without_tax'))) {
-			$this->messages->addWarning(sprintf(__('Invalid prices option: "%s". Value set to %s.', 'jigoshop'), $settings['price_tax'], __('Without tax', 'jigoshop')));
-			$settings['price_tax'] = 'without_tax';
-		}
+		//if (!in_array($settings['price_tax'], array('with_tax', 'without_tax'))) {
+		//	$this->messages->addWarning(sprintf(__('Invalid prices option: "%s". Value set to %s.', 'jigoshop'), $settings['price_tax'], __('Without tax', 'jigoshop')));
+		//	$settings['price_tax'] = 'without_tax';
+		//}
 
 		return $settings;
 	}

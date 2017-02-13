@@ -18,6 +18,7 @@ class Simple implements ProductServiceInterface
 	private $objects = array();
 	private $queries = array();
 	private $states = array();
+	private $reviews = array();
 	private $attachments = array();
 	private $attributes;
 	private $productAttributes = array();
@@ -150,6 +151,18 @@ class Simple implements ProductServiceInterface
 		return $this->queries['low_stock_'.$threshold];
 	}
 
+    /**
+     * @param Product $product Product to find attachments for.
+     * @return array List of attachments attached to the product.
+     */
+    public function getReviews(Product $product)
+    {
+        if (!isset($this->reviews[$product->getId()])) {
+            $this->reviews[$product->getId()] = $this->service->getReviews($product);
+        }
+
+        return $this->reviews[$product->getId()];
+    }
 	/**
 	 * @param Product $product Product to find attachments for.
 	 * @param string $size Size for images.

@@ -1,5 +1,10 @@
 ## Changelog
-
+* 2.0.9 - 2017.02.13:
+    * Fix: Support Twentyseventeen theme.
+    * Fix: Improve product reviews.
+    * Fix: Integrate up sells cross sells plugin.
+    * Fix: Integrate add flat rate plugin.
+    * Fix: Improve tax settings.
 * 2.0.8 - 2017.02.01:
     * Fix: Allow to remove all attachments.
     * Fix: Do not recalculate discounts for placed orders.

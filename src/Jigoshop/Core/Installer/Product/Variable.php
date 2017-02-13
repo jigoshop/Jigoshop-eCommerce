@@ -29,10 +29,13 @@ class Variable implements Initializer
 				value VARCHAR(255),
 				PRIMARY KEY id (variation_id, attribute_id),
 				FOREIGN KEY variation (variation_id) REFERENCES {$wpdb->posts} (ID) ON DELETE CASCADE,
-				FOREIGN KEY attribute (attribute_id) REFERENCES {$wpdb->prefix}jigoshop_attribute (id) ON DELETE CASCADE
+				FOREIGN KEY attribute_pva (attribute_id) REFERENCES {$wpdb->prefix}jigoshop_attribute (id) ON DELETE CASCADE
 			) {$collate};
 		";
-		$wpdb->query($query);
-		$wpdb->show_errors();
+        if (!$wpdb->query($query)) {
+            Registry::getInstance(JIGOSHOP_LOGGER)->addCritical(sprintf('Unable to create table "%s". Error: "%s".', 'jigoshop_tax', $wpdb->last_error));
+            echo __('Unable to create Jigoshop tables.', 'jigoshop');
+            exit;
+        }
 	}
 }

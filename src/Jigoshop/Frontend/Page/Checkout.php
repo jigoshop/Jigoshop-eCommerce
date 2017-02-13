@@ -549,6 +549,9 @@ class Checkout implements PageInterface
 		}
 		$verificationMessage = $this->options->get('shopping.enable_verification_message') ? $this->options->get('shopping.verification_message') : '';
 
+        $showWithTax = $this->options->get('tax.item_prices', 'excluding_tax') == 'including_tax';
+        $suffix = $showWithTax ? $this->options->get('tax.suffix_for_included', '') : $this->options->get('tax.suffix_for_excluded', '');
+
 		return Render::get('shop/checkout', array(
 			'cartUrl' => $this->wp->getPermalink($this->options->getPageId(Pages::CART)),
 			'content' => $content,
@@ -558,7 +561,8 @@ class Checkout implements PageInterface
 			'paymentMethods' => $this->paymentService->getEnabled(),
 			'billingFields' => $billingFields,
 			'shippingFields' => $shippingFields,
-			'showWithTax' => $this->options->get('tax.price_tax') == 'with_tax',
+			'showWithTax' => $showWithTax,
+            'suffix' => $suffix,
 			'showLoginForm' => $this->options->get('shopping.show_login_form') && !$this->wp->isUserLoggedIn(),
 			'allowRegistration' => $this->options->get('shopping.allow_registration') && !$this->wp->isUserLoggedIn(),
 			'showRegistrationForm' => $this->options->get('shopping.allow_registration') && !$this->options->get('shopping.guest_purchases') && !$this->wp->isUserLoggedIn(),

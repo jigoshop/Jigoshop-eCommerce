@@ -38,6 +38,10 @@ class ShippingConfiguration implements ConfigurationInterface
 			'jigoshop.options',
 			'jigoshop.service.cart'
 		));
+        $services->setDetails('jigoshop.shipping.advanced_flat_rate', 'Jigoshop\Shipping\AdvancedFlatRate', array(
+            'wpal',
+            'jigoshop.service.cart'
+        ));
 	}
 
 	/**
@@ -50,6 +54,7 @@ class ShippingConfiguration implements ConfigurationInterface
 		$tags->add('jigoshop.shipping.method', 'jigoshop.shipping.flat_rate');
 		$tags->add('jigoshop.shipping.method', 'jigoshop.shipping.free_shipping');
 		$tags->add('jigoshop.shipping.method', 'jigoshop.shipping.local_pickup');
+		$tags->add('jigoshop.shipping.method', 'jigoshop.shipping.advanced_flat_rate');
 	}
 
 	/**
