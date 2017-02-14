@@ -17,10 +17,9 @@ namespace phpFastCache\Drivers\Files;
 use phpFastCache\Core\Pool\DriverBaseTrait;
 use phpFastCache\Core\Pool\ExtendedCacheItemPoolInterface;
 use phpFastCache\Core\Pool\IO\IOHelperTrait;
-use phpFastCache\Entities\driverStatistic;
 use phpFastCache\Exceptions\phpFastCacheDriverCheckException;
 use phpFastCache\Exceptions\phpFastCacheDriverException;
-use phpFastCache\Exceptions\phpFastCacheIOException;
+use phpFastCache\Exceptions\phpFastCacheInvalidArgumentException;
 use phpFastCache\Util\Directory;
 use Psr\Cache\CacheItemInterface;
 
@@ -62,7 +61,7 @@ class Driver implements ExtendedCacheItemPoolInterface
     /**
      * @param \Psr\Cache\CacheItemInterface $item
      * @return mixed
-     * @throws \InvalidArgumentException
+     * @throws phpFastCacheInvalidArgumentException
      */
     protected function driverWrite(CacheItemInterface $item)
     {
@@ -82,7 +81,7 @@ class Driver implements ExtendedCacheItemPoolInterface
                 return false;
             }
         } else {
-            throw new \InvalidArgumentException('Cross-Driver type confusion detected');
+            throw new phpFastCacheInvalidArgumentException('Cross-Driver type confusion detected');
         }
     }
 
@@ -109,7 +108,7 @@ class Driver implements ExtendedCacheItemPoolInterface
     /**
      * @param \Psr\Cache\CacheItemInterface $item
      * @return bool
-     * @throws \InvalidArgumentException
+     * @throws phpFastCacheInvalidArgumentException
      */
     protected function driverDelete(CacheItemInterface $item)
     {
@@ -124,7 +123,7 @@ class Driver implements ExtendedCacheItemPoolInterface
                 return false;
             }
         } else {
-            throw new \InvalidArgumentException('Cross-Driver type confusion detected');
+            throw new phpFastCacheInvalidArgumentException('Cross-Driver type confusion detected');
         }
     }
 
@@ -148,7 +147,7 @@ class Driver implements ExtendedCacheItemPoolInterface
      * @param string $optionName
      * @param mixed $optionValue
      * @return bool
-     * @throws \InvalidArgumentException
+     * @throws phpFastCacheInvalidArgumentException
      */
     public static function isValidOption($optionName, $optionValue)
     {
@@ -193,34 +192,5 @@ class Driver implements ExtendedCacheItemPoolInterface
     public static function getRequiredOptions()
     {
         return ['path'];
-    }
-
-    /********************
-     *
-     * PSR-6 Extended Methods
-     *
-     *******************/
-
-    /**
-     * @return driverStatistic
-     * @throws \phpFastCache\Exceptions\phpFastCacheIOException
-     */
-    public function getStats()
-    {
-        $stat = new driverStatistic();
-        $path = $this->getFilePath(false);
-
-        if (!is_dir($path)) {
-            throw new phpFastCacheIOException("Can't read PATH:" . $path);
-        }
-
-        $stat->setData(implode(', ', array_keys($this->itemInstances)))
-          ->setRawData([
-            'tmp' => $this->tmp
-          ])
-          ->setSize(Directory::dirSize($path))
-          ->setInfo('Number of files used to build the cache: ' . Directory::getFileCount($path));
-
-        return $stat;
     }
 }

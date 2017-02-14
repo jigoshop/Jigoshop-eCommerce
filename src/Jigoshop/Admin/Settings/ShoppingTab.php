@@ -151,6 +151,15 @@ class ShoppingTab implements TabInterface
 						'value' => $this->options['redirect_continue_shopping'],
 						'options' => $this->backToShopRedirectionOptions,
 					),
+                    array(
+                        'name' => '[cross_sells_product_limit]',
+                        'title' => __('Number cross sell of products to display', 'jigoshop'),
+                        'tip' => __('Enter the number of products to limit the items displayed in Cart page',
+                            'jigoshop'),
+                        'description' => '',
+                        'type' => 'number',
+                        'value' => $this->options['cross_sells_product_limit'],
+                    ),
 				),
 			),
 			array(
@@ -300,6 +309,7 @@ class ShoppingTab implements TabInterface
 			$this->messages->addWarning(sprintf(__('Invalid continue shopping redirection: "%s". Value set to %s.', 'jigoshop'), $settings['redirect_continue_shopping'], $this->backToShopRedirectionOptions['product_list']));
 			$settings['redirect_continue_shopping'] = 'product_list';
 		}
+        $settings['cross_sells_product_limit'] = $settings['cross_sells_product_limit'] >= 0 ? $settings['cross_sells_product_limit'] : 0;
 
 		return $settings;
 	}

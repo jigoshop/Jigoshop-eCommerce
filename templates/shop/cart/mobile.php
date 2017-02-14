@@ -1,6 +1,8 @@
 <?php
 /**
  * @var $cart \Jigoshop\Entity\Cart
+ * @var $showWithTax
+ * @var $suffix
  */
 ?>
 <ul id="mobile" class="list-group">
@@ -9,7 +11,8 @@
             'cart' => $cart,
             'key' => $key,
             'item' => $item,
-            'showWithTax' => $showWithTax
+            'showWithTax' => $showWithTax,
+            'suffix' => $suffix,
         ]); ?>
     <?php endforeach; ?>
 </ul>

@@ -1,6 +1,7 @@
-[![Code Climate](https://codeclimate.com/github/PHPSocialNetwork/phpfastcache/badges/gpa.svg)](https://codeclimate.com/github/PHPSocialNetwork/phpfastcache) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/PHPSocialNetwork/phpfastcache/badges/quality-score.png?b=final)](https://scrutinizer-ci.com/g/PHPSocialNetwork/phpfastcache/?branch=final) [![Build Status](https://travis-ci.org/PHPSocialNetwork/phpfastcache.svg?branch=final)](https://travis-ci.org/PHPSocialNetwork/phpfastcache) [![Latest Stable Version](http://img.shields.io/packagist/v/phpfastcache/phpfastcache.svg)](https://packagist.org/packages/phpfastcache/phpfastcache) [![Total Downloads](http://img.shields.io/packagist/dt/phpfastcache/phpfastcache.svg)](https://packagist.org/packages/phpfastcache/phpfastcache) [![Dependency Status](https://www.versioneye.com/php/phpfastcache:phpfastcache/badge.svg)](https://www.versioneye.com/php/phpfastcache:phpfastcache) [![License](https://img.shields.io/packagist/l/phpfastcache/phpfastcache.svg)](https://packagist.org/packages/phpfastcache/phpfastcache) [![Coding Standards](https://img.shields.io/badge/CI-PSR6-orange.svg)](https://github.com/php-fig/cache) 
+[![Total Downloads](http://img.shields.io/packagist/dt/phpfastcache/phpfastcache.svg)](https://packagist.org/packages/phpfastcache/phpfastcache) [![Dependency Status](https://www.versioneye.com/php/phpfastcache:phpfastcache/badge.svg)](https://www.versioneye.com/php/phpfastcache:phpfastcache) [![Latest Stable Version](http://img.shields.io/packagist/v/phpfastcache/phpfastcache.svg)](https://packagist.org/packages/phpfastcache/phpfastcache) [![License](https://img.shields.io/packagist/l/phpfastcache/phpfastcache.svg)](https://packagist.org/packages/phpfastcache/phpfastcache) [![Coding Standards](https://img.shields.io/badge/CI-PSR6-orange.svg)](https://github.com/php-fig/cache)  [![Coding Standards](https://img.shields.io/badge/CS-PSR16-orange.svg)](https://github.com/php-fig/simple-cache)    
+[![Code Climate](https://codeclimate.com/github/PHPSocialNetwork/phpfastcache/badges/gpa.svg)](https://codeclimate.com/github/PHPSocialNetwork/phpfastcache) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/PHPSocialNetwork/phpfastcache/badges/quality-score.png?b=final)](https://scrutinizer-ci.com/g/PHPSocialNetwork/phpfastcache/?branch=final) [![Build Status](https://travis-ci.org/PHPSocialNetwork/phpfastcache.svg?branch=final)](https://travis-ci.org/PHPSocialNetwork/phpfastcache)
 
-:exclamation: V6 USERS, PLEASE NOTE THAT THE V5 REQUIRES PHP 5.6 AT LEAST :exclamation:
+:exclamation: V6 USERS, PLEASE NOTE THAT THE V6 REQUIRES PHP 5.6 AT LEAST :exclamation:
 
 ---------------------------
 Simple Yet Powerful PHP Caching Class
@@ -14,21 +15,23 @@ One Class uses for All Cache. You don't need to rewrite your code many times aga
 
 |   Regular drivers  | High performances drivers | Development drivers |
 |--------------------|---------------------------|---------------------|
-|  `Apc(u)`          | `CouchBase`               | `Devnull`           |
-|  `Cookie`          | `Mongodb`                 | `Devfalse`          |
-|  `Files`           | `Predis`                  | `Devtrue`           |
-|  `Leveldb`         | `Redis`                   | `Memstatic`         |
-|  `Memcache(d)`     | `Ssdb`                    |                     |
-|  `Sqlite`          | `Zend Memory Cache`       |                     |
-|  `Wincache`        |                           |                     |
+|  `Apc(u)`          | `Cassandra`               | `Devnull`           |
+|  `Cookie`          | `CouchBase`               | `Devfalse`          |
+|  `Files`           | `Mongodb`                 | `Devtrue`           |
+|  `Leveldb`         | `Predis`                  | `Memstatic`         |
+|  `Memcache(d)`     | `Redis`                   |                     |
+|  `Sqlite`          | `Ssdb`                    |                     |
+|  `Wincache`        | `Zend Memory Cache`       |                     |
 |  `Xcache`          |                           |                     |
 |  `Zend Disk Cache` |                           |                     |
 
 \* Driver descriptions available in DOCS/DRIVERS.md
 
-### Symfony developers are not forgotten !
+### Symfony/Drupal developers are not forgotten !
 Starting with v5, phpFastCache comes with a [Symfony Bundle](https://github.com/PHPSocialNetwork/phpfastcache-bundle).
 It's fresh, so feel free to report any bug or contribute to the project using pull requests.
+
+Also a [Drupal 8 Module](https://github.com/PHPSocialNetwork/phpfastcache-drupal) is currently in development, add it to your starred projects to get notified of the first public release. 
 
 ---------------------------
 Not a "Traditional" Caching
@@ -98,30 +101,75 @@ phpFastCache offers you a lot of useful APIs:
 - deleteItem($key) // Deletes an item
 - deleteItems(array $keys) // Deletes one or more items
 - save(CacheItemInterface $item) // Persists a cache item immediately
+- saveMultiple(...$items) // Persists multiple cache items immediately
 - saveDeferred(CacheItemInterface $item); // Sets a cache item to be persisted later
 - commit(); // Persists any deferred cache items
 - clear() // Allows you to completely empty the cache and restart from the beginning
+- getHelp() // Provides a very basic help for a specific driver
 - getStats() // Returns the cache statistics as an object, useful for checking disk space used by the cache etc.
 - getItemsByTag($tagName) // Returns items by a tag
-- getItemsByTags(array $tagNames) // Returns items by multiple tags
+- getItemsByTags(array $tagNames) // Returns items by one of multiple tag names
+- getItemsByTagsAll(array $tagNames) // Returns items by all of multiple tag names
 - getItemsByTagsAsJsonString(array $tagNames) // Returns A json string that represents an array of items corresponding to given tags
 - deleteItemsByTag($tagName) // Deletes items by a tag
-- deleteItemsByTags(array $tagNames) // Deletes items by multiple tags
+- deleteItemsByTags(array $tagNames) // Deletes items  by one of multiple tag names
+- deleteItemsByTagsAll(array $tagNames) // Deletes items by all of multiple tag names
 - incrementItemsByTag($tagName, $step = 1) // Increments items by a tag
-- incrementItemsByTags(array $tagNames, $step = 1) // Increments items by multiple tags
+- incrementItemsByTags(array $tagNames, $step = 1) // Increments items by one of multiple tag names
+- incrementItemsByTagsAll(array $tagNames, $step = 1) // Increments items by all of multiple tag names
 - decrementItemsByTag($tagName, $step = 1) // Decrements items by a tag
-- decrementItemsByTags(array $tagNames, $step = 1) // Decrements items by multiple tags
+- decrementItemsByTags(array $tagNames, $step = 1) // Decrements items by one of multiple tag names
+- decrementItemsByTagsAll(array $tagNames, $step = 1) // Decrements items by all of multiple tag names
 - appendItemsByTag($tagName, $data) // Appends items by a tag
-- appendItemsByTags(array $tagNames, $data) // Appends items by multiple tags
+- appendItemsByTags(array $tagNames, $data) // Appends items by one of multiple tag names
+- appendItemsByTagsAll(array $tagNames, $data) // Appends items by all of multiple tag names
 - prependItemsByTag($tagName, $data) // Prepends items by a tag
-- prependItemsByTags(array $tagNames, $data) // Prepends items by multiple tags
+- prependItemsByTags(array $tagNames, $data) // Prepends items by one of multiple tag names
+- prependItemsByTagsAll(array $tagNames, $data) // Prepends items by all of multiple tag names
 - detachItem($item) // Detaches an item from the pool
 - detachAllItems($item) // Detaches all items from the pool
 - attachItem($item) // (Re-)attaches an item to the pool
 - isAttached($item) // Verify if an item is (still) attached
-- setEventManager($evtMngr) // Sets the event manager
+- setEventManager(EventManager $evtMngr) // Sets the event manager
 
 It also supports multiple calls, Tagging, Setup Folder for caching. Look at our examples folders for more information.
+
+---------------------------
+Want to keep it simple ?
+---------------------------
+:sweat_smile: Good news, as of the V6, a Psr16 adapter is provided to keep the cache simplest using very basic getters/setters:
+
+- get($key, $default = null);
+- set($key, $value, $ttl = null);
+- delete($key);
+- clear();
+- getMultiple($keys, $default = null);
+- setMultiple($values, $ttl = null);
+- deleteMultiple($keys);
+- has($key);
+
+Basic usage:
+```php
+use phpFastCache\Helper\Psr16Adapter;
+
+$Psr16Adapter = new Psr16Adapter($defaultDriver);
+
+if(!$Psr16Adapter->has('test-key')){
+    // Setter action
+    $data = 'lorem ipsum';
+    $Psr16Adapter->set('test-key', 'lorem ipsum', 300);// 5 minutes
+}else{
+    // Getter action
+    $data = $Psr16Adapter->get('test-key');
+}
+
+
+/**
+* Do your stuff with $data
+*/
+```
+
+Internally, the Psr16 adapter calls the PhpFastCache Api via the cache manager. 
 
 ---------------------------
 Introducing to events

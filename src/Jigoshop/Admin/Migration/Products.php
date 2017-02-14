@@ -543,6 +543,10 @@ class Products implements Tool
 			case 'product_attributes':
 			case 'variation_data':
 				return null;
+            case 'crosssell_ids':
+                return 'cross_sells';
+            case 'upsell_ids':
+                return 'up_sells';
 			default:
 				return $key;
 		}

@@ -13,6 +13,7 @@ use Jigoshop\Factory\Customer;
 use Jigoshop\Factory\Order as OrderFactory;
 use Jigoshop\Frontend\Pages;
 use Jigoshop\Helper\Country;
+use Jigoshop\Helper\Tax as TaxHelper;
 use Jigoshop\Helper\Validation;
 use Jigoshop\Shipping\Dummy;
 use Jigoshop\Shipping\Method;
@@ -62,6 +63,9 @@ class CartService implements CartServiceInterface
 		}
 
 		$this->currentUserCartId = $this->generateCartId();
+
+		//TODO: do something with this
+        TaxHelper::setCartService($this);
 	}
 
 	private function generateCartId()
@@ -114,7 +118,7 @@ class CartService implements CartServiceInterface
 	{
 		if (!isset($this->carts[$id])) {
 			$cart = new Cart($this->options->get('tax.classes'));
-            $cart->setTaxIncluded($this->options->get('tax.included'));
+            $cart->setTaxIncluded($this->options->get('tax.prices_entered', 'without_tax') == 'with_tax');
 			$cart->setCustomer($this->customerService->getCurrent());
 			$cart->getCustomer()->selectTaxAddress($this->options->get('taxes.shipping') ? 'shipping' : 'billing');
 

@@ -8,8 +8,8 @@ use Jigoshop\Helper\Render;
 <div class="form-group">
 	<div class="row">
 		<div class="col-sm-12">
-				<div class="col-xs-2 col-sm-1 text-right"></div>
-				<div class="col-xs-10 col-sm-11">
+				<div class="tooltip-inline-badge text-right"></div>
+				<div class="tooltip-inline-input">
 					<table class="table table-striped" id="tax-classes">
 						<thead>
 						<tr>

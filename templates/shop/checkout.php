@@ -16,6 +16,7 @@ use Jigoshop\Helper\Tax;
  * @var $showRegistrationForm bool Whether to show registration form.
  * @var $showLoginForm bool Whether to show login form.
  * @var $showWithTax bool Whether to show product price with or without tax.
+ * @var $suffix string
  * @var $alwaysShowShipping bool Whether to always show shipping fields.
  * @var $cartUrl string URL to cart.
  * @var $billingFields array Fields to display as billing fields.
@@ -85,7 +86,7 @@ use Jigoshop\Helper\Tax;
 		</div>
 		<ul id="checkout-mobile">
 			<?php foreach($cart->getItems() as $key => $item): /** @var \Jigoshop\Entity\Order\Item $item */ ?>
-				<?php Render::output('shop/checkout/mobile/'.$item->getType(), array('cart' => $cart, 'key' => $key, 'item' => $item, 'showWithTax' => $showWithTax)); ?>
+				<?php Render::output('shop/checkout/mobile/'.$item->getType(), array('cart' => $cart, 'key' => $key, 'item' => $item, 'showWithTax' => $showWithTax, 'suffix' => $suffix)); ?>
 			<?php endforeach; ?>
 		</ul>
 		<div class="mobile-coupons-product-subtotal">
@@ -103,7 +104,7 @@ use Jigoshop\Helper\Tax;
 		<div class="pull-right">
 			<?php $productSubtotal = $showWithTax ? $cart->getProductSubtotal() + $cart->getTotalTax() : $cart->getProductSubtotal(); ?>
 			<div class="pull-left mobile-products-subtotal"><?php _e('Products subtotal', 'jigoshop'); ?></div>
-			<div class="pull-left product-subtotal" class="pull-right"><?php echo Product::formatPrice($productSubtotal); ?></div>
+			<div class="pull-left product-subtotal" class="pull-right"><?php echo Product::formatPrice($productSubtotal, $suffix); ?></div>
 		</div>
 		</div>
 		<table class="table table-hover">
@@ -119,7 +120,7 @@ use Jigoshop\Helper\Tax;
 			</thead>
 			<tbody>
 			<?php foreach($cart->getItems() as $key => $item): /** @var \Jigoshop\Entity\Order\Item $item */ ?>
-				<?php Render::output('shop/checkout/item/'.$item->getType(), array('cart' => $cart, 'key' => $key, 'item' => $item, 'showWithTax' => $showWithTax)); ?>
+				<?php Render::output('shop/checkout/item/'.$item->getType(), array('cart' => $cart, 'key' => $key, 'item' => $item, 'showWithTax' => $showWithTax, 'suffix' => $suffix)); ?>
 			<?php endforeach; ?>
 			<?php do_action('jigoshop\checkout\table_body', $cart); ?>
 			</tbody>
@@ -138,7 +139,7 @@ use Jigoshop\Helper\Tax;
 				</td>
 				<?php $productSubtotal = $showWithTax ? $cart->getProductSubtotal() + $cart->getTotalTax() : $cart->getProductSubtotal(); ?>
 				<th colspan="2" scope="row" class="text-right"><?php _e('Products subtotal', 'jigoshop'); ?></th>
-				<td id="product-subtotal"><?php echo Product::formatPrice($productSubtotal); ?></td>
+				<td id="product-subtotal"><?php echo Product::formatPrice($productSubtotal, $suffix); ?></td>
 			</tr>
 			</tfoot>
 		</table>

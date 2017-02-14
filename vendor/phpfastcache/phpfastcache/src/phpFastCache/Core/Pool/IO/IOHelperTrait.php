@@ -14,10 +14,20 @@
 
 namespace phpFastCache\Core\Pool\IO;
 
+use phpFastCache\Core\Item\ExtendedCacheItemInterface;
 use phpFastCache\Core\Pool\ExtendedCacheItemPoolInterface;
+use phpFastCache\Entities\driverStatistic;
+use phpFastCache\EventManager;
 use phpFastCache\Exceptions\phpFastCacheIOException;
 use phpFastCache\Util\Directory;
 
+/**
+ * Trait IOHelperTrait
+ * @package phpFastCache\Core\Pool\IO
+ * @property array $config The configuration array passed via DriverBaseTrait
+ * @property ExtendedCacheItemInterface[] $itemInstances The item instance passed via CacheItemPoolTrait
+ * @property EventManager $eventManager The event manager passed via CacheItemPoolTrait
+ */
 trait IOHelperTrait
 {
     /**
@@ -142,7 +152,7 @@ trait IOHelperTrait
         /**
          * Skip Create Sub Folders;
          */
-        if ($skip == false) {
+        if (!$skip) {
             if (!file_exists($path)) {
                 if (@!mkdir($path, $this->setChmodAuto(), true)) {
                     throw new phpFastCacheIOException('PLEASE CHMOD ' . $path . ' - ' . $this->setChmodAuto() . ' OR ANY WRITABLE PERMISSION!');
@@ -162,16 +172,6 @@ trait IOHelperTrait
     protected function encodeFilename($keyword)
     {
         return md5($keyword);
-    }
-
-    /**
-     * @return bool
-     */
-    public function isExpired()
-    {
-        trigger_error(__FUNCTION__ . '() is deprecated, use ExtendedCacheItemInterface::isExpired() instead.', E_USER_DEPRECATED);
-
-        return true;
     }
 
     /**
@@ -306,5 +306,36 @@ HTACCESS;
         }
 
         return $octetWritten !== false;
+    }
+
+    /********************
+     *
+     * PSR-6 Extended Methods
+     *
+     *******************/
+
+    /**
+     * Provide a generic getStats() method
+     * for files-based drivers
+     * @return driverStatistic
+     * @throws \phpFastCache\Exceptions\phpFastCacheIOException
+     */
+    public function getStats()
+    {
+        $stat = new driverStatistic();
+        $path = $this->getFilePath(false);
+
+        if (!is_dir($path)) {
+            throw new phpFastCacheIOException("Can't read PATH:" . $path);
+        }
+
+        $stat->setData(implode(', ', array_keys($this->itemInstances)))
+          ->setRawData([
+            'tmp' => $this->tmp
+          ])
+          ->setSize(Directory::dirSize($path))
+          ->setInfo('Number of files used to build the cache: ' . Directory::getFileCount($path));
+
+        return $stat;
     }
 }

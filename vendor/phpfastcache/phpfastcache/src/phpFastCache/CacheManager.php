@@ -11,11 +11,11 @@
  * @author Georges.L (Geolim4)  <contact@geolim4.com>
  *
  */
-
 namespace phpFastCache;
 
 use phpFastCache\Core\Pool\ExtendedCacheItemPoolInterface;
 use phpFastCache\Exceptions\phpFastCacheDriverCheckException;
+use phpFastCache\Exceptions\phpFastCacheInvalidArgumentException;
 
 /**
  * Class CacheManager
@@ -219,21 +219,9 @@ class CacheManager
     }
 
     /**
-     * @param $name
-     * @param string $value
-     * @deprecated Method "setup" is deprecated and will be removed in V6. Use method "setDefaultConfig" instead.
-     * @throws \InvalidArgumentException
-     */
-    public static function setup($name, $value = '')
-    {
-        trigger_error('Method "setup" is deprecated and will be removed in V6 Use method "setDefaultConfig" instead.');
-        self::setDefaultConfig($name, $value);
-    }
-
-    /**
      * @param $name string|array
      * @param mixed $value
-     * @throws \InvalidArgumentException
+     * @throws phpFastCacheInvalidArgumentException
      */
     public static function setDefaultConfig($name, $value = null)
     {
@@ -242,7 +230,7 @@ class CacheManager
         } else if (is_string($name)){
             self::$config[ $name ] = $value;
         }else{
-            throw new \InvalidArgumentException('Invalid variable type: $name');
+            throw new phpFastCacheInvalidArgumentException('Invalid variable type: $name');
         }
     }
 
@@ -262,6 +250,7 @@ class CacheManager
         return [
           'Apc',
           'Apcu',
+          'Cassandra',
           'Couchbase',
           'Devnull',
           'Files',

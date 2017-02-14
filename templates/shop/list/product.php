@@ -4,7 +4,9 @@ use Jigoshop\Helper\Product;
 
 /**
  * @var $product \Jigoshop\Entity\Product Product to display.
+ * @var bool $show_add_to_cart_form
  */
+$show_add_to_cart_form = !isset($show_add_to_cart_form) || $show_add_to_cart_form;
 ?>
 <li class="product">
 	<?php do_action('jigoshop\shop\list\product\before', $product); ?>
@@ -22,6 +24,8 @@ use Jigoshop\Helper\Product;
 	</a>
 	<?php do_action('jigoshop\shop\list\product\before_button', $product); ?>
 	<span class="price"><?php echo Product::getPriceHtml($product); ?></span>
-	<?php Product::printAddToCartForm($product, 'list'); ?>
+    <?php if($show_add_to_cart_form) : ?>
+	    <?php Product::printAddToCartForm($product, 'list'); ?>
+    <?php endif; ?>
 	<?php do_action('jigoshop\shop\list\product\after', $product); ?>
 </li>

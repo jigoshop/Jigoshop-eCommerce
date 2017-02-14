@@ -9,6 +9,7 @@ use Jigoshop\Entity\Order\Item;
 use Jigoshop\Entity\OrderInterface;
 use Jigoshop\Entity\Product\Attributes;
 use Jigoshop\Entity\Product\Variable;
+use Jigoshop\Helper\Tax;
 use Jigoshop\Shipping\Method;
 use Monolog\Registry;
 use WPAL\Wordpress;
@@ -104,27 +105,7 @@ class TaxService implements TaxServiceInterface
                     $price = $item->getProduct()->getPrice();
                 }
                 if($price == $item->getPrice()) {
-                    $taxClasses = $item->getTaxClasses();
-                    $taxDefinitions = $order->getTaxDefinitions();
-                    $standard = $compound = [];
-                    foreach ($taxClasses as $class) {
-                        if(isset($taxDefinitions[$class])) {
-                            $standard[$class] = $taxDefinitions[$class];
-                            if (isset($taxDefinitions['__compound__' . $class])) {
-                                $compound[$class] = $taxDefinitions['__compound__' . $class];
-                            }
-                        }
-                    }
-
-                    $standardRate = 0;
-                    foreach ($standard as $class => $definition) {
-                        $standardRate += $definition['rate'] / 100;
-                    }
-                    $compoundRate = 0;
-                    foreach ($compound as $class => $definition) {
-                        $compoundRate += $definition['rate'] / 100;
-                    }
-                    $item->setPrice(($item->getPrice()/((1 + $standardRate) * (1 + $compoundRate))));
+                    $item->setPrice(Tax::getPriceWithoutTax($price, $item->getTaxClasses(), $order));
                 }
             }
         }, 10 ,2);

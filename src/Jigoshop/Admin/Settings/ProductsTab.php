@@ -80,6 +80,23 @@ class ProductsTab implements TabInterface
 						'checked' => $this->options['related'],
 						'classes' => array('switch-medium'),
 					),
+                    array(
+                        'name' => '[reviews]',
+                        'title' => __('Reviews', 'jigoshop'),
+                        'type' => 'checkbox',
+                        'description' => __("Show or hide the product reviews tab on a product page.", 'jigoshop'),
+                        'checked' => $this->options['reviews'],
+                        'classes' => array('switch-medium'),
+                    ),
+                    array(
+                        'name' => '[up_sells_product_limit]',
+                        'title' => __('Number up sell of products to display', 'jigoshop'),
+                        'tip' => __('Enter the number of products to limit the items displayed in Product page',
+                            'jigoshop'),
+                        'description' => '',
+                        'type' => 'number',
+                        'value' => $this->options['up_sells_product_limit'],
+                    ),
 				),
 			),
 			array(
@@ -300,6 +317,8 @@ class ProductsTab implements TabInterface
 		$settings['manage_stock'] = $settings['manage_stock'] == 'on';
 		$settings['show_stock'] = $settings['show_stock'] == 'on';
 		$settings['related'] = $settings['related'] == 'on';
+		$settings['reviews'] = $settings['reviews'] == 'on';
+        $settings['up_sells_product_limit'] = $settings['up_sells_product_limit'] >= 0 ? $settings['up_sells_product_limit'] : 0;
 
 		$settings['low_stock_threshold'] = (int)$settings['low_stock_threshold'];
 		if ($settings['low_stock_threshold'] < 0) {

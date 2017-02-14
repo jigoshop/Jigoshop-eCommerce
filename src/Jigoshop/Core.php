@@ -13,7 +13,7 @@ use WPAL\Wordpress;
 
 class Core
 {
-	const VERSION = '2.0.8';
+	const VERSION = '2.0.9';
 	const WIDGET_CACHE = 'jigoshop_widget_cache';
 	const TERMS = 'jigoshop_term';
 
@@ -101,11 +101,16 @@ class Core
 			$api = $container->get('jigoshop.api');
 			$api->run();
 		}
+		if(defined('DOING_AJAX') && DOING_AJAX) {
+		    /** @var Ajax $ajax */
+		    $ajax = $container->get('jigoshop.ajax');
+		    $ajax->run();
+        }
 
 		/** @var \Jigoshop\Service\TaxServiceInterface $tax */
 		$tax = $container->get('jigoshop.service.tax');
 		$tax->register();
-		Tax::setService($tax);
+		Tax::setTaxService($tax);
 
 		$container->get('jigoshop.emails');
 

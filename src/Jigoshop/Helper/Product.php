@@ -71,36 +71,49 @@ class Product
     public static function getPriceHtml(Entity\Product $product)
     {
         $price = 0;
+        $showWithTax = self::$options->get('tax.product_prices', 'excluding_tax') == 'including_tax';
+        $taxIncluded = self::$options->get('tax.prices_entered', 'without_tax') == 'with_tax';
+        $suffix = '';
+        if(self::$options->get('tax.show_suffix', 'in_cart_totals') == 'everywhere') {
+            $suffix = $showWithTax ? self::$options->get('tax.suffix_for_included', '') : self::$options->get('tax.suffix_for_excluded', '');
+        }
         switch ($product->getType()) {
             case Entity\Product\Simple::TYPE:
             case Entity\Product\Virtual::TYPE:
             case Entity\Product\External::TYPE:
             case Entity\Product\Downloadable::TYPE:
                 /** @var $product Entity\Product\Simple */
+                $price = $product->getPrice();
+                $price = $taxIncluded ? Tax::getPriceWithoutTax($price, $product->getTaxClasses()) : $price;
+                $price += $showWithTax ? Tax::getForProduct($price, $product) : 0;
+
                 if (self::isOnSale($product)) {
-                    $price = $product->getRegularPrice();
-                    if (empty($price)) {
+                    $regularPrice = $product->getRegularPrice();
+                    $regularPrice = $taxIncluded ? Tax::getPriceWithoutTax($regularPrice, $product->getTaxClasses()) : $regularPrice;
+                    $regularPrice += $showWithTax ? Tax::getForProduct($regularPrice, $product) : 0;
+                    if (empty($regularPrice)) {
                         return apply_filters('jigoshop\helper\product\get_price_html', __('Price not announced', 'jigoshop'), '',
                             $product);
                     }
                     if (strpos($product->getSales()->getPrice(), '%') !== false) {
-                        $result = '<del>' . self::formatPrice($price) . '</del>' . self::formatPrice($product->getPrice()) . '
+                        $result = '<del>' . self::formatPrice(round($regularPrice, 2), $suffix) . '</del>' . self::formatPrice(round($price, 2), $suffix) . '
 						<ins>' . sprintf(__('%s off!', 'jigoshop'), $product->getSales()->getPrice()) . '</ins>';
                         break;
                     } else {
-                        $result = '<del>' . self::formatPrice($price) . '</del>
-						<ins>' . self::formatPrice($product->getPrice()) . '</ins>';
+                        $result = '<del>' . self::formatPrice(round($regularPrice, 2), $suffix) . '</del>
+						<ins>' . self::formatPrice(round($price, 2), $suffix) . '</ins>';
                         break;
                     }
                 }
 
-                $price = $product->getPrice();
-                $result = self::formatPrice($price);
+                $result = self::formatPrice(round($price, 2), $suffix);
                 break;
             case Entity\Product\Variable::TYPE:
                 /** @var $product Entity\Product\Variable */
                 $price = $product->getLowestPrice();
-                $formatted = self::formatPrice($price);
+                $price = $taxIncluded ? Tax::getPriceWithoutTax($price, $product->getTaxClasses()) : $price;
+                $price += $showWithTax ? Tax::getForProduct($price, $product) : 0;
+                $formatted = self::formatPrice(round($price, 2), $suffix);
 
                 if ($price !== '' && $product->getLowestPrice() < $product->getHighestPrice()) {
                     $result = sprintf(__('From: %s', 'jigoshop'), $formatted);
@@ -139,17 +152,20 @@ class Product
 
     /**
      * @param $price float Price to format.
+     * @param $suffix string
      *
      * @return string Formatted price with currency symbol.
      */
-    public static function formatPrice($price)
+    public static function formatPrice($price, $suffix = '')
     {
         if ($price === 0.00) {
             return __('Free', 'jigoshop');
         }
 
         if ($price !== '') {
-            return sprintf(Currency::format(), Currency::symbol(), Currency::code(), self::formatNumericPrice($price));
+            $formatted = sprintf(Currency::format(), Currency::symbol(), Currency::code(), self::formatNumericPrice($price));
+
+            return $suffix ? sprintf('%s %s', $formatted, $suffix) : $formatted;
         }
 
         return __('Price not announced.', 'jigoshop');
@@ -209,14 +225,15 @@ class Product
      *
      * @param Entity\Product $product
      * @param string $size
+	 * @param array $attributes
      *
      * @return string
      */
-    public static function getFeaturedImage(Entity\Product $product, $size = CoreOptions::IMAGE_SMALL)
+    public static function getFeaturedImage(Entity\Product $product, $size = CoreOptions::IMAGE_SMALL, $attributes = [])
     {
         if (self::hasFeaturedImage($product)) {
             $thumbnail = apply_filters('jigoshop\helper\product\get_featured_image',
-                get_the_post_thumbnail($product->getId(), $size), $product, $size);
+                get_the_post_thumbnail($product->getId(), $size, $attributes), $product, $size);
             if ($thumbnail) {
                 return $thumbnail;
             }

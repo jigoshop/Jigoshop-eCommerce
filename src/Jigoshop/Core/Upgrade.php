@@ -39,7 +39,7 @@ class Upgrade
                     $upgraders = $this->di->getTaggedServices('jigoshop.upgrade.' . ($i+1));
                     foreach ($upgraders as $upgrader) {
                         /** @var Upgrader $upgrader */
-                        $upgrader->up($this->wp);
+                        $upgrader->up($this->wp, $this->di);
                     }
                 }
             }

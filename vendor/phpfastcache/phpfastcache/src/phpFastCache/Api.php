@@ -11,7 +11,6 @@
  * @author Georges.L (Geolim4)  <contact@geolim4.com>
  *
  */
-
 namespace phpFastCache;
 
 /**
@@ -20,7 +19,7 @@ namespace phpFastCache;
  */
 class Api
 {
-    protected static $version = '1.2.1';
+    protected static $version = '1.2.4';
 
     /**
      * This method will returns the current
@@ -45,6 +44,23 @@ class Api
     public static function getChangelog()
     {
         return <<<CHANGELOG
+- 1.2.4
+-- Implemented additional simple helper method to provide basic information about the driver:
+   ExtendedCacheItemPoolInterface::getHelp()
+
+- 1.2.3
+-- Implemented additional saving method form multiple items:
+   ExtendedCacheItemPoolInterface::saveMultiple()
+
+- 1.2.2
+-- Implemented additional tags methods such as:
+   ExtendedCacheItemPoolInterface::getItemsByTagsAll()
+   ExtendedCacheItemPoolInterface::incrementItemsByTagsAll()
+   ExtendedCacheItemPoolInterface::decrementItemsByTagsAll()
+   ExtendedCacheItemPoolInterface::deleteItemsByTagsAll()
+   ExtendedCacheItemPoolInterface::appendItemsByTagsAll()
+   ExtendedCacheItemPoolInterface::prependItemsByTagsAll()
+
 - 1.2.1
 -- Implemented Event manager methods such as:
    ExtendedCacheItemInterface::setEventManager()
@@ -58,6 +74,10 @@ class Api
    ExtendedCacheItemInterface::setCreationDate(\DateTimeInterface) *
    ExtendedCacheItemInterface::setModificationDate() *
    * Require configuration directive "itemDetailedDate" to be enabled
+
+- 1.1.3
+-- Added an additional CacheItemInterface method:
+   ExtendedCacheItemInterface::getEncodedKey()
 
 - 1.1.2
 -- Implemented [de|a]ttaching methods to improve memory management

@@ -3,8 +3,10 @@
 namespace Jigoshop\Admin\Settings;
 
 use Jigoshop\Core\Options;
+use Jigoshop\Helper\Scripts;
 use Jigoshop\Service\ShippingServiceInterface;
 use Jigoshop\Shipping\Method;
+use WPAL\Wordpress;
 
 /**
  * Shipping tab definition.
@@ -20,10 +22,18 @@ class ShippingTab implements TabInterface
 	/** @var ShippingServiceInterface */
 	private $shippingService;
 
-	public function __construct(Options $options, ShippingServiceInterface $shippingService)
+	public function __construct(Wordpress $wp, Options $options, ShippingServiceInterface $shippingService)
 	{
 		$this->options = $options->get(self::SLUG);
 		$this->shippingService = $shippingService;
+
+        $wp->addAction('admin_enqueue_scripts', function (){
+            if (isset($_GET['tab']) && $_GET['tab'] == ShippingTab::SLUG) {
+                Scripts::add('jigoshop.admin.settings.shopping', \JigoshopInit::getUrl().'/assets/js/admin/settings/shipping.js',
+                    ['jquery', 'wp-util'],
+                    ['page' => 'jigoshop_page_jigoshop_settings']);
+            }
+        });
 	}
 
 	/**

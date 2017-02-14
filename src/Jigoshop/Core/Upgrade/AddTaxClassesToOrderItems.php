@@ -2,6 +2,7 @@
 
 namespace Jigoshop\Core\Upgrade;
 
+use Jigoshop\Container;
 use WPAL\Wordpress;
 
 /**
@@ -14,8 +15,9 @@ class AddTaxClassesToOrderItems implements Upgrader
 {
     /**
      * @param Wordpress $wp
+     * @param Container $di
      */
-    public function up(Wordpress $wp)
+    public function up(Wordpress $wp, Container $di)
     {
         $wpdb = $wp->getWPDB();
         $wpdb->query("ALTER TABLE `{$wpdb->prefix}jigoshop_order_item` ADD `tax_classes` VARCHAR(170) NOT NULL AFTER `title`;");
@@ -23,8 +25,9 @@ class AddTaxClassesToOrderItems implements Upgrader
 
     /**
      * @param Wordpress $wp
+     * @param Container $di
      */
-    public function down(Wordpress $wp)
+    public function down(Wordpress $wp, Container $di)
     {
         $wpdb = $wp->getWPDB();
         $wpdb->query("ALTER TABLE `{$wpdb->prefix}jigoshop_order_item` DROP `tax_classes`");
