@@ -153,7 +153,7 @@ class ShoppingTab implements TabInterface
 					),
                     array(
                         'name' => '[cross_sells_product_limit]',
-                        'title' => __('Number cross sell of products to display', 'jigoshop'),
+                        'title' => __('Number of cross sell products to display', 'jigoshop'),
                         'tip' => __('Enter the number of products to limit the items displayed in Cart page',
                             'jigoshop'),
                         'description' => '',

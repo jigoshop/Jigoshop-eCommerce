@@ -90,7 +90,7 @@ class ProductsTab implements TabInterface
                     ),
                     array(
                         'name' => '[up_sells_product_limit]',
-                        'title' => __('Number up sell of products to display', 'jigoshop'),
+                        'title' => __('Number of up sell products to display', 'jigoshop'),
                         'tip' => __('Enter the number of products to limit the items displayed in Product page',
                             'jigoshop'),
                         'description' => '',
