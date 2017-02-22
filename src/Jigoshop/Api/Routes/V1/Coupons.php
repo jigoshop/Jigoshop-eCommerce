@@ -22,7 +22,7 @@ class Coupons
     private $app;
 
     /**
-     * Orders constructor.
+     * Coupons constructor.
      * @param App $app
      */
     public function __construct(App $app)
