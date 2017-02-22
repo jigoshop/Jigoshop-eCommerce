@@ -62,16 +62,16 @@ class Coupon implements EntityFactoryInterface
 	/**
 	 * Fetches product from database.
 	 *
-	 * @param $post \WP_Post Post to fetch product for.
+	 * @param $post \WP_Post Post to fetch coupon for.
 	 *
-	 * @return \Jigoshop\Entity\Product
+	 * @return \Jigoshop\Entity\Coupon
 	 */
 	public function fetch($post)
 	{
-		$coupon = new Entity();
 		$state = array();
-
+        $coupon = null;
 		if ($post) {
+            $coupon = new Entity();
 			$state = array_map(function ($item){
 				return $item[0];
 			}, $this->wp->getPostMeta($post->ID));

@@ -46,6 +46,9 @@ class Routes
             $app->group('/reports', function() use ($app) {
                 new Routes\V1\Reports($app);
             });
+            $app->group('/coupons', function() use ($app) {
+                new Routes\V1\Coupons($app);
+            });
         }
     }
 

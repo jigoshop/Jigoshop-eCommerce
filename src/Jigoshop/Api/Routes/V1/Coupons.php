@@ -4,19 +4,19 @@ namespace Jigoshop\Api\Routes\V1;
 
 use Jigoshop\Api\Permission;
 use Jigoshop\Core\Types;
-use Jigoshop\Entity\Product as ProductEntity;
+use Jigoshop\Entity\Coupon as CouponEntity;
 use Jigoshop\Exception;
-use Jigoshop\Service\ProductService;
+use Jigoshop\Service\CouponService;
 use Slim\App;
 use Slim\Http\Request;
 use Slim\Http\Response;
 
 /**
- * Class Products
+ * Class Coupons
  * @package Jigoshop\Api\Routes\V1;
- * @author Krzysztof Kasowski
+ * @author Maciej Maciaszek
  */
-class Products
+class Coupons
 {
     /** @var  App */
     private $app;
@@ -28,8 +28,8 @@ class Products
     public function __construct(App $app)
     {
         $this->app = $app;
-        $app->get('', array($this, 'getProducts'));
-        $app->get('/{id:[0-9]+}', array($this, 'getProduct'));
+        $app->get('', array($this, 'getCoupons'));
+        $app->get('/{id:[0-9]+}', array($this, 'getCoupon'));
     }
 
     /**
@@ -38,57 +38,55 @@ class Products
      * @param $args
      * @return Response
      */
-    public function getProducts(Request $request, Response $response, $args)
+    public function getCoupons(Request $request, Response $response, $args)
     {
-        if(!$this->app->getContainer()->token->hasPermission(Permission::READ_PRODUCTS)) {
+        if(!$this->app->getContainer()->token->hasPermission(Permission::READ_COUPONS)) {
             throw new Exception('You have no permissions to access to this page.', 401);
         }
 
-        /** @var ProductService $service */
-        $service = $this->app->getContainer()->di->get('jigoshop.service.product');
+        /** @var CouponService $service */
+        $service = $this->app->getContainer()->di->get('jigoshop.service.coupon');
 
         $queryParams = $request->getParams();
         $queryParams['pagelen'] = isset($queryParams['pagelen']) && is_numeric($queryParams['pagelen']) ? (int)$queryParams['pagelen'] : 10;
         $queryParams['page'] = isset($queryParams['page']) && is_numeric($queryParams['page']) ? (int)$queryParams['page'] : 1;
-        $allProducts = $service->getProductsCount();
-
-        $products = $service->findByQuery(new \WP_Query([
-            'post_type' => Types::PRODUCT,
+        $coupons = $service->findByQuery(new \WP_Query([
+            'post_type' => Types::COUPON,
             'posts_per_page' => $queryParams['pagelen'],
             'paged' => $queryParams['page'],
         ]));
 
         return $response->withJson([
             'success' => true,
-            'all_results' => $allProducts,
+            'all_results' => $service->getCouponsCount(),
             'pagelen' => $queryParams['pagelen'],
             'page' => $queryParams['page'],
             'next' => '',
             'previous' =>  '',
-            'data' => array_values($products),
+            'data' => array_values($coupons),
         ]);
     }
 
-    public function getProduct(Request $request, Response $response, $args)
+    public function getCoupon(Request $request, Response $response, $args)
     {
-        if(!$this->app->getContainer()->token->hasPermission(Permission::READ_PRODUCTS)) {
+        if(!$this->app->getContainer()->token->hasPermission(Permission::READ_COUPONS)) {
             throw new Exception('You have no permissions to access to this page.', 401);
         }
 
         if(!isset($args['id']) || empty($args['id'])) {
-            throw new Exception(__('Product ID was not provided', 'jigoshop'));
+            throw new Exception(__('Coupon ID was not provided', 'jigoshop'));
         }
-        /** @var ProductService $service */
-        $service = $this->app->getContainer()->di->get('jigoshop.service.product');
-        $product = $service->find($args['id']);
+        /** @var CouponService $service */
+        $service = $this->app->getContainer()->di->get('jigoshop.service.coupon');
+        $coupon = $service->find($args['id']);
 
-        if(!$product instanceof ProductEntity) {
-            throw new Exception(__('Product not found.', 'jigoshop'), 404);
+        if(!$coupon instanceof CouponEntity) {
+            throw new Exception(__('Coupon not found.', 'jigoshop'),404);
         }
 
         return $response->withJson([
             'success' => true,
-            'data' => $product,
+            'data' => $coupon,
         ]);
     }
 }

@@ -42,7 +42,7 @@ class CouponService implements CouponServiceInterface
 	 *
 	 * @param $id int The ID.
 	 *
-	 * @return Product
+	 * @return Coupon
 	 */
 	public function find($id)
 	{
@@ -221,4 +221,17 @@ class CouponService implements CouponServiceInterface
 	{
 		return $this->factory->fetch($post);
 	}
+
+    /**
+     * Gets number of Coupons
+     *
+     * @return int
+     */
+    public function getCouponsCount()
+    {
+        $wpdb = $this->wp->getWPDB();
+        return (int)$wpdb->get_var($wpdb->prepare("
+            SELECT COUNT(*) FROM {$wpdb->posts} 
+            WHERE post_status = 'publish' AND post_type = %s", Types::COUPON));
+    }
 }
