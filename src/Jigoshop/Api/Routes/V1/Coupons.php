@@ -2,13 +2,7 @@
 
 namespace Jigoshop\Api\Routes\V1;
 
-use Jigoshop\Core\Types;
-use Jigoshop\Entity\Coupon as CouponEntity;
-use Jigoshop\Exception;
-use Jigoshop\Service\CouponService;
 use Slim\App;
-use Slim\Http\Request;
-use Slim\Http\Response;
 
 /**
  * Class Coupons
@@ -31,53 +25,4 @@ class Coupons extends PostController
         $app->get('/{id:[0-9]+}', array($this, 'findOne'));
     }
 
-    /**
-     * @param Request $request
-     * @param Response $response
-     * @param $args
-     * @return Response
-     */
-    public function getCoupons(Request $request, Response $response, $args)
-    {
-        /** @var CouponService $service */
-        $service = $this->app->getContainer()->di->get('jigoshop.service.coupon');
-
-        $queryParams = $request->getParams();
-        $queryParams['pagelen'] = isset($queryParams['pagelen']) && is_numeric($queryParams['pagelen']) ? (int)$queryParams['pagelen'] : 10;
-        $queryParams['page'] = isset($queryParams['page']) && is_numeric($queryParams['page']) ? (int)$queryParams['page'] : 1;
-        $coupons = $service->findByQuery(new \WP_Query([
-            'post_type' => Types::COUPON,
-            'posts_per_page' => $queryParams['pagelen'],
-            'paged' => $queryParams['page'],
-        ]));
-
-        return $response->withJson([
-            'success' => true,
-            'all_results' => $service->getCouponsCount(),
-            'pagelen' => $queryParams['pagelen'],
-            'page' => $queryParams['page'],
-            'next' => '',
-            'previous' =>  '',
-            'data' => array_values($coupons),
-        ]);
-    }
-
-    public function getCoupon(Request $request, Response $response, $args)
-    {
-        if(!isset($args['id']) || empty($args['id'])) {
-            throw new Exception(__('Coupon ID was not provided', 'jigoshop'));
-        }
-        /** @var CouponService $service */
-        $service = $this->app->getContainer()->di->get('jigoshop.service.coupon');
-        $coupon = $service->find($args['id']);
-
-        if(!$coupon instanceof CouponEntity) {
-            throw new Exception(__('Coupon not found.', 'jigoshop'),404);
-        }
-
-        return $response->withJson([
-            'success' => true,
-            'data' => $coupon,
-        ]);
-    }
 }

@@ -47,6 +47,7 @@ abstract class PostController
     protected $app;
 
     /**
+     * initialize all needed values
      * PostController constructor.
      * @param App $app
      */
