@@ -15,10 +15,10 @@ use Slim\Http\Response;
  * @package Jigoshop\Api\Routes\V1;
  * @author Krzysztof Kasowski
  */
-class Products
+class Products extends PostController
 {
     /** @var  App */
-    private $app;
+    protected $app;
 
     /**
      * Orders constructor.
@@ -26,9 +26,10 @@ class Products
      */
     public function __construct(App $app)
     {
+        parent::__construct($app);
         $this->app = $app;
-        $app->get('', array($this, 'getProducts'));
-        $app->get('/{id:[0-9]+}', array($this, 'getProduct'));
+        $app->get('', array($this, 'findAll'));
+        $app->get('/{id:[0-9]+}', array($this, 'findOne'));
     }
 
     /**

@@ -15,20 +15,20 @@ use Slim\Http\Response;
  * @package Jigoshop\Api\Routes\V1;
  * @author Maciej Maciaszek
  */
-class Coupons
+class Coupons extends PostController
 {
     /** @var  App */
-    private $app;
-
+    protected $app;
     /**
      * Coupons constructor.
      * @param App $app
      */
     public function __construct(App $app)
     {
+        parent::__construct($app);
         $this->app = $app;
-        $app->get('', array($this, 'getCoupons'));
-        $app->get('/{id:[0-9]+}', array($this, 'getCoupon'));
+        $app->get('', array($this, 'findAll'));
+        $app->get('/{id:[0-9]+}', array($this, 'findOne'));
     }
 
     /**
