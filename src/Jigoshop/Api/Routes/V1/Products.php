@@ -2,7 +2,6 @@
 
 namespace Jigoshop\Api\Routes\V1;
 
-use Jigoshop\Api\Permission;
 use Jigoshop\Core\Types;
 use Jigoshop\Entity\Product as ProductEntity;
 use Jigoshop\Exception;
@@ -40,10 +39,6 @@ class Products
      */
     public function getProducts(Request $request, Response $response, $args)
     {
-        if(!$this->app->getContainer()->token->hasPermission(Permission::READ_PRODUCTS)) {
-            throw new Exception('You have no permissions to access to this page.', 401);
-        }
-
         /** @var ProductService $service */
         $service = $this->app->getContainer()->di->get('jigoshop.service.product');
 
@@ -71,10 +66,6 @@ class Products
 
     public function getProduct(Request $request, Response $response, $args)
     {
-        if(!$this->app->getContainer()->token->hasPermission(Permission::READ_PRODUCTS)) {
-            throw new Exception('You have no permissions to access to this page.', 401);
-        }
-
         if(!isset($args['id']) || empty($args['id'])) {
             throw new Exception(__('Product ID was not provided', 'jigoshop'));
         }

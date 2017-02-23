@@ -7,6 +7,7 @@ use Jigoshop\Admin\Dashboard;
 use Jigoshop\Api\Routes;
 use Jigoshop\Core\Options;
 use Jigoshop\Extensions\Extension;
+use Jigoshop\Middleware\ApiPermissionMiddleware;
 use Monolog\Logger;
 use Monolog\Registry;
 use Slim;
@@ -131,11 +132,11 @@ class Api
     {
         $container = $app->getContainer();
         $users = [];
-        foreach($this->options->get('advanced.api.users', []) as $user) {
+        foreach ($this->options->get('advanced.api.users', []) as $user) {
             $users[$user['login']] = $user['password'];
         }
         $secret = $this->options->get('advanced.api.secret', '');
-        if(empty($users) || empty($secret)) {
+        if (empty($users) || empty($secret)) {
             throw new Exception('Users or secret key was not set up.', 500);
         }
 
@@ -145,6 +146,13 @@ class Api
             'secure' => false,
             'users' => $users
         ]));
+
+        $app->add(new ApiPermissionMiddleware($app, [
+            'path' => '/',
+            'passthrough' => ['/token', '/ping'],
+            'relaxed' => ['localhost', 'jigoshop2.dev'],
+        ]));
+
         $app->add(new Slim\Middleware\JwtAuthentication([
             'path' => '/',
             'passthrough' => ['/token', '/ping'],
@@ -156,6 +164,7 @@ class Api
                 $container->token->restoreState($args['decoded']);
             }
         ]));
+
     }
 
     /**

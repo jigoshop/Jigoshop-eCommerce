@@ -7,7 +7,7 @@ namespace Jigoshop\Api;
  */
 class Permission
 {
-    const READ_PRODUCTS = 'read_orders';
+    const READ_PRODUCTS = 'read_products';
     const READ_CART = 'read_cart';
     const READ_ORDERS = 'read_orders';
     const READ_COUPONS = 'read_coupons';

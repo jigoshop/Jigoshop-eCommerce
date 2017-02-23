@@ -2,7 +2,6 @@
 
 namespace Jigoshop\Api\Routes\V1;
 
-use Jigoshop\Api\Permission;
 use Jigoshop\Core\Types;
 use Jigoshop\Entity\Coupon as CouponEntity;
 use Jigoshop\Exception;
@@ -40,10 +39,6 @@ class Coupons
      */
     public function getCoupons(Request $request, Response $response, $args)
     {
-        if(!$this->app->getContainer()->token->hasPermission(Permission::READ_COUPONS)) {
-            throw new Exception('You have no permissions to access to this page.', 401);
-        }
-
         /** @var CouponService $service */
         $service = $this->app->getContainer()->di->get('jigoshop.service.coupon');
 
@@ -69,10 +64,6 @@ class Coupons
 
     public function getCoupon(Request $request, Response $response, $args)
     {
-        if(!$this->app->getContainer()->token->hasPermission(Permission::READ_COUPONS)) {
-            throw new Exception('You have no permissions to access to this page.', 401);
-        }
-
         if(!isset($args['id']) || empty($args['id'])) {
             throw new Exception(__('Coupon ID was not provided', 'jigoshop'));
         }
