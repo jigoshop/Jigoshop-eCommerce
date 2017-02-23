@@ -37,6 +37,9 @@ class Routes
         $app->get('/ping', array($this, 'ping'));
         if($version == 1) {
             $app->post('/token', array($this, 'token'));
+            $app->group('/emails', function() use ($app) {
+                new Routes\V1\Emails($app);
+            });
             $app->group('/orders', function() use ($app) {
                 new Routes\V1\Orders($app);
             });
