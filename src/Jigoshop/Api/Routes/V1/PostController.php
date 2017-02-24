@@ -114,6 +114,14 @@ abstract class PostController
         ]);
     }
 
+    public function create(Request $request, Response $response, $args)
+    {
+        $this->service->savePost(null);
+        return $response->withJson([
+            'success' => true,
+            'data' => "$this->entityName successfully created",
+        ]);
+    }
     /**
      * function to shorten plural to singular strings
      *
