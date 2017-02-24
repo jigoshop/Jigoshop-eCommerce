@@ -121,7 +121,7 @@ abstract class PostController
      * @param Request $request
      * @param Response $response
      * @param $args
-     * @return static
+     * @return Response
      */
     public function create(Request $request, Response $response, $args)
     {
@@ -139,7 +139,7 @@ abstract class PostController
      * @param string $ending
      * @return string
      */
-    private function singularize($string, $ending = 's')
+    protected function singularize($string, $ending = 's')
     {
         return rtrim($string, "$ending");
     }

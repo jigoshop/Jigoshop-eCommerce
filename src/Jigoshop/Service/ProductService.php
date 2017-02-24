@@ -11,6 +11,7 @@ use Jigoshop\Entity\Product\Attribute;
 use Jigoshop\Entity\Product\Purchasable;
 use Jigoshop\Exception;
 use Jigoshop\Factory\Product as ProductFactory;
+use Jigoshop\Traits\WpPostManageTrait;
 use WPAL\Wordpress;
 
 /**
@@ -21,6 +22,8 @@ use WPAL\Wordpress;
  */
 class ProductService implements ProductServiceInterface
 {
+    use WpPostManageTrait;
+
 	/** @var \WPAL\Wordpress */
 	private $wp;
 	/** @var \Jigoshop\Factory\Product */
@@ -178,6 +181,15 @@ class ProductService implements ProductServiceInterface
 		if (!($object instanceof \Jigoshop\Entity\Product)) {
 			throw new Exception('Trying to save not a product!');
 		}
+
+        if (!$object->getId()) {
+            //if object does not exist insert new one
+            $id = $this->insertPost($this->wp, $object, Types::PRODUCT);
+            if (!is_int($id) || $id === 0) {
+                throw new Exception(__('Unable to save product. Please try again.', 'jigoshop'));
+            }
+            $object->setId($id);
+        }
 
 		// TODO: Support for transactions!
 
