@@ -60,6 +60,7 @@ abstract class PostController
     }
 
     /**
+     * Basic wp_post findAll method
      * @param Request $request
      * @param Response $response
      * @param $args
@@ -90,6 +91,7 @@ abstract class PostController
 
 
     /**
+     * Basic wp_post findOne method
      * @param Request $request
      * @param Response $response
      * @param $args
@@ -114,6 +116,13 @@ abstract class PostController
         ]);
     }
 
+    /**
+     * Basic wp_post creation method
+     * @param Request $request
+     * @param Response $response
+     * @param $args
+     * @return static
+     */
     public function create(Request $request, Response $response, $args)
     {
         $this->service->savePost(null);
@@ -122,6 +131,7 @@ abstract class PostController
             'data' => "$this->entityName successfully created",
         ]);
     }
+
     /**
      * function to shorten plural to singular strings
      *
