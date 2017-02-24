@@ -9,6 +9,7 @@ use Jigoshop\Entity\Coupon;
 use Jigoshop\Entity\EntityInterface;
 use Jigoshop\Entity\Product;
 use Jigoshop\Factory\Coupon as Factory;
+use Jigoshop\Traits\WpPostManageTrait;
 use WPAL\Wordpress;
 
 /**
@@ -20,6 +21,8 @@ use WPAL\Wordpress;
  */
 class CouponService implements CouponServiceInterface
 {
+    use WpPostManageTrait;
+
     /** @var Wordpress */
     private $wp;
     /** @var Options */
@@ -79,24 +82,7 @@ class CouponService implements CouponServiceInterface
 
         if (!$object->getId()) {
             //if object does not exist insert new one
-            $wpdb = $this->wp->getWPDB();
-            $date = $this->wp->getHelpers()->currentTime('mysql');
-            $dateGmt = $this->wp->getHelpers()->currentTime('mysql', true);
-
-            $wpdb->insert($wpdb->posts, array(
-                'post_author' => 0, //TODO #316 ticket update posts
-                'post_date' => $date,
-                'post_date_gmt' => $dateGmt,
-                'post_modified' => $date,
-                'post_modified_gmt' => $dateGmt,
-                'post_type' => Types::COUPON,
-                'post_title' => $object->getTitle(),
-                'post_name' => sanitize_title($object->getTitle()),
-                'ping_status' => 'closed',
-                'comment_status' => 'closed',
-            ));
-
-            $id = $wpdb->insert_id;
+            $id = $this->insertPost($this->wp, $object, Types::COUPON);
             if (!is_int($id) || $id === 0) {
                 throw new Exception(__('Unable to save coupon. Please try again.', 'jigoshop'));
             }
