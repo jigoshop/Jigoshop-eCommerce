@@ -87,11 +87,16 @@ class Product
                 $price = $taxIncluded ? Tax::getPriceWithoutTax($price, $product->getTaxClasses()) : $price;
                 $price += $showWithTax ? Tax::getForProduct($price, $product) : 0;
 
+                if ($price === '') {
+                    return apply_filters('jigoshop\helper\product\get_price_html', __('Price not announced', 'jigoshop'), '',
+                        $product);
+                }
+
                 if (self::isOnSale($product)) {
                     $regularPrice = $product->getRegularPrice();
                     $regularPrice = $taxIncluded ? Tax::getPriceWithoutTax($regularPrice, $product->getTaxClasses()) : $regularPrice;
                     $regularPrice += $showWithTax ? Tax::getForProduct($regularPrice, $product) : 0;
-                    if (empty($regularPrice)) {
+                    if ($regularPrice === '') {
                         return apply_filters('jigoshop\helper\product\get_price_html', __('Price not announced', 'jigoshop'), '',
                             $product);
                     }

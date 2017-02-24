@@ -10,6 +10,7 @@
     * Fix: Tax helper should return tax for Taxable products.
     * Fix: Properly interpret ignore meta queries option.
     * Fix: Now coupons and emails are available via api.
+    * Fix: Displaying free instead of price not announced.
 * 2.0.9 - 2017.02.13:
     * Fix: Support Twentyseventeen theme.
     * Fix: Improve product reviews.
