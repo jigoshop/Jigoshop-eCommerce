@@ -2,27 +2,19 @@
 
 namespace Jigoshop\Api\Routes\V1;
 
-use Jigoshop\Core\Types;
-use Jigoshop\Entity\Product as ProductEntity;
-use Jigoshop\Exception;
-use Jigoshop\Service\ProductService;
 use Slim\App;
-use Slim\Http\Request;
-use Slim\Http\Response;
 
 /**
- * Class Products
+ * Class Emails
  * @package Jigoshop\Api\Routes\V1;
- * @author Krzysztof Kasowski
+ * @author Maciej Maciaszek
  */
-class Products extends PostController
+class Emails extends PostController
 {
     /** @var  App */
     protected $app;
-
-
     /**
-     * Products constructor.
+     * Coupons constructor.
      * @param App $app
      */
     public function __construct(App $app)
@@ -32,5 +24,4 @@ class Products extends PostController
         $app->get('', array($this, 'findAll'));
         $app->get('/{id:[0-9]+}', array($this, 'findOne'));
     }
-
 }

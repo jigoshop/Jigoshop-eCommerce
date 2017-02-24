@@ -7,12 +7,13 @@ namespace Jigoshop\Api;
  */
 class Permission
 {
-    const READ_PRODUCTS = 'read_orders';
+    const READ_PRODUCTS = 'read_products';
     const READ_CART = 'read_cart';
     const READ_ORDERS = 'read_orders';
     const READ_COUPONS = 'read_coupons';
     const READ_CUSTOMERS = 'read_customers';
     const READ_REPORTS = 'read_reports';
+    const READ_EMAILS = 'read_emails';
     const MANAGE_PRODUCTS = 'manage_products';
     const MANAGE_CART = 'manage_cart';
     const MANAGE_ORDERS = 'manage_orders';
@@ -36,6 +37,7 @@ class Permission
                 self::READ_COUPONS => __('Read coupons', 'jigoshop'),
                 self::READ_CUSTOMERS => __('Read customers', 'jigoshop'),
                 self::READ_REPORTS => __('Read reports', 'jigoshop'),
+                self::READ_EMAILS => __('Read emails', 'jigoshop'),
                 self::MANAGE_PRODUCTS => __('Manage products', 'jigoshop'),
                 self::MANAGE_CART => __('Manage cart', 'jigoshop'),
                 self::MANAGE_ORDERS => __('Manage orders', 'jigoshop'),
