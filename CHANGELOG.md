@@ -1,4 +1,14 @@
 ## Changelog
+* 2.0.10:
+    * Fix: Added Layout settings tab.
+    * Fix: Some action hook names.
+    * Fix: Fatal error when order was saved in admin panel triggered by multiple method shippings.
+    * Fix: Variation prices on product page.
+    * Fix: Item price suffix is Account Orders, Checkout Pay, Thant You pages.
+    * Fix: Displaying file attachments on product page.
+    * Fix: Fix fatal error on activation triggered by options helper.
+    * Fix: Tax helper should return tax for Taxable products.
+    * Fix: Properly interpret ignore meta queries option.
 * 2.0.9 - 2017.02.13:
     * Fix: Support Twentyseventeen theme.
     * Fix: Improve product reviews.

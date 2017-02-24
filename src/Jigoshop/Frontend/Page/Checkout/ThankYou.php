@@ -117,11 +117,15 @@ class ThankYou implements PageInterface
 			$this->wp->redirectTo($this->options->getPageId(Pages::SHOP));
 		}
 
+        $showWithTax = $this->options->get('tax.item_prices', 'excluding_tax') == 'including_tax';
+        $suffix = $showWithTax ? $this->options->get('tax.suffix_for_included', '') : $this->options->get('tax.suffix_for_excluded', '');
+
 		return Render::get('shop/checkout/thanks', array(
 			'content' => $content,
 			'messages' => $this->messages,
 			'order' => $order,
-			'showWithTax' => $this->options->get('tax.price_tax') == 'with_tax',
+            'showWithTax' => $showWithTax,
+            'suffix' => $suffix,
 			'shopUrl' => $this->wp->getPermalink($this->options->getPageId(Pages::SHOP)),
 			'cancelUrl' => \Jigoshop\Helper\Order::getCancelLink($order),
 			'getTaxLabel' => function ($taxClass) use ($order){

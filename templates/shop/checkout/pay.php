@@ -7,6 +7,7 @@ use Jigoshop\Helper\Render;
  * @var $messages \Jigoshop\Core\Messages Messages container.
  * @var $order \Jigoshop\Entity\Order The order.
  * @var $showWithTax bool Whether to show product price with or without tax.
+ * @var $suffix
  * @var $termsUrl string URL to Terms and Conditions page (if applicable).
  * @var $myAccountUrl string URL to My account page.
  * @var $myOrdersUrl string URL to My orders page.
@@ -32,7 +33,7 @@ use Jigoshop\Helper\Render;
 		</thead>
 		<tbody>
 		<?php foreach($order->getItems() as $key => $item): /** @var $item \Jigoshop\Entity\Order\Item */ ?>
-			<?php Render::output('shop/checkout/item/'.$item->getType(), array('cart' => $order, 'key' => $key, 'item' => $item, 'showWithTax' => $showWithTax)); ?>
+			<?php Render::output('shop/checkout/item/'.$item->getType(), array('cart' => $order, 'key' => $key, 'item' => $item, 'showWithTax' => $showWithTax, 'suffix' => $suffix)); ?>
 		<?php endforeach; ?>
 		<?php do_action('jigoshop\checkout\table_body', $order); ?>
 		</tbody>

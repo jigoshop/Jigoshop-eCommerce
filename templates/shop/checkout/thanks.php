@@ -10,6 +10,7 @@ use Jigoshop\Helper\Render;
  * @var $cancelUrl string URL to cancel order.
  * @var $shopUrl string URL to product list page.
  * @var $showWithTax bool Whether to show product price with or without tax.
+ * @var $suffix
  * @var $getTaxLabel \Closure Function to retrieve tax label.
  */
 ?>
@@ -57,7 +58,7 @@ use Jigoshop\Helper\Render;
 	</thead>
 	<tbody>
 	<?php foreach($order->getItems() as $key => $item): /** @var $item \Jigoshop\Entity\Order\Item */ ?>
-		<?php Render::output('shop/checkout/item/'.$item->getType(), array('cart' => $order, 'key' => $key, 'item' => $item, 'showWithTax' => $showWithTax)); ?>
+		<?php Render::output('shop/checkout/item/'.$item->getType(), array('cart' => $order, 'key' => $key, 'item' => $item, 'showWithTax' => $showWithTax, 'suffix' => $suffix)); ?>
 	<?php endforeach; ?>
 	<?php do_action('jigoshop\checkout\table_body', $order); ?>
 	</tbody>

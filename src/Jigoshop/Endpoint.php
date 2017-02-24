@@ -79,7 +79,7 @@ class Endpoint
 
 				$processor->processResponse();
 			} else {
-				$this->wp->doAction('jigoshop_endpoint_'.$endpoint);
+				$this->wp->doAction('jigoshop\endpoint\\'.$endpoint);
 			}
 
 			exit;

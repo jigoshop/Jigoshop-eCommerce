@@ -95,7 +95,7 @@ class Tax
      */
     public static function getForProduct($price, ProductEntity $product)
     {
-        if($product instanceof ProductEntity\Purchasable && self::$cartService) {
+        if($product instanceof ProductEntity\Taxable && self::$cartService) {
             return self::getTax($price, $product->getTaxClasses(), self::$cartService->getCurrent()->getTaxDefinitions());
         }
 

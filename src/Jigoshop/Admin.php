@@ -96,6 +96,8 @@ class Admin
 			$menu[54] = array('', 'read', 'separator-jigoshop', '', 'wp-menu-separator jigoshop');
 		}
 
+        $this->wp->doAction('jigoshop\admin\before_menu');
+
 		$this->wp->addMenuPage(__('Jigoshop'), __('Jigoshop'), 'manage_jigoshop', 'jigoshop', array($this->dashboard, 'display'), null, 55);
 		foreach ($this->pages['jigoshop'] as $page) {
 			/** @var $page PageInterface */
@@ -117,8 +119,6 @@ class Admin
 				'display'
 			));
 		}
-
-		$this->wp->doAction('jigoshop\admin\before_menu');
 	}
 
 	/**

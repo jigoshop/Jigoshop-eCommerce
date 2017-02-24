@@ -115,7 +115,7 @@ class Migration implements PageInterface
 		if (isset($this->tools[$id])) {
 			/** @var Tool $tool */
 			$tool = $this->tools[$id];
-			$this->wp->doAction('jigoshop\migration\before', $tool);
+			$this->wp->doAction('jigoshop\admin\migration\before', $tool);
 			$tool->migrate(null);
 			$this->messages->addNotice(__('Migration complete', 'jigoshop'));
 			$this->wp->wpRedirect($this->wp->adminUrl('admin.php?page='.self::NAME));

@@ -15,7 +15,6 @@ use WPAL\Wordpress;
 
 /**
  * Product service.
- *
  * @package Jigoshop\Service
  * @author  Amadeusz Starzykiewicz
  */

@@ -305,9 +305,9 @@ class Product implements PageInterface
 	 */
 	public function productDownloads($currentTab, $product)
 	{
-        if (array_filter($product->getAttachments(), function($item) {
+        if (empty(array_filter($product->getAttachments(), function($item) {
             return $item['type'] == Datafile::TYPE;
-        })) {
+        }))) {
             return;
         }
 
