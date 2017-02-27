@@ -24,6 +24,8 @@ trait WpPostManageTrait
         //assign title from one of post methods to get title or name
         $title = method_exists($object, 'getTitle') ? $object->getTitle() :
             (method_exists($object, 'getName') ? $object->getName() : null);
+        $postContent = method_exists($object, 'getDescription') ? $object->getDescription() :
+            (method_exists($object, 'getText') ? $object->getText() : '');
 
         $wpdb->insert($wpdb->posts, array(
             'post_author' => 0, //TODO #316 ticket update posts
@@ -36,6 +38,7 @@ trait WpPostManageTrait
             'post_name' => sanitize_title($title),
             'ping_status' => 'closed',
             'comment_status' => 'closed',
+            'post_content' => $postContent,
         ));
 
         return $wpdb->insert_id;

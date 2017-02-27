@@ -23,5 +23,6 @@ class Emails extends PostController
         $this->app = $app;
         $app->get('', array($this, 'findAll'));
         $app->get('/{id:[0-9]+}', array($this, 'findOne'));
+        $app->post('', array($this, 'create'));
     }
 }

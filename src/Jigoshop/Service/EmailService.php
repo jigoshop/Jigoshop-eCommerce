@@ -7,6 +7,7 @@ use Jigoshop\Core\Types;
 use Jigoshop\Entity\Email;
 use Jigoshop\Entity\EntityInterface;
 use Jigoshop\Factory\Email as Factory;
+use Jigoshop\Traits\WpPostManageTrait;
 use WPAL\Wordpress;
 
 /**
@@ -18,6 +19,8 @@ use WPAL\Wordpress;
  */
 class EmailService implements EmailServiceInterface
 {
+    use WpPostManageTrait;
+
 	/** @var Wordpress */
 	private $wp;
 	/** @var Options */
@@ -116,7 +119,16 @@ class EmailService implements EmailServiceInterface
 			throw new Exception('Trying to save not an email!');
 		}
 
-		// TODO: Support for transactions!
+        if (!$object->getId()) {
+            //if object does not exist insert new one
+            $id = $this->insertPost($this->wp, $object, Types::EMAIL);
+            if (!is_int($id) || $id === 0) {
+                throw new Exception(__('Unable to save product. Please try again.', 'jigoshop'));
+            }
+            $object->setId($id);
+        }
+
+        // TODO: Support for transactions!
 
 		$fields = $object->getStateToSave();
 
@@ -140,7 +152,7 @@ class EmailService implements EmailServiceInterface
 	 */
 	public function savePost($id)
 	{
-		$email = $this->factory->create($id);
+        $email = $this->factory->create($id);
 		$this->save($email);
 	}
 
