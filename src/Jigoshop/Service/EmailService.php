@@ -123,7 +123,7 @@ class EmailService implements EmailServiceInterface
             //if object does not exist insert new one
             $id = $this->insertPost($this->wp, $object, Types::EMAIL);
             if (!is_int($id) || $id === 0) {
-                throw new Exception(__('Unable to save product. Please try again.', 'jigoshop'));
+                throw new Exception(__('Unable to save email. Please try again.', 'jigoshop'));
             }
             $object->setId($id);
         }
