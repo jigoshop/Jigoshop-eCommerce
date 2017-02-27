@@ -108,6 +108,16 @@ class CouponService implements CouponServiceInterface
     }
 
     /**
+     * coupon method updating post
+     * @param Coupon $coupon
+     */
+    public function updateAndSavePost(Entity $coupon)
+    {
+        $this->updatePost($this->wp, $coupon, Types::COUPON);
+        $this->save($coupon);
+    }
+
+    /**
      * @param $coupon Entity
      *
      * @return string Type name.

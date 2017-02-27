@@ -133,6 +133,38 @@ abstract class PostController
     }
 
     /**
+     * Basic wp_post updating method
+     * @param Request $request
+     * @param Response $response
+     * @param $args
+     * @return Response
+     */
+    public function update(Request $request, Response $response, $args)
+    {
+        if (!isset($args['id']) || empty($args['id'])) {
+            throw new Exception("$this->entityName ID was not provided");
+        }
+
+        $object = $this->service->find($args['id']);
+        $entity = self::JIGOSHOP_ENTITY_PREFIX . ucfirst($this->entityName);
+
+        if (!$object instanceof $entity) {
+            throw new Exception("$this->entityName not found.", 404);
+        }
+
+        $factory = $this->app->getContainer()->di->get("jigoshop.factory.$this->entityName");
+        $object = $factory->update($object,  $request->getParsedBody()); //updating object with parsed variables
+
+        $service = $this->app->getContainer()->di->get("jigoshop.service.$this->entityName");
+        $service->updateAndSavePost($object);
+
+        return $response->withJson([
+            'success' => true,
+            'data' => "$this->entityName successfully updated",
+        ]);
+    }
+
+    /**
      * function to shorten plural to singular strings
      *
      * @param $string

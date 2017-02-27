@@ -43,4 +43,28 @@ trait WpPostManageTrait
 
         return $wpdb->insert_id;
     }
+
+    public function updatePost($wp, $object, $postType){
+        $wpdb = $wp->getWPDB();
+        $date = $wp->getHelpers()->currentTime('mysql');
+        $dateGmt = $wp->getHelpers()->currentTime('mysql', true);
+        //assign title from one of post methods to get title or name
+        $title = method_exists($object, 'getTitle') ? $object->getTitle() :
+            (method_exists($object, 'getName') ? $object->getName() : null);
+        $postContent = method_exists($object, 'getDescription') ? $object->getDescription() :
+            (method_exists($object, 'getText') ? $object->getText() : '');
+
+        $wpdb->update($wpdb->posts, array(
+            'post_modified' => $date,
+            'post_modified_gmt' => $dateGmt,
+            'post_type' => $postType,
+            'post_title' => $title,
+            'post_name' => sanitize_title($title),
+            'post_content' => $postContent,
+        ),
+            array('id'=>$object->getId())
+        );
+
+        return $object->getId();
+    }
 }
