@@ -52,6 +52,11 @@ class SettingsConfiguration implements ConfigurationInterface
 			'jigoshop.options',
 			'jigoshop.service.payment'
 		));
+        $services->setDetails('jigoshop.admin.settings.layout', 'Jigoshop\Admin\Settings\LayoutTab', array(
+            'wpal',
+            'jigoshop.options',
+            'jigoshop.messages'
+        ));
 		$services->setDetails('jigoshop.admin.settings.advanced', 'Jigoshop\Admin\Settings\AdvancedTab', array(
 			'wpal',
 			'di',
@@ -73,6 +78,7 @@ class SettingsConfiguration implements ConfigurationInterface
 		$tags->add('jigoshop.admin.settings.tab', 'jigoshop.admin.settings.taxes');
 		$tags->add('jigoshop.admin.settings.tab', 'jigoshop.admin.settings.shipping');
 		$tags->add('jigoshop.admin.settings.tab', 'jigoshop.admin.settings.payment');
+		$tags->add('jigoshop.admin.settings.tab', 'jigoshop.admin.settings.layout');
 		$tags->add('jigoshop.admin.settings.tab', 'jigoshop.admin.settings.advanced');
 	}
 

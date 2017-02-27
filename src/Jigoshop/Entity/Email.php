@@ -146,6 +146,7 @@ class Email implements EntityInterface, \JsonSerializable
             'title' => $this->title,
             'text' => $this->text,
             'subject' => $this->subject,
+            'actions' => $this->actions
         );
     }
 }

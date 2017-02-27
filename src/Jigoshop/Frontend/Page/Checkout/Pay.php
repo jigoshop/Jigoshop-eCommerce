@@ -116,10 +116,15 @@ class Pay implements PageInterface
 
 		$accountUrl = $this->wp->getPermalink($this->options->getPageId(Pages::ACCOUNT));
 
-		return Render::get('shop/checkout/pay', array(
+        $showWithTax = $this->options->get('tax.item_prices', 'excluding_tax') == 'including_tax';
+        $suffix = $showWithTax ? $this->options->get('tax.suffix_for_included', '') : $this->options->get('tax.suffix_for_excluded', '');
+
+
+        return Render::get('shop/checkout/pay', array(
 			'messages' => $this->messages,
 			'order' => $order,
-			'showWithTax' => $this->options->get('tax.price_tax') == 'with_tax',
+            'showWithTax' => $showWithTax,
+            'suffix' => $suffix,
 			'termsUrl' => $termsUrl,
 			'myAccountUrl' => $accountUrl,
 			'myOrdersUrl' => Api::getEndpointUrl('orders', '', $accountUrl),

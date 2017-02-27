@@ -150,7 +150,7 @@ class Interceptor
 			'order' => $options['catalog_order']
 		);
 
-        if($this->options->get('advanced.ignore_meta_queries', false) == true) {
+        if($this->options->get('advanced.ignore_meta_queries', false) == false) {
             $result['meta_query'] = array(
                 array(
                     'key' => 'visibility',

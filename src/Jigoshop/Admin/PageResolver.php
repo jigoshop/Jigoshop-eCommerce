@@ -32,7 +32,11 @@ class PageResolver
 		} else {
 			$that = $this;
 			$this->wp->addAction('current_screen', function () use ($container, $that){
+			    /** TODO Deprecated filter */
 				$page = $that->wp->applyFilters('jigoshop.admin.page_resolver.page', null);
+                if($page == null || !($page instanceof PageInterface)) {
+                    $page = $that->wp->applyFilters('jigoshop\admin\page_resolver\page', null);
+                }
 				if($page == null || !($page instanceof PageInterface)) {
 					$page = $that->getPage($container);
 				}

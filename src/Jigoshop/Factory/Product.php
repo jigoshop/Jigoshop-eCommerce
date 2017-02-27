@@ -167,7 +167,7 @@ class Product implements EntityFactoryInterface
 	 */
 	public function fetch($post)
 	{
-        if(!in_array($post->post_type, [Types::PRODUCT, Types\Product\Variable::TYPE])) {
+        if($post && !in_array($post->post_type, [Types::PRODUCT, Types\Product\Variable::TYPE])) {
             return null;
         }
 

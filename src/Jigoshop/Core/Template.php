@@ -2,6 +2,7 @@
 
 namespace Jigoshop\Core;
 
+use Jigoshop\Admin\Settings\LayoutTab;
 use Jigoshop\Exception;
 use Jigoshop\Frontend\Page\PageInterface;
 use Jigoshop\Frontend\Pages;
@@ -73,19 +74,57 @@ class Template
 		}
 
 		$content = $this->page->render();
-		$template = $this->wp->getOption('template');
-		$theme = $this->wp->wpGetTheme();
-		if ($theme->get('Author') === 'WooThemes') {
-			$template = 'woothemes';
-		}
+		if($this->options->get(LayoutTab::SLUG.'.enabled', false)) {
+		    $settings = $this->options->get(LayoutTab::SLUG, false);
 
-		if (!file_exists(\JigoshopInit::getDir().'/templates/layout/'.$template.'.php')) {
-			$template = 'default';
-		}
+            $options = $settings['default'];
+		    if(Pages::isProductList() && $settings[Pages::PRODUCT_LIST]['enabled']) {
+                $options = $settings[Pages::PRODUCT_LIST];
+            } elseif (Pages::isProduct() && $settings[Pages::PRODUCT]['enabled']) {
+                $options = $settings[Pages::PRODUCT];
+            } elseif (Pages::isCart() && $settings[Pages::CART]['enabled']) {
+                $options = $settings[Pages::CART];
+            } elseif (Pages::isCheckout() && $settings[Pages::CHECKOUT]['enabled']) {
+                $options = $settings[Pages::CHECKOUT];
+            } elseif (Pages::isProductCategory() && $settings[Pages::PRODUCT_CATEGORY]['enabled']) {
+                $options = $settings[Pages::PRODUCT_CATEGORY];
+            } elseif (Pages::isProductTag() && $settings[Pages::PRODUCT_TAG]['enabled']) {
+                $options = $settings[Pages::PRODUCT_TAG];
+            } elseif (Pages::isAccount() && $settings[Pages::ACCOUNT]['enabled']) {
+                $options = $settings[Pages::ACCOUNT];
+            } elseif (Pages::isCheckoutThankYou() && $settings[Pages::THANK_YOU]['enabled']) {
+                $options = $settings[Pages::THANK_YOU];
+            }
 
-		Render::output('layout/'.$template, array(
-			'content' => $content,
-		));
+            $options['page_width'] = $settings['page_width'];
+		    if($options['proportions'] == 'custom') {
+		        $options['proportions'] = $options['custom_proportions'];
+            } else {
+		        $proportions = explode('-', $options['proportions']);
+		        $options['proportions'] = [
+		            'content' => $proportions[0],
+                    'sidebar' => $proportions[1],
+                ];
+            }
+		    Render::output('layout/custom', [
+		        'content' => $content,
+                'options' => $options
+            ]);
+        } else {
+            $template = $this->wp->getOption('template');
+            $theme = $this->wp->wpGetTheme();
+            if ($theme->get('Author') === 'WooThemes') {
+                $template = 'woothemes';
+            }
+
+            if (!file_exists(\JigoshopInit::getDir() . '/templates/layout/' . $template . '.php')) {
+                $template = 'default';
+            }
+
+            Render::output('layout/' . $template, array(
+                'content' => $content,
+            ));
+        }
 
 		return false;
 	}

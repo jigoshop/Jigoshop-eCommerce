@@ -34,7 +34,6 @@ class OrderService implements OrderServiceInterface
         $this->factory = $factory;
 
         $wp->addAction('save_post_' . Types\Order::NAME, array($this, 'savePost'), 10);
-        //$wp->addAction('jigoshop\order\add_item', [$this, 'priceIncludingTax']);
     }
 
     /**
@@ -572,6 +571,7 @@ class OrderService implements OrderServiceInterface
             'order' => 'DESC',
             'orderby' => 'post_date',
             'numberposts' => -1, // TODO: Pagination?
+            'posts_per_page' => -1,
             'meta_query' => array(
                 array(
                     'key' => 'customer_id',
