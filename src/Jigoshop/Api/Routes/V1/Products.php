@@ -57,9 +57,7 @@ class Products extends PostController
      */
     public static function overridePostProductData()
     {
-        foreach ($_POST['jigoshop_product'] as $key => $item) {
-            $_POST['product'][$key] = $item;
-        }
+        $_POST['product'] = $_POST['jigoshop_product'];
         unset($_POST['jigoshop_product']);
     }
 
