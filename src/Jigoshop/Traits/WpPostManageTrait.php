@@ -44,6 +44,13 @@ trait WpPostManageTrait
         return $wpdb->insert_id;
     }
 
+    /**
+     * updates post with specified type and id, returns its id
+     * @param $wp (WP instance)
+     * @param $object
+     * @param $postType
+     * @return int
+     */
     public function updatePost($wp, $object, $postType){
         $wpdb = $wp->getWPDB();
         $date = $wp->getHelpers()->currentTime('mysql');
