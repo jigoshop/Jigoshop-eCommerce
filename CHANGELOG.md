@@ -11,6 +11,10 @@
     * Fix: Properly interpret ignore meta queries option.
     * Fix: Now coupons and emails are available via api.
     * Fix: Displaying free instead of price not announced.
+    * Fix: Edit address button.
+    * Fix: External view product button on product list.
+    * Fix: Notice on order list when product was removed.
+    * Fix: Show all orders on Account Orders page.
 * 2.0.9 - 2017.02.13:
     * Fix: Support Twentyseventeen theme.
     * Fix: Improve product reviews.

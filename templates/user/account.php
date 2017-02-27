@@ -22,7 +22,7 @@ use Jigoshop\Helper\Render;
 		<div class="panel panel-default">
 			<div class="panel-heading">
 				<h3 class="panel-title"><?php _e('Billing address', 'jigoshop'); ?></h3>
-				<a href="<?php echo $editBillingAddressUrl; ?>" class="btn btn-primary pull-right"><?php _e('Edit', 'jigoshop'); ?></a>
+				<a href="<?php echo $editBillingAddressUrl; ?>" class="btn btn-xs btn-primary pull-right"><?php _e('Edit', 'jigoshop'); ?></a>
 			</div>
 			<div class="panel-body clearfix">
 				<?php Render::output('user/account/address', array('address' => $customer->getBillingAddress())); ?>
@@ -31,7 +31,7 @@ use Jigoshop\Helper\Render;
 		<div class="panel panel-default">
 			<div class="panel-heading">
 				<h3 class="panel-title"><?php _e('Shipping address', 'jigoshop'); ?></h3>
-				<a href="<?php echo $editShippingAddressUrl; ?>" class="btn btn-primary pull-right"><?php _e('Edit', 'jigoshop'); ?></a>
+				<a href="<?php echo $editShippingAddressUrl; ?>" class="btn btn-xs btn-primary pull-right"><?php _e('Edit', 'jigoshop'); ?></a>
 			</div>
 			<div class="panel-body">
 				<?php Render::output('user/account/address', array('address' => $customer->getShippingAddress())); ?>

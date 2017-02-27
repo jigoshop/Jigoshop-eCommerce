@@ -571,6 +571,7 @@ class OrderService implements OrderServiceInterface
             'order' => 'DESC',
             'orderby' => 'post_date',
             'numberposts' => -1, // TODO: Pagination?
+            'posts_per_page' => -1,
             'meta_query' => array(
                 array(
                     'key' => 'customer_id',
