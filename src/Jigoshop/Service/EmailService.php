@@ -2,6 +2,7 @@
 
 namespace Jigoshop\Service;
 
+use Jigoshop\Api\Routes\V1\Emails;
 use Jigoshop\Core\Options;
 use Jigoshop\Core\Types;
 use Jigoshop\Entity\Email;
@@ -155,6 +156,16 @@ class EmailService implements EmailServiceInterface
         $email = $this->factory->create($id);
 		$this->save($email);
 	}
+
+    /**
+     * email method updating post
+     * @param Email $email
+     */
+    public function updateAndSavePost(Email $email)
+    {
+        $this->updatePost($this->wp, $email, Types::EMAIL);
+        $this->save($email);
+    }
 
 	/**
 	 * @return array List of registered mails with accepted arguments.
