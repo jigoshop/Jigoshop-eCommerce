@@ -105,58 +105,36 @@ class Product implements EntityFactoryInterface
 			$helpers = $this->wp->getHelpers();
 			$product->setName($helpers->sanitizeTitle($_POST['post_title']));
 			$product->setDescription($helpers->parsePostBody($_POST['post_excerpt']));
-			$_POST['product']['categories'] = $this->getTerms($id, Types::PRODUCT_CATEGORY, $this->wp->getTerms(Types::PRODUCT_CATEGORY, array(
-				'posts__in' => $_POST['tax_input']['product_category'],
-			)));
-			$_POST['product']['tags'] = $this->getTerms($id, Types::PRODUCT_TAG, $this->wp->getTerms(Types::PRODUCT_TAG, array(
-				'posts__in' => $_POST['tax_input']['product_tag'],
-			)));
-
-			if (!isset($_POST['product']['tax_classes'])) {
-				$_POST['product']['tax_classes'] = array();
-			}
-
-			if(isset($_POST['product']['attributes'])) {
-                $_POST['product']['attribute_order'] = array_keys($_POST['product']['attributes']);
-                unset($_POST['product']['attributes']);
-            }
-
-			if(isset($_POST['product']['stock_manage']))
-			{
-				$_POST['product']['stock_manage'] = $_POST['product']['stock_manage'] == 'on';
-			}
-			if(isset($_POST['product']['sales_enabled']))
-			{
-				$_POST['product']['sales_enabled'] = $_POST['product']['sales_enabled'] == 'on';
-			}
-			if(isset($_POST['product']['attachments'])) {
-				$temp = $_POST['product']['attachments'];
-				$_POST['product']['attachments'] = array();
-				foreach($temp as $type => $ids) {
-					for($i = 0; $i < sizeof($ids); $i++){
-						$_POST['product']['attachments'][] = array(
-							'id' => $ids[$i],
-							'type' => $type
-						);
-					}
-				}
-			} else {
-                $_POST['product']['attachments'] = array();
-            }
-
-            if (isset($_POST['product']['cross_sells']) && $_POST['product']['cross_sells']) {
-                $_POST['product']['cross_sells'] = explode(',', $_POST['product']['cross_sells']);
-            }
-            if (isset($_POST['product']['up_sells']) && $_POST['product']['up_sells']) {
-                $_POST['product']['up_sells'] = explode(',', $_POST['product']['up_sells']);
-            }
-
-			$product->restoreState($_POST['product']);
+            $this->convertData($_POST, $id);
+            $product->restoreState($_POST['product']);
 			$product->markAsDirty($_POST['product']);
 		}
 
 		return $product;
 	}
+
+    /**
+     * Updates product properties based on array data.
+     *
+     * @param $product \Jigoshop\Entity\Product for update.
+     * @param $data array of data for update.
+     *
+     * @return \Jigoshop\Entity\Product
+     */
+    public function update(\Jigoshop\Entity\Product $product, array $data)
+    {
+        if (!empty($data)) {
+            $id = $product->getId();
+            $helpers = $this->wp->getHelpers();
+            $product->setName($helpers->sanitizeTitle($data['post_title']));
+            $product->setDescription($helpers->parsePostBody($_POST['post_excerpt']));
+            $this->convertData($data, $id, true);
+            $product->restoreState($data['product']);
+            $product->markAsDirty($data['product']);
+        }
+
+        return $product;
+    }
 
 	/**
 	 * Fetches product from database.
@@ -209,7 +187,7 @@ class Product implements EntityFactoryInterface
 				}
 				$state['attributes'] = $attributes;
 			}
-			
+
 			if (isset($state['cross_sells'])) {
 			    $state['cross_sells'] = maybe_unserialize($state['cross_sells']);
                 $state['cross_sells'] = empty($state['cross_sells']) ? [] : $state['cross_sells'];
@@ -222,7 +200,7 @@ class Product implements EntityFactoryInterface
 			if (!isset($state['default_variation_id'])) {
                 $state['default_variation_id'] = '';
             }
-			
+
 			$product->restoreState($state);
 		}
 
@@ -407,4 +385,60 @@ class Product implements EntityFactoryInterface
                 return $this->wp->applyFilters('jigoshop\factory\product\create_attachment', null, $type);
         }
 	}
+	
+    /**
+     * converting input data to be readable by db
+     * @param array $data
+     * @param int $id
+     * @param bool $withAttributes
+     * @return array
+     */
+	private function convertData(array &$data, $id, $withAttributes = false){
+        $data['product']['categories'] = $this->getTerms($id, Types::PRODUCT_CATEGORY, $this->wp->getTerms(Types::PRODUCT_CATEGORY, array(
+            'posts__in' => $data['tax_input']['product_category'],
+        )));
+        $data['product']['tags'] = $this->getTerms($id, Types::PRODUCT_TAG, $this->wp->getTerms(Types::PRODUCT_TAG, array(
+            'posts__in' => $data['tax_input']['product_tag'],
+        )));
+
+        if (!isset($data['product']['tax_classes'])) {
+            $data['product']['tax_classes'] = array();
+        }
+
+        if(isset($data['product']['attributes'])) {
+            $data['product']['attribute_order'] = array_keys($data['product']['attributes']);
+            if (!$withAttributes) unset($data['product']['attributes']);
+        }
+
+        if(isset($data['product']['stock_manage']))
+        {
+            $data['product']['stock_manage'] = $data['product']['stock_manage'] == 'on';
+        }
+        if(isset($data['product']['sales_enabled']))
+        {
+            $data['product']['sales_enabled'] = $data['product']['sales_enabled'] == 'on';
+        }
+        if(isset($data['product']['attachments'])) {
+            $temp = $data['product']['attachments'];
+            $data['product']['attachments'] = array();
+            foreach($temp as $type => $ids) {
+                for($i = 0; $i < sizeof($ids); $i++){
+                    $data['product']['attachments'][] = array(
+                        'id' => $ids[$i],
+                        'type' => $type
+                    );
+                }
+            }
+        } else {
+            $data['product']['attachments'] = array();
+        }
+
+        if (isset($data['product']['cross_sells']) && $data['product']['cross_sells']) {
+            $data['product']['cross_sells'] = explode(',', $data['product']['cross_sells']);
+        }
+        if (isset($data['product']['up_sells']) && $data['product']['up_sells']) {
+            $data['product']['up_sells'] = explode(',', $data['product']['up_sells']);
+        }
+    }
+
 }

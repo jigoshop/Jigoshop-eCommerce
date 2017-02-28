@@ -21,7 +21,7 @@ class Coupon implements EntityFactoryInterface
     }
 
     /**
-     * Creates new product properly based on POST variable data.
+     * Creates new coupon properly based on POST variable data.
      *
      * @param $id int Post ID to create object for.
      *
@@ -45,7 +45,7 @@ class Coupon implements EntityFactoryInterface
     }
 
     /**
-     * Updates product properties based on array data.
+     * Updates coupon properties based on array data.
      *
      * @param $coupon \Jigoshop\Entity\Coupon for update.
      * @param $data array of data for update.

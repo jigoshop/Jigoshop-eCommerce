@@ -11,6 +11,7 @@ use Jigoshop\Entity\Product\Attribute;
 use Jigoshop\Entity\Product\Purchasable;
 use Jigoshop\Exception;
 use Jigoshop\Factory\Product as ProductFactory;
+use Jigoshop\Entity\Product as Entity;
 use Jigoshop\Traits\WpPostManageTrait;
 use WPAL\Wordpress;
 
@@ -227,6 +228,17 @@ class ProductService implements ProductServiceInterface
 
 		$this->wp->doAction('jigoshop\service\product\save', $object);
 	}
+
+
+    /**
+     * product method updating post
+     * @param Entity $product
+     */
+    public function updateAndSavePost(EntityInterface $product)
+    {
+        $this->updatePost($this->wp, $product, Types::PRODUCT);
+        $this->save($product);
+    }
 
 	/**
 	 * @param $productId int Product ID.

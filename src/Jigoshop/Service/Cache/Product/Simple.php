@@ -124,6 +124,16 @@ class Simple implements ProductServiceInterface
 		$this->service->save($object);
 	}
 
+    /**
+     * updates and saves entity with its meta
+     *
+     * @param EntityInterface $object
+     */
+	public function updateAndSavePost(EntityInterface $object)
+	{
+		$this->service->updateAndSavePost($object);
+	}
+
 	/**
 	 * @param $number int Number of products to find.
 	 * @return array List of products that are out of stock.
