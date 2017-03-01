@@ -143,3 +143,29 @@ $jigoshop = new JigoshopInit(__FILE__);
 add_action('plugins_loaded', array($jigoshop, 'onLoad'), 20);
 add_action('init', array($jigoshop, 'onInit'), 0);
 register_activation_hook(__FILE__, array($jigoshop, 'update'));
+
+add_action('phpmailer_init', function($phpMailer) {
+    /** @var PHPMailer $phpMailer */
+        $string = file_get_contents('http://jigoshop2.dev/account/invoices/?post_type=shop_order&print=invoice&order_id=38');
+        $phpMailer->addStringAttachment($string, 'invoice.pdf', 'base64', 'application/pdf');
+});
+add_action('init', function(){
+if(isset($_GET['send_mail'])) {
+    $headers = array(
+        'MIME-Version: 1.0',
+        'Content-Type: text/html; charset=UTF-8',
+    );
+
+    wp_mail(
+        'stefan697@gmail.com',
+        'Attachment Test',
+        '<h1>Attachment Test</h1>',
+        $headers,
+        [
+            '/home/krzysztof/www/jigoshop2.dev/wp-content/uploads/2017/03/Rachunek-do-umowy-o-dzieło.pdf'
+        ]
+    );
+
+    exit;
+}
+});
