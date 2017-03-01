@@ -91,7 +91,7 @@ class LayoutTab implements TabInterface
                     ],
                     [
                         'name' => '[global_css]',
-                        'title' => __('Custom CSS', 'jigoshop'),
+                        'title' => __('Custom global CSS', 'jigoshop'),
                         'type' => 'user_defined',
                         'value' => $this->options['global_css'],
                         'display' => function ($field) {

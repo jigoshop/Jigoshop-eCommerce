@@ -125,6 +125,7 @@ class Template
         }
 
         $options['page_width'] = $settings['page_width'];
+        $options['global_css'] = $settings['global_css'];
         if($options['proportions'] == 'custom') {
             $options['proportions'] = $options['custom_proportions'];
         } else {
