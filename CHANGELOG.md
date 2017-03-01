@@ -18,6 +18,7 @@
     * Fix: Show view product button when product doesn't have price.
     * Fix: Notice about undefined key in session for recently viewed products widget.
     * Fix: Don't set shipping method when shipping is not required.
+    * Fix: Notice caused by dashboard monthly report.
 * 2.0.9 - 2017.02.13:
     * Fix: Support Twentyseventeen theme.
     * Fix: Improve product reviews.
