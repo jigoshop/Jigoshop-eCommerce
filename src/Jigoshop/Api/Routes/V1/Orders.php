@@ -34,6 +34,7 @@ class Orders extends PostController
         $app->get('', array($this, 'getOrders'));
         $app->get('/{id:[0-9]+}', array($this, 'getOrder'));
         $app->post('', array($this, 'create'));
+        $app->put('/{id:[0-9]+}', array($this, 'update'));
     }
 
     public function getOrders(Request $request, Response $response, $args)
@@ -120,6 +121,38 @@ class Orders extends PostController
     }
 
     /**
+     * overriden function of PostController to update orders
+     * @param Request $request
+     * @param Response $response
+     * @param $args
+     * @return Response
+     */
+    public function update(Request $request, Response $response, $args)
+    {
+        if (!isset($args['id']) || empty($args['id'])) {
+            throw new Exception("$this->entityName ID was not provided");
+        }
+
+        $object = $this->service->find($args['id']);
+        if (!$object instanceof OrderEntity) {
+            throw new Exception("Order not found.", 404);
+        }
+
+        $putData = $request->getParsedBody();
+        $putData['jigoshop_order']['customer'] = $object->getCustomer(); //setting customer
+        $factory = $this->app->getContainer()->di->get("jigoshop.factory.$this->entityName");
+        $object = $factory->fill($object, $putData['jigoshop_order']);
+
+        $service = $this->app->getContainer()->di->get("jigoshop.service.$this->entityName");
+        $service->save($object);
+
+        return $response->withJson([
+            'success' => true,
+            'data' => "Order successfully updated",
+        ]);
+    }
+
+    /**
      * creates new post of order type that is needed for
      * @return int
      */
@@ -150,4 +183,6 @@ class Orders extends PostController
         }
         return $id;
     }
+
+
 }

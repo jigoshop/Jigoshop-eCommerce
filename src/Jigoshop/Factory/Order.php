@@ -229,6 +229,26 @@ class Order implements EntityFactoryInterface
         return $items;
     }
 
+    /**
+     * Updates order properties based on array data.
+     *
+     * @param $order \Jigoshop\Entity\Order for update.
+     * @param $data array of data for update.
+     *
+     * @return \Jigoshop\Entity\Order
+     */
+    public function update(Entity $order, $data)
+    {
+        if (!empty($data)) {
+            $helpers = $this->wp->getHelpers();
+
+            $order = $this->fill($order, $data);
+            $order->restoreState($data['jigoshop_order']);
+        }
+
+        return $order;
+    }
+
     public function fill(OrderInterface $order, array $data)
     {
         if (!empty($data['customer']) && is_numeric($data['customer'])) {
