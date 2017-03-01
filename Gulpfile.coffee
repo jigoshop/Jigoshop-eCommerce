@@ -114,4 +114,6 @@ gulp.task 'dist', ['clean-deploy', 'default'], ->
             './CONTRIBUTING.md', 'LICENSE.md', 'README.md', 'jigoshop.php', 'readme.txt'], {base: './'}
     .pipe gulp.dest('dist/')
 
+gulp.task 'dev', ['clean-deploy', 'default']
+
 gulp.task 'default', defaultTask
