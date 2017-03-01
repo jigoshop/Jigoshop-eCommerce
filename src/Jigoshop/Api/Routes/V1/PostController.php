@@ -153,7 +153,7 @@ abstract class PostController
         }
 
         $factory = $this->app->getContainer()->di->get("jigoshop.factory.$this->entityName");
-        $object = $factory->update($object,  $request->getParsedBody()); //updating object with parsed variables
+        $object = $factory->update($object, $request->getParsedBody()); //updating object with parsed variables
 
         $service = $this->app->getContainer()->di->get("jigoshop.service.$this->entityName");
         $service->updateAndSavePost($object);
