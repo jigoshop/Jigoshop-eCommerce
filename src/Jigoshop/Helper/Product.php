@@ -319,23 +319,25 @@ class Product
      */
     public static function printAddToCartForm($product, $template)
     {
-        if ($product instanceof Entity\Product\Purchasable) {
-            $price = $product->getRegularPrice();
-            if ($price === '') {
-                return;
-            }
-        }
-
         do_action('jigoshop\helper\product\cart_form\before', $product, $template);
         $type = apply_filters('jigoshop\helper\product\cart_form\type', $product->getType(), $product, $template);
 
         $buttonType = $template == 'list' ? self::getButtonType() : 'add_to_cart';
+        if ($product instanceof Entity\Product\Purchasable) {
+            $price = $product->getRegularPrice();
+            if ($price === '') {
+                if($template == 'list') {
+                    $buttonType = 'view_product';
+                } else {
+                    return;
+                }
+            }
+        }
+
         if ($buttonType == 'add_to_cart') {
             self::renderAddToCartForm($type, $product, $template);
-        } else {
-            if ($buttonType == 'view_product') {
-                self::renderViewProductButton($product);
-            }
+        } elseif ($buttonType == 'view_product') {
+            self::renderViewProductButton($product);
         }
 
         do_action('jigoshop\helper\product\cart_form\after', $product, $template);

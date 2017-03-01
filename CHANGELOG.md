@@ -15,6 +15,7 @@
     * Fix: External view product button on product list.
     * Fix: Notice on order list when product was removed.
     * Fix: Show all orders on Account Orders page.
+    * Fix: Show view product button when product doesn't have price.
 * 2.0.9 - 2017.02.13:
     * Fix: Support Twentyseventeen theme.
     * Fix: Improve product reviews.
