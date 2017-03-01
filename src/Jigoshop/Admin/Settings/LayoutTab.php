@@ -275,7 +275,7 @@ class LayoutTab implements TabInterface
         ob_start();
         Forms::checkbox([
             'id' => $parent . '_enabled',
-            'name' => '[' . $parent . '][enabled]',
+            'name' => 'jigoshop[' . $parent . '][enabled]',
             'title' => __('Is enabled?', 'jigoshop'),
             'description' => __('Override default settings for this page.', 'jigoshop'),
             'type' => 'checkbox',
