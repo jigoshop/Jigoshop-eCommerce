@@ -84,13 +84,13 @@ class Product
             case Entity\Product\Downloadable::TYPE:
                 /** @var $product Entity\Product\Simple */
                 $price = $product->getPrice();
-                $price = $taxIncluded ? Tax::getPriceWithoutTax($price, $product->getTaxClasses()) : $price;
-                $price += $showWithTax ? Tax::getForProduct($price, $product) : 0;
-
                 if ($price === '') {
                     return apply_filters('jigoshop\helper\product\get_price_html', __('Price not announced', 'jigoshop'), '',
                         $product);
                 }
+
+                $price = $taxIncluded ? Tax::getPriceWithoutTax($price, $product->getTaxClasses()) : $price;
+                $price += $showWithTax ? Tax::getForProduct($price, $product) : 0;
 
                 if (self::isOnSale($product)) {
                     $regularPrice = $product->getRegularPrice();

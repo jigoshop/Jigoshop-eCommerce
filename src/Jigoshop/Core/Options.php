@@ -3,6 +3,7 @@
 namespace Jigoshop\Core;
 
 use Jigoshop\Entity\Product\Attributes\StockStatus;
+use Jigoshop\Frontend\Pages;
 use WPAL\Wordpress;
 
 /**
@@ -185,6 +186,109 @@ class Options
                 'additional_info' => '',
             ],
 		),
+        'layout' => [
+            'enabled' => false,
+            'page_width' => '960px',
+            'global_css' => '',
+            'default' => [
+                'structure' => 'only_content',
+                'sidebar' => '',
+                'proportions' => '',
+                'custom_proportions' => [
+                    'content' => '',
+                    'sidebar' => '',
+                ],
+                'css' => ''
+            ],
+            Pages::PRODUCT_LIST => [
+                'enabled' => false,
+                'structure' => 'only_content',
+                'sidebar' => '',
+                'proportions' => '',
+                'custom_proportions' => [
+                    'content' => '',
+                    'sidebar' => '',
+                ],
+                'css' => ''
+            ],
+            Pages::CART => [
+                'enabled' => false,
+                'structure' => 'only_content',
+                'sidebar' => '',
+                'proportions' => '',
+                'custom_proportions' => [
+                    'content' => '',
+                    'sidebar' => '',
+                ],
+                'css' => ''
+            ],
+            Pages::CHECKOUT => [
+                'enabled' => false,
+                'structure' => 'only_content',
+                'sidebar' => '',
+                'proportions' => '',
+                'custom_proportions' => [
+                    'content' => '',
+                    'sidebar' => '',
+                ],
+                'css' => ''
+            ],
+            Pages::PRODUCT => [
+                'enabled' => false,
+                'structure' => 'only_content',
+                'sidebar' => '',
+                'proportions' => '',
+                'custom_proportions' => [
+                    'content' => '',
+                    'sidebar' => '',
+                ],
+                'css' => ''
+            ],
+            Pages::PRODUCT_CATEGORY => [
+                'enabled' => false,
+                'structure' => 'only_content',
+                'sidebar' => '',
+                'proportions' => '',
+                'custom_proportions' => [
+                    'content' => '',
+                    'sidebar' => '',
+                ],
+                'css' => ''
+            ],
+            Pages::PRODUCT_TAG => [
+                'enabled' => false,
+                'structure' => 'only_content',
+                'sidebar' => '',
+                'proportions' => '',
+                'custom_proportions' => [
+                    'content' => '',
+                    'sidebar' => '',
+                ],
+                'css' => ''
+            ],
+            Pages::ACCOUNT => [
+                'enabled' => false,
+                'structure' => 'only_content',
+                'sidebar' => '',
+                'proportions' => '',
+                'custom_proportions' => [
+                    'content' => '',
+                    'sidebar' => '',
+                ],
+                'css' => ''
+            ],
+            Pages::THANK_YOU => [
+                'enabled' => false,
+                'structure' => 'only_content',
+                'sidebar' => '',
+                'proportions' => '',
+                'custom_proportions' => [
+                    'content' => '',
+                    'sidebar' => '',
+                ],
+                'css' => ''
+            ],
+        ],
 		'advanced' => array(
 			'automatic_complete' => false,
 			'automatic_reset' => false,

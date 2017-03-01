@@ -52,7 +52,7 @@ class Widget
 			/** @var Options $options */
 			$options = $di->get('jigoshop.options');
 			$settings = $options->get(LayoutTab::SLUG);
-			unset($settings['enabled'], $settings['page_width']);
+			unset($settings['enabled'], $settings['page_width'], $settings['global_css']);
 			$sidebars = [];
 			foreach($settings as $pageSettings) {
 			    if((!isset($pageSettings['enabled']) || $pageSettings['enabled']) && $pageSettings['structure'] != 'only_content') {
