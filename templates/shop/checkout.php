@@ -92,7 +92,7 @@ use Jigoshop\Helper\Tax;
 		<div class="mobile-coupons-product-subtotal">
 		<div class="pull-left">
 			<?php \Jigoshop\Helper\Forms::text(array(
-				'id' => 'jigoshop_coupons',
+				'id' => 'jigoshop_coupons_mobile',
 				'name' => 'jigoshop_coupons',
 				'placeholder' => __('Enter coupons...', 'jigoshop'),
 				'value' => join(',', array_map(function ($coupon){

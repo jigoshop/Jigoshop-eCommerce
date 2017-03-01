@@ -41,7 +41,7 @@ class Checkout
       'billing_address')
     jQuery('#jigoshop_order_shipping_address_postcode').on 'change', @updatePostcode.bind(@,
       'shipping_address')
-    jQuery('#jigoshop_coupons')
+    jQuery('#jigoshop_coupons, #jigoshop_coupons_mobile')
       .on 'change', @updateDiscounts
       .select2
         tags: []
