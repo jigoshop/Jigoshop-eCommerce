@@ -126,6 +126,14 @@ class Orders extends PostController
         $postId = $this->createNewPostOrder();
         $factory = $this->app->getContainer()->di->get("jigoshop.factory.order");
         $object = $factory->create($postId);
+
+        if (isset($_POST['jigoshop_order']['customer'])) {
+            $customerService = $this->app->getContainer()->di->get("jigoshop.service.customer");
+            $_POST['jigoshop_order']['customer'] = $customerService->find($_POST['jigoshop_order']['customer']);
+        }
+        if (isset($_POST['jigoshop_order']['items'])) {
+            $object = $this->_updateOrderItems($object, $_POST['jigoshop_order']['items']);
+        }
         $object = $factory->fill($object, $_POST['jigoshop_order']);
         $service = $this->app->getContainer()->di->get("jigoshop.service.order");
         $service->save($object);
@@ -155,7 +163,9 @@ class Orders extends PostController
         }
 
         $putData = $request->getParsedBody();
-        $putData['jigoshop_order']['customer'] = $object->getCustomer(); //setting customer
+        if (isset($putData['jigoshop_order']['customer'])) {
+            $putData['jigoshop_order']['customer'] = $object->getCustomer(); //setting customer
+        }
         if (isset($putData['jigoshop_order']['items'])) {
             $object = $this->_updateOrderItems($object, $putData['jigoshop_order']['items']);
         }
@@ -237,7 +247,7 @@ class Orders extends PostController
                 $item->setPrice((float)$singleItem['price']);
             }
             if ($item->getQuantity() > 0) {
-                $item = $this->wp->applyFilters('jigoshop\admin\order\update_product', $item, $order);
+                $item = $wp->applyFilters('jigoshop\admin\order\update_product', $item, $order);
             }
             $order->addItem($item);
             $singleItem = $item;
