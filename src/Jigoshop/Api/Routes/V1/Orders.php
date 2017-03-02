@@ -6,6 +6,7 @@ use Jigoshop\Api\Permission;
 use Jigoshop\Core\Types;
 use Jigoshop\Entity\Customer\Guest;
 use Jigoshop\Entity\Order as OrderEntity;
+use Jigoshop\Entity\OrderInterface;
 use Jigoshop\Exception;
 use Jigoshop\Service\OrderService;
 use Slim\App;
@@ -140,6 +141,9 @@ class Orders extends PostController
 
         $putData = $request->getParsedBody();
         $putData['jigoshop_order']['customer'] = $object->getCustomer(); //setting customer
+        if (isset($putData['jigoshop_order']['items'])) {
+            $object = $this->_updateOrderItems($object, $putData['jigoshop_order']['items']);
+        }
         $factory = $this->app->getContainer()->di->get("jigoshop.factory.$this->entityName");
         $object = $factory->fill($object, $putData['jigoshop_order']);
 
@@ -184,5 +188,67 @@ class Orders extends PostController
         return $id;
     }
 
+    /**
+     * @param Request $request
+     * @param Response $response
+     * @param $args
+     * @return Response
+     */
+    public function updateOrderItems(Request $request, Response $response, $args)
+    {
+        if (!isset($args['id']) || empty($args['id'])) {
+            throw new Exception("$this->entityName ID was not provided");
+        }
+
+        $object = $this->service->find($args['id']);
+        if (!$object instanceof OrderEntity) {
+            throw new Exception("Order not found.", 404);
+        }
+        if (isset($request->getParsedBody()['jigoshop_order']['items'])) {
+            $this->_updateOrderItems($object, $request->getParsedBody()['jigoshop_order']['items']);
+        }
+        return $response->withJson([
+            'success' => true,
+            'data' => "Order successfully updated",
+        ]);
+    }
+
+    /**
+     * @param OrderInterface $order
+     * @param array $itemsData
+     * @return OrderInterface
+     */
+    private function _updateOrderItems(OrderInterface $order, array &$itemsData){
+        $productService = $this->app->getContainer()->di->get("jigoshop.service.product");
+        $wp = $this->app->getContainer()->di->get("wpal");
+        foreach ($itemsData as &$singleItem) {
+            $post = $wp->getPost((int)$singleItem['product']);
+            if ($post->post_type == 'product_variation' && $post->post_parent > 0) {
+                $post = $wp->getPost($post->post_parent);
+                //TODO: change this!!!
+                $singleItem['variation_id'] = (int)$singleItem['product'];
+                $singleItem['quantity'] = 1;
+            }
+
+            $product = $productService->findforPost($post);
+
+            if ($product->getId() === null) {
+                throw new Exception(__('Product not found.', 'jigoshop'));
+            }
+
+            /** @var Item $item */
+            $item = $wp->applyFilters('jigoshop\cart\add', null, $product);
+
+            if ($item === null) {
+                throw new Exception(__('Product cannot be added to the order.', 'jigoshop'));
+            }
+            $key = $productService->generateItemKey($item);
+            $item->setKey($key);
+
+            $order->addItem($item);
+            $singleItem = $item;
+        }
+        return $order;
+    }
 
 }

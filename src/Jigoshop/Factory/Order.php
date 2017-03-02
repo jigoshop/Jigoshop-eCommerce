@@ -124,7 +124,7 @@ class Order implements EntityFactoryInterface
      */
     public function fetch($post)
     {
-        if($post->post_type != Types::ORDER) {
+        if ($post->post_type != Types::ORDER) {
             return null;
         }
 
@@ -143,9 +143,10 @@ class Order implements EntityFactoryInterface
                 // Customer must be unserialized twice "thanks" to WordPress second serialization.
                 /** @var CustomerEntity */
                 $state['customer'] = unserialize(unserialize($state['customer']));
-                if($state['customer'] instanceof CustomerEntity &&
+                if ($state['customer'] instanceof CustomerEntity &&
                     !($state['customer'] instanceof CustomerEntity\Guest) &&
-                    $state['customer_id'] > 0) {
+                    $state['customer_id'] > 0
+                ) {
                     $customer = $this->customerService->find($state['customer_id']);
                     $customer->setBillingAddress($state['customer']->getBillingAddress());
                     $customer->setShippingAddress($state['customer']->getShippingAddress());
@@ -206,7 +207,7 @@ class Order implements EntityFactoryInterface
 
             $product = $this->productService->find($results[$i]['product_id']);
             $product = $this->wp->applyFilters('jigoshop\factory\order\find_product', $product, $item);
-            if($product == null || !$product instanceof ProductEntity) {
+            if ($product == null || !$product instanceof ProductEntity) {
                 $product = new ProductEntity\Simple();
                 $product->setId($results[$i]['product_id']);
             }
