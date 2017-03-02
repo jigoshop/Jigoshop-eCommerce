@@ -52,6 +52,9 @@ class Routes
             $app->group('/coupons', function() use ($app) {
                 new Routes\V1\Coupons($app);
             });
+            $app->group('/customers', function() use ($app) {
+                new Routes\V1\Customers($app);
+            });
         }
     }
 
