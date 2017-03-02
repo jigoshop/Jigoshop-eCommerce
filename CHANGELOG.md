@@ -15,6 +15,12 @@
     * Fix: External view product button on product list.
     * Fix: Notice on order list when product was removed.
     * Fix: Show all orders on Account Orders page.
+    * Fix: Show view product button when product doesn't have price.
+    * Fix: Notice about undefined key in session for recently viewed products widget.
+    * Fix: Don't set shipping method when shipping is not required.
+    * Fix: Notice caused by dashboard monthly report.
+    * Fix: Order migration when product no longer exists.
+    * Fix: Input coupon field on checkout page.
 * 2.0.9 - 2017.02.13:
     * Fix: Support Twentyseventeen theme.
     * Fix: Improve product reviews.

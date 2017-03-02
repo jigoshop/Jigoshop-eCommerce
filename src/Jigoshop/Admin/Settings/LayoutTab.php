@@ -2,10 +2,12 @@
 
 namespace Jigoshop\Admin\Settings;
 
+use Jigoshop\Admin\Helper\Forms;
 use Jigoshop\Core\Messages;
 use Jigoshop\Core\Options;
 use Jigoshop\Frontend\Pages;
 use Jigoshop\Helper\Render;
+use Jigoshop\Helper\Scripts;
 use WPAL\Wordpress;
 
 /**
@@ -16,9 +18,11 @@ use WPAL\Wordpress;
 class LayoutTab implements TabInterface
 {
     const SLUG = 'layout';
-    /** @var  array  */
+    /** @var  Wordpress */
+    private $wp;
+    /** @var  array */
     private $options;
-    /** @var  Messages  */
+    /** @var  Messages */
     private $messages;
 
     /**
@@ -29,9 +33,17 @@ class LayoutTab implements TabInterface
      */
     public function __construct(Wordpress $wp, Options $options, Messages $messages)
     {
-        $wp;
+        $this->wp = $wp;
         $this->options = $options->get(self::SLUG);
         $this->messages = $messages;
+
+        $wp->addAction('admin_enqueue_scripts', function () use ($options) {
+            if (!isset($_GET['tab']) || $_GET['tab'] != LayoutTab::SLUG) {
+                return;
+            }
+            Scripts::add('jigoshop.admin.layout', \JigoshopInit::getUrl() . '/assets/js/admin/settings/layout.js',
+                array('jquery'), array('page' => 'jigoshop_page_jigoshop_settings'));
+        });
     }
 
     /**
@@ -55,7 +67,7 @@ class LayoutTab implements TabInterface
      */
     public function getSections()
     {
-        return [
+        return $this->wp->applyFilters('jigoshop\admin\settings\layout\sections', [
             [
                 'title' => __('Main', 'jigoshop'),
                 'id' => 'main',
@@ -64,67 +76,80 @@ class LayoutTab implements TabInterface
                         'name' => '[enabled]',
                         'title' => __('Enable custom layout', 'jigoshop'),
                         'type' => 'checkbox',
-                        'checked' => isset($this->options['enabled']) ? $this->options['enabled'] : false,
+                        'checked' => $this->options['enabled'],
                         'classes' => ['switch-medium'],
                     ],
                     [
                         'name' => '[page_width]',
                         'title' => __('Page width', 'jigoshop'),
                         'type' => 'select',
-                        'value' => isset($this->options['page_width']) ? $this->options['page_width'] : false,
+                        'value' => $this->options['page_width'],
                         'options' => [
                             '960px' => '960 px',
                             '1000px' => '1000 px',
                         ]
                     ],
+                    [
+                        'name' => '[global_css]',
+                        'title' => __('Custom global CSS', 'jigoshop'),
+                        'type' => 'user_defined',
+                        'value' => $this->options['global_css'],
+                        'display' => function ($field) {
+                            Render::output('admin/settings/layout/css', [
+                                'id' => $field['id'],
+                                'name' => $field['name'],
+                                'value' => $field['value'],
+                            ]);
+                        }
+                    ]
                 ],
             ],
             [
                 'title' => __('Default', 'jigoshop'),
                 'id' => 'default',
-                'fields' => $this->getFields('default', false),
+                'fields' => $this->getFields('default'),
             ],
             [
-                'title' => __('Product List', 'jigoshop'),
+                'title' => $this->getSectionTitle(__('Product List', 'jigoshop'), Pages::PRODUCT_LIST),
                 'id' => Pages::PRODUCT_LIST,
                 'fields' => $this->getFields(Pages::PRODUCT_LIST),
             ],
             [
-                'title' => __('Cart', 'jigoshop'),
+                'title' => $this->getSectionTitle(__('Cart', 'jigoshop'), Pages::CART),
                 'id' => Pages::CART,
                 'fields' => $this->getFields(Pages::CART),
             ],
             [
-                'title' => __('Checkout', 'jigoshop'),
+                'title' => $this->getSectionTitle(__('Checkout', 'jigoshop'), Pages::CHECKOUT),
                 'id' => Pages::CHECKOUT,
                 'fields' => $this->getFields(Pages::CHECKOUT),
             ],
             [
-                'title' => __('Product', 'jigoshop'),
+                'title' => $this->getSectionTitle(__('Product', 'jigoshop'), Pages::PRODUCT),
                 'id' => Pages::PRODUCT,
                 'fields' => $this->getFields(Pages::PRODUCT),
             ],
             [
-                'title' => __('Product Category', 'jigoshop'),
+                'title' => $this->getSectionTitle(__('Product Category', 'jigoshop'), Pages::PRODUCT_CATEGORY),
                 'id' => Pages::PRODUCT_CATEGORY,
                 'fields' => $this->getFields(Pages::PRODUCT_CATEGORY),
             ],
             [
-                'title' => __('Product Tag', 'jigoshop'),
+                'title' => $this->getSectionTitle(__('Product Tag', 'jigoshop'), Pages::PRODUCT_TAG),
                 'id' => Pages::PRODUCT_TAG,
                 'fields' => $this->getFields(Pages::PRODUCT_TAG),
             ],
             [
-                'title' => __('Account', 'jigoshop'),
+                'title' => $this->getSectionTitle(__('Account', 'jigoshop'), Pages::ACCOUNT),
                 'id' => Pages::ACCOUNT,
                 'fields' => $this->getFields(Pages::ACCOUNT),
             ],
             [
-                'title' => __('Thank You', 'jigoshop'),
+                'title' => $this->getSectionTitle(__('Thank You', 'jigoshop'), Pages::THANK_YOU),
                 'id' => Pages::THANK_YOU,
                 'fields' => $this->getFields(Pages::THANK_YOU),
             ],
-        ];
+        ]);
     }
 
     /**
@@ -152,102 +177,112 @@ class LayoutTab implements TabInterface
 
     /**
      * @param string $parent
-     * @param bool $allowToDisable
      * @return array
      */
-    private function getFields($parent, $allowToDisable = true)
+    private function getFields($parent)
     {
-        if(!isset($this->options[$parent])) {
-            $this->options[$parent] = [
-                'enabled' => '',
-                'structure' => 'only_content',
-                'sidebar' => '',
-                'proportions' => '',
-                'custom_proportions' => [
-                    'content' => '',
-                    'sidebar' => '',
-                ],
-                'css' => ''
-            ];
-        }
-        $fields = [];
-        if($allowToDisable) {
-            $fields[] = [
-                'name' => '['.$parent.'][enabled]',
-                'title' => __('Is enabled?', 'jigoshop'),
-                'type' => 'checkbox',
-                'checked' => $this->options[$parent]['enabled'],
-                'classes' => ['switch-medium'],
-            ];
-        }
-        $fields[] = [
-            'name' => '['.$parent.'][structure]',
-            'title' => __('Structure', 'jigoshop'),
-            'type' => 'user_defined',
-            'value' => $this->options[$parent]['structure'],
-            'display' => function($field) {
-                Render::output('admin/settings/layout/structure', [
-                    'id' => $field['id'],
-                    'name' => $field['name'],
-                    'value' => $field['value'],
-                ]);
-            }
-        ];
-        $fields[] = [
-            'name' => '['.$parent.'][sidebar]',
-            'title' => __('Sidebar', 'jigoshop'),
-            'type' => 'select',
-            'value' => $this->options[$parent]['sidebar'],
-            'options' => [
-                '1' => __('Jigoshop Sidebar 1', 'jigoshop'),
-                '2' => __('Jigoshop Sidebar 2', 'jigoshop'),
-                '3' => __('Jigoshop Sidebar 3', 'jigoshop'),
-                '4' => __('Jigoshop Sidebar 4', 'jigoshop'),
-                '5' => __('Jigoshop Sidebar 5', 'jigoshop'),
-                '6' => __('Jigoshop Sidebar 6', 'jigoshop'),
-                '7' => __('Jigoshop Sidebar 7', 'jigoshop'),
-                '8' => __('Jigoshop Sidebar 8', 'jigoshop'),
-                '9' => __('Jigoshop Sidebar 9', 'jigoshop'),
+        return [
+            [
+                'name' => '[' . $parent . '][structure]',
+                'title' => __('Structure', 'jigoshop'),
+                'type' => 'user_defined',
+                'value' => $this->options[$parent]['structure'],
+                'display' => function ($field) {
+                    Render::output('admin/settings/layout/structure', [
+                        'id' => $field['id'],
+                        'name' => $field['name'],
+                        'value' => $field['value'],
+                    ]);
+                }
+            ],
+            [
+                'name' => '[' . $parent . '][sidebar]',
+                'title' => __('Sidebar', 'jigoshop'),
+                'type' => 'select',
+                'value' => $this->options[$parent]['sidebar'],
+                'options' => [
+                    '1' => __('Jigoshop Sidebar 1', 'jigoshop'),
+                    '2' => __('Jigoshop Sidebar 2', 'jigoshop'),
+                    '3' => __('Jigoshop Sidebar 3', 'jigoshop'),
+                    '4' => __('Jigoshop Sidebar 4', 'jigoshop'),
+                    '5' => __('Jigoshop Sidebar 5', 'jigoshop'),
+                    '6' => __('Jigoshop Sidebar 6', 'jigoshop'),
+                    '7' => __('Jigoshop Sidebar 7', 'jigoshop'),
+                    '8' => __('Jigoshop Sidebar 8', 'jigoshop'),
+                    '9' => __('Jigoshop Sidebar 9', 'jigoshop'),
+                ]
+            ],
+            [
+                'name' => '[' . $parent . '][proportions]',
+                'title' => __('Proportions', 'jigoshop'),
+                'type' => 'select',
+                'value' => $this->options[$parent]['proportions'],
+                'classes' => ['proportions'],
+                'options' => [
+                    '66-34' => '66% - 34%',
+                    '70-30' => '70% - 30%',
+                    'custom' => __('Custom', 'jigoshop'),
+                ]
+            ],
+            [
+                'name' => '[' . $parent . '][custom_proportions]',
+                'title' => __('Custom Proportions', 'jigoshop'),
+                'type' => 'user_defined',
+                'value' => $this->options[$parent]['custom_proportions'],
+                'display' => function ($field) {
+                    Render::output('admin/settings/layout/custom_proportions', [
+                        'id' => $field['id'],
+                        'name' => $field['name'],
+                        'value' => $field['value'],
+                    ]);
+                }
+            ],
+            [
+                'name' => '[' . $parent . '][css]',
+                'title' => __('Custom CSS', 'jigoshop'),
+                'type' => 'user_defined',
+                'value' => $this->options[$parent]['css'],
+                'display' => function ($field) {
+                    Render::output('admin/settings/layout/css', [
+                        'id' => $field['id'],
+                        'name' => $field['name'],
+                        'value' => $field['value'],
+                    ]);
+                }
             ]
         ];
-        $fields[] = [
-            'name' => '['.$parent.'][proportions]',
-            'title' => __('Proportions', 'jigoshop'),
-            'type' => 'select',
-            'value' => $this->options[$parent]['proportions'],
-            'options' => [
-                '66-34' => '66% - 34%',
-                '70-30' => '70% - 30%',
-                'custom' => __('Custom', 'jigoshop'),
-            ]
-        ];
-        $fields[] = [
-            'name' => '['.$parent.'][custom_proportions]',
-            'title' => __('Custom Proportions', 'jigoshop'),
-            'type' => 'user_defined',
-            'value' => $this->options[$parent]['custom_proportions'],
-            'display' => function($field) {
-                Render::output('admin/settings/layout/custom_proportions', [
-                    'id' => $field['id'],
-                    'name' => $field['name'],
-                    'value' => $field['value'],
-                ]);
-            }
-        ];
-        $fields[] = [
-            'name' => '['.$parent.'][css]',
-            'title' => __('Custom CSS', 'jigoshop'),
-            'type' => 'user_defined',
-            'value' => $this->options[$parent]['css'],
-            'display' => function($field) {
-                Render::output('admin/settings/layout/css', [
-                    'id' => $field['id'],
-                    'name' => $field['name'],
-                    'value' => $field['value'],
-                ]);
-            }
-        ];
+    }
 
-        return $fields;
+    /**
+     * @param $title
+     * @param $id
+     *
+     * @return string
+     */
+    private function getSectionTitle($title, $id)
+    {
+        return sprintf('<table class="form-table"><tr><th scope="row">%s</th><td>%s</td></tr></table>', $title,
+            $this->getEnabledField($id));
+    }
+
+    /**
+     * @param $parent
+     *
+     * @return string
+     */
+    private function getEnabledField($parent)
+    {
+        ob_start();
+        Forms::checkbox([
+            'id' => $parent . '_enabled',
+            'name' => 'jigoshop[' . $parent . '][enabled]',
+            'title' => __('Is enabled?', 'jigoshop'),
+            'description' => __('Override default settings for this page.', 'jigoshop'),
+            'type' => 'checkbox',
+            'checked' => $this->options[$parent]['enabled'],
+            'classes' => ['switch-medium', 'enable_section'],
+        ]);
+
+        return ob_get_clean();
     }
 }

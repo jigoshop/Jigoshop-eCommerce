@@ -3,10 +3,11 @@
  * @var $content string Content to display.
  * @var $options
  */
-get_header('shop');
 $contentSize = $options['structure'] != 'only_content' ? $options['proportions']['content'].'%' : '100%';
 $contentPosition = $options['structure'] == 'sidebar_left' ? 'right' : 'left';
+get_header('shop');
 ?>
+<style><?php echo $options['global_css']; ?></style>
 <style><?php echo $options['css']; ?></style>
 <div style="width: <?php echo $options['page_width']; ?>; margin-left: auto; margin-right: auto">
     <?php if($options['structure'] == 'sidebar_left') : ?>
@@ -31,6 +32,6 @@ $contentPosition = $options['structure'] == 'sidebar_left' ? 'right' : 'left';
         </div>
     <?php endif; ?>
 </div>
-<div class="clear"></div>
+<div style="clear: both"></div>
 <?php get_footer('shop'); ?>
 

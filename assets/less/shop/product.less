@@ -34,14 +34,15 @@
     div.images {
       vertical-align: top;
       display: inline-block;
-      width: 39%; // TODO: Why it needs to be 39% instead of 40%?
-      margin-bottom: 10px;
+      width: calc(~"39% - 10px");
+      margin: 0 10px 10px 0;
       position: relative;
       box-sizing: border-box;
 
       .featured-image img {
         width: 100%;
         height: auto;
+        margin-right: 10px;
       }
 
       img {

@@ -75,40 +75,9 @@ class Template
 
 		$content = $this->page->render();
 		if($this->options->get(LayoutTab::SLUG.'.enabled', false)) {
-		    $settings = $this->options->get(LayoutTab::SLUG, false);
-
-            $options = $settings['default'];
-		    if(Pages::isProductList() && $settings[Pages::PRODUCT_LIST]['enabled']) {
-                $options = $settings[Pages::PRODUCT_LIST];
-            } elseif (Pages::isProduct() && $settings[Pages::PRODUCT]['enabled']) {
-                $options = $settings[Pages::PRODUCT];
-            } elseif (Pages::isCart() && $settings[Pages::CART]['enabled']) {
-                $options = $settings[Pages::CART];
-            } elseif (Pages::isCheckout() && $settings[Pages::CHECKOUT]['enabled']) {
-                $options = $settings[Pages::CHECKOUT];
-            } elseif (Pages::isProductCategory() && $settings[Pages::PRODUCT_CATEGORY]['enabled']) {
-                $options = $settings[Pages::PRODUCT_CATEGORY];
-            } elseif (Pages::isProductTag() && $settings[Pages::PRODUCT_TAG]['enabled']) {
-                $options = $settings[Pages::PRODUCT_TAG];
-            } elseif (Pages::isAccount() && $settings[Pages::ACCOUNT]['enabled']) {
-                $options = $settings[Pages::ACCOUNT];
-            } elseif (Pages::isCheckoutThankYou() && $settings[Pages::THANK_YOU]['enabled']) {
-                $options = $settings[Pages::THANK_YOU];
-            }
-
-            $options['page_width'] = $settings['page_width'];
-		    if($options['proportions'] == 'custom') {
-		        $options['proportions'] = $options['custom_proportions'];
-            } else {
-		        $proportions = explode('-', $options['proportions']);
-		        $options['proportions'] = [
-		            'content' => $proportions[0],
-                    'sidebar' => $proportions[1],
-                ];
-            }
 		    Render::output('layout/custom', [
 		        'content' => $content,
-                'options' => $options
+                'options' => $this->getCustomLayoutOptions()
             ]);
         } else {
             $template = $this->wp->getOption('template');
@@ -128,4 +97,45 @@ class Template
 
 		return false;
 	}
+
+    /**
+     * @return array
+     */
+	private function getCustomLayoutOptions()
+    {
+        $settings = $this->options->get(LayoutTab::SLUG, false);
+
+        $options = $settings['default'];
+        if(Pages::isProductList() && $settings[Pages::PRODUCT_LIST]['enabled']) {
+            $options = $settings[Pages::PRODUCT_LIST];
+        } elseif (Pages::isProduct() && $settings[Pages::PRODUCT]['enabled']) {
+            $options = $settings[Pages::PRODUCT];
+        } elseif (Pages::isCart() && $settings[Pages::CART]['enabled']) {
+            $options = $settings[Pages::CART];
+        } elseif (Pages::isCheckout() && $settings[Pages::CHECKOUT]['enabled']) {
+            $options = $settings[Pages::CHECKOUT];
+        } elseif (Pages::isProductCategory() && $settings[Pages::PRODUCT_CATEGORY]['enabled']) {
+            $options = $settings[Pages::PRODUCT_CATEGORY];
+        } elseif (Pages::isProductTag() && $settings[Pages::PRODUCT_TAG]['enabled']) {
+            $options = $settings[Pages::PRODUCT_TAG];
+        } elseif (Pages::isAccount() && $settings[Pages::ACCOUNT]['enabled']) {
+            $options = $settings[Pages::ACCOUNT];
+        } elseif (Pages::isCheckoutThankYou() && $settings[Pages::THANK_YOU]['enabled']) {
+            $options = $settings[Pages::THANK_YOU];
+        }
+
+        $options['page_width'] = $settings['page_width'];
+        $options['global_css'] = $settings['global_css'];
+        if($options['proportions'] == 'custom') {
+            $options['proportions'] = $options['custom_proportions'];
+        } else {
+            $proportions = explode('-', $options['proportions']);
+            $options['proportions'] = [
+                'content' => $proportions[0],
+                'sidebar' => $proportions[1],
+            ];
+        }
+
+        return $this->wp->applyFilters('jigoshop\template\custom_layout\options', $options);
+    }
 }

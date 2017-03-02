@@ -408,12 +408,14 @@ class Order implements OrderInterface, \JsonSerializable
 	{
 		$this->removeShippingMethod();
 
-		$this->shippingMethod = $method;
-		$this->shippingPrice = $method->calculate($this);
-		$this->subtotal += $this->shippingPrice;
-		$this->shippingTax = apply_filters('jigoshop\order\shipping_tax', $this->shippingTax, $method, $this);
-		$this->total += apply_filters('jigoshop\order\shipping_price', $this->shippingPrice, $method, $this);
-		$this->totalCombinedTax = null;
+		if($this->isShippingRequired()) {
+            $this->shippingMethod = $method;
+            $this->shippingPrice = $method->calculate($this);
+            $this->subtotal += $this->shippingPrice;
+            $this->shippingTax = apply_filters('jigoshop\order\shipping_tax', $this->shippingTax, $method, $this);
+            $this->total += apply_filters('jigoshop\order\shipping_price', $this->shippingPrice, $method, $this);
+            $this->totalCombinedTax = null;
+        }
 	}
 
 	/**
