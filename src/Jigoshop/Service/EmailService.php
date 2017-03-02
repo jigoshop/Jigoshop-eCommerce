@@ -317,4 +317,18 @@ WHERE posts.post_type = %s", 'actions', Types\Email::NAME), ARRAY_A);
 
         return $this->templates;
     }
+
+
+    /**
+     * Gets number of Emails
+     *
+     * @return int
+     */
+    public function getEmailsCount()
+    {
+        $wpdb = $this->wp->getWPDB();
+        return (int)$wpdb->get_var($wpdb->prepare("
+            SELECT COUNT(*) FROM {$wpdb->posts} 
+            WHERE post_status = 'publish' AND post_type = %s", Types::EMAIL));
+    }
 }

@@ -2,6 +2,7 @@
 
 namespace Jigoshop\Api\Routes\V1;
 
+use Jigoshop\Api\Contracts\ApiControllerContract;
 use Slim\App;
 
 /**
@@ -9,7 +10,7 @@ use Slim\App;
  * @package Jigoshop\Api\Routes\V1;
  * @author Maciej Maciaszek
  */
-class Coupons extends PostController
+class Coupons extends PostController implements ApiControllerContract
 {
     /** @var  App */
     protected $app;
