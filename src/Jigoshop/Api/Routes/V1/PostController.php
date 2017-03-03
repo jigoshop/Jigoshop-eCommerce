@@ -63,9 +63,27 @@ abstract class PostController extends BaseController
         ]);
     }
 
+    /**
+     * post deleting method
+     * @param Request $request
+     * @param Response $response
+     * @param $args
+     * @return Response
+     */
     public function delete(Request $request, Response $response, $args)
     {
-        // TODO: Implement delete() method.
+        $this->validateObjectFinding($args);
+        $result = wp_trash_post($args['id']);
+        if (!$result) {
+            return $response->withJson([
+                'success' => false,
+                'data' => "$this->entityName couldn't or is already deleted",
+            ]);
+        }
+        return $response->withJson([
+            'success' => true,
+            'data' => "$this->entityName successfully deleted",
+        ]);
     }
 
     /**
@@ -101,5 +119,26 @@ abstract class PostController extends BaseController
     protected function singularize($string, $ending = 's')
     {
         return rtrim($string, "$ending");
+    }
+
+    //TODO not working with current uncached services
+    /**
+     * validates if correct post was found
+     * @param $args
+     * @return bool
+     */
+    protected function validateObjectFinding($args)
+    {
+        if (!isset($args['id']) || empty($args['id'])) {
+            throw new Exception("$this->entityName ID was not provided");
+        }
+
+        $object = $this->service->find($args['id']);
+        $entity = self::JIGOSHOP_ENTITY_PREFIX . ucfirst($this->entityName);
+        if (!$object instanceof $entity) {
+            throw new Exception("$this->entityName not found.", 404);
+        }
+
+        return $object;
     }
 }

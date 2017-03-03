@@ -4,7 +4,6 @@ namespace Jigoshop\Api\Routes\V1;
 
 use Jigoshop\Api\Permission;
 use Jigoshop\Core\Types;
-use Jigoshop\Entity\Customer\Guest;
 use Jigoshop\Entity\Order as OrderEntity;
 use Jigoshop\Entity\OrderInterface;
 use Jigoshop\Exception;
@@ -36,6 +35,7 @@ class Orders extends PostController
         $app->get('/{id:[0-9]+}', array($this, 'getOrder'));
         $app->post('', array($this, 'create'));
         $app->put('/{id:[0-9]+}', array($this, 'update'));
+        $app->delete('/{id:[0-9]+}', array($this, 'delete'));
     }
 
     /**
@@ -56,7 +56,7 @@ class Orders extends PostController
         $queryParams = $request->getParams();
         $queryParams['pagelen'] = isset($queryParams['pagelen']) && is_numeric($queryParams['pagelen']) ? (int)$queryParams['pagelen'] : 10;
         $queryParams['page'] = isset($queryParams['page']) && is_numeric($queryParams['page']) ? (int)$queryParams['page'] : 1;
-        $allOrders = 12;//$service->getOrdersCount();
+        $allOrders = $service->getOrdersCount();
 
         $orders = $service->findByQuery(new \WP_Query([
             'post_type' => Types::ORDER,

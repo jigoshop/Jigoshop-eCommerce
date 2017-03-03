@@ -27,6 +27,7 @@ class Coupons extends PostController implements ApiControllerContract
         $app->get('/{id:[0-9]+}', array($this, 'findOne'));
         $app->post('', array($this, 'create'));
         $app->put('/{id:[0-9]+}', array($this, 'update'));
+        $app->delete('/{id:[0-9]+}', array($this, 'delete'));
     }
 
 
