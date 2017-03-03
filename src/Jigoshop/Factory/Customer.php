@@ -38,6 +38,21 @@ class Customer implements EntityFactoryInterface
 	}
 
 	/**
+	 * Updates customer properly based on array data.
+	 *
+	 * @param $user user object
+	 * @param array $data Post ID to create object for.
+	 *
+	 * @return Entity
+	 */
+	public function update($user, array $data)
+	{
+	    $user = $this->fetch($user);
+        $user->restoreState($data);
+		return $user;
+	}
+
+	/**
 	 * Fetches customer from database.
 	 *
 	 * @param $user \WP_User User object to fetch customer for.
