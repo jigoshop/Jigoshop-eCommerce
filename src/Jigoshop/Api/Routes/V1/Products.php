@@ -7,7 +7,6 @@ use Jigoshop\Entity\Product as ProductEntity;
 use Slim\App;
 use Slim\Http\Request;
 use Slim\Http\Response;
-use Jigoshop\Exception;
 
 /**
  * Class Products
@@ -65,15 +64,7 @@ class Products extends PostController implements ApiControllerContract
      */
     public function update(Request $request, Response $response, $args)
     {
-        if (!isset($args['id']) || empty($args['id'])) {
-            throw new Exception("$this->entityName ID was not provided");
-        }
-
-        $object = $this->service->find($args['id']);
-
-        if (!$object instanceof ProductEntity) {
-            throw new Exception("Product not found.", 404);
-        }
+        $object = $this->validateObjectFinding($args);
 
         $putData = self::overridePutProductData($request->getParsedBody());
         $factory = $this->app->getContainer()->di->get('jigoshop.factory.product');

@@ -97,16 +97,7 @@ abstract class BaseController
      */
     public function findOne(Request $request, Response $response, $args)
     {
-        if (!isset($args['id']) || empty($args['id'])) {
-            throw new Exception("$this->entityName ID was not provided");
-        }
-
-        $item = $this->service->find($args['id']);
-        $entity = self::JIGOSHOP_ENTITY_PREFIX . ucfirst($this->entityName);
-
-        if (!$item instanceof $entity) {
-            throw new Exception("$this->entityName not found.", 404);
-        }
+        $item = $this->validateObjectFinding($args);
 
         return $response->withJson([
             'success' => true,
@@ -147,5 +138,26 @@ abstract class BaseController
         $queryParams['page'] = isset($queryParams['page']) && is_numeric($queryParams['page'])
             ? (int)$queryParams['page'] : 1;
         return $queryParams;
+    }
+
+    //TODO not working with current uncached services
+    /**
+     * validates if correct post was found
+     * @param $args
+     * @return bool
+     */
+    protected function validateObjectFinding($args)
+    {
+        if (!isset($args['id']) || empty($args['id'])) {
+            throw new Exception("$this->entityName ID was not provided");
+        }
+
+        $object = $this->service->find($args['id']);
+        $entity = self::JIGOSHOP_ENTITY_PREFIX . ucfirst($this->entityName);
+        if (!$object instanceof $entity) {
+            throw new Exception("$this->entityName not found.", 404);
+        }
+
+        return $object;
     }
 }

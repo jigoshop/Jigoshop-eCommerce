@@ -4,7 +4,6 @@ namespace Jigoshop\Api\Routes\V1;
 
 use Slim\Http\Request;
 use Slim\Http\Response;
-use Jigoshop\Exception;
 
 /**
  * extend this class in order to get RESTful methods for PostArray
@@ -40,16 +39,7 @@ abstract class PostController extends BaseController
      */
     public function update(Request $request, Response $response, $args)
     {
-        if (!isset($args['id']) || empty($args['id'])) {
-            throw new Exception("$this->entityName ID was not provided");
-        }
-
-        $object = $this->service->find($args['id']);
-        $entity = self::JIGOSHOP_ENTITY_PREFIX . ucfirst($this->entityName);
-
-        if (!$object instanceof $entity) {
-            throw new Exception("$this->entityName not found.", 404);
-        }
+        $object = $this->validateObjectFinding($args);
 
         $factory = $this->app->getContainer()->di->get("jigoshop.factory.$this->entityName");
         $object = $factory->update($object, $request->getParsedBody()); //updating object with parsed variables
@@ -121,24 +111,4 @@ abstract class PostController extends BaseController
         return rtrim($string, "$ending");
     }
 
-    //TODO not working with current uncached services
-    /**
-     * validates if correct post was found
-     * @param $args
-     * @return bool
-     */
-    protected function validateObjectFinding($args)
-    {
-        if (!isset($args['id']) || empty($args['id'])) {
-            throw new Exception("$this->entityName ID was not provided");
-        }
-
-        $object = $this->service->find($args['id']);
-        $entity = self::JIGOSHOP_ENTITY_PREFIX . ucfirst($this->entityName);
-        if (!$object instanceof $entity) {
-            throw new Exception("$this->entityName not found.", 404);
-        }
-
-        return $object;
-    }
 }
