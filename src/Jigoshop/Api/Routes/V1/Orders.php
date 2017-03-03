@@ -2,6 +2,7 @@
 
 namespace Jigoshop\Api\Routes\V1;
 
+use Jigoshop\Api\Contracts\ApiControllerContract;
 use Jigoshop\Api\Permission;
 use Jigoshop\Core\Types;
 use Jigoshop\Entity\Order as OrderEntity;
@@ -17,7 +18,7 @@ use Slim\Http\Response;
  * @package Jigoshop\Api\Controller\V1;
  * @author Krzysztof Kasowski
  */
-class Orders extends PostController
+class Orders extends PostController implements ApiControllerContract
 {
     /** @var  App */
     protected $app;

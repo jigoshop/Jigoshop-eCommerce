@@ -2,6 +2,7 @@
 
 namespace Jigoshop\Api\Routes\V1;
 
+use Jigoshop\Api\Contracts\ApiControllerContract;
 use Jigoshop\Entity\Product as ProductEntity;
 use Slim\App;
 use Slim\Http\Request;
@@ -13,7 +14,7 @@ use Jigoshop\Exception;
  * @package Jigoshop\Api\Routes\V1;
  * @author Krzysztof Kasowski
  */
-class Products extends PostController
+class Products extends PostController implements ApiControllerContract
 {
     /** @var  App */
     protected $app;
