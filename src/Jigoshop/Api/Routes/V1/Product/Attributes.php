@@ -23,7 +23,13 @@ class Attributes extends BaseController implements ApiControllerContract
     /** @var  $product */
     protected $product;
 
+    /**
+     * @var string
+     */
     protected $serviceName = 'jigoshop.service.product';
+    /**
+     * @var string
+     */
     protected $entityName = 'attribute';
 
     /**
@@ -38,7 +44,13 @@ class Attributes extends BaseController implements ApiControllerContract
         $app->get('/{id:[0-9]+}', array($this, 'findOne'));
     }
 
-
+    /**
+     * get all attributes for product
+     * @param Request $request
+     * @param Response $response
+     * @param $args
+     * @return Response
+     */
     public function findAll(Request $request, Response $response, $args)
     {
         $queryParams = $this->setDefaultQueryParams($request->getParams());
@@ -57,6 +69,13 @@ class Attributes extends BaseController implements ApiControllerContract
         ]);
     }
 
+    /**
+     * get all attributes for product
+     * @param Request $request
+     * @param Response $response
+     * @param $args
+     * @return Response
+     */
     public function findOne(Request $request, Response $response, $args)
     {
         $this->setProduct($args);
@@ -67,8 +86,42 @@ class Attributes extends BaseController implements ApiControllerContract
         ]);
     }
 
+    /**
+     * overrided create function from BaseController
+     * @param Request $request
+     * @param Response $response
+     * @param $args
+     * @return Response
+     */
+    public function create(Request $request, Response $response, $args)
+    {
+        //TODO implement
+        return $response->withJson([
+            'success' => true,
+            'data' => "$this->entityName successfully created",
+        ]);
+    }
 
     /**
+     * overrided update function from BaseController
+     * @param Request $request
+     * @param Response $response
+     * @param $args
+     * @return Response
+     */
+    public function update(Request $request, Response $response, $args)
+    {
+        $object = $this->validateObjectFinding($args);
+        //TODO implement
+
+        return $response->withJson([
+            'success' => true,
+            'data' => "Product successfully updated",
+        ]);
+    }
+
+    /**
+     * setting
      * @param $args
      */
     protected function setProduct($args)
@@ -84,12 +137,20 @@ class Attributes extends BaseController implements ApiControllerContract
         $this->product = $product;
     }
 
-
+    /**
+     * @param Request $request
+     * @param Response $response
+     * @param $args
+     */
     public function delete(Request $request, Response $response, $args)
     {
         // TODO: Implement delete() method.
     }
 
+    /**
+     * @param array $args
+     * @return ProductEntity\Attribute[]
+     */
     protected function getObjects(array $args)
     {
         /** @var ProductService $service */
@@ -97,6 +158,9 @@ class Attributes extends BaseController implements ApiControllerContract
         return $service->getAttributes($this->product->getId());
     }
 
+    /**
+     * @return int
+     */
     protected function getObjectsCount()
     {
         /** @var ProductService $service */
@@ -105,6 +169,11 @@ class Attributes extends BaseController implements ApiControllerContract
         return count($items);
     }
 
+    /**
+     * find attribute and validate it's
+     * @param $args
+     * @return mixed
+     */
     protected function validateObjectFinding($args)
     {
         if (!isset($args['id']) || empty($args['id'])) {
@@ -112,7 +181,7 @@ class Attributes extends BaseController implements ApiControllerContract
         }
 
         $object = $this->service->getAttribute($args['id']);
-        $entity = self::JIGOSHOP_ENTITY_PREFIX . 'Product\\'. ucfirst($this->entityName);
+        $entity = self::JIGOSHOP_ENTITY_PREFIX . 'Product\\' . ucfirst($this->entityName);
 
         if (!$object instanceof $entity) {
             throw new Exception("$this->entityName not found.", 404);

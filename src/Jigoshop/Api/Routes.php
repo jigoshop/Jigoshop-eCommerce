@@ -45,10 +45,10 @@ class Routes
                 new Routes\V1\Orders($app);
             });
             $app->group('/products', function () use ($app) {
+                new Routes\V1\Products($app);
                 $app->group('/{productId:[0-9]+}/attributes', function () use ($app) {
                     new Routes\V1\Product\Attributes($app);
                 });
-                new Routes\V1\Products($app);
             });
             $app->group('/reports', function () use ($app) {
                 new Routes\V1\Reports($app);
