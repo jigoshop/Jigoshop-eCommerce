@@ -47,7 +47,8 @@ class Attributes extends BaseController implements ApiControllerContract
         $app->get('', array($this, 'findAll'));
         $app->get('/{id:[0-9]+}', array($this, 'findOne'));
         $app->put('/{id:[0-9]+}', array($this, 'update'));
-        $app->get('', array($this, 'create'));
+        $app->delete('/{id:[0-9]+}', array($this, 'delete'));
+        $app->post('', array($this, 'create'));
     }
 
     /**
