@@ -131,7 +131,7 @@ abstract class BaseController
      * @param $queryParams
      * @return mixed
      */
-    private function setDefaultQueryParams($queryParams)
+    protected function setDefaultQueryParams($queryParams)
     {
         $queryParams['pagelen'] = isset($queryParams['pagelen']) && is_numeric($queryParams['pagelen'])
             ? (int)$queryParams['pagelen'] : $this->pageLen;
@@ -140,7 +140,6 @@ abstract class BaseController
         return $queryParams;
     }
 
-    //TODO not working with current uncached services
     /**
      * validates if correct post was found
      * @param $args

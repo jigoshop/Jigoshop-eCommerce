@@ -28,6 +28,7 @@ class Routes
     {
         $this->options = $options;
     }
+
     /**
      * @param App $app
      * @param string $version
@@ -35,24 +36,27 @@ class Routes
     public function init(App $app, $version)
     {
         $app->get('/ping', array($this, 'ping'));
-        if($version == 1) {
+        if ($version == 1) {
             $app->post('/token', array($this, 'token'));
-            $app->group('/emails', function() use ($app) {
+            $app->group('/emails', function () use ($app) {
                 new Routes\V1\Emails($app);
             });
-            $app->group('/orders', function() use ($app) {
+            $app->group('/orders', function () use ($app) {
                 new Routes\V1\Orders($app);
             });
-            $app->group('/products', function() use ($app) {
+            $app->group('/products', function () use ($app) {
+                $app->group('/{productId:[0-9]+}/attributes', function () use ($app) {
+                    new Routes\V1\Product\Attributes($app);
+                });
                 new Routes\V1\Products($app);
             });
-            $app->group('/reports', function() use ($app) {
+            $app->group('/reports', function () use ($app) {
                 new Routes\V1\Reports($app);
             });
-            $app->group('/coupons', function() use ($app) {
+            $app->group('/coupons', function () use ($app) {
                 new Routes\V1\Coupons($app);
             });
-            $app->group('/customers', function() use ($app) {
+            $app->group('/customers', function () use ($app) {
                 new Routes\V1\Customers($app);
             });
         }
@@ -90,14 +94,14 @@ class Routes
         $sub = '';
         $permissions = [];
         $users = $this->options->get('advanced.api.users', []);
-        foreach($users as $user) {
-            if($user['login'] == $server['PHP_AUTH_USER']) {
+        foreach ($users as $user) {
+            if ($user['login'] == $server['PHP_AUTH_USER']) {
                 $sub = $user['login'];
                 $permissions = $user['permissions'];
             }
         }
 
-        if($sub == '') {
+        if ($sub == '') {
             throw new Exception('User not found.', 401);
         }
 
