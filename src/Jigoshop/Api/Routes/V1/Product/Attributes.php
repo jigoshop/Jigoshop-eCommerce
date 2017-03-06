@@ -6,6 +6,9 @@ use Jigoshop\Admin\Migration\Exception;
 use Jigoshop\Api\Contracts\ApiControllerContract;
 use Jigoshop\Api\Routes\V1\BaseController;
 use Jigoshop\Entity\Product as ProductEntity;
+use Jigoshop\Entity\Product;
+use Jigoshop\Entity\Product\Attribute as AttributeEntity;
+use Jigoshop\Entity\Product\Attribute;
 use Jigoshop\Service\ProductService;
 use Slim\App;
 use Slim\Http\Request;
@@ -20,10 +23,11 @@ class Attributes extends BaseController implements ApiControllerContract
 {
     /** @var  App */
     protected $app;
-    /** @var  $product */
+    /** @var Product $product */
     protected $product;
 
     /**
+     * product service is service we are using for product attributes
      * @var string
      */
     protected $serviceName = 'jigoshop.service.product';
@@ -42,6 +46,8 @@ class Attributes extends BaseController implements ApiControllerContract
         $this->app = $app;
         $app->get('', array($this, 'findAll'));
         $app->get('/{id:[0-9]+}', array($this, 'findOne'));
+        $app->put('/{id:[0-9]+}', array($this, 'update'));
+        $app->get('', array($this, 'create'));
     }
 
     /**
@@ -95,10 +101,31 @@ class Attributes extends BaseController implements ApiControllerContract
      */
     public function create(Request $request, Response $response, $args)
     {
-        //TODO implement
+        $this->setProduct($args);
+
+        $attribute = new AttributeEntity\Custom();
+        $label = trim(strip_tags($_POST['attribute_label']));
+
+        if (empty($label)) {
+            throw new Exception(__('Custom attribute requires label to be set.', 'jigoshop'));
+        }
+
+        $attribute->setLabel($label);
+        $attribute->setSlug($this->wp->getHelpers()->sanitizeTitle($label));
+        $this->service->saveAttribute($attribute);
+        $attributeExists = false;
+
+        if ($attribute === null) {
+            throw new Exception(__('Attribute does not exists.', 'jigoshop'));
+        }
+
+        $this->populateAttribute($attribute, $attributeExists, $_POST);
+
+        $this->addAndSaveAttribute($attribute);
+
         return $response->withJson([
             'success' => true,
-            'data' => "$this->entityName successfully created",
+            'data' => "Attribute successfully created",
         ]);
     }
 
@@ -111,17 +138,37 @@ class Attributes extends BaseController implements ApiControllerContract
      */
     public function update(Request $request, Response $response, $args)
     {
-        $object = $this->validateObjectFinding($args);
-        //TODO implement
+        $this->setProduct($args);
+        /** @var ProductEntity\Attribute $attribute */
+        $attribute = $this->validateObjectFinding($args);
+
+        $data = $request->getParsedBody();
+        $id = $attribute->getId();
+
+        if ($this->product->hasAttribute($id)) {
+            $attribute = $this->product->removeAttribute($id);
+            $attributeExists = true;
+        } else {
+            $attribute = $this->service->getAttribute($id);
+            $attributeExists = false;
+        }
+
+        if ($attribute === null) {
+            throw new Exception(__('Attribute does not exists.', 'jigoshop'));
+        }
+
+        $this->populateAttribute($attribute, $attributeExists, $data);
+
+        $this->addAndSaveAttribute($attribute);
 
         return $response->withJson([
             'success' => true,
-            'data' => "Product successfully updated",
+            'data' => "Attribute successfully updated",
         ]);
     }
 
     /**
-     * setting
+     * setting product
      * @param $args
      */
     protected function setProduct($args)
@@ -188,6 +235,41 @@ class Attributes extends BaseController implements ApiControllerContract
         }
 
         return $object;
+    }
+
+    /**
+     * set attribute with given values
+     * @param Attribute $attribute
+     * @param $attributeExists
+     * @param $data
+     */
+    protected function populateAttribute(&$attribute, $attributeExists, $data)
+    {
+        if (isset($data['value'])) {
+            $attribute->setValue(trim(htmlspecialchars(wp_kses_post($data['value']))));
+        } else {
+            if ($attributeExists) {
+                throw new Exception(sprintf(__('Attribute "%s" already exists.', 'jigoshop'), $attribute->getLabel()));
+            } else {
+                $attribute->setValue('');
+            }
+        }
+
+        if (isset($data['options']) && isset($data['options']['display'])) {
+            $attribute->setVisible($_POST['options']['display'] === 'true');
+        }
+    }
+
+    /**
+     * @param $attribute
+     */
+    private function addAndSaveAttribute($attribute)
+    {
+        $wp = $this->app->getContainer()->di->get('wpal');
+        $wp->doAction('jigoshop\admin\product_attribute\add', $attribute, $this->product);
+
+        $this->product->addAttribute($attribute);
+        $this->service->save($this->product);
     }
 
 }
