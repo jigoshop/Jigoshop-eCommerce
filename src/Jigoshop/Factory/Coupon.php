@@ -2,6 +2,7 @@
 
 namespace Jigoshop\Factory;
 
+use Jigoshop\Core\Types;
 use Jigoshop\Entity\Coupon as Entity;
 use WPAL\Wordpress;
 
@@ -73,6 +74,10 @@ class Coupon implements EntityFactoryInterface
      */
     public function fetch($post)
     {
+        if($post && ($post->post_type != Types::COUPON)) {
+            return null;
+        }
+
         $state = array();
         $coupon = null;
         if ($post) {

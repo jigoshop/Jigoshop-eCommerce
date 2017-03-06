@@ -3,6 +3,7 @@
 namespace Jigoshop\Factory;
 
 use Jigoshop\Core\Options;
+use Jigoshop\Core\Types;
 use Jigoshop\Entity\Email as Entity;
 use WPAL\Wordpress;
 
@@ -105,6 +106,10 @@ class Email implements EntityFactoryInterface
      */
     public function fetch($post)
     {
+        if($post && ($post->post_type != Types::EMAIL)) {
+            return null;
+        }
+
         $email = new Entity();
         $state = array();
 
