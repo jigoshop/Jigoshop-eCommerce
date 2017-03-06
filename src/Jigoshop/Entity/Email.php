@@ -14,6 +14,8 @@ class Email implements EntityInterface, \JsonSerializable
 	private $text;
 	/** @var array */
 	private $actions = array();
+    /** @var array  */
+    private $attachments = [];
 
 	/**
 	 * @return int
@@ -114,11 +116,28 @@ class Email implements EntityInterface, \JsonSerializable
 		}
 	}
 
+    /**
+     * @return array
+     */
+    public function getAttachments()
+    {
+        return $this->attachments;
+    }
+
+    /**
+     * @param array $attachments
+     */
+    public function setAttachments($attachments)
+    {
+        $this->attachments = $attachments;
+    }
+
 	public function getStateToSave()
 	{
 		return array(
 			'subject' => $this->subject,
 			'actions' => $this->actions,
+            'attachments' => $this->attachments
 		);
 	}
 
@@ -130,6 +149,9 @@ class Email implements EntityInterface, \JsonSerializable
 		if (isset($state['actions'])) {
 			$this->actions = $state['actions'];
 		}
+		if (isset($state['attachments'])) {
+		    $this->attachments = $state['attachments'];
+        }
 	}
 
     /**
@@ -146,7 +168,8 @@ class Email implements EntityInterface, \JsonSerializable
             'title' => $this->title,
             'text' => $this->text,
             'subject' => $this->subject,
-            'actions' => $this->actions
+            'actions' => $this->actions,
+            'attachments' => $this->attachments,
         );
     }
 }
