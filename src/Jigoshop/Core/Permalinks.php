@@ -18,7 +18,6 @@ class Permalinks
 		$this->options = $options;
 
 		$wp->addAction('init', array($this, 'initFix'));
-        $wp->addFilter('post_type_link', [$this, 'parsePermalink'], 10, 2);
 		$wp->addFilter('rewrite_rules_array', array($this, 'fix'));
 	}
 
@@ -52,30 +51,4 @@ class Permalinks
 
 		return $rules;
 	}
-
-    /**
-     * @param $postLink
-     * @param $post
-     *
-     * @return string
-     */
-    public function parsePermalink($postLink, $post)
-    {
-        if (is_object($post) && $post->post_type == Types::PRODUCT) {
-            $parseProductLink = function ($postLink, $post, $taxonomy) {
-                if (strpos($postLink, '%' . $taxonomy . '%') !== 0) {
-                    $terms = wp_get_object_terms($post->ID, $taxonomy);
-                    if ($terms) {
-                        return str_replace('%' . $taxonomy . '%', $terms[0]->slug, $postLink);
-                    }
-                }
-
-                return $postLink;
-            };
-            $postLink = $parseProductLink($postLink, $post, Types::PRODUCT_CATEGORY);
-            $postLink = $parseProductLink($postLink, $post, Types::PRODUCT_TAG);
-        }
-
-        return $postLink;
-    }
 }
