@@ -15,9 +15,9 @@ use Slim\Http\Request;
 use Slim\Http\Response;
 
 /**
- * Class Products
+ * Class Attributes
  * @package Jigoshop\Api\Routes\V1;
- * @author Krzysztof Kasowski
+ * @author MAciej Maciaszek
  */
 class Attributes extends BaseController implements ApiControllerContract
 {
@@ -76,7 +76,7 @@ class Attributes extends BaseController implements ApiControllerContract
     }
 
     /**
-     * get all attributes for product
+     * get specified attribute for product
      * @param Request $request
      * @param Response $response
      * @param $args
@@ -86,6 +86,9 @@ class Attributes extends BaseController implements ApiControllerContract
     {
         $this->setProduct($args);
         $attribute = $this->validateObjectFinding($args);
+        if (!$this->product->hasAttribute($attribute->getId())) {
+            throw new Exception("Product has not this attribute");
+        }
         return $response->withJson([
             'success' => true,
             'data' => $attribute,
@@ -142,7 +145,6 @@ class Attributes extends BaseController implements ApiControllerContract
         /** @var ProductEntity\Attribute $attribute */
         $attribute = $this->validateObjectFinding($args);
 
-        $data = $request->getParsedBody();
         $id = $attribute->getId();
 
         if ($this->product->hasAttribute($id)) {
@@ -157,13 +159,37 @@ class Attributes extends BaseController implements ApiControllerContract
             throw new Exception(__('Attribute does not exists.', 'jigoshop'));
         }
 
-        $this->populateAttribute($attribute, $attributeExists, $data);
+        $this->populateAttribute($attribute, $attributeExists, $request->getParsedBody());
 
         $this->addAndSaveAttribute($attribute);
 
         return $response->withJson([
             'success' => true,
             'data' => "Attribute successfully updated",
+        ]);
+    }
+
+    /**
+     * remove attribute from product
+     * @param Request $request
+     * @param Response $response
+     * @param $args
+     * @return Response
+     */
+    public function delete(Request $request, Response $response, $args)
+    {
+        $this->setProduct($args);
+        /** @var ProductEntity\Attribute $attribute */
+        $attribute = $this->validateObjectFinding($args);
+        $id = $attribute->getId();
+        if (!$this->product->hasAttribute($id)) {
+            throw new Exception("Product has not this attribute");
+        }
+        $this->product->removeAttribute($id);
+        $this->service->save($this->product);
+        return $response->withJson([
+            'success' => true,
+            'data' => "Attribute successfully deleted",
         ]);
     }
 
@@ -182,16 +208,6 @@ class Attributes extends BaseController implements ApiControllerContract
             throw new Exception("Product not found.", 404);
         }
         $this->product = $product;
-    }
-
-    /**
-     * @param Request $request
-     * @param Response $response
-     * @param $args
-     */
-    public function delete(Request $request, Response $response, $args)
-    {
-        // TODO: Implement delete() method.
     }
 
     /**
