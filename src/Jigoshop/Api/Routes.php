@@ -43,6 +43,9 @@ class Routes
             });
             $app->group('/orders', function () use ($app) {
                 new Routes\V1\Orders($app);
+                $app->group('/{orderId:[0-9]+}/items', function () use ($app) {
+                    new Routes\V1\Order\Items($app);
+                });
             });
             $app->group('/products', function () use ($app) {
                 new Routes\V1\Products($app);

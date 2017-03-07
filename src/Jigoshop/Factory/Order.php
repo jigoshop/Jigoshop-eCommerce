@@ -10,6 +10,7 @@ use Jigoshop\Entity\Customer as CustomerEntity;
 use Jigoshop\Entity\Order as Entity;
 use Jigoshop\Entity\OrderInterface;
 use Jigoshop\Entity\Product as ProductEntity;
+use Jigoshop\Entity\Product;
 use Jigoshop\Exception;
 use Jigoshop\Helper\Product as ProductHelper;
 use Jigoshop\Shipping\Method as ShippingMethod;
@@ -297,6 +298,36 @@ class Order implements EntityFactoryInterface
         $order->restoreState($data);
 
         return $this->wp->applyFilters('jigoshop\factory\order\fill', $order);
+    }
+
+    /**
+     * @param OrderInterface $order
+     * @param $productId
+     * @param array $data
+     * @return OrderInterface
+     */
+    public function updateOrderItemByProductId(OrderInterface $order, $productId, array $data){
+        /** @var Product $product */
+        $product = $this->productService->find($productId);
+        $item = new Entity\Item();
+        $item->setProduct($product);
+        $key = $this->productService->generateItemKey($item);
+        $orderItem = $order->getItem($key);
+        if($orderItem){
+            $order->removeItem($key);
+        }
+        $item->setKey($key);
+        $item->setName($product->getName());
+        $item->setQuantity((int)$data['quantity']);
+        if (isset($data['price']) && is_numeric($data['price'])) {
+            $item->setPrice((float)$data['price']);
+        }
+        if ($item->getQuantity() > 0) {
+            $item = $this->wp->applyFilters('jigoshop\admin\order\update_product', $item, $order);
+        }
+        $order->addItem($item);
+        return $order;
+
     }
 
     private function createAddress($data)

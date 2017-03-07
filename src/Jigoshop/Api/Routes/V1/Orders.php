@@ -8,6 +8,7 @@ use Jigoshop\Core\Types;
 use Jigoshop\Entity\Order as OrderEntity;
 use Jigoshop\Entity\OrderInterface;
 use Jigoshop\Exception;
+use Jigoshop\Factory\Order;
 use Jigoshop\Service\OrderService;
 use Slim\App;
 use Slim\Http\Request;
@@ -170,6 +171,7 @@ class Orders extends PostController implements ApiControllerContract
         if (isset($putData['jigoshop_order']['items'])) {
             $object = $this->_updateOrderItems($object, $putData['jigoshop_order']['items']);
         }
+        /** @var Order $factory */
         $factory = $this->app->getContainer()->di->get("jigoshop.factory.$this->entityName");
         $object = $factory->fill($object, $putData['jigoshop_order']);
 
