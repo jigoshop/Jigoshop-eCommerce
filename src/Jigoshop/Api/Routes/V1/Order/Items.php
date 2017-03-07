@@ -77,7 +77,7 @@ class Items extends BaseController implements ApiControllerContract
     }
 
     /**
-     * get specified attribute for product
+     * get specified item from order
      * @param Request $request
      * @param Response $response
      * @param $args
@@ -86,8 +86,10 @@ class Items extends BaseController implements ApiControllerContract
     public function findOne(Request $request, Response $response, $args)
     {
         $this->setOrder($args);
-        $item = $this->validateObjectFinding($args);
-        $key = $item->getKey();
+        $product = $this->validateObjectFinding($args);
+        $item = new OrderEntity\Item();
+        $item->setProduct($product);
+        $key = $this->app->getContainer()->di->get('jigoshop.service.product')->generateItemKey($item);
         if (!$this->order->hasItem($key)) {
             throw new Exception("Order doesn't have this item");
         }
@@ -99,6 +101,7 @@ class Items extends BaseController implements ApiControllerContract
 
     /**
      * overrided create function from BaseController
+     * adding item to order
      * @param Request $request
      * @param Response $response
      * @param $args
@@ -116,6 +119,7 @@ class Items extends BaseController implements ApiControllerContract
 
     /**
      * overrided update function from BaseController
+     * updating item in order
      * @param Request $request
      * @param Response $response
      * @param $args
@@ -132,7 +136,7 @@ class Items extends BaseController implements ApiControllerContract
     }
 
     /**
-     * remove item from product
+     * remove item from order
      * @param Request $request
      * @param Response $response
      * @param $args
@@ -173,7 +177,6 @@ class Items extends BaseController implements ApiControllerContract
         }
         $this->order = $order;
     }
-
 
     /**
      * saving Order entity
