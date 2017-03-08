@@ -125,7 +125,7 @@ class Attributes extends BaseController implements ApiControllerContract
     public function updateOption(Request $request, Response $response, $args)
     {
         $attribute = $this->validateObjectFinding($args);
-
+        $this->validateOptionFinding($attribute, $args);
         $this->saveOption($args['id'], $request->getParsedBody(), $args['optionId']);
         return $response->withJson([
             'success' => true,
@@ -143,7 +143,7 @@ class Attributes extends BaseController implements ApiControllerContract
     public function deleteOption(Request $request, Response $response, $args)
     {
         $attribute = $this->validateObjectFinding($args);
-
+        $this->validateOptionFinding($attribute, $args);
         $this->service->removeAttribute($args['optionId']);
         return $response->withJson([
             'success' => true,
@@ -182,7 +182,23 @@ class Attributes extends BaseController implements ApiControllerContract
         return $object;
     }
 
-     private function saveAttribute($data, $attributeId = null)
+    /**
+     * validates if correct attribute option object was found
+     * @param $attribute
+     * @param $args
+     * @return mixed
+     */
+    private function validateOptionFinding($attribute, $args)
+    {
+        if (!isset($args['optionId']) || empty($args['optionId'])) {
+            throw new Exception("option ID was not provided");
+        }
+        if (!$attribute->getOption($args['optionId'])) {
+            throw new Exception("Attribute does not have this option.", 404);
+        }
+    }
+
+    private function saveAttribute($data, $attributeId = null)
     {
         $errors = array();
         if (!isset($data['label']) || empty($data['label'])) {
