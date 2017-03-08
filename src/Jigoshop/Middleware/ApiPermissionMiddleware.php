@@ -44,7 +44,7 @@ class ApiPermissionMiddleware
         $className = explode('/', $request->getUri()->getPath())[1] ?: null;
         if ($className && class_exists(self::API_NAMESPACE . '\\' . ucfirst($className))) {
 
-            //if has own permissions
+            //if has own referring permissions
             if (property_exists(self::API_NAMESPACE . '\\' . ucfirst($className), 'referringPermission')) {
                 $class = new \ReflectionClass(self::API_NAMESPACE . '\\' . ucfirst($className));
                 $property = $class->getDefaultProperties()['referringPermission'];
@@ -119,12 +119,5 @@ class ApiPermissionMiddleware
                 return false;
         }
     }
-//if ($request->isGet()) {
-//$this->checkPermission('read_' . $className);
-//}
-//elseif ($request->isPost() || $request->isPut() || $request->isDelete()) {
-//$this->checkPermission('manage_' . $className);
-//}
-
 
 }

@@ -7,6 +7,7 @@ use Jigoshop\Exception;
 use Slim\App;
 use Slim\Http\Request;
 use Slim\Http\Response;
+use Jigoshop\Entity\Product\Attribute;
 
 /**
  * Class Attributes
@@ -45,22 +46,29 @@ class Attributes extends BaseController implements ApiControllerContract
     public function create(Request $request, Response $response, $args)
     {
         $this->saveAttribute($_POST);
-
+        return $response->withJson([
+            'success' => true,
+            'data' => "$this->entityName successfully created",
+        ]);
     }
 
     public function update(Request $request, Response $response, $args)
     {
-        $this->validateObjectFinding($args);
-        $this->saveAttribute($request->getParsedBody());
+        $attribute = $this->validateObjectFinding($args);
+        $this->saveAttribute($request->getParsedBody(), $args['id']);
+        return $response->withJson([
+            'success' => true,
+            'data' => "$this->entityName successfully updated",
+        ]);
     }
 
     public function delete(Request $request, Response $response, $args)
     {
-        $this->validateObjectFinding($args);
-        $this->service->removeAttribute($id);
+        $attribute = $this->validateObjectFinding($args);
+        $this->service->removeAttribute($attribute->getId());
     }
 
-    private function saveAttribute($data)
+    private function saveAttribute($data, $attributeId = null)
     {
         $errors = array();
         if (!isset($data['label']) || empty($data['label'])) {
@@ -76,8 +84,8 @@ class Attributes extends BaseController implements ApiControllerContract
 
         $attribute = $this->service->createAttribute((int)$data['type']);
 
-        if (isset($data['id']) && is_numeric($data['id'])) {
-            $baseAttribute = $this->service->getAttribute((int)$data['id']);
+        if ($attributeId) {
+            $baseAttribute = $this->service->getAttribute($attributeId);
             $attribute->setId($baseAttribute->getId());
             $attribute->setOptions($baseAttribute->getOptions());
         }
@@ -87,7 +95,8 @@ class Attributes extends BaseController implements ApiControllerContract
         if (isset($data['slug']) && !empty($data['slug'])) {
             $attribute->setSlug(trim(htmlspecialchars(strip_tags($data['slug']))));
         } else {
-            $attribute->setSlug($this->wp->getHelpers()->sanitizeTitle($attribute->getLabel()));
+            $wp = $this->app->getContainer()->di->get('wpal');
+            $attribute->setSlug($wp->getHelpers()->sanitizeTitle($attribute->getLabel()));
         }
 
         $this->service->saveAttribute($attribute);
@@ -101,5 +110,20 @@ class Attributes extends BaseController implements ApiControllerContract
     protected function getObjectsCount()
     {
         return $this->service->countAttributes();
+    }
+
+    protected function validateObjectFinding($args)
+    {
+        if (!isset($args['id']) || empty($args['id'])) {
+            throw new Exception("Attribute ID was not provided");
+        }
+
+        $object = $this->service->getAttribute($args['id']);
+        $entity = self::JIGOSHOP_ENTITY_PREFIX . ucfirst($this->entityName);
+        if (!$object instanceof $entity) {
+            throw new Exception("Attribute not found.", 404);
+        }
+
+        return $object;
     }
 }
