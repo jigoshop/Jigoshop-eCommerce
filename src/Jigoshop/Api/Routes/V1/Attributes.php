@@ -41,6 +41,11 @@ class Attributes extends BaseController implements ApiControllerContract
         $app->post('', array($this, 'create'));
         $app->put('/{id:[0-9]+}', array($this, 'update'));
         $app->delete('/{id:[0-9]+}', array($this, 'delete'));
+
+        //options single routes
+        $app->post('/{id:[0-9]+}/options', array($this, 'addOption'));
+        $app->put('/{id:[0-9]+}/options/{optionId:[0-9]+}', array($this, 'updateOption'));
+        $app->delete('/{id:[0-9]+}/options/{optionId:[0-9]+}', array($this, 'deleteOption'));
     }
 
     /**
@@ -93,7 +98,91 @@ class Attributes extends BaseController implements ApiControllerContract
         ]);
     }
 
-    private function saveAttribute($data, $attributeId = null)
+    /**
+     * add option to Attribute
+     * @param Request $request
+     * @param Response $response
+     * @param $args
+     * @return Response
+     */
+    public function addOption(Request $request, Response $response, $args)
+    {
+        $attribute = $this->validateObjectFinding($args);
+        $this->saveOption($args['id'], $_POST);
+        return $response->withJson([
+            'success' => true,
+            'data' => "Attribute option successfully created",
+        ]);
+    }
+
+    /**
+     * update attribute option
+     * @param Request $request
+     * @param Response $response
+     * @param $args
+     * @return Response
+     */
+    public function updateOption(Request $request, Response $response, $args)
+    {
+        $attribute = $this->validateObjectFinding($args);
+
+        $this->saveOption($args['id'], $request->getParsedBody(), $args['optionId']);
+        return $response->withJson([
+            'success' => true,
+            'data' => "Attribute option successfully updated",
+        ]);
+    }
+
+    /**
+     * remove attribute option
+     * @param Request $request
+     * @param Response $response
+     * @param $args
+     * @return Response
+     */
+    public function deleteOption(Request $request, Response $response, $args)
+    {
+        $attribute = $this->validateObjectFinding($args);
+
+        $this->service->removeAttribute($args['optionId']);
+        return $response->withJson([
+            'success' => true,
+            'data' => "Attribute successfully deleted",
+        ]);
+    }
+
+
+    public function getObjects(array $queryParams)
+    {
+        return $this->service->findAllAttributes();
+    }
+
+    protected function getObjectsCount()
+    {
+        return $this->service->countAttributes();
+    }
+
+    /**
+     * validates if correct attribute object was found
+     * @param $args
+     * @return mixed
+     */
+    protected function validateObjectFinding($args)
+    {
+        if (!isset($args['id']) || empty($args['id'])) {
+            throw new Exception("Attribute ID was not provided");
+        }
+
+        $object = $this->service->getAttribute($args['id']);
+        $entity = self::JIGOSHOP_ENTITY_PREFIX . ucfirst($this->entityName);
+        if (!$object instanceof $entity) {
+            throw new Exception("Attribute not found.", 404);
+        }
+
+        return $object;
+    }
+
+     private function saveAttribute($data, $attributeId = null)
     {
         $errors = array();
         if (!isset($data['label']) || empty($data['label'])) {
@@ -127,28 +216,39 @@ class Attributes extends BaseController implements ApiControllerContract
         $this->service->saveAttribute($attribute);
     }
 
-    public function getObjects(array $queryParams)
+    /**
+     * @param $attributeId
+     * @param $data
+     * @param $optionId
+     */
+    protected function saveOption($attributeId, $data, $optionId = null)
     {
-        return $this->service->findAllAttributes();
-    }
-
-    protected function getObjectsCount()
-    {
-        return $this->service->countAttributes();
-    }
-
-    protected function validateObjectFinding($args)
-    {
-        if (!isset($args['id']) || empty($args['id'])) {
-            throw new Exception("Attribute ID was not provided");
+        $errors = array();
+        if (!isset($data['label']) || empty($data['label'])) {
+            $errors[] = __('Option label is not set.', 'jigoshop');
         }
 
-        $object = $this->service->getAttribute($args['id']);
-        $entity = self::JIGOSHOP_ENTITY_PREFIX . ucfirst($this->entityName);
-        if (!$object instanceof $entity) {
-            throw new Exception("Attribute not found.", 404);
+        if (!empty($errors)) {
+            throw new Exception(join('<br/>', $errors));
         }
 
-        return $object;
+        $attribute = $this->service->getAttribute($attributeId);
+        if ($optionId) {
+            $option = $attribute->removeOption($optionId);
+        } else {
+            $option = new Attribute\Option();
+        }
+
+        $option->setLabel(trim(htmlspecialchars(strip_tags($data['label']))));
+
+        if (isset($data['value']) && !empty($data['value'])) {
+            $option->setValue(trim(htmlspecialchars(strip_tags($data['value']))));
+        } else {
+            $wp = $this->app->getContainer()->di->get('wpal');
+            $option->setValue($wp->getHelpers()->sanitizeTitle($option->getLabel()));
+        }
+
+        $attribute->addOption($option);
+        $this->service->saveAttribute($attribute);
     }
 }
