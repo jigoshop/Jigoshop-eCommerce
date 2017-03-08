@@ -43,17 +43,17 @@ class ApiPermissionMiddleware
 
         $className = explode('/', $request->getUri()->getPath())[1] ?: null;
         if ($className && class_exists(self::API_NAMESPACE . '\\' . ucfirst($className))) {
-            /* check reading permission */
-            if ($request->isGet()) {
-                if (!$this->app->getContainer()->token->hasPermission('read_' . $className)) {
-                  throw new Exception('You have no permissions to access to this page.', 401);
-                }
-            } /* check managing permission */
-            elseif ($request->isPost() || $request->isPut() || $request->isDelete()) {
-                if (!$this->app->getContainer()->token->hasPermission('manage_' . $className)) {
-                    throw new Exception('You have no permissions to access to this page.', 401);
-                }
+
+            //if has own permissions
+            if (property_exists(self::API_NAMESPACE . '\\' . ucfirst($className), 'referringPermission')) {
+                $class = new \ReflectionClass(self::API_NAMESPACE . '\\' . ucfirst($className));
+                $property = $class->getDefaultProperties()['referringPermission'];
+                $this->checkPermission($this->resolvePermission($request->getMethod()) . '_' . $property);
+            } //validate
+            else {
+                $this->checkPermission($this->resolvePermission($request->getMethod()) . '_' . $className);
             }
+
         }
 
         return $next($request, $response);
@@ -87,5 +87,44 @@ class ApiPermissionMiddleware
         }
         return false;
     }
+
+    /**
+     * throw exception when permission not in token
+     * @param $permissionName
+     */
+    private function checkPermission($permissionName)
+    {
+        if (!$this->app->getContainer()->token->hasPermission($permissionName)) {
+            throw new Exception('You have no permissions to access to this page.', 401);
+        }
+    }
+
+    /**
+     * resolve permission from request method
+     * @param $requestMethod
+     * @return bool|string
+     */
+    private function resolvePermission($requestMethod)
+    {
+        switch ($requestMethod) {
+            case "GET":
+                /* check reading permission */
+                return 'read';
+            case 'POST':
+            case 'PUT':
+            case 'DELETE':
+                /* check managing permission */
+                return 'manage';
+            default:
+                return false;
+        }
+    }
+//if ($request->isGet()) {
+//$this->checkPermission('read_' . $className);
+//}
+//elseif ($request->isPost() || $request->isPut() || $request->isDelete()) {
+//$this->checkPermission('manage_' . $className);
+//}
+
 
 }

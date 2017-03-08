@@ -38,6 +38,15 @@ class Routes
         $app->get('/ping', array($this, 'ping'));
         if ($version == 1) {
             $app->post('/token', array($this, 'token'));
+            $app->group('/attributes', function () use ($app) {
+                new Routes\V1\Attributes($app);
+            });
+            $app->group('/coupons', function () use ($app) {
+                new Routes\V1\Coupons($app);
+            });
+            $app->group('/customers', function () use ($app) {
+                new Routes\V1\Customers($app);
+            });
             $app->group('/emails', function () use ($app) {
                 new Routes\V1\Emails($app);
             });
@@ -55,12 +64,6 @@ class Routes
             });
             $app->group('/reports', function () use ($app) {
                 new Routes\V1\Reports($app);
-            });
-            $app->group('/coupons', function () use ($app) {
-                new Routes\V1\Coupons($app);
-            });
-            $app->group('/customers', function () use ($app) {
-                new Routes\V1\Customers($app);
             });
         }
     }
