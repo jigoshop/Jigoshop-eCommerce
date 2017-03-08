@@ -8,15 +8,36 @@ $contentPosition = $options['structure'] == 'sidebar_left' ? 'right' : 'left';
 get_header('shop');
 ?>
 <style><?php echo $options['global_css']; ?></style>
-<style><?php echo $options['css']; ?></style>
-<div style="width: <?php echo $options['page_width']; ?>; margin-left: auto; margin-right: auto">
+<style>
+    .custom-layout-container {
+        width: <?php echo $options['page_width']; ?>;
+        margin-left: auto;
+        margin-right: auto;
+        max-width: 100%;
+    }
+    .custom-layout-content {
+        width: <?php echo $contentSize; ?>;
+        float: <?php echo $contentPosition; ?>
+    }
+    <?php if(in_array($options['structure'], ['sidebat_left', 'sidebar_right'])): ?>
+        .custom-layout-sidebar {
+            width: <?php echo $options['proportions']['sidebar'].'%'; ?>;
+            float: <?php echo $options['structure'] == 'sidebat_left' ? 'left' : 'right'; ?>;
+        }
+    <?php endif; ?>
+    .custom-layout-clear {
+        clear: both;
+    }
+    <?php echo $options['css']; ?>
+</style>
+<div class="custom-layout-container">
     <?php if($options['structure'] == 'sidebar_left') : ?>
-        <div style="float: left; width: <?php echo $options['proportions']['sidebar'].'%';?>">
+        <div class="custom-layout-sidebar">
             <?php do_action('jigoshop\template\sidebar'); ?>
             <?php dynamic_sidebar('jigoshop_sidebar_'.$options['sidebar']); ?>
         </div>
     <?php endif; ?>
-    <div style="width: <?php echo $contentSize; ?>; float: <?php echo $contentPosition; ?>">
+    <div class="custom-layout-content">
         <div id="jigoshop_content" role="main" class="jigoshop">
             <?php /** @deprecated */ do_action('jigoshop\shop\content\before'); ?>
             <?php do_action('jigoshop\template\shop\content\before'); ?>
@@ -26,12 +47,12 @@ get_header('shop');
         </div>
     </div>
     <?php if($options['structure'] == 'sidebar_right') : ?>
-        <div style="float: right; width: <?php echo $options['proportions']['sidebar'].'%';?>">
+        <div class="custom-layout-sidebar">
             <?php do_action('jigoshop\template\sidebar'); ?>
             <?php dynamic_sidebar('jigoshop_sidebar_'.$options['sidebar']); ?>
         </div>
     <?php endif; ?>
 </div>
-<div style="clear: both"></div>
+<div class="custom-layout-clear"></div>
 <?php get_footer('shop'); ?>
 
