@@ -43,29 +43,54 @@ class Attributes extends BaseController implements ApiControllerContract
         $app->delete('/{id:[0-9]+}', array($this, 'delete'));
     }
 
+    /**
+     * create attribute
+     * @param Request $request
+     * @param Response $response
+     * @param $args
+     * @return Response
+     */
     public function create(Request $request, Response $response, $args)
     {
         $this->saveAttribute($_POST);
         return $response->withJson([
             'success' => true,
-            'data' => "$this->entityName successfully created",
+            'data' => "Attribute successfully created",
         ]);
     }
 
+    /**
+     * update attribute
+     * @param Request $request
+     * @param Response $response
+     * @param $args
+     * @return Response
+     */
     public function update(Request $request, Response $response, $args)
     {
         $attribute = $this->validateObjectFinding($args);
         $this->saveAttribute($request->getParsedBody(), $args['id']);
         return $response->withJson([
             'success' => true,
-            'data' => "$this->entityName successfully updated",
+            'data' => "Attribute successfully updated",
         ]);
     }
 
+    /**
+     * remove attribute
+     * @param Request $request
+     * @param Response $response
+     * @param $args
+     * @return Response
+     */
     public function delete(Request $request, Response $response, $args)
     {
         $attribute = $this->validateObjectFinding($args);
         $this->service->removeAttribute($attribute->getId());
+        return $response->withJson([
+            'success' => true,
+            'data' => "Attribute successfully deleted",
+        ]);
     }
 
     private function saveAttribute($data, $attributeId = null)
