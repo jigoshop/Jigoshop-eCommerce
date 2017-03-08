@@ -183,7 +183,19 @@ class ProductService implements ProductServiceInterface
 		$fields = $object->getStateToSave();
 
 		if (isset($fields['id']) || isset($fields['name']) || isset($fields['description'])) {
-			// We do not need to save ID, name and description (excerpt) as they are saved by WordPress itself.
+			$post = [];
+
+		    if(isset($fields['name'])) {
+			    $post['post_title'] = $fields['name'];
+            }
+            if(isset($fields['description'])) {
+                $post['post_content'] = $fields['description'];
+            }
+            if(count($post)) {
+		        $post['ID'] = $object->getId();
+		        $this->wp->wpUpdatePost($post);
+            }
+
 			unset($fields['id'], $fields['name'], $fields['description']);
 		}
 

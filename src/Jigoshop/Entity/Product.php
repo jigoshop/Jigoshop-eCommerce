@@ -502,6 +502,12 @@ abstract class Product implements EntityInterface, Product\Taxable, \JsonSeriali
 
         foreach ($this->dirtyFields as $field) {
             switch ($field) {
+                case 'name':
+                    $toSave['name'] = $this->name;
+                    break;
+                case 'description':
+                    $toSave['description'] = $this->description;
+                    break;
                 case 'sku':
                     $toSave['sku'] = $this->sku;
                     break;
