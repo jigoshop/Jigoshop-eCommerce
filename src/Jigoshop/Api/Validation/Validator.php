@@ -40,24 +40,24 @@ class Validator
 
 
     /**
-     * @param $className
+     * @param $requirementsName
      * @return array|null
      */
-    public function getRequiredFieldsArray($className)
+    public function getRequiredFieldsArray($requirementsName)
     {
-        return isset($this->requiredFieldsArray[$className]) ? $this->requiredFieldsArray[$className] : null;
+        return isset($this->requiredFieldsArray[$requirementsName]) ? $this->requiredFieldsArray[$requirementsName] : null;
     }
 
     /**
-     * @param $className
+     * @param $requirementsName
      * @param $method
      * @return array|null
      */
-    public function getRequiredFieldsArrayForMethod($className, $method)
+    public function getRequiredFieldsArrayForMethod($requirementsName, $method)
     {
         $method = strtolower($method);
-        $forClass = $this->getRequiredFieldsArray($className);
-        return isset($forClass[$method]) ? $forClass[$method] : $forClass;
+        $forClass = $this->getRequiredFieldsArray($requirementsName);
+        return isset($forClass[$method]) ? $forClass[$method] : $requirementsName;
     }
 
 

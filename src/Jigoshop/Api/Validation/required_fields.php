@@ -10,9 +10,7 @@
  */
 return [
     'attributes' => [
-        'post' => [
             'label',
             'type',
-        ],
     ],
 ];

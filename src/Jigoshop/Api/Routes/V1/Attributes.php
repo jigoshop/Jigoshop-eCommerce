@@ -40,7 +40,7 @@ class Attributes extends BaseController implements ApiControllerContract
         $app->get('', array($this, 'findAll'));
         $app->get('/{id:[0-9]+}', array($this, 'findOne'));
         $app->post('', array($this, 'create'))->add(new RequiredFieldsMiddleware($app));
-        $app->put('/{id:[0-9]+}', array($this, 'update'));
+        $app->put('/{id:[0-9]+}', array($this, 'update'))->add(new RequiredFieldsMiddleware($app));
         $app->delete('/{id:[0-9]+}', array($this, 'delete'));
 
         //options single routes

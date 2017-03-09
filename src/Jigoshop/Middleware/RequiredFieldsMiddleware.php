@@ -38,9 +38,9 @@ class RequiredFieldsMiddleware
     public function __invoke($request, $response, $next)
     {
         if (in_array($method = $request->getMethod(), ['POST', 'PUT'])) {
-
-            $className = explode('/', $request->getUri()->getPath())[1] ?: null;
-            $required = Validator::getInstance()->getRequiredFieldsArrayForMethod($className, $method);
+            $requirementsName = isset($this->options['requirementsName']) ? $this->options['requirementsName'] :
+                (explode('/', $request->getUri()->getPath())[1] ?: null);
+            $required = Validator::getInstance()->getRequiredFieldsArrayForMethod($requirementsName, $method);
             $this->validateRequiredFields($request->getParsedBody(), $required);
         }
         return $next($request, $response);
