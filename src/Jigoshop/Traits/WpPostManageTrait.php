@@ -51,7 +51,8 @@ trait WpPostManageTrait
      * @param $postType
      * @return int
      */
-    public function updatePost($wp, $object, $postType){
+    public function updatePost($wp, $object, $postType)
+    {
         $wpdb = $wp->getWPDB();
         $date = $wp->getHelpers()->currentTime('mysql');
         $dateGmt = $wp->getHelpers()->currentTime('mysql', true);
@@ -69,7 +70,7 @@ trait WpPostManageTrait
             'post_name' => sanitize_title($title),
             'post_content' => $postContent,
         ),
-            array('id'=>$object->getId())
+            array('id' => $object->getId())
         );
 
         return $object->getId();

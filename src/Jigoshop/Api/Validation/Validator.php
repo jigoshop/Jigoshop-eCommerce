@@ -57,7 +57,7 @@ class Validator
     {
         $method = strtolower($method);
         $forClass = $this->getRequiredFieldsArray($requirementsName);
-        return isset($forClass[$method]) ? $forClass[$method] : $requirementsName;
+        return isset($forClass[$method]) ? $forClass[$method] : $forClass;
     }
 
 

@@ -10,7 +10,11 @@
  */
 return [
     'attributes' => [
-            'label',
-            'type',
+        'label',
+        'type',
     ],
+    'attributeOptions' => [
+        'label',
+    ],
+
 ];

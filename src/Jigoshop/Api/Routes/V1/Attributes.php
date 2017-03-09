@@ -44,7 +44,8 @@ class Attributes extends BaseController implements ApiControllerContract
         $app->delete('/{id:[0-9]+}', array($this, 'delete'));
 
         //options single routes
-        $app->post('/{id:[0-9]+}/options', array($this, 'addOption'));
+        $app->post('/{id:[0-9]+}/options', array($this, 'addOption'))
+            ->add(new RequiredFieldsMiddleware($app, ['requirementsName'=>'attributeOptions']));
         $app->put('/{id:[0-9]+}/options/{optionId:[0-9]+}', array($this, 'updateOption'));
         $app->delete('/{id:[0-9]+}/options/{optionId:[0-9]+}', array($this, 'deleteOption'));
     }
@@ -238,15 +239,6 @@ class Attributes extends BaseController implements ApiControllerContract
      */
     protected function saveOption($attributeId, $data, $optionId = null)
     {
-        $errors = array();
-        if (!isset($data['label']) || empty($data['label'])) {
-            $errors[] = __('Option label is not set.', 'jigoshop');
-        }
-
-        if (!empty($errors)) {
-            throw new Exception(join('<br/>', $errors));
-        }
-
         $attribute = $this->service->getAttribute($attributeId);
         if ($optionId) {
             $option = $attribute->removeOption($optionId);
