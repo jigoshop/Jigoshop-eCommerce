@@ -4,6 +4,7 @@ namespace Jigoshop\Api\Routes\V1;
 
 use Jigoshop\Api\Contracts\ApiControllerContract;
 use Jigoshop\Exception;
+use Jigoshop\Middleware\RequiredFieldsMiddleware;
 use Slim\App;
 use Slim\Http\Request;
 use Slim\Http\Response;
@@ -38,7 +39,7 @@ class Attributes extends BaseController implements ApiControllerContract
         $this->app = $app;
         $app->get('', array($this, 'findAll'));
         $app->get('/{id:[0-9]+}', array($this, 'findOne'));
-        $app->post('', array($this, 'create'));
+        $app->post('', array($this, 'create'))->add(new RequiredFieldsMiddleware($app));
         $app->put('/{id:[0-9]+}', array($this, 'update'));
         $app->delete('/{id:[0-9]+}', array($this, 'delete'));
 
@@ -204,12 +205,10 @@ class Attributes extends BaseController implements ApiControllerContract
         if (!isset($data['label']) || empty($data['label'])) {
             $errors[] = __('Attribute label is not set.', 'jigoshop');
         }
-        if (!isset($data['type']) || !in_array($data['type'], array_keys(Attribute::getTypes()))) {
-            $errors[] = __('Attribute type is not valid.', 'jigoshop');
-        }
-
-        if (!empty($errors)) {
-            throw new Exception(join('<br/>', $errors));
+        if (!isset($data['type']) ||
+            !(is_numeric($data['type']) && in_array((int)$data['type'], array_keys(Attribute::getTypes()), true))
+        ) {
+            throw new Exception(__('Attribute type is not valid.', 'jigoshop'), 422);
         }
 
         $attribute = $this->service->createAttribute((int)$data['type']);
