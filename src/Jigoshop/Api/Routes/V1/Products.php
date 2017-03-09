@@ -2,6 +2,7 @@
 
 namespace Jigoshop\Api\Routes\V1;
 
+use Jigoshop\Admin\Migration\Exception;
 use Jigoshop\Api\Contracts\ApiControllerContract;
 use Jigoshop\Entity\Product as ProductEntity;
 use Slim\App;
@@ -45,9 +46,9 @@ class Products extends PostController implements ApiControllerContract
     {
         $factory = $this->app->getContainer()->di->get('jigoshop.factory.product');
         self::overridePostProductData();
-        $product = $factory->create(null);
-        $service = $this->app->getContainer()->di->get('jigoshop.service.product');
-        $service->save($product);
+        $this->saveAttributes($_POST['product']);
+        $product = $factory->createWithAttributes(null);
+        $this->service->save($product);
 
         return $response->withJson([
             'success' => true,
@@ -70,8 +71,7 @@ class Products extends PostController implements ApiControllerContract
         $factory = $this->app->getContainer()->di->get('jigoshop.factory.product');
         $this->saveAttributes($putData['product']);
         $product = $factory->update($object, $putData); //updating object with parsed variables
-        $service = $this->app->getContainer()->di->get('jigoshop.service.product');
-        $service->updateAndSavePost($product);
+        $this->service->updateAndSavePost($product);
 
         return $response->withJson([
             'success' => true,
@@ -99,7 +99,7 @@ class Products extends PostController implements ApiControllerContract
         return $data;
     }
 
-
+    //todo move to service
     /**
      * converts attributes in array to updated or created attribute objects
      * @param array $productData
@@ -107,15 +107,22 @@ class Products extends PostController implements ApiControllerContract
     private function saveAttributes(array &$productData)
     {
         if (isset($productData['attributes'])) {
+            $newAttributesArray = [];
+            $factory = $this->app->getContainer()->di->get('jigoshop.factory.product');
             foreach ($productData['attributes'] as $key => &$attribute) {
                 if (!$dbAttr = $this->service->getAttribute($key)) {
-                    $dbAttr = $this->service->createAttribute(null);
+                    $dbAttr = $this->service->createAttribute($attribute['type']);
+                    $dbAttr = $factory->updateAttribute($attribute, $dbAttr, $key);
+                    $dbAttr->setValue($attribute['value']);
                 } else {
                     $dbAttr->setExists(true);
+                    $dbAttr->setValue($attribute);
                 }
-                $dbAttr->setValue($attribute);
-                $attribute = $this->service->saveAttribute($dbAttr);
+                $tempAttribute = $this->service->saveAttribute($dbAttr);
+                $newAttributesArray[$tempAttribute->getId()] = $tempAttribute;
+                unset($productData['attributes'][$key]);
             }
+            $productData['attributes'] = $newAttributesArray;
         }
     }
 

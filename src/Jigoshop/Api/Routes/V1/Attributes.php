@@ -200,6 +200,11 @@ class Attributes extends BaseController implements ApiControllerContract
         }
     }
 
+    //todo can be moved to service
+    /**
+     * @param $data
+     * @param null $attributeId
+     */
     private function saveAttribute($data, $attributeId = null)
     {
         $errors = array();
