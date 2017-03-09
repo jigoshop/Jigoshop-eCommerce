@@ -91,7 +91,7 @@ class Items extends BaseController implements ApiControllerContract
         $item->setProduct($product);
         $key = $this->app->getContainer()->di->get('jigoshop.service.product')->generateItemKey($item);
         if (!$this->order->hasItem($key)) {
-            throw new Exception("Order doesn't have this item");
+            throw new Exception("Order doesn't have this item",404);
         }
         return $response->withJson([
             'success' => true,
@@ -151,7 +151,7 @@ class Items extends BaseController implements ApiControllerContract
         $item->setProduct($product);
         $key = $this->app->getContainer()->di->get('jigoshop.service.product')->generateItemKey($item);
         if (!$this->order->hasItem($key)) {
-            throw new Exception("Order doesn't have this item");
+            throw new Exception("Order doesn't have this item",404);
         }
         $this->order->removeItem($key);
         $this->service->save($this->order);
@@ -169,7 +169,7 @@ class Items extends BaseController implements ApiControllerContract
     {
         // validating product first
         if (!isset($args['orderId']) || empty($args['orderId'])) {
-            throw new Exception("Order Id was not provided");
+            throw new Exception("Order Id was not provided",422);
         }
         $order = $this->service->find($args['orderId']);
         if (!$order instanceof OrderEntity) {

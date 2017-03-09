@@ -88,7 +88,7 @@ class Attributes extends BaseController implements ApiControllerContract
         $this->setProduct($args);
         $attribute = $this->validateObjectFinding($args);
         if (!$this->product->hasAttribute($attribute->getId())) {
-            throw new Exception("Product has not this attribute");
+            throw new Exception("Product has not this attribute",404);
         }
         return $response->withJson([
             'success' => true,
@@ -111,7 +111,7 @@ class Attributes extends BaseController implements ApiControllerContract
         $label = trim(strip_tags($_POST['attribute_label']));
 
         if (empty($label)) {
-            throw new Exception(__('Custom attribute requires label to be set.', 'jigoshop'));
+            throw new Exception(__('Custom attribute requires label to be set.', 'jigoshop'),422);
         }
 
         $attribute->setLabel($label);
@@ -120,7 +120,7 @@ class Attributes extends BaseController implements ApiControllerContract
         $attributeExists = false;
 
         if ($attribute === null) {
-            throw new Exception(__('Attribute does not exists.', 'jigoshop'));
+            throw new Exception(__('Attribute does not exists.', 'jigoshop'),404);
         }
 
         $this->populateAttribute($attribute, $attributeExists, $_POST);
@@ -157,7 +157,7 @@ class Attributes extends BaseController implements ApiControllerContract
         }
 
         if ($attribute === null) {
-            throw new Exception(__('Attribute does not exists.', 'jigoshop'));
+            throw new Exception(__('Attribute does not exists.', 'jigoshop'),404);
         }
 
         $this->populateAttribute($attribute, $attributeExists, $request->getParsedBody());
@@ -184,7 +184,7 @@ class Attributes extends BaseController implements ApiControllerContract
         $attribute = $this->validateObjectFinding($args);
         $id = $attribute->getId();
         if (!$this->product->hasAttribute($id)) {
-            throw new Exception("Product has not this attribute");
+            throw new Exception("Product has not this attribute",404);
         }
         $this->product->removeAttribute($id);
         $this->service->save($this->product);
@@ -202,7 +202,7 @@ class Attributes extends BaseController implements ApiControllerContract
     {
         // validating product first
         if (!isset($args['productId']) || empty($args['productId'])) {
-            throw new Exception("Product Id was not provided");
+            throw new Exception("Product Id was not provided",422);
         }
         $product = $this->service->find($args['productId']);
         if (!$product instanceof ProductEntity) {
@@ -241,7 +241,7 @@ class Attributes extends BaseController implements ApiControllerContract
     protected function validateObjectFinding($args)
     {
         if (!isset($args['id']) || empty($args['id'])) {
-            throw new Exception("$this->entityName ID was not provided");
+            throw new Exception("$this->entityName ID was not provided",422);
         }
 
         $object = $this->service->getAttribute($args['id']);

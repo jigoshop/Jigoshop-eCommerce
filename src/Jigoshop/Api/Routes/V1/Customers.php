@@ -80,7 +80,7 @@ class Customers extends BaseController implements ApiControllerContract
     public function update(Request $request, Response $response, $args)
     {
         if (!isset($args['id']) || empty($args['id'])) {
-            throw new Exception("$this->entityName ID was not provided");
+            throw new Exception("$this->entityName ID was not provided",422);
         }
 
         $user = $this->service->find($args['id']);

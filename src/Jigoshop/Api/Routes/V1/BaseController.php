@@ -148,7 +148,7 @@ abstract class BaseController
     protected function validateObjectFinding($args)
     {
         if (!isset($args['id']) || empty($args['id'])) {
-            throw new Exception("$this->entityName ID was not provided");
+            throw new Exception("$this->entityName ID was not provided",422);
         }
 
         $object = $this->service->find($args['id']);

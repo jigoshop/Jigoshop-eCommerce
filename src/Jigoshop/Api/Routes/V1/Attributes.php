@@ -172,7 +172,7 @@ class Attributes extends BaseController implements ApiControllerContract
     protected function validateObjectFinding($args)
     {
         if (!isset($args['id']) || empty($args['id'])) {
-            throw new Exception("Attribute ID was not provided");
+            throw new Exception("Attribute ID was not provided", 422);
         }
 
         $object = $this->service->getAttribute($args['id']);
@@ -193,7 +193,7 @@ class Attributes extends BaseController implements ApiControllerContract
     private function validateOptionFinding($attribute, $args)
     {
         if (!isset($args['optionId']) || empty($args['optionId'])) {
-            throw new Exception("option ID was not provided");
+            throw new Exception("option ID was not provided",422);
         }
         if (!$attribute->getOption($args['optionId'])) {
             throw new Exception("Attribute does not have this option.", 404);
