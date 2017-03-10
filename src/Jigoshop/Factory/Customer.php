@@ -9,84 +9,84 @@ use WPAL\Wordpress;
 
 class Customer implements EntityFactoryInterface
 {
-	const CUSTOMER = 'jigoshop_customer';
+    const CUSTOMER = 'jigoshop_customer';
 
-	/** @var \WPAL\Wordpress */
-	private $wp;
+    /** @var \WPAL\Wordpress */
+    private $wp;
     /** @var  SessionEntity */
     private $session;
 
-	public function __construct(Wordpress $wp, SessionServiceInterface $sessionService)
-	{
-		$this->wp = $wp;
+    public function __construct(Wordpress $wp, SessionServiceInterface $sessionService)
+    {
+        $this->wp = $wp;
         $this->session = $sessionService->get($sessionService->getCurrentKey());
-	}
+    }
 
-	/**
-	 * Creates new customer properly based on POST variable data.
-	 *
-	 * @param $id int Post ID to create object for.
-	 *
-	 * @return Entity
-	 */
-	public function create($id)
-	{
-		$customer = new Entity();
-		$customer->setId($id);
+    /**
+     * Creates new customer properly based on POST variable data.
+     *
+     * @param $id int Post ID to create object for.
+     *
+     * @return Entity
+     */
+    public function create($id)
+    {
+        $customer = new Entity();
+        $customer->setId($id);
 
-		return $customer;
-	}
+        return $customer;
+    }
 
-	/**
-	 * Updates customer properly based on array data.
-	 *
-	 * @param $user user object
-	 * @param array $data Post ID to create object for.
-	 *
-	 * @return Entity
-	 */
-	public function update($user, array $data)
-	{
-	    $user = $this->fetch($user);
+    /**
+     * Updates customer properly based on array data.
+     *
+     * @param $user user object
+     * @param array $data Post ID to create object for.
+     *
+     * @return Entity
+     */
+    public function update($user, array $data)
+    {
+        $user = $this->fetch($user);
         $user->restoreState($data);
-		return $user;
-	}
+        return $user;
+    }
 
-	/**
-	 * Fetches customer from database.
-	 *
-	 * @param $user \WP_User User object to fetch customer for.
-	 *
-	 * @return \Jigoshop\Entity\Customer
-	 */
-	public function fetch($user)
-	{
-		$state = array();
+    /**
+     * Fetches customer from database.
+     *
+     * @param $user \WP_User User object to fetch customer for.
+     *
+     * @return \Jigoshop\Entity\Customer
+     */
+    public function fetch($user)
+    {
+        $state = array();
 
-		if ($user->ID == 0) {
-			$customer = new Entity\Guest();
+        if ($user->ID == 0) {
+            $customer = new Entity\Guest();
 
-			if ($this->session->getField(self::CUSTOMER)) {
-				$customer->restoreState($this->session->getField(self::CUSTOMER));
-			}
-		} else {
-			$customer = new Entity();
-			$meta = $this->wp->getUserMeta($user->ID);
+            if ($this->session->getField(self::CUSTOMER)) {
+                $customer->restoreState($this->session->getField(self::CUSTOMER));
+            }
+        } else {
+            $customer = new Entity();
+            $meta = $this->wp->getUserMeta($user->ID);
 
-			if (is_array($meta)) {
-				$state = array_map(function ($item){
-					return $item[0];
-				}, $meta);
-			}
+            if (is_array($meta)) {
+                $state = array_map(function ($item) {
+                    return $item[0];
+                }, $meta);
+            }
 
-			$state['id'] = $user->ID;
-			$state['login'] = $user->get('login');
-			$state['email'] = $user->get('user_email');
-			$state['name'] = $user->get('display_name');
+            $state['id'] = $user->ID;
+            $state['login'] = $user->get('login');
+            $state['email'] = $user->get('user_email');
+            $state['name'] = $user->get('display_name');
 
-			$customer->restoreState($state);
-		}
+            $customer->restoreState($state);
+        }
 
-		return $this->wp->applyFilters('jigoshop\find\customer', $customer, $state);
-	}
+        return $this->wp->applyFilters('jigoshop\find\customer', $customer, $state);
+    }
 }
