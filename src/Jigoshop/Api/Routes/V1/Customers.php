@@ -32,6 +32,7 @@ class Customers extends BaseController implements ApiControllerContract
         $app->get('/{id:[0-9]+}', array($this, 'findOne'));
         $app->post('', array($this, 'create'));
         $app->put('/{id:[0-9]+}', array($this, 'update'));
+        $app->delete('/{id:[0-9]+}', array($this, 'delete'));
     }
 
     /**
@@ -43,6 +44,7 @@ class Customers extends BaseController implements ApiControllerContract
      */
     public function findOne(Request $request, Response $response, $args)
     {
+        $item = $this->validateObjectFinding($args);
         $item = $this->service->find($args['id']);
         return $response->withJson([
             'success' => true,
@@ -104,6 +106,7 @@ class Customers extends BaseController implements ApiControllerContract
     }
 
     /**
+     *
      * @param Request $request
      * @param Response $response
      * @param $args
@@ -111,7 +114,8 @@ class Customers extends BaseController implements ApiControllerContract
      */
     public function delete(Request $request, Response $response, $args)
     {
-        // TODO: Implement delete() method.
+        throw new Exception("Removing customers not available from API.", 400);
+        // TODO: Implement delete() method. if needed
     }
 
     /**
