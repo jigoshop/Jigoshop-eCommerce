@@ -5,6 +5,7 @@ namespace Jigoshop\Api\Routes\V1;
 use Jigoshop\Api\Contracts\ApiControllerContract;
 use Jigoshop\Entity\Customer;
 use Jigoshop\Exception;
+use Jigoshop\Middleware\RequiredFieldsMiddleware;
 use Slim\App;
 use Slim\Http\Request;
 use Slim\Http\Response;
@@ -30,7 +31,7 @@ class Customers extends BaseController implements ApiControllerContract
         $this->app = $app;
         $app->get('', array($this, 'findAll'));
         $app->get('/{id:[0-9]+}', array($this, 'findOne'));
-        $app->post('', array($this, 'create'));
+        $app->post('', array($this, 'create'))->add(new RequiredFieldsMiddleware($app));
         $app->put('/{id:[0-9]+}', array($this, 'update'));
         $app->delete('/{id:[0-9]+}', array($this, 'delete'));
     }
@@ -61,13 +62,18 @@ class Customers extends BaseController implements ApiControllerContract
      */
     public function create(Request $request, Response $response, $args)
     {
+        /** @var Wordpress $wp */
         $wp = $this->app->getContainer()->di->get('wpal');
         if (username_exists($_POST['user_login'])) {
             throw new Exception("Customer username is taken", 422);
         } elseif (email_exists($_POST['user_email'])) {
             throw new Exception("Customer email exists", 422);
         }
-        $userId = $wp->insert($_POST['user_login'], $_POST['user_pass'], $_POST['user_email']);
+        $userId = wp_insert_user([
+            'user_login' => $_POST['user_login'],
+            'user_pass' => $_POST['user_pass'],
+            'user_email' => $_POST['user_email']
+        ]);
         if ($userId->errors) {
             return $response->withJson([
                 'success' => false,

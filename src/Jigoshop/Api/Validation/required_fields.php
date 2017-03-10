@@ -16,5 +16,12 @@ return [
     'attributeOptions' => [
         'label',
     ],
+    'customers' => [
+        'post' => [
+            'user_login',
+            'user_pass',
+            'user_email',
+        ]
+    ],
 
 ];
