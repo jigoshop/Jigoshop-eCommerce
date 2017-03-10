@@ -41,7 +41,7 @@ class JigoshopInit
         require_once __DIR__ . '/functions.php';
         $this->setStaticVariables($file);
         $this->classLoader = $this->getClassLoader();
-        $this->classLoader->addPsr4('WPAL\\', array(self::getDir() . '/vendor/megawebmaster/wpal/WPAL'));
+        $this->classLoader->addPsr4('WPAL\\', array(self::getDir() . '/vendor/jigoshop/wpal/WPAL'));
         $this->initLoggers();
         $this->initCache();
 
