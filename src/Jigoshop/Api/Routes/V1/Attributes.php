@@ -75,7 +75,7 @@ class Attributes extends BaseController implements ApiControllerContract
      */
     public function update(Request $request, Response $response, $args)
     {
-        $attribute = $this->validateObjectFinding($args);
+        $this->validateObjectFinding($args);
         $this->saveAttribute($request->getParsedBody(), $args['id']);
         return $response->withJson([
             'success' => true,
@@ -109,7 +109,7 @@ class Attributes extends BaseController implements ApiControllerContract
      */
     public function addOption(Request $request, Response $response, $args)
     {
-        $attribute = $this->validateObjectFinding($args);
+        $this->validateObjectFinding($args);
         $this->saveOption($args['id'], $_POST);
         return $response->withJson([
             'success' => true,
@@ -186,9 +186,8 @@ class Attributes extends BaseController implements ApiControllerContract
 
     /**
      * validates if correct attribute option object was found
-     * @param $attribute
+     * @param Attribute $attribute
      * @param $args
-     * @return mixed
      */
     private function validateOptionFinding($attribute, $args)
     {

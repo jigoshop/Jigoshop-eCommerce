@@ -11,7 +11,7 @@ use Jigoshop\Exception;
  * extend this class in order to get RESTful methods for contollers
  * It takes class name to provide service, entity and type. You can override this if there is need by providing
  * $service, $entityName
- * Class BaseControlller
+ * Class BaseController
  * @package Jigoshop\Api\Routes\V1
  */
 abstract class BaseController

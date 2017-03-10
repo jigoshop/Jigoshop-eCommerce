@@ -2,7 +2,7 @@
 
 namespace Jigoshop\Api\Routes\V1;
 
-use Jigoshop\Admin\Migration\Exception;
+
 use Jigoshop\Api\Contracts\ApiControllerContract;
 use Jigoshop\Entity\Product as ProductEntity;
 use Slim\App;

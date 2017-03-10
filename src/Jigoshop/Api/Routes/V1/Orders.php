@@ -203,7 +203,7 @@ class Orders extends PostController implements ApiControllerContract
             throw new Exception("Order not found.", 404);
         }
         if (isset($request->getParsedBody()['jigoshop_order']['items'])) {
-            $object = $this->_updateOrderItems($object, $request->getParsedBody()['jigoshop_order']['items']);
+            $this->_updateOrderItems($object, $request->getParsedBody()['jigoshop_order']['items']);
         }
 
         return $response->withJson([
@@ -237,7 +237,7 @@ class Orders extends PostController implements ApiControllerContract
                 throw new Exception(__('Product not found.', 'jigoshop'));
             }
 
-            /** @var Item $item */
+            /** @var OrderEntity\Item $item */
             $item = $wp->applyFilters('jigoshop\cart\add', null, $product);
 
             if ($item === null) {

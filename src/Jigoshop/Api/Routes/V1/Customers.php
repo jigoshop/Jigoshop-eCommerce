@@ -3,7 +3,6 @@
 namespace Jigoshop\Api\Routes\V1;
 
 use Jigoshop\Api\Contracts\ApiControllerContract;
-use Jigoshop\Entity\Customer;
 use Jigoshop\Exception;
 use Jigoshop\Middleware\RequiredFieldsMiddleware;
 use Slim\App;
@@ -45,7 +44,7 @@ class Customers extends BaseController implements ApiControllerContract
      */
     public function findOne(Request $request, Response $response, $args)
     {
-        $item = $this->validateObjectFinding($args);
+        $this->validateObjectFinding($args);
         $item = $this->service->find($args['id']);
         return $response->withJson([
             'success' => true,
@@ -62,8 +61,6 @@ class Customers extends BaseController implements ApiControllerContract
      */
     public function create(Request $request, Response $response, $args)
     {
-        /** @var Wordpress $wp */
-        $wp = $this->app->getContainer()->di->get('wpal');
         if (username_exists($_POST['user_login'])) {
             throw new Exception("Customer username is taken", 422);
         } elseif (email_exists($_POST['user_email'])) {
@@ -165,7 +162,7 @@ class Customers extends BaseController implements ApiControllerContract
     /**
      * validates if correct post was found
      * @param $args
-     * @return bool|\WP_User
+     * @return \WP_User
      */
     protected function validateObjectFinding($args)
     {

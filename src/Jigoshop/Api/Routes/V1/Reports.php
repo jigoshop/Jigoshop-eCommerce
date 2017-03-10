@@ -4,7 +4,7 @@ namespace Jigoshop\Api\Routes\V1;
 
 use Jigoshop\Admin\Reports\Chart;
 use Jigoshop\Admin\Reports\SalesTab;
-use Jigoshop\Api\Permission;
+
 use Jigoshop\Exception;
 use Slim\App;
 use Slim\Http\Request;
@@ -32,10 +32,6 @@ class Reports
 
     public function getReports(Request $request, Response $response, $args)
     {
-        if(!$this->app->getContainer()->token->hasPermission(Permission::READ_REPORTS)) {
-            throw new Exception('You have no permissions to access to this page.', 403);
-        }
-
         /** @var SalesTab $sales */
         $sales = $this->app->getContainer()->di->get('jigoshop.admin.reports.sales');
         $chart = $sales->getChart();

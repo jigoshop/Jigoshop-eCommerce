@@ -40,7 +40,7 @@ class Customer implements EntityFactoryInterface
     /**
      * Updates customer properly based on array data.
      *
-     * @param $user user object
+     * @param $user \WP_User user object
      * @param array $data Post ID to create object for.
      *
      * @return Entity
