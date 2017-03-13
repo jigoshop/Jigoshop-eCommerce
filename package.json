@@ -5,8 +5,8 @@
   "repository": {},
   "dependencies": {},
   "devDependencies": {
+    "apidoc": "^0.17.5",
     "coffee-script": "^1.7.1",
-    "jquery-flot": "^0.8.3",
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^0.0.6",
     "gulp-cache": "^0.1.1",
@@ -21,6 +21,7 @@
     "gulp-replace": "^0.3.0",
     "gulp-rimraf": "^0.1.0",
     "gulp-uglify": "^0.2.1",
+    "jquery-flot": "^0.8.3",
     "require-dir": "~0.1.0",
     "yargs": "^1.2.6"
   },
