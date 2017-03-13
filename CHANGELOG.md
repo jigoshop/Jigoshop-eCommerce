@@ -22,6 +22,7 @@
     * Fix: Order migration when product no longer exists.
     * Fix: Input coupon field on checkout page.
     * Fix: Fatal error when product does not have default tax classes selected.
+    * Fix: Fatal error when attribute was removed from product.
 * 2.0.9 - 2017.02.13:
     * Fix: Support Twentyseventeen theme.
     * Fix: Improve product reviews.

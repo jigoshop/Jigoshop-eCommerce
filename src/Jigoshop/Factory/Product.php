@@ -200,7 +200,9 @@ class Product implements EntityFactoryInterface
 				$state['attribute_order'] = maybe_unserialize($state['attribute_order']);
 				$attributes = array();
 				foreach($state['attribute_order'] as $attributeId) {
-					$attributes[$attributeId] = $state['attributes'][$attributeId];
+				    if(isset($state['attributes'][$attributeId])) {
+                        $attributes[$attributeId] = $state['attributes'][$attributeId];
+                    }
 				}
 				foreach ($state['attributes'] as $attributeId => $attribute) {
 					if(!isset($attributes[$attributeId])) {
