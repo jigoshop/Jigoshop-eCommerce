@@ -64,6 +64,13 @@ abstract class BaseController
     }
 
     /**
+     * @apiDefine findAllReturnData
+     * @apiSuccess {Bool} success Response status.
+     * @apiSuccess {Number} all_results Number of all found results.
+     * @apiSuccess {Number} pagelen Limit of items on page.
+     * @apiSuccess {Number} page Current page.
+     */
+    /**
      * Basic findAll method
      * @param Request $request
      * @param Response $response
@@ -140,6 +147,11 @@ abstract class BaseController
         return $queryParams;
     }
 
+    /**
+     * @apiDefine validateObjectFindingError
+     * @apiError UnprocessableEntity ID was not provide
+     * @apiError EntityNotFound Object was not found
+     */
     /**
      * validates if correct post was found
      * @param $args
