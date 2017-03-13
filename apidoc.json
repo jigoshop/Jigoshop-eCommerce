@@ -1,0 +1,11 @@
+{
+  "name": "Jigoshop API",
+  "version": "0.1.0",
+  "description": "RESTful API developed for mobile usage purposes",
+  "title": "Jigoshop API",
+  "url" : "https://jigoshop.dev/api/v1",
+  "template": {
+    "withCompare": true,
+    "withGenerator": true
+  }
+}
