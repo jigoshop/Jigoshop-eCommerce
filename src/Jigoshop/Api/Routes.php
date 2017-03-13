@@ -35,8 +35,25 @@ class Routes
      */
     public function init(App $app, $version)
     {
+        /**
+         * @api {get} /ping verify connection to API.
+         * @apiName Ping
+         * @apiGroup Main
+         *
+         * @apiSuccess {Bool} success Request status .
+         * @apiSuccess {String} time Response time.
+         */
         $app->get('/ping', array($this, 'ping'));
         if ($version == 1) {
+            /**
+             * @api {post} /token setting token variable for authorization header
+             * @apiName Token
+             * @apiGroup Main
+             *
+             * @apiSuccess {Bool} success Request status .
+             * @apiSuccess {String} token Token that is needed to include in authorization header.
+             * @apiError UserNotFound User not found.
+             */
             $app->post('/token', array($this, 'token'));
             $app->group('/attributes', function () use ($app) {
                 new Routes\V1\Attributes($app);
