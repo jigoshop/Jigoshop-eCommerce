@@ -117,6 +117,7 @@ abstract class BaseController
      * @return mixed
      */
     abstract protected function getObjects(array $queryParams);
+
     /**
      * @return mixed
      */
@@ -149,7 +150,7 @@ abstract class BaseController
 
     /**
      * @apiDefine validateObjectFindingError
-     * @apiError UnprocessableEntity ID was not provide
+     * @apiError UnprocessableEntity ID was not provided
      * @apiError EntityNotFound Object was not found
      */
     /**
@@ -160,7 +161,7 @@ abstract class BaseController
     protected function validateObjectFinding($args)
     {
         if (!isset($args['id']) || empty($args['id'])) {
-            throw new Exception("$this->entityName ID was not provided",422);
+            throw new Exception("$this->entityName ID was not provided", 422);
         }
 
         $object = $this->service->find($args['id']);
@@ -171,4 +172,10 @@ abstract class BaseController
 
         return $object;
     }
+
+    /**
+     * @apiDefine StandardSuccessResponse
+     * @apiSuccess {Bool} success Response status.
+     * @apiSuccess {String} data Response information.
+     */
 }

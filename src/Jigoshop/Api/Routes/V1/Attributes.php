@@ -30,23 +30,147 @@ class Attributes extends BaseController implements ApiControllerContract
     protected $referringPermission = 'products';
 
     /**
-     * Coupons constructor.
+     * @apiDefine AttributeReturnObject
+     * @apiSuccess {Number}    data.id    The ID.
+     * @apiSuccess {String}    data.label Attribute label.
+     * @apiSuccess {String}    data.slug Slug.
+     * @apiSuccess {Bool}    data.local Defines if variable can be used for all products or just locally.
+     * @apiSuccess {String}    data.type Type of attribute.
+     * @apiSuccess {String}    data.key Defines if attribute is visible.
+     * @apiSuccess {Bool}    data.exists True if this attribute is in the database.
+     * @apiSuccess {Object[]} data.options Array of available options objects for this attribute.
+     * @apiSuccess {String} data.options.label Option visible label.
+     * @apiSuccess {Number} data.options.value Value of attribute.
+     */
+    /**
+     * @apiDefine AttributeData
+     * @apiParam {String} label Jigoshop coupon array of data.
+     * @apiParam {Number=0,1,2} type Type of Attribute.
+     * @apiParam {String} [slug] Slug (is generated from label if not provided).
+     */
+    /**
+     * @apiDefine AttributeOptionData
+     * @apiParam {String} label Option visible label.
+     * @apiParam {Number} value Option value.
+     */
+    /**
+     * @apiDefine AttributeOptionReturnObject
+     * @apiSuccess {String} label Option visible label.
+     * @apiSuccess {Number} value Option value.
+     */
+
+    /**
+     * Attributes constructor.
      * @param App $app
      */
     public function __construct(App $app)
     {
         parent::__construct($app);
         $this->app = $app;
+
+        /**
+         * @api {get} /attributes Get Attributes
+         * @apiName FindAllAttributes
+         * @apiGroup Attributes
+         *
+         * @apiUse findAllReturnData
+         * @apiSuccess {Object[]} data List of available attributes.
+         * @apiUse AttributeReturnObject
+         * @apiUse AttributeOptionReturnObject
+         */
         $app->get('', array($this, 'findAll'));
+
+        /**
+         * @api {get} /attributes/:id Get Attribute information
+         * @apiName GetAttribute
+         * @apiGroup Attributes
+         *
+         * @apiParam {Number} id Attribute unique ID.
+         *
+         * @apiUse AttributeReturnObject
+         * @apiUse validateObjectFindingError
+         * @apiUse AttributeOptionReturnObject
+         */
         $app->get('/{id:[0-9]+}', array($this, 'findOne'));
+
+        /**
+         * @api {post} /attributes Create attribute
+         * @apiName PostAttributes
+         * @apiGroup Attributes
+         *
+         * @apiUse AttributeData
+         * @apiUse StandardSuccessResponse
+         */
         $app->post('', array($this, 'create'))->add(new RequiredFieldsMiddleware($app));
+
+        /**
+         * @api {put} /attributes/:id Update attribute
+         * @apiName PutAttribute
+         * @apiGroup Attributes
+         *
+         * @apiParam {Number} id Attribute unique ID.
+         *
+         * @apiUse AttributeData
+         * @apiUse StandardSuccessResponse
+         * @apiUse validateObjectFindingError
+         */
         $app->put('/{id:[0-9]+}', array($this, 'update'))->add(new RequiredFieldsMiddleware($app));
+        /**
+         * @api {delete} /attributes/:id Delete attribute
+         * @apiName DeleteAttribute
+         * @apiGroup Attributes
+         *
+         * @apiParam {Number} id Attribute unique ID.
+         *
+         * @apiUse StandardSuccessResponse
+         * @apiUse validateObjectFindingError
+         */
         $app->delete('/{id:[0-9]+}', array($this, 'delete'));
 
         //options single routes
+        /**
+         * @api {post} /attributes/:id/options Create attribute option
+         * @apiName PostAttributeOption
+         * @apiGroup Attributes
+         *
+         * @apiParam {Number} id Attribute unique ID.
+         *
+         * @apiUse StandardSuccessResponse
+         * @apiUse AttributeOptionData
+         * @apiError UnprocessableEntity Attribute Id was not provided.
+         * @apiError ObjectNotFound Attribute have not been found.
+         */
         $app->post('/{id:[0-9]+}/options', array($this, 'addOption'))
-            ->add(new RequiredFieldsMiddleware($app, ['requirementsName'=>'attributeOptions']));
+            ->add(new RequiredFieldsMiddleware($app, ['requirementsName' => 'attributeOptions']));
+
+        /**
+         * @api {put} /attributes/:id/options/:id Update attribute option
+         * @apiName PutAttributeOption
+         * @apiGroup Attributes
+         *
+         * @apiParam {Number} id Attribute unique ID.
+         * @apiParam {Number} optionId Attribute option unique ID.
+         *
+         * @apiUse AttributeOptionData
+         *
+         * @apiUse StandardSuccessResponse
+         * @apiError UnprocessableEntity Attribute Id or Option Id was not provided.
+         * @apiError ObjectNotFound Attribute have not been found or it does not have this option.
+         */
         $app->put('/{id:[0-9]+}/options/{optionId:[0-9]+}', array($this, 'updateOption'));
+
+        /**
+         * @api {delete} /attributes/:id/options/:id Delete attribute option
+         * @apiName DeleteAttributeOption
+         * @apiGroup Attributes
+         *
+         * @apiParam {Number} id Attribute unique ID.
+         * @apiParam {Number} optionId Attribute option unique ID.
+         *
+         * @apiUse StandardSuccessResponse
+         * @apiError UnprocessableEntity Attribute Id or Option Id was not provided.
+         * @apiError ObjectNotFound Attribute have not been found or it does not have this option.
+         */
         $app->delete('/{id:[0-9]+}/options/{optionId:[0-9]+}', array($this, 'deleteOption'));
     }
 
@@ -192,7 +316,7 @@ class Attributes extends BaseController implements ApiControllerContract
     private function validateOptionFinding($attribute, $args)
     {
         if (!isset($args['optionId']) || empty($args['optionId'])) {
-            throw new Exception("option ID was not provided",422);
+            throw new Exception("option ID was not provided", 422);
         }
         if (!$attribute->getOption($args['optionId'])) {
             throw new Exception("Attribute does not have this option.", 404);
