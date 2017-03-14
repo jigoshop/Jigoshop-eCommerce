@@ -72,7 +72,7 @@ class Coupons extends PostController implements ApiControllerContract
         $app->get('', array($this, 'findAll'));
 
         /**
-         * @api {get} /coupon/:id Get Coupon information
+         * @api {get} /coupons/:id Get Coupon information
          * @apiName GetCoupon
          * @apiGroup Coupon
          *
@@ -85,7 +85,7 @@ class Coupons extends PostController implements ApiControllerContract
         $app->get('/{id:[0-9]+}', array($this, 'findOne'));
 
         /**
-         * @api {post} /coupon Create a Coupon
+         * @api {post} /coupons Create a Coupon
          * @apiName PostCoupon
          * @apiGroup Coupon
          *
@@ -97,7 +97,7 @@ class Coupons extends PostController implements ApiControllerContract
         $app->post('', array($this, 'create'));
 
         /**
-         * @api {put} /coupon/ Update a Coupon
+         * @api {put} /coupons/:id Update a Coupon
          * @apiName PutCoupon
          * @apiGroup Coupon
          *
@@ -111,7 +111,7 @@ class Coupons extends PostController implements ApiControllerContract
         $app->put('/{id:[0-9]+}', array($this, 'update'));
 
         /**
-         * @api {delete} /coupon/:id Delete a Coupon
+         * @api {delete} /coupons/:id Delete a Coupon
          * @apiName DeleteCoupon
          * @apiGroup Coupon
          *
