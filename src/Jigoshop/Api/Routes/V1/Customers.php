@@ -36,7 +36,7 @@ class Customers extends BaseController implements ApiControllerContract
      * @apiSuccess {String} data.billing.state Billing state.
      * @apiSuccess {String} data.billing.email Billing email.
      * @apiSuccess {String} data.billing.phone Billing phone.
-     * @apiSuccess {Object} data.billing Customer's shipping data.
+     * @apiSuccess {Object} data.shipping Customer's shipping data.
      * @apiSuccess {String} data.shipping.first_name Shipping first name.
      * @apiSuccess {String} data.shipping.last_name Shipping last name.
      * @apiSuccess {String} data.shipping.address Shipping address.
@@ -60,7 +60,7 @@ class Customers extends BaseController implements ApiControllerContract
      * @apiParam {String} data.billing.state Billing state.
      * @apiParam {String} data.billing.email Billing email.
      * @apiParam {String} data.billing.phone Billing phone.
-     * @apiParam {Object} data.billing Customer's shipping data.
+     * @apiParam {Object} data.shipping Customer's shipping data.
      * @apiParam {String} data.shipping.first_name Shipping first name.
      * @apiParam {String} data.shipping.last_name Shipping last name.
      * @apiParam {String} data.shipping.address Shipping address.
@@ -125,7 +125,7 @@ class Customers extends BaseController implements ApiControllerContract
          * @apiParam {Number} id Customer unique ID.
          * @apiUse CustomerData
          *
-         * @apiUse StandardSuccessResponse.
+         * @apiUse StandardSuccessResponse
          * @apiUse validateObjectFindingError
          */
         $app->put('/{id:[0-9]+}', array($this, 'update'));
