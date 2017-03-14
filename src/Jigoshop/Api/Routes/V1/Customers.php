@@ -21,6 +21,59 @@ class Customers extends BaseController implements ApiControllerContract
     protected $app;
 
     /**
+     * @apiDefine CustomerReturnObject
+     * @apiSuccess {Number} data.id    The ID.
+     * @apiSuccess {String} data.login Customer login.
+     * @apiSuccess {String} data.email Customer email.
+     * @apiSuccess {String} data.name Customer name.
+     * @apiSuccess {Object} data.billing Customer's billing data.
+     * @apiSuccess {String} data.billing.first_name Billing first name.
+     * @apiSuccess {String} data.billing.last_name Billing last name.
+     * @apiSuccess {String} data.billing.address Billing address.
+     * @apiSuccess {String} data.billing.city Billing city.
+     * @apiSuccess {String} data.billing.postcode Billing postcode.
+     * @apiSuccess {String} data.billing.country Billing country code.
+     * @apiSuccess {String} data.billing.state Billing state.
+     * @apiSuccess {String} data.billing.email Billing email.
+     * @apiSuccess {String} data.billing.phone Billing phone.
+     * @apiSuccess {Object} data.billing Customer's shipping data.
+     * @apiSuccess {String} data.shipping.first_name Shipping first name.
+     * @apiSuccess {String} data.shipping.last_name Shipping last name.
+     * @apiSuccess {String} data.shipping.address Shipping address.
+     * @apiSuccess {String} data.shipping.city Shipping city.
+     * @apiSuccess {String} data.shipping.postcode Shipping postcode.
+     * @apiSuccess {String} data.shipping.country Shipping country code.
+     * @apiSuccess {String} data.shipping.state Shipping state.
+     * @apiSuccess {String} data.shipping.email Shipping email.
+     * @apiSuccess {String} data.shipping.phone Shipping phone.
+     * @apiSuccess {String} data.taxAddres Address type chosen for tax.
+     */
+    /**
+     * @apiDefine CustomerData
+     * @apiParam {Object} data.billing Customer's billing data.
+     * @apiParam {String} data.billing.first_name Billing first name.
+     * @apiParam {String} data.billing.last_name Billing last name.
+     * @apiParam {String} data.billing.address Billing address.
+     * @apiParam {String} data.billing.city Billing city.
+     * @apiParam {String} data.billing.postcode Billing postcode.
+     * @apiParam {String} data.billing.country Billing country code.
+     * @apiParam {String} data.billing.state Billing state.
+     * @apiParam {String} data.billing.email Billing email.
+     * @apiParam {String} data.billing.phone Billing phone.
+     * @apiParam {Object} data.billing Customer's shipping data.
+     * @apiParam {String} data.shipping.first_name Shipping first name.
+     * @apiParam {String} data.shipping.last_name Shipping last name.
+     * @apiParam {String} data.shipping.address Shipping address.
+     * @apiParam {String} data.shipping.city Shipping city.
+     * @apiParam {String} data.shipping.postcode Shipping postcode.
+     * @apiParam {String} data.shipping.country Shipping country code.
+     * @apiParam {String} data.shipping.state Shipping state.
+     * @apiParam {String} data.shipping.email Shipping email.
+     * @apiParam {String} data.shipping.phone Shipping phone.
+     * @apiParam {String} data.taxAddres Address type chosen for tax.
+     */
+
+    /**
      * Coupons constructor.
      * @param App $app
      */
@@ -28,10 +81,65 @@ class Customers extends BaseController implements ApiControllerContract
     {
         parent::__construct($app);
         $this->app = $app;
+
+        /**
+         * @api {get} /customers Get Customers
+         * @apiName FindCustomers
+         * @apiGroup Customer
+         *
+         * @apiUse findAllReturnData
+         * @apiSuccess {Object[]} data List of customers.
+         * @apiUse CustomerReturnObject
+         */
         $app->get('', array($this, 'findAll'));
+
+        /**
+         * @api {get} /customers/:id Get Customer information
+         * @apiName GetCustomers
+         * @apiGroup Customer
+         *
+         * @apiParam {Number} id Customer unique ID.
+         *
+         * @apiUse CustomerReturnObject
+         *
+         * @apiUse validateObjectFindingError
+         */
         $app->get('/{id:[0-9]+}', array($this, 'findOne'));
+
+        /**
+         * @api {post} /customers Create a Customer
+         * @apiName PostCustomer
+         * @apiGroup Customer
+         *
+         * @apiUse CustomerData
+         *
+         * @apiUse StandardSuccessResponse
+         */
         $app->post('', array($this, 'create'))->add(new RequiredFieldsMiddleware($app));
+
+        /**
+         * @api {put} /customers/:id Update a Customer
+         * @apiName PutCustomer
+         * @apiGroup Customer
+         *
+         * @apiParam {Number} id Customer unique ID.
+         * @apiUse CustomerData
+         *
+         * @apiUse StandardSuccessResponse.
+         * @apiUse validateObjectFindingError
+         */
         $app->put('/{id:[0-9]+}', array($this, 'update'));
+
+        /**
+         * @api {delete} /customers/:id Delete a Customer
+         * @apiName DeleteCustomer
+         * @apiGroup Customer
+         *
+         * @apiParam {Number} id Customer unique ID.
+         *
+         * @apiUse StandardSuccessResponse
+         * @apiUse validateObjectFindingError
+         */
         $app->delete('/{id:[0-9]+}', array($this, 'delete'));
     }
 
