@@ -4,19 +4,18 @@ coffeelint = require('gulp-coffeelint')
 concat = require('gulp-concat')
 less = require('gulp-less')
 cssmin = require('gulp-cssmin')
-argv = require('yargs').argv
 check = require('gulp-if')
 uglify = require('gulp-uglify')
 rimraf = require('gulp-rimraf')
 replace = require('gulp-replace')
-
+minify = true
 # Sources declaration
 
 # CSS
 cssFiles =
   select2: ['assets/bower/select2/select2.css', 'assets/bower/select2/select2-bootstrap.css']
-  colorbox: ['assets/bower/jquery-colorbox/example1/colorbox.css']
   tokenfield: ['assets/bower/bootstrap-tokenfield/dist/css/bootstrap-tokenfield.css']
+  blueimp: ['node_modules/blueimp-gallery/css/blueimp-gallery.css']
 
 # JS
 jsFiles =
@@ -24,8 +23,8 @@ jsFiles =
   bs_tab_trans_tooltip_collapse: ['assets/bower/bootstrap/js/{tab,transition,tooltip,collapse}.js']
   datepicker: ['assets/bower/bootstrap-datepicker/js/bootstrap-datepicker.js']
   tokenfield: ['assets/bower/bootstrap-tokenfield/js/bootstrap-tokenfield.js']
-  colorbox: ['assets/bower/jquery-colorbox/jquery.colorbox-min.js']
   flot: ['node_modules/jquery-flot/{jquery.flot,jquery.flot.stack,jquery.flot.pie,jquery.flot.resize,jquery.flot.time}.js']
+  blueimp: ['node_modules/blueimp-gallery/js/{blueimp-gallery.js,jquery.blueimp-gallery.js}']
 
 # Coffee
 coffeeFiles =
@@ -43,7 +42,7 @@ cssTasks.forEach (taskName) ->
     gulp.src(cssFiles[taskName])
     .pipe replace(/images\/(.*?)\.(png|gif)/g, '../../images/$1.$2')
     .pipe replace(/select2(.*?)\.(png|gif)/g, '../../images/select2$1.$2')
-    .pipe cssmin()
+    .pipe check(minify, cssmin())
     .pipe concat(taskName + '.css')
     .pipe gulp.dest('assets/css/vendors')
 
@@ -53,7 +52,7 @@ jsTasks.forEach (taskName) ->
   defaultTask.push(taskName + 'js')
   gulp.task taskName + 'js', ->
     gulp.src(jsFiles[taskName])
-    .pipe uglify()
+    .pipe check(minify, uglify())
     .pipe concat(taskName + '.js')
     .pipe gulp.dest('assets/js/vendors')
 
@@ -72,7 +71,7 @@ coffeeTasks.forEach (taskName) ->
 gulp.task 'styles', ->
   gulp.src 'assets/less/**/*.less'
     .pipe less()
-    .pipe check(!argv.development, cssmin())
+    .pipe check(minify, cssmin())
     .pipe gulp.dest('assets/css')
 
 # other coffee scripts
@@ -81,7 +80,7 @@ gulp.task 'scripts', ['lint'], ->
     'assets/coffee/**/*.coffee',
   ]
     .pipe coffee({bare: true})
-    .pipe check(!argv.development, uglify())
+    .pipe check(minify, uglify())
     .pipe gulp.dest('assets/js')
 
 gulp.task 'lint', ->
@@ -114,6 +113,9 @@ gulp.task 'dist', ['clean-deploy', 'default'], ->
             './CONTRIBUTING.md', 'LICENSE.md', 'README.md', 'jigoshop.php', 'readme.txt'], {base: './'}
     .pipe gulp.dest('dist/')
 
-gulp.task 'dev', ['clean-deploy', 'default']
+gulp.task 'dev', ['do-not-minify', 'clean-deploy', 'default']
+
+gulp.task 'do-not-minify', ->
+  minify = false
 
 gulp.task 'default', defaultTask

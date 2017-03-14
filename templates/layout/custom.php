@@ -28,6 +28,16 @@ get_header('shop');
     .custom-layout-clear {
         clear: both;
     }
+    @media all and (max-width: 768px) {
+        .custom-layout-content {
+            float: left;
+            width: 100%;
+        }
+        .custom-layout-sidebar {
+            float: right;
+            width: 100%;
+        }
+    }
     <?php echo $options['css']; ?>
 </style>
 <div class="custom-layout-container">
