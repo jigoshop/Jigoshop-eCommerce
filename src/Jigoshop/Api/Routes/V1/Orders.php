@@ -25,22 +25,6 @@ class Orders extends PostController implements ApiControllerContract
     protected $app;
 
     /**
-     * Orders constructor.
-     * @param App $app
-     */
-    public function __construct(App $app)
-    {
-        parent::__construct($app);
-
-        $this->app = $app;
-        $app->get('', array($this, 'getOrders'));
-        $app->get('/{id:[0-9]+}', array($this, 'getOrder'));
-        $app->post('', array($this, 'create'));
-        $app->put('/{id:[0-9]+}', array($this, 'update'));
-        $app->delete('/{id:[0-9]+}', array($this, 'delete'));
-    }
-
-    /**
      * basic method to GET all orders
      * @param Request $request
      * @param Response $response
@@ -58,7 +42,7 @@ class Orders extends PostController implements ApiControllerContract
         $queryParams = $request->getParams();
         $queryParams['pagelen'] = isset($queryParams['pagelen']) && is_numeric($queryParams['pagelen']) ? (int)$queryParams['pagelen'] : 10;
         $queryParams['page'] = isset($queryParams['page']) && is_numeric($queryParams['page']) ? (int)$queryParams['page'] : 1;
-        $allOrders = $service->getOrdersCount();
+        $allOrders = 12;// $service->getOrdersCount();
 
         $orders = $service->findByQuery(new \WP_Query([
             'post_type' => Types::ORDER,
@@ -84,6 +68,189 @@ class Orders extends PostController implements ApiControllerContract
             'data' => array_values($orders),
         ]);
 
+    }
+
+    /**
+     * @apiDefine OrderReturnObject
+     * @apiSuccess {Number}    data.id    The ID.
+     * @apiSuccess {Number}    data.number    Ordering number.
+     * @apiSuccess {Object}    data.created_at Order creation time.
+     * @apiSuccess {Timestamp}    data.created_at.timestamp Create timestamp.
+     * @apiSuccess {Datetime}    data.created_at.format Create time in format Y-M-D H:i:s.
+     * @apiSuccess {Object}    data.updated_at Order update time.
+     * @apiSuccess {Timestamp}    data.updated_at.timestamp Update timestamp.
+     * @apiSuccess {Datetime}    data.updated_at.format Update time in format Y-M-D H:i:s.
+     * @apiSuccess {Object}    data.completed_at Order completing time. If order was not completed false is returned.
+     * @apiSuccess {Timestamp}    data.completed_at.timestamp Completion timestamp.
+     * @apiSuccess {Object[]}    data.items Array of ordered items.
+     * @apiSuccess {Number}    data.items.id Item id.
+     * @apiSuccess {String}    data.items.key Item key.
+     * @apiSuccess {String}    data.items.name Item name.
+     * @apiSuccess {String}    data.items.type Item type.
+     * @apiSuccess {String}    data.items.quantity Item quantity.
+     * @apiSuccess {String}    data.items.price Item price.
+     * @apiSuccess {Number}    data.items.tax Item tax.
+     * @apiSuccess {Array}    data.items.tax_classes Tax classes set for this item.
+     * @apiSuccess {Number}    data.items.product Product id.
+     * @apiSuccess {Array}    data.items.meta Meta keys for item.
+     * @apiSuccess {Bool}    data.price_includes_tax True if price includes tax.
+     * @apiSuccess {Object}    data.customer Customer of this order.
+     * @apiSuccess {Number}    data.customer.id Customer id.
+     * @apiSuccess {String}    data.customer.login Customer login.
+     * @apiSuccess {String}    data.customer.email Customer email.
+     * @apiSuccess {String}    data.customer.name Customer name.
+     * @apiSuccess {Object} data.customer.billing Customer's billing data.
+     * @apiSuccess {String} data.customer.billing.company Customer's company name.
+     * @apiSuccess {String} data.customer.billing.euvatno  Customer's billing vat number.
+     * @apiSuccess {String} data.customer.billing.parent.first_name  Customer's billing first name.
+     * @apiSuccess {String} data.customer.billing.parent.last_name  Customer's billing last name.
+     * @apiSuccess {String} data.customer.billing.parent.address Customer's billing address.
+     * @apiSuccess {String} data.customer.billing.parent.city Customer's billing city.
+     * @apiSuccess {String} data.customer.billing.parent.postcode Customer's billing postcode.
+     * @apiSuccess {String} data.customer.billing.parent.country Customer's billing country code.
+     * @apiSuccess {String} data.customer.billing.parent.state Customer's billing state.
+     * @apiSuccess {String} data.customer.billing.parent.email Customer's billing email.
+     * @apiSuccess {String} data.customer.billing.parent.phone Customer's billing phone.
+     * @apiSuccess {Object} data.customer.shipping Customer's shipping data.
+     * @apiSuccess {String} data.customer.shipping.first_name Customer's shipping first name.
+     * @apiSuccess {String} data.customer.shipping.last_name Customer's shipping last name.
+     * @apiSuccess {String} data.customer.shipping.address Customer's shipping address.
+     * @apiSuccess {String} data.customer.shipping.city Customer's shipping city.
+     * @apiSuccess {String} data.customer.shipping.postcode Customer's shipping postcode.
+     * @apiSuccess {String} data.customer.shipping.country Customer's shipping country code.
+     * @apiSuccess {String} data.customer.shipping.state Customer's shipping state.
+     * @apiSuccess {String} data.customer.shipping.email Customer's shipping email.
+     * @apiSuccess {String} data.customer.shipping.phone Customer's shipping phone.
+     * @apiSuccess {String} data.customer.taxAddres Customer's s address type chosen for tax.
+     * @apiSuccess {Object} data.shipping Shipping data set for this order.
+     * @apiSuccess {String} data.shipping.method Shipping method.
+     * @apiSuccess {Number} data.shipping.price Shipping price.
+     * @apiSuccess {String} data.shipping.rate Shipping rate.
+     * @apiSuccess {String} data.payment Payment.
+     * @apiSuccess {String} data.customer_note Additional info provided by customer.
+     * @apiSuccess {Number} data.total Total price.
+     * @apiSuccess {Object} data.tax Tax for this order.
+     * @apiSuccess {Number} data.tax.standard Standard tax.
+     * @apiSuccess {Object} data.shipping_tax Shipping tax for this order.
+     * @apiSuccess {Number} data.shipping_tax.standard Standard tax.
+     * @apiSuccess {Float} data.subtotal Subtotal.
+     * @apiSuccess {Float} data.discount Discount calculated for this order.
+     * @apiSuccess {Array} data.coupons Array of coupons ids used for this order.
+     * @apiSuccess {String} data.status Current status of order.
+     * @apiSuccess {Array} data.update_messages Additional messages added when order is updated.
+     */
+
+    /**
+     * @apiDefine OrderData
+     * @apiParam {post_title} post_title Order name.
+     * @apiParam {Number}    jigoshop_order.number    Ordering number.
+     * @apiParam {Number}  jigoshop_order.customer Customer id.
+     * @apiParam {Array[]} [jigoshop_order.items] Array of ordered items.
+     * @apiParam {Number}    [jigoshop_order.items.quantity] Item key.
+     * @apiParam {Number} [jigoshop_order.items.product] Product id.
+     * @apiParam {Bool}  [jigoshop_order.price_includes_tax] True if price includes tax.
+     * @apiParam {Object} [jigoshop_order.biling_address] Customer's billing data.
+     * @apiParam {String} [jigoshop_order.biling_address.company] Customer's company name.
+     * @apiParam {String} [jigoshop_order.biling_address.euvatno]  Customer's billing vat number.
+     * @apiParam {String} [jigoshop_order.biling_address.first_name]  Customer's billing first name.
+     * @apiParam {String} [jigoshop_order.biling_address.last_name]  Customer's billing last name.
+     * @apiParam {String} [jigoshop_order.biling_address.address] Customer's billing address.
+     * @apiParam {String} [jigoshop_order.biling_address.city] Customer's billing city.
+     * @apiParam {String} [jigoshop_order.biling_address.postcode] Customer's billing postcode.
+     * @apiParam {String} [jigoshop_order.biling_address.country] Customer's billing country code.
+     * @apiParam {String} [jigoshop_order.biling_address.state] Customer's billing state.
+     * @apiParam {String} [jigoshop_order.biling_address.email] Customer's billing email.
+     * @apiParam {String} [jigoshop_order.biling_address.phone] Customer's billing phone.
+     * @apiParam {Object} [jigoshop_order.shipping_address] Customer's shipping data.
+     * @apiParam {String} [jigoshop_order.shipping_address.first_name] Customer's shipping first name.
+     * @apiParam {String} [jigoshop_order.shipping_address.last_name] Customer's shipping last name.
+     * @apiParam {String} [jigoshop_order.shipping_address.address] Customer's shipping address.
+     * @apiParam {String} [jigoshop_order.shipping_address.city] Customer's shipping city.
+     * @apiParam {String} [jigoshop_order.shipping_address.postcode] Customer's shipping postcode.
+     * @apiParam {String} [jigoshop_order.shipping_address.country] Customer's shipping country code.
+     * @apiParam {String} [jigoshop_order.shipping_address.state] Customer's shipping state.
+     * @apiParam {String} [jigoshop_order.shipping_address.email] Customer's shipping email.
+     * @apiParam {String} [jigoshop_order.shipping_address.phone] Customer's shipping phone.
+     * @apiParam {String} [jigoshop_order.shipping_method] Shipping method.
+     * @apiParam {Bool} [jigoshop_order.completed_at] If true, then current completed time will be set.
+     * @apiParam {String} [jigoshop_order.payment] Payment.
+     * @apiParam {String} [jigoshop_order.customer_note] Additional info provided by customer.
+     * @apiParam {Number} [jigoshop_order.total] Total price.
+     * @apiParam {Float} [jigoshop_order.subtotal] Subtotal.
+     * @apiParam {Float} [jigoshop_order.discount] Discount calculated for this order.
+     * @apiParam {Array} [jigoshop_order.coupons] Array of coupons ids used for this order.
+     * @apiParam {String} jigoshop_order.status Current status of order.
+     */
+
+    /**
+     * Orders constructor.
+     * @param App $app
+     */
+    public function __construct(App $app)
+    {
+        parent::__construct($app);
+
+        $this->app = $app;
+
+        /**
+         * @api {get} /orders Get Orders
+         * @apiName FindOrders
+         * @apiGroup Order
+         *
+         * @apiUse findAllReturnData
+         * @apiSuccess {Object[]} data List of orders.
+         * @apiUse OrderReturnObject
+         */
+        $app->get('', array($this, 'getOrders'));
+
+        /**
+         * @api {get} /orders/:id Get Order information
+         * @apiName GetOrders
+         * @apiGroup Order
+         *
+         * @apiParam {Number} id Order unique ID.
+         *
+         * @apiUse OrderReturnObject
+         *
+         * @apiUse validateObjectFindingError
+         */
+        $app->get('/{id:[0-9]+}', array($this, 'getOrder'));
+
+        /**
+         * @api {post} /orders Create a Order
+         * @apiName PostOrder
+         * @apiGroup Order
+         *
+         * @apiUse OrderData
+         *
+         * @apiUse StandardSuccessResponse
+         */
+        $app->post('', array($this, 'create'));
+
+        /**
+         * @api {put} /orders/:id Update a Order
+         * @apiName PutOrder
+         * @apiGroup Order
+         *
+         * @apiParam {Number} id Order unique ID.
+         * @apiUse OrderData
+         *
+         * @apiUse StandardSuccessResponse
+         * @apiUse validateObjectFindingError
+         */
+        $app->put('/{id:[0-9]+}', array($this, 'update'));
+
+        /**
+         * @api {delete} /orders/:id Delete a Order
+         * @apiName DeleteOrder
+         * @apiGroup Order
+         *
+         * @apiParam {Number} id Order unique ID.
+         *
+         * @apiUse StandardSuccessResponse
+         * @apiUse validateObjectFindingError
+         */
+        $app->delete('/{id:[0-9]+}', array($this, 'delete'));
     }
 
     /**
