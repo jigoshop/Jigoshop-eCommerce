@@ -61,7 +61,7 @@ class Coupons extends PostController implements ApiControllerContract
         $this->app = $app;
 
         /**
-         * @api {get} /coupon/ Request Coupons
+         * @api {get} /coupon/ Get Coupons
          * @apiName FindCoupons
          * @apiGroup Coupon
          *
@@ -72,7 +72,7 @@ class Coupons extends PostController implements ApiControllerContract
         $app->get('', array($this, 'findAll'));
 
         /**
-         * @api {get} /coupon/:id Request Coupon information
+         * @api {get} /coupon/:id Get Coupon information
          * @apiName GetCoupon
          * @apiGroup Coupon
          *
