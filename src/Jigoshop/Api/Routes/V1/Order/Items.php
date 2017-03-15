@@ -51,7 +51,7 @@ class Items extends BaseController implements ApiControllerContract
      */
     /**
      * @apiDefine OrderItemData
-     * @apiParam {Number}    [items.price] Item key.
+     * @apiParam {Number} [items.price] Item key.
      * @apiParam {Number} [items.product] Product id.
      */
     /**

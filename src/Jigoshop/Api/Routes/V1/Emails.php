@@ -25,10 +25,9 @@ class Emails extends PostController implements ApiControllerContract
      */
     /**
      * @apiDefine EmailData
-     * @apiParam {Number} id    The ID.
      * @apiParam {String} post_title Email title.
      * @apiParam {String} [content] Email content in html format.
-     * @apiParam {String} jigoshop_email Email attributes.
+     * @apiParam {Array} jigoshop_email Email attributes.
      * @apiParam {String} jigoshop_email.subject Email subject.
      */
 
@@ -57,7 +56,7 @@ class Emails extends PostController implements ApiControllerContract
          * @apiName GetEmails
          * @apiGroup Email
          *
-         * @apiParam {Number} id Email unique ID.
+         * @apiParam {Number} :id Email unique ID.
          *
          * @apiUse EmailReturnObject
          *
@@ -81,11 +80,12 @@ class Emails extends PostController implements ApiControllerContract
          * @apiName PutEmail
          * @apiGroup Email
          *
-         * @apiParam {Number} id Email unique ID.
+         * @apiParam {Number} :id Email unique ID.
          * @apiUse EmailData
          *
          * @apiUse StandardSuccessResponse
          * @apiUse validateObjectFindingError
+         *
          */
         $app->put('/{id:[0-9]+}', array($this, 'update'));
 
@@ -94,7 +94,7 @@ class Emails extends PostController implements ApiControllerContract
          * @apiName DeleteEmail
          * @apiGroup Email
          *
-         * @apiParam {Number} id Email unique ID.
+         * @apiParam {Number} :id Email unique ID.
          *
          * @apiUse StandardSuccessResponse
          * @apiUse validateObjectFindingError
