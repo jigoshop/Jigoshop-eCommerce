@@ -11,6 +11,11 @@
   ],
   "template": {
     "withCompare": true,
-    "withGenerator": true
+    "withGenerator": true,
+    "forceLanguage": "en"
+  },
+  "header": {
+    "title": "Remember",
+    "filename": "header.md"
   }
 }
