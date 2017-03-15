@@ -37,6 +37,33 @@ class Attributes extends BaseController implements ApiControllerContract
     protected $entityName = 'attribute';
 
     /**
+     * @apiDefine ProductAttributeReturnObject
+     * @apiSuccess {Number}    data.id    The ID.
+     * @apiSuccess {String}    data.label Attribute label.
+     * @apiSuccess {String}    data.slug Slug.
+     * @apiSuccess {Bool}    data.local Defines if variable can be used for all products or just locally.
+     * @apiSuccess {Number}    data.type Type of attribute.
+     * @apiSuccess {String}    data.key Defines if attribute is visible.
+     * @apiSuccess {Bool}    data.exists True if this attribute is in the database.
+     * @apiSuccess {Object[]} data.visible Product attribute visibility.
+     * @apiSuccess {Number} data.visible.id Option visible label.
+     * @apiSuccess {String} data.visible.key Meta name.
+     * @apiSuccess {Number} data.visible.value Visibility value.
+     * @apiSuccess {Object[]} data.options Array of available options objects for this attribute.
+     * @apiSuccess {Number} data.options.id Option visible label.
+     * @apiSuccess {String} data.options.label Option visible label.
+     * @apiSuccess {Number} data.options.value Value of attribute.
+     * @apiSuccess {Number} data.options.value Product attribute chosen or typed value.
+     */
+    /**
+     * @apiDefine ProductAttributeData
+     * @apiParam {String} value Value.
+     * @apiParam {Array} [options] Set product attribute options.
+     * @apiParam {String} [options.display] Set product visibility.
+     */
+
+
+    /**
      * Products constructor.
      * @param App $app
      */
@@ -44,11 +71,77 @@ class Attributes extends BaseController implements ApiControllerContract
     {
         parent::__construct($app);
         $this->app = $app;
+
+        /**
+         * @api {get} /product/:productId/attributes Get Attributes of a Product
+         * @apiName FindAllProductAttributes
+         * @apiGroup ProductAttributes
+         *
+         * @apiParam {Number} productId Product unique ID.
+         *
+         * @apiUse findAllReturnData
+         * @apiSuccess {Object[]} data List of product attributes.
+         * @apiUse ProductAttributeReturnObject
+         * @apiUse AttributeOptionReturnObject
+         */
         $app->get('', array($this, 'findAll'));
+
+        /**
+         * @api {get} /product/:productId/attributes/:id Get Attribute information
+         * @apiName GetProductAttribute
+         * @apiGroup ProductAttributes
+         *
+         * @apiParam {Number} productId Product unique ID.
+         * @apiParam {Number} id Attribute unique ID.
+         *
+         * @apiUse ProductAttributeReturnObject
+         * @apiUse AttributeOptionReturnObject
+         *
+         * @apiError UnprocessableEntity Attribute Id or Product Id was not provided.
+         * @apiError ObjectNotFound Product have not been found or it does not have this attribute.
+         */
         $app->get('/{id:[0-9]+}', array($this, 'findOne'));
-        $app->put('/{id:[0-9]+}', array($this, 'update'));
-        $app->delete('/{id:[0-9]+}', array($this, 'delete'));
+
+        /**
+         * @api {post} /product/:productId/attributes Add attribute to a product
+         * @apiName PostProductAttributes
+         * @apiGroup ProductAttributes
+         *
+         * @apiUse ProductAttributeData
+         * @apiUse StandardSuccessResponse
+         */
         $app->post('', array($this, 'create'));
+
+        /**
+         * @api {put} /product/:productId/attributes/:id Update product attribute
+         * @apiName PutProductAttribute
+         * @apiGroup ProductAttributes
+         *
+         * @apiParam {Number} productId Product unique ID.
+         * @apiParam {Number} id Attribute unique ID.
+         *
+         * @apiUse ProductAttributeData
+         * @apiUse StandardSuccessResponse
+         *
+         * @apiError UnprocessableEntity Attribute Id or Product Id was not provided.
+         * @apiError ObjectNotFound Product have not been found or it does not have this attribute.
+         */
+        $app->put('/{id:[0-9]+}', array($this, 'update'));
+
+        /**
+         * @api {delete} /product/:productId/attributes/:id Delete attribute from a product
+         * @apiName DeleteProductAttribute
+         * @apiGroup ProductAttributes
+         *
+         * @apiParam {Number} productId Product unique ID.
+         * @apiParam {Number} id Attribute unique ID.
+         *
+         * @apiUse StandardSuccessResponse
+         *
+         * @apiError UnprocessableEntity Attribute Id or Product Id was not provided.
+         * @apiError ObjectNotFound Product have not been found or it does not have this attribute.
+         */
+        $app->delete('/{id:[0-9]+}', array($this, 'delete'));
     }
 
     /**
@@ -88,7 +181,7 @@ class Attributes extends BaseController implements ApiControllerContract
         $this->setProduct($args);
         $attribute = $this->validateObjectFinding($args);
         if (!$this->product->hasAttribute($attribute->getId())) {
-            throw new Exception("Product has not this attribute",404);
+            throw new Exception("Product has not this attribute", 404);
         }
         return $response->withJson([
             'success' => true,
@@ -111,7 +204,7 @@ class Attributes extends BaseController implements ApiControllerContract
         $label = trim(strip_tags($_POST['attribute_label']));
 
         if (empty($label)) {
-            throw new Exception(__('Custom attribute requires label to be set.', 'jigoshop'),422);
+            throw new Exception(__('Custom attribute requires label to be set.', 'jigoshop'), 422);
         }
 
         $attribute->setLabel($label);
@@ -120,7 +213,7 @@ class Attributes extends BaseController implements ApiControllerContract
         $attributeExists = false;
 
         if ($attribute === null) {
-            throw new Exception(__('Attribute does not exists.', 'jigoshop'),404);
+            throw new Exception(__('Attribute does not exists.', 'jigoshop'), 404);
         }
 
         $this->populateAttribute($attribute, $attributeExists, $_POST);
@@ -157,7 +250,7 @@ class Attributes extends BaseController implements ApiControllerContract
         }
 
         if ($attribute === null) {
-            throw new Exception(__('Attribute does not exists.', 'jigoshop'),404);
+            throw new Exception(__('Attribute does not exists.', 'jigoshop'), 404);
         }
 
         $this->populateAttribute($attribute, $attributeExists, $request->getParsedBody());
@@ -184,7 +277,7 @@ class Attributes extends BaseController implements ApiControllerContract
         $attribute = $this->validateObjectFinding($args);
         $id = $attribute->getId();
         if (!$this->product->hasAttribute($id)) {
-            throw new Exception("Product has not this attribute",404);
+            throw new Exception("Product has not this attribute", 404);
         }
         $this->product->removeAttribute($id);
         $this->service->save($this->product);
@@ -202,7 +295,7 @@ class Attributes extends BaseController implements ApiControllerContract
     {
         // validating product first
         if (!isset($args['productId']) || empty($args['productId'])) {
-            throw new Exception("Product Id was not provided",422);
+            throw new Exception("Product Id was not provided", 422);
         }
         $product = $this->service->find($args['productId']);
         if (!$product instanceof ProductEntity) {
@@ -241,7 +334,7 @@ class Attributes extends BaseController implements ApiControllerContract
     protected function validateObjectFinding($args)
     {
         if (!isset($args['id']) || empty($args['id'])) {
-            throw new Exception("$this->entityName ID was not provided",422);
+            throw new Exception("$this->entityName ID was not provided", 422);
         }
 
         $object = $this->service->getAttribute($args['id']);

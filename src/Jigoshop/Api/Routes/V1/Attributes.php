@@ -35,7 +35,7 @@ class Attributes extends BaseController implements ApiControllerContract
      * @apiSuccess {String}    data.label Attribute label.
      * @apiSuccess {String}    data.slug Slug.
      * @apiSuccess {Bool}    data.local Defines if variable can be used for all products or just locally.
-     * @apiSuccess {String}    data.type Type of attribute.
+     * @apiSuccess {Number}    data.type Type of attribute.
      * @apiSuccess {String}    data.key Defines if attribute is visible.
      * @apiSuccess {Bool}    data.exists True if this attribute is in the database.
      * @apiSuccess {Object[]} data.options Array of available options objects for this attribute.
@@ -44,7 +44,7 @@ class Attributes extends BaseController implements ApiControllerContract
      */
     /**
      * @apiDefine AttributeData
-     * @apiParam {String} label Jigoshop coupon array of data.
+     * @apiParam {String} label Attribute label.
      * @apiParam {Number=0,1,2} type Type of Attribute.
      * @apiParam {String} [slug] Slug (is generated from label if not provided).
      */
@@ -115,6 +115,7 @@ class Attributes extends BaseController implements ApiControllerContract
          * @apiUse validateObjectFindingError
          */
         $app->put('/{id:[0-9]+}', array($this, 'update'))->add(new RequiredFieldsMiddleware($app));
+
         /**
          * @api {delete} /attributes/:id Delete attribute
          * @apiName DeleteAttribute
