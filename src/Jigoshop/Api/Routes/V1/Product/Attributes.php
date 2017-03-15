@@ -62,7 +62,6 @@ class Attributes extends BaseController implements ApiControllerContract
      * @apiParam {String} [options.display] Set product visibility.
      */
 
-
     /**
      * Products constructor.
      * @param App $app
