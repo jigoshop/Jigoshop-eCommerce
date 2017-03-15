@@ -37,7 +37,7 @@ class Items extends BaseController implements ApiControllerContract
     protected $entityName = 'item';
 
     /**
-     * @apiDefine ItemReturnObject
+     * @apiDefine OrderItemReturnObject
      * @apiSuccess {Number}     items.id Item id.
      * @apiSuccess {String}     items.key Item key.
      * @apiSuccess {String}     items.name Item name.
@@ -50,7 +50,7 @@ class Items extends BaseController implements ApiControllerContract
      * @apiSuccess {Array}     items.meta Meta keys for item.
      */
     /**
-     * @apiDefine ItemData
+     * @apiDefine OrderItemData
      * @apiParam {Number}    [items.price] Item key.
      * @apiParam {Number} [items.product] Product id.
      */
@@ -64,19 +64,19 @@ class Items extends BaseController implements ApiControllerContract
         $this->app = $app;
 
         /**
-         * @api {get} /orders/:id/items Get OrderItems
+         * @api {get} /orders/:id/items Get Order Items
          * @apiName FindOrderItems
          * @apiGroup OrderItem
          *
          * @apiParam {Number} id Order id
          * @apiUse findAllReturnData
-         * @apiSuccess {Object[]} data List of orders.
+         * @apiSuccess {Object[]} data List of order items.
          * @apiUse OrderItemReturnObject
          */
         $app->get('', array($this, 'findAll'));
 
         /**
-         * @api {get} /orders/:id/items/:itemId Get OrderItem information
+         * @api {get} /orders/:id/items/:itemId Get Order Item information
          * @apiName GetOrderItems
          * @apiGroup OrderItem
          *
@@ -91,7 +91,7 @@ class Items extends BaseController implements ApiControllerContract
         $app->get('/{id:[0-9]+}', array($this, 'findOne'));
 
         /**
-         * @api {post} /orders/:id/items Create a OrderItem
+         * @api {post} /orders/:id/items Add item to an order
          * @apiName PostOrderItem
          * @apiGroup OrderItem
          *
@@ -122,7 +122,7 @@ class Items extends BaseController implements ApiControllerContract
         $app->put('/{id:[0-9]+}', array($this, 'update'));
 
         /**
-         * @api {delete} /orders/:id/items/:itemId Delete a OrderItem
+         * @api {delete} /orders/:id/items/:itemId Delete Item from an order
          * @apiName DeleteOrderItem
          * @apiGroup OrderItem
          *
