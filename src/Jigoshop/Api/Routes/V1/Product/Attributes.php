@@ -82,7 +82,6 @@ class Attributes extends BaseController implements ApiControllerContract
          * @apiUse findAllReturnData
          * @apiSuccess {Object[]} data List of product attributes.
          * @apiUse ProductAttributeReturnObject
-         * @apiUse AttributeOptionReturnObject
          */
         $app->get('', array($this, 'findAll'));
 
@@ -95,7 +94,6 @@ class Attributes extends BaseController implements ApiControllerContract
          * @apiParam {Number} id Attribute unique ID.
          *
          * @apiUse ProductAttributeReturnObject
-         * @apiUse AttributeOptionReturnObject
          *
          * @apiError UnprocessableEntity Attribute Id or Product Id was not provided.
          * @apiError ObjectNotFound Product have not been found or it does not have this attribute.
