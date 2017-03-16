@@ -68,6 +68,7 @@ class Coupons extends PostController implements ApiControllerContract
          * @apiUse findAllReturnData
          * @apiSuccess {Object[]} data List of coupons.
          * @apiUse CouponReturnObject
+         * @apiPermission read_coupons
          */
         $app->get('', array($this, 'findAll'));
 
@@ -81,6 +82,7 @@ class Coupons extends PostController implements ApiControllerContract
          * @apiUse CouponReturnObject
          *
          * @apiUse validateObjectFindingError
+         * @apiPermission read_coupons
          */
         $app->get('/{id:[0-9]+}', array($this, 'findOne'));
 
@@ -93,6 +95,7 @@ class Coupons extends PostController implements ApiControllerContract
          *
          * @apiSuccess {Bool} success Response status.
          * @apiSuccess {String} data Response information.
+         * @apiPermission manage_coupons
          */
         $app->post('', array($this, 'create'));
 
@@ -107,6 +110,7 @@ class Coupons extends PostController implements ApiControllerContract
          * @apiSuccess {Bool} success Response status.
          * @apiSuccess {String} data Response information.
          * @apiUse validateObjectFindingError
+         * @apiPermission manage_coupons
          */
         $app->put('/{id:[0-9]+}', array($this, 'update'));
 
@@ -120,6 +124,7 @@ class Coupons extends PostController implements ApiControllerContract
          * @apiSuccess {Bool} success Response status.
          * @apiSuccess {String} data Response information.
          * @apiUse validateObjectFindingError
+         * @apiPermission manage_coupons
          */
         $app->delete('/{id:[0-9]+}', array($this, 'delete'));
     }

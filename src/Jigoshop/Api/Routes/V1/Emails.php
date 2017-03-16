@@ -48,6 +48,7 @@ class Emails extends PostController implements ApiControllerContract
          * @apiUse findAllReturnData
          * @apiSuccess {Object[]} data List of emails.
          * @apiUse EmailReturnObject
+         * @apiPermission read_emails
          */
         $app->get('', array($this, 'findAll'));
 
@@ -61,6 +62,7 @@ class Emails extends PostController implements ApiControllerContract
          * @apiUse EmailReturnObject
          *
          * @apiUse validateObjectFindingError
+         * @apiPermission manage_emails
          */
         $app->get('/{id:[0-9]+}', array($this, 'findOne'));
 
@@ -72,6 +74,7 @@ class Emails extends PostController implements ApiControllerContract
          * @apiUse EmailData
          *
          * @apiUse StandardSuccessResponse
+         * @apiPermission manage_emails
          */
         $app->post('', array($this, 'create'));
 
@@ -85,7 +88,7 @@ class Emails extends PostController implements ApiControllerContract
          *
          * @apiUse StandardSuccessResponse
          * @apiUse validateObjectFindingError
-         *
+         * @apiPermission manage_emails
          */
         $app->put('/{id:[0-9]+}', array($this, 'update'));
 
@@ -98,6 +101,7 @@ class Emails extends PostController implements ApiControllerContract
          *
          * @apiUse StandardSuccessResponse
          * @apiUse validateObjectFindingError
+         * @apiPermission manage_emails
          */
         $app->delete('/{id:[0-9]+}', array($this, 'delete'));
     }

@@ -81,6 +81,7 @@ class Attributes extends BaseController implements ApiControllerContract
          * @apiUse findAllReturnData
          * @apiSuccess {Object[]} data List of product attributes.
          * @apiUse ProductAttributeReturnObject
+         * @apiPermission read_products
          */
         $app->get('', array($this, 'findAll'));
 
@@ -96,6 +97,7 @@ class Attributes extends BaseController implements ApiControllerContract
          *
          * @apiError UnprocessableEntity Attribute Id or Product Id was not provided.
          * @apiError ObjectNotFound Product have not been found or it does not have this attribute.
+         * @apiPermission read_products
          */
         $app->get('/{id:[0-9]+}', array($this, 'findOne'));
 
@@ -106,6 +108,7 @@ class Attributes extends BaseController implements ApiControllerContract
          *
          * @apiUse ProductAttributeData
          * @apiUse StandardSuccessResponse
+         * @apiPermission manage_products
          */
         $app->post('', array($this, 'create'));
 
@@ -122,6 +125,7 @@ class Attributes extends BaseController implements ApiControllerContract
          *
          * @apiError UnprocessableEntity Attribute Id or Product Id was not provided.
          * @apiError ObjectNotFound Product have not been found or it does not have this attribute.
+         * @apiPermission manage_products
          */
         $app->put('/{id:[0-9]+}', array($this, 'update'));
 
@@ -137,6 +141,7 @@ class Attributes extends BaseController implements ApiControllerContract
          *
          * @apiError UnprocessableEntity Attribute Id or Product Id was not provided.
          * @apiError ObjectNotFound Product have not been found or it does not have this attribute.
+         * @apiPermission manage_products
          */
         $app->delete('/{id:[0-9]+}', array($this, 'delete'));
     }

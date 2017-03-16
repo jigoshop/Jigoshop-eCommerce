@@ -154,6 +154,7 @@ class Orders extends PostController implements ApiControllerContract
          * @apiUse findAllReturnData
          * @apiSuccess {Object[]} data List of orders.
          * @apiUse OrderReturnObject
+         * @apiPermission read_orders
          */
         $app->get('', array($this, 'getOrders'));
 
@@ -167,6 +168,7 @@ class Orders extends PostController implements ApiControllerContract
          * @apiUse OrderReturnObject
          *
          * @apiUse validateObjectFindingError
+         * @apiPermission manage_orders
          */
         $app->get('/{id:[0-9]+}', array($this, 'getOrder'));
 
@@ -178,6 +180,7 @@ class Orders extends PostController implements ApiControllerContract
          * @apiUse OrderData
          *
          * @apiUse StandardSuccessResponse
+         * @apiPermission manage_orders
          */
         $app->post('', array($this, 'create'));
 
@@ -191,6 +194,7 @@ class Orders extends PostController implements ApiControllerContract
          *
          * @apiUse StandardSuccessResponse
          * @apiUse validateObjectFindingError
+         * @apiPermission manage_orders
          */
         $app->put('/{id:[0-9]+}', array($this, 'update'));
 
@@ -203,6 +207,7 @@ class Orders extends PostController implements ApiControllerContract
          *
          * @apiUse StandardSuccessResponse
          * @apiUse validateObjectFindingError
+         * @apiPermission manage_orders
          */
         $app->delete('/{id:[0-9]+}', array($this, 'delete'));
     }

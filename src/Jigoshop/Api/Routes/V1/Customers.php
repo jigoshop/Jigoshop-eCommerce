@@ -90,6 +90,7 @@ class Customers extends BaseController implements ApiControllerContract
          * @apiUse findAllReturnData
          * @apiSuccess {Object[]} data List of customers.
          * @apiUse CustomerReturnObject
+         * @apiPermission read_customers
          */
         $app->get('', array($this, 'findAll'));
 
@@ -103,6 +104,7 @@ class Customers extends BaseController implements ApiControllerContract
          * @apiUse CustomerReturnObject
          *
          * @apiUse validateObjectFindingError
+         * @apiPermission read_customers
          */
         $app->get('/{id:[0-9]+}', array($this, 'findOne'));
 
@@ -114,6 +116,7 @@ class Customers extends BaseController implements ApiControllerContract
          * @apiUse CustomerData
          *
          * @apiUse StandardSuccessResponse
+         * @apiPermission manage_customers
          */
         $app->post('', array($this, 'create'))->add(new RequiredFieldsMiddleware($app));
 
@@ -127,6 +130,7 @@ class Customers extends BaseController implements ApiControllerContract
          *
          * @apiUse StandardSuccessResponse
          * @apiUse validateObjectFindingError
+         * @apiPermission manage_customers
          */
         $app->put('/{id:[0-9]+}', array($this, 'update'));
 
@@ -139,6 +143,7 @@ class Customers extends BaseController implements ApiControllerContract
          *
          * @apiUse StandardSuccessResponse
          * @apiUse validateObjectFindingError
+         * @apiPermission manage_customers
          */
         $app->delete('/{id:[0-9]+}', array($this, 'delete'));
     }

@@ -22,8 +22,8 @@ class Reports
 
     /**
      * @apiDefine ReportsReturnObject
-     * @apiSuccess {Object[]} order Orders objects returned in report
-     * @apiSuccess {Datatime} order.post_date Datetime when order was requested
+     * @apiSuccess {Object} order Orders objects returned in report
+     * @apiSuccess {Datetime} order.post_date Datetime when order was requested
      * @apiSuccess {Number} order.count Count value
      * @apiSuccess {Number} order.total_sales Number of total sales
      * @apiSuccess {Number} order.total_tax Total tax value
@@ -58,6 +58,7 @@ class Reports
          *
          * @apiUse ReportsReturnObject
          * @apiError NotFound Invalid report type.
+         * @apiPermission read_reports
          */
         $app->get('', array($this, 'getReports'));
     }

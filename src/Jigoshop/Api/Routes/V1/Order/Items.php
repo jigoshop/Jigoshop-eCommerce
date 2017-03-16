@@ -72,6 +72,7 @@ class Items extends BaseController implements ApiControllerContract
          * @apiUse findAllReturnData
          * @apiSuccess {Object[]} data List of order items.
          * @apiUse OrderItemReturnObject
+         * @apiPermission read_orders
          */
         $app->get('', array($this, 'findAll'));
 
@@ -87,6 +88,7 @@ class Items extends BaseController implements ApiControllerContract
          *
          * @apiError UnprocessableEntity Attribute Id or Order Id was not provided.
          * @apiError ObjectNotFound Order have not been found or it does not have this item.
+         * @apiPermission read_orders
          */
         $app->get('/{id:[0-9]+}', array($this, 'findOne'));
 
@@ -102,6 +104,7 @@ class Items extends BaseController implements ApiControllerContract
          *
          * @apiError UnprocessableEntity Order Id was not provided.
          * @apiError ObjectNotFound Order have not been found.
+         * @apiPermission manage_orders
          */
         $app->post('/{id:[0-9]+}', array($this, 'create'));
 
@@ -118,6 +121,7 @@ class Items extends BaseController implements ApiControllerContract
          *
          * @apiError UnprocessableEntity Attribute Id or Order Id was not provided.
          * @apiError ObjectNotFound Order have not been found or it does not have this item.
+         * @apiPermission manage_orders
          */
         $app->put('/{id:[0-9]+}', array($this, 'update'));
 
@@ -133,6 +137,7 @@ class Items extends BaseController implements ApiControllerContract
          *
          * @apiError UnprocessableEntity Attribute Id or Order Id was not provided.
          * @apiError ObjectNotFound Order have not been found or it does not have this item.
+         * @apiPermission manage_orders
          */
         $app->delete('/{id:[0-9]+}', array($this, 'delete'));
     }

@@ -125,6 +125,7 @@ class Products extends PostController implements ApiControllerContract
          * @apiUse findAllReturnData
          * @apiSuccess {Object[]} data List of products.
          * @apiUse ProductReturnObject
+         * @apiPermission read_products
          */
         $app->get('', array($this, 'findAll'));
 
@@ -138,6 +139,7 @@ class Products extends PostController implements ApiControllerContract
          * @apiUse ProductReturnObject
          *
          * @apiUse validateObjectFindingError
+         * @apiPermission read_products
          */
         $app->get('/{id:[0-9]+}', array($this, 'findOne'));
 
@@ -149,6 +151,7 @@ class Products extends PostController implements ApiControllerContract
          * @apiUse ProductData
          *
          * @apiUse StandardSuccessResponse
+         * @apiPermission manage_products
          */
         $app->post('', array($this, 'create'));
 
@@ -162,6 +165,7 @@ class Products extends PostController implements ApiControllerContract
          *
          * @apiUse StandardSuccessResponse
          * @apiUse validateObjectFindingError
+         * @apiPermission manage_products
          */
         $app->put('/{id:[0-9]+}', array($this, 'update'));
 
@@ -174,6 +178,7 @@ class Products extends PostController implements ApiControllerContract
          *
          * @apiUse StandardSuccessResponse
          * @apiUse validateObjectFindingError
+         * @apiPermission manage_products
          */
         $app->delete('/{id:[0-9]+}', array($this, 'delete'));
     }
