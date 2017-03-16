@@ -6,6 +6,7 @@
   "dependencies": {},
   "devDependencies": {
     "apidoc": "^0.17.5",
+    "apidoc-markdown": "^0.2.0",
     "coffee-script": "^1.7.1",
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^0.0.6",
