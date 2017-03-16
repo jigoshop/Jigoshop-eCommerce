@@ -68,8 +68,9 @@ class Items extends BaseController implements ApiControllerContract
          * @apiName FindOrderItems
          * @apiGroup OrderItem
          *
-         * @apiParam {Number} id Order id
+         * @apiParam (Url Params) {Number} id Order id
          * @apiUse findAllReturnData
+         *
          * @apiSuccess {Object[]} data List of order items.
          * @apiUse OrderItemReturnObject
          * @apiPermission read_orders
@@ -81,8 +82,8 @@ class Items extends BaseController implements ApiControllerContract
          * @apiName GetOrderItems
          * @apiGroup OrderItem
          *
-         * @apiParam {Number} id Order unique ID.
-         * @apiParam {Number} id Item unique ID.
+         * @apiParam (Url Params) {Number} id Order unique ID.
+         * @apiParam (Url Params) {Number} id Item unique ID.
          *
          * @apiUse OrderItemReturnObject
          *
@@ -97,7 +98,7 @@ class Items extends BaseController implements ApiControllerContract
          * @apiName PostOrderItem
          * @apiGroup OrderItem
          *
-         * @apiParam {Number} id Order unique ID.
+         * @apiParam (Url Params) {Number} id Order unique ID.
          * @apiUse OrderItemData
          *
          * @apiUse StandardSuccessResponse
@@ -113,8 +114,8 @@ class Items extends BaseController implements ApiControllerContract
          * @apiName PutOrderItem
          * @apiGroup OrderItem
          *
-         * @apiParam {Number} id Order unique ID.
-         * @apiParam {Number} itemId Item unique ID.
+         * @apiParam (Url Params) {Number} id Order unique ID.
+         * @apiParam (Url Params) {Number} itemId Item unique ID.
          * @apiUse OrderItemData
          *
          * @apiUse StandardSuccessResponse
@@ -130,8 +131,8 @@ class Items extends BaseController implements ApiControllerContract
          * @apiName DeleteOrderItem
          * @apiGroup OrderItem
          *
-         * @apiParam {Number} id Order unique ID.
-         * @apiParam {Number} itemId Item unique ID.
+         * @apiParam (Url Params) {Number} id Order unique ID.
+         * @apiParam (Url Params) {Number} itemId Item unique ID.
          *
          * @apiUse StandardSuccessResponse
          *

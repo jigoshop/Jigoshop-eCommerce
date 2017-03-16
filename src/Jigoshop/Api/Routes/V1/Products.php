@@ -134,7 +134,7 @@ class Products extends PostController implements ApiControllerContract
          * @apiName GetProducts
          * @apiGroup Product
          *
-         * @apiParam {Number} :id Product unique ID.
+         * @apiParam (Url Params) {Number} id Product unique ID.
          *
          * @apiUse ProductReturnObject
          *
@@ -160,7 +160,7 @@ class Products extends PostController implements ApiControllerContract
          * @apiName PutProduct
          * @apiGroup Product
          *
-         * @apiParam {Number} :id Product unique ID.
+         * @apiParam (Url Params) {Number} id Product unique ID.
          * @apiUse ProductData
          *
          * @apiUse StandardSuccessResponse
@@ -174,7 +174,7 @@ class Products extends PostController implements ApiControllerContract
          * @apiName DeleteProduct
          * @apiGroup Product
          *
-         * @apiParam {Number} :id Product unique ID.
+         * @apiParam (Url Params) {Number} id Product unique ID.
          *
          * @apiUse StandardSuccessResponse
          * @apiUse validateObjectFindingError

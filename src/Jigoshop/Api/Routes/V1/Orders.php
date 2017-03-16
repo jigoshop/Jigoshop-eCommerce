@@ -163,7 +163,7 @@ class Orders extends PostController implements ApiControllerContract
          * @apiName GetOrders
          * @apiGroup Order
          *
-         * @apiParam {Number} id Order unique ID.
+         * @apiParam (Url Params) {Number} id Order unique ID.
          *
          * @apiUse OrderReturnObject
          *
@@ -189,7 +189,7 @@ class Orders extends PostController implements ApiControllerContract
          * @apiName PutOrder
          * @apiGroup Order
          *
-         * @apiParam {Number} id Order unique ID.
+         * @apiParam (Url Params) {Number} id Order unique ID.
          * @apiUse OrderData
          *
          * @apiUse StandardSuccessResponse
@@ -203,7 +203,7 @@ class Orders extends PostController implements ApiControllerContract
          * @apiName DeleteOrder
          * @apiGroup Order
          *
-         * @apiParam {Number} id Order unique ID.
+         * @apiParam (Url Params) {Number} id Order unique ID.
          *
          * @apiUse StandardSuccessResponse
          * @apiUse validateObjectFindingError

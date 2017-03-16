@@ -50,27 +50,27 @@ class Customers extends BaseController implements ApiControllerContract
      */
     /**
      * @apiDefine CustomerData
-     * @apiParam {Object} data.billing Customer's billing data.
-     * @apiParam {String} data.billing.first_name Billing first name.
-     * @apiParam {String} data.billing.last_name Billing last name.
-     * @apiParam {String} data.billing.address Billing address.
-     * @apiParam {String} data.billing.city Billing city.
-     * @apiParam {String} data.billing.postcode Billing postcode.
-     * @apiParam {String} data.billing.country Billing country code.
-     * @apiParam {String} data.billing.state Billing state.
-     * @apiParam {String} data.billing.email Billing email.
-     * @apiParam {String} data.billing.phone Billing phone.
-     * @apiParam {Object} data.shipping Customer's shipping data.
-     * @apiParam {String} data.shipping.first_name Shipping first name.
-     * @apiParam {String} data.shipping.last_name Shipping last name.
-     * @apiParam {String} data.shipping.address Shipping address.
-     * @apiParam {String} data.shipping.city Shipping city.
-     * @apiParam {String} data.shipping.postcode Shipping postcode.
-     * @apiParam {String} data.shipping.country Shipping country code.
-     * @apiParam {String} data.shipping.state Shipping state.
-     * @apiParam {String} data.shipping.email Shipping email.
-     * @apiParam {String} data.shipping.phone Shipping phone.
-     * @apiParam {String} data.taxAddres Address type chosen for tax.
+     * @apiParam {Object} billing Customer's billing  
+     * @apiParam {String}  billing.first_name Billing first name.
+     * @apiParam {String}  billing.last_name Billing last name.
+     * @apiParam {String}  billing.address Billing address.
+     * @apiParam {String}  billing.city Billing city.
+     * @apiParam {String}  billing.postcode Billing postcode.
+     * @apiParam {String}  billing.country Billing country code.
+     * @apiParam {String}  billing.state Billing state.
+     * @apiParam {String}  billing.email Billing email.
+     * @apiParam {String}  billing.phone Billing phone.
+     * @apiParam {Object}  shipping Customer's shipping  
+     * @apiParam {String}  shipping.first_name Shipping first name.
+     * @apiParam {String}  shipping.last_name Shipping last name.
+     * @apiParam {String}  shipping.address Shipping address.
+     * @apiParam {String}  shipping.city Shipping city.
+     * @apiParam {String}  shipping.postcode Shipping postcode.
+     * @apiParam {String}  shipping.country Shipping country code.
+     * @apiParam {String}  shipping.state Shipping state.
+     * @apiParam {String}  shipping.email Shipping email.
+     * @apiParam {String}  shipping.phone Shipping phone.
+     * @apiParam {String}  taxAddres Address type chosen for tax.
      */
 
     /**
@@ -88,7 +88,7 @@ class Customers extends BaseController implements ApiControllerContract
          * @apiGroup Customer
          *
          * @apiUse findAllReturnData
-         * @apiSuccess {Object[]} data List of customers.
+         * @apiSuccess {Object[]} data Array of customers objects.
          * @apiUse CustomerReturnObject
          * @apiPermission read_customers
          */
@@ -99,8 +99,9 @@ class Customers extends BaseController implements ApiControllerContract
          * @apiName GetCustomers
          * @apiGroup Customer
          *
-         * @apiParam {Number} id Customer unique ID.
+         * @apiParam (Url Params) {Number} id Customer unique ID.
          *
+         * @apiSuccess {Object} data Customer object.
          * @apiUse CustomerReturnObject
          *
          * @apiUse validateObjectFindingError
@@ -125,7 +126,7 @@ class Customers extends BaseController implements ApiControllerContract
          * @apiName PutCustomer
          * @apiGroup Customer
          *
-         * @apiParam {Number} id Customer unique ID.
+         * @apiParam (Url Params) {Number} id Customer unique ID.
          * @apiUse CustomerData
          *
          * @apiUse StandardSuccessResponse
@@ -139,7 +140,7 @@ class Customers extends BaseController implements ApiControllerContract
          * @apiName DeleteCustomer
          * @apiGroup Customer
          *
-         * @apiParam {Number} id Customer unique ID.
+         * @apiParam (Url Params) {Number} id Customer unique ID.
          *
          * @apiUse StandardSuccessResponse
          * @apiUse validateObjectFindingError

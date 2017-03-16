@@ -11,6 +11,11 @@ use Slim\Http\Response;
 use Jigoshop\Entity\Product\Attribute;
 
 /**
+ * @apiDefine Attributes Attributes endpoints
+ * Reusable attributes objects that can be added to products and then customized.
+ */
+
+/**
  * Class Attributes
  * @package Jigoshop\Api\Routes\V1;
  * @author Maciej Maciaszek
@@ -74,9 +79,9 @@ class Attributes extends BaseController implements ApiControllerContract
          * @apiGroup Attributes
          *
          * @apiUse findAllReturnData
-         * @apiSuccess {Object[]} data List of available attributes.
+         * @apiSuccess {Object[]} data List of available attribute objects.
          * @apiUse AttributeReturnObject
-         * @apiUse AttributeOptionReturnObject
+         * @apiPermission read_products
          */
         $app->get('', array($this, 'findAll'));
 
@@ -85,11 +90,12 @@ class Attributes extends BaseController implements ApiControllerContract
          * @apiName GetAttribute
          * @apiGroup Attributes
          *
-         * @apiParam {Number} id Attribute unique ID.
+         * @apiParam (Url Params) {Number} id Attribute unique ID.
          *
+         * @apiSuccess {Object} data Single attribute object.
          * @apiUse AttributeReturnObject
          * @apiUse validateObjectFindingError
-         * @apiUse AttributeOptionReturnObject
+         * @apiPermission read_products
          */
         $app->get('/{id:[0-9]+}', array($this, 'findOne'));
 
@@ -108,7 +114,7 @@ class Attributes extends BaseController implements ApiControllerContract
          * @apiName PutAttribute
          * @apiGroup Attributes
          *
-         * @apiParam {Number} id Attribute unique ID.
+         * @apiParam (Url Params) {Number} id Attribute unique ID.
          *
          * @apiUse AttributeData
          * @apiUse StandardSuccessResponse
@@ -121,7 +127,7 @@ class Attributes extends BaseController implements ApiControllerContract
          * @apiName DeleteAttribute
          * @apiGroup Attributes
          *
-         * @apiParam {Number} id Attribute unique ID.
+         * @apiParam (Url Params) {Number} id Attribute unique ID.
          *
          * @apiUse StandardSuccessResponse
          * @apiUse validateObjectFindingError
@@ -134,7 +140,7 @@ class Attributes extends BaseController implements ApiControllerContract
          * @apiName PostAttributeOption
          * @apiGroup Attributes
          *
-         * @apiParam {Number} id Attribute unique ID.
+         * @apiParam (UrlParams) {Number} id Attribute unique ID.
          *
          * @apiUse StandardSuccessResponse
          * @apiUse AttributeOptionData
@@ -149,8 +155,8 @@ class Attributes extends BaseController implements ApiControllerContract
          * @apiName PutAttributeOption
          * @apiGroup Attributes
          *
-         * @apiParam {Number} id Attribute unique ID.
-         * @apiParam {Number} optionId Attribute option unique ID.
+         * @apiParam (Url Params) {Number} id Attribute unique ID.
+         * @apiParam (Url Params) {Number} optionId Attribute option unique ID.
          *
          * @apiUse AttributeOptionData
          *
@@ -165,8 +171,8 @@ class Attributes extends BaseController implements ApiControllerContract
          * @apiName DeleteAttributeOption
          * @apiGroup Attributes
          *
-         * @apiParam {Number} id Attribute unique ID.
-         * @apiParam {Number} optionId Attribute option unique ID.
+         * @apiParam (Url Params) {Number} id Attribute unique ID.
+         * @apiParam (Url Params) {Number} optionId Attribute option unique ID.
          *
          * @apiUse StandardSuccessResponse
          * @apiError UnprocessableEntity Attribute Id or Option Id was not provided.

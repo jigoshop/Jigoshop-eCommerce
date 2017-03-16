@@ -2,6 +2,7 @@
 
 namespace Jigoshop\Api\Routes\V1;
 
+use Jigoshop\Service\ServiceInterface;
 use Slim\App;
 use Slim\Http\Request;
 use Slim\Http\Response;
@@ -37,7 +38,7 @@ abstract class BaseController
      */
     protected $serviceName;
     /**
-     * @var
+     * @var ServiceInterface
      */
     protected $service;
     /**

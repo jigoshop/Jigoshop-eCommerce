@@ -24,31 +24,33 @@ class Coupons extends PostController implements ApiControllerContract
      * @apiSuccess {Number}    data.from Time from when counpon's available to use.
      * @apiSuccess {Number}    data.to Time to when counpon's available to use.
      * @apiSuccess {Number}    data.usage_limit Limit of coupon usages.
-     * @apiSuccess {String}    data.free_shipping Is free shipping.
+     * @apiSuccess {Number}    data.free_shipping This value is set to 1 if coupon provides free shipping.
      * @apiSuccess {Number}    data.order_total_minimum Required minimum subtotal for this coupon to be valid on an order.
      * @apiSuccess {Number}    data.order_total_maximum Required maximum subtotal for this coupon to be valid on an order.
-     * @apiSuccess {Array}    data.products Products that are available to use coupon for.
-     * @apiSuccess {Array}    data.excluded_products Products that are not available to use coupon for.
-     * @apiSuccess {Array}    data.categories Categories that coupon is available for.
-     * @apiSuccess {Array}    data.excluded_categories Categories that are excluded from usage of this coupon.
-     * @apiSuccess {Array}    data.payment_methods Payment methods.
+     * @apiSuccess {Array}    data.products Products that coupon can apply to.
+     * @apiSuccess {Array}    data.excluded_products Products this coupon cannot be applied to.
+     * @apiSuccess {Array}    data.categories Categories which this coupon can apply to. If this is left blank it will have effect on all of the products.
+     * @apiSuccess {Array}    data.excluded_categories Categories that this coupon cannot be applied to..
+     * @apiSuccess {Array}    data.payment_methods Payment methods that are allowed for this coupon to be effective.
      */
     /**
      * @apiDefine CouponData
-     * @apiParam {Array} jigoshop_coupon Jigoshop coupon array of data.
-     * @apiParam {Timestamp} [jigoshop_coupon.from] Time from when counpon's available to use.
-     * @apiParam {Timestamp} [jigoshop_coupon.to] Time to when counpon's available to use.
+     * @apiParam {Array} [post_title] Coupon name.
+     * @apiParam {Array} [jigoshop_coupon] Jigoshop coupon array of data.
+     * @apiParam {Datetime} [jigoshop_coupon.from] Time from when counpon's available to use in format Y-M-D h:i.s.
+     * @apiParam {Datetime} [jigoshop_coupon.to] Time to when counpon's available to use in format Y-M-D h:i.s.
      * @apiParam {Number} [jigoshop_coupon.usage_limit] Limit of coupon usages.
-     * @apiParam {String} [jigoshop_coupon.type] Coupon type.
+     * @apiParam {String='fixed_cart', 'percent_cart', 'fixed_product', 'percent_product'} [jigoshop_coupon.type='fixed_cart'] Coupon type.
      * @apiParam {Number} [jigoshop_coupon.order_total_minimum] Required minimum subtotal for this coupon to be valid on an order.
      * @apiParam {Number} [jigoshop_coupon.order_total_maximum] Required minimum subtotal for this coupon to be valid on an order.
      * @apiParam {String='on','off'} [jigoshop_coupon.individual_use='off'] Individual usage.
      * @apiParam {String='on','off'} [jigoshop_coupon.freeShipping='off'] Show the Free Shipping method on the checkout with this enabled.
      * @apiParam {String} [jigoshop_coupon.amount] Coupon's value.
-     * @apiParam {Array} [jigoshop_coupon.products] Products that are available to use coupon for.
-     * @apiParam {Array} [jigoshop_coupon.excluded_products] Products that are not available to use coupon for.
-     * @apiParam {Array} [jigoshop_coupon.categories] Categories that are available to use coupon for.
+     * @apiParam {Array} [jigoshop_coupon.products] Which products this coupon can apply to. If this is left blank it will have effect on all of the products.
+     * @apiParam {Array} [jigoshop_coupon.excluded_products] Which products this coupon cannot be applied to.
+     * @apiParam {Array} [jigoshop_coupon.categories] Which categories this coupon can apply to. If this is left blank it will have effect on all of the products.
      * @apiParam {Array} [jigoshop_coupon.excluded_categories] Categories that are not available to use coupon for.
+     * @apiParam {Array} [jigoshop_coupon.payment_methods] Which payment methods are allowed for this coupon to be effective.
      */
 
     /**
@@ -66,7 +68,7 @@ class Coupons extends PostController implements ApiControllerContract
          * @apiGroup Coupon
          *
          * @apiUse findAllReturnData
-         * @apiSuccess {Object[]} data List of coupons.
+         * @apiSuccess {Object[]} data Array of coupons objects.
          * @apiUse CouponReturnObject
          * @apiPermission read_coupons
          */
@@ -77,8 +79,9 @@ class Coupons extends PostController implements ApiControllerContract
          * @apiName GetCoupon
          * @apiGroup Coupon
          *
-         * @apiParam {Number} id Coupon unique ID.
+         * @apiParam (Url Params) {Number} id Coupon unique ID.
          *
+         * @apiSuccess {Object} data Coupon object.
          * @apiUse CouponReturnObject
          *
          * @apiUse validateObjectFindingError
@@ -104,7 +107,7 @@ class Coupons extends PostController implements ApiControllerContract
          * @apiName PutCoupon
          * @apiGroup Coupon
          *
-         * @apiParam {Number} id Coupon unique ID.
+         * @apiParam (Url Params) {Number} id Coupon unique ID.
          * @apiUse CouponData
          *
          * @apiSuccess {Bool} success Response status.
@@ -119,7 +122,7 @@ class Coupons extends PostController implements ApiControllerContract
          * @apiName DeleteCoupon
          * @apiGroup Coupon
          *
-         * @apiParam {Number} id Coupon unique ID.
+         * @apiParam (Url Params) {Number} id Coupon unique ID.
          *
          * @apiSuccess {Bool} success Response status.
          * @apiSuccess {String} data Response information.

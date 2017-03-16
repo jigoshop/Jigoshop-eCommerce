@@ -27,8 +27,8 @@ class Emails extends PostController implements ApiControllerContract
      * @apiDefine EmailData
      * @apiParam {String} post_title Email title.
      * @apiParam {String} [content] Email content in html format.
-     * @apiParam {Array} jigoshop_email Email attributes.
-     * @apiParam {String} jigoshop_email.subject Email subject.
+     * @apiParam {Array} [jigoshop_email] Email attributes.
+     * @apiParam {String} [jigoshop_email.subject] Email subject.
      */
 
     /**
@@ -46,7 +46,7 @@ class Emails extends PostController implements ApiControllerContract
          * @apiGroup Email
          *
          * @apiUse findAllReturnData
-         * @apiSuccess {Object[]} data List of emails.
+         * @apiSuccess {Object[]} data Array of emails objects.
          * @apiUse EmailReturnObject
          * @apiPermission read_emails
          */
@@ -57,8 +57,9 @@ class Emails extends PostController implements ApiControllerContract
          * @apiName GetEmails
          * @apiGroup Email
          *
-         * @apiParam {Number} :id Email unique ID.
+         * @apiParam (Url Params) {Number} id Email unique ID.
          *
+         * @apiSuccess {Object} data Email object.
          * @apiUse EmailReturnObject
          *
          * @apiUse validateObjectFindingError
@@ -83,7 +84,7 @@ class Emails extends PostController implements ApiControllerContract
          * @apiName PutEmail
          * @apiGroup Email
          *
-         * @apiParam {Number} :id Email unique ID.
+         * @apiParam (Url Params) {Number} id Email unique ID.
          * @apiUse EmailData
          *
          * @apiUse StandardSuccessResponse
@@ -97,7 +98,7 @@ class Emails extends PostController implements ApiControllerContract
          * @apiName DeleteEmail
          * @apiGroup Email
          *
-         * @apiParam {Number} :id Email unique ID.
+         * @apiParam (Url Params) {Number} id Email unique ID.
          *
          * @apiUse StandardSuccessResponse
          * @apiUse validateObjectFindingError
