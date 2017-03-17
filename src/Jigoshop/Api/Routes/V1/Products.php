@@ -82,10 +82,10 @@ class Products extends PostController implements ApiControllerContract
      * @apiParam {String} post_title Product name.
      * @apiParam {String} post_excerpt Product description.
      * @apiParam {Array} jigoshop_product Product data.
-     * @apiParam {String} [jigoshop_product.type] Product type.
+     * @apiParam {String='simple','virtual','variable','external','downloadable'} [jigoshop_product.type] Product type.
      * @apiParam {String} [jigoshop_product.name] Product name.
      * @apiParam {String} [jigoshop_product.description] Product description.
-     * @apiParam {String} [jigoshop_product.sku] SKU.
+     * @apiParam {String} [jigoshop_product.sku] SKU. SKU will be generated as id if not provided
      * @apiParam {String} [jigoshop_product.gtin] gtin.
      * @apiParam {String} [jigoshop_product.mpn] mpn.
      * @apiParam {Bool} [jigoshop_product.featured] If featured.
@@ -102,12 +102,13 @@ class Products extends PostController implements ApiControllerContract
      * @apiParam {Array} [jigoshop_product.attachments.datafile] Array of datafile attachments ids.
      * @apiParam {Array} [tax_input.product_category] Array of categories that product is assigned to.
      * @apiParam {Array} [tax_input.tags] Array of tags that product is assigned to.
-     * @apiParam {String} [jigoshop_product.link] Link to product.
      * @apiParam {Array} [jigoshop_product.cross_sells] Cross sells array.
      * @apiParam {Array} [jigoshop_product.up_sells] Up sells array.
      * @apiParam {Number} [jigoshop_product.regular_price] Product regular price.
-     * @apiParam {Bool} [jigoshop_product.stock_manage If stock is manageable.
-     * @apiParam {Bool} [jigoshop_product.sales_enabled] If sale is enabled.
+     * @apiParam {String='on', 'off'} [jigoshop_product.stock_manage] If stock is manageable.
+     * @apiParam {Number} [jigoshop_product.stock_stock] Number of items in stock.
+     * @apiParam {String='no','notify','yes'} [jigoshop_product.stock_allow_backorders] If backorders should be allowed.
+     * @apiParam {String='on','off'} [jigoshop_product.sales_enabled] If sale is enabled.
      */
 
     /**
