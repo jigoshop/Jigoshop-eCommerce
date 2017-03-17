@@ -9,6 +9,7 @@ use Jigoshop\Entity\Order as OrderEntity;
 use Jigoshop\Entity\OrderInterface;
 use Jigoshop\Exception;
 use Jigoshop\Factory\Order;
+use Jigoshop\Service\CustomerService;
 use Jigoshop\Service\OrderService;
 use Slim\App;
 use Slim\Http\Request;
@@ -56,6 +57,7 @@ class Orders extends PostController implements ApiControllerContract
      * @apiSuccess {Object} data.customer.billing Customer's billing data.
      * @apiSuccess {String} data.customer.billing.company Customer's company name.
      * @apiSuccess {String} data.customer.billing.euvatno  Customer's billing vat number.
+     * @apiSuccess {Object} data.customer.billing.parent  Customer's billing data.
      * @apiSuccess {String} data.customer.billing.parent.first_name  Customer's billing first name.
      * @apiSuccess {String} data.customer.billing.parent.last_name  Customer's billing last name.
      * @apiSuccess {String} data.customer.billing.parent.address Customer's billing address.
@@ -96,8 +98,7 @@ class Orders extends PostController implements ApiControllerContract
 
     /**
      * @apiDefine OrderData
-     * @apiParam {post_title} post_title Order name.
-     * @apiParam {Number}    jigoshop_order.number    Ordering number.
+     * @apiParam {Array}  jigoshop_order .
      * @apiParam {Number}  jigoshop_order.customer Customer id.
      * @apiParam {Array[]} [jigoshop_order.items] Array of ordered items.
      * @apiParam {Number}    [jigoshop_order.items.quantity] Item key.
@@ -125,15 +126,14 @@ class Orders extends PostController implements ApiControllerContract
      * @apiParam {String} [jigoshop_order.shipping_address.state] Customer's shipping state.
      * @apiParam {String} [jigoshop_order.shipping_address.email] Customer's shipping email.
      * @apiParam {String} [jigoshop_order.shipping_address.phone] Customer's shipping phone.
-     * @apiParam {String} [jigoshop_order.shipping_method] Shipping method.
      * @apiParam {Bool} [jigoshop_order.completed_at] If true, then current completed time will be set.
      * @apiParam {String} [jigoshop_order.payment] Payment.
      * @apiParam {String} [jigoshop_order.customer_note] Additional info provided by customer.
-     * @apiParam {Number} [jigoshop_order.total] Total price.
-     * @apiParam {Float} [jigoshop_order.subtotal] Subtotal.
-     * @apiParam {Float} [jigoshop_order.discount] Discount calculated for this order.
      * @apiParam {Array} [jigoshop_order.coupons] Array of coupons ids used for this order.
-     * @apiParam {String} jigoshop_order.status Current status of order.
+     * @apiParam {String='pending','on-hold','processing','completed','cancelled','refunded'} [jigoshop_order.status='pending'] Current status of order.
+     * @apiParam {String} [order] Additional order data.
+     * @apiParam {Number} [order.shipping] Shipping method.
+     * @apiParam {Float} [order.discount] Discount calculated for this order.
      */
 
     /**
@@ -152,7 +152,7 @@ class Orders extends PostController implements ApiControllerContract
          * @apiGroup Order
          *
          * @apiUse findAllReturnData
-         * @apiSuccess {Object[]} data List of orders.
+         * @apiSuccess {Object[]} data Array of orders objects.
          * @apiUse OrderReturnObject
          * @apiPermission read_orders
          */
@@ -165,6 +165,7 @@ class Orders extends PostController implements ApiControllerContract
          *
          * @apiParam (Url Params) {Number} id Order unique ID.
          *
+         * @apiSuccess {Object} data Order object.
          * @apiUse OrderReturnObject
          *
          * @apiUse validateObjectFindingError
@@ -297,10 +298,12 @@ class Orders extends PostController implements ApiControllerContract
     public function create(Request $request, Response $response, $args)
     {
         $postId = $this->createNewPostOrder();
+        /** @var Order $factory */
         $factory = $this->app->getContainer()->di->get("jigoshop.factory.order");
         $object = $factory->create($postId);
 
         if (isset($_POST['jigoshop_order']['customer'])) {
+            /** @var CustomerService $customerService */
             $customerService = $this->app->getContainer()->di->get("jigoshop.service.customer");
             $_POST['jigoshop_order']['customer'] = $customerService->find($_POST['jigoshop_order']['customer']);
         }
@@ -308,8 +311,9 @@ class Orders extends PostController implements ApiControllerContract
             $object = $this->_updateOrderItems($object, $_POST['jigoshop_order']['items']);
         }
         $object = $factory->fill($object, $_POST['jigoshop_order']);
+        /** @var OrderService $service */
         $service = $this->app->getContainer()->di->get("jigoshop.service.order");
-        $service->save($object);
+        $this->service->save($object);
 
         return $response->withJson([
             'success' => true,

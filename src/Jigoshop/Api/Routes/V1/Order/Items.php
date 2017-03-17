@@ -71,7 +71,7 @@ class Items extends BaseController implements ApiControllerContract
          * @apiParam (Url Params) {Number} id Order id
          * @apiUse findAllReturnData
          *
-         * @apiSuccess {Object[]} data List of order items.
+         * @apiSuccess {Object[]} data Array of order items objects.
          * @apiUse OrderItemReturnObject
          * @apiPermission read_orders
          */
@@ -85,6 +85,7 @@ class Items extends BaseController implements ApiControllerContract
          * @apiParam (Url Params) {Number} id Order unique ID.
          * @apiParam (Url Params) {Number} id Item unique ID.
          *
+         * @apiSuccess {Object} data Order item object.
          * @apiUse OrderItemReturnObject
          *
          * @apiError UnprocessableEntity Attribute Id or Order Id was not provided.
@@ -178,13 +179,24 @@ class Items extends BaseController implements ApiControllerContract
     public function findOne(Request $request, Response $response, $args)
     {
         $this->setOrder($args);
-        $product = $this->validateObjectFinding($args);
-        $item = new OrderEntity\Item();
-        $item->setProduct($product);
-        $key = $this->app->getContainer()->di->get('jigoshop.service.product')->generateItemKey($item);
-        if (!$this->order->hasItem($key)) {
+        $id = $args['id'];
+        $result = array_filter(
+            $this->order->getItems(),
+            function ($e) use ($id) {
+                return $e->getProductId() == $id;
+            });
+        if(empty($result)){
             throw new Exception("Order doesn't have this item", 404);
         }
+        reset($result);
+        $item = (current($result));
+//        $product = $this->validateObjectFinding($args);
+//        $item = new OrderEntity\Item();
+//        $item->setProduct($product);
+//        $key = $this->app->getContainer()->di->get('jigoshop.service.product')->generateItemKey($item);
+//        if (!$this->order->hasItem($key)) {
+//            throw new Exception("Order doesn't have this item", 404);
+//        }
         return $response->withJson([
             'success' => true,
             'data' => $item,
@@ -237,15 +249,18 @@ class Items extends BaseController implements ApiControllerContract
     public function delete(Request $request, Response $response, $args)
     {
         $this->setOrder($args);
-
-        $product = $this->validateObjectFinding($args);
-        $item = new OrderEntity\Item();
-        $item->setProduct($product);
-        $key = $this->app->getContainer()->di->get('jigoshop.service.product')->generateItemKey($item);
-        if (!$this->order->hasItem($key)) {
+        $id = $args['id'];
+        $result = array_filter(
+            $this->order->getItems(),
+            function ($e) use ($id) {
+                return $e->getProductId() == $id;
+            });
+        if(empty($result)){
             throw new Exception("Order doesn't have this item", 404);
         }
-        $this->order->removeItem($key);
+        reset($result);
+        $item = (current($result));
+        $this->order->removeItem($item->getKey());
         $this->service->save($this->order);
         return $response->withJson([
             'success' => true,

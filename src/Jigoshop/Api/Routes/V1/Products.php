@@ -30,7 +30,7 @@ class Products extends PostController implements ApiControllerContract
      * @apiSuccess {String} data.gtin gtin.
      * @apiSuccess {String} data.mpn mpn.
      * @apiSuccess {Bool} data.featured If featured.
-     * @apiSuccess {Number} data.visibility Visibility value.
+     * @apiSuccess {Number} data.visibility Defines where product should be visible. 0 - Hidden, 1 - Search only, 2 - Catalog only, 3 - Catalog & Search
      * @apiSuccess {Array} data.tax_classes Array of tax classes assigned for this product.
      * @apiSuccess {Object} data.size Size attributes.
      * @apiSuccess {Number} data.size.weight Weight.
@@ -79,6 +79,9 @@ class Products extends PostController implements ApiControllerContract
      */
     /**
      * @apiDefine ProductData
+     * @apiParam {String} post_title Product name.
+     * @apiParam {String} post_excerpt Product description.
+     * @apiParam {Array} jigoshop_product Product data.
      * @apiParam {String} [jigoshop_product.type] Product type.
      * @apiParam {String} [jigoshop_product.name] Product name.
      * @apiParam {String} [jigoshop_product.description] Product description.
@@ -86,7 +89,7 @@ class Products extends PostController implements ApiControllerContract
      * @apiParam {String} [jigoshop_product.gtin] gtin.
      * @apiParam {String} [jigoshop_product.mpn] mpn.
      * @apiParam {Bool} [jigoshop_product.featured] If featured.
-     * @apiParam {Number} [jigoshop_product.visibility] Visibility value.
+     * @apiParam {Number=0,1,2,3} [jigoshop_product.visibility] Visibility value. Defines where product should be visible. 0 - Hidden, 1 - Search only, 2 - Catalog only, 3 - Catalog & Search
      * @apiParam {Array} [jigoshop_product.tax_classes] Array of tax classes assigned for this product.
      * @apiParam {Number} [jigoshop_product.weight] Weight.
      * @apiParam {Number} [jigoshop_product.width] width.
@@ -136,6 +139,7 @@ class Products extends PostController implements ApiControllerContract
          *
          * @apiParam (Url Params) {Number} id Product unique ID.
          *
+         * @apiSuccess {Object} data Products object.
          * @apiUse ProductReturnObject
          *
          * @apiUse validateObjectFindingError

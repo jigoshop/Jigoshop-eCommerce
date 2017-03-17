@@ -79,7 +79,7 @@ class Attributes extends BaseController implements ApiControllerContract
          * @apiParam (Url Params) {Number} productId Product unique ID.
          *
          * @apiUse findAllReturnData
-         * @apiSuccess {Object[]} data List of product attributes.
+         * @apiSuccess {Object[]} data Array of product attributes objects.
          * @apiUse ProductAttributeReturnObject
          * @apiPermission read_products
          */
@@ -93,6 +93,7 @@ class Attributes extends BaseController implements ApiControllerContract
          * @apiParam (Url Params) {Number} productId Product unique ID.
          * @apiParam (Url Params) {Number} id Attribute unique ID.
          *
+         * @apiSuccess {Object} data Product attribute object.
          * @apiUse ProductAttributeReturnObject
          *
          * @apiError UnprocessableEntity Attribute Id or Product Id was not provided.
@@ -111,8 +112,6 @@ class Attributes extends BaseController implements ApiControllerContract
          * @apiUse ProductAttributeData
          * @apiUse StandardSuccessResponse
          * @apiPermission manage_products
- * @apiSampleRequest http://jigoshop.dev/api/v1/product/:productId/attributes
-
          */
         $app->post('', array($this, 'create'));
 
@@ -130,7 +129,6 @@ class Attributes extends BaseController implements ApiControllerContract
          * @apiError UnprocessableEntity Attribute Id or Product Id was not provided.
          * @apiError ObjectNotFound Product have not been found or it does not have this attribute.
          * @apiPermission manage_products
-         * @apiSampleRequest http://jigoshop.dev/api/v1/product/:productId/attributes/:id
          */
         $app->put('/{id:[0-9]+}', array($this, 'update'));
 
