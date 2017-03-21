@@ -24,6 +24,7 @@
     * Fix: Fatal error when product does not have default tax classes selected.
     * Fix: Fatal error when attribute was removed from product.
     * Fix: Query Interceptor for custom Jigoshop pages.
+    * Fix: Default payment gateway select.
 * 2.0.9 - 2017.02.13:
     * Fix: Support Twentyseventeen theme.
     * Fix: Improve product reviews.
