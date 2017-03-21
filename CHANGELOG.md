@@ -1,5 +1,5 @@
 ## Changelog
-* 2.0.10:
+* 2.0.10 - 2017.03.21:
     * Fix: Added Layout settings tab.
     * Fix: Some action hook names.
     * Fix: Fatal error when order was saved in admin panel triggered by multiple method shippings.
@@ -25,6 +25,8 @@
     * Fix: Fatal error when attribute was removed from product.
     * Fix: Query Interceptor for custom Jigoshop pages.
     * Fix: Default payment gateway select.
+    * Fix: Reports for variable products.
+    * Fix: Custom permalinks for products.
 * 2.0.9 - 2017.02.13:
     * Fix: Support Twentyseventeen theme.
     * Fix: Improve product reviews.
