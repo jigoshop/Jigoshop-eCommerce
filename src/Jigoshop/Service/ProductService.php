@@ -192,8 +192,8 @@ class ProductService implements ProductServiceInterface
                 $post['post_content'] = $fields['description'];
             }
             if(count($post)) {
-		        $post['ID'] = $object->getId();
-		        $this->wp->wpUpdatePost($post);
+                $wpdb = $this->wp->getWPDB();
+                $wpdb->update($wpdb->posts, $post, ['ID' => $object->getId()]);
             }
 
 			unset($fields['id'], $fields['name'], $fields['description']);
