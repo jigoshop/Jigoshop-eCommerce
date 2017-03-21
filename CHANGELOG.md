@@ -1,4 +1,6 @@
 ## Changelog
+* 2.0.10.1 - 2017.03.21:
+    * Fix: Fatal error on product save.
 * 2.0.10 - 2017.03.21:
     * Fix: Added Layout settings tab.
     * Fix: Some action hook names.

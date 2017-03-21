@@ -5,7 +5,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 
 Requires at least: 4.0
 Tested up to: 4.7.3
-Stable tag: 2.0.10
+Stable tag: 2.0.10.1
 
 A feature-packed eCommerce plugin built upon WordPress core functionality ensuring excellent performance, customizability and control - robust Tax Settings, Stock Level Management, Free and Premium Extensions - you name it.
 
@@ -151,6 +151,8 @@ However, if you want priority, dedicated support from Jigoshop staff, we dp offe
 
 == Changelog ==
 
+= 2.0.10.1 - 2017.03.21 =
+* Fix: Fatal error on product save.
 = 2.0.10 - 2017.03.21 =
 * Fix: Added Layout settings tab.
 * Fix: Some action hook names.
