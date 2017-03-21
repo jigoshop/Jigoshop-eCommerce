@@ -7,7 +7,8 @@ Requires at least: 4.0
 Tested up to: 4.7.3
 Stable tag: 2.0.10
 
-A feature-packed eCommerce plugin built upon WordPress core functionality ensuring excellent performance and customizability.
+A feature-packed eCommerce plugin built upon WordPress core functionality ensuring excellent performance, customizability and control - robust Tax Settings, Stock Level Management, Free and Premium Extensions - you name it.
+
 
 == Description ==
 
@@ -24,15 +25,19 @@ With the option to create a multitude of product types and apply detailed attrib
 * Downloadable or Virtual products
 * Variable products (eg, offer `Size: S,M,L` for one product)
 * Affiliate (External) products (ie, link your `Add to cart` button off-site)
-* Grouped products
+* Simple products
 
 = DETAILED REPORTS =
 
 Inside the custom dashboard you get sortable sales graphs, incoming order / review notifications as well as stats on your stores performance.
 
+= STYLING =
+
+Adapt and customize your theme using the built-in Layout Manager. If you don't have one - no worries, the Simply Jigoshop theme is available for free!
+
 = MANAGE STOCK =
 
-Manage your stock levels and customer orders easily. Jigoshop has been engineered to make the boring parts of eCommerce, well, less boring!
+Manage your stock levels and customer orders easily. Jigoshop eCommerce has been engineered to make the boring parts of eCommerce, well, less boring!
 
 = EXTEND YOUR SHOP =
 
@@ -40,6 +45,28 @@ Extend Jigoshop eCommerce with Payment Gateways, Shipping Methods, and various o
 
 http://www.jigoshop.com/product-category/extensions/
 
+To list some important ones:
+
+1. Payment Gateways
+* Authorize.Net
+* SagePay
+* 2Checkout
+* Braintree
+* Paypal
+
+2. Shipping Methods
+* Table Rate Shipping
+* Premium Shipping
+* Official UPS Shipping
+* Per Product Shipping
+* USPS Shipping
+
+3. Misc Premium Extensions
+* PDF Invoices
+* Checkout Fields Manager
+* Customer Discounts
+* Official Duplicate Product
+* Official Duplicate Orders
 
 = MORE INFO =
 
@@ -48,6 +75,18 @@ Built upon the WordPress core you get all the benefits of this global leading pl
 Find out more on our official Jigoshop website:
 
 http://www.jigoshop.com/
+
+= BECOME A PART OF THE COMMUNITY =
+
+You can become a part of the Jigoshop eCommerce in a variety of ways - either passively, by being a Jigoshop eCommerce user, or actively - let's focus on the latter:
+
+* Core Development - Resolve potential bugs and make improvements to the core of the plugin and get rewarded for it - check out our <a href="https://www.jigoshop.com/development/core-contributors/" title="Core Contributors">Core Contributors</a> Section for more information.
+
+* Theme Development - Create themes and increase their exposure by submitting them on our website - For more information visit our <a href="https://www.jigoshop.com/development/theme-developers/" title="Theme Developers">Theme Developers</a> Section.
+
+* Extension Development -
+
+* Language Translation - Provide Jigoshop eCommerce with your native language's translation. Check out our <a href="https://www.jigoshop.com/development/language-translations/" title="Language Translations">Language Translations</a> Section.
 
 == Installation ==
 
@@ -58,12 +97,20 @@ http://www.jigoshop.com/
 * The mod_rewrite Apache module (for permalinks)
 * Some payment gateways require fsockopen support (for IPN access)
 
-= Installation =
+= Manual Installation =
 
 1.  Download the Jigoshop eCommerce plugin file
 2.  Unzip the file into a folder to your computer
-3.  Upload the `/jigoshop/` folder to the `/wp-content/plugins/` folder on your site
+3.  Upload the `/jigoshop-ecommerce/` folder to the `/wp-content/plugins/` folder on your site
 4.  Visit the plugins page in WordPress Admin to activate the Jigoshop plugin
+
+= Automatic Installation =
+
+1.  Login to your WordPress Dashboard.
+2.  Go to Plugins -> Add New
+3.  Type "Jigoshop eCommerce" into the Search input
+4.  Click on "Install Now"
+5. 	Click on "Activate"
 
 = Setting up Jigoshop =
 
@@ -73,7 +120,7 @@ Take a look through our <a href="http://forum.jigoshop.com/kb/" title="Jigoshop 
 
 = Will Jigoshop eCommerce work with X theme? =
 
-Jigoshop eCommerce will in theory work with any theme, but of course, certain parts may need to be styled using CSS to make them match up. We've added default styling for Twenty Thirteen,Twenty Fourteen,Twenty Fifteen,Twenty Sixteen and...WooThemes. We're developing custom themes for the plugin - they should be available soon!
+Jigoshop eCommerce will in theory work with any theme, but of course, certain parts may need to be styled using CSS to make them match up - that's why we created the Layout Manager. We've added default styling for Twenty Thirteen,Twenty Fourteen,Twenty Fifteen,Twenty Sixteen and...WooThemes. We're developing custom themes for the plugin - they should be available soon!
 
 If you need a theme built, or have a theme that needs styling, <a href="http://www.jigoshop.com/contact/">give us a shout</a> and we may be able to assist.
 
