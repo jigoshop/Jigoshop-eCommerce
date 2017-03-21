@@ -12,6 +12,7 @@ use Jigoshop\Helper\Render;
  * @var $myAccountUrl string URL to my account.
  * @var $listUrl string URL to orders list.
  * @var $showWithTax bool Whether to show product price with or without tax.
+ * @var $suffix string
  * @var $getTaxLabel \Closure Function to retrieve tax label.
  */
 ?>
@@ -55,13 +56,15 @@ use Jigoshop\Helper\Render;
 			<th class="product-quantity"><?php _e('Quantity', 'jigoshop'); ?></th>
 			<th class="product-subtotal"><?php _e('Price', 'jigoshop'); ?></th>
 		</tr>
-		<?php do_action('jigoshop\checkout\table_head', $order); ?>
+		<?php /** @deprecated */ do_action('jigoshop\checkout\table_head', $order); ?>
+		<?php do_action('jigoshop\template\checkout\table_head', $order); ?>
 	</thead>
 	<tbody>
 		<?php foreach($order->getItems() as $key => $item): /** @var $item \Jigoshop\Entity\Order\Item */ ?>
-			<?php Render::output('shop/checkout/item/'.$item->getType(), array('cart' => $order, 'key' => $key, 'item' => $item, 'showWithTax' => $showWithTax)); ?>
+			<?php Render::output('shop/checkout/item/'.$item->getType(), array('cart' => $order, 'key' => $key, 'item' => $item, 'showWithTax' => $showWithTax, 'suffix' => $suffix)); ?>
 		<?php endforeach; ?>
-		<?php do_action('jigoshop\checkout\table_body', $order); ?>
+		<?php /** @deprecated */ do_action('jigoshop\checkout\table_body', $order); ?>
+		<?php do_action('jigoshop\template\checkout\table_body', $order); ?>
 	</tbody>
 	<tfoot>
 		<tr id="product-subtotal">
@@ -69,7 +72,9 @@ use Jigoshop\Helper\Render;
 			<th scope="row" colspan="4" class="text-right"><?php _e('Products subtotal', 'jigoshop'); ?></th>
 			<td><?php echo Product::formatPrice($productSubtotal); ?></td>
 		</tr>
-	</tfoot>
+        <?php /** @deprecated */ do_action('jigoshop\checkout\table_foot', $order); ?>
+        <?php do_action('jigoshop\template\checkout\table_foot', $order); ?>
+    </tfoot>
 </table>
 <?php do_action('jigoshop\template\account\orders\single\before_totals', $order); ?>
 <div id="cart-collaterals">

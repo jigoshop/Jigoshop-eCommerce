@@ -121,7 +121,7 @@ class Interceptor
 
 	private function isCart($request)
 	{
-		return isset($request['pagename']) && $request['pagename'] == Pages::CART;
+		return isset($request['pagename']) && $request['pagename'] == get_post_field('post_name', $this->options->getPageId(Pages::CART));
 	}
 
 	private function isProductCategory($request)
@@ -150,7 +150,7 @@ class Interceptor
 			'order' => $options['catalog_order']
 		);
 
-        if($this->options->get('advanced.ignore_meta_queries', false) == true) {
+        if($this->options->get('advanced.ignore_meta_queries', false) == false) {
             $result['meta_query'] = array(
                 array(
                     'key' => 'visibility',
@@ -204,7 +204,7 @@ class Interceptor
 	private function isProductList($request)
 	{
 		return !isset($request['product']) && !isset($request['preview']) && (
-			(isset($request['pagename']) && $request['pagename'] == Pages::SHOP) ||
+			(isset($request['pagename']) && $request['pagename'] == get_post_field('post_name', $this->options->getPageId(Pages::SHOP))) ||
 			(isset($request['post_type']) && $request['post_type'] == Types::PRODUCT)
 		);
 	}
@@ -240,7 +240,7 @@ class Interceptor
 
 	private function isAccount($request)
 	{
-		return isset($request['pagename']) && $request['pagename'] == Pages::SHOP;
+		return isset($request['pagename']) && $request['pagename'] == get_post_field('post_name', $this->options->getPageId(Pages::ACCOUNT));
 	}
 
 	private function isAdminOrderList($request)

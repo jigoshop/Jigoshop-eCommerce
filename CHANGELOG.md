@@ -1,4 +1,32 @@
 ## Changelog
+* 2.0.10 - 2017.03.21:
+    * Fix: Added Layout settings tab.
+    * Fix: Some action hook names.
+    * Fix: Fatal error when order was saved in admin panel triggered by multiple method shippings.
+    * Fix: Variation prices on product page.
+    * Fix: Item price suffix is Account Orders, Checkout Pay, Thant You pages.
+    * Fix: Displaying file attachments on product page.
+    * Fix: Fix fatal error on activation triggered by options helper.
+    * Fix: Tax helper should return tax for Taxable products.
+    * Fix: Properly interpret ignore meta queries option.
+    * Fix: Now coupons and emails are available via api.
+    * Fix: Displaying free instead of price not announced.
+    * Fix: Edit address button.
+    * Fix: External view product button on product list.
+    * Fix: Notice on order list when product was removed.
+    * Fix: Show all orders on Account Orders page.
+    * Fix: Show view product button when product doesn't have price.
+    * Fix: Notice about undefined key in session for recently viewed products widget.
+    * Fix: Don't set shipping method when shipping is not required.
+    * Fix: Notice caused by dashboard monthly report.
+    * Fix: Order migration when product no longer exists.
+    * Fix: Input coupon field on checkout page.
+    * Fix: Fatal error when product does not have default tax classes selected.
+    * Fix: Fatal error when attribute was removed from product.
+    * Fix: Query Interceptor for custom Jigoshop pages.
+    * Fix: Default payment gateway select.
+    * Fix: Reports for variable products.
+    * Fix: Custom permalinks for products.
 * 2.0.9 - 2017.02.13:
     * Fix: Support Twentyseventeen theme.
     * Fix: Improve product reviews.

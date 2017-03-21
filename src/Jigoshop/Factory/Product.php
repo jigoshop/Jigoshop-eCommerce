@@ -167,7 +167,7 @@ class Product implements EntityFactoryInterface
 	 */
 	public function fetch($post)
 	{
-        if(!in_array($post->post_type, [Types::PRODUCT, Types\Product\Variable::TYPE])) {
+        if($post && !in_array($post->post_type, [Types::PRODUCT, Types\Product\Variable::TYPE])) {
             return null;
         }
 
@@ -200,7 +200,9 @@ class Product implements EntityFactoryInterface
 				$state['attribute_order'] = maybe_unserialize($state['attribute_order']);
 				$attributes = array();
 				foreach($state['attribute_order'] as $attributeId) {
-					$attributes[$attributeId] = $state['attributes'][$attributeId];
+				    if(isset($state['attributes'][$attributeId])) {
+                        $attributes[$attributeId] = $state['attributes'][$attributeId];
+                    }
 				}
 				foreach ($state['attributes'] as $attributeId => $attribute) {
 					if(!isset($attributes[$attributeId])) {

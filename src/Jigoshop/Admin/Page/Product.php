@@ -307,7 +307,7 @@ class Product
 
             $result = array(
                 'success' => true,
-                'results' => $this->prepareResults($products, isset($_POST['only_parent'])),
+                'results' => $this->prepareResults($products, isset($_POST['only_parent']) && (bool)$_POST['only_parent']),
             );
         } catch (Exception $e) {
             $result = array(

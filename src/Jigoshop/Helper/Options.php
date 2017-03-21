@@ -45,7 +45,11 @@ class Options
                 $defaults = self::$defaults[$id];
             }
 
-            self::$loadedOptions[$id] = array_merge($defaults, self::$options->get($id, array()));
+            if(self::$options) {
+                self::$loadedOptions[$id] = array_merge($defaults, self::$options->get($id, array()));
+            } else {
+                self::$loadedOptions[$id] = $defaults;
+            }
         }
 
         return self::$loadedOptions[$id];

@@ -104,8 +104,8 @@ class Order implements EntityFactoryInterface
             );
 
             $method = $this->shippingService->get($_POST['order']['shipping']);
-            if ($method instanceof MultipleMethod && isset($_POST['order']['shipping_rate'])) {
-                $method->setShippingRate($_POST['order']['shipping_rate']);
+            if ($method instanceof MultipleMethod && isset($_POST['order']['shipping_rate'], $_POST['order']['shipping_rate'][$method->getId()])) {
+                $method->setShippingRate($_POST['order']['shipping_rate'][$method->getId()]);
                 $data['shipping']['rate'] = $method->getShippingRate();
             }
 

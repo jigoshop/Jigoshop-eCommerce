@@ -213,7 +213,7 @@ Warning : This will result in showing "out of stock" products on the catalog pag
                         'title' => __('Secret key', 'jigoshop'),
                         'type' => 'user_defined',
                         'value' => $this->settings['api']['secret'],
-                        'desctiption' => __('', 'jigoshop'),
+                        'description' => __('', 'jigoshop'),
                         'display' => function($field) {
                             Render::output('admin/settings/api_key', array(
                                 'name' => $field['name'],

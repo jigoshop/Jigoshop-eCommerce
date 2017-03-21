@@ -331,7 +331,7 @@ class Variable implements Type
 				$variations[$variation->getId()] = array(
 					'price' => $variation->getProduct()->getPrice(),
 					'html' => array(
-						'price' => \Jigoshop\Helper\Product::formatPrice($variation->getProduct()->getPrice()),
+						'price' => \Jigoshop\Helper\Product::getPriceHtml($variation->getProduct()),
 					),
 					'attributes' => array(),
 				);
@@ -370,7 +370,7 @@ class Variable implements Type
 			}
 
 			$variation = $this->factory->createVariation($product);
-			$this->wp->doAction('jigoshop\admin\product_variation\add', $variation);
+			$this->wp->doAction('jigoshop\admin\product_variation\add', $variation, $product);
 
 			$product->addVariation($variation);
 			$this->productService->save($product);

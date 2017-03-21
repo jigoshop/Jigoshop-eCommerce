@@ -153,13 +153,36 @@ class ByProduct extends Chart
 						)
 					),
 				),
+                'order_item_meta' => [
+                    'table' => $wpdb->prefix.'jigoshop_order_item_meta',
+                    'on' => [
+                        [
+                            'key' => 'item_id',
+                            'value' => 'order_item.id',
+                            'compare' => '='
+                        ],
+                        [
+                            'key' => 'meta_key',
+                            'value' => '"variation_id"',
+                            'compare' => '='
+                        ]
+                    ]
+                ]
 			),
 			'where' => array(
-				array(
-					'key' => 'order_item.product_id',
-					'value' => sprintf('("%s")', implode('","', $this->productIds)),
-					'compare' => 'IN'
-				),
+                array(
+                    'operator' => 'OR',
+                    array(
+                        'key' => 'order_item.product_id',
+                        'value' => sprintf('("%s")', implode('","', $this->productIds)),
+                        'compare' => 'IN'
+                    ),
+                    array(
+                        'key' => 'order_item_meta.meta_value',
+                        'value' => sprintf('("%s")', implode('","', $this->productIds)),
+                        'compare' => 'IN'
+                    )
+                )
 			),
 			'group_by' => 'order_item.order_id',
 			'order_by' => 'posts.post_date ASC',

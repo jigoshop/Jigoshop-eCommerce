@@ -1,7 +1,9 @@
 <?php
 namespace Jigoshop;
 
+use Jigoshop\Admin\Settings\LayoutTab;
 use Jigoshop\Container;
+use Jigoshop\Core\Options;
 use WPAL\Wordpress;
 
 /**
@@ -47,7 +49,28 @@ class Widget
 					}
 				}
 			}
-		});
+			/** @var Options $options */
+			$options = $di->get('jigoshop.options');
+			$settings = $options->get(LayoutTab::SLUG);
+			unset($settings['enabled'], $settings['page_width'], $settings['global_css']);
+			$sidebars = [];
+			foreach($settings as $pageSettings) {
+			    if((!isset($pageSettings['enabled']) || $pageSettings['enabled']) && $pageSettings['structure'] != 'only_content') {
+			        $sidebars[] = $pageSettings['sidebar'];
+                }
+            }
+            foreach(array_unique($sidebars, SORT_NUMERIC) as $sidebar) {
+			    register_sidebar([
+                    'id' => 'jigoshop_sidebar_'.$sidebar,
+                    'name' => sprintf(__('Jigoshop Sidebar %d', 'textdomain'), $sidebar),
+                    //'description' => __( 'A short description of the sidebar.', 'textdomain' ),
+                    'before_widget' => '<aside id="%1$s" class="widget %2$s">',
+                    'after_widget' => '</aside>',
+                    'before_title' => '<h3 class="widget-title">',
+                    'after_title' => '</h3>'
+                ]);
+            }
+        });
 	}
 
 	/**

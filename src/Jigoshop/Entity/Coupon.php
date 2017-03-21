@@ -9,7 +9,7 @@ use Jigoshop\Entity\Order\Item;
  *
  * @package Jigoshop\Entity
  */
-class Coupon implements EntityInterface
+class Coupon implements EntityInterface, \JsonSerializable
 {
 	const FIXED_CART = 'fixed_cart';
 	const PERCENT_CART = 'percent_cart';
@@ -543,4 +543,39 @@ class Coupon implements EntityInterface
 
 		return false;
 	}
+
+    /**
+     * Specify data which should be serialized to JSON
+     * @link http://php.net/manual/en/jsonserializable.jsonserialize.php
+     * @return mixed data which can be serialized by <b>json_encode</b>,
+     * which is a value of any type other than a resource.
+     * @since 5.4.0
+     */
+    function jsonSerialize()
+    {
+        return array(
+            'id' => $this->id,
+            'type' => $this->type,
+            'amount' => $this->amount,
+            'title' => $this->title,
+            'from' => $this->from ? [
+                'timestamp' => $this->from->getTimestamp(),
+                'format' => $this->fromAt->format('Y-m-d')
+            ] : 0,
+            'to' => $this->to ? [
+                'timestamp' => $this->createdAt->getTimestamp(),
+                'format' => $this->createdAt->format('Y-m-d')
+            ] : 0,
+            'usage_limit' => $this->usageLimit,
+            'individual_use' => $this->individualUse,
+            'free_shipping' => $this->freeShipping,
+            'order_total_minimum' => $this->orderTotalMinimum,
+            'order_total_maximum' => $this->orderTotalMaximum,
+            'products' => $this->products,
+            'excluded_products' => $this->excludedProducts,
+            'categories' => $this->categories,
+            'excluded_categories' => $this->excludedCategories,
+            'payment_methods' => $this->paymentMethods,
+        );
+    }
 }

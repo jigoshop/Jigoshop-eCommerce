@@ -17,7 +17,7 @@ use InvalidArgumentException;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\ResponseInterface;
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use FastRoute\Dispatcher;
 use Slim\Exception\SlimException;
 use Slim\Exception\MethodNotAllowedException;
@@ -52,7 +52,7 @@ class App
      *
      * @var string
      */
-    const VERSION = '3.8.0-dev';
+    const VERSION = '3.9.0-dev';
 
     /**
      * Container

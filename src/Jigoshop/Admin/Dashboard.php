@@ -190,43 +190,30 @@ class Dashboard implements PageInterface
 		$currentDay = intval(date('d'));
 		$selectedMonth = isset($_GET['month']) ? intval($_GET['month']) : $currentMonth;
 		$selectedYear = isset($_GET['year']) ? intval($_GET['year']) : $currentYear;
-
 		$nextYear = ($selectedMonth == 12) ? $selectedYear + 1 : $selectedYear;
 		$nextMonth = ($selectedMonth == 12) ? 1 : $selectedMonth + 1;
 		$previousYear = ($selectedMonth == 1) ? $selectedYear - 1 : $selectedYear;
 		$previousMonth = ($selectedMonth == 1) ? 12 : $selectedMonth - 1;
 
-		$orders = $this->orderService->findFromMonth($selectedMonth, $selectedYear);
-
 		$currentTime = strtotime($selectedYear.'-'.$selectedMonth.'-1');
 
-		if ($currentTime >= strtotime($currentYear.'-'.$currentMonth.'-1')) {
+		if ($currentTime >= strtotime($currentYear.'-'.$currentMonth.'-1') &&
+            ($currentTime - strtotime($currentYear.'-'.$currentMonth.'-'.$currentDay + 1)) > 24 * 3600) {
 			$days = range($currentTime, strtotime($currentYear.'-'.$currentMonth.'-'.$currentDay + 1), 24 * 3600);
 		} else {
 			$days = range($currentTime, strtotime($nextYear.'-'.$nextMonth.'-1'), 24 * 3600);
 		}
+        $orders = $this->orderService->findFromMonth($selectedMonth, $selectedYear);
 
-		$orderAmountsData = $orderCountsData = array_fill_keys($days, 0);
+
+		$orderData = $this->getOrderData($orders, $days);
 		$orderAmounts = $orderCounts = array();
 
-		foreach ($orders as $order) {
-			/** @var $order Order */
-			$debug = $order->getStateToSave();
-			unset($debug['items']);
+		foreach ($days as $day) {
+			$orderCounts[] = array($day, $orderData['counts'][$day]);
+            $orderAmounts[] = array($day, $orderData['amounts'][$day]);
+        }
 
-			$day = strtotime($order->getCreatedAt()->format('Y-m-d'));
-			$orderCountsData[$day] += 1;
-			$orderAmountsData[$day] += $order->getSubtotal() + $order->getShippingPrice();
-		}
-
-		foreach ($orderCountsData as $day => $value) {
-			$orderCounts[] = array($day, $value);
-		}
-		foreach ($orderAmountsData as $day => $value) {
-			$orderAmounts[] = array($day, $value);
-		}
-
-		unset($orderAmountsData, $orderCountsData);
 		Render::output('admin/dashboard/monthlyReport', array(
 			'orders' => $orders,
 			'selectedMonth' => $selectedMonth,
@@ -240,6 +227,29 @@ class Dashboard implements PageInterface
 			'orderCounts' => $orderCounts,
 			'orderAmounts' => $orderAmounts,
 		));
+	}
+
+    /**
+     * @param Order[] $orders
+     * @param array $days
+     *
+     * @return array
+     */
+    private function getOrderData($orders, $days)
+    {
+        $orderCountsData = $orderAmountsData = array_fill_keys($days, 0);
+
+        foreach ($orders as $order) {
+            $day = strtotime($order->getCreatedAt()->format('Y-m-d'));
+            if(!isset($orderCountsData[$day])) {
+                $orderCountsData[$day] = $orderAmountsData[$day] = 0;
+            }
+
+            $orderCountsData[$day] += 1;
+            $orderAmountsData[$day] += $order->getSubtotal() + $order->getShippingPrice();
+        }
+
+        return ['counts' => $orderCountsData, 'amounts' => $orderAmountsData];
 	}
 
 	/**

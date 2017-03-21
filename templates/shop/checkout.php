@@ -92,7 +92,7 @@ use Jigoshop\Helper\Tax;
 		<div class="mobile-coupons-product-subtotal">
 		<div class="pull-left">
 			<?php \Jigoshop\Helper\Forms::text(array(
-				'id' => 'jigoshop_coupons',
+				'id' => 'jigoshop_coupons_mobile',
 				'name' => 'jigoshop_coupons',
 				'placeholder' => __('Enter coupons...', 'jigoshop'),
 				'value' => join(',', array_map(function ($coupon){
@@ -116,13 +116,15 @@ use Jigoshop\Helper\Tax;
 				<th class="product-quantity"><?php _e('Quantity', 'jigoshop'); ?></th>
 				<th class="product-subtotal"><?php _e('Price', 'jigoshop'); ?></th>
 			</tr>
-			<?php do_action('jigoshop\checkout\table_head', $cart); ?>
+			<?php /** @deprecated */ do_action('jigoshop\checkout\table_head', $cart); ?>
+			<?php do_action('jigoshop\template\checkout\table_head', $cart); ?>
 			</thead>
 			<tbody>
 			<?php foreach($cart->getItems() as $key => $item): /** @var \Jigoshop\Entity\Order\Item $item */ ?>
 				<?php Render::output('shop/checkout/item/'.$item->getType(), array('cart' => $cart, 'key' => $key, 'item' => $item, 'showWithTax' => $showWithTax, 'suffix' => $suffix)); ?>
 			<?php endforeach; ?>
-			<?php do_action('jigoshop\checkout\table_body', $cart); ?>
+			<?php /** @deprecated  */ do_action('jigoshop\checkout\table_body', $cart); ?>
+			<?php do_action('jigoshop\template\checkout\table_body', $cart); ?>
 			</tbody>
 			<tfoot>
 			<tr>
@@ -141,6 +143,7 @@ use Jigoshop\Helper\Tax;
 				<th colspan="2" scope="row" class="text-right"><?php _e('Products subtotal', 'jigoshop'); ?></th>
 				<td id="product-subtotal"><?php echo Product::formatPrice($productSubtotal, $suffix); ?></td>
 			</tr>
+            <?php do_action('jigoshop\template\checkout\table_foot', $cart); ?>
 			</tfoot>
 		</table>
 	</div>

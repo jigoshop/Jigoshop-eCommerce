@@ -45,37 +45,24 @@ class PaymentTab implements TabInterface
 	/**
 	 * Extract title and id from all availble gateway
 	 *
-	 * @param array $options all gateway
-	 *
 	 * @return array
 	 */
-	protected function getTitles($options)
+	protected function getTitles()
 	{
-		if(!is_array($options))
-		{
-			return array();
-		}
+	    $gateways = $this->paymentService->getEnabled();
+	    if(count($gateways)) {
+            $options = [
+                '' => __('Please select a gateway', 'jigoshop'),
+            ];
+            foreach ($gateways as $gateway) {
+                /** @var $gateway Method */
+                $options[$gateway->getId()] = trim(strip_tags($gateway->getName()));
+            }
+        } else {
+	        $options['no_default_gateway'] = __('All gateways are disabled. Please turn on a gateway.', 'jigoshop');
+        }
 
-		$opt = array();
-
-		foreach ($options as $k => $v)
-		{
-			if($v['enabled'] == false)
-			{
-				continue;
-			}
-
-			$opt[$v['id']] = trim(strip_tags($v['title']));
-		}
-
-		$noDefGateway = array('no_default_gateway' => __('All gateways are disabled. Please turn on a gateway.', 'jigoshop'));
-
-		if(count($opt) == 0)
-		{
-			return $noDefGateway;
-		}
-
-		return array_merge($noDefGateway, $opt);
+        return $options;
 	}
 
 	/**

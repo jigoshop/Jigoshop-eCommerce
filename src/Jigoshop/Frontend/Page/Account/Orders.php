@@ -60,13 +60,16 @@ class Orders implements PageInterface
 			$order = $this->orderService->find($order);
 
 			/** @var Entity $order */
+            $showWithTax = $this->options->get('tax.item_prices', 'excluding_tax') == 'including_tax';
+            $suffix = $showWithTax ? $this->options->get('tax.suffix_for_included', '') : $this->options->get('tax.suffix_for_excluded', '');
 
 			return Render::get('user/account/orders/single', array(
 				'messages' => $this->messages,
 				'order' => $order,
 				'myAccountUrl' => $accountUrl,
 				'listUrl' => Api::getEndpointUrl('orders', '', $accountUrl),
-				'showWithTax' => $this->options->get('tax.price_tax') == 'with_tax',
+                'showWithTax' => $showWithTax,
+                'suffix' => $suffix,
 				'getTaxLabel' => function ($taxClass) use ($order){
 					return Tax::getLabel($taxClass, $order);
 				},

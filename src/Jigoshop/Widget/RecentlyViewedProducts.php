@@ -55,7 +55,7 @@ class RecentlyViewedProducts extends \WP_Widget
 			return;
 		}
 
-		if (!is_array($_SESSION[self::SESSION_KEY])) {
+		if (!isset($_SESSION[self::SESSION_KEY]) || !is_array($_SESSION[self::SESSION_KEY])) {
 			$_SESSION[self::SESSION_KEY] = array();
 		}
 

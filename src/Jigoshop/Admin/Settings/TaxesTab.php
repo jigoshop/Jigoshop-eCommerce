@@ -274,9 +274,8 @@ class TaxesTab implements TabInterface
 	 */
 	public function validate($settings)
 	{
-		$settings['included'] = $settings['included'] == 'on';
 		$settings['shipping'] = $settings['shipping'] == 'on';
-		$classes = $settings['classes'];
+		$classes = isset($settings['classes']) ? $settings['classes'] : [];
 		$settings['classes'] = array();
 		foreach ($classes['class'] as $key => $class) {
 			$settings['classes'][] = array(
@@ -286,9 +285,14 @@ class TaxesTab implements TabInterface
 		}
 
 		$settings['defaults']['taxable'] = $settings['defaults']['taxable'] == 'on';
-		$settings['defaults']['classes'] = array_filter($settings['defaults']['classes'], function ($class) use ($classes){
-			return in_array($class, $classes['class']);
-		});
+		if(isset($settings['defaults']['classes'])) {
+            $settings['defaults']['classes'] = array_filter($settings['defaults']['classes'],
+                function ($class) use ($classes) {
+                    return in_array($class, $classes['class']);
+                });
+        } else {
+            $settings['defaults']['classes'] = [];
+        }
 
 		if (!isset($settings['rules'])) {
 			$settings['rules'] = array('id' => array());
