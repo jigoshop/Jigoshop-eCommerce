@@ -65,7 +65,7 @@ if (!defined('WP_DEBUG')) {
 
 define('JIGOSHOP_REQUIRED_MEMORY', 64);
 define('JIGOSHOP_REQUIRED_WP_MEMORY', 40);
-define('JIGOSHOP_PHP_VERSION', '5.3');
+define('JIGOSHOP_PHP_VERSION', '5.6');
 define('JIGOSHOP_WORDPRESS_VERSION', '3.8');
 
 if(version_compare(PHP_VERSION, JIGOSHOP_PHP_VERSION, '<')){
