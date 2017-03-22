@@ -5,6 +5,7 @@ namespace Jigoshop\Admin\Reports;
 use Jigoshop\Admin\Reports;
 use Jigoshop\Core\Options;
 use Jigoshop\Helper\Render;
+use Jigoshop\Integration;
 use WPAL\Wordpress;
 
 class SalesTab implements TabInterface
@@ -25,6 +26,14 @@ class SalesTab implements TabInterface
         if (in_array($this->wp->getPageNow(), array('admin.php', 'options.php')) &&
             isset($_GET['page']) && $_GET['page'] == Reports::NAME
         ) {
+            add_action( 'admin_notices', function(){
+                ?>
+                <div class="notice notice-warning is-dismissible">
+                    <p><?php _e('We have decided to disable the Discount Summary Report Tab until the next update due to an issue with coupon retrieval. We\'re terribly sorry for the inconvenience - our development team is doing their best to resolve this issue ASAP.', 'jigoshop'); ?></p>
+                </div>
+                <?php
+            });
+
             $this->chart = $this->getChart();
         }
 	}
@@ -63,7 +72,7 @@ class SalesTab implements TabInterface
 			'by_date' => __('By Date', 'jigoshop'),
 			'by_product' => __('By Product', 'jigoshop'),
 			'by_category' => __('By Category', 'jigoshop'),
-			'discount_summary' => __('Discount Summary', 'jigoshop')
+			//'discount_summary' => __('Discount Summary', 'jigoshop')
 		));
 	}
 

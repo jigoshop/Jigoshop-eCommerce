@@ -245,13 +245,28 @@ class Cart extends Order
 		}
 	}
 
+    /**
+     * @return array
+     */
 	public function getStateToSave()
 	{
 		$state = parent::getStateToSave();
 		$state['items'] = serialize($state['items']);
+		$state['coupon_data'] = serialize($this->couponData);
 		unset($state['update_messages'], $state['updated_at'], $state['completed_at'], $state['total'],
 			$state['subtotal']);
 
 		return $state;
+	}
+
+    /**
+     * @param array $state
+     */
+    public function restoreState(array $state)
+    {
+        parent::restoreState($state);
+        if(isset($state['coupon_data'])) {
+            $this->couponData = maybe_unserialize($state['coupon_data']);
+        }
 	}
 }

@@ -103,8 +103,8 @@ class Product implements EntityFactoryInterface
 
 		if (!empty($_POST)) {
 			$helpers = $this->wp->getHelpers();
-			$product->setName($helpers->sanitizeTitle($_POST['post_title']));
-			$product->setDescription($helpers->parsePostBody($_POST['post_excerpt']));
+			$product->setName($_POST['post_title']);
+			$product->setDescription($helpers->parsePostBody($_POST['post_content']));
 			$_POST['product']['categories'] = $this->getTerms($id, Types::PRODUCT_CATEGORY, $this->wp->getTerms(Types::PRODUCT_CATEGORY, array(
 				'posts__in' => $_POST['tax_input']['product_category'],
 			)));

@@ -648,18 +648,8 @@ class Order
 
     private function renderModifiedPublishBoxContent($post)
     {
-        ob_start();
         post_submit_meta_box($post);
-        $html = ob_get_clean();
-        $doc = new \DOMDocument();
-        $doc->loadHTML($html);
-        $element = $doc->getElementById('minor-publishing');
-        $element->removeChild($doc->getElementById('minor-publishing-actions'));
-        $doc->getElementById('minor-publishing')->parentNode->removeChild($doc->getElementById('major-publishing-actions'));
-        $element = $doc->getElementById('misc-publishing-actions');
-        $element->removeChild($doc->getElementById('visibility'));
-        $element->removeChild($element->getElementsByTagName('div')->item(0));
-
-        echo $doc->saveHTML();
+        //TODO: move it to CSS file.
+        echo '<style>#major-publishing-actions, #minor-publishing-actions, #misc-publishing-actions div:first-of-type, #misc-publishing-actions #visibility {display:none;}</style>';
     }
 }
