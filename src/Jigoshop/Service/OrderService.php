@@ -268,6 +268,8 @@ class OrderService implements OrderServiceInterface
                     $this->saveDiscountMeta($discount, $meta);
                 }
             }
+
+            unset($fields['discounts']);
         }
 
         foreach ($fields as $field => $value) {
@@ -493,6 +495,7 @@ class OrderService implements OrderServiceInterface
             'meta_key' => $meta->getKey(),
             'meta_value' => $meta->getValue(),
         ]);
+
     }
 
     /**

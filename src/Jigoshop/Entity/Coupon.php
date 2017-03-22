@@ -527,7 +527,7 @@ class Coupon implements EntityInterface, \JsonSerializable
 		$discount->setType(Types::COUPON);
 		$discount->setAmount($amount);
 		$discount->addMeta(new Discount\Meta('coupon_data', json_encode($this)));
-		$discount->addMeta(new Discount\Meta('free_shipping', $this->freeShipping));
+		$discount->addMeta(new Discount\Meta('free_shipping', $this->freeShipping ? 1 : 0));
 
 		return $discount;
 	}
