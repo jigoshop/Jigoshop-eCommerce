@@ -12,15 +12,15 @@ use Jigoshop\Helper\Product as ProductHelper;
 
 class Cart extends Order
 {
-	/** @var array */
-	private $couponData = array();
+	/** @var Coupon[] */
+	private $coupons = [];
 
 	public function __construct(array $taxClasses)
 	{
 		parent::__construct($taxClasses);
 	}
 
-	/**
+    /**
 	 * Updates quantity of selected item by it's key.
 	 *
 	 * @param $key      string Item key in the cart.
@@ -145,9 +145,7 @@ class Cart extends Order
 	 */
 	public function getCoupons()
 	{
-		return array_map(function ($item){
-			return $item['object'];
-		}, $this->couponData);
+		return $this->coupons;
 	}
 
 	/**
@@ -155,7 +153,7 @@ class Cart extends Order
 	 */
 	public function hasCoupons()
 	{
-		return !empty($this->couponData);
+		return !empty($this->coupons);
 	}
 
 	/**
@@ -163,9 +161,7 @@ class Cart extends Order
 	 */
 	public function recalculateCoupons()
 	{
-		foreach ($this->couponData as $data) {
-			/** @var Coupon $coupon */
-			$coupon = $data['object'];
+		foreach ($this->coupons as $coupon) {
 
 			$this->removeCoupon($coupon->getId());
 			try {
@@ -181,30 +177,19 @@ class Cart extends Order
 	 */
 	public function removeCoupon($id)
 	{
-		if (!isset($this->couponData[$id])) {
+		if (!isset($this->coupons[$id])) {
 			return;
 		}
-
-		$coupon = $this->couponData[$id];
-		/** @var Coupon $object */
-		$object = $coupon['object'];
-		$this->removeDiscount($coupon['discount']);
-		parent::removeCoupon($object->getCode());
-		unset($this->couponData[$id]);
+        $this->removeDiscount($this->coupons[$id]->getCode());
+		unset($this->coupons[$id]);
 	}
 
 	/**
-	 * @param $coupon Coupon
+	 * @param Coupon $coupon
 	 */
-	public function addCoupon($coupon)
+	public function addCoupon(Coupon $coupon)
 	{
-		if (!is_object($coupon)) {
-			parent::addCoupon($coupon);
-
-			return;
-		}
-
-		if (isset($this->couponData[$coupon->getId()])) {
+		if (isset($this->coupons[$coupon->getId()])) {
 			return;
 		}
 
@@ -216,16 +201,12 @@ class Cart extends Order
 		}
 
 		if ($coupon->isIndividualUse()) {
-			$this->removeAllCouponsExcept(array());
+			$this->removeAllCouponsExcept([]);
 		}
 
 		$discount = $coupon->getDiscount($this);
-		$this->couponData[$coupon->getId()] = array(
-			'object' => $coupon,
-			'discount' => $discount,
-		);
+		$this->coupons[$coupon->getId()] = $coupon;
 
-		parent::addCoupon($coupon->getCode());
 		$this->addDiscount($discount);
 	}
 
@@ -236,9 +217,7 @@ class Cart extends Order
 	 */
 	public function removeAllCouponsExcept($codes)
 	{
-		foreach ($this->couponData as $coupon) {
-			/** @var Coupon $coupon */
-			$coupon = $coupon['object'];
+		foreach ($this->coupons as $coupon) {
 			if (!in_array($coupon->getCode(), $codes)) {
 				$this->removeCoupon($coupon->getId());
 			}
@@ -252,7 +231,7 @@ class Cart extends Order
 	{
 		$state = parent::getStateToSave();
 		$state['items'] = serialize($state['items']);
-		$state['coupon_data'] = serialize($this->couponData);
+		$state['coupons'] = serialize($this->coupons);
 		unset($state['update_messages'], $state['updated_at'], $state['completed_at'], $state['total'],
 			$state['subtotal']);
 
@@ -265,8 +244,8 @@ class Cart extends Order
     public function restoreState(array $state)
     {
         parent::restoreState($state);
-        if(isset($state['coupon_data'])) {
-            $this->couponData = maybe_unserialize($state['coupon_data']);
+        if(isset($state['coupons'])) {
+            $this->coupons = maybe_unserialize($state['coupons']);
         }
 	}
 }

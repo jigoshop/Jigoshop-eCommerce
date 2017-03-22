@@ -76,10 +76,9 @@ class AdvancedFlatRate implements MultipleMethod
      */
     public function isEnabled()
     {
-        $cart = $this->cartService->getCurrent();
         $post = get_post();
-
         if ($post === null || $post->post_type != Types::ORDER) {
+            $cart = $this->cartService->getCurrent();
             $customer = $cart->getCustomer();
         } else {
             $customer = unserialize(get_post_meta($post->ID, 'customer', true));
