@@ -241,6 +241,11 @@ class Order implements OrderInterface, \JsonSerializable
         return $discount;
     }
 
+    public function removeDiscounts()
+    {
+        $this->discounts = [];
+    }
+
 
     public function getDiscount()
     {

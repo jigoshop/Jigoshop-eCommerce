@@ -134,4 +134,5 @@ interface OrderInterface extends EntityInterface
     public function addDiscount(Discount $discount);
 
     public function removeDiscount($key);
+    public function removeDiscounts();
 }
