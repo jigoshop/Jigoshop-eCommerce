@@ -135,6 +135,38 @@ class Installer
         }
 
         $query = "
+			CREATE TABLE IF NOT EXISTS {$wpdb->prefix}jigoshop_order_discount (
+				id INT NOT NULL AUTO_INCREMENT,
+				order_id BIGINT(20) UNSIGNED,
+				type VARCHAR(255) NOT NULL,
+			    code VARCHAR(255) NOT NULL,
+				amount DECIMAL(12,4) NOT NULL,
+				PRIMARY KEY id (id),
+				FOREIGN KEY discount_order (order_id) REFERENCES {$wpdb->posts} (ID) ON DELETE CASCADE
+			) {$collate};
+		";
+        if (!$wpdb->query($query)) {
+            Registry::getInstance(\JigoshopInit::getLogger())->addCritical(sprintf('Unable to create table "%s". Error: "%s".', 'jigoshop_order_item', $wpdb->last_error));
+            echo __('Unable to create Jigoshop tables.', 'jigoshop');
+            exit;
+        }
+
+        $query = "
+			CREATE TABLE IF NOT EXISTS {$wpdb->prefix}jigoshop_order_discount_meta (
+				discount_id INT,
+				meta_key VARCHAR(170) NOT NULL,
+				meta_value TEXT NOT NULL,
+				PRIMARY KEY id (item_id, meta_key),
+				FOREIGN KEY order_discount (discount_id) REFERENCES {$wpdb->prefix}jigoshop_order_discount (id) ON DELETE CASCADE
+			) {$collate};
+		";
+        if (!$wpdb->query($query)) {
+            Registry::getInstance(JIGOSHOP_LOGGER)->addCritical(sprintf('Unable to create table "%s". Error: "%s".', 'jigoshop_order_item_meta', $wpdb->last_error));
+            echo __('Unable to create Jigoshop tables.', 'jigoshop');
+            exit;
+        }
+
+        $query = "
 			CREATE TABLE IF NOT EXISTS {$wpdb->prefix}jigoshop_order_item (
 				id INT NOT NULL AUTO_INCREMENT,
 				order_id BIGINT(20) UNSIGNED,
