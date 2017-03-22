@@ -247,6 +247,9 @@ class Order implements OrderInterface, \JsonSerializable
     }
 
 
+    /**
+     * @return float
+     */
     public function getDiscount()
     {
         if(empty($this->discounts)) {
