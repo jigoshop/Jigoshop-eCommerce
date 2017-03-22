@@ -18,11 +18,7 @@ use Jigoshop\Admin\Reports;
 		</ul>
 	</nav>
 	<div class="tab-content">
-        <?php if($current_type == 'discount_summary') : ?>
-            asdsad
-        <?php else: ?>
             <?php $chart->display(); ?>
-        <?php endif; ?>
 	</div>
 </div>
 
