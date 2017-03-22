@@ -241,6 +241,35 @@ class OrderService implements OrderServiceInterface
             unset($fields['items']);
         }
 
+        if(isset($fields['discounts'])) {
+            $existing = array_map(function($discount) {
+                return $discount->getId();
+            }, $fields['discounts']);
+
+            $this->removeAllDiscountsExcept($object, $existing);
+
+            foreach ($fields['discounts'] as $discount) {
+                /** @var Order\Discount $discount */
+                $data = [
+                    'order_id' => $object->getId(),
+                    'type' => $discount->getType(),
+                    'code' => $discount->getCode(),
+                    'amount' => $discount->getAmount(),
+                ];
+
+                if($discount->getId() !== null) {
+                    $wpdb->update($wpdb->prefix . 'jigoshop_order_discount', $data, ['id' => $discount->getId()]);
+                } else {
+                    $wpdb->insert($wpdb->prefix . 'jigoshop_order_discount', $data);
+                    $discount->setId($wpdb->insert_id);
+                }
+
+                foreach ($discount->getAllMeta() as $meta) {
+                    $this->saveDiscountMeta($discount, $meta);
+                }
+            }
+        }
+
         foreach ($fields as $field => $value) {
             $this->wp->updatePostMeta($object->getId(), $field, $this->wp->getHelpers()->escSql($value));
         }
@@ -416,6 +445,25 @@ class OrderService implements OrderServiceInterface
     }
 
     /**
+     * @param $order int Order ID.
+     * @param $ids   array IDs to preserve.
+     */
+    public function removeAllDiscountsExcept($order, $ids)
+    {
+        $wpdb = $this->wp->getWPDB();
+        $ids = join(',', array_filter(array_map(function ($item) {
+            return (int)$item;
+        }, $ids)));
+        // Support for removing all discounts
+        if (empty($ids)) {
+            $ids = '0';
+        }
+        $query = $wpdb->prepare("DELETE FROM {$wpdb->prefix}jigoshop_order_discount WHERE id NOT IN ({$ids}) AND order_id = %d",
+            [$order]);
+        $wpdb->query($query);
+    }
+
+    /**
      * Saves item meta value to database.
      *
      * @param $item Order\Item Item of the meta.
@@ -429,6 +477,22 @@ class OrderService implements OrderServiceInterface
             'meta_key' => $meta->getKey(),
             'meta_value' => $meta->getValue(),
         ));
+    }
+
+    /**
+     * Saves discount meta value to database.
+     *
+     * @param $discount Order\Discount Item of the meta.
+     * @param $meta Order\Discount\Meta Meta to save.
+     */
+    public function saveDiscountMeta($discount, $meta)
+    {
+        $wpdb = $this->wp->getWPDB();
+        $wpdb->replace($wpdb->prefix . 'jigoshop_order_discount_meta', [
+            'discount_id' => $discount->getId(),
+            'meta_key' => $meta->getKey(),
+            'meta_value' => $meta->getValue(),
+        ]);
     }
 
     /**

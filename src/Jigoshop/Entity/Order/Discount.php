@@ -15,7 +15,7 @@ class Discount implements \Serializable, \JsonSerializable
     /** @var  int */
     private $id;
     /** @var  string */
-    private $key;
+    private $code;
     /** @var  string  */
     private $type;
     /** @var  float */
@@ -42,17 +42,17 @@ class Discount implements \Serializable, \JsonSerializable
     /**
      * @return string
      */
-    public function getKey()
+    public function getCode()
     {
-        return $this->key;
+        return $this->code;
     }
 
     /**
-     * @param string $key
+     * @param string $code
      */
-    public function setKey($key)
+    public function setCode($code)
     {
-        $this->key = $key;
+        $this->code = $code;
     }
 
     /**
@@ -152,7 +152,7 @@ class Discount implements \Serializable, \JsonSerializable
     {
         return serialize([
             'id' => $this->id,
-            'key' => $this->key,
+            'code' => $this->code,
             'type' => $this->type,
             'amount' => $this->amount,
             'meta' => serialize($this->meta),
@@ -172,7 +172,7 @@ class Discount implements \Serializable, \JsonSerializable
     {
         $data = unserialize($serialized);
         $this->id = $data['id'];
-        $this->key = $data['key'];
+        $this->code = $data['code'];
         $this->type = $data['type'];
         $this->amount = $data['amount'];
         $this->meta = unserialize($data['meta']);
@@ -193,7 +193,7 @@ class Discount implements \Serializable, \JsonSerializable
     {
         return [
             'id' => $this->id,
-            'key' => $this->key,
+            'code' => $this->code,
             'type' => $this->type,
             'amount' => $this->amount,
             'meta' => array_values($this->meta),

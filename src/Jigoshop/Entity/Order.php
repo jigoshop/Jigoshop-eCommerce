@@ -200,7 +200,7 @@ class Order implements OrderInterface, \JsonSerializable
      */
     public function addDiscount(Discount $discount)
     {
-        $this->discounts[$discount->getKey()] = $discount;
+        $this->discounts[$discount->getCode()] = $discount;
 	}
 
 //    /**
@@ -518,7 +518,7 @@ class Order implements OrderInterface, \JsonSerializable
 	public function getTotal()
 	{
         //TODO: calculate it only once
-		return $this->subtotal + $this->getTotalCombinedTax() + $this->getShippingPrice() - $this->getDiscount();
+		return $this->subtotal + $this->getTotalCombinedTax() - $this->getDiscount();
 	}
 
 	/**

@@ -523,7 +523,7 @@ class Coupon implements EntityInterface, \JsonSerializable
 		}
 
 		$discount = new Discount();
-		$discount->setKey($this->code);
+		$discount->setCode($this->code);
 		$discount->setType(Types::COUPON);
 		$discount->setAmount($amount);
 		$discount->addMeta(new Discount\Meta('coupon_data', json_encode($this)));
