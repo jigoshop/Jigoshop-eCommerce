@@ -66,7 +66,7 @@ class CreateDiscountsTables implements Upgrader
     public function down(Wordpress $wp, Container $di)
     {
         $wpdb = $wp->getWPDB();
-        $wpdb->query("DROP TABLE IF EXISTS {$wpdb->prefix}jigoshop_order_discount");
         $wpdb->query("DROP TABLE IF EXISTS {$wpdb->prefix}jigoshop_order_discount_meta");
+        $wpdb->query("DROP TABLE IF EXISTS {$wpdb->prefix}jigoshop_order_discount");
     }
 }
