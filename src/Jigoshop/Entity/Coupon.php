@@ -2,7 +2,6 @@
 
 namespace Jigoshop\Entity;
 
-use Jigoshop\Core\Types;
 use Jigoshop\Entity\Order\Discount;
 use Jigoshop\Entity\Order\Item;
 
@@ -524,7 +523,7 @@ class Coupon implements EntityInterface, \JsonSerializable
 
 		$discount = new Discount();
 		$discount->setCode($this->code);
-		$discount->setType(Types::COUPON);
+		$discount->setType(Discount\Type::COUPON);
 		$discount->setAmount($amount);
 		$discount->addMeta(new Discount\Meta('coupon_data', json_encode($this)));
 		$discount->addMeta(new Discount\Meta('free_shipping', $this->freeShipping ? 1 : 0));
