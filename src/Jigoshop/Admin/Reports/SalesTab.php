@@ -72,7 +72,7 @@ class SalesTab implements TabInterface
 			'by_date' => __('By Date', 'jigoshop'),
 			'by_product' => __('By Product', 'jigoshop'),
 			'by_category' => __('By Category', 'jigoshop'),
-			//'discount_summary' => __('Discount Summary', 'jigoshop')
+			'discount_summary' => __('Discount Summary', 'jigoshop')
 		));
 	}
 

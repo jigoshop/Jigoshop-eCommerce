@@ -194,6 +194,23 @@ class DiscountSummary extends Chart
 						'name' => 'coupons'
 					)
 				),
+                'discount' => [
+                    [
+                        'field' => 'type',
+                        'function' => '',
+                        'name' => 'type',
+                    ],
+                    [
+                        'field' => 'code',
+                        'function' => '',
+                        'name' => 'code',
+                    ],
+                    [
+                        'field' => 'amount',
+                        'function' => '',
+                        'name' => 'amount',
+                    ]
+                ],
 				'posts' => array(
 					array(
 						'field' => 'post_date',
@@ -203,48 +220,21 @@ class DiscountSummary extends Chart
 				),
 			),
 			'from' => array(
-				'discount' => $wpdb->postmeta,
+				'discount' => $wpdb->prefix . 'jigoshop_order_discount',
 			),
 			'join' => array(
-				'coupons' => array(
-					'table' => $wpdb->postmeta,
-					'on' => array(
-						array(
-							'key' => 'post_id',
-							'value' => 'discount.post_id',
-							'compare' => '=',
-						),
-						array(
-							'key' => 'meta_key',
-							'value' => '"coupons"',
-							'compare' => '=',
-						)
-					),
-				),
 				'posts' => array(
 					'table' => $wpdb->posts,
 					'on' => array(
 						array(
 							'key' => 'ID',
-							'value' => 'discount.post_id',
+							'value' => 'discount.order_id',
 							'compare' => '=',
 						)
 					),
 				)
 			),
-			'where' => array(
-				array(
-					'key' => 'discount.meta_key',
-					'value' => '"discount"',
-					'compare' => '='
-				),
-				array(
-					'key' => 'discount.meta_value',
-					'value' => '0',
-					'compare' => '>'
-				),
-			),
-			'filter_range' => true,
+            'filter_range' => true,
 		));
 		$coupons = $this->getOrderReportData($query);
 		$this->reportData->orders = $this->parseReportData($coupons);
