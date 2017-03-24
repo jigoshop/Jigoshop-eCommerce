@@ -409,20 +409,23 @@ abstract class Chart
 	private function prepareQueryWhere(array $args, $filterRange)
 	{
 		$where = 'WHERE 1=1';
-		for($i = 0 ; $i < sizeof($args) ; $i++){
-            if(isset($args[$i]['operator'])) {
-                $statement = [];
-                $operator = $args[$i]['operator'];
-                unset($args[$i]['operator']);
-                $args[$i] = array_values($args[$i]);
-                for($j = 0 ; $j < count($args[$i]); $j++) {
-                    $statement[] = sprintf('%s %s %s', $args[$i][$j]['key'], $args[$i][$j]['compare'], $args[$i][$j]['value']);
+
+		if(count($args)) {
+            $helper = function(array $args) use (&$helper) {
+                if(isset($args['key'])) {
+                    return sprintf('%s %s %s', $args['key'], $args['compare'], $args['value']);
+                } else {
+                    $operator = ' AND ';
+                    if(isset($args['operator'])) {
+                        $operator = ' ' . $args['operator'] . ' ';
+                        unset($args['operator']);
+                    }
+                    return '(' . join($operator, array_map($helper, $args)) . ')';
                 }
-                $where = sprintf('%s AND ( %s )', $where, join(' '.$operator.' ', $statement));
-            } else {
-                $where = sprintf('%s AND %s %s %s', $where, $args[$i]['key'], $args[$i]['compare'], $args[$i]['value']);
-            }
-		}
+            };
+            $where = sprintf('%s AND %s', $where, $helper($args));
+        }
+
 		if($filterRange){
 			$where = sprintf('%s AND posts.post_date >= "%s" AND posts.post_date < "%s"', $where, date('Y-m-d', $this->range['start']), date('Y-m-d', strtotime('+1 DAY', $this->range['end'])));
 		}
