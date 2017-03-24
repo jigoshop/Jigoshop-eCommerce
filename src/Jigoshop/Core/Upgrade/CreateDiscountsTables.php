@@ -50,7 +50,7 @@ class CreateDiscountsTables implements Upgrader
 				discount_id INT,
 				meta_key VARCHAR(170) NOT NULL,
 				meta_value TEXT NOT NULL,
-				PRIMARY KEY id (item_id, meta_key),
+				PRIMARY KEY id (discount_id, meta_key),
 				FOREIGN KEY order_discount (discount_id) REFERENCES {$wpdb->prefix}jigoshop_order_discount (id) ON DELETE CASCADE
 			) {$collate};
 		";

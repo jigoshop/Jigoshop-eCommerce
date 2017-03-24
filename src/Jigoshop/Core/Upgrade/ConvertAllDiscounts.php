@@ -29,10 +29,10 @@ class ConvertAllDiscounts implements Upgrader
         $this->couponService = $di->get('jigoshop.service.coupon');
         $this->orderService = $di->get('jigoshop.service.order');
 
-        $results = $wpdb->get_results("
+        $results = $wpdb->get_results($wpdb->prepare("
           SELECT meta1.post_id as id, meta1.meta_value as discount, meta2.meta_value as coupons FROM {$wpdb->postmeta} as meta1
           LEFT JOIN {$wpdb->postmeta} as meta2 on (meta2.post_id = meta1.post_id AND meta2.meta_key = %s)
-          WHERE meta1.meta_key = %s AND (meta1.meta_value + 0.0) > 0", ['discount', 'coupons']);
+          WHERE meta1.meta_key = %s AND (meta1.meta_value + 0.0) > 0", ['discount', 'coupons']));
 
         foreach($results as $result) {
             $coupons = array_values(maybe_unserialize($result['coupons']));
@@ -41,7 +41,7 @@ class ConvertAllDiscounts implements Upgrader
                 if(is_string($coupons[0])) {
                     $discouts = $this->convertCouponsFromJSE($result, $coupons);
                 } elseif (is_array($coupons[0])) {
-                    $discouts = $this->convertCouponsFromJSX($result, $coupons);
+                    $discouts = [];//$this->convertCouponsFromJSX($result, $coupons);
                 }
                 if(count($discouts)) {
                     $this->saveDiscounts($wpdb, $discouts);

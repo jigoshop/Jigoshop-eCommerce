@@ -271,6 +271,7 @@ class JigoshopInit
         /** @var \WPAL\Wordpress $wp */
         $wp = $this->container->get('wpal');
         Jigoshop\Entity\Order\Status::setWordpress($wp);
+        Jigoshop\Entity\Order\Discount\Type::setWordpress($wp);
     }
 
     /**
