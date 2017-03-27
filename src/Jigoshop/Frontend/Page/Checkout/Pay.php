@@ -4,18 +4,16 @@ namespace Jigoshop\Frontend\Page\Checkout;
 
 use Jigoshop\Core\Messages;
 use Jigoshop\Core\Options;
-use Jigoshop\Core\Types;
 use Jigoshop\Entity\Order;
-use Jigoshop\Entity\Order\Item;
-use Jigoshop\Entity\Product;
 use Jigoshop\Exception;
 use Jigoshop\Frontend\Page\PageInterface;
 use Jigoshop\Frontend\Pages;
-use Jigoshop\Helper\Api;
+use Jigoshop\Helper\Endpoint;
 use Jigoshop\Helper\Render;
 use Jigoshop\Helper\Scripts;
 use Jigoshop\Helper\Styles;
 use Jigoshop\Helper\Tax;
+use Jigoshop\Payment\RenderPayInterface;
 use Jigoshop\Service\OrderServiceInterface;
 use Jigoshop\Service\PaymentServiceInterface;
 use WPAL\Wordpress;
@@ -98,6 +96,15 @@ class Pay implements PageInterface
 	{
 		/** @var Order $order */
 		$order = $this->orderService->find((int)$this->wp->getQueryParameter('pay'));
+
+		if(isset($_GET['payment'])) {
+		    $payment = $this->paymentService->get($_GET['payment']);
+		    if($payment instanceof RenderPayInterface) {
+		        return $payment->renderPay($order);
+            }
+        }
+
+        /** @deprecated since 2.1 */
 		$render = $this->wp->applyFilters('jigoshop\pay\render', '', $order);
 
 		if (!empty($render)) {
@@ -127,7 +134,7 @@ class Pay implements PageInterface
             'suffix' => $suffix,
 			'termsUrl' => $termsUrl,
 			'myAccountUrl' => $accountUrl,
-			'myOrdersUrl' => Api::getEndpointUrl('orders', '', $accountUrl),
+			'myOrdersUrl' => Endpoint::getEndpointUrl('orders', '', $accountUrl),
 			'paymentMethods' => $this->paymentService->getEnabled(),
 			'getTaxLabel' => function ($taxClass) use ($order){
 				return Tax::getLabel($taxClass, $order);
