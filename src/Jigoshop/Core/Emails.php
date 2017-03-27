@@ -255,8 +255,16 @@ class Emails
 					$itemResult .= $attribute->getAttribute()->getLabel().': '.$attribute->getItemValue($item).', ';
 				}
 
-				$itemResult = rtrim($itemResult, ',');
-			}
+                if($variation->getProduct() instanceof Product\Downloadable) {
+                    $itemResult .= PHP_EOL;
+                    $itemResult .= '<a href="'.$variation->getProduct()->getUrl().'">'.$variation->getProduct()->getUrl().'</a>';
+                }
+
+                $itemResult = rtrim($itemResult, ',');
+            } elseif ($product instanceof Product\Downloadable) {
+                $itemResult .= PHP_EOL;
+                $itemResult .= '<a href="'.$product->getUrl().'">'.$product->getUrl().'</a>';
+            }
 
 			$itemResult = $this->wp->applyFilters('jigoshop\emails\order_item', $itemResult, $item, $order);
 			$result .= $itemResult.PHP_EOL;
