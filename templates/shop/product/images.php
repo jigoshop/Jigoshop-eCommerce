@@ -16,12 +16,17 @@ use Jigoshop\Helper\Product;
 	<?php endif; ?>
 	<?php do_action('jigoshop\template\product\before_featured_image', $product); ?>
     <div class="product-gallery">
-        <a href="<?php echo $featuredUrl; ?>" class="<?php echo join(' ', $imageClasses); ?>" <?= $featuredUrl ? 'data-gallery="#blueimp-gallery"' : ''; ?> title="<?= $featuredTitle ?>"><?php echo $featured; ?></a>
+        <?php \Jigoshop\Helper\Render::output('shop/product/images/featured', [
+            'featured' => $featured,
+            'featuredUrl' => $featuredUrl,
+            'featuredTitle' => $featuredTitle,
+            'imageClasses' => $imageClasses,
+        ]); ?>
     </div>
 	<?php do_action('jigoshop\template\product\before_thumbnails', $product); ?>
 	<div class="product-gallery thumbnails">
 		<?php foreach($thumbnails as $thumbnail): ?>
-			<a href="<?php echo $thumbnail->getUrl(); ?>" data-lightbox="product-gallery" data-gallery="#blueimp-gallery" title="<?php echo $thumbnail->getTitle(); ?>" title="<?php echo $thumbnail->getTitle(); ?>" class="zoom">
+			<a href="<?php echo $thumbnail->getUrl(); ?>" data-lightbox="product-gallery" data-gallery="#blueimp-gallery" title="<?php echo $thumbnail->getTitle(); ?>" title="<?php echo $thumbnail->getTitle(); ?>" class="zoom active">
 				<?php echo apply_filters('jigoshop\template\product\thumbnail', $thumbnail->getImage(), $thumbnail, $product); ?>
 			</a>
 		<?php endforeach; ?>

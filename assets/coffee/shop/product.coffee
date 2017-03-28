@@ -1,5 +1,4 @@
 jQuery ($) ->
-  $('#blueimp-gallery').data('gallery')
   $('ul.tabs a').on 'click', (e) ->
     e.preventDefault()
     $(this).tab('show')

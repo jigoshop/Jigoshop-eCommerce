@@ -6,8 +6,11 @@ class ProductVariable
   params:
     variations: {}
   attributes: {}
+  defaultFeaturedImage: ''
 
   constructor: (@params) ->
+    @defaultFeaturedImage = jQuery('.featured-image')
+
     jQuery('select.product-attribute').on 'change', @updateAttributes
     jQuery('select.product-attribute').trigger 'change'
   updateAttributes: (event) =>
@@ -28,19 +31,30 @@ class ProductVariable
           proper = @VARIATION_NOT_EXISTS
           break
       if proper == @VARIATION_EXISTS
-        if not definition.price
+        if definition.price == ''
           proper = @VARIATION_NOT_EXISTS
           continue
         jQuery('p.price > span', $buttons).html(definition.html.price)
+        if definition.html.image != ''
+          jQuery('.featured-image').replaceWith(definition.html.image)
+          @refreshVariationGallery(id)
+        else
+          jQuery('.featured-image').replaceWith(@defaultFeaturedImage)
+          @refreshVariationGallery('parent')
         jQuery('#variation-id').val(id)
         $buttons.slideDown()
         $messages.slideUp()
         break
     if proper != @VARIATION_EXISTS
       jQuery('#variation-id').val('')
+      jQuery('.featured-image').replaceWith(@defaultFeaturedImage)
       $buttons.slideUp()
     if proper == @VARIATION_NOT_EXISTS
       $messages.slideDown()
+
+  refreshVariationGallery: (id) ->
+    jQuery('.variable-product-gallery a.active').removeClass('active')
+    jQuery('.variable-product-gallery a').not(jQuery('#variation-featured-image-' + id)).addClass('active')
 
 jQuery () ->
   new ProductVariable(jigoshop_product_variable)

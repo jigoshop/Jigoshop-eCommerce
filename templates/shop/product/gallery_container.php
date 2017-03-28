@@ -3,7 +3,7 @@
  *
  */
 ?>
-<div id="blueimp-gallery" class="blueimp-gallery" data-start-slideshow="false">
+<div id="blueimp-gallery" class="blueimp-gallery" data-start-slideshow="false" data-filter=".active">
     <div class="slides"></div>
     <h3 class="title"></h3>
     <a class="prev">‹</a>

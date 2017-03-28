@@ -25,10 +25,11 @@ jsFiles =
   tokenfield: ['assets/bower/bootstrap-tokenfield/js/bootstrap-tokenfield.js']
   flot: ['node_modules/jquery-flot/{jquery.flot,jquery.flot.stack,jquery.flot.pie,jquery.flot.resize,jquery.flot.time}.js']
   blueimp: ['node_modules/blueimp-gallery/js/{blueimp-gallery.js,jquery.blueimp-gallery.js}']
+  bs_switch: ['assets/bower/bootstrap-switch/dist/js/bootstrap-switch.js']
 
 # Coffee
-coffeeFiles =
-  bs_switch: ['assets/bower/bootstrap-switch/src/coffee/bootstrap-switch.coffee']
+coffeeFiles = []
+
 
 defaultTask = ['scripts', 'styles', 'fonts']
 
