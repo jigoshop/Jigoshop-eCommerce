@@ -106,7 +106,7 @@ $stock = $product instanceof Product\Purchasable ? $product->getStock() : new St
 			));
 			?>
 			</fieldset>
-            <fieldset>
+            <fieldset class="stock" class="<?php $product instanceof Product\External and print 'display: none;'; ?>">
                 <?php
                 Forms::checkbox(array(
                     'name' => 'product[variation]['.$variation->getId().'][product][stock_manage]',
@@ -123,32 +123,32 @@ $stock = $product instanceof Product\Purchasable ? $product->getStock() : new St
                         StockStatus::IN_STOCK => __('In stock', 'jigoshop'),
                         StockStatus::OUT_STOCK => __('Out of stock', 'jigoshop'),
                     ),
-                    'classes' => array($stock->getManage() ? 'not-active' : '', 'stock-status'),
+                    'classes' => array($stock->getManage() ? 'not-active' : '', 'manual-stock-status'),
                     'size' => 11,
                 ));
                 ?>
-            </fieldset>
-            <fieldset class="stock-status" style="<?php !$stock->getManage() and print 'display: none;'; ?>">
-                <?php
-                Forms::number(array(
-                    'name' => 'product[variation]['.$variation->getId().'][product][stock_stock]',
-                    'label' => __('Items in stock', 'jigoshop'),
-                    'value' => $stock->getStock(),
-                    'min' => 0,
-                    'size' => 11,
-                ));
-                Forms::select(array(
-                    'name' => 'product[variation]['.$variation->getId().'][product][stock_allow_backorders]',
-                    'label' => __('Allow backorders?', 'jigoshop'),
-                    'value' => $stock->getAllowBackorders(),
-                    'options' => array(
-                        StockStatus::BACKORDERS_FORBID => __('Do not allow', 'jigoshop'),
-                        StockStatus::BACKORDERS_NOTIFY => __('Allow, but notify customer', 'jigoshop'),
-                        StockStatus::BACKORDERS_ALLOW => __('Allow', 'jigoshop')
-                    ),
-                    'size' => 11,
-                ));
-                ?>
+                <div class="stock-status" style="<?php !$stock->getManage() and print 'display: none;'; ?>">
+                    <?php
+                    Forms::number(array(
+                        'name' => 'product[variation]['.$variation->getId().'][product][stock_stock]',
+                        'label' => __('Items in stock', 'jigoshop'),
+                        'value' => $stock->getStock(),
+                        'min' => 0,
+                        'size' => 11,
+                    ));
+                    Forms::select(array(
+                        'name' => 'product[variation]['.$variation->getId().'][product][stock_allow_backorders]',
+                        'label' => __('Allow backorders?', 'jigoshop'),
+                        'value' => $stock->getAllowBackorders(),
+                        'options' => array(
+                            StockStatus::BACKORDERS_FORBID => __('Do not allow', 'jigoshop'),
+                            StockStatus::BACKORDERS_NOTIFY => __('Allow, but notify customer', 'jigoshop'),
+                            StockStatus::BACKORDERS_ALLOW => __('Allow', 'jigoshop')
+                        ),
+                        'size' => 11,
+                    ));
+                    ?>
+                </div>
             </fieldset>
 			<fieldset>
 			<?php

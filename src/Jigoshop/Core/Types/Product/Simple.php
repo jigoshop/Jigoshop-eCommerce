@@ -5,6 +5,7 @@ namespace Jigoshop\Core\Types\Product;
 use Jigoshop\Entity\Order\Item;
 use Jigoshop\Entity\Product;
 use Jigoshop\Entity\Product\Simple as Entity;
+use Jigoshop\Helper\Render;
 use Jigoshop\Helper\Scripts;
 use WPAL\Wordpress;
 
@@ -53,7 +54,23 @@ class Simple implements Type
 		$wp->addFilter('jigoshop\core\types\variable\subtypes', array($this, 'addVariableSubtype'), 10, 1);
 		$wp->addFilter('jigoshop\product\get_stock', array($this, 'getStock'), 10, 2);
 		$wp->addAction('jigoshop\admin\product\assets', array($this, 'addAssets'), 10, 0);
-	}
+        $wp->addAction('jigoshop\admin\variation', array($this, 'addVariationFields'), 10, 2);
+    }
+
+    /**
+     * Renders additional fields for variations.
+     *
+     * @param $variation Product\Variable\Variation
+     * @param $product   Product\Variable
+     */
+    public function addVariationFields($variation, $product)
+    {
+        Render::output('admin/product/box/variations/variation/simple', array(
+            'variation' => $variation,
+            'product' => $variation->getProduct(),
+            'parent' => $product,
+        ));
+    }
 
 	/**
 	 * @param $stock bool|int Current stock value.
