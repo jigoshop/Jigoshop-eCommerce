@@ -78,11 +78,19 @@ class ConvertAllDiscounts implements Upgrader
                 $discount->setAmount($discount->getAmount() - abs($result['discount']) / count($discounts));
             }
         }
-        foreach($removed as $code) {
+        if($result['discount'] > 0 && count($removed)) {
+            foreach ($removed as $code) {
+                $discount = new Order\Discount();
+                $discount->setType(Order\Discount\Type::COUPON);
+                $discount->setCode($code);
+                $discount->setAmount($result['discount'] / count($removed));
+                $discounts[] = $discount;
+            }
+        } elseif($result['discount'] > 0) {
             $discount = new Order\Discount();
-            $discount->setType(Order\Discount\Type::COUPON);
-            $discount->setCode($code);
-            $discount->setAmount($result['discount'] / count($removed));
+            $discount->setType(Order\Discount\Type::USER_DEFINED);
+            $discount->setCode('manually_added');
+            $discount->setAmount($result['discount']);
             $discounts[] = $discount;
         }
 
@@ -91,30 +99,55 @@ class ConvertAllDiscounts implements Upgrader
 
     private function convertCouponsFromJSX($result, $coupons)
     {
-//            'id'                    => false,
-//            'code'                  => false,
-//            'type'                  => true,
-//            'amount'                => true,
-//            'date_from'             => true,
-//            'date_to'               => true,
-//            'usage_limit'           => true,
-//            'usage'                 => true,
-//            'free_shipping'         => true,
-//            'individual_use'        => true,
-//            'order_total_min'       => true,
-//            'order_total_max'       => true,
-//            'include_products'      => true,
-//            'exclude_products'      => true,
-//            'include_categories'    => true,
-//            'exclude_categories'    => true,
-//            'pay_methods'           => true,
-
         /** @var Order\Discount[] $discounts */
         $discounts = [];
+        $order = $this->orderService->find($result['id']);
+        $percentProductsCoupons = [];
         foreach($coupons as $coupon) {
-            $couponEntity = new Coupon();
-            //$couponEntity->set
+            $discountAmount = 0;
+            if ($coupon['type'] == 'fixed_cart' || $coupon['type'] == 'fixed_product') {
+                $discountAmount = $coupon['amount'];
+            } else if ($coupon['type'] == 'percent') {
+                $discountAmount = $order->getSubtotal() * $coupon['amount'] / 100;
+            } else {
+                $percentProductsCoupons[] = $coupon['amount'];
+                continue;
+            }
+
+            $discount = new Order\Discount();
+            $discount->setType(Order\Discount\Type::COUPON);
+            $discount->setCode($coupon['code']);
+            $discount->setAmount($discountAmount);
+            $discount->addMeta(new Order\Discount\Meta('js1_coupon', $coupon));
+            $discounts[] = $discount;
+
+            $result['discount'] -= $discountAmount;
         }
+
+        if($result['discount'] < 0) {
+            foreach($discounts as $discount) {
+                $discount->setAmount($discount->getAmount() - abs($result['discount']) / count($discounts));
+            }
+        }
+
+        if($result['discount'] > 0 && count($percentProductsCoupons)) {
+            foreach ($percentProductsCoupons as $coupon) {
+                $discount = new Order\Discount();
+                $discount->setType(Order\Discount\Type::COUPON);
+                $discount->setCode($coupon['code']);
+                $discount->setAmount($result['discount'] / count($percentProductsCoupons));
+                $discount->addMeta(new Order\Discount\Meta('js1_coupon', $coupon));
+                $discounts[] = $discount;
+            }
+        } elseif ($result['discount'] > 0) {
+            $discount = new Order\Discount();
+            $discount->setType(Order\Discount\Type::USER_DEFINED);
+            $discount->setCode('manually_added');
+            $discount->setAmount($result['discount']);
+            $discounts[] = $discount;
+        }
+
+        return $discounts;
     }
 
     /**
