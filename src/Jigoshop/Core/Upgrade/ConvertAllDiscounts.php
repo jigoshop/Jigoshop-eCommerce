@@ -41,7 +41,7 @@ class ConvertAllDiscounts implements Upgrader
                 if(is_string($coupons[0])) {
                     $discouts = $this->convertCouponsFromJSE($result, $coupons);
                 } elseif (is_array($coupons[0])) {
-                    $discouts = [];//$this->convertCouponsFromJSX($result, $coupons);
+                    $discouts = $this->convertCouponsFromJSX($result, $coupons);
                 }
                 if(count($discouts)) {
                     $this->saveDiscounts($wpdb, $discouts);
