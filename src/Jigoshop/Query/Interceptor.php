@@ -126,13 +126,18 @@ class Interceptor
 
 	private function isProductCategory($request)
 	{
-		return isset($request[Types\ProductCategory::NAME]);
+		return isset($request[Types\ProductCategory::NAME]) || (isset($request['taxonomy']) && $request['taxonomy'] == Types\ProductCategory::NAME);
 	}
 
 	private function getProductCategoryListQuery($request)
 	{
 		$result = $this->_getProductListBaseQuery($request);
-		$result[Types\ProductCategory::NAME] = $request[Types\ProductCategory::NAME];
+		if(isset($request[Types\ProductCategory::NAME])) {
+		    $result[Types\ProductCategory::NAME] = $request[Types\ProductCategory::NAME];
+        } elseif(isset($request['taxonomy']) && $request['taxonomy'] == Types\ProductCategory::NAME) {
+            $result['taxonomy'] = Types\ProductCategory::NAME;
+            $result['term'] = $request['term'];
+        }
 
 		return $this->wp->applyFilters('jigoshop\query\product_category_list', $result, $request);
 	}
