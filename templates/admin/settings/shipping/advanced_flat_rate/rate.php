@@ -32,11 +32,23 @@
         </div>
         <div class="col-sm-6">
             <?php \Jigoshop\Helper\Forms::select(array(
-                'name' => sprintf('%s[%s][country]', $name, $id),
-                'label' => __('Country', 'jigoshop'),
-                'value' => $value['country'],
+                'name' => sprintf('%s[%s][continents]', $name, $id),
+                'label' => __('Continents', 'jigoshop'),
+                'value' => $value['continents'],
+                'multiple' => true,
                 'options' => array_merge(
-                    array('' => __('All countries', 'jigoshop')),
+                    array('' => __('None', 'jigoshop')),
+                    \Jigoshop\Shipping\AdvancedFlatRate::getContinets()
+                ),
+                'classes' => array('continents-select')
+            )); ?>
+            <?php \Jigoshop\Helper\Forms::select(array(
+                'name' => sprintf('%s[%s][countries]', $name, $id),
+                'label' => __('Countries', 'jigoshop'),
+                'value' => $value['countries'],
+                'multiple' => true,
+                'options' => array_merge(
+                    array('' => __('None', 'jigoshop')),
                     \Jigoshop\Helper\Country::getAll()
                 ),
                 'classes' => array('country-select')
