@@ -209,15 +209,21 @@ class Interceptor
 
 	private function isProductTag($request)
 	{
-		return isset($request[Types\ProductTag::NAME]);
+        return isset($request[Types\ProductTag::NAME]) || (isset($request['taxonomy']) && $request['taxonomy'] == Types\ProductTag::NAME);
 	}
 
 	private function getProductTagListQuery($request)
 	{
-		$result = $this->_getProductListBaseQuery($request);
-		$result[Types\ProductTag::NAME] = $request[Types\ProductTag::NAME];
+        $result = $this->_getProductListBaseQuery($request);
+        if(isset($request[Types\ProductTag::NAME])) {
+            $result[Types\ProductTag::NAME] = $request[Types\ProductTag::NAME];
+        } elseif(isset($request['taxonomy']) && $request['taxonomy'] == Types\ProductTag::NAME) {
+            $result['taxonomy'] = Types\ProductTag::NAME;
+            $result['term'] = $request['term'];
+        }
 
-		return $this->wp->applyFilters('jigoshop\query\product_tag_list', $result, $request);
+
+        return $this->wp->applyFilters('jigoshop\query\product_tag_list', $result, $request);
 	}
 
 	private function isProductList($request)
