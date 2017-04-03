@@ -173,16 +173,30 @@ class Interceptor
         if (isset($request['s'])) {
             $wpdb = $this->wp->getWPDB();
 
-            $query = $wpdb->prepare("SELECT posts.ID as ID FROM {$wpdb->posts} as posts
-                INNER JOIN {$wpdb->postmeta} as meta ON (meta.post_id = posts.ID AND meta.meta_key = 'sku')
-                WHERE meta.meta_value LIKE %s OR posts.post_title LIKE %s OR posts.post_content LIKE %s",
-                '%'.$request['s'].'%', '%'.$request['s'].'%', '%'.$request['s'].'%');
+            $result['s'] = $request['s'];
 
-            $query = $this->wp->applyFilters('jigoshop\query\product_list_base\search', $query, $request);
-            $ids = $wpdb->get_results($query, ARRAY_A);
+            $joinClosure = function($join) use ($wpdb, &$joinClosure) {
+                if ( is_search() ) {
+                    $join .=' LEFT JOIN '.$wpdb->postmeta. ' as jse_search ON ('. $wpdb->posts . '.ID = jse_search.post_id  AND jse_search.meta_key = "sku")';
+                }
 
-            $result['post__in'] = array_map(function($item){ return $item['ID']; }, $ids);
-            $result['post__in'] = count($result['post__in']) ? $result['post__in'] : [0];
+                remove_filter('posts_join', $joinClosure);
+                return $join;
+            };
+
+            $whereClosure = function($where) use ($wpdb, &$whereClosure) {
+                if ( is_search() ) {
+                    $where = preg_replace(
+                        "/\(\s*".$wpdb->posts.".post_title\s+LIKE\s*(\'[^\']+\')\s*\)/",
+                        "(".$wpdb->posts.".post_title LIKE $1) OR (jse_search.meta_value LIKE $1)", $where );
+                }
+
+                remove_filter('posts_where', $whereClosure);
+                return $where;
+            };
+
+            add_filter('posts_join', $joinClosure);
+            add_filter('posts_where', $whereClosure);
 		}
 
 		return $this->wp->applyFilters('jigoshop\query\product_list_base', $result, $request);
