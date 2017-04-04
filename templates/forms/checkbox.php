@@ -16,7 +16,7 @@ use Jigoshop\Helper\Forms;
  * @var $size int Size of form widget.
  */
 ?>
-<div class="form-group <?php echo $id; ?>_field clearfix<?php $hidden and print ' not-active'; ?>">
+<div class="form-group <?php echo $id; ?>_field <?php echo join(' ', $classes); ?> clearfix<?php $hidden and print ' not-active'; ?>">
 	<label for="<?php echo $id; ?>" class="col-sm-<?php echo $size == 12 ? 12 : 12 - $size; ?> control-label">
 		<?php echo $label; ?>
 		<?php if(!empty($tip)): ?>

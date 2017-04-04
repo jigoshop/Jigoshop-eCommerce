@@ -16,7 +16,7 @@
  * @var int $max Maximal value of input
  */
 ?>
-<div class="form-group <?php echo $id; ?>_field clearfix<?php $hidden and print ' not-active'; ?>">
+<div class="form-group <?php echo $id; ?>_field <?php echo join(' ', $classes); ?> clearfix<?php $hidden and print ' not-active'; ?>">
 	<?php if ($label): ?>
 	<label for="<?php echo $id; ?>" class="col-sm-<?php echo $size == 12 ? 12 : 12 - $size; ?> control-label">
 		<?php echo $label; ?>
