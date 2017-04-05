@@ -40,7 +40,9 @@ class ShippingConfiguration implements ConfigurationInterface
 		));
         $services->setDetails('jigoshop.shipping.advanced_flat_rate', 'Jigoshop\Shipping\AdvancedFlatRate', array(
             'wpal',
-            'jigoshop.service.cart'
+            'jigoshop.options',
+            'jigoshop.service.cart',
+            'jigoshop.messages'
         ));
 	}
 

@@ -2,12 +2,12 @@
 
 namespace Jigoshop\Shipping;
 
+use Jigoshop\Core\Messages;
 use Jigoshop\Core\Types;
+use Jigoshop\Core\Options;
 use Jigoshop\Entity\OrderInterface;
 use Jigoshop\Helper\Country;
-use Jigoshop\Helper\Options;
 use Jigoshop\Helper\Render;
-use Jigoshop\Integration;
 use Jigoshop\Exception;
 use Jigoshop\Service\CartServiceInterface;
 use WPAL\Wordpress;
@@ -28,24 +28,20 @@ class AdvancedFlatRate implements MultipleMethod
     private $rate;
     /** @var  CartServiceInterface */
     private $cartService;
+    /** @var  Messages */
+    private $messages;
 
     /**
-     * Method constructor.
+     * AdvancedFlatRate constructor.
+     * @param Wordpress $wp
+     * @param Options $options
+     * @param CartServiceInterface $cartService
      */
-    public function __construct(Wordpress $wp, CartServiceInterface $cartService)
+    public function __construct(Wordpress $wp, Options $options, CartServiceInterface $cartService, Messages $messages)
     {
-        Options::setDefaults('shipping.' . self::ID, array(
-            'enabled' => false,
-            'title' => '',
-            'taxable' => false,
-            'fee' => 0,
-            'available_for' => 'all',
-            'countries' => array(),
-            'rates' => array()
-        ));
-
-        $this->settings = Options::getOptions('shipping.' . self::ID);
+        $this->settings = $options->get('shipping.' . self::ID);
         $this->cartService = $cartService;
+        $this->messages = $messages;
     }
 
     /**
@@ -157,23 +153,9 @@ class AdvancedFlatRate implements MultipleMethod
                 'type' => 'user_defined',
                 'value' => $this->settings['rates'],
                 'display' => function ($field) {
-                    $rates = $field['value'];
-                    for($i = 0; $i < count($rates); $i++) {
-                        if(isset($rates[$i]['country']) && $rates[$i]['country'] && (!isset($rates[$i]['countries']) || empty($rates[$i]['countries']))) {
-                            $country = $rates[$i]['country'];
-                            if(!empty($rates[$i]['states'])) {
-                                $rates[$i]['states'] = array_map(function($state) use ($country) {
-                                    return $country.':'.$state;
-                                }, $rates[$i]['states']);
-                            } else {
-                                $rates[$i]['countries'] = [$country];
-                            }
-                        };
-                        $rates[$i]['rest_of_the_world'] = isset($rates[$i]['rest_of_the_world']) ? $rates[$i]['rest_of_the_world'] : false;
-                    }
                     Render::output('admin/settings/shipping/advanced_flat_rate', [
                         'name' => $field['name'],
-                        'values' => $rates,
+                        'values' => $field['value'],
                     ]);
                 }
             ),
@@ -214,6 +196,17 @@ class AdvancedFlatRate implements MultipleMethod
                 $settings['rates'][$i]['cost'] = (float)$settings['rates'][$i]['cost'];
                 $settings['rates'][$i]['rest_of_the_world'] = $settings['rates'][$i]['rest_of_the_world'] == 'on';
             }
+        }
+
+        if (!is_numeric($settings['fee'])) {
+            $settings['fee'] = $this->options['fee'];
+            $this->messages->addWarning(__('Fee was invalid - value is left unchanged.', 'jigoshop'));
+        }
+        if ($settings['fee'] >= 0) {
+            $settings['fee'] = (float)$settings['fee'];
+        } else {
+            $settings['fee'] = $this->options['fee'];
+            $this->messages->addWarning(__('Fee was below 0 - value is left unchanged.', 'jigoshop'));
         }
 
         return $settings;

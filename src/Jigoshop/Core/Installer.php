@@ -16,7 +16,7 @@ use WPAL\Wordpress;
  */
 class Installer
 {
-    const DB_VERSION = 3;
+    const DB_VERSION = 4;
 
     /** @var \WPAL\Wordpress */
     private $wp;
