@@ -186,7 +186,7 @@ class Downloadable implements Type
 	{
 		$product = $item->getProduct();
 		if($product instanceof Product\Variable) {
-		    $product = $product->getVariation($item->getMeta('variation_id')->getValue());
+		    $product = $product->getVariation($item->getMeta('variation_id')->getValue())->getProduct();
         }
 
 		if ($product instanceof Product\Downloadable && in_array($order->getStatus(), array(Order\Status::COMPLETED, Order\Status::PROCESSING))) {
