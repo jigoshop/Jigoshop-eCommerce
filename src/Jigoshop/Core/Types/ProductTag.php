@@ -65,7 +65,7 @@ class ProductTag implements Taxonomy
 			),
 			'hierarchical' => false,
 			'show_ui' => true,
-			'query_var' => false,
+			'query_var' => true,
 			'rewrite' => array(
 				'slug' => $this->options->get('permalinks.tag'),
 				'with_front' => true,

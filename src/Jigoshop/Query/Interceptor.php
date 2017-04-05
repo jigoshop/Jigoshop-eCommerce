@@ -176,32 +176,8 @@ class Interceptor
 
         // Support for search queries
         if (isset($request['s'])) {
-            $wpdb = $this->wp->getWPDB();
-
             $result['s'] = $request['s'];
-
-            $joinClosure = function($join) use ($wpdb, &$joinClosure) {
-                if ( is_search() ) {
-                    $join .=' LEFT JOIN '.$wpdb->postmeta. ' as jse_search ON ('. $wpdb->posts . '.ID = jse_search.post_id  AND jse_search.meta_key = "sku")';
-                }
-
-                remove_filter('posts_join', $joinClosure);
-                return $join;
-            };
-
-            $whereClosure = function($where) use ($wpdb, &$whereClosure) {
-                if ( is_search() ) {
-                    $where = preg_replace(
-                        "/\(\s*".$wpdb->posts.".post_title\s+LIKE\s*(\'[^\']+\')\s*\)/",
-                        "(".$wpdb->posts.".post_title LIKE $1) OR (jse_search.meta_value LIKE $1)", $where );
-                }
-
-                remove_filter('posts_where', $whereClosure);
-                return $where;
-            };
-
-            add_filter('posts_join', $joinClosure);
-            add_filter('posts_where', $whereClosure);
+            $this->improveSearchQuery(['sku']);
 		}
 
 		return $this->wp->applyFilters('jigoshop\query\product_list_base', $result, $request);
@@ -275,18 +251,8 @@ class Interceptor
 
     private function getAdminOrderListQuery($request)
     {
-        if(isset($request['s']) && $request['s']) {
-            $wpdb = $this->wp->getWPDB();
-            $ids = $wpdb->get_results($wpdb->prepare("SELECT posts.ID as ID FROM {$wpdb->posts} as posts
-                INNER JOIN {$wpdb->postmeta} as meta ON (meta.post_id = posts.ID AND meta.meta_key = 'number')
-                INNER JOIN {$wpdb->postmeta} as meta2 ON (meta2.post_id = posts.ID AND meta2.meta_key = 'customer')
-                WHERE meta.meta_value LIKE %s OR meta2.meta_value LIKE %s OR posts.ID = %d",
-                '%'.$request['s'].'%', '%:"%'.$request['s'].'%";%', $request['s']), ARRAY_A);
-
-            unset($request['s']);
-            unset($request['m']);
-            $request['post__in'] = array_map(function($item){ return $item['ID']; }, $ids);
-            $request['post__in'] = count($request['post__in']) ? $request['post__in'] : [0];
+        if(isset($request['s']) && $request['s'] !== '') {
+            $this->improveSearchQuery(['number', 'customer']);
         }
 
         return $request;
@@ -299,19 +265,42 @@ class Interceptor
 
     private function getAdminProductListQuery($request)
     {
-        if(isset($request['s']) && $request['s']) {
-            $wpdb = $this->wp->getWPDB();
-            $ids = $wpdb->get_results($wpdb->prepare("SELECT posts.ID as ID FROM {$wpdb->posts} as posts
-                INNER JOIN {$wpdb->postmeta} as meta ON (meta.post_id = posts.ID AND meta.meta_key = 'sku')
-                WHERE meta.meta_value LIKE %s OR posts.post_title LIKE %s OR posts.post_content LIKE %s OR posts.ID = %d",
-                '%'.$request['s'].'%', '%'.$request['s'].'%', '%'.$request['s'].'%', $request['s']), ARRAY_A);
-
-            unset($request['s']);
-            unset($request['m']);
-            $request['post__in'] = array_map(function($item){ return $item['ID']; }, $ids);
-            $request['post__in'] = count($request['post__in']) ? $request['post__in'] : [0];
+        if(isset($request['s']) && $request['s'] !== '') {
+            $this->improveSearchQuery(['sku']);
         }
 
         return $request;
+    }
+
+    private function improveSearchQuery($fields)
+    {
+        $wpdb = $this->wp->getWPDB();
+
+        $joinClosure = function($join) use ($wpdb, $fields, &$joinClosure) {
+            if ( is_search() ) {
+                for($i = 0; $i < count($fields); $i++) {
+                    $join .=" LEFT JOIN {$wpdb->postmeta} as jse_search_{$i} ON ({$wpdb->posts}.ID = jse_search_{$i}.post_id  AND jse_search_{$i}.meta_key = '{$fields[$i]}')";
+                }
+            }
+
+            remove_filter('posts_join', $joinClosure);
+            return $join;
+        };
+
+        $whereClosure = function($where) use ($wpdb, $fields, &$whereClosure) {
+            if ( is_search() ) {
+                for($i = 0; $i < count($fields); $i++) {
+                    $where = preg_replace(
+                        "/\(\s*{$wpdb->posts}.post_title\s+LIKE\s*(\'[^\']+\')\s*\)/",
+                        "({$wpdb->posts}.post_title LIKE $1) OR (jse_search_{$i}.meta_value LIKE $1)", $where);
+                }
+            }
+
+            remove_filter('posts_where', $whereClosure);
+            return $where;
+        };
+
+        add_filter('posts_join', $joinClosure);
+        add_filter('posts_where', $whereClosure);
     }
 }
