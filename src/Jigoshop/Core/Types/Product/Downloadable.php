@@ -185,6 +185,10 @@ class Downloadable implements Type
 	public function emailLink($result, $item, $order)
 	{
 		$product = $item->getProduct();
+		if($product instanceof Product\Variable) {
+		    $product = $product->getVariation($item->getMeta('variation_id')->getValue());
+        }
+
 		if ($product instanceof Product\Downloadable && in_array($order->getStatus(), array(Order\Status::COMPLETED, Order\Status::PROCESSING))) {
 			$url = $this->wp->getHelpers()->addQueryArg(array('file' => $order->getKey().'.'.$order->getId().'.'.$item->getKey()), Endpoint::getUrl(DownloadFile::NAME));
 			$result .= PHP_EOL.__('Your download link for this file is:', 'jigoshop');
