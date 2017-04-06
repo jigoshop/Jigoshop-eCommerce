@@ -10,5 +10,8 @@
     "bootstrap-datepicker": "1.*",
 	  "jquery-colorbox": "1.5.*"
   },
+  "resolutions": {
+    "jquery": "2.*"
+  },
   "devDependencies": {}
 }
