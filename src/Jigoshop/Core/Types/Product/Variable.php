@@ -223,6 +223,13 @@ class Variable implements Type
 			$meta->setValue($variation->getId());
 			$item->addMeta($meta);
 
+			if($variation->getProduct() instanceof Product\Downloadable) {
+                $meta = new Item\Meta('file', $variation->getProduct()->getUrl());
+                $item->addMeta($meta);
+                $meta = new Item\Meta('downloads', $variation->getProduct()->getLimit());
+                $item->addMeta($meta);
+            }
+
 			return $item;
 		}
 

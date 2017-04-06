@@ -12,6 +12,8 @@ use Jigoshop\Helper\Render;
  * @var $editShippingAddressUrl string URL to shipping address edition page.
  * @var $changePasswordUrl string URL to password changing page.
  * @var $myOrdersUrl string URL to My orders page.
+ * @var $unpaidOrders \Jigoshop\Entity\Order[]
+ * @var $downloadableItems \Jigoshop\Entity\Order\Item[]
  */
 ?>
 
@@ -37,6 +39,25 @@ use Jigoshop\Helper\Render;
 				<?php Render::output('user/account/address', array('address' => $customer->getShippingAddress())); ?>
 			</div>
 		</div>
+        <?php if(count($downloadableItems)): ?>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><?php _e('Your Downloads', 'jigoshop'); ?></h3>
+                </div>
+                <ul class="list-group">
+                    <?php foreach($downloadableItems as $data): ?>
+                        <li class="list-group-item downloadable-item">
+                            <a href="<?= Order::getItemDownloadLink($data['order'], $data['item']); ?>"><?= $data['item']->getName() ?></a>
+                            <?php if($data['item']->getMeta('downloads')->getValue() < 0): ?>
+                                <span>
+                                    <?= sprintf(__('Left: %d', 'jigoshop'), $data['item']->getMeta('downloads')->getValue()); ?>
+                                </span>
+                            <?php endif; ?>
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
+            </div>
+        <?php endif; ?>
 	<?php do_action('jigoshop\user\account\primary_panels', $customer); ?>
 </div>
 <div class="col-md-4">
@@ -54,7 +75,7 @@ use Jigoshop\Helper\Render;
 			<h3 class="panel-title"><?php _e('Unpaid orders', 'jigoshop'); ?></h3>
 		</div>
 		<ul class="list-group">
-			<?php foreach ($unpaidOrders as $order): /** @var $order \Jigoshop\Entity\Order */?>
+			<?php foreach ($unpaidOrders as $order): ?>
 			<li class="list-group-item clearfix">
 				<h4 class="list-group-item-heading"><?php echo $order->getTitle(); ?></h4>
 				<dl class="dl-horizontal list-group-item-text">
