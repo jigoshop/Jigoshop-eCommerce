@@ -67,6 +67,10 @@ class AdminConfiguration implements ConfigurationInterface
 			'jigoshop.messages',
 			'jigoshop.service.product'
 		));
+		$services->setDetails('jigoshop.admin.notices', 'Jigoshop\Admin\Notices', [
+		    'wpal',
+            'jigoshop.options',
+        ]);
 	}
 
 	/**
@@ -93,6 +97,7 @@ class AdminConfiguration implements ConfigurationInterface
 	public function addTriggers(Triggers $triggers)
 	{
         $triggers->add('jigoshop.admin', 'jigoshop.admin.page_resolver', 'resolve', array('di'));
+        $triggers->add('jigoshop.admin', 'jigoshop.admin.notices', 'init', []);
 	}
 
 	/**

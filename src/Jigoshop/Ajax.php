@@ -23,7 +23,7 @@ class Ajax
     public function __construct(Wordpress $wp, Container $di)
     {
         $this->di = $di;
-        $wp->addAction('wp_ajax_jigoshop.ajax.loged', [$this, 'process']);
+        $wp->addAction('wp_ajax_jigoshop.ajax.logged', [$this, 'process']);
         $wp->addAction('wp_ajax_jigoshop.ajax', [$this, 'process']);
         $wp->addAction('wp_ajax_nopriv_jigoshop.ajax', [$this, 'process']);
         $wp->addAction('wp_ajax_nopriv_jigoshop.ajax.logged_out', [$this, 'process']);
