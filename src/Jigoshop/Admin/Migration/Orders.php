@@ -378,12 +378,17 @@ class Orders implements Tool
                                 $this->checkSql();
                                 $itemId = $wpdb->insert_id;
 
+                                if($productGetId != null) {
+                                    $this->_addDownloadableMeta($order->ID, $productGetId, $itemId);
+                                }
+
                                 if (isset($itemData['variation_id']) && !empty($itemData['variation_id']) && ($productGetId == null || $product instanceof Product\Variable)) {
                                     $wpdb->query($wpdb->prepare(
                                         "INSERT INTO {$wpdb->prefix}jigoshop_order_item_meta (item_id, meta_key, meta_value) VALUES (%d, %s, %s)",
                                         $itemId, 'variation_id', $itemData['variation_id'] // TODO: HERE
                                     ));
                                     $this->checkSql();
+                                    $this->_addDownloadableMeta($order->ID, $itemData['variation_id'], $itemId);
 
                                     if ($productGetId !== null) {
                                         /** @var Product\Variable\Variation $variationProduct */
@@ -669,7 +674,7 @@ class Orders implements Tool
         return $this->_fetchData($defaults, $args);
     }
 
-    protected function _fetchOrderData($args) 
+    protected function _fetchOrderData($args)
     {
         $defaults = array(
             'shipping_method' => '',
@@ -717,5 +722,29 @@ class Orders implements Tool
         }
 
         return $this->_fetchData($defaults, $args);
+    }
+
+    /**
+     * @param $orderId
+     * @param $productId
+     * @param $itemId
+     */
+    private function _addDownloadableMeta($orderId, $productId, $itemId) {
+        $wpdb = $this->wp->getWPDB();
+        $results = $wpdb->get_results($wpdb->prepare(
+            "SELECT meta1.post_id as order_id, product.downloads_remaining as downloads, meta2.meta_value as file 
+                    FROM {$wpdb->prefix}jigoshop_downloadable_product_permissions as product
+                    LEFT JOIN {$wpdb->postmeta} as meta1 ON (meta1.meta_key = 'order_key' AND product.order_key = meta1.meta_value)
+                    LEFT JOIN {$wpdb->postmeta} as meta2 ON (meta2.post_id = product.product_id AND meta2.meta_key = 'file_path')
+                    WHERE product.product_id = %d", $productId), ARRAY_A);
+        foreach ($results as $result) {
+            if ($result['order_id'] == $orderId) {
+                $wpdb->query($wpdb->prepare(
+                    "INSERT INTO {$wpdb->prefix}jigoshop_order_item_meta (item_id, meta_key, meta_value) VALUES (%d, %s, %s) , (%d, %s, %s)",
+                    $itemId, 'downloads', $result['downloads'], $itemId, 'file', $result['file']
+                ));
+                $this->checkSql();
+            }
+        }
     }
 }
