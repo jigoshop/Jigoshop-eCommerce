@@ -138,6 +138,8 @@ class MainConfiguration implements ConfigurationInterface
         $services->setDetails('jigoshop.upgrade.add_tax_classes_to_order_items', 'Jigoshop\Core\Upgrade\AddTaxClassesToOrderItems', []);
         $services->setDetails('jigoshop.upgrade.replace_attachment_types', 'Jigoshop\Core\Upgrade\ReplaceAttachmentTypes', []);
         $services->setDetails('jigoshop.upgrade.change_up_sells_cross_sells_meta_names', 'Jigoshop\Core\Upgrade\ChangeUpSellsCrossSellsMetaNames', []);
+        $services->setDetails('jigoshop.upgrade.create_discounts_tables', 'Jigoshop\Core\Upgrade\CreateDiscountsTables', []);
+        $services->setDetails('jigoshop.upgrade.convert_all_discounts', 'Jigoshop\Core\Upgrade\ConvertAllDiscounts', []);
 	}
 
 	/**
@@ -158,6 +160,8 @@ class MainConfiguration implements ConfigurationInterface
         $tags->add('jigoshop.upgrade.2', 'jigoshop.upgrade.add_tax_classes_to_order_items');
         $tags->add('jigoshop.upgrade.2', 'jigoshop.upgrade.replace_attachment_types');
         $tags->add('jigoshop.upgrade.3', 'jigoshop.upgrade.change_up_sells_cross_sells_meta_names');
+        $tags->add('jigoshop.upgrade.4', 'jigoshop.upgrade.create_discounts_tables');
+        $tags->add('jigoshop.upgrade.4', 'jigoshop.upgrade.convert_all_discounts');
 	}
 
 	/**

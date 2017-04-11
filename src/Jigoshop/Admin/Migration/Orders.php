@@ -5,6 +5,7 @@ namespace Jigoshop\Admin\Migration;
 use Jigoshop\Admin\Helper\Migration;
 use Jigoshop\Core\Messages;
 use Jigoshop\Entity\Customer;
+use Jigoshop\Entity\Order\Discount\Type;
 use Jigoshop\Entity\Order\Status;
 use Jigoshop\Entity\Product;
 use Jigoshop\Exception;
@@ -200,6 +201,28 @@ class Orders implements Tool
                             $this->checkSql();
 
                             // Migrate coupons
+                            if(is_array($data['order_discount_coupons']) && count($data['order_discount_coupons']) && $data['order_discount']) {
+                                $discounts = $this->convertCouponsToDiscounts($data);
+                                foreach ($discounts as $discount) {
+                                    $wpdb->insert($wpdb->prefix . 'jigoshop_order_discount', [
+                                        'order_id' => $order->ID,
+                                        'type' => $discount['type'],
+                                        'code' => $discount['code'],
+                                        'amount' => $discount['amount'],
+                                    ]);
+                                    $discountId = $wpdb->insert_id;
+                                    if (isset($discount['meta']) && is_array($discount['meta'])) {
+                                        foreach ($discount['meta'] as $key => $value) {
+                                            $value = is_array($value) ? serialize($value) : $value;
+                                            $wpdb->insert($wpdb->prefix . 'jigoshop_order_discount_meta', [
+                                                'discount_id' => $discountId,
+                                                'meta_mey' => $key,
+                                                'meta_value' => $value,
+                                            ]);
+                                        }
+                                    }
+                                }
+                            }
                             $wpdb->query($wpdb->prepare("INSERT INTO {$wpdb->postmeta} (post_id, meta_key, meta_value) VALUES (%d, %s, %s)",
                                 $order->ID,
                                 'coupons',
@@ -216,7 +239,6 @@ class Orders implements Tool
                                     serialize(array(
                                         'method' => $method->getState(),
                                         'price' => $data['order_shipping'],
-                                        // TODO do usuniecia, gdyz jest na dole w osobnej mecie
                                         'rate' => '',
                                         // Rates are stored nowhere - so no rate here
                                     ))
@@ -260,13 +282,6 @@ class Orders implements Tool
                                 $data['order_total']
                             ));
                             $this->checkSql();
-                            // TODO: Add new meta for shipping total price
-                            /*$wpdb->query($wpdb->prepare("INSERT INTO {$wpdb->postmeta} (post_id, meta_key, meta_value) VALUES (%d, %s, %s)",
-                                $order->ID,
-                                'shipping',
-                                $data['order_shipping']
-                            ));
-                            $this->checkSql();*/
                             break;
                         case 'customer_user':
                             if ($this->customer == null) {
@@ -717,5 +732,65 @@ class Orders implements Tool
         }
 
         return $this->_fetchData($defaults, $args);
+    }
+
+    /**
+     * @param array $data
+     *
+     * @return array
+     */
+    private function convertCouponsToDiscounts($data)
+    {
+        $discounts = [];
+        $percentProductsCoupons = [];
+        foreach($data['order_discount_coupons'] as $coupon) {
+            $discountAmount = 0;
+            if ($coupon['type'] == 'fixed_cart' || $coupon['type'] == 'fixed_product') {
+                $discountAmount = $coupon['amount'];
+            } else if ($coupon['type'] == 'percent') {
+                $discountAmount = $data['order_subtotal'] * $coupon['amount'] / 100;
+            } else {
+                $percentProductsCoupons[] = $coupon['amount'];
+                continue;
+            }
+
+            $discount = [
+                'type' => Type::COUPON,
+                'code' => $coupon['code'],
+                'amount' => $discountAmount,
+                'meta' => [ 'js1_coupon' => $coupon ]
+            ];
+            $discounts[] = $discount;
+
+            $data['order_discount'] -= $discountAmount;
+        }
+
+        if($data['order_discount'] < 0) {
+            for($i = 0; $i < count($discounts); $i++) {
+                $discounts[$i]['amount'] -= abs($data['order_discount']) / count($discounts);
+            }
+        }
+
+        if($data['order_discount'] > 0 && count($percentProductsCoupons)) {
+            foreach ($percentProductsCoupons as $coupon) {
+                $discount = [
+                    'type' => Type::COUPON,
+                    'code' => $coupon['code'],
+                    'amount' => $data['order_discount'] / count($percentProductsCoupons),
+                    'meta' => [ 'js1_coupon' => $coupon ]
+                ];
+                $discounts[] = $discount;
+            }
+        } elseif ($data['order_discount'] > 0) {
+            $discount = [
+                'type' => Type::USER_DEFINED,
+                'code' => 'manually_added',
+                'amount' => $data['order_discount'] / count($percentProductsCoupons),
+                'meta' => [ 'js1_coupon' => $coupon ]
+            ];
+            $discounts[] = $discount;
+        }
+
+        return $discounts;
     }
 }

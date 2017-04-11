@@ -3,15 +3,18 @@
 namespace Jigoshop\Admin\Reports\Chart\Widget;
 
 use Jigoshop\Admin\Reports\Chart\WidgetInterface;
+use Jigoshop\Entity\Order\Discount\Type;
 use Jigoshop\Helper\Render;
 
 class MostPopular implements WidgetInterface
 {
-	const SLUG = 'most_popular';
+	const SLUG = 'most_popular_%s';
+	private $type;
 	private $mostPopular;
 
-	public function __construct($mostPopular)
+	public function __construct($type,  $mostPopular)
 	{
+	    $this->type = $type;
 		$this->mostPopular = $mostPopular;
 	}
 
@@ -22,7 +25,7 @@ class MostPopular implements WidgetInterface
 
 	public function getTitle()
 	{
-		return __('Most Popular', 'jigoshop');
+		return sprintf(__('Most Popular %s Codes', 'jigoshop'), Type::getName($this->type));
 	}
 
 	public function getArgs()
@@ -30,8 +33,8 @@ class MostPopular implements WidgetInterface
 		$args = array();
 		foreach($this->mostPopular as $coupon){
 			$args[] = array(
-				'count' => $coupon['usage'],
-				'url' => esc_url(add_query_arg('coupon_codes', $coupon['code'], add_query_arg('last_used', self::SLUG))),
+				'count' => $coupon['count'],
+				'url' => esc_url(add_query_arg('codes['.$this->type.']', $coupon['code'], add_query_arg('last_used', self::SLUG))),
 				'title' => $coupon['code']
 			);
 		}
