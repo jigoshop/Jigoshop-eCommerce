@@ -1,7 +1,8 @@
 <?php
 use Jigoshop\Admin\Helper\Forms;
+use Jigoshop\Entity\Product;
 use Jigoshop\Entity\Product\Attribute;
-use Jigoshop\Helper\Product;
+use Jigoshop\Entity\Product\Attributes\StockStatus;
 use Jigoshop\Helper\Product as ProductHelper;
 
 /**
@@ -10,6 +11,7 @@ use Jigoshop\Helper\Product as ProductHelper;
  * @var $allowedSubtypes array List of types allowed as variations.
  */
 $product = $variation->getProduct();
+$stock = $product instanceof Product\Purchasable ? $product->getStock() : new StockStatus();
 ?>
 <li class="list-group-item variation" data-id="<?php echo $variation->getId(); ?>">
 	<h4 class="list-group-item-heading clearfix">
@@ -40,9 +42,9 @@ $product = $variation->getProduct();
 	</h4>
 	<div class="list-group-item-text row clearfix">
 		<div class="col-md-2">
-			<?php echo Product::getFeaturedImage($product, \Jigoshop\Core\Options::IMAGE_SMALL); ?>
+			<?php echo ProductHelper::getFeaturedImage($product, \Jigoshop\Core\Options::IMAGE_SMALL); ?>
 			<button class="btn btn-block btn-default set_variation_image"><?php _e('Set image', 'jigoshop'); ?></button>
-			<button class="btn btn-block btn-danger remove_variation_image<?php !Product::hasFeaturedImage($product) and print ' not-active'; ?>"><?php _e('Remove image', 'jigoshop'); ?></button>
+			<button class="btn btn-block btn-danger remove_variation_image<?php !ProductHelper::hasFeaturedImage($product) and print ' not-active'; ?>"><?php _e('Remove image', 'jigoshop'); ?></button>
 		</div>
 		<div class="col-md-10">
 			<fieldset>
@@ -104,14 +106,52 @@ $product = $variation->getProduct();
 			));
 			?>
 			</fieldset>
+            <fieldset class="stock" class="<?php $product instanceof Product\External and print 'display: none;'; ?>">
+                <?php
+                Forms::checkbox(array(
+                    'name' => 'product[variation]['.$variation->getId().'][product][stock_manage]',
+                    'classes' => ['stock-manage'],
+                    'label' => __('Manage stock?', 'jigoshop'),
+                    'checked' => $stock->getManage(),
+                    'size' => 11,
+                ));
+                Forms::select(array(
+                    'name' => 'product[variation]['.$variation->getId().'][product][stock_status]',
+                    'label' => __('Status', 'jigoshop'),
+                    'value' => $stock->getStatus(),
+                    'options' => array(
+                        StockStatus::IN_STOCK => __('In stock', 'jigoshop'),
+                        StockStatus::OUT_STOCK => __('Out of stock', 'jigoshop'),
+                    ),
+                    'classes' => array($stock->getManage() ? 'not-active' : '', 'manual-stock-status'),
+                    'size' => 11,
+                ));
+                ?>
+                <div class="stock-status" style="<?php !$stock->getManage() and print 'display: none;'; ?>">
+                    <?php
+                    Forms::number(array(
+                        'name' => 'product[variation]['.$variation->getId().'][product][stock_stock]',
+                        'label' => __('Items in stock', 'jigoshop'),
+                        'value' => $stock->getStock(),
+                        'min' => 0,
+                        'size' => 11,
+                    ));
+                    Forms::select(array(
+                        'name' => 'product[variation]['.$variation->getId().'][product][stock_allow_backorders]',
+                        'label' => __('Allow backorders?', 'jigoshop'),
+                        'value' => $stock->getAllowBackorders(),
+                        'options' => array(
+                            StockStatus::BACKORDERS_FORBID => __('Do not allow', 'jigoshop'),
+                            StockStatus::BACKORDERS_NOTIFY => __('Allow, but notify customer', 'jigoshop'),
+                            StockStatus::BACKORDERS_ALLOW => __('Allow', 'jigoshop')
+                        ),
+                        'size' => 11,
+                    ));
+                    ?>
+                </div>
+            </fieldset>
 			<fieldset>
 			<?php
-			Forms::text(array(
-				'name' => 'product[variation]['.$variation->getId().'][product][stock_stock]',
-				'label' => __('Stock', 'jigoshop'),
-				'value' => $product->getStock()->getStock(),
-				'size' => 11,
-			));
 			Forms::text(array(
 				'name' => 'product[variation]['.$variation->getId().'][product][sales_price]',
 				'label' => __('Sale price', 'jigoshop'),
