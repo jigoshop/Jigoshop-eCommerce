@@ -3,6 +3,7 @@
 namespace Jigoshop\Helper;
 
 use Jigoshop\Core\Options as CoreOptions;
+use Jigoshop\Endpoint\DownloadFile;
 use Jigoshop\Entity\Customer\Guest;
 use Jigoshop\Entity\Order\Status;
 use Jigoshop\Frontend\Pages;
@@ -153,5 +154,19 @@ class Order
         $url = add_query_arg($args, get_permalink(self::$options->getPageId(Pages::THANK_YOU)));
 
         return apply_filters('jigoshop\helper\order\thank_you_url', $url);
+    }
+
+    /**
+     * @param \Jigoshop\Entity\Order $order
+     * @param \Jigoshop\Entity\Order\Item $item
+     * @return string
+     */
+    public static function getItemDownloadLink($order, $item)
+    {
+        if($item->getMeta('file') && $item->getMeta('downloads')) {
+            return add_query_arg(['file' => $order->getKey().'.'.$order->getId().'.'.$item->getKey()], Endpoint::getUrl(DownloadFile::NAME));
+        }
+
+        return '';
     }
 }
