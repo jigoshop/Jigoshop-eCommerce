@@ -4,7 +4,6 @@ namespace Jigoshop\Core\Types\Product;
 
 use Jigoshop\Admin\Helper\Forms;
 use Jigoshop\Core\Options;
-use Jigoshop\Entity\Order;
 use Jigoshop\Entity\Order\Item;
 use Jigoshop\Entity\Product;
 use Jigoshop\Entity\Product\Attribute;
@@ -108,6 +107,7 @@ class Variable implements Type
 		$wp->addFilter('jigoshop\checkout\is_shipping_required', array($this, 'isShippingRequired'), 10, 2);
 		$wp->addAction('jigoshop\product\assets', array($this, 'addFrontendAssets'), 10, 1);
 		$wp->addFilter('jigoshop\product\get_stock', array($this, 'getStock'), 10, 2);
+		$wp->addAction('jigoshop\template\product\before_thumbnails', [$this, 'addVariationImages']);
 
 		$wp->addAction('jigoshop\admin\product\assets', array($this, 'addAdminAssets'), 10, 1);
 		$wp->addAction('jigoshop\admin\product\attribute\options', array($this, 'addVariableAttributeOptions'));
@@ -127,6 +127,45 @@ class Variable implements Type
 				return in_array($type->getId(), $allowedSubtypes);
 			}));
 		});
+	}
+
+    public function addVariationImages($product)
+    {
+        if($product instanceof Product\Variable) {
+            $images = [];
+            foreach($product->getVariations() as $variation) {
+                $variationProduct = $variation->getProduct();
+                $image = \Jigoshop\Helper\Product::getFeaturedImage($variationProduct, Options::IMAGE_THUMBNAIL);
+                $url = \Jigoshop\Helper\Product::hasFeaturedImage($variationProduct) ? $this->wp->wpGetAttachmentUrl($this->wp->getPostThumbnailId($variationProduct->getId())) : '';
+                $title = \Jigoshop\Helper\Product::hasFeaturedImage($variationProduct) ? get_the_title($this->wp->getPostThumbnailId($variationProduct->getId())) : '';
+                if($url) {
+                    $images[] = [
+                        'id' => $variationProduct->getId(),
+                        'image' => $image,
+                        'url' => $url,
+                        'title' => $title,
+                    ];
+                }
+            }
+            if(count($images) < count($product->getVariations())) {
+                $image = \Jigoshop\Helper\Product::getFeaturedImage($product, Options::IMAGE_THUMBNAIL);
+                $url = \Jigoshop\Helper\Product::hasFeaturedImage($product) ? $this->wp->wpGetAttachmentUrl($this->wp->getPostThumbnailId($product->getId())) : '';
+                $title = \Jigoshop\Helper\Product::hasFeaturedImage($product) ? get_the_title($this->wp->getPostThumbnailId($product->getId())) : '';
+                if($url) {
+                    $images[] = [
+                        'id' => 'parent',
+                        'image' => $image,
+                        'url' => $url,
+                        'title' => $title,
+                    ];
+                }
+            }
+
+            Render::output('shop/product/images/variable', [
+                'product' => $product,
+                'images' => $images,
+            ]);
+        }
 	}
 
 	/**
@@ -339,9 +378,18 @@ class Variable implements Type
 					'price' => $variation->getProduct()->getPrice(),
 					'html' => array(
 						'price' => \Jigoshop\Helper\Product::getPriceHtml($variation->getProduct()),
+                        'image' => '',
 					),
 					'attributes' => array(),
 				);
+				if($this->wp->hasPostThumbnail($variation->getId())) {
+                    $variations[$variation->getId()]['html']['image'] = Render::get('shop/product/images/featured', [
+                        'imageClasses' => apply_filters('jigoshop\product\image_classes', array('featured-image'), $variation->getProduct()),
+                        'featured' => \Jigoshop\Helper\Product::getFeaturedImage($variation->getProduct(), Options::IMAGE_LARGE),
+                        'featuredUrl' => $this->wp->wpGetAttachmentUrl($this->wp->getPostThumbnailId($variation->getId())),
+                        'featuredTitle' => get_the_title($this->wp->getPostThumbnailId($variation->getId())),
+                    ]);
+                }
 				foreach ($variation->getAttributes() as $attribute) {
 					/** @var $attribute Product\Variable\Attribute */
 					$variations[$variation->getId()]['attributes'][$attribute->getAttribute()->getId()] = $attribute->getValue();

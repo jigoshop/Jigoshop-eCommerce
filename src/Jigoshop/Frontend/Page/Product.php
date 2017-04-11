@@ -40,27 +40,27 @@ class Product implements PageInterface
 		$this->cartService = $cartService;
 		$this->messages = $messages;
 
-		Styles::add('jigoshop.vendors.colorbox', \JigoshopInit::getUrl().'/assets/css/vendors/colorbox.css');
-		Styles::add('jigoshop.vendors.select2', \JigoshopInit::getUrl().'/assets/css/vendors/select2.css');
+        Styles::add('jigoshop.shop.list', \JigoshopInit::getUrl().'/assets/css/shop/list.css', array(
+            'jigoshop.shop',
+        ));
+        Styles::add('jigoshop.vendors.blueimp', \JigoshopInit::getUrl().'/assets/css/vendors/blueimp.css');
+        Styles::add('jigoshop.vendors.select2', \JigoshopInit::getUrl().'/assets/css/vendors/select2.css');
 		Styles::add('jigoshop.shop.product', \JigoshopInit::getUrl().'/assets/css/shop/product.css', array(
 			'jigoshop.shop',
 			'jigoshop.vendors.select2',
-			'jigoshop.vendors.colorbox',
+			'jigoshop.vendors.blueimp',
 		));
 
-		Scripts::add('jigoshop.vendors.select2', \JigoshopInit::getUrl().'/assets/js/vendors/select2.js', array('jquery'));
-		Scripts::add('jigoshop.vendors.colorbox', \JigoshopInit::getUrl().'/assets/js/vendors/colorbox.js', array('jquery'));
+        Scripts::add('jigoshop.vendors.blueimp', \JigoshopInit::getUrl().'/assets/js/vendors/blueimp.js', array('jquery'));
+        Scripts::add('jigoshop.vendors.select2', \JigoshopInit::getUrl().'/assets/js/vendors/select2.js', array('jquery'));
 		Scripts::add('jigoshop.vendors.bs_tab_trans_tooltip_collapse', \JigoshopInit::getUrl().'/assets/js/vendors/bs_tab_trans_tooltip_collapse.js', array('jquery'));
 		Scripts::add('jigoshop.shop.product', \JigoshopInit::getUrl().'/assets/js/shop/product.js', array(
 			'jquery',
 			'jigoshop.shop',
 			'jigoshop.vendors.select2',
-			'jigoshop.vendors.colorbox',
+			'jigoshop.vendors.blueimp',
 			'jigoshop.vendors.bs_tab_trans_tooltip_collapse',
 		));
-        Styles::add('jigoshop.shop.list', \JigoshopInit::getUrl().'/assets/css/shop/list.css', array(
-            'jigoshop.shop',
-        ));
 
 		$wp->addFilter('jigoshop\cart\add', function ($item) use ($productService){
 			/** @var $item Item */
@@ -96,8 +96,10 @@ class Product implements PageInterface
             $this,
             'productReviews'
         ), 25, 2);
+        $wp->addAction('wp_footer', function() {
+            Render::output('shop/product/gallery_container', []);
+        });
 		$wp->doAction('jigoshop\product\assets', $wp);
-
 	}
 
 	public function action()
@@ -201,12 +203,14 @@ class Product implements PageInterface
 		$imageClasses = apply_filters('jigoshop\product\image_classes', array('featured-image'), $product);
 		$featured = ProductHelper::getFeaturedImage($product, Options::IMAGE_LARGE);
 		$featuredUrl = ProductHelper::hasFeaturedImage($product) ? $this->wp->wpGetAttachmentUrl($this->wp->getPostThumbnailId($product->getId())) : '';
+		$featuredTitle = ProductHelper::hasFeaturedImage($product) ? get_the_title($this->wp->getPostThumbnailId($product->getId())) : '';
 		$thumbnails = ProductHelper::filterAttachments($this->productService->getAttachments($product, Options::IMAGE_THUMBNAIL), Image::TYPE);
 
 		Render::output('shop/product/images', array(
 			'product' => $product,
 			'featured' => $featured,
 			'featuredUrl' => $featuredUrl,
+            'featuredTitle' => $featuredTitle,
 			'thumbnails' => $thumbnails,
 			'imageClasses' => $imageClasses,
 		));
