@@ -10,3 +10,4 @@
 		'emails' => $emails,
 	)); ?>
 </div>
+<div class="clear"></div>

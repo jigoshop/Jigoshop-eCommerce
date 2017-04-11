@@ -7,6 +7,7 @@ use Jigoshop\Core\Types;
 use Jigoshop\Exception;
 use Jigoshop\Helper\Render;
 use Jigoshop\Helper\Scripts;
+use Jigoshop\Helper\Styles;
 use Jigoshop\Service\EmailServiceInterface as Service;
 use WPAL\Wordpress;
 
@@ -31,14 +32,17 @@ class Email
 		$wp->addAction('add_meta_boxes_'.Types::EMAIL, function () use ($wp, $that){
 			$wp->addMetaBox('jigoshop-email-data', __('Email Data', 'jigoshop'), array($that, 'box'), Types::EMAIL, 'normal', 'default');
 			$wp->addMetaBox('jigoshop-email-variable', __('Email Variables', 'jigoshop'), array($that, 'variablesBox'), Types::EMAIL, 'normal', 'default');
+			$wp->addMetaBox('jigoshop-email-attachments', __('Email Attachments', 'jigoshop'), [$that, 'attachmentsBox'], Types::EMAIL, 'side', 'default');
 		});
 
 		$wp->addAction('admin_enqueue_scripts', function () use ($wp){
 			if ($wp->getPostType() == Types::EMAIL) {
 				Scripts::add('jigoshop.admin.email', \JigoshopInit::getUrl().'/assets/js/admin/email.js', array(
 					'jquery',
-					'jigoshop.helpers'
+					'jigoshop.helpers',
+                    'wp-util'
 				));
+				Styles::add('jigoshop.admin.email', \JigoshopInit::getUrl().'/assets/css/admin/email.css', ['jigoshop.admin']);
 
 				$wp->doAction('jigoshop\admin\email\assets', $wp);
 			}
@@ -117,5 +121,16 @@ class Email
 			'email' => $email,
 			'emails' => $this->emailService->getMails(),
 		));
+	}
+
+    public function attachmentsBox()
+    {
+        $post = $this->wp->getGlobalPost();
+        $email = $this->emailService->findForPost($post);
+        $attachments = $this->emailService->getAttachments($email);
+
+        Render::output('admin/email/attachmentsBox', [
+            'attachments' => $attachments
+        ]);
 	}
 }

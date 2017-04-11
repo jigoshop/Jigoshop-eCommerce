@@ -20,3 +20,4 @@
 		'value' => $email->getActions(),
 	)); ?>
 </div>
+<div class="clear"></div>

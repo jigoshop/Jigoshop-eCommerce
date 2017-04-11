@@ -96,6 +96,7 @@ class Email implements EntityFactoryInterface
 			$email->setTitle($post->post_title);
 			$email->setText($post->post_content);
 			$state['actions'] = unserialize($state['actions']);
+			$state['attachments'] = unserialize($state['attachments']);
 
 			$email->restoreState($state);
 		}
