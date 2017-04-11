@@ -2,12 +2,12 @@
 
 namespace Jigoshop\Shipping;
 
+use Jigoshop\Core\Messages;
 use Jigoshop\Core\Types;
+use Jigoshop\Core\Options;
 use Jigoshop\Entity\OrderInterface;
 use Jigoshop\Helper\Country;
-use Jigoshop\Helper\Options;
 use Jigoshop\Helper\Render;
-use Jigoshop\Integration;
 use Jigoshop\Exception;
 use Jigoshop\Service\CartServiceInterface;
 use WPAL\Wordpress;
@@ -28,23 +28,20 @@ class AdvancedFlatRate implements MultipleMethod
     private $rate;
     /** @var  CartServiceInterface */
     private $cartService;
+    /** @var  Messages */
+    private $messages;
 
     /**
-     * Method constructor.
+     * AdvancedFlatRate constructor.
+     * @param Wordpress $wp
+     * @param Options $options
+     * @param CartServiceInterface $cartService
      */
-    public function __construct(Wordpress $wp, CartServiceInterface $cartService)
+    public function __construct(Wordpress $wp, Options $options, CartServiceInterface $cartService, Messages $messages)
     {
-        Options::setDefaults('shipping.' . self::ID, array(
-            'enabled' => false,
-            'title' => '',
-            'taxable' => false,
-            'fee' => 0,
-            'available_for' => 'all',
-            'countries' => array(),
-            'rates' => array()
-        ));
-        $this->settings = Options::getOptions('shipping.' . self::ID);
+        $this->settings = $options->get('shipping.' . self::ID);
         $this->cartService = $cartService;
+        $this->messages = $messages;
     }
 
     /**
@@ -189,12 +186,26 @@ class AdvancedFlatRate implements MultipleMethod
                 $settings['rates'][$i] = array_merge(array(
                     'label' => '',
                     'cost' => 0,
-                    'country' => '',
-                    'states' => array(),
-                    'postcode' => ''
+                    'continents' => [],
+                    'countries' => [],
+                    'states' => [],
+                    'postcode' => '',
+                    'rest_of_the_world' => false,
                 ), $settings['rates'][$i]);
                 $settings['rates'][$i]['cost'] = (float)$settings['rates'][$i]['cost'];
+                $settings['rates'][$i]['rest_of_the_world'] = $settings['rates'][$i]['rest_of_the_world'] == 'on';
             }
+        }
+
+        if (!is_numeric($settings['fee'])) {
+            $settings['fee'] = $this->options['fee'];
+            $this->messages->addWarning(__('Fee was invalid - value is left unchanged.', 'jigoshop'));
+        }
+        if ($settings['fee'] >= 0) {
+            $settings['fee'] = (float)$settings['fee'];
+        } else {
+            $settings['fee'] = $this->options['fee'];
+            $this->messages->addWarning(__('Fee was below 0 - value is left unchanged.', 'jigoshop'));
         }
 
         return $settings;
@@ -275,23 +286,33 @@ class AdvancedFlatRate implements MultipleMethod
             $this->rates = array();
             foreach ($this->settings['rates'] as $key => $rawRate) {
                 $address = $order->getCustomer()->getShippingAddress();
-                if ($rawRate['country'] != '' && $rawRate['country'] != $address->getCountry()) {
-                    continue;
-                }
-                if (count($rawRate['states']) != 0 && !in_array($address->getState(), $rawRate['states'])) {
-                    continue;
-                }
                 $code = str_replace('*', '(.*)', str_replace(['-', ' '], '', strtoupper($rawRate['postcode'])));
-                if ($code != '' && preg_match('/^'.$code.'$/', str_replace(['-', ' '], '', strtoupper($address->getPostcode()))) == false) {
-                    continue;
-                }
 
-                $rate = new Rate();
-                $rate->setId($key);
-                $rate->setName($rawRate['label']);
-                $rate->setPrice($rawRate['cost'] + (1 * $this->settings['fee']));
-                $rate->setMethod($this);
-                $this->rates[$key] = $rate;
+                if ((count($rawRate['continents']) && in_array(Country::getContinentByCountry($address->getCountry()), $rawRate['continents'])) ||
+                    (count($rawRate['countries']) && in_array($address->getCountry(), $rawRate['countries'])) ||
+                    (count($rawRate['states']) && in_array($address->getCountry().':'.$address->getState(), $rawRate['states'])) ||
+                    ($code != '' && preg_match('/^'.$code.'$/', str_replace(['-', ' '], '', strtoupper($address->getPostcode())))) ||
+                    (empty($rawRate['continents']) && empty($rawRate['countries']) && empty($rawRate['states']) && empty($code) && !$rawRate['rest_of_the_world'])
+                ) {
+                    $rate = new Rate();
+                    $rate->setId($key);
+                    $rate->setName($rawRate['label']);
+                    $rate->setPrice($rawRate['cost'] + (1 * $this->settings['fee']));
+                    $rate->setMethod($this);
+                    $this->rates[$key] = $rate;
+                }
+            }
+            if(empty($this->rates)) {
+                foreach ($this->settings['rates'] as $key => $rawRate) {
+                    if(isset($rawRate['rest_of_the_world']) && $rawRate['rest_of_the_world']) {
+                        $rate = new Rate();
+                        $rate->setId($key);
+                        $rate->setName($rawRate['label']);
+                        $rate->setPrice($rawRate['cost'] + (1 * $this->settings['fee']));
+                        $rate->setMethod($this);
+                        $this->rates[$key] = $rate;
+                    }
+                }
             }
         }
 

@@ -150,6 +150,15 @@ class Options
 				'title' => 'Local pickup',
 				'fee' => 0,
 			),
+            'advanced_flat_rate' => [
+                'enabled' => false,
+                'title' => '',
+                'taxable' => false,
+                'fee' => 0,
+                'available_for' => 'all',
+                'countries' => [],
+                'rates' => []
+            ],
 		),
 		'payment' => array(
 			'default_gateway' => 'no_default_gateway',

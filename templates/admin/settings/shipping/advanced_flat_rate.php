@@ -26,7 +26,8 @@
         'value' => [
             'label' => __('New rate', 'jigoshop'),
             'cost' => '0',
-            'country' => '',
+            'continents' => [],
+            'countries' => [],
             'states' => [],
             'postcode' => ''
         ]
