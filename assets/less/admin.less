@@ -8,6 +8,7 @@
   @import '../bower/bootstrap/less/normalize';
   @import '../bower/bootstrap/less/scaffolding';
   @import '../bower/bootstrap/less/forms';
+  @import '../bower/bootstrap/less/buttons';
 
   label {
     margin: 4px 0 0;
@@ -159,6 +160,10 @@
   .animated input[type="checkbox"]:checked + i:before{
     color: @order-completed-color;
     text-shadow: 1px 1px darken(@order-completed-color, 5%);
+  }
+
+  &.notice .disable-notice {
+    float: left; font-size: 9px; color: #c7c7c7; padding: 2px 0 0 10px;
   }
 }
 

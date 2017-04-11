@@ -5,5 +5,5 @@
  */
 ?>
 <div role="tabpanel" id="tab-description" class="tab-pane<?php $currentTab == 'description' and print ' active'; ?>">
-	<?php echo do_shortcode($product->getDescription()); ?>
+	<?= apply_filters('the_content', $product->getDescription()); ?>
 </div>

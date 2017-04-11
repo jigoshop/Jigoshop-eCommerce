@@ -42,7 +42,7 @@ class Notices
 
     public function init()
     {
-        $this->addNotice(self::INFO, 'Info Message 1233', self::UNTIL_DISABLE);
+        $this->addNotice(self::INFO, Render::get('admin/notice/thanks_for_using_jigoshop', []), self::UNTIL_DISABLE);
     }
 
     /**
@@ -74,13 +74,7 @@ class Notices
     {
         foreach($this->notices as $notice) {
             if($this->canDisplay($notice)) {
-                ?>
-                <div class="notice notice-<?= $notice['type']; ?> is-dismissible">
-                    <p><?= $notice['message']; ?></p>
-                    <button class="disable-notice" data-notice="<?= md5($notice['message']); ?>">Disable Notice</button>
-                </div>
-                <?php
-                //Render::output('admin/notice', $notice);
+                Render::output('admin/notice', $notice);
             }
         }
         $this->options->saveOptions();
