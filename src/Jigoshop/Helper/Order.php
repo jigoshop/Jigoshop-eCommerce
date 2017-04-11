@@ -7,6 +7,7 @@ use Jigoshop\Endpoint\DownloadFile;
 use Jigoshop\Entity\Customer\Guest;
 use Jigoshop\Entity\Order\Status;
 use Jigoshop\Frontend\Pages;
+use Jigoshop\Payment\Method;
 
 class Order
 {
@@ -127,14 +128,20 @@ class Order
 
 	/**
 	 * @param $order \Jigoshop\Entity\Order Order to generate link for.
+     * @param $payment Method
 	 *
 	 * @return string Payment link.
 	 */
-	public static function getPayLink($order)
+	public static function getPayLink($order, $payment = null)
 	{
 	    $args = array(
 	        'key' => $order->getKey()
         );
+
+	    if($payment instanceof Method) {
+	        $args['payment'] = $payment->getId();
+        }
+
         $url = add_query_arg($args, Api::getEndpointUrl('pay', $order->getId(), get_permalink(self::$options->getPageId(Pages::CHECKOUT))));
 
 		return apply_filters('jigoshop\helper\order\pay_url', $url);
