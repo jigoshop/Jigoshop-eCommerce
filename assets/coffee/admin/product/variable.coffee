@@ -14,9 +14,9 @@ class AdminProductVariable
         jQuery('.list-group-item-text', $item.closest('li')).slideToggle ->
           jQuery('span', $item).toggleClass('glyphicon-collapse-down').toggleClass('glyphicon-collapse-up')
       .on 'change', 'select.variation-attribute', @updateVariation
-      .on 'change', '.list-group-item-text input.form-control,
-                     .list-group-item-text input[type="checkbox"],
-                     .list-group-item-text select.form-control', @updateVariation
+      .on 'change', '.list-group-item-text input.form-control' , @updateVariation
+      .on 'change', '.list-group-item-text input[type="checkbox"]', @updateVariation
+      .on 'change', '.list-group-item-text select.form-control', @updateVariation
       .on 'click', '.set_variation_image', @setImage
       .on 'click', '.remove_variation_image', @removeImage
       .on 'change', 'input[type="checkbox"].default_variation', (event) ->

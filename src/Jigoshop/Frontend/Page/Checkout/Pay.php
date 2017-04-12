@@ -100,7 +100,11 @@ class Pay implements PageInterface
 		if(isset($_GET['payment'])) {
 		    $payment = $this->paymentService->get($_GET['payment']);
 		    if($payment instanceof RenderPayInterface) {
-		        return $payment->renderPay($order);
+                return Render::get('shop/checkout/payment', array(
+                    'messages' => $this->messages,
+                    'content' => $payment->renderPay($order),
+                    'order' => $order,
+                ));
             }
         }
 

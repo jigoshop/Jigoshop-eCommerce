@@ -28,7 +28,7 @@ class DisableNotice implements Processable
             throw new Exception('Something went wrong');
         }
 
-        $this->options->update(Notices::SLUG.'.'.$_POST['notice'], false);
+        $this->options->update(Notices::SLUG.'.'.$_POST['notice'], true);
         $this->options->saveOptions();
 
         return [
