@@ -5,7 +5,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 
 Requires at least: 4.0
 Tested up to: 4.7.3
-Stable tag: 2.0.10.1
+Stable tag: 2.1
 
 A feature-packed eCommerce plugin built upon WordPress core functionality ensuring excellent performance, customizability and control - robust Tax Settings, Stock Level Management, Free and Premium Extensions - you name it.
 
@@ -151,6 +151,23 @@ However, if you want priority, dedicated support from Jigoshop staff, we dp offe
 
 == Changelog ==
 
+= 2.1 =
+* New: Admin notices.
+* New: My Downloads panel in my account.
+* New: Continents in Advanced flat rate shipping.
+* New: Dimensions and weight fields for product variations.
+* New: Replace product featured image with image from selected variation.
+* New: Discount entity.
+* New: Blueimp gallery for products.
+* New: Ability to add attachments to email.
+* New: RenderPay Interface
+* Fix: Product and order search.
+* Fix: Product filtering in admin panel.
+* Fix: Do not show migration if there is no reason to migrate.
+* Fix: Properly save and downloa all downloadable items.
+* Fix: Download link for variation.
+* Fix: Product category and tag queries.
+* Fix: Discount summary report.
 = 2.0.10.2 - 2017.03.22 =
 * Fix: Sanitized product title on product save in Wordpress panel.
 * Fix: Post excerpt was saved as product description.

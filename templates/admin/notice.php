@@ -11,4 +11,4 @@
     <?php endif; ?>
     <div class="clear"></div>
     </p>
-</div
+</div>
