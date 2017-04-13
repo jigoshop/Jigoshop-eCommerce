@@ -111,7 +111,6 @@ class JigoshopInit
         $this->initSession();
         $this->disableRelationLinks();
         $this->rewriteRules();
-        $this->upgrade();
 
         add_filter('plugin_action_links_' . self::getBaseName(), array($this, 'pluginLinks'));
     }
@@ -125,6 +124,7 @@ class JigoshopInit
         $this->addOptionsToStaticClasses();
         $this->addWpalToStaticClasses();
         $this->initCoreServices();
+        $this->upgrade();
         $this->container->get('jigoshop.core')->run($this->container);
     }
 

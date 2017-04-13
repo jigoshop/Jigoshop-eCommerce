@@ -50,23 +50,21 @@ class LocalPickup implements Method
 	 */
 	public function isEnabled()
 	{
-	    return true;
-//		$cart = $this->cartService->getCurrent();
-//		$post = $this->wp->getGlobalPost();
-//
-//		if ($post === null || $post->post_type != Types::ORDER) {
-//			$customer = $cart->getCustomer();
-//		} else {
-//			// TODO: Get rid of this hack for customer fetching
-//			$customer = maybe_unserialize($this->wp->getPostMeta($post->ID, 'customer', true));
-//		}
-//
-//		if(empty($customer))
-//		{
-//			return $this->options['enabled'];
-//		}
-//
-//		return $this->options['enabled'] && $customer->getShippingAddress()->getCountry() == $this->baseCountry;
+		$post = $this->wp->getGlobalPost();
+
+		if ($post === null || $post->post_type != Types::ORDER) {
+            $cart = $this->cartService->getCurrent();
+			$customer = $cart->getCustomer();
+		} else {
+			// TODO: Get rid of this hack for customer fetching
+			$customer = maybe_unserialize($this->wp->getPostMeta($post->ID, 'customer', true));
+		}
+
+		if(empty($customer)) {
+			return $this->options['enabled'];
+		}
+
+		return $this->options['enabled'] && $customer->getShippingAddress()->getCountry() == $this->baseCountry;
 	}
 
 	/**

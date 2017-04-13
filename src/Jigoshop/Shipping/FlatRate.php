@@ -88,18 +88,16 @@ class FlatRate implements Method
 	 */
 	public function isEnabled()
 	{
-	    return true;
-//		$cart = $this->cartService->getCurrent();
-//		$post = $this->wp->getGlobalPost();
-//
-//		if ($post === null || $post->post_type != Types::ORDER) {
-//			$customer = $cart->getCustomer();
-//		} else {
-//			// TODO: Get rid of this hack for customer fetching
-//			$customer = unserialize($this->wp->getPostMeta($post->ID, 'customer', true));
-//		}
-//
-//		return $this->options['enabled'] && ($this->options['available_for'] === 'all' || in_array($customer->getShippingAddress()->getCountry(), $this->options['countries']));
+		$post = $this->wp->getGlobalPost();
+		if ($post === null || $post->post_type != Types::ORDER) {
+            $cart = $this->cartService->getCurrent();
+            $customer = $cart->getCustomer();
+		} else {
+			// TODO: Get rid of this hack for customer fetching
+			$customer = unserialize($this->wp->getPostMeta($post->ID, 'customer', true));
+		}
+
+		return $this->options['enabled'] && ($this->options['available_for'] === 'all' || in_array($customer->getShippingAddress()->getCountry(), $this->options['countries']));
 	}
 
 	/**

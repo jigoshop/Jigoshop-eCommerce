@@ -353,9 +353,9 @@ class DiscountSummary extends Chart
 
 		$data = array();
 		$data['series'] = array();
-        $width = $this->barwidth / sizeof($this->reportData->discounts);
         $index = 0;
 		foreach($this->reportData->discounts as $type => $reportData) {
+            $width = $this->barwidth / count($this->reportData->discounts);
 		    $dataAmounts = $this->prepareChartData(array_filter($reportData, $filterTimes), 'post_date', 'amount', $this->chartInterval, $this->range['start'], $this->chartGroupBy);
 		    $dataCounts = $this->prepareChartData(array_filter($reportData, $filterTimes), 'post_date', 'count', $this->chartInterval, $this->range['start'], $this->chartGroupBy);
 

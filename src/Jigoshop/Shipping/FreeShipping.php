@@ -7,6 +7,7 @@ use Jigoshop\Core\Messages;
 use Jigoshop\Core\Options;
 use Jigoshop\Core\Types;
 use Jigoshop\Entity\Coupon;
+use Jigoshop\Entity\Order\Discount;
 use Jigoshop\Entity\OrderInterface;
 use Jigoshop\Helper\Country;
 use Jigoshop\Helper\Scripts;
@@ -83,24 +84,23 @@ class FreeShipping implements Method
 	 */
 	public function isEnabled()
 	{
-//		$cart = $this->cartService->getCurrent();
-//		$post = $this->wp->getGlobalPost();
-//
-//		if ($post === null || $post->post_type != Types::ORDER) {
-//			$customer = $cart->getCustomer();
-//		} else {
-//			// TODO: Get rid of this hack for customer fetching
-//			$customer = unserialize($this->wp->getPostMeta($post->ID, 'customer', true));
-//		}
-//
-//		$freeShippingCoupon = array_reduce($cart->getCoupons(), function ($value, $coupon){
-//			/** @var $coupon Coupon */
-//			return $value || $coupon->isFreeShipping();
-//		}, false);
-//
-//		return $this->options['enabled'] && ($freeShippingCoupon || ($cart->getProductSubtotal() >= $this->options['minimum'] &&
-//				($this->options['available_for'] === 'all' || in_array($customer->getShippingAddress()->getCountry(), $this->options['countries']))));
-        return true;
+		$post = $this->wp->getGlobalPost();
+        $freeShippingDiscount = false;
+
+		if ($post === null || $post->post_type != Types::ORDER) {
+            $order = $this->cartService->getCurrent();
+			$customer = $order->getCustomer();
+            $freeShippingDiscount = array_reduce($order->getDiscounts(), function ($value, $discount){
+                /** @var $discount Discount */
+                return $value || $discount->getMeta('free_shipping') ? $discount->getMeta('free_shipping')->getValue() : 0;
+            }, false);
+		} else {
+			// TODO: Get rid of this hack for customer fetching
+			$customer = unserialize($this->wp->getPostMeta($post->ID, 'customer', true));
+		}
+
+		return $this->options['enabled'] && ($freeShippingDiscount || ($order->getProductSubtotal() >= $this->options['minimum'] &&
+				($this->options['available_for'] === 'all' || in_array($customer->getShippingAddress()->getCountry(), $this->options['countries']))));
 	}
 
 	/**

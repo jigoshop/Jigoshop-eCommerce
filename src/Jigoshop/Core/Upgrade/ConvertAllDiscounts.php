@@ -30,9 +30,9 @@ class ConvertAllDiscounts implements Upgrader
         $this->orderService = $di->get('jigoshop.service.order');
 
         $results = $wpdb->get_results($wpdb->prepare("
-          SELECT meta1.post_id as id, meta1.meta_value as discount, meta2.meta_value as coupons FROM {$wpdb->postmeta} as meta1
+          SELECT meta1.post_id as id, meta1.meta_value as coupons, meta2.meta_value as discount FROM {$wpdb->postmeta} as meta1
           LEFT JOIN {$wpdb->postmeta} as meta2 on (meta2.post_id = meta1.post_id AND meta2.meta_key = %s)
-          WHERE meta1.meta_key = %s AND (meta1.meta_value + 0.0) > 0", ['discount', 'coupons']));
+          WHERE meta1.meta_key = %s AND (meta2.meta_value + 0.0) > 0", ['discount', 'coupons']), ARRAY_A);
 
         foreach($results as $result) {
             $coupons = array_values(maybe_unserialize($result['coupons']));
@@ -44,7 +44,7 @@ class ConvertAllDiscounts implements Upgrader
                     $discouts = $this->convertCouponsFromJSX($result, $coupons);
                 }
                 if(count($discouts)) {
-                    $this->saveDiscounts($wpdb, $discouts);
+                    $this->saveDiscounts($wpdb, $discouts, $result['id']);
                 }
             }
         }
@@ -110,7 +110,7 @@ class ConvertAllDiscounts implements Upgrader
             } else if ($coupon['type'] == 'percent') {
                 $discountAmount = $order->getSubtotal() * $coupon['amount'] / 100;
             } else {
-                $percentProductsCoupons[] = $coupon['amount'];
+                $percentProductsCoupons[] = $coupon;
                 continue;
             }
 
@@ -153,12 +153,14 @@ class ConvertAllDiscounts implements Upgrader
     /**
      * @param \wpdb $wpdb
      * @param Order\Discount[] $discounts
+     * @param int $orderId
      */
-    private function saveDiscounts($wpdb, $discounts)
+    private function saveDiscounts($wpdb, $discounts, $orderId)
     {
         foreach ($discounts as $discount) {
             $wpdb->insert($wpdb->prefix . 'jigoshop_order_discount', [
                 'type' => $discount->getType(),
+                'order_id' => $orderId,
                 'code' => $discount->getCode(),
                 'amount' => $discount->getAmount(),
             ]);
@@ -167,7 +169,7 @@ class ConvertAllDiscounts implements Upgrader
                 $wpdb->insert($wpdb->prefix . 'jigoshop_order_discount_meta', [
                     'discount_id' => $id,
                     'meta_key' => $meta->getKey(),
-                    'meta_value' => $meta->getValue(),
+                    'meta_value' => is_array($meta->getValue()) ? serialize($meta->getValue()) : $meta->getValue(),
                 ]);
             }
         }

@@ -20,7 +20,7 @@ class AddZonesToAdvancedFlatRate implements Upgrader
     public function up(Wordpress $wp, Container $di)
     {
         /** @var Options $options */
-        $options = $di->get('jigoshop.core.options');
+        $options = $di->get('jigoshop.options');
         $rates = $options->get('shipping.advanced_flat_rate.rates', []);
         for($i = 0; $i < count($rates); $i++) {
             if(isset($rates[$i]['country']) && $rates[$i]['country'] && (!isset($rates[$i]['countries']) || empty($rates[$i]['countries']))) {
