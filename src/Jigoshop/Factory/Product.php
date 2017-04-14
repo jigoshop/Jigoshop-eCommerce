@@ -103,8 +103,8 @@ class Product implements EntityFactoryInterface
 
         if (!empty($_POST)) {
             $helpers = $this->wp->getHelpers();
-            $product->setName($helpers->sanitizeTitle($_POST['post_title']));
-            $product->setDescription($helpers->parsePostBody($_POST['post_excerpt']));
+            $product->setName($_POST['post_title']);
+            $product->setDescription($helpers->parsePostBody(stripslashes_deep($_POST['post_content'])));
             $this->convertData($_POST, $id);
             $product->restoreState($_POST['product']);
             $product->markAsDirty($_POST['product']);

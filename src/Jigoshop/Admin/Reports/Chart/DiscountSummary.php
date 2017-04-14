@@ -360,6 +360,7 @@ class DiscountSummary extends Chart
 		    $dataCounts = $this->prepareChartData(array_filter($reportData, $filterTimes), 'post_date', 'count', $this->chartInterval, $this->range['start'], $this->chartGroupBy);
 
             $data['series'][$index + sizeof($this->reportData->discounts)] = $this->arrayToObject([
+                'label' => sprintf(__('%s discounts in total', 'jigoshop'), Type::getName($type)),
                 'data' => array_values($dataAmounts),
                 'yaxis' => 2,
                 'color' => $this->chartColours[$index + sizeof($this->reportData->discounts)],
@@ -384,6 +385,7 @@ class DiscountSummary extends Chart
                 $dataCounts[$i][0] += $offset;
             }
             $data['series'][$index] = $this->arrayToObject([
+                'label' => sprintf(__('%s discounts used in total', 'jigoshop'), Type::getName($type)),
                 'data' => $dataCounts,
                 'color' => $this->chartColours[$index],
                 'bars' => $this->arrayToObject([

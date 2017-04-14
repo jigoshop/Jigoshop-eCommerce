@@ -419,7 +419,7 @@ class ByProduct extends Chart
 			'hoverable' => false
         ]);
 		$data['series'][] = $this->arrayToObject([
-			'label' => __('Number of items sold', 'jigoshop'),
+			'label' => __('Number of purchases', 'jigoshop'),
 			'data' => array_values($orderItemCounts),
 			'color' => $this->chartColours['item_count'],
 			'bars' => $this->arrayToObject([
