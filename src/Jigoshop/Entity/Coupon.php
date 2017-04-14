@@ -569,11 +569,11 @@ class Coupon implements EntityInterface, \JsonSerializable
             'title' => $this->title,
             'from' => $this->from ? [
                 'timestamp' => $this->from->getTimestamp(),
-                'format' => $this->fromAt->format('Y-m-d')
+                'format' => $this->from->format('Y-m-d')
             ] : 0,
             'to' => $this->to ? [
-                'timestamp' => $this->createdAt->getTimestamp(),
-                'format' => $this->createdAt->format('Y-m-d')
+                'timestamp' => $this->to->getTimestamp(),
+                'format' => $this->to->format('Y-m-d')
             ] : 0,
             'usage_limit' => $this->usageLimit,
             'individual_use' => $this->individualUse,

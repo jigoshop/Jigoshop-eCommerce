@@ -2,6 +2,7 @@
 
 namespace Jigoshop\Factory;
 
+use Jigoshop\Core\Types;
 use Jigoshop\Entity\Coupon as Entity;
 use WPAL\Wordpress;
 
@@ -21,7 +22,7 @@ class Coupon implements EntityFactoryInterface
     }
 
     /**
-     * Creates new product properly based on POST variable data.
+     * Creates new coupon properly based on POST variable data.
      *
      * @param $id int Post ID to create object for.
      *
@@ -33,27 +34,32 @@ class Coupon implements EntityFactoryInterface
         $coupon->setId($id);
 
         if (!empty($_POST)) {
+
             $helpers = $this->wp->getHelpers();
             $coupon->setTitle($helpers->sanitizeTitle($_POST['post_title']));
 
-            $_POST['jigoshop_coupon']['individual_use'] = $_POST['jigoshop_coupon']['individual_use'] == 'on';
-            $_POST['jigoshop_coupon']['free_shipping'] = $_POST['jigoshop_coupon']['free_shipping'] == 'on';
-            $_POST['jigoshop_coupon']['products'] = array_filter(explode(',', $_POST['jigoshop_coupon']['products']));
-            $_POST['jigoshop_coupon']['excluded_products'] = array_filter(explode(',', $_POST['jigoshop_coupon']['excluded_products']));
-            $_POST['jigoshop_coupon']['categories'] = array_filter(explode(',', $_POST['jigoshop_coupon']['categories']));
-            $_POST['jigoshop_coupon']['excluded_categories'] = array_filter(explode(',', $_POST['jigoshop_coupon']['excluded_categories']));
-            if (!empty($_POST['jigoshop_coupon']['from'])) {
-                $_POST['jigoshop_coupon']['from'] = strtotime($_POST['jigoshop_coupon']['from']);
-            } else {
-                $_POST['jigoshop_coupon']['from'] = false;
-            }
-            if (!empty($_POST['jigoshop_coupon']['to'])) {
-                $_POST['jigoshop_coupon']['to'] = strtotime($_POST['jigoshop_coupon']['to']);
-            } else {
-                $_POST['jigoshop_coupon']['to'] = false;
-            }
-
+            $this->convertData($_POST);
             $coupon->restoreState($_POST['jigoshop_coupon']);
+        }
+
+        return $coupon;
+    }
+
+    /**
+     * Updates coupon properties based on array data.
+     *
+     * @param $coupon \Jigoshop\Entity\Coupon for update.
+     * @param $data array of data for update.
+     *
+     * @return \Jigoshop\Entity\Coupon
+     */
+    public function update(Entity $coupon, $data)
+    {
+        if (!empty($data)) {
+            $helpers = $this->wp->getHelpers();
+            $coupon->setTitle($helpers->sanitizeTitle($data['post_title']));
+            $this->convertData($data);
+            $coupon->restoreState($data['jigoshop_coupon']);
         }
 
         return $coupon;
@@ -68,6 +74,10 @@ class Coupon implements EntityFactoryInterface
      */
     public function fetch($post)
     {
+        if($post && ($post->post_type != Types::COUPON)) {
+            return null;
+        }
+
         $state = array();
         $coupon = null;
         if ($post) {
@@ -100,5 +110,32 @@ class Coupon implements EntityFactoryInterface
         }
 
         return $this->wp->applyFilters('jigoshop\find\coupon', $coupon, $state);
+    }
+
+    /**
+     * converting input data to be readable by db
+     * @param array $data
+     * @return array
+     */
+    private function convertData(array &$data)
+    {
+        $data['jigoshop_coupon']['individual_use'] = $data['jigoshop_coupon']['individual_use'] == 'on';
+        $data['jigoshop_coupon']['free_shipping'] = $data['jigoshop_coupon']['free_shipping'] == 'on';
+        $data['jigoshop_coupon']['products'] = array_filter(explode(',', $data['jigoshop_coupon']['products']));
+        $data['jigoshop_coupon']['excluded_products'] = array_filter(explode(',',
+            $data['jigoshop_coupon']['excluded_products']));
+        $data['jigoshop_coupon']['categories'] = array_filter(explode(',', $data['jigoshop_coupon']['categories']));
+        $data['jigoshop_coupon']['excluded_categories'] = array_filter(explode(',',
+            $data['jigoshop_coupon']['excluded_categories']));
+        if (!empty($data['jigoshop_coupon']['from'])) {
+            $data['jigoshop_coupon']['from'] = strtotime($data['jigoshop_coupon']['from']);
+        } else {
+            $data['jigoshop_coupon']['from'] = false;
+        }
+        if (!empty($data['jigoshop_coupon']['to'])) {
+            $data['jigoshop_coupon']['to'] = strtotime($data['jigoshop_coupon']['to']);
+        } else {
+            $data['jigoshop_coupon']['to'] = false;
+        }
     }
 }

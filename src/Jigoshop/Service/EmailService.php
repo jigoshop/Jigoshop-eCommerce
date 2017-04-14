@@ -2,11 +2,13 @@
 
 namespace Jigoshop\Service;
 
+use Jigoshop\Api\Routes\V1\Emails;
 use Jigoshop\Core\Options;
 use Jigoshop\Core\Types;
 use Jigoshop\Entity\Email;
 use Jigoshop\Entity\EntityInterface;
 use Jigoshop\Factory\Email as Factory;
+use Jigoshop\Traits\WpPostManageTrait;
 use WPAL\Wordpress;
 
 /**
@@ -18,6 +20,8 @@ use WPAL\Wordpress;
  */
 class EmailService implements EmailServiceInterface
 {
+    use WpPostManageTrait;
+
 	/** @var Wordpress */
 	private $wp;
 	/** @var Options */
@@ -116,7 +120,16 @@ class EmailService implements EmailServiceInterface
 			throw new Exception('Trying to save not an email!');
 		}
 
-		// TODO: Support for transactions!
+        if (!$object->getId()) {
+            //if object does not exist insert new one
+            $id = $this->insertPost($this->wp, $object, Types::EMAIL);
+            if (!is_int($id) || $id === 0) {
+                throw new Exception(__('Unable to save email. Please try again.', 'jigoshop'));
+            }
+            $object->setId($id);
+        }
+
+        // TODO: Support for transactions!
 
 		$fields = $object->getStateToSave();
 
@@ -140,9 +153,19 @@ class EmailService implements EmailServiceInterface
 	 */
 	public function savePost($id)
 	{
-		$email = $this->factory->create($id);
+        $email = $this->factory->create($id);
 		$this->save($email);
 	}
+
+    /**
+     * email method updating post
+     * @param Email $email
+     */
+    public function updateAndSavePost(Email $email)
+    {
+        $this->updatePost($this->wp, $email, Types::EMAIL);
+        $this->save($email);
+    }
 
 	/**
 	 * @return array List of registered mails with accepted arguments.
@@ -314,4 +337,18 @@ WHERE posts.post_type = %s", 'actions', Types\Email::NAME), ARRAY_A);
 
         return  array_filter($attacments);
     }
+
+    /**
+     * Gets number of Emails
+     *
+     * @return int
+     */
+    public function getEmailsCount()
+    {
+        $wpdb = $this->wp->getWPDB();
+        return (int)$wpdb->get_var($wpdb->prepare("
+            SELECT COUNT(*) FROM {$wpdb->posts} 
+            WHERE post_status = 'publish' AND post_type = %s", Types::EMAIL));
+    }
+
 }

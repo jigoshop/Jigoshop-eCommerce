@@ -157,4 +157,5 @@ class Simple implements OrderServiceInterface
 	{
 		$this->service->addNote($order, $note, $private);
 	}
+
 }
