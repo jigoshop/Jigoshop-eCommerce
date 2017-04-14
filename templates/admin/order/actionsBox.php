@@ -12,7 +12,7 @@
             <li><input type="submit" class="button" name="recalculate_tax" value="<?php _e('Recalculate Tax', 'jigoshop'); ?>" /> <?php _e('- Recalculates for each item in the order using CURRENT tax rules.', 'jigoshop'); ?></li>
         <!--    <li><input type="submit" class="button" name="invoice" value="--><?php //_e('Email invoice', 'jigoshop'); ?><!--" /> --><?php //_e('- Emails the customer order details and a payment link.', 'jigoshop'); ?><!--</li>-->
             <?php if($delete_text) : ?>
-                <li><a class="submitdelete deletion" href="<?php echo esc_url(get_delete_post_link($order->getId())); ?>"><?php echo $delete_text; ?></a></li>
+                <li><a class="submitdelete deletion" href="<?= esc_url(get_delete_post_link($order->getId())); ?>"><?= $delete_text; ?></a></li>
             <?php endif; ?>
         </ul>
     </div>

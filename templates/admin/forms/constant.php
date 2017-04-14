@@ -11,24 +11,24 @@
  */
 $hasLabel = !empty($label);
 ?>
-<div class="form-group <?php echo $id; ?>_field <?php echo join(' ', $classes); ?><?php $hidden and print ' not-active'; ?>">
+<div class="form-group <?= $id; ?>_field <?= join(' ', $classes); ?><?php $hidden and print ' not-active'; ?>">
 	<div class="row">
-		<div class="col-sm-<?php echo $size; ?>">
+		<div class="col-sm-<?= $size; ?>">
 			<?php if ($hasLabel): $size -= 2; ?>
-				<label for="<?php echo $id; ?>" class="col-xs-12 col-sm-2 margin-top-bottom-9">
-					<?php echo $label; ?>
+				<label for="<?= $id; ?>" class="col-xs-12 col-sm-2 margin-top-bottom-9">
+					<?= $label; ?>
 				</label>
 			<?php endif; ?>
-			<div class="col-xs-12 col-sm-<?php echo $size ?> clearfix">
+			<div class="col-xs-12 col-sm-<?= $size ?> clearfix">
 				<div class="tooltip-inline-badge">
 					<?php if (!empty($tip)): ?>
-						<span data-toggle="tooltip" class="badge margin-top-bottom-9" data-placement="top" title="<?php echo $tip; ?>">?</span>
+						<span data-toggle="tooltip" class="badge margin-top-bottom-9" data-placement="top" title="<?= $tip; ?>">?</span>
 					<?php endif; ?>
 				</div>
 				<div class="tooltip-inline-input">
-					<p class="form-control-static <?php echo join(' ', $classes); ?>" id="<?php echo $id; ?>"><?php echo $value; ?></p>
+					<p class="form-control-static <?= join(' ', $classes); ?>" id="<?= $id; ?>"><?= $value; ?></p>
 					<?php if(!empty($description)): ?>
-						<span class="help-block"><?php echo $description; ?></span>
+						<span class="help-block"><?= $description; ?></span>
 					<?php endif; ?>
 				</div>
 			</div>

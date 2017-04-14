@@ -20,7 +20,7 @@ use Jigoshop\Helper\Tax;
 ?>
 <h1><?php _e('Cart', 'jigoshop'); ?></h1>
 <?php Render::output('shop/messages', array('messages' => $messages)); ?>
-<?php echo wpautop(wptexturize($content)); ?>
+<?= wpautop(wptexturize($content)); ?>
 <?php if ($cart->isEmpty()): ?>
 	<?php Render::output('shop/cart/empty', array('shopUrl' => $shopUrl)); ?>
 <?php else: ?>
@@ -86,7 +86,7 @@ use Jigoshop\Helper\Tax;
 						<tr id="shipping-calculator">
 							<th scope="row">
 								<?php _e('Shipping', 'jigoshop'); ?>
-								<p class="small text-muted"><?php echo sprintf(__('Estimated for:<br/><span>%s</span>', 'jigoshop'), $customer->getShippingAddress()->getLocation()); ?></p>
+								<p class="small text-muted"><?= sprintf(__('Estimated for:<br/><span>%s</span>', 'jigoshop'), $customer->getShippingAddress()->getLocation()); ?></p>
 							</th>
 							<td>
 								<noscript>
@@ -153,27 +153,27 @@ use Jigoshop\Helper\Tax;
 					<?php endif; ?>
 					<tr id="cart-subtotal">
 						<th scope="row"><?php _e('Subtotal', 'jigoshop'); ?></th>
-						<td><?php echo Product::formatPrice($cart->getSubtotal()); ?></td>
+						<td><?= Product::formatPrice($cart->getSubtotal()); ?></td>
 					</tr>
 					<?php foreach ($cart->getCombinedTax() as $taxClass => $tax): ?>
-						<tr id="tax-<?php echo $taxClass; ?>"<?php $tax == 0 and print ' style="display: none;"'; ?>>
-							<th scope="row"><?php echo Tax::getLabel($taxClass, $cart); ?></th>
-							<td><?php echo Product::formatPrice($tax); ?></td>
+						<tr id="tax-<?= $taxClass; ?>"<?php $tax == 0 and print ' style="display: none;"'; ?>>
+							<th scope="row"><?= Tax::getLabel($taxClass, $cart); ?></th>
+							<td><?= Product::formatPrice($tax); ?></td>
 						</tr>
 					<?php endforeach; ?>
 					<tr id="cart-discount"<?php $cart->getDiscount() == 0 and print ' class="not-active"'; ?>>
 						<th scope="row"><?php _e('Discount', 'jigoshop'); ?></th>
-						<td><?php echo Product::formatPrice($cart->getDiscount()); ?></td>
+						<td><?= Product::formatPrice($cart->getDiscount()); ?></td>
 					</tr>
 					<tr id="cart-total">
 						<th scope="row"><?php _e('Total', 'jigoshop'); ?></th>
-						<td><?php echo Product::formatPrice($cart->getTotal()); ?></td>
+						<td><?= Product::formatPrice($cart->getTotal()); ?></td>
 					</tr>
 					</tbody>
 				</table>
 			</div>
 		</div>
-		<a href="<?php echo $shopUrl; ?>" class="btn btn-default pull-left"><?php _e('&larr; Return to shopping', 'jigoshop'); ?></a>
+		<a href="<?= $shopUrl; ?>" class="btn btn-default pull-left"><?php _e('&larr; Return to shopping', 'jigoshop'); ?></a>
 		<button class="btn btn-primary pull-right" name="action" value="checkout"><?php _e('Proceed to checkout &rarr;', 'jigoshopp'); ?></button>
 		<div class="clear"></div>
 	</form>

@@ -7,7 +7,7 @@ use Jigoshop\Admin\Helper\Forms;
  * @var $option_id int ID of the option.
  */
 ?>
-<tr data-id="<?php echo $option_id; ?>">
+<tr data-id="<?= $option_id; ?>">
 	<td>
 		<?php Forms::text(array(
 			'name' => 'attributes['.$id.'][options]['.$option_id.'][label]',

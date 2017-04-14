@@ -12,14 +12,14 @@ use Jigoshop\Helper\Forms;
 
 ?>
 <p>
-	<label for="<?php echo $title_id; ?>"><?php _e('Title:', 'jigoshop'); ?></label>
-	<input class="widefat" id="<?php echo $title_id; ?>"  name="<?php echo $title_name; ?>" type="text" value="<?php echo $title; ?>" />
+	<label for="<?= $title_id; ?>"><?php _e('Title:', 'jigoshop'); ?></label>
+	<input class="widefat" id="<?= $title_id; ?>"  name="<?= $title_name; ?>" type="text" value="<?= $title; ?>" />
 </p>
 <p>
-	<label for="<?php echo $attribute_id; ?>"><?php _e('Attributes:', 'jigoshop'); ?></label>
-	<select id="<?php echo $attribute_id; ?>"  name="<?php echo $attribute_name; ?>">
+	<label for="<?= $attribute_id; ?>"><?php _e('Attributes:', 'jigoshop'); ?></label>
+	<select id="<?= $attribute_id; ?>"  name="<?= $attribute_name; ?>">
 		<?php foreach ($attributes as $attr): /** @var $attr \Jigoshop\Entity\Product\Attribute */?>
-			<option value="<?php echo $attr->getId(); ?>" <?php Forms::selected($attr->getId(), $attribute); ?>><?php echo $attr->getLabel(); ?></option>
+			<option value="<?= $attr->getId(); ?>" <?php Forms::selected($attr->getId(), $attribute); ?>><?= $attr->getLabel(); ?></option>
 		<?php endforeach; ?>
 	</select>
 </p>

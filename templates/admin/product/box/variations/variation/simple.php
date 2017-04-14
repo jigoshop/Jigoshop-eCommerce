@@ -9,7 +9,7 @@ use Jigoshop\Helper\Product as ProductHelper;
  * @var $variation Product\Variable\Variation The variation.
  */
 ?>
-<fieldset class="product-simple<?php echo $product instanceof Product\Simple ? '' : ' not-active'; ?>">
+<fieldset class="product-simple<?= $product instanceof Product\Simple ? '' : ' not-active'; ?>">
     <?php
     Forms::text(array(
         'name' => 'product[variation][' . $variation->getId() . '][product][size_weight]',

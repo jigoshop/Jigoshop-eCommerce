@@ -13,19 +13,19 @@ use Jigoshop\Helper\Product as ProductHelper;
 $product = $variation->getProduct();
 $stock = $product instanceof Product\Purchasable ? $product->getStock() : new StockStatus();
 ?>
-<li class="list-group-item variation" data-id="<?php echo $variation->getId(); ?>">
+<li class="list-group-item variation" data-id="<?= $variation->getId(); ?>">
 	<h4 class="list-group-item-heading clearfix">
 		<button type="button" class="remove-variation btn btn-default pull-right" title="<?php _e('Remove', 'jigoshop'); ?>"><span class="glyphicon glyphicon-remove"></span></button>
 		<button type="button" class="show-variation btn btn-default pull-right" title="<?php _e('Expand', 'jigoshop'); ?>"><span class="glyphicon glyphicon-collapse-down"></span></button>
-		<label for="default_variation_<?php echo $variation->getId(); ?>" class="animated pull-right">
+		<label for="default_variation_<?= $variation->getId(); ?>" class="animated pull-right">
 			<span data-toggle="tooltip" data-placement="top" title="" data-original-title="This variation will be pre-selected on product page.">
 				<span class="small">Is default?</span>
-				<input id="default_variation_<?php echo $variation->getId(); ?>"
+				<input id="default_variation_<?= $variation->getId(); ?>"
 					   class="default_variation"
 					   name="product[default_variation_id]"
 					   type="checkbox"
-					   value="<?php echo $variation->getId(); ?>"
-				<?php echo Forms::checked($variation->getParent()->getDefaultVariationId(), $variation->getId()); ?>>
+					   value="<?= $variation->getId(); ?>"
+				<?= Forms::checked($variation->getParent()->getDefaultVariationId(), $variation->getId()); ?>>
 				<i class="glyphicon"></i>
 			</span>
 		</label>
@@ -42,7 +42,7 @@ $stock = $product instanceof Product\Purchasable ? $product->getStock() : new St
 	</h4>
 	<div class="list-group-item-text row clearfix">
 		<div class="col-md-2">
-			<?php echo ProductHelper::getFeaturedImage($product, \Jigoshop\Core\Options::IMAGE_SMALL); ?>
+			<?= ProductHelper::getFeaturedImage($product, \Jigoshop\Core\Options::IMAGE_SMALL); ?>
 			<button class="btn btn-block btn-default set_variation_image"><?php _e('Set image', 'jigoshop'); ?></button>
 			<button class="btn btn-block btn-danger remove_variation_image<?php !ProductHelper::hasFeaturedImage($product) and print ' not-active'; ?>"><?php _e('Remove image', 'jigoshop'); ?></button>
 		</div>

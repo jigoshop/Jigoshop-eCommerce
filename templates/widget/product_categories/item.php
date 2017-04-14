@@ -12,9 +12,9 @@ use Jigoshop\Helper\Forms;
  * @var $count int Count of items in category.
  */
 ?>
-<option class="level-<?php echo $depth; ?>" value="<?php echo $value; ?>" <?php echo Forms::selected($value, $selected); ?> data-url="<?php echo get_term_link($term, Types::PRODUCT_CATEGORY); ?>">
-	<?php echo str_repeat('&nbsp;', $depth*3).$name; ?>
+<option class="level-<?= $depth; ?>" value="<?= $value; ?>" <?= Forms::selected($value, $selected); ?> data-url="<?= get_term_link($term, Types::PRODUCT_CATEGORY); ?>">
+	<?= str_repeat('&nbsp;', $depth*3).$name; ?>
 	<?php if ($show_count): ?>
-		(<?php echo $count; ?>)
+		(<?= $count; ?>)
 	<?php endif; ?>
 </option>

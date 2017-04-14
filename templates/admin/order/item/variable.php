@@ -14,7 +14,7 @@ $meta = $item->getMeta('variation_id');
 $variation = $meta ? $product->getVariation($meta->getValue()) : null;
 $product = $variation ? $variation->getProduct() : $product;
 ?>
-<tr data-id="<?php echo $id; ?>" data-product="<?php echo $product->getId(); ?>">
+<tr data-id="<?= $id; ?>" data-product="<?= $product->getId(); ?>">
 	<td class="id"><?php Forms::constant(array('name' => 'order[items]['.$id.'][id]', 'value' => $product->getId())); ?></td>
 	<td class="sku"><?php Forms::constant(array('name' => 'order[items]['.$id.'][sku]', 'value' => $product->getSku())); ?></td>
 	<td class="name"><?php Forms::constant(array('name' => 'order[items]['.$id.'][name]', 'value' => apply_filters('jigoshop\template\admin\order\item_title', $item->getName(), $item->getProduct(), $item))); ?></td>

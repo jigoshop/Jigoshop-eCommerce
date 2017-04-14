@@ -9,7 +9,7 @@ use Jigoshop\Helper\Product;
 
 $id = $item->getKey();
 ?>
-<tr data-id="<?php echo $id; ?>" data-product="<?php echo $item->getProduct()->getId(); ?>">
+<tr data-id="<?= $id; ?>" data-product="<?= $item->getProduct()->getId(); ?>">
 	<td class="id"><?php Forms::constant(array('name' => 'order[items]['.$id.'][id]', 'value' => $item->getProduct()->getId())); ?></td>
 	<td class="sku"><?php Forms::constant(array('name' => 'order[items]['.$id.'][sku]', 'value' => $item->getProduct()->getSku())); ?></td>
 	<td class="name"><?php Forms::constant(array('name' => 'order[items]['.$id.'][name]', 'value' => apply_filters('jigoshop\template\admin\order\item_title', $item->getName(), $item->getProduct(), $item))); ?></td>

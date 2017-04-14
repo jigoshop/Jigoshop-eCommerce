@@ -9,7 +9,7 @@ use Jigoshop\Helper\Render;
  * @var $types array List of available attribute types.
  */
 ?>
-<tr class="attribute" data-id="<?php echo $id; ?>">
+<tr class="attribute" data-id="<?= $id; ?>">
 	<td>
 		<?php Forms::text(array(
 			'name' => 'attributes['.$id.'][label]',
@@ -40,7 +40,7 @@ use Jigoshop\Helper\Render;
 	</td>
 </tr>
 <?php if ($attribute->getType() != Attribute\Text::TYPE): ?>
-<tr class="options not-active" data-id="<?php echo $id; ?>">
+<tr class="options not-active" data-id="<?= $id; ?>">
 	<td colspan="4">
 		<div class="panel panel-default">
 			<div class="panel-heading">

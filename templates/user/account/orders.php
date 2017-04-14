@@ -24,22 +24,22 @@ use Jigoshop\Helper\Render;
 			<?php $unpaid = in_array($order->getStatus(), array(Status::PENDING)); ?>
 			<li class="list-group-item clearfix <?php $unpaid and print 'list-group-item-warning'; ?>">
 				<h4 class="list-group-item-heading">
-					<?php echo $order->getTitle(); ?>
+					<?= $order->getTitle(); ?>
 					<?php if ($unpaid): ?>
-						<a href="<?php echo Order::getPayLink($order); ?>" class="btn btn-success pull-right"><?php _e('Pay', 'jigoshop'); ?></a>
+						<a href="<?= Order::getPayLink($order); ?>" class="btn btn-success pull-right"><?php _e('Pay', 'jigoshop'); ?></a>
 					<?php endif; ?>
-					<a href="<?php echo Api::getEndpointUrl('orders', $order->getId(), get_permalink()); ?>" class="btn btn-primary pull-right"><?php _e('View', 'jigoshop'); ?></span></a>
+					<a href="<?= Api::getEndpointUrl('orders', $order->getId(), get_permalink()); ?>" class="btn btn-primary pull-right"><?php _e('View', 'jigoshop'); ?></span></a>
 				</h4>
 				<dl class="dl-horizontal list-group-item-text">
 					<dt><?php _e('Date', 'jigoshop'); ?></dt>
-					<dd><?php echo $order->getCreatedAt()->format(_x('d.m.Y, H:i', 'account', 'jigoshop')); ?></dd>
+					<dd><?= $order->getCreatedAt()->format(_x('d.m.Y, H:i', 'account', 'jigoshop')); ?></dd>
 					<dt><?php _e('Status', 'jigoshop'); ?></dt>
-					<dd><?php echo Status::getName($order->getStatus()); ?></dd>
+					<dd><?= Status::getName($order->getStatus()); ?></dd>
 					<dt><?php _e('Total', 'jigoshop'); ?></dt>
-					<dd><?php echo Product::formatPrice($order->getTotal()); ?></dd>
+					<dd><?= Product::formatPrice($order->getTotal()); ?></dd>
 				</dl>
 			</li>
 		<?php endforeach; ?>
 	</ul>
 </div>
-<a href="<?php echo $myAccountUrl; ?>" class="btn btn-default"><?php _e('Go back to My account', 'jigoshop'); ?></a>
+<a href="<?= $myAccountUrl; ?>" class="btn btn-default"><?php _e('Go back to My account', 'jigoshop'); ?></a>

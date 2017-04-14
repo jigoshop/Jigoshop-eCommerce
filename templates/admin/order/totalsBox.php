@@ -11,11 +11,11 @@ use Jigoshop\Helper\Render;
  */
 $orderTax = $order->getTax();
 ?>
-<div class="jigoshop jigoshop-totals" data-order="<?php echo $order->getId(); ?>">
+<div class="jigoshop jigoshop-totals" data-order="<?= $order->getId(); ?>">
 	<div class="form-horizontal">
 		<div class="form-group<?php $order->isShippingRequired() ? '' : ' not-active'; ?>">
 			<label for="order_shipping" class="col-sm-2 control-label">
-				<?php echo __('Shipping', 'jigoshop'); ?>
+				<?= __('Shipping', 'jigoshop'); ?>
 			</label>
 			<div class="col-sm-9">
 				<ul class="list-group" id="shipping-methods">

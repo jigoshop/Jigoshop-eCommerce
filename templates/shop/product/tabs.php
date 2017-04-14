@@ -8,7 +8,7 @@
 <div id="tabs">
 	<ul class="nav nav-tabs tabs" role="tablist">
 		<?php foreach($tabs as $tab => $label): ?>
-			<li<?php $tab == $currentTab and print ' class="active"'; ?>><a href="#tab-<?php echo $tab; ?>" role="tab" data-toggle="tab"><?php echo $label; ?></a></li>
+			<li<?php $tab == $currentTab and print ' class="active"'; ?>><a href="#tab-<?= $tab; ?>" role="tab" data-toggle="tab"><?= $label; ?></a></li>
 		<?php endforeach; ?>
 		<?php do_action('jigoshop\template\product\tabs', $currentTab, $product); ?>
 	</ul>

@@ -20,13 +20,13 @@ use Jigoshop\Helper\Render;
 		<div class="col-lg-4">
 		<ul class="list-group clearfix max-width-270">
 			<?php foreach ($tools as $tool): /** @var $tool \Jigoshop\Admin\Migration\Tool */ ?>
-				<li class="list-group-item tool-<?php echo $tool->getId(); ?>"><?php echo $tool->display(); ?></li>
+				<li class="list-group-item tool-<?= $tool->getId(); ?>"><?= $tool->display(); ?></li>
 			<?php endforeach; ?>
 		</ul>
-		<input type="hidden" name="page" value="<?php echo Jigoshop\Admin\Migration::NAME; ?>" />
+		<input type="hidden" name="page" value="<?= Jigoshop\Admin\Migration::NAME; ?>" />
 		</div>
 		<div class="col-lg-6">
-			<div class="alert alert-info"><b><?php _e('Migration information', 'jigoshop'); ?></b><br /><br /><?php echo $logMessages; ?></div>
+			<div class="alert alert-info"><b><?php _e('Migration information', 'jigoshop'); ?></b><br /><br /><?= $logMessages; ?></div>
 		</div>
 	</div>
 	<input type="hidden" id="msgLog">
@@ -67,7 +67,7 @@ use Jigoshop\Helper\Render;
 	<div class="progress parent_progress_bar simple_border">
 		<div id="migration_progress_bar" class="progress-bar active progress_bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:0%"></div>
 	</div>
-	<form id="back_to_mt" action="admin.php?page=<?php echo Jigoshop\Admin\Migration::NAME; ?>" method="post">
+	<form id="back_to_mt" action="admin.php?page=<?= Jigoshop\Admin\Migration::NAME; ?>" method="post">
 		<button type="submit" class="btn btn-primary invisible back-to-home"><?php _e('Back to Migration Tool'); ?></button>
 	</form>
 </div>

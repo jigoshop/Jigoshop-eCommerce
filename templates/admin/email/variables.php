@@ -22,7 +22,7 @@
 			}
 			foreach ($keys as $key) : ?>
 				<?php if($i % 3 == 0): ?> <tr> <?php endif; ?>
-				<td width="33.33%"><strong>[<?php echo $key ?>] </strong> - <?php echo $emails[$selected[0]]['arguments'][$key] ?> <br/>
+				<td width="33.33%"><strong>[<?= $key ?>] </strong> - <?= $emails[$selected[0]]['arguments'][$key] ?> <br/>
 				<?php if($i % 3 == 2): ?> </tr> <?php endif; ?>
 				<?php $i++; ?>
 			<?php endforeach;

@@ -8,4 +8,4 @@ use Jigoshop\Admin\Helper\Forms;
  * @var $current mixed Currently selected value(s).
  */
 ?>
-<option value="<?php echo $value; ?>" <?php echo Forms::selected($value, $current); ?> <?php echo Forms::disabled($disabled); ?>><?php echo $label; ?></option>
+<option value="<?= $value; ?>" <?= Forms::selected($value, $current); ?> <?= Forms::disabled($disabled); ?>><?= $label; ?></option>

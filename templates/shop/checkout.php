@@ -27,7 +27,7 @@ use Jigoshop\Helper\Tax;
 ?>
 <h1><?php _e('Checkout', 'jigoshop'); ?></h1>
 <?php Render::output('shop/messages', array('messages' => $messages)); ?>
-<?php echo wpautop(wptexturize($content)); ?>
+<?= wpautop(wptexturize($content)); ?>
 <?php if ($showLoginForm): ?>
 	<?php Render::output('shop/checkout/login', array()); ?>
 <?php endif; ?>
@@ -41,7 +41,7 @@ use Jigoshop\Helper\Tax;
 		<div class="panel-body">
 			<div class="row clearfix" id="billing-address">
 				<?php foreach($billingFields as $field): ?>
-				<div class="col-md-<?php echo $field['columnSize']; ?>">
+				<div class="col-md-<?= $field['columnSize']; ?>">
 					<?php Forms::field($field['type'], $field); ?>
 				</div>
 				<?php endforeach; ?>
@@ -68,7 +68,7 @@ use Jigoshop\Helper\Tax;
 		<div class="panel-body">
 			<div class="row clearfix" >
 				<?php foreach($shippingFields as $field): ?>
-					<div class="col-md-<?php echo $field['columnSize']; ?>">
+					<div class="col-md-<?= $field['columnSize']; ?>">
 						<?php Forms::field($field['type'], $field); ?>
 					</div>
 				<?php endforeach; ?>
@@ -104,7 +104,7 @@ use Jigoshop\Helper\Tax;
 		<div class="pull-right">
 			<?php $productSubtotal = $showWithTax ? $cart->getProductSubtotal() + $cart->getTotalTax() : $cart->getProductSubtotal(); ?>
 			<div class="pull-left mobile-products-subtotal"><?php _e('Products subtotal', 'jigoshop'); ?></div>
-			<div class="pull-left product-subtotal" class="pull-right"><?php echo Product::formatPrice($productSubtotal, $suffix); ?></div>
+			<div class="pull-left product-subtotal" class="pull-right"><?= Product::formatPrice($productSubtotal, $suffix); ?></div>
 		</div>
 		</div>
 		<table class="table table-hover">
@@ -141,7 +141,7 @@ use Jigoshop\Helper\Tax;
 				</td>
 				<?php $productSubtotal = $showWithTax ? $cart->getProductSubtotal() + $cart->getTotalTax() : $cart->getProductSubtotal(); ?>
 				<th colspan="2" scope="row" class="text-right"><?php _e('Products subtotal', 'jigoshop'); ?></th>
-				<td id="product-subtotal"><?php echo Product::formatPrice($productSubtotal, $suffix); ?></td>
+				<td id="product-subtotal"><?= Product::formatPrice($productSubtotal, $suffix); ?></td>
 			</tr>
             <?php do_action('jigoshop\template\checkout\table_foot', $cart); ?>
 			</tfoot>
@@ -185,23 +185,23 @@ use Jigoshop\Helper\Tax;
 			<?php endif; ?>
 				<tr id="cart-subtotal">
 					<th scope="row"><?php _e('Subtotal', 'jigoshop'); ?></th>
-					<td><?php echo Product::formatPrice($cart->getSubtotal()); ?></td>
+					<td><?= Product::formatPrice($cart->getSubtotal()); ?></td>
 				</tr>
 			<?php do_action('jigoshop\template\shop\checkout\before_tax'); ?>
 				<?php foreach ($cart->getCombinedTax() as $taxClass => $tax): ?>
-					<tr id="tax-<?php echo $taxClass; ?>"<?php $tax == 0 and print ' style="display: none;"'; ?>>
-						<th scope="row"><?php echo Tax::getLabel($taxClass, $cart); ?></th>
-						<td><?php echo Product::formatPrice($tax); ?></td>
+					<tr id="tax-<?= $taxClass; ?>"<?php $tax == 0 and print ' style="display: none;"'; ?>>
+						<th scope="row"><?= Tax::getLabel($taxClass, $cart); ?></th>
+						<td><?= Product::formatPrice($tax); ?></td>
 					</tr>
 				<?php endforeach; ?>
 				<tr id="cart-discount"<?php $cart->getDiscount() == 0 and print ' class="not-active"'; ?>>
 					<th scope="row"><?php _e('Discount', 'jigoshop'); ?></th>
-					<td><?php echo Product::formatPrice($cart->getDiscount()); ?></td>
+					<td><?= Product::formatPrice($cart->getDiscount()); ?></td>
 				</tr>
 			<?php do_action('jigoshop\template\shop\checkout\before_total'); ?>
 				<tr id="cart-total" class="info">
 					<th scope="row"><?php _e('Total', 'jigoshop'); ?></th>
-					<td><strong><?php echo Product::formatPrice($cart->getTotal()); ?></strong></td>
+					<td><strong><?= Product::formatPrice($cart->getTotal()); ?></strong></td>
 				</tr>
 			</tbody>
 		</table>
@@ -213,12 +213,12 @@ use Jigoshop\Helper\Tax;
 		</div>
 		<ul class="list-group" id="payment-methods">
 			<?php foreach($paymentMethods as $method): /** @var $method \Jigoshop\Payment\Method */ ?>
-				<li class="list-group-item" id="payment-<?php echo $method->getId(); ?>">
+				<li class="list-group-item" id="payment-<?= $method->getId(); ?>">
 					<label>
-						<input type="radio" name="jigoshop_order[payment_method]" value="<?php echo $method->getId(); ?>"<?php checked($method->getId(), $defaultGateway); ?>/>
-						<?php echo $method->getName(); ?>
+						<input type="radio" name="jigoshop_order[payment_method]" value="<?= $method->getId(); ?>"<?php checked($method->getId(), $defaultGateway); ?>/>
+						<?= $method->getName(); ?>
 					</label>
-					<div class="well well-sm" <?php echo $method->getId() == $defaultGateway ? 'style="display:block"' : ''; ?>>
+					<div class="well well-sm" <?= $method->getId() == $defaultGateway ? 'style="display:block"' : ''; ?>>
 						<?php $method->render(); ?>
 					</div>
 				</li>
@@ -249,7 +249,7 @@ use Jigoshop\Helper\Tax;
 		)); ?>
 	<?php endif; ?>
 	<?php do_action('jigoshop\template\checkout\after_panels', $cart); ?>
-	<a class="btn btn-default" href="<?php echo $cartUrl; ?>"><?php _e('Back to cart', 'jigoshop'); ?></a>
+	<a class="btn btn-default" href="<?= $cartUrl; ?>"><?php _e('Back to cart', 'jigoshop'); ?></a>
 	<button class="btn btn-success pull-right clearfix" name="action" value="purchase" type="submit"><?php _e('Purchase and pay', 'jigoshop'); ?></button>
 	<?php do_action('jigoshop\template\checkout\after', $cart); ?>
 </form>

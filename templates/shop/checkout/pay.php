@@ -43,7 +43,7 @@ use Jigoshop\Helper\Render;
 		<tr id="product-subtotal">
 			<?php $productSubtotal = $showWithTax ? $order->getProductSubtotal() + $order->getTotalTax() : $order->getProductSubtotal(); ?>
 			<th scope="row" colspan="4" class="text-right"><?php _e('Products subtotal', 'jigoshop'); ?></th>
-			<td><?php echo Product::formatPrice($productSubtotal); ?></td>
+			<td><?= Product::formatPrice($productSubtotal); ?></td>
 		</tr>
         <?php /** @deprecated */ do_action('jigoshop\checkout\table_foot', $order); ?>
         <?php do_action('jigoshop\template\checkout\table_foot', $order); ?>
@@ -61,32 +61,32 @@ use Jigoshop\Helper\Render;
 							<?php _e('Shipping', 'jigoshop'); ?>
 						</th>
 						<td>
-							<?php echo Product::formatPrice($order->getShippingPrice()); ?>
+							<?= Product::formatPrice($order->getShippingPrice()); ?>
 							<p class="method">
-								<small><?php echo $order->getShippingMethod()->getName(); ?></small>
+								<small><?= $order->getShippingMethod()->getName(); ?></small>
 							</p>
 						</td>
 					</tr>
 				<?php endif; ?>
 				<tr id="cart-subtotal">
 					<th scope="row"><?php _e('Subtotal', 'jigoshop'); ?></th>
-					<td><?php echo Product::formatPrice($order->getSubtotal()); ?></td>
+					<td><?= Product::formatPrice($order->getSubtotal()); ?></td>
 				</tr>
 				<?php foreach ($order->getCombinedTax() as $taxClass => $tax): //TODO: Fix showing tax after registering ?>
 					<?php if ($tax > 0): ?>
-						<tr id="tax-<?php echo $taxClass; ?>">
-							<th scope="row"><?php echo $getTaxLabel($taxClass); ?></th>
-							<td><?php echo Product::formatPrice($tax); ?></td>
+						<tr id="tax-<?= $taxClass; ?>">
+							<th scope="row"><?= $getTaxLabel($taxClass); ?></th>
+							<td><?= Product::formatPrice($tax); ?></td>
 						</tr>
 					<?php endif; ?>
 				<?php endforeach; ?>
 				<tr id="cart-discount"<?php $order->getDiscount() == 0 and print ' class="not-active"'; ?>>
 					<th scope="row"><?php _e('Discount', 'jigoshop'); ?></th>
-					<td><?php echo Product::formatPrice($order->getDiscount()); ?></td>
+					<td><?= Product::formatPrice($order->getDiscount()); ?></td>
 				</tr>
 				<tr id="cart-total">
 					<th scope="row"><?php _e('Total', 'jigoshop'); ?></th>
-					<td><?php echo Product::formatPrice($order->getTotal()); ?></td>
+					<td><?= Product::formatPrice($order->getTotal()); ?></td>
 				</tr>
 				</tbody>
 			</table>
@@ -99,10 +99,10 @@ use Jigoshop\Helper\Render;
 		</div>
 		<ul class="list-group" id="payment-methods">
 			<?php foreach($paymentMethods as $method): /** @var $method \Jigoshop\Payment\Method */ ?>
-				<li class="list-group-item" id="payment-<?php echo $method->getId(); ?>">
+				<li class="list-group-item" id="payment-<?= $method->getId(); ?>">
 					<label>
-						<input type="radio" name="payment_method" value="<?php echo $method->getId(); ?>" />
-						<?php echo $method->getName(); ?>
+						<input type="radio" name="payment_method" value="<?= $method->getId(); ?>" />
+						<?= $method->getName(); ?>
 					</label>
 					<div class="well well-sm">
 						<?php $method->render(); ?>
@@ -129,7 +129,7 @@ use Jigoshop\Helper\Render;
 	</div>
 		<div class="clear"></div>
 	<?php endif; ?>
-	<a class="btn btn-default" href="<?php echo $myAccountUrl; ?>"><?php _e('Go back to My account', 'jigoshop'); ?></a>
-	<a class="btn btn-default" href="<?php echo $myOrdersUrl; ?>"><?php _e('Go back to My orders', 'jigoshop'); ?></a>
+	<a class="btn btn-default" href="<?= $myAccountUrl; ?>"><?php _e('Go back to My account', 'jigoshop'); ?></a>
+	<a class="btn btn-default" href="<?= $myOrdersUrl; ?>"><?php _e('Go back to My orders', 'jigoshop'); ?></a>
 	<button class="btn btn-success pull-right clearfix" name="action" value="purchase" type="submit"><?php _e('Pay', 'jigoshop'); ?></button>
 </form>

@@ -6,7 +6,7 @@
 <div id="api-users" class="col-xs-12 col-sm-12 clearfix">
     <div class="tooltip-inline-badge"></div>
     <div class="tooltip-inline-input">
-        <span class="help-block"><?php echo $description; ?></span>
+        <span class="help-block"><?= $description; ?></span>
         <ul class="list-group">
             <?php if ($values && count($values)) : ?>
                 <?php foreach ($values as $i => $keyData): ?>
@@ -36,7 +36,7 @@
     </div>
 </div>
 <script type="text/template" id="tmpl-api-user">
-    <?php echo preg_replace('/<script\b[^>]*>(.*?)<\/script>/is', '', \Jigoshop\Helper\Render::get('admin/settings/api_users/user', array(
+    <?= preg_replace('/<script\b[^>]*>(.*?)<\/script>/is', '', \Jigoshop\Helper\Render::get('admin/settings/api_users/user', array(
         'index' => '{{{ data.id }}}',
         'name' => $name,
         'login' => '',

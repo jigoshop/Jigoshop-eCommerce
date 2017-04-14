@@ -14,19 +14,19 @@
  * @var $size int Size of form widget.
  */
 ?>
-<div class="form-group <?php echo $id; ?>_field <?php echo join(' ', $classes); ?> clearfix<?php $hidden and print ' not-active'; ?>">
+<div class="form-group <?= $id; ?>_field <?= join(' ', $classes); ?> clearfix<?php $hidden and print ' not-active'; ?>">
 	<?php if ($label): ?>
-	<label for="<?php echo $id; ?>" class="col-sm-<?php echo $size == 12 ? 12 : 12 - $size; ?> control-label">
-		<?php echo $label; ?>
+	<label for="<?= $id; ?>" class="col-sm-<?= $size == 12 ? 12 : 12 - $size; ?> control-label">
+		<?= $label; ?>
 		<?php if(!empty($tip)): ?>
-			<a href="#" data-toggle="tooltip" class="badge" data-placement="top" title="<?php echo $tip; ?>">?</a>
+			<a href="#" data-toggle="tooltip" class="badge" data-placement="top" title="<?= $tip; ?>">?</a>
 		<?php endif; ?>
 	</label>
 	<?php endif; ?>
-	<div class="col-sm-<?php echo $size; ?>">
-		<input type="<?php echo $type; ?>" id="<?php echo $id; ?>" name="<?php echo $name; ?>" class="form-control <?php echo join(' ', $classes); ?>" placeholder="<?php echo $placeholder; ?>" value="<?php echo $value; ?>"<?php $disabled and print ' disabled'; ?> />
+	<div class="col-sm-<?= $size; ?>">
+		<input type="<?= $type; ?>" id="<?= $id; ?>" name="<?= $name; ?>" class="form-control <?= join(' ', $classes); ?>" placeholder="<?= $placeholder; ?>" value="<?= $value; ?>"<?php $disabled and print ' disabled'; ?> />
 		<?php if(!empty($description)): ?>
-			<span class="help-block"><?php echo $description; ?></span>
+			<span class="help-block"><?= $description; ?></span>
 		<?php endif; ?>
 	</div>
 </div>

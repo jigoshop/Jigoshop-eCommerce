@@ -8,13 +8,13 @@ use Jigoshop\Core\Types;
 <tr class="form-field">
 	<th scope="row" valign="top"><label><?php _e('Thumbnail', 'jigoshop'); ?></label></th>
 	<td>
-		<div id="<?php echo Types::PRODUCT_CATEGORY; ?>_thumbnail"
-		     style="float:left;margin-right:10px;"><img src="<?php echo $image['image']; ?>"
+		<div id="<?= Types::PRODUCT_CATEGORY; ?>_thumbnail"
+		     style="float:left;margin-right:10px;"><img src="<?= $image['image']; ?>"
 		                                                width="60px" height="60px" /></div>
 		<div style="line-height:60px;">
-			<input type="hidden" id="<?php echo Types::PRODUCT_CATEGORY; ?>_thumbnail_id"
-			       name="<?php echo Types::PRODUCT_CATEGORY; ?>_thumbnail_id"
-			       value="<?php echo $image['thumbnail_id']; ?>" />
+			<input type="hidden" id="<?= Types::PRODUCT_CATEGORY; ?>_thumbnail_id"
+			       name="<?= Types::PRODUCT_CATEGORY; ?>_thumbnail_id"
+			       value="<?= $image['thumbnail_id']; ?>" />
 			<a id="add-image" href="#" class="button"
 			   data-title="<?php esc_attr_e('Choose thumbnail image', 'jigoshop'); ?>"
 			   data-button="<?php esc_attr_e('Set as thumbnail', 'jigoshop'); ?>"><?php _e('Change image', 'jigoshop'); ?></a>

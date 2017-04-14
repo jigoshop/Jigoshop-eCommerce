@@ -8,7 +8,7 @@
 		<h3><?php _e('Jigoshop Dashboard', 'jigoshop'); ?></h3>
 
 		<p id="wp-version-message"><?php _e('You are using version:	', 'jigoshop'); ?>
-			<strong><?php echo \Jigoshop\Core::VERSION; ?></strong>
+			<strong><?= \Jigoshop\Core::VERSION; ?></strong>
 		</p>
 
 		<?php wp_nonce_field('jigoshop-metaboxes-main'); ?>
@@ -18,7 +18,7 @@
 		<div class="pages">
 			<ul class="pages">
 				<?php foreach ($submenu['jigoshop'] as $item): ?>
-					<li><a href="<?php echo (strpos($item[2], 'edit.php') === false ? 'admin.php?page=' : '').$item[2]; ?>"><?php echo $item[0]; ?></a></li>
+					<li><a href="<?= (strpos($item[2], 'edit.php') === false ? 'admin.php?page=' : '').$item[2]; ?>"><?= $item[0]; ?></a></li>
 				<?php endforeach; ?>
 			</ul>
 		</div>

@@ -32,5 +32,5 @@
             'postcode' => ''
         ]
     ]); ?>
-    <?php echo preg_replace('/<script\b[^>]*>(.*?)<\/script>/is', "", ob_get_clean()); ?>
+    <?= preg_replace('/<script\b[^>]*>(.*?)<\/script>/is', "", ob_get_clean()); ?>
 </script>

@@ -29,6 +29,6 @@ use Jigoshop\Helper\Render;
 		'label' => __('Re-type new password', 'jigoshop'),
 		'value' => '',
 	)); ?>
-	<a href="<?php echo $myAccountUrl; ?>" class="btn btn-default"><?php _e('Go back to My account', 'jigoshop'); ?></a>
+	<a href="<?= $myAccountUrl; ?>" class="btn btn-default"><?php _e('Go back to My account', 'jigoshop'); ?></a>
 	<button class="btn btn-success pull-right" name="action" value="change_password"><?php _e('Change password', 'jigoshop'); ?></button>
 </form>

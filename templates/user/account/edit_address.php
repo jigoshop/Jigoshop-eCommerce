@@ -72,6 +72,6 @@ use Jigoshop\Helper\Render;
 		'label' => __('Email', 'jigoshop'),
 		'value' => $address->getEmail(),
 	)); ?>
-	<a href="<?php echo $myAccountUrl; ?>" class="btn btn-default"><?php _e('Go back to My account', 'jigoshop'); ?></a>
+	<a href="<?= $myAccountUrl; ?>" class="btn btn-default"><?php _e('Go back to My account', 'jigoshop'); ?></a>
 	<button class="btn btn-success pull-right" name="action" value="save_address"><?php _e('Save', 'jigoshop'); ?></button>
 </form>

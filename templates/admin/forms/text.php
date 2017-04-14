@@ -17,29 +17,29 @@ use Jigoshop\Admin\Helper\Forms;
  */
 $hasLabel = !empty($label);
 ?>
-<div class="form-group <?php echo $id; ?>_field <?php echo join(' ',
+<div class="form-group <?= $id; ?>_field <?= join(' ',
     $classes); ?><?php $hidden and print ' not-active'; ?> padding-bottom-5">
     <div class="row">
-        <div class="col-sm-<?php echo $size; ?>">
+        <div class="col-sm-<?= $size; ?>">
             <?php if ($hasLabel): $size -= 2; ?>
-                <label for="<?php echo $id; ?>" class="col-xs-12 col-sm-2 margin-top-bottom-9">
-                    <?php echo $label; ?>
+                <label for="<?= $id; ?>" class="col-xs-12 col-sm-2 margin-top-bottom-9">
+                    <?= $label; ?>
                 </label>
             <?php endif; ?>
-            <div class="col-xs-12 col-sm-<?php echo $size ?> clearfix">
+            <div class="col-xs-12 col-sm-<?= $size ?> clearfix">
                 <div class="tooltip-inline-badge">
                     <?php if (!empty($tip)): ?>
                         <span data-toggle="tooltip" class="badge margin-top-bottom-9" data-placement="top"
-                              title="<?php echo $tip; ?>">?</span>
+                              title="<?= $tip; ?>">?</span>
                     <?php endif; ?>
                 </div>
                 <div class="tooltip-inline-input">
-                    <input type="<?php echo $type; ?>" id="<?php echo $id; ?>" name="<?php echo $name; ?>"
-                           class="form-control <?php echo join(' ', $classes); ?>"
-                           placeholder="<?php echo $placeholder; ?>"
-                           value="<?php echo $value; ?>"<?php echo Forms::disabled($disabled); ?>/>
+                    <input type="<?= $type; ?>" id="<?= $id; ?>" name="<?= $name; ?>"
+                           class="form-control <?= join(' ', $classes); ?>"
+                           placeholder="<?= $placeholder; ?>"
+                           value="<?= $value; ?>"<?= Forms::disabled($disabled); ?>/>
                     <?php if (!empty($description)): ?>
-                        <span class="help-block"><?php echo $description; ?></span>
+                        <span class="help-block"><?= $description; ?></span>
                     <?php endif; ?>
                 </div>
             </div>

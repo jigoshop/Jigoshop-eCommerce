@@ -9,13 +9,13 @@ $hasPayment = $order->getPaymentMethod() !== null;
 	<div>
 		<?php if ($hasShipping): ?>
 			<div class="font-bold shipping pull-left"><?php printf(__('Shipping%s', 'jigoshop'), ':&nbsp;'); ?></div>
-			<div class="shipping pull-left"><?php echo strip_tags($order->getShippingMethod()
+			<div class="shipping pull-left"><?= strip_tags($order->getShippingMethod()
 			                                                           ->getName()); ?></div>
 			<div class="clear"></div>
 		<?php endif; ?>
 		<?php if ($hasPayment): ?>
 			<div class="font-bold payment pull-left"><?php printf(__('Payment%s', 'jigoshop'), ':&nbsp;'); ?></div>
-			<div class="payment pull-left"><?php echo strip_tags($order->getPaymentMethod()
+			<div class="payment pull-left"><?= strip_tags($order->getPaymentMethod()
 			                                                          ->getName()); ?></div>
 		<?php endif; ?>
 	</div>

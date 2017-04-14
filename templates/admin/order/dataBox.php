@@ -11,9 +11,9 @@ use Jigoshop\Entity\Order\Status;
  * @var $shippingTax boolean Whether taxes are based on shipping country.
  */
 ?>
-<div class="panels jigoshop jigoshop-data" data-order="<?php echo $order->getId(); ?>">
+<div class="panels jigoshop jigoshop-data" data-order="<?= $order->getId(); ?>">
 	<div id="messages"></div>
-	<input name="post_title" type="hidden" value="<?php echo $order->getTitle(); ?>" />
+	<input name="post_title" type="hidden" value="<?= $order->getTitle(); ?>" />
 
 	<ul class="nav nav-tabs nav-justified" role="tablist">
 		<li class="active"><a href="#order" role="tab" data-toggle="tab"><?php _e('Order', 'jigoshop'); ?></a></li>

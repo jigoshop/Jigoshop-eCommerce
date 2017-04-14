@@ -7,22 +7,22 @@ $contentSize = $options['structure'] != 'only_content' ? $options['proportions']
 $contentPosition = $options['structure'] == 'sidebar_left' ? 'right' : 'left';
 get_header('shop');
 ?>
-<style><?php echo $options['global_css']; ?></style>
+<style><?= $options['global_css']; ?></style>
 <style>
     .custom-layout-container {
-        width: <?php echo $options['page_width']; ?>;
+        width: <?= $options['page_width']; ?>;
         margin-left: auto;
         margin-right: auto;
         max-width: 100%;
     }
     .custom-layout-content {
-        width: <?php echo $contentSize; ?>;
-        float: <?php echo $contentPosition; ?>
+        width: <?= $contentSize; ?>;
+        float: <?= $contentPosition; ?>
     }
     <?php if(in_array($options['structure'], ['sidebat_left', 'sidebar_right'])): ?>
         .custom-layout-sidebar {
-            width: <?php echo $options['proportions']['sidebar'].'%'; ?>;
-            float: <?php echo $options['structure'] == 'sidebat_left' ? 'left' : 'right'; ?>;
+            width: <?= $options['proportions']['sidebar'].'%'; ?>;
+            float: <?= $options['structure'] == 'sidebat_left' ? 'left' : 'right'; ?>;
         }
     <?php endif; ?>
     .custom-layout-clear {
@@ -38,7 +38,7 @@ get_header('shop');
             width: 100%;
         }
     }
-    <?php echo $options['css']; ?>
+    <?= $options['css']; ?>
 </style>
 <div class="custom-layout-container">
     <?php if($options['structure'] == 'sidebar_left') : ?>
@@ -51,7 +51,7 @@ get_header('shop');
         <div id="jigoshop_content" role="main" class="jigoshop">
             <?php /** @deprecated */ do_action('jigoshop\shop\content\before'); ?>
             <?php do_action('jigoshop\template\shop\content\before'); ?>
-            <?php echo $content; ?>
+            <?= $content; ?>
             <?php /** @deprecated */ do_action('jigoshop\shop\content\after'); ?>
             <?php do_action('jigoshop\template\shop\content\after'); ?>
         </div>

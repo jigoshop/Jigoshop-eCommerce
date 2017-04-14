@@ -5,7 +5,7 @@
 ?>
 <li class="list-group-item">
     <h4 class="list-group-item-heading clearfix">
-        <span class="title"><?php echo $login; ?></span>
+        <span class="title"><?= $login; ?></span>
         <button type="button" class="remove btn btn-default pull-right" title="<?php _e('Remove', 'jigoshop'); ?>"><span class="glyphicon glyphicon-remove"></span></button>
         <button type="button" class="toggle btn btn-default pull-right" title="<?php _e('Expand', 'jigoshop'); ?>"><span class="glyphicon glyphicon-collapse-down"></span></button>
     </h4>

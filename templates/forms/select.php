@@ -16,18 +16,18 @@ use Jigoshop\Helper\Render;
  * @var $size int Size of form widget.
  */
 ?>
-<div class="form-group <?php echo $id; ?>_field <?php echo join(' ', $classes); ?> clearfix<?php $hidden and print ' not-active'; ?>">
-	<label for="<?php echo $id; ?>" class="col-sm-<?php echo $size == 12 ? 12 : 12 - $size; ?> control-label">
-		<?php echo $label; ?>
+<div class="form-group <?= $id; ?>_field <?= join(' ', $classes); ?> clearfix<?php $hidden and print ' not-active'; ?>">
+	<label for="<?= $id; ?>" class="col-sm-<?= $size == 12 ? 12 : 12 - $size; ?> control-label">
+		<?= $label; ?>
 		<?php if(!empty($tip)): ?>
-			<a href="#" data-toggle="tooltip" class="badge" data-placement="top" title="<?php echo $tip; ?>">?</a>
+			<a href="#" data-toggle="tooltip" class="badge" data-placement="top" title="<?= $tip; ?>">?</a>
 		<?php endif; ?>
 	</label>
-	<div class="col-sm-<?php echo $size; ?>">
-		<select id="<?php echo $id; ?>" name="<?php echo $name; ?>" class="form-control <?php echo join(' ', $classes); ?>" placeholder="<?php echo $placeholder; ?>"<?php $multiple and print ' multiple="multiple"'; ?><?php $disabled and print ' disabled'; ?>>
+	<div class="col-sm-<?= $size; ?>">
+		<select id="<?= $id; ?>" name="<?= $name; ?>" class="form-control <?= join(' ', $classes); ?>" placeholder="<?= $placeholder; ?>"<?php $multiple and print ' multiple="multiple"'; ?><?php $disabled and print ' disabled'; ?>>
 			<?php foreach($options as $option => $item): ?>
 				<?php if(isset($item['items'])): ?>
-					<optgroup label="<?php echo $option; ?>">
+					<optgroup label="<?= $option; ?>">
 						<?php foreach($item['items'] as $subvalue => $subitem): $subitem['disabled'] = isset($subitem['disabled']) && $subitem['disabled'] ? true : false; ?>
 							<?php Render::output('forms/select/option', array('label' => $subitem['label'], 'disabled' => $subitem['disabled'], 'value' => $subvalue, 'current' => $value)); ?>
 						<?php endforeach; ?>
@@ -38,7 +38,7 @@ use Jigoshop\Helper\Render;
 			<?php endforeach; ?>
 		</select>
 		<?php if(!empty($description)): ?>
-			<span class="help-block"><?php echo $description; ?></span>
+			<span class="help-block"><?= $description; ?></span>
 		<?php endif; ?>
 	</div>
 </div>
@@ -46,7 +46,7 @@ use Jigoshop\Helper\Render;
 <script type="text/javascript">
 	/*<![CDATA[*/
 	jQuery(function($){
-		$("select#<?php echo $id; ?>").select2(<?php echo json_encode($args); ?>);
+		$("select#<?= $id; ?>").select2(<?= json_encode($args); ?>);
 	});
 	/*]]>*/
 </script>

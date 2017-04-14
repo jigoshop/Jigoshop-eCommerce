@@ -10,7 +10,7 @@ use Jigoshop\Helper\Product;
 ?>
 <div class="jigoshop jigoshop-order">
 	<div class="form-horizontal">
-		<table class="table table-striped" data-order="<?php echo $order->getId(); ?>">
+		<table class="table table-striped" data-order="<?= $order->getId(); ?>">
 			<thead>
 			<tr>
 				<th scope="col"><?php Forms::constant(array('name' => 'order[items][id]', 'value' => __('ID', 'jigoshop'))); ?></th>

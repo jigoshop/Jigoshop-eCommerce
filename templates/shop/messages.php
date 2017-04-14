@@ -5,13 +5,13 @@
 ?>
 <div id="messages">
 	<?php foreach ($messages->getErrors() as $error): ?>
-		<div class="alert alert-danger" role="alert"><?php echo $error; ?></div>
+		<div class="alert alert-danger" role="alert"><?= $error; ?></div>
 	<?php endforeach; ?>
 	<?php foreach ($messages->getWarnings() as $warning): ?>
-		<div class="alert alert-warning" role="alert"><?php echo $warning; ?></div>
+		<div class="alert alert-warning" role="alert"><?= $warning; ?></div>
 	<?php endforeach; ?>
 	<?php foreach ($messages->getNotices() as $notice): ?>
-		<div class="alert alert-success" role="alert"><?php echo $notice; ?></div>
+		<div class="alert alert-success" role="alert"><?= $notice; ?></div>
 	<?php endforeach; ?>
 	<?php do_action('jigoshop\template\shop\messages'); ?>
 </div>

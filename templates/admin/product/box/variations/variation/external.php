@@ -8,7 +8,7 @@ use Jigoshop\Entity\Product;
  * @var $variation Product\Variable\Variation The variation.
  */
 ?>
-<fieldset class="product-external<?php echo $product instanceof Product\External ? '' : ' not-active'; ?>">
+<fieldset class="product-external<?= $product instanceof Product\External ? '' : ' not-active'; ?>">
     <?php
     Forms::text(array(
         'name' => 'product[variation][' . $variation->getId() . '][product][url]',

@@ -12,7 +12,7 @@ use Jigoshop\Helper\Product;
 ?>
 <div class="images">
 	<?php if (Product::isOnSale($product)): ?>
-		<span class="on-sale"><?php echo apply_filters('jigoshop\template\product\sale_text', __('Sale!', 'jigoshop'), $product) ?></span>
+		<span class="on-sale"><?= apply_filters('jigoshop\template\product\sale_text', __('Sale!', 'jigoshop'), $product) ?></span>
 	<?php endif; ?>
 	<?php do_action('jigoshop\template\product\before_featured_image', $product); ?>
     <div class="product-gallery">
@@ -26,8 +26,8 @@ use Jigoshop\Helper\Product;
 	<?php do_action('jigoshop\template\product\before_thumbnails', $product); ?>
 	<div class="product-gallery thumbnails">
 		<?php foreach($thumbnails as $thumbnail): ?>
-			<a href="<?php echo $thumbnail->getUrl(); ?>" data-lightbox="product-gallery" data-gallery="#blueimp-gallery" title="<?php echo $thumbnail->getTitle(); ?>" title="<?php echo $thumbnail->getTitle(); ?>" class="zoom active">
-				<?php echo apply_filters('jigoshop\template\product\thumbnail', $thumbnail->getImage(), $thumbnail, $product); ?>
+			<a href="<?= $thumbnail->getUrl(); ?>" data-lightbox="product-gallery" data-gallery="#blueimp-gallery" title="<?= $thumbnail->getTitle(); ?>" title="<?= $thumbnail->getTitle(); ?>" class="zoom active">
+				<?= apply_filters('jigoshop\template\product\thumbnail', $thumbnail->getImage(), $thumbnail, $product); ?>
 			</a>
 		<?php endforeach; ?>
 	</div>

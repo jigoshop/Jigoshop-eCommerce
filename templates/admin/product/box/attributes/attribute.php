@@ -7,9 +7,9 @@ use Jigoshop\Helper\Product;
  * @var $attribute Attribute Attribute to display.
  */
 ?>
-<li class="list-group-item" data-id="<?php echo $attribute->getId(); ?>">
+<li class="list-group-item" data-id="<?= $attribute->getId(); ?>">
 	<h4 class="list-group-item-heading clearfix">
-		<?php echo $attribute->getLabel(); ?>
+		<?= $attribute->getLabel(); ?>
 		<button type="button" class="remove-attribute btn btn-default pull-right" title="<?php _e('Remove', 'jigoshop'); ?>"><span class="glyphicon glyphicon-remove"></span></button>
 		<button type="button" class="show-variation btn btn-default pull-right" title="<?php _e('Expand', 'jigoshop'); ?>"><span class="glyphicon glyphicon-collapse-down"></span></button>
 	</h4>

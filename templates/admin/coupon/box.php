@@ -7,7 +7,7 @@ use Jigoshop\Admin\Helper\Forms;
  * @var $paymentMethods array List of available payment methods.
  */
 ?>
-<div class="jigoshop" data-id="<?php echo $coupon->getId(); ?>">
+<div class="jigoshop" data-id="<?= $coupon->getId(); ?>">
 	<fieldset>
 		<?php Forms::constant(array(
 			'name' => 'jigoshop_coupon[code]',

@@ -15,9 +15,9 @@
             </script>
             <?php foreach ($attachments as $id => $attachment) : ?>
                 <div class="email-attachment col-xs-12">
-                    <div data-id="<?php echo $id; ?>"><?php echo basename($attachment); ?></div>
+                    <div data-id="<?= $id; ?>"><?= basename($attachment); ?></div>
                     <span class="delete"></span>
-                    <input type="hidden" name="jigoshop_email[attachments][]" value="<?php echo $id; ?>">
+                    <input type="hidden" name="jigoshop_email[attachments][]" value="<?= $id; ?>">
                 </div>
             <?php endforeach; ?>
             <p class="empty-attachments"><?php _e('This email template does not have attachments.', 'jigoshop'); ?></p>

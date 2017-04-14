@@ -8,7 +8,7 @@
 <div role="tabpanel" id="tab-downloads" class="tab-pane<?php $currentTab == 'downloads' and print ' active'; ?>">
     <ul class="downloads-list" >
         <?php foreach($attachments as $attachment): ?>
-            <li><a href="<?php echo $attachment->getUrl() ?>"><?php echo $attachment->getTitle(); ?></a></li>
+            <li><a href="<?= $attachment->getUrl() ?>"><?= $attachment->getTitle(); ?></a></li>
         <?php endforeach; ?>
     </ul>
 </div>

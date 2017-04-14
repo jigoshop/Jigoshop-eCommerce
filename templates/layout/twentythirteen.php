@@ -8,7 +8,7 @@ get_header('shop');
 	<div id="content" class="site-content jigoshop" role="main">
         <?php /** @deprecated */ do_action('jigoshop\shop\content\before'); ?>
         <?php do_action('jigoshop\template\shop\content\before'); ?>
-		<?php echo $content; ?>
+		<?= $content; ?>
         <?php /** @deprecated */ do_action('jigoshop\shop\content\after'); ?>
         <?php do_action('jigoshop\template\shop\content\after'); ?>
 	</div>

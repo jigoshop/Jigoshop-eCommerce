@@ -29,19 +29,19 @@ use Jigoshop\Admin\SystemInfo;
 				<button type="button" class="navbar-toggle margin-9" data-toggle="collapse" data-target="#settingsBar">
 					<span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="#"><?php echo $activeTitle; ?></a>
+				<a class="navbar-brand" href="#"><?= $activeTitle; ?></a>
 				<div class="clear"></div>
 			</div>
 			<div class="collapse navbar-collapse" id="settingsBar">
 				<ul class="nav navbar-nav">
-					<?php echo $menuContent; ?>
+					<?= $menuContent; ?>
 				</ul>
 			</div>
 		</div>
 	</nav>
 	<nav class="hidden-xs">
 		<ul class="nav nav-tabs nav-justified">
-			<?php echo $menuContent; ?>
+			<?= $menuContent; ?>
 		</ul>
 	</nav>
 	<noscript>

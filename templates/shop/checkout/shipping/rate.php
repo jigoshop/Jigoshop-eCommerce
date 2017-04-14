@@ -9,11 +9,11 @@ use Jigoshop\Helper\Product;
  */
 ?>
 <li
-	class="list-group-item shipping-<?php echo $method->getId(); ?>-<?php echo $rate->getId(); ?> clearfix">
+	class="list-group-item shipping-<?= $method->getId(); ?>-<?= $rate->getId(); ?> clearfix">
 	<label>
-		<input type="radio" name="jigoshop_order[shipping_method]" value="<?php echo $method->getId(); ?>" <?php echo Forms::checked($cart->hasShippingMethod($method, $rate), true); ?> />
-		<input type="hidden" class="shipping-method-rate" name="jigoshop_order[shipping_method_rate][<?php echo $method->getId(); ?>]" value="<?php echo $rate->getId(); ?>" />
-		<?php echo $rate->getName(); ?>
+		<input type="radio" name="jigoshop_order[shipping_method]" value="<?= $method->getId(); ?>" <?= Forms::checked($cart->hasShippingMethod($method, $rate), true); ?> />
+		<input type="hidden" class="shipping-method-rate" name="jigoshop_order[shipping_method_rate][<?= $method->getId(); ?>]" value="<?= $rate->getId(); ?>" />
+		<?= $rate->getName(); ?>
 	</label>
-	<span class="pull-right"><?php echo Product::formatPrice($rate->calculate($cart)); ?></span>
+	<span class="pull-right"><?= Product::formatPrice($rate->calculate($cart)); ?></span>
 </li>

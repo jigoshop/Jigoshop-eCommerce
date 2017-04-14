@@ -13,32 +13,32 @@
  */
 $hasLabel = !empty($label);
 ?>
-<div class="form-group <?php echo $id; ?>_field <?php echo join(' ',
+<div class="form-group <?= $id; ?>_field <?= join(' ',
     $classes); ?> padding-bottom-5">
     <div class="row">
-        <div class="col-sm-<?php echo $size; ?>">
+        <div class="col-sm-<?= $size; ?>">
             <?php if ($hasLabel): $size -= 2; ?>
-                <label for="<?php echo $id; ?>" class="col-xs-12 col-sm-2 margin-top-bottom-9">
-                    <?php echo $label; ?>
+                <label for="<?= $id; ?>" class="col-xs-12 col-sm-2 margin-top-bottom-9">
+                    <?= $label; ?>
                 </label>
             <?php endif; ?>
-            <div class="col-xs-12 col-sm-<?php echo $size ?> clearfix text-right">
+            <div class="col-xs-12 col-sm-<?= $size ?> clearfix text-right">
                 <div class="tooltip-inline-badge">
                     <?php if (!empty($tip)): ?>
                         <span data-toggle="tooltip" class="badge margin-top-bottom-9" data-placement="top"
-                              title="<?php echo $tip; ?>">?</span>
+                              title="<?= $tip; ?>">?</span>
                     <?php endif; ?>
                 </div>
                 <div class="tooltip-inline-input">
-                    <div class="<?php echo $id; ?>-form input-daterange input-group"
-                         id="<?php echo $id; ?>">
-                        <input type="<?php echo $type; ?>" id="<?php echo $id; ?>-from" name="<?php echo $name['from']; ?>"
-                               class="form-control <?php echo join(' ', $classes); ?>" placeholder="<?php echo $placeholder; ?>"
-                               value="<?php echo $value['from']; ?>"/>
+                    <div class="<?= $id; ?>-form input-daterange input-group"
+                         id="<?= $id; ?>">
+                        <input type="<?= $type; ?>" id="<?= $id; ?>-from" name="<?= $name['from']; ?>"
+                               class="form-control <?= join(' ', $classes); ?>" placeholder="<?= $placeholder; ?>"
+                               value="<?= $value['from']; ?>"/>
                         <span class="input-group-addon"><?php _e('to', 'jigoshop'); ?></span>
-                        <input type="<?php echo $type; ?>" id="<?php echo $id; ?>-to" name="<?php echo $name['to']; ?>"
-                               class="form-control <?php echo join(' ', $classes); ?>" placeholder="<?php echo $placeholder; ?>"
-                               value="<?php echo $value['to']; ?>"/>
+                        <input type="<?= $type; ?>" id="<?= $id; ?>-to" name="<?= $name['to']; ?>"
+                               class="form-control <?= join(' ', $classes); ?>" placeholder="<?= $placeholder; ?>"
+                               value="<?= $value['to']; ?>"/>
                     </div>
                 </div>
             </div>
@@ -47,13 +47,13 @@ $hasLabel = !empty($label);
 </div>
 <script>
     <?php //TODO move this to separated file. ?>
-    jQuery('.<?php echo $id; ?>-form').datepicker({
+    jQuery('.<?= $id; ?>-form').datepicker({
         autoclose: true,
         todayHighlight: true,
-        container: '#<?php echo $id; ?>',
+        container: '#<?= $id; ?>',
         orientation: 'top left',
         todayBtn: 'linked',
-        startDate: <?php echo $startDate ? "'" . $startDate . "'" : 'false'; ?>,
-        endDate: <?php echo $endDate ? "'" . $endDate . "'" : 'false'; ?>,
+        startDate: <?= $startDate ? "'" . $startDate . "'" : 'false'; ?>,
+        endDate: <?= $endDate ? "'" . $endDate . "'" : 'false'; ?>,
     });
 </script>

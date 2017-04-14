@@ -69,7 +69,7 @@ use Jigoshop\Core\Options;
 		)); ?>
 	</td>
 	<td class="vert-align">
-		<input type="hidden" name="<?php echo Options::NAME.'[rules][id]['.$rule['id'].']'; ?>" value="<?php echo $rule['id']; ?>" />
+		<input type="hidden" name="<?= Options::NAME.'[rules][id]['.$rule['id'].']'; ?>" value="<?= $rule['id']; ?>" />
 		<button type="button" class="remove-tax-rule btn btn-default" title="<?php _e('Remove', 'jigoshop'); ?>"><span class="glyphicon glyphicon-remove"></span></button>
 	</td>
 </tr>

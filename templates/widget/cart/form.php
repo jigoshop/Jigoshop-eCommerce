@@ -12,14 +12,14 @@
  */
 ?>
 <p>
-	<label for="<?php echo $title_id; ?>"><?php _e('Title:', 'jigoshop'); ?></label>
-	<input class="widefat" id="<?php echo $title_id; ?>"  name="<?php echo $title_name; ?>" type="text" value="<?php echo $title; ?>" />
+	<label for="<?= $title_id; ?>"><?php _e('Title:', 'jigoshop'); ?></label>
+	<input class="widefat" id="<?= $title_id; ?>"  name="<?= $title_name; ?>" type="text" value="<?= $title; ?>" />
 </p>
 <p>
-	<label for="<?php echo $view_cart_button_id; ?>"><?php _e('View cart button:', 'jigoshop'); ?></label>
-	<input class="widefat" id="<?php echo $view_cart_button_id; ?>"  name="<?php echo $view_cart_button_name; ?>" type="text" value="<?php echo $view_cart_button; ?>" />
+	<label for="<?= $view_cart_button_id; ?>"><?php _e('View cart button:', 'jigoshop'); ?></label>
+	<input class="widefat" id="<?= $view_cart_button_id; ?>"  name="<?= $view_cart_button_name; ?>" type="text" value="<?= $view_cart_button; ?>" />
 </p>
 <p>
-	<label for="<?php echo $checkout_button_id; ?>"><?php _e('Checkout button:', 'jigoshop'); ?></label>
-	<input class="widefat" id="<?php echo $checkout_button_id; ?>"  name="<?php echo $checkout_button_name; ?>" type="text" value="<?php echo $checkout_button; ?>" />
+	<label for="<?= $checkout_button_id; ?>"><?php _e('Checkout button:', 'jigoshop'); ?></label>
+	<input class="widefat" id="<?= $checkout_button_id; ?>"  name="<?= $checkout_button_name; ?>" type="text" value="<?= $checkout_button; ?>" />
 </p>
