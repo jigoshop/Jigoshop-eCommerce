@@ -197,7 +197,7 @@ class DiscountSummary extends Chart
                 return $b['count'] - $a['count'];
             });
             $mostPopular = array_slice($mostPopular, 0, 12);
-            $widgets[] = new Chart\Widget\SelectCodes($type,  $this->codes[$type], $codes);
+            $widgets[] = new Chart\Widget\SelectCodes($type,  isset($this->codes[$type]) ? $this->codes[$type] : [], $codes);
             if (!empty($mostPopular)) {
                 $widgets[] = new Chart\Widget\MostPopular($type, $mostPopular);
             }
