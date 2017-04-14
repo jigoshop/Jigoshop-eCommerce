@@ -41,7 +41,7 @@ class JigoshopInit
         require_once __DIR__ . '/functions.php';
         $this->setStaticVariables($file);
         $this->classLoader = $this->getClassLoader();
-        $this->classLoader->addPsr4('WPAL\\', array(self::getDir() . '/vendor/jigoshop/wpal/WPAL'));
+        $this->classLoader->addPsr4('WPAL\\', [self::getDir() . '/vendor/jigoshop/wpal/WPAL']);
         $this->initLoggers();
         $this->initCache();
 
@@ -55,9 +55,9 @@ class JigoshopInit
         $this->addConfigurations();
         $this->addCompilers();
 
-        add_filter('admin_footer_text', array($this, 'footer'));
-        add_action('admin_bar_menu', array($this, 'toolbar'), 35);
-        add_action('jigoshop\extensions\install', array($this, 'installExtension'));
+        add_filter('admin_footer_text', [$this, 'footer']);
+        add_action('admin_bar_menu', [$this, 'toolbar'], 35);
+        add_action('jigoshop\extensions\install', [$this, 'installExtension']);
     }
 
     /**
@@ -112,7 +112,7 @@ class JigoshopInit
         $this->disableRelationLinks();
         $this->rewriteRules();
 
-        add_filter('plugin_action_links_' . self::getBaseName(), array($this, 'pluginLinks'));
+        add_filter('plugin_action_links_' . self::getBaseName(), [$this, 'pluginLinks']);
     }
 
     /**
@@ -341,9 +341,9 @@ class JigoshopInit
      */
     private function initCache()
     {
-        \phpFastCache\CacheManager::setDefaultConfig(array(
+        \phpFastCache\CacheManager::setDefaultConfig([
             'path' => JigoshopInit::getLogDir(),
-        ));
+        ]);
     }
 
     /**
@@ -393,7 +393,7 @@ class JigoshopInit
         $screen = get_current_screen();
 
         if (strpos($screen->base, 'jigoshop') === false && strpos($screen->parent_base,
-                'jigoshop') === false && !in_array($screen->post_type, array('product', 'shop_order'))
+                'jigoshop') === false && !in_array($screen->post_type, ['product', 'shop_order'])
         ) {
             return $text;
         }
@@ -402,12 +402,12 @@ class JigoshopInit
             '<a target="_blank" href="https://www.jigoshop.com/support/">%s</a> | %s',
             __('Contact support', 'jigoshop'),
             str_replace(
-                array('[stars]', '[link]', '[/link]'),
-                array(
+                ['[stars]', '[link]', '[/link]'],
+                [
                     '<a target="_blank" href="http://wordpress.org/support/view/plugin-reviews/jigoshop#postform" >&#9733;&#9733;&#9733;&#9733;&#9733;</a>',
                     '<a target="_blank" href="http://wordpress.org/support/view/plugin-reviews/jigoshop#postform" >',
                     '</a>'
-                ),
+                ],
                 __('Add your [stars] on [link]wordpress.org[/link] and keep this plugin essentially free.', 'jigoshop')
             )
         );
@@ -426,61 +426,61 @@ class JigoshopInit
         $view_reports = current_user_can('view_jigoshop_reports');
 
         if (!is_admin() && ($manage_jigoshop || $manage_products || $manage_orders || $view_reports)) {
-            $wp_admin_bar->add_node(array(
+            $wp_admin_bar->add_node([
                 'id' => 'jigoshop',
                 'title' => __('Jigoshop', 'jigoshop'),
                 'href' => $manage_jigoshop ? admin_url('admin.php?page=jigoshop') : '',
                 'parent' => false,
-                'meta' => array(
+                'meta' => [
                     'class' => 'jigoshop-toolbar'
-                ),
-            ));
+                ],
+            ]);
 
             if ($manage_jigoshop) {
-                $wp_admin_bar->add_node(array(
+                $wp_admin_bar->add_node([
                     'id' => 'jigoshop_dashboard',
                     'title' => __('Dashboard', 'jigoshop'),
                     'parent' => 'jigoshop',
                     'href' => admin_url('admin.php?page=jigoshop'),
-                ));
+                ]);
             }
 
             if ($manage_products) {
-                $wp_admin_bar->add_node(array(
+                $wp_admin_bar->add_node([
                     'id' => 'jigoshop_products',
                     'title' => __('Products', 'jigoshop'),
                     'parent' => 'jigoshop',
                     'href' => admin_url('edit.php?post_type=product'),
-                ));
+                ]);
             }
 
             if ($manage_orders) {
-                $wp_admin_bar->add_node(array(
+                $wp_admin_bar->add_node([
                     'id' => 'jigoshop_orders',
                     'title' => __('Orders', 'jigoshop'),
                     'parent' => 'jigoshop',
                     'href' => admin_url('edit.php?post_type=shop_order'),
-                ));
+                ]);
             }
 
             if ($manage_jigoshop) {
-                $wp_admin_bar->add_node(array(
+                $wp_admin_bar->add_node([
                     'id' => 'jigoshop_settings',
                     'title' => __('Settings', 'jigoshop'),
                     'parent' => 'jigoshop',
                     'href' => admin_url('admin.php?page=jigoshop_settings'),
-                ));
+                ]);
             }
         }
     }
 
     public function pluginLinks($links)
     {
-        return array_merge(array(
+        return array_merge([
             '<a href="' . admin_url('admin.php?page=jigoshop_settings') . '">' . __('Settings', 'jigoshop') . '</a>',
             '<a href="https://www.jigoshop.com/documentation/">' . __('Docs', 'jigoshop') . '</a>',
             '<a href="https://www.jigoshop.com/support/">' . __('Support', 'jigoshop') . '</a>',
-        ), $links);
+        ], $links);
     }
 
     /**

@@ -28,17 +28,17 @@ class RecentReviews extends \WP_Widget
 
 	public function __construct()
 	{
-		$options = array(
+		$options = [
 			'classname' => self::ID,
 			'description' => __('Display a list of your most recent product reviews', 'jigoshop')
-		);
+        ];
 
 		parent::__construct(self::ID, __('Jigoshop: Recent Reviews', 'jigoshop'), $options);
 
 		// Flush cache after every save
-		add_action('save_post', array($this, 'deleteTransient'));
-		add_action('deleted_post', array($this, 'deleteTransient'));
-		add_action('switch_theme', array($this, 'deleteTransient'));
+		add_action('save_post', [$this, 'deleteTransient']);
+		add_action('deleted_post', [$this, 'deleteTransient']);
+		add_action('switch_theme', [$this, 'deleteTransient']);
 	}
 
 	public static function setProductService($productService)
@@ -83,15 +83,15 @@ class RecentReviews extends \WP_Widget
 		}
 
 		// Modify get_comments query to only include products which are visible
-		add_filter('comments_clauses', array($this, 'visibleProduct'));
+		add_filter('comments_clauses', [$this, 'visibleProduct']);
 
 		// Get the latest reviews
-		$comments = get_comments(array(
+		$comments = get_comments([
 			'number' => $number,
 			'status' => 'approve',
 			'post_status' => 'publish',
 			'post_type' => Core\Types::PRODUCT,
-		));
+        ]);
 
 		$service = self::$productService;
 		$comments = array_map(function ($comment) use ($service){
@@ -103,14 +103,14 @@ class RecentReviews extends \WP_Widget
 
 		// If there are products
 		if ($comments) {
-			Render::output('widget/recent_reviews/widget', array_merge($args, array(
+			Render::output('widget/recent_reviews/widget', array_merge($args, [
 				'title' => $title,
 				'comments' => $comments,
-			)));
+            ]));
 		}
 
 		// Remove the filter on comments to stop other queries from being manipulated
-		remove_filter('comments_clauses', array($this, 'visibleProducts'));
+		remove_filter('comments_clauses', [$this, 'visibleProducts']);
 
 		// Flush output buffer and save to transient cache
 		$cache[$args['widget_id']] = ob_get_flush();
@@ -157,7 +157,7 @@ class RecentReviews extends \WP_Widget
 		global $wpdb;
 
 		// Only fetch comments whose products are visible
-		$clauses['where'] .= $wpdb->prepare(" AND {$wpdb->postmeta}.meta_value IN (%d,%d)", array(Product::VISIBILITY_PUBLIC));
+		$clauses['where'] .= $wpdb->prepare(" AND {$wpdb->postmeta}.meta_value IN (%d,%d)", [Product::VISIBILITY_PUBLIC]);
 		$clauses['join'] .= " LEFT JOIN {$wpdb->postmeta} cpm ON {$wpdb->comments}.comment_post_ID = cpm.post_id AND cpm.meta_key = 'visibility')";
 
 		return $clauses;
@@ -176,13 +176,13 @@ class RecentReviews extends \WP_Widget
 		$title = isset($instance['title']) ? esc_attr($instance['title']) : null;
 		$number = isset($instance['number']) ? absint($instance['number']) : 5;
 
-		Render::output('widget/recent_reviews/form', array(
+		Render::output('widget/recent_reviews/form', [
 			'title_id' => $this->get_field_id('title'),
 			'title_name' => $this->get_field_name('title'),
 			'title' => $title,
 			'number_id' => $this->get_field_id('number'),
 			'number_name' => $this->get_field_name('number'),
 			'number' => $number,
-		));
+        ]);
 	}
 }

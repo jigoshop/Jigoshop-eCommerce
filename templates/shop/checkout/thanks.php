@@ -16,7 +16,7 @@ use Jigoshop\Helper\Render;
 ?>
 
 <h1><?php _e('Thank you for your order', 'jigoshop'); ?></h1>
-<?php Render::output('shop/messages', array('messages' => $messages)); ?>
+<?php Render::output('shop/messages', ['messages' => $messages]); ?>
 <?= wpautop(wptexturize($content)); ?>
 <dl class="dl-horizontal">
 	<dt><?php _e('Order number', 'jigoshop'); ?></dt>
@@ -30,7 +30,7 @@ use Jigoshop\Helper\Render;
 			<h3 class="panel-title"><?php _e('Billing address', 'jigoshop'); ?></h3>
 		</div>
 		<div class="panel-body clearfix">
-			<?php Render::output('user/account/address', array('address' => $order->getCustomer()->getBillingAddress())); ?>
+			<?php Render::output('user/account/address', ['address' => $order->getCustomer()->getBillingAddress()]); ?>
 		</div>
 	</div>
 </div>
@@ -40,7 +40,7 @@ use Jigoshop\Helper\Render;
 			<h3 class="panel-title"><?php _e('Shipping address', 'jigoshop'); ?></h3>
 		</div>
 		<div class="panel-body">
-			<?php Render::output('user/account/address', array('address' => $order->getCustomer()->getShippingAddress())); ?>
+			<?php Render::output('user/account/address', ['address' => $order->getCustomer()->getShippingAddress()]); ?>
 		</div>
 	</div>
 </div>
@@ -59,7 +59,7 @@ use Jigoshop\Helper\Render;
 	</thead>
 	<tbody>
 	<?php foreach($order->getItems() as $key => $item): /** @var $item \Jigoshop\Entity\Order\Item */ ?>
-		<?php Render::output('shop/checkout/item/'.$item->getType(), array('cart' => $order, 'key' => $key, 'item' => $item, 'showWithTax' => $showWithTax, 'suffix' => $suffix)); ?>
+		<?php Render::output('shop/checkout/item/'.$item->getType(), ['cart' => $order, 'key' => $key, 'item' => $item, 'showWithTax' => $showWithTax, 'suffix' => $suffix]); ?>
 	<?php endforeach; ?>
 	<?php /** @deprecated */ do_action('jigoshop\checkout\table_body', $order); ?>
 	<?php do_action('jigoshop\template\checkout\table_body', $order); ?>

@@ -47,10 +47,10 @@ class Product
      */
     public static function getSelectOption(array $options, $emptyItem = false)
     {
-        $result = array();
+        $result = [];
 
         if ($emptyItem !== false) {
-            $result = array('' => $emptyItem);
+            $result = ['' => $emptyItem];
         }
 
         foreach ($options as $item) {
@@ -291,7 +291,7 @@ class Product
             $height = intval($_wp_additional_image_sizes[$size]['height']);
         }
 
-        return array('width' => $width, 'height' => $height);
+        return ['width' => $width, 'height' => $height];
     }
 
     /**
@@ -347,16 +347,16 @@ class Product
     {
         switch ($type) {
             case Entity\Product\Simple::TYPE:
-                Render::output("shop/{$template}/cart/simple", array('product' => $product));
+                Render::output("shop/{$template}/cart/simple", ['product' => $product]);
                 break;
             case Entity\Product\Downloadable::TYPE:
-                Render::output("shop/{$template}/cart/downloadable", array('product' => $product));
+                Render::output("shop/{$template}/cart/downloadable", ['product' => $product]);
                 break;
             case Entity\Product\External::TYPE:
-                Render::output("shop/{$template}/cart/external", array('product' => $product));
+                Render::output("shop/{$template}/cart/external", ['product' => $product]);
                 break;
             case Entity\Product\Virtual::TYPE:
-                Render::output("shop/{$template}/cart/virtual", array('product' => $product));
+                Render::output("shop/{$template}/cart/virtual", ['product' => $product]);
                 break;
             case Entity\Product\Variable::TYPE:
                 /** @var $product Entity\Product\Variable */
@@ -365,7 +365,7 @@ class Product
                     return;
                 }
 
-                Render::output("shop/{$template}/cart/variable", array('product' => $product));
+                Render::output("shop/{$template}/cart/variable", ['product' => $product]);
                 break;
             default:
                 do_action('jigoshop\helper\product\print_cart_form', $type, $product, $template);
@@ -374,7 +374,7 @@ class Product
 
     private static function renderViewProductButton($product)
     {
-        Render::output("shop/list/cart/default", array('product' => $product));
+        Render::output("shop/list/cart/default", ['product' => $product]);
     }
 
     /**
@@ -408,10 +408,10 @@ class Product
      */
     public static function getVariation(Entity\Product\Variable\Variation $variation, Entity\Order\Item $item)
     {
-        return Render::get('helper/product/variation', array(
+        return Render::get('helper/product/variation', [
             'variation' => $variation,
             'item' => $item,
-        ));
+        ]);
     }
 
     public static function getRating(Entity\Product $product)
@@ -467,36 +467,36 @@ class Product
         }, $product->getTags());
 
         // Only get related posts that are in stock & visible
-        $query = array(
+        $query = [
             'posts_per_page' => $limit,
-            'post__not_in' => array($product->getId()),
+            'post__not_in' => [$product->getId()],
             'post_type' => Types::PRODUCT,
             'orderby' => 'rand',
-            'meta_query' => array(
-                array(
+            'meta_query' => [
+                [
                     'key' => 'visibility',
-                    'value' => array(Entity\Product::VISIBILITY_CATALOG, Entity\Product::VISIBILITY_PUBLIC),
+                    'value' => [Entity\Product::VISIBILITY_CATALOG, Entity\Product::VISIBILITY_PUBLIC],
                     'compare' => 'IN',
-                ),
-            ),
-            'tax_query' => array(
+                ],
+            ],
+            'tax_query' => [
                 'relation' => 'OR',
-            ),
-        );
+            ],
+        ];
 
         if (!empty($cats)) {
-            $query['tax_query'][] = array(
+            $query['tax_query'][] = [
                 'taxonomy' => Types::PRODUCT_CATEGORY,
                 'terms' => $cats,
                 'operator' => 'IN',
-            );
+            ];
         }
         if (!empty($tags)) {
-            $query['tax_query'][] = array(
+            $query['tax_query'][] = [
                 'taxonomy' => Types::PRODUCT_TAG,
                 'terms' => $tags,
                 'operator' => 'IN',
-            );
+            ];
         }
         return new \WP_Query($query);
     }
@@ -509,65 +509,65 @@ class Product
      *
      * @return array
      */
-    public static function getBasicBillingFields($fields = array(), $except = array())
+    public static function getBasicBillingFields($fields = [], $except = [])
     {
-        $fields = array_replace_recursive(array(
-            'first_name' => array(
+        $fields = array_replace_recursive([
+            'first_name' => [
                 'label' => __('First Name', 'jigoshop'),
                 'type' => 'text',
                 'name' => 'jigoshop_order[billing_address][first_name]',
-            ),
-            'last_name' => array(
+            ],
+            'last_name' => [
                 'label' => __('Last Name', 'jigoshop'),
                 'type' => 'text',
                 'name' => 'jigoshop_order[billing_address][last_name]',
-            ),
-            'company' => array(
+            ],
+            'company' => [
                 'label' => __('Company', 'jigoshop'),
                 'type' => 'text',
                 'name' => 'jigoshop_order[billing_address][company]',
-            ),
-            'euvatno' => array(
+            ],
+            'euvatno' => [
                 'label' => __('EU VAT Number', 'jigoshop'),
                 'type' => 'text',
                 'name' => 'jigoshop_order[billing_address][euvatno]',
-            ),
-            'address' => array(
+            ],
+            'address' => [
                 'label' => __('Address', 'jigoshop'),
                 'type' => 'text',
                 'name' => 'jigoshop_order[billing_address][address]',
-            ),
-            'city' => array(
+            ],
+            'city' => [
                 'label' => __('City', 'jigoshop'),
                 'type' => 'text',
                 'name' => 'jigoshop_order[billing_address][city]',
-            ),
-            'postcode' => array(
+            ],
+            'postcode' => [
                 'label' => __('Postcode', 'jigoshop'),
                 'type' => 'text',
                 'name' => 'jigoshop_order[billing_address][postcode]',
-            ),
-            'country' => array(
+            ],
+            'country' => [
                 'label' => __('Country', 'jigoshop'),
                 'type' => 'select',
                 'name' => 'jigoshop_order[billing_address][country]',
-            ),
-            'state' => array(
+            ],
+            'state' => [
                 'label' => __('State/Province', 'jigoshop'),
                 'type' => 'select',
                 'name' => 'jigoshop_order[billing_address][state]',
-            ),
-            'phone' => array(
+            ],
+            'phone' => [
                 'label' => __('Phone', 'jigoshop'),
                 'type' => 'text',
                 'name' => 'jigoshop_order[billing_address][phone]',
-            ),
-            'email' => array(
+            ],
+            'email' => [
                 'label' => __('Email Address', 'jigoshop'),
                 'type' => 'text',
                 'name' => 'jigoshop_order[billing_address][email]',
-            ),
-        ), $fields);
+            ],
+        ], $fields);
 
         foreach ($except as $key) {
             unset($fields[$key]);
@@ -584,50 +584,50 @@ class Product
      *
      * @return array
      */
-    public static function getBasicShippingFields($fields = array(), $except = array())
+    public static function getBasicShippingFields($fields = [], $except = [])
     {
-        $fields = array_replace_recursive(array(
-            'first_name' => array(
+        $fields = array_replace_recursive([
+            'first_name' => [
                 'label' => __('First Name', 'jigoshop'),
                 'type' => 'text',
                 'name' => 'jigoshop_order[shipping_address][first_name]',
-            ),
-            'last_name' => array(
+            ],
+            'last_name' => [
                 'label' => __('Last Name', 'jigoshop'),
                 'type' => 'text',
                 'name' => 'jigoshop_order[shipping_address][last_name]',
-            ),
-            'company' => array(
+            ],
+            'company' => [
                 'label' => __('Company', 'jigoshop'),
                 'type' => 'text',
                 'name' => 'jigoshop_order[shipping_address][company]',
-            ),
-            'address' => array(
+            ],
+            'address' => [
                 'label' => __('Address', 'jigoshop'),
                 'type' => 'text',
                 'name' => 'jigoshop_order[shipping_address][address]',
-            ),
-            'city' => array(
+            ],
+            'city' => [
                 'label' => __('City', 'jigoshop'),
                 'type' => 'text',
                 'name' => 'jigoshop_order[shipping_address][city]',
-            ),
-            'postcode' => array(
+            ],
+            'postcode' => [
                 'label' => __('Postcode', 'jigoshop'),
                 'type' => 'text',
                 'name' => 'jigoshop_order[shipping_address][postcode]',
-            ),
-            'country' => array(
+            ],
+            'country' => [
                 'label' => __('Country', 'jigoshop'),
                 'type' => 'select',
                 'name' => 'jigoshop_order[shipping_address][country]',
-            ),
-            'state' => array(
+            ],
+            'state' => [
                 'label' => __('State/Province', 'jigoshop'),
                 'type' => 'select',
                 'name' => 'jigoshop_order[shipping_address][state]',
-            ),
-        ), $fields);
+            ],
+        ], $fields);
 
         foreach ($except as $key) {
             unset($fields[$key]);
@@ -638,7 +638,7 @@ class Product
 
     public static function getAttachmentsData(Entity\Product $product)
     {
-        $attachments = array();
+        $attachments = [];
         $types = array_unique(array_map(function($attachment) {
             return $attachment['type'];
         }, $product->getAttachments()));

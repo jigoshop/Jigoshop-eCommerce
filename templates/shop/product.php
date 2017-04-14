@@ -9,7 +9,7 @@ use Jigoshop\Helper\Render;
 ?>
 <?php do_action('jigoshop\template\product\before', $product); ?>
 <article id="post-<?= $product->getId(); ?>" class="product">
-	<?php Render::output('shop/messages', array('messages' => $messages)); ?>
+	<?php Render::output('shop/messages', ['messages' => $messages]); ?>
 	<?php do_action('jigoshop\template\product\before_summary', $product); ?>
 	<div class="summary">
 		<h1><?= $product->getName(); ?></h1>

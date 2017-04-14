@@ -156,7 +156,7 @@ class Orders extends PostController implements ApiControllerContract
          * @apiUse OrderReturnObject
          * @apiPermission read_orders
          */
-        $app->get('', array($this, 'getOrders'));
+        $app->get('', [$this, 'getOrders']);
 
         /**
          * @api {get} /orders/:id Get Order information
@@ -171,7 +171,7 @@ class Orders extends PostController implements ApiControllerContract
          * @apiUse validateObjectFindingError
          * @apiPermission manage_orders
          */
-        $app->get('/{id:[0-9]+}', array($this, 'getOrder'));
+        $app->get('/{id:[0-9]+}', [$this, 'getOrder']);
 
         /**
          * @api {post} /orders Create a Order
@@ -183,7 +183,7 @@ class Orders extends PostController implements ApiControllerContract
          * @apiUse StandardSuccessResponse
          * @apiPermission manage_orders
          */
-        $app->post('', array($this, 'create'));
+        $app->post('', [$this, 'create']);
 
         /**
          * @api {put} /orders/:id Update a Order
@@ -197,7 +197,7 @@ class Orders extends PostController implements ApiControllerContract
          * @apiUse validateObjectFindingError
          * @apiPermission manage_orders
          */
-        $app->put('/{id:[0-9]+}', array($this, 'update'));
+        $app->put('/{id:[0-9]+}', [$this, 'update']);
 
         /**
          * @api {delete} /orders/:id Delete a Order
@@ -210,7 +210,7 @@ class Orders extends PostController implements ApiControllerContract
          * @apiUse validateObjectFindingError
          * @apiPermission manage_orders
          */
-        $app->delete('/{id:[0-9]+}', array($this, 'delete'));
+        $app->delete('/{id:[0-9]+}', [$this, 'delete']);
     }
 
     /**
@@ -445,7 +445,7 @@ class Orders extends PostController implements ApiControllerContract
         $date = $wp->getHelpers()->currentTime('mysql');
         $dateGmt = $wp->getHelpers()->currentTime('mysql', true);
 
-        $wpdb->insert($wpdb->posts, array(
+        $wpdb->insert($wpdb->posts, [
             'post_author' => $_POST['customer_id'] ?: 0, //TODO create function that will receive customer from api
             'post_date' => $date,
             'post_date_gmt' => $dateGmt,
@@ -457,7 +457,7 @@ class Orders extends PostController implements ApiControllerContract
             'post_name' => sanitize_title($_POST['post_title'] ?: ''),
             'comment_status' => 'open',
             'ping_status' => 'closed',
-        ));
+        ]);
 
         $id = $wpdb->insert_id;
         if (!is_int($id) || $id === 0) {

@@ -9,18 +9,18 @@ use Jigoshop\Admin\Helper\Forms;
 ?>
 <tr data-id="<?= $option_id; ?>">
 	<td>
-		<?php Forms::text(array(
+		<?php Forms::text([
 			'name' => 'attributes['.$id.'][options]['.$option_id.'][label]',
-			'classes' => array('option-label'),
+			'classes' => ['option-label'],
 			'value' => $option->getLabel(),
-		)); ?>
+        ]); ?>
 	</td>
 	<td>
-		<?php Forms::text(array(
+		<?php Forms::text([
 			'name' => 'attributes['.$id.'][options]['.$option_id.'][value]',
-			'classes' => array('option-value'),
+			'classes' => ['option-value'],
 			'value' => $option->getValue(),
-		)); ?>
+        ]); ?>
 	</td>
 	<td>
 		<button type="button" class="remove-attribute-option btn btn-default" title="<?php _e('Remove', 'jigoshop'); ?>"><span class="glyphicon glyphicon-remove"></span></button>

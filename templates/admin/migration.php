@@ -9,7 +9,7 @@ use Jigoshop\Helper\Render;
 <div class="wrap jigoshop migration">
 	<h1><?php _e('Jigoshop &raquo; Migration tool', 'jigoshop'); ?></h1>
 	<?php settings_errors(); ?>
-	<?php Render::output('shop/messages', array('messages' => $messages)); ?>
+	<?php Render::output('shop/messages', ['messages' => $messages]); ?>
 	<p class="alert alert-info"><?php _e('This panel allows you to update your old Jigoshop plugin data to new format.', 'jigoshop'); ?><br />
 	<?php if(!defined('PHP_VERSION_ID') || PHP_VERSION_ID < 50600) : ?>
 		<p class="alert alert-info"><?php _e('Your PHP version is below 5.6, you might experience issues while migrating to/using <strong>Jigoshop eCommerce</strong><strong>We strongly recommend updating your PHP version</strong>', 'jigoshop'); ?><br />

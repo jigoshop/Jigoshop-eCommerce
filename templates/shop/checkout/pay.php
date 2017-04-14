@@ -17,7 +17,7 @@ use Jigoshop\Helper\Render;
 ?>
 
 <h1><?php printf(__('Checkout &raquo; Pay &raquo; %s', 'jigoshop'), $order->getTitle()); ?></h1>
-<?php Render::output('shop/messages', array('messages' => $messages)); ?>
+<?php Render::output('shop/messages', ['messages' => $messages]); ?>
 <form action="" role="form" method="post" id="checkout">
 	<h3><?php _e('Order details', 'jigoshop'); ?></h3>
 	<table class="table table-hover">
@@ -34,7 +34,7 @@ use Jigoshop\Helper\Render;
 		</thead>
 		<tbody>
 		<?php foreach($order->getItems() as $key => $item): /** @var $item \Jigoshop\Entity\Order\Item */ ?>
-			<?php Render::output('shop/checkout/item/'.$item->getType(), array('cart' => $order, 'key' => $key, 'item' => $item, 'showWithTax' => $showWithTax, 'suffix' => $suffix)); ?>
+			<?php Render::output('shop/checkout/item/'.$item->getType(), ['cart' => $order, 'key' => $key, 'item' => $item, 'showWithTax' => $showWithTax, 'suffix' => $suffix]); ?>
 		<?php endforeach; ?>
 		<?php /** @deprecated */ do_action('jigoshop\checkout\table_body', $order); ?>
 		<?php do_action('jigoshop\template\checkout\table_body', $order); ?>
@@ -121,11 +121,11 @@ use Jigoshop\Helper\Render;
 	<?php endif; ?>
 	<?php if (!empty($termsUrl)): ?>
 	<div class="col-md-6 col-xs-12 pull-right toggle-panels">
-		<?php Forms::checkbox(array(
+		<?php Forms::checkbox([
 			'name' => 'terms',
 			'description' => sprintf(__('I accept the <a href="%s">Terms &amp; Conditions</a>'), $termsUrl),
 			'checked' => false,
-		)); ?>
+        ]); ?>
 	</div>
 		<div class="clear"></div>
 	<?php endif; ?>

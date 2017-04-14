@@ -10,7 +10,7 @@ class Validation
 	 * Postcode regex for validation
 	 * TODO: need to verify these country codes match ours, it doesn't appear all do
 	 */
-	public static $postcodes = array(
+	public static $postcodes = [
 		'AD' => 'AD\d{3}',
 		'AM' => '(37)?\d{4}',
 		'AR' => '^([A-HJ-TP-Z]{1}\d{4}[A-Z]{3}|[a-z]{1}\d{4}[a-hj-tp-z]{3})$',
@@ -166,7 +166,7 @@ class Validation
 		'YU' => '\d{5}',
 		'ZA' => '\d{4}',
 		'ZM' => '\d{5}',
-	);
+    ];
 
 	/**
 	 * Validates a numeric integer value, positive or negative

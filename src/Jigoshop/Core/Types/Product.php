@@ -20,7 +20,7 @@ class Product implements Post
 	/** @var Options */
 	private $options;
 	/** @var array */
-	private $enabledTypes = array();
+	private $enabledTypes = [];
 
 	public function __construct(Container $di, Wordpress $wp, Options $options, ProductServiceInterface $productService)
 	{
@@ -43,7 +43,7 @@ class Product implements Post
 
 			$this->enabledTypes[$type->getId()] = $type;
 			$productService->addType($type->getId(), $type->getClass());
-			$wp->addAction('jigoshop\product\type\init', array($type, 'initialize'), 10, 2);
+			$wp->addAction('jigoshop\product\type\init', [$type, 'initialize'], 10, 2);
 		}
 
 		$wp->doAction('jigoshop\product\type\init', $wp, $this->enabledTypes);
@@ -65,8 +65,8 @@ class Product implements Post
 
 	public function getDefinition()
 	{
-		return array(
-			'labels' => array(
+		return [
+			'labels' => [
 				'name' => __('Products', 'jigoshop'),
 				'singular_name' => __('Product', 'jigoshop'),
 				'all_items' => __('All Products', 'jigoshop'),
@@ -81,7 +81,7 @@ class Product implements Post
 				'not_found' => __('No Products found', 'jigoshop'),
 				'not_found_in_trash' => __('No Products found in trash', 'jigoshop'),
 				'parent' => __('Parent Product', 'jigoshop'),
-			),
+            ],
 			'description' => __('This is where you can add new products to your store.', 'jigoshop'),
 			'public' => true,
 			'show_ui' => true,
@@ -90,19 +90,19 @@ class Product implements Post
 			'publicly_queryable' => true,
 			'exclude_from_search' => false,
 			'hierarchical' => false, // Hierarchical causes a memory leak http://core.trac.wordpress.org/ticket/15459
-			'rewrite' => array(
+			'rewrite' => [
 				'slug' => $this->options->get('permalinks.product'),
 				'with_front' => true,
 				'feeds' => true,
 				'pages' => true,
-			),
+            ],
 			'query_var' => true,
-			'supports' => array('title', 'editor', 'thumbnail', 'comments', 'excerpt'),
+			'supports' => ['title', 'editor', 'thumbnail', 'comments', 'excerpt'],
 			'has_archive' => true,
 			'show_in_nav_menus' => false,
 			'menu_position' => 56,
 			'menu_icon' => 'dashicons-book',
-		);
+        ];
 	}
 
 	/**

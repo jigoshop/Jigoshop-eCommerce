@@ -14,8 +14,8 @@ use Jigoshop\Service\OrderServiceInterface;
  */
 class Simple implements OrderServiceInterface
 {
-	private $objects = array();
-	private $queries = array();
+	private $objects = [];
+	private $queries = [];
 
 	/** @var \Jigoshop\Service\OrderServiceInterface */
 	private $service;
@@ -79,7 +79,7 @@ class Simple implements OrderServiceInterface
 	 */
 	public function save(EntityInterface $object)
 	{
-		$this->queries = array();
+		$this->queries = [];
 		$this->objects[$object->getId()] = $object;
 		$this->service->save($object);
 	}

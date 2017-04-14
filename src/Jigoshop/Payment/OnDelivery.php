@@ -55,28 +55,28 @@ class OnDelivery implements Method
 	 */
 	public function getOptions()
 	{
-		return array(
-			array(
+		return [
+			[
 				'name' => sprintf('[%s][enabled]', self::ID),
 				'title' => __('Is enabled?', 'jigoshop'),
 				'type' => 'checkbox',
 				'checked' => $this->options['enabled'],
-				'classes' => array('switch-medium'),
-			),
-			array(
+				'classes' => ['switch-medium'],
+            ],
+			[
 				'name' => sprintf('[%s][title]', self::ID),
 				'title' => __('Title', 'jigoshop'),
 				'type' => 'text',
 				'value' => $this->options['title'],
-			),
-			array(
+            ],
+			[
 				'name' => sprintf('[%s][description]', self::ID),
 				'title' => __('Description', 'jigoshop'),
 				'tip' => sprintf(__('Allowed HTML tags are: %s', 'jigoshop'), '<p>, <a>, <strong>, <em>, <b>, <i>'),
 				'type' => 'text',
 				'value' => $this->options['description'],
-			),
-		);
+            ],
+        ];
 	}
 
 	/**

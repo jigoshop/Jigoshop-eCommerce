@@ -27,7 +27,7 @@ class Migration implements PageInterface
 	private $options;
 	/** @var Messages */
 	private $messages;
-	private $tools = array();
+	private $tools = [];
 
 	public function __construct(Wordpress $wp, Options $options, Messages $messages)
 	{
@@ -35,10 +35,10 @@ class Migration implements PageInterface
 		$this->options = $options;
 		$this->messages = $messages;
 
-		$wp->addAction('current_screen', array($this, 'action'));
+		$wp->addAction('current_screen', [$this, 'action']);
 		$wp->addAction('admin_enqueue_scripts', function () use ($wp){
 			// Weed out all admin pages except the Jigoshop Settings page hits
-			if (!in_array($wp->getPageNow(), array('admin.php', 'options.php'))) {
+			if (!in_array($wp->getPageNow(), ['admin.php', 'options.php'])) {
 				return;
 			}
 
@@ -52,8 +52,8 @@ class Migration implements PageInterface
 			Scripts::add('jigoshop.admin.migration', \JigoshopInit::getUrl().'/assets/js/admin/migration.js');
 
 			$migration_title = __('Jigoshop &raquo; Migration Tool &raquo; ', 'jigoshop');
-			Scripts::localize('jigoshop.admin.migration', 'jigoshop_admin_migration', array(
-				'i18n' => array(
+			Scripts::localize('jigoshop.admin.migration', 'jigoshop_admin_migration', [
+				'i18n' => [
 					'migration_complete' => __('migration complete', 'jigoshop'),
 					'migration_error' => __('migration error', 'jigoshop'),
 					'alert_msg' => __('A communication error has occured, please reload the page and continue with the migration.', 'jigoshop'),
@@ -63,8 +63,8 @@ class Migration implements PageInterface
 					'jigoshop.admin.migration.emails' => $migration_title . __('Emails', 'jigoshop'),
 					'jigoshop.admin.migration.options' => $migration_title . __('Options', 'jigoshop'),
 					'jigoshop.admin.migration.orders' => $migration_title . __('Orders', 'jigoshop'),
-				),
-			));
+                ],
+            ]);
 		});
 	}
 
@@ -125,11 +125,11 @@ class Migration implements PageInterface
 	/** Displays the page. */
 	public function display()
 	{
-		Render::output('admin/migration', array(
+		Render::output('admin/migration', [
 			'messages' => $this->messages,
 			'tools' => $this->tools,
 			'logMessages' => $this->getLogs(),
-		));
+        ]);
 	}
 
 	private function getLogs()

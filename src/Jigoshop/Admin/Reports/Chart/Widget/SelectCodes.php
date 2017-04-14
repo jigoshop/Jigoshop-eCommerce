@@ -10,8 +10,8 @@ class SelectCodes implements WidgetInterface
 {
 	const SLUG = 'select_%s_codes';
 	private $type;
-	private $selectedCodes = array();
-	private $allUsedCodes = array();
+	private $selectedCodes = [];
+	private $allUsedCodes = [];
 
 	public function __construct($type, $selectedCodes, $allUsedCodes)
 	{
@@ -34,15 +34,15 @@ class SelectCodes implements WidgetInterface
 
 	public function getArgs()
 	{
-		return array(
+		return [
 			'id' => $this->getSlug(),
 			'name' => 'codes['.$this->type.']',
 			'value' => $this->selectedCodes,
 			'multiple' => true,
-			'classes' => array(),
+			'classes' => [],
 			'options' => $this->allUsedCodes,
 			'size' => 14,
-		);
+        ];
 	}
 
 	public function isVisible()

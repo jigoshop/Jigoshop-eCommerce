@@ -33,7 +33,7 @@ if ($title) {
 					}
 					$options = array_unique($options);
 					?>
-					<a href="<?= add_query_arg(array('filter_'.$attribute->getSlug() => join('|', $options)), $baseUrl); ?>"><?= $option->getLabel(); ?></a>
+					<a href="<?= add_query_arg(['filter_'.$attribute->getSlug() => join('|', $options)], $baseUrl); ?>"><?= $option->getLabel(); ?></a>
 				<?php else: ?>
 					<span><?= $option->getLabel(); ?></span>
 				<?php endif; ?>

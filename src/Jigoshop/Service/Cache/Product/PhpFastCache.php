@@ -16,12 +16,12 @@ use phpFastCache\CacheManager;
  */
 class PhpFastCache implements ProductServiceInterface
 {
-    private $objects = array();
-    private $queries = array();
-    private $states = array();
-    private $attachments = array();
+    private $objects = [];
+    private $queries = [];
+    private $states = [];
+    private $attachments = [];
     private $attributes;
-    private $productAttributes = array();
+    private $productAttributes = [];
     private $attributesCount;
     private $instanceCache;
 
@@ -109,7 +109,7 @@ class PhpFastCache implements ProductServiceInterface
      */
     public function findByQuery($query)
     {
-        $products = array();
+        $products = [];
         if(isset($query->posts) && count($query->posts)) {
             $results = $query->posts;
         } else {
@@ -138,7 +138,7 @@ class PhpFastCache implements ProductServiceInterface
      */
     public function save(EntityInterface $object)
     {
-        $this->queries = array();
+        $this->queries = [];
         $this->objects[$object->getId()] = $object;
         unset($this->thumbnails[$object->getId()]);
         unset($this->productAttributes[$object->getId()]);

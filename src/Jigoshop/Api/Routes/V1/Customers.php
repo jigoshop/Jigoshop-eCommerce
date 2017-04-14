@@ -92,7 +92,7 @@ class Customers extends BaseController implements ApiControllerContract
          * @apiUse CustomerReturnObject
          * @apiPermission read_customers
          */
-        $app->get('', array($this, 'findAll'));
+        $app->get('', [$this, 'findAll']);
 
         /**
          * @api {get} /customers/:id Get Customer information
@@ -107,7 +107,7 @@ class Customers extends BaseController implements ApiControllerContract
          * @apiUse validateObjectFindingError
          * @apiPermission read_customers
          */
-        $app->get('/{id:[0-9]+}', array($this, 'findOne'));
+        $app->get('/{id:[0-9]+}', [$this, 'findOne']);
 
         /**
          * @api {post} /customers Create a Customer
@@ -119,7 +119,7 @@ class Customers extends BaseController implements ApiControllerContract
          * @apiUse StandardSuccessResponse
          * @apiPermission manage_customers
          */
-        $app->post('', array($this, 'create'))->add(new RequiredFieldsMiddleware($app));
+        $app->post('', [$this, 'create'])->add(new RequiredFieldsMiddleware($app));
 
         /**
          * @api {put} /customers/:id Update a Customer
@@ -133,7 +133,7 @@ class Customers extends BaseController implements ApiControllerContract
          * @apiUse validateObjectFindingError
          * @apiPermission manage_customers
          */
-        $app->put('/{id:[0-9]+}', array($this, 'update'));
+        $app->put('/{id:[0-9]+}', [$this, 'update']);
 
         /**
          * @api {delete} /customers/:id Delete a Customer
@@ -146,7 +146,7 @@ class Customers extends BaseController implements ApiControllerContract
          * @apiUse validateObjectFindingError
          * @apiPermission manage_customers
          */
-        $app->delete('/{id:[0-9]+}', array($this, 'delete'));
+        $app->delete('/{id:[0-9]+}', [$this, 'delete']);
     }
 
     /**

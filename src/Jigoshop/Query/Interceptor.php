@@ -21,19 +21,19 @@ class Interceptor
 		$this->wp = $wp;
 		$this->options = $options;
 
-		$this->endpoints = array(
+		$this->endpoints = [
 			'edit-address',
 			'change-password',
 			'orders',
 			'pay',
-		);
+        ];
 	}
 
 	public function run()
 	{
 		$this->addEndpoints();
-		$this->wp->addFilter('request', array($this, 'intercept'));
-		$this->wp->addFilter('wp_nav_menu_objects', array($this, 'menu'));
+		$this->wp->addFilter('request', [$this, 'intercept']);
+		$this->wp->addFilter('wp_nav_menu_objects', [$this, 'menu']);
 	}
 
 	/**
@@ -145,7 +145,7 @@ class Interceptor
 	private function _getProductListBaseQuery($request)
 	{
 		$options = $this->options->get('shopping');
-		$result = array(
+		$result = [
 			'post_type' => Types::PRODUCT,
 			'post_status' => 'publish',
 			'ignore_sticky_posts' => true,
@@ -153,24 +153,24 @@ class Interceptor
 			'paged' => isset($request['paged']) ? $request['paged'] : 1,
 			'orderby' => $options['catalog_order_by'],
 			'order' => $options['catalog_order']
-		);
+        ];
 
         if($this->options->get('advanced.ignore_meta_queries', false) == false) {
-            $result['meta_query'] = array(
-                array(
+            $result['meta_query'] = [
+                [
                     'key' => 'visibility',
-                    'value' => array(Product::VISIBILITY_CATALOG, Product::VISIBILITY_PUBLIC),
+                    'value' => [Product::VISIBILITY_CATALOG, Product::VISIBILITY_PUBLIC],
                     'compare' => 'IN'
-                )
-            );
+                ]
+            ];
             if ($options['hide_out_of_stock'] == 'on') {
-                $result['meta_query'][] = array(
-                    array(
+                $result['meta_query'][] = [
+                    [
                         'key' => 'stock_status',
                         'value' => 1,
                         'compare' => '='
-                    ),
-                );
+                    ],
+                ];
             }
         }
 
@@ -224,12 +224,12 @@ class Interceptor
 
 	private function getProductQuery($request)
 	{
-		$result = array(
+		$result = [
 			'name' => isset($request['product']) ? $request['product'] : '',
 			'post_type' => Types::PRODUCT,
 			'post_status' => 'publish',
 			'posts_per_page' => 1,
-		);
+        ];
 
         if(isset($request['p'], $request['preview']) && $request['preview'] == "true") {
             $result = array_merge($result, $request);

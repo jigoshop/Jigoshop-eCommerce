@@ -8,7 +8,7 @@ use Jigoshop\Admin\Helper\Forms;
 class ProductSearch implements WidgetInterface
 {
 	const SLUG = 'product_search';
-	private $productIds = array();
+	private $productIds = [];
 
 	public function __construct($productIds)
 	{
@@ -27,12 +27,12 @@ class ProductSearch implements WidgetInterface
 
 	public function getArgs()
 	{
-		return array(
+		return [
 			'id' => 'jigoshop_find_products',
 			'name' => 'product_ids',
 			'value' => join(',', $this->productIds),
 			'size' => 14,
-		);
+        ];
 	}
 
 	public function isVisible()

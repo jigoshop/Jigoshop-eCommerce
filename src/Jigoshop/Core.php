@@ -28,7 +28,7 @@ class Core
 	/** @var array */
 	private $widgets;
 
-	public function __construct(Wordpress $wp, Options $options, Messages $messages, Template $template, $widgets = array())
+	public function __construct(Wordpress $wp, Options $options, Messages $messages, Template $template, $widgets = [])
 	{
 		$this->wp = $wp;
 		$this->options = $options;
@@ -41,22 +41,22 @@ class Core
 		Styles::register('jigoshop.shop', \JigoshopInit::getUrl().'/assets/css/shop.css');
 		Styles::register('prettyphoto', \JigoshopInit::getUrl().'/assets/css/prettyPhoto.css');
 		Styles::register('tokenfield', \JigoshopInit::getUrl().'/assets/css/vendors/tokenfield.css');
-		Scripts::register('jigoshop.helpers', \JigoshopInit::getUrl().'/assets/js/helpers.js', array('jquery'));
-		Scripts::register('jigoshop.helpers.ajax_search', \JigoshopInit::getUrl().'/assets/js/helpers/ajax_search.js', array('jigoshop.helpers'));
-		Scripts::register('jigoshop.helpers.payment', \JigoshopInit::getUrl().'/assets/js/helpers/payment.js', array('jigoshop.helpers', 'jquery-blockui'));
-		Scripts::register('jigoshop.api', \JigoshopInit::getUrl().'/assets/js/api.js', array('jigoshop.helpers'));
-		Scripts::register('jigoshop.media', \JigoshopInit::getUrl().'/assets/js/media.js', array('jquery'));
-		Scripts::register('jigoshop.shop', \JigoshopInit::getUrl().'/assets/js/shop.js', array(
+		Scripts::register('jigoshop.helpers', \JigoshopInit::getUrl().'/assets/js/helpers.js', ['jquery']);
+		Scripts::register('jigoshop.helpers.ajax_search', \JigoshopInit::getUrl().'/assets/js/helpers/ajax_search.js', ['jigoshop.helpers']);
+		Scripts::register('jigoshop.helpers.payment', \JigoshopInit::getUrl().'/assets/js/helpers/payment.js', ['jigoshop.helpers', 'jquery-blockui']);
+		Scripts::register('jigoshop.api', \JigoshopInit::getUrl().'/assets/js/api.js', ['jigoshop.helpers']);
+		Scripts::register('jigoshop.media', \JigoshopInit::getUrl().'/assets/js/media.js', ['jquery']);
+		Scripts::register('jigoshop.shop', \JigoshopInit::getUrl().'/assets/js/shop.js', [
 			'jquery',
 			'jigoshop.helpers'
-		));
-		Scripts::register('jquery-blockui', '//cdnjs.cloudflare.com/ajax/libs/jquery.blockUI/2.66.0-2013.10.09/jquery.blockUI.min.js', array('jquery'));
+        ]);
+		Scripts::register('jquery-blockui', '//cdnjs.cloudflare.com/ajax/libs/jquery.blockUI/2.66.0-2013.10.09/jquery.blockUI.min.js', ['jquery']);
 		Scripts::register('prettyphoto', \JigoshopInit::getUrl().'/assets/js/jquery.prettyPhoto.js');
-		Scripts::register('tokenfield', \JigoshopInit::getUrl().'/assets/js/vendors/tokenfield.js', array('jquery'));
-		Scripts::localize('jigoshop.helpers', 'jigoshop_helpers', array(
+		Scripts::register('tokenfield', \JigoshopInit::getUrl().'/assets/js/vendors/tokenfield.js', ['jquery']);
+		Scripts::localize('jigoshop.helpers', 'jigoshop_helpers', [
 			'assets' => \JigoshopInit::getUrl().'/assets',
 			'ajaxUrl' => admin_url('admin-ajax.php'),
-		));
+        ]);
 	}
 
 	/**
@@ -73,8 +73,8 @@ class Core
 		/** @noinspection PhpUndefinedFieldInspection */
 		$wpdb->jigoshop_termmeta = "{$wpdb->prefix}jigoshop_term_meta";
 
-		$wp->addFilter('template_include', array($this->template, 'process'));
-		$wp->addFilter('template_redirect', array($this->template, 'redirect'));
+		$wp->addFilter('template_include', [$this->template, 'process']);
+		$wp->addFilter('template_redirect', [$this->template, 'redirect']);
 		$wp->addFilter('jigoshop\get_fields', function ($fields){
 			// Post type
 			if (isset($_GET['post_type'])) {
@@ -83,8 +83,8 @@ class Core
 
 			return $fields;
 		});
-		$wp->addAction('jigoshop\shop\content\before', array($this, 'displayCustomMessage'));
-		$wp->addAction('wp_head', array($this, 'googleAnalyticsTracking'), 9990);
+		$wp->addAction('jigoshop\shop\content\before', [$this, 'displayCustomMessage']);
+		$wp->addAction('wp_head', [$this, 'googleAnalyticsTracking'], 9990);
 		// Action for limiting WordPress feed from using order notes.
 		$wp->addAction('comment_feed_where', function ($where){
 			return $where." AND comment_type <> 'order_note'";
@@ -172,15 +172,15 @@ class Core
 	public function displayCustomMessage()
 	{
 		if ($this->options->get('general.show_message') && Frontend\Pages::isJigoshop()) {
-			Render::output('shop/custom_message', array(
+			Render::output('shop/custom_message', [
 				'message' => $this->options->get('general.message'),
-			));
+            ]);
 		}
 
 		if ($this->options->get('general.demo_store') && Frontend\Pages::isJigoshop()) {
-			Render::output('shop/custom_message', array(
+			Render::output('shop/custom_message', [
 				'message' => __('This is a demo store for testing purposes &mdash; no orders shall be fulfilled.', 'jigoshop'),
-			));
+            ]);
 		}
 	}
 }

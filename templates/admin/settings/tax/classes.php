@@ -20,7 +20,7 @@ use Jigoshop\Helper\Render;
 						</thead>
 						<tbody>
 						<?php foreach($classes as $class): ?>
-							<?php Render::output('admin/settings/tax/class', array('class' => $class)); ?>
+							<?php Render::output('admin/settings/tax/class', ['class' => $class]); ?>
 						<?php endforeach; ?>
 						</tbody>
 						<tfoot>

@@ -141,7 +141,7 @@ abstract class PostController extends BaseController
      */
     protected function getObjectsCount()
     {
-        return call_user_func(array($this->service, 'get' . $this->entityName . 'sCount'));
+        return call_user_func([$this->service, 'get' . $this->entityName . 'sCount']);
     }
 
     /**

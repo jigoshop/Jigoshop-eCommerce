@@ -12,26 +12,26 @@
     <div class="list-group-item-text"<?php $active == false and print ' style="display: none"'?>>
         <fieldset>
             <div class="col-sm-6">
-                <?php \Jigoshop\Admin\Helper\Forms::text(array(
+                <?php \Jigoshop\Admin\Helper\Forms::text([
                     'label' => __('Login', 'jigoshop'),
                     'name' => sprintf('%s[%s][login]', $name, $index),
                     'value' => $login,
                     'placeholder' => __('Login', 'jigoshop'),
-                    'classes' => array('login'),
-                )); ?>
+                    'classes' => ['login'],
+                ]); ?>
                 <div class="col-xs-12">
                     <a href="#" class="btn btn-default pull-right generate"><?php _e('Generate', 'jigoshop'); ?></a>
                 </div>
             </div>
             <div class="col-sm-6">
-                <?php \Jigoshop\Admin\Helper\Forms::text(array(
+                <?php \Jigoshop\Admin\Helper\Forms::text([
                     'label' => __('Password', 'jigoshop'),
                     'name' => sprintf('%s[%s][password]', $name, $index),
                     'value' => $password,
                     'placeholder' => __('Key', 'jigoshop'),
-                    'classes' => array('password'),
-                )); ?>
-                <?php \Jigoshop\Admin\Helper\Forms::select(array(
+                    'classes' => ['password'],
+                ]); ?>
+                <?php \Jigoshop\Admin\Helper\Forms::select([
                     'label' => __('Permissions', 'jigoshop'),
                     'name' => sprintf('%s[%s][permissions]', $name, $index),
                     'type' => 'select',
@@ -39,7 +39,7 @@
                     'description' => __('Leave all to set all permissions.', 'jigoshop'),
                     'multiple' => true,
                     'options' => $availablePermissions,
-                )); ?>
+                ]); ?>
             </div>
         </fieldset>
     </div>

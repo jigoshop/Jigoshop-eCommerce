@@ -15,7 +15,7 @@ use Monolog\Registry;
  */
 class ShippingService implements ShippingServiceInterface
 {
-	private $methods = array();
+	private $methods = [];
 
 	/**
 	 * Adds new method to service.

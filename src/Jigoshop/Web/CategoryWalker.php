@@ -12,7 +12,7 @@ use WPAL\Wordpress;
 class CategoryWalker extends \Walker_CategoryDropdown
 {
 	public $tree_type = 'category';
-	public $db_fields = array('parent' => 'parent', 'id' => 'term_id', 'slug' => 'slug');
+	public $db_fields = ['parent' => 'parent', 'id' => 'term_id', 'slug' => 'slug'];
 
 	/** @var Wordpress */
 	private $wp;
@@ -25,7 +25,7 @@ class CategoryWalker extends \Walker_CategoryDropdown
 		$this->template = $template;
 	}
 
-	public function start_el(&$output, $category, $depth = 0, $args = array(), $current_object_id = 0)
+	public function start_el(&$output, $category, $depth = 0, $args = [], $current_object_id = 0)
 	{
 		$name = $this->wp->applyFilters('list_product_cats', $category->name, $category);
 
@@ -35,7 +35,7 @@ class CategoryWalker extends \Walker_CategoryDropdown
 
 		$value = $args['value'] == 'slug' ? $category->slug : $category->term_id;
 
-		$output .= Render::get($this->template, array(
+		$output .= Render::get($this->template, [
 			'depth' => $depth,
 			'term' => $category,
 			'value' => $value,
@@ -43,6 +43,6 @@ class CategoryWalker extends \Walker_CategoryDropdown
 			'selected' => $args['selected'],
 			'show_count' => $args['show_count'],
 			'count' => $category->count,
-		));
+        ]);
 	}
 }

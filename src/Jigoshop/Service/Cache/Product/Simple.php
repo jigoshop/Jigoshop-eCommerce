@@ -15,13 +15,13 @@ use Jigoshop\Service\ProductServiceInterface;
  */
 class Simple implements ProductServiceInterface
 {
-	private $objects = array();
-	private $queries = array();
-	private $states = array();
-	private $reviews = array();
-	private $attachments = array();
+	private $objects = [];
+	private $queries = [];
+	private $states = [];
+	private $reviews = [];
+	private $attachments = [];
 	private $attributes;
-	private $productAttributes = array();
+	private $productAttributes = [];
 	private $attributesCount;
 
 	/** @var \Jigoshop\Service\ProductServiceInterface */
@@ -117,7 +117,7 @@ class Simple implements ProductServiceInterface
 	 */
 	public function save(EntityInterface $object)
 	{
-		$this->queries = array();
+		$this->queries = [];
 		$this->objects[$object->getId()] = $object;
 		unset($this->thumbnails[$object->getId()]);
 		unset($this->productAttributes[$object->getId()]);

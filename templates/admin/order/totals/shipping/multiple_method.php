@@ -8,5 +8,5 @@ use Jigoshop\Helper\Product;
  */
 ?>
 <?php foreach ($method->getRates($order) as $rate): /** @var $rate \Jigoshop\Shipping\Rate */ ?>
-	<?php \Jigoshop\Helper\Render::output('admin/order/totals/shipping/rate', array('method' => $method, 'rate' => $rate, 'order' => $order)); ?>
+	<?php \Jigoshop\Helper\Render::output('admin/order/totals/shipping/rate', ['method' => $method, 'rate' => $rate, 'order' => $order]); ?>
 <?php endforeach; ?>

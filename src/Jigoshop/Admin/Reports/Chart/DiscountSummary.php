@@ -16,9 +16,9 @@ use WPAL\Wordpress;
 class DiscountSummary extends Chart
 {
 	/** @var array */
-	public $chartColours = array();
+	public $chartColours = [];
 	/** @var array */
-	public $codes = array();
+	public $codes = [];
 	/** @var */
 	private $reportData;
 
@@ -37,7 +37,7 @@ class DiscountSummary extends Chart
 		        if(is_array($value)) {
 		            $this->codes[$type] = array_filter(array_map('sanitize_text_field', $value));
                 } else {
-                    $this->codes[$type] = array_filter(array(sanitize_text_field($value)));
+                    $this->codes[$type] = array_filter([sanitize_text_field($value)]);
                 }
             }
         }
@@ -49,7 +49,7 @@ class DiscountSummary extends Chart
 
 		$wp->addAction('admin_enqueue_scripts', function () use ($wp){
 			// Weed out all admin pages except the Jigoshop Settings page hits
-			if (!in_array($wp->getPageNow(), array('admin.php', 'options.php'))) {
+			if (!in_array($wp->getPageNow(), ['admin.php', 'options.php'])) {
 				return;
 			}
 
@@ -57,8 +57,8 @@ class DiscountSummary extends Chart
 			if ($screen->base != 'jigoshop_page_'.Reports::NAME) {
 				return;
 			}
-			Styles::add('jigoshop.vendors.select2', \JigoshopInit::getUrl().'/assets/css/vendors/select2.css', array('jigoshop.admin'));
-			Scripts::add('jigoshop.vendors.select2', \JigoshopInit::getUrl().'/assets/js/vendors/select2.js', array('jigoshop.admin'), array('in_footer' => true));
+			Styles::add('jigoshop.vendors.select2', \JigoshopInit::getUrl().'/assets/css/vendors/select2.css', ['jigoshop.admin']);
+			Scripts::add('jigoshop.vendors.select2', \JigoshopInit::getUrl().'/assets/js/vendors/select2.js', ['jigoshop.admin'], ['in_footer' => true]);
 			Scripts::localize('jigoshop.reports.chart', 'chart_data', $this->getMainChart());
 		});
 	}
@@ -68,7 +68,7 @@ class DiscountSummary extends Chart
 	 */
 	public function getChartLegend()
 	{
-		$legend = array();
+		$legend = [];
 
 		$this->getReportData();
 		$index = 0;
@@ -80,16 +80,16 @@ class DiscountSummary extends Chart
                 return $discount->count;
             }, (array)$reportData));
 
-            $legend[] = array(
+            $legend[] = [
                 'title' => sprintf(__('%s %s discounts in total', 'jigoshop'), '<strong>'.Product::formatPrice($totalAmount).'</strong>', Type::getName($type)),
                 'color' => $this->chartColours[$index + sizeof($this->reportData->discounts)],
                 'highlight_series' => $index + sizeof($this->reportData->discounts)
-            );
-            $legend[] = array(
+            ];
+            $legend[] = [
                 'title' => sprintf(__('%s %s discounts used in total', 'jigoshop'), '<strong>'.$totalCount.'</strong>', Type::getName($type)),
                 'color' => $this->chartColours[$index],
                 'highlight_series' => $index
-            );
+            ];
             $index++;
         }
 
@@ -102,7 +102,7 @@ class DiscountSummary extends Chart
 	public function display()
 	{
 		/** @noinspection PhpUnusedLocalVariableInspection */
-		$ranges = array(
+		$ranges = [
 			'all' => __('All Time', 'jigoshop'),
 			'year' => __('Year', 'jigoshop'),
 			'last_month' => __('Last Month', 'jigoshop'),
@@ -110,20 +110,20 @@ class DiscountSummary extends Chart
 			'30day' => __('Last 30 Days', 'jigoshop'),
 			'7day' => __('Last 7 Days', 'jigoshop'),
 			'today' => __('Today', 'jigoshop'),
-		);
+        ];
 
-		Render::output('admin/reports/chart', array(
+		Render::output('admin/reports/chart', [
 			/** TODO This is ugly... */
 			'current_tab' => Reports\SalesTab::SLUG,
 			'current_type' => 'discount_summary',
 			'ranges' => $ranges,
-			'url' => remove_query_arg(array('start_date', 'end_date')),
+			'url' => remove_query_arg(['start_date', 'end_date']),
 			'current_range' => $this->currentRange,
 			'legends' => $this->getChartLegend(),
 			'widgets' => $this->getChartWidgets(),
 			'export' => $this->getExportButton(),
 			'group_by' => $this->chartGroupBy
-		));
+        ]);
 	}
 
 	/**
@@ -131,10 +131,10 @@ class DiscountSummary extends Chart
 	 */
 	public function getChartWidgets()
 	{
-		$widgets = array();
+		$widgets = [];
 		$wpdb = $this->wp->getWPDB();
-		$query = $this->prepareQuery(array(
-            'select' => array(
+		$query = $this->prepareQuery([
+            'select' => [
                 'discount' => [
                     [
                         'field' => 'type',
@@ -152,31 +152,31 @@ class DiscountSummary extends Chart
                         'name' => 'amount',
                     ]
                 ],
-                'posts' => array(
-                    array(
+                'posts' => [
+                    [
                         'field' => 'post_date',
                         'function' => '',
                         'name' => 'post_date'
-                    )
-                ),
-            ),
-            'from' => array(
+                    ]
+                ],
+            ],
+            'from' => [
                 'discount' => $wpdb->prefix . 'jigoshop_order_discount',
-            ),
-            'join' => array(
-                'posts' => array(
+            ],
+            'join' => [
+                'posts' => [
                     'table' => $wpdb->posts,
-                    'on' => array(
-                        array(
+                    'on' => [
+                        [
                             'key' => 'ID',
                             'value' => 'discount.order_id',
                             'compare' => '=',
-                        )
-                    ),
-                )
-            ),
+                        ]
+                    ],
+                ]
+            ],
             'filter_range' => true,
-        ));
+        ]);
 		$discounts = $this->getOrderReportData($query);
 		$reportData = $this->parseOrderReportData($discounts);
 
@@ -231,8 +231,8 @@ class DiscountSummary extends Chart
 		$this->reportData = new \stdClass();
 		$wpdb = $this->wp->getWPDB();
 
-		$args = array(
-            'select' => array(
+		$args = [
+            'select' => [
                 'discount' => [
                     [
                         'field' => 'type',
@@ -250,31 +250,31 @@ class DiscountSummary extends Chart
                         'name' => 'amount',
                     ]
                 ],
-                'posts' => array(
-                    array(
+                'posts' => [
+                    [
                         'field' => 'post_date',
                         'function' => '',
                         'name' => 'post_date'
-                    )
-                ),
-            ),
-            'from' => array(
+                    ]
+                ],
+            ],
+            'from' => [
                 'discount' => $wpdb->prefix . 'jigoshop_order_discount',
-            ),
-            'join' => array(
-                'posts' => array(
+            ],
+            'join' => [
+                'posts' => [
                     'table' => $wpdb->posts,
-                    'on' => array(
-                        array(
+                    'on' => [
+                        [
                             'key' => 'ID',
                             'value' => 'discount.order_id',
                             'compare' => '=',
-                        )
-                    ),
-                )
-            ),
+                        ]
+                    ],
+                ]
+            ],
             'filter_range' => true,
-        );
+        ];
 		if(count($this->codes)) {
 		    $args['where'] = [];
             $args['where']['operator'] = 'OR';
@@ -329,11 +329,11 @@ class DiscountSummary extends Chart
 	 */
 	public function getExportButton()
 	{
-		return array(
+		return [
 			'download' => 'report-'.esc_attr($this->currentRange).'-'.date_i18n('Y-m-d', current_time('timestamp')).'.csv',
 			'xaxes' => __('Date', 'jigoshop'),
 			'groupby' => $this->chartGroupBy,
-		);
+        ];
 	}
 
 	/**
@@ -351,42 +351,42 @@ class DiscountSummary extends Chart
 			return $time >= $startTime && $time < $endTime;
 		};
 
-		$data = array();
-		$data['series'] = array();
+		$data = [];
+		$data['series'] = [];
         $index = 0;
 		foreach($this->reportData->discounts as $type => $reportData) {
             $width = $this->barwidth / count($this->reportData->discounts);
 		    $dataAmounts = $this->prepareChartData(array_filter($reportData, $filterTimes), 'post_date', 'amount', $this->chartInterval, $this->range['start'], $this->chartGroupBy);
 		    $dataCounts = $this->prepareChartData(array_filter($reportData, $filterTimes), 'post_date', 'count', $this->chartInterval, $this->range['start'], $this->chartGroupBy);
 
-            $data['series'][$index + sizeof($this->reportData->discounts)] = $this->arrayToObject(array(
+            $data['series'][$index + sizeof($this->reportData->discounts)] = $this->arrayToObject([
                 'data' => array_values($dataAmounts),
                 'yaxis' => 2,
                 'color' => $this->chartColours[$index + sizeof($this->reportData->discounts)],
-                'points' => $this->arrayToObject(array(
+                'points' => $this->arrayToObject([
                     'show' => true,
                     'radius' => 5,
                     'lineWidth' => 4,
                     'fillColor' => '#fff',
                     'fill' => true,
-                )),
-                'lines' => $this->arrayToObject(array(
+                ]),
+                'lines' => $this->arrayToObject([
                     'show' => true,
                     'lineWidth' => 4,
                     'fill' => false,
-                )),
+                ]),
                 'shadowSize' => 0,
                 'append_tooltip' => Currency::symbol(),
-            ));
+            ]);
             $offset = ($width * $index);
             $dataCounts = array_values($dataCounts);
             for($i = 0; $i < count($dataCounts); $i++) {
                 $dataCounts[$i][0] += $offset;
             }
-            $data['series'][$index] = $this->arrayToObject(array(
+            $data['series'][$index] = $this->arrayToObject([
                 'data' => $dataCounts,
                 'color' => $this->chartColours[$index],
-                'bars' => $this->arrayToObject(array(
+                'bars' => $this->arrayToObject([
                     'fillColor' => $this->chartColours[$index],
                     'fill' => true,
                     'show' => true,
@@ -394,25 +394,25 @@ class DiscountSummary extends Chart
                     'align' => 'center',
                     'barWidth' => $width * 0.8,
                     'stack' => false
-                )),
+                ]),
                 'shadowSize' => 0,
                 'enable_tooltip' => true
-            ));
+            ]);
             $index++;
 		}
 
-		$data['options'] = $this->arrayToObject(array(
-			'legend' => $this->arrayToObject(array(
+		$data['options'] = $this->arrayToObject([
+			'legend' => $this->arrayToObject([
 				'show' => false,
-			)),
-			'grid' => $this->arrayToObject(array(
+            ]),
+			'grid' => $this->arrayToObject([
 				'color' => '#aaa',
 				'borderColor' => 'transparent',
 				'borderWidth' => 0,
 				'hoverable' => true
-			)),
-			'xaxes' => array(
-				$this->arrayToObject(array(
+            ]),
+			'xaxes' => [
+				$this->arrayToObject([
                     'color' => '#aaa',
                     'reserveSpace' => false,
                     'position' => 'bottom',
@@ -421,30 +421,30 @@ class DiscountSummary extends Chart
                     'timeformat' => $this->chartGroupBy == 'hour' ? '%H' : $this->chartGroupBy == 'day' ? '%d %b' : '%b',
                     'monthNames' => array_values($wp_locale->month_abbrev),
                     'tickLength' => 1,
-                    'minTickSize' => array(1, $this->chartGroupBy),
-                    'tickSize' => array(1, $this->chartGroupBy),
-                    'font' => $this->arrayToObject(array('color' => '#aaa')),
-				))
-			),
-			'yaxes' => array(
-				$this->arrayToObject(array(
+                    'minTickSize' => [1, $this->chartGroupBy],
+                    'tickSize' => [1, $this->chartGroupBy],
+                    'font' => $this->arrayToObject(['color' => '#aaa']),
+                ])
+            ],
+			'yaxes' => [
+				$this->arrayToObject([
 					'min' => 0,
 					'minTickSize' => 1,
 					'tickDecimals' => 0,
 					'color' => '#ecf0f1',
-					'font' => $this->arrayToObject(array('color' => '#aaa'))
-				)),
-				$this->arrayToObject(array(
+					'font' => $this->arrayToObject(['color' => '#aaa'])
+                ]),
+				$this->arrayToObject([
 					'position' => 'right',
 					'min' => 0,
 					'tickDecimals' => 2,
 					'alignTicksWithAxis' => 1,
 					'autoscaleMargin' => 0,
 					'color' => 'transparent',
-					'font' => $this->arrayToObject(array('color' => '#aaa'))
-				))
-			),
-		));
+					'font' => $this->arrayToObject(['color' => '#aaa'])
+                ])
+            ],
+        ]);
 		if ($this->chartGroupBy == 'hour') {
 			$data['options']->xaxes[0]->min = 0;
 			$data['options']->xaxes[0]->max = 24 * 60 * 60 * 1000;
@@ -458,7 +458,7 @@ class DiscountSummary extends Chart
 	 */
 	private function getChartColours()
 	{
-		$this->chartColours = $this->wp->applyFilters('jigoshop\admin\reports\discount_summary\chart_colours', array(
+		$this->chartColours = $this->wp->applyFilters('jigoshop\admin\reports\discount_summary\chart_colours', [
             '#3498db',
             '#2ecc71',
             '#f1c40f',
@@ -469,7 +469,7 @@ class DiscountSummary extends Chart
             '#EAA6EA',
             '#FFC8C8',
             '#AAAAFF',
-		));
+        ]);
 	}
 
 	private function getUsedCodes($reportData)

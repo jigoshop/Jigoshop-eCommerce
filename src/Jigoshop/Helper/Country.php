@@ -292,9 +292,9 @@ class Country
     ];
 
 //   w
-	protected static $states = array(
+	protected static $states = [
 		// Albania: Prefectures ("qarks")
-		'AL' => array(
+		'AL' => [
 			'BER' => 'Berat',
 			'DIB' => 'Dibër',
 			'DUR' => 'Durrës',
@@ -307,8 +307,8 @@ class Country
 			'SHK' => 'Shkodër',
 			'TIR' => 'Tiranë',
 			'VLO' => 'Vlorë'
-		),
-		'AU' => array(
+        ],
+		'AU' => [
 			'ACT' => 'Australian Capital Territory',
 			'NSW' => 'New South Wales',
 			'NT' => 'Northern Territory',
@@ -317,8 +317,8 @@ class Country
 			'TAS' => 'Tasmania',
 			'VIC' => 'Victoria',
 			'WA' => 'Western Australia'
-		),
-		'BR' => array(
+        ],
+		'BR' => [
 			'AC' => 'Acre',
 			'AL' => 'Alagoas',
 			'AM' => 'Amazonas',
@@ -346,8 +346,8 @@ class Country
 			'SE' => 'Sergipe',
 			'SP' => 'São paulo',
 			'TO' => 'Tocantins'
-		),
-		'CA' => array(
+        ],
+		'CA' => [
 			'AB' => 'Alberta',
 			'BC' => 'British Columbia',
 			'MB' => 'Manitoba',
@@ -361,9 +361,9 @@ class Country
 			'QC' => 'Quebec',
 			'SK' => 'Saskatchewan',
 			'YT' => 'Yukon Territory'
-		),
+        ],
 		// Switzerland: Cantons
-		'CH' => array(
+		'CH' => [
 			'AG' => 'Aargau',
 			'AI' => 'Appenzell Innerrhoden',
 			'AR' => 'Appenzell Ausserrhoden',
@@ -390,9 +390,9 @@ class Country
 			'VS' => 'Wallis',
 			'ZG' => 'Zug',
 			'ZH' => 'Zürich'
-		),
+        ],
 		// Spain: Provinces
-		'ES' => array(
+		'ES' => [
 			'AA' => 'Álava',
 			'AB' => 'Albacete',
 			'AN' => 'Alicante',
@@ -445,9 +445,9 @@ class Country
 			'VZ' => 'Vizcaya',
 			'ZM' => 'Zamora',
 			'ZG' => 'Zaragoza'
-		),
+        ],
 		// Czech Republic: Regions
-		'CZ' => array(
+		'CZ' => [
 			'JC' => 'Jihoceský kraj [South Bohemian Region]',
 			'JM' => 'Jihomoravský kraj [South Moravian Region]',
 			'KA' => 'Karlovarský kraj [Karlovy Vary Region]',
@@ -462,9 +462,9 @@ class Country
 			'US' => 'Ústecký kraj [Ústí Region]',
 			'VY' => 'Vysocina',
 			'ZL' => 'Zlínský kraj [Zlín Region]'
-		),
+        ],
 		// Germany: Federal States
-		'DE' => array(
+		'DE' => [
 			'NDS' => 'Niedersachsen',
 			'BAW' => 'Baden-Württemberg',
 			'BAY' => 'Bayern',
@@ -481,9 +481,9 @@ class Country
 			'SAC' => 'Sachsen-Anhalt',
 			'SCN' => 'Schleswig-Holstein',
 			'THE' => 'Thüringen'
-		),
+        ],
 		// Finland: Regions
-		'FI' => array(
+		'FI' => [
 			'ÅAL' => 'Åland',
 			'EKA' => 'Etelä-Karjala [South Karelia]',
 			'EPO' => 'Etelä-Pohjanmaa [South Ostrobothnia]',
@@ -503,9 +503,9 @@ class Country
 			'SAT' => 'Satakunta',
 			'UUS' => 'Uusimaa (Nyland)',
 			'VSS' => 'Varsinais-Suomi (Egentliga Finland)'
-		),
+        ],
 		// France: Regions
-		'FR' => array(
+		'FR' => [
 			'ALS' => 'Alsace',
 			'AQU' => 'Aquitaine',
 			'AUV' => 'Auvergne',
@@ -528,9 +528,9 @@ class Country
 			'POI' => 'Poitou - Charentes',
 			'PRO' => 'Provence - Alpes - Côte d\'Azur',
 			'RHO' => 'Rhône - Alpes'
-		),
+        ],
 		// Greece: Regions
-		'GR' => array(
+		'GR' => [
 			'AOR' => 'Ágio Óros [Mount Athos]',
 			'AMT' => 'Anatolikí Makedonía & Thrakí [East Macedonia & Thrace]',
 			'ATT' => 'Attikí [Attica]',
@@ -545,14 +545,14 @@ class Country
 			'SEL' => 'Stereá Elláda [Central Greece]',
 			'THE' => 'Thessalía [Thessaly]',
 			'VAI' => 'Vório Aigaío [Northern Aegean]'
-		),
-		'HK' => array(
+        ],
+		'HK' => [
 			'HONG KONG' => 'Hong Kong Island',
 			'KOWLOONG' => 'Kowloong',
 			'NEW TERRITORIES' => 'New Territories'
-		),
+        ],
 		// Hungary: Counties
-		'HU' => array(
+		'HU' => [
 			'BAC' => 'Bács-Kiskun',
 			'BAR' => 'Baranya',
 			'BEK' => 'Békés',
@@ -573,9 +573,9 @@ class Country
 			'VAS' => 'Vas',
 			'VES' => 'Veszprém',
 			'ZAL' => 'Zala'
-		),
+        ],
 		// Ireland: Counties
-		'IE' => array(
+		'IE' => [
 			'G' => 'Galway (incl. Galway City)',
 			'LM' => 'Leitrim',
 			'MO' => 'Mayo',
@@ -606,9 +606,9 @@ class Country
 			'CN' => 'Cavan',
 			'DL' => 'Donegal',
 			'MIN' => 'Monaghan'
-		),
+        ],
 		// Netherlands: Provinces
-		'NL' => array(
+		'NL' => [
 			'D' => 'Drenthe',
 			'Fl' => 'Flevoland',
 			'Fr' => 'Friesland',
@@ -621,9 +621,9 @@ class Country
 			'U' => 'Utrecht',
 			'Z' => 'Zeeland',
 			'Z-H' => 'Zuid-Holland'
-		),
+        ],
 		// New Zealand: Regions
-		'NZ' => array(
+		'NZ' => [
 			'AUK' => 'Auckland',
 			'BOP' => 'Bay of Plenty',
 			'CAN' => 'Canterbury',
@@ -640,9 +640,9 @@ class Country
 			'WKO' => 'Waikato',
 			'WGN' => 'Wellington',
 			'WTC' => 'West Coast'
-		),
+        ],
 		// Philippines: Provinces
-		'PH' => array(
+		'PH' => [
 			'ABR' => 'Abra',
 			'AGN' => 'Agusan del Norte',
 			'AGS' => 'Agusan del Sur',
@@ -725,8 +725,8 @@ class Country
 			'ZAS' => 'Zamboanga del Sur',
 			'ZSI' => 'Zamboanga Sibugay',
 			'MNL' => 'Metro Manila',
-		),
-		'PL' => array(
+        ],
+		'PL' => [
 			'DS' => 'dolnośląskie',
 			'KP' => 'kujawsko-pomorskie',
 			'LU' => 'lubelskie',
@@ -743,9 +743,9 @@ class Country
 			'WN' => 'warmińsko-mazurskie',
 			'WP' => 'wielkopolskie',
 			'ZP' => 'zachodniopomorskie',
-		),
+        ],
 		// Romania: Counties
-		'RO' => array(
+		'RO' => [
 			'ALB' => 'Alba',
 			'ARA' => 'Arad',
 			'ARG' => 'Argeș',
@@ -788,9 +788,9 @@ class Country
 			'VAL' => 'Vâlcea',
 			'VAS' => 'Vaslui',
 			'VRA' => 'Vrancea'
-		),
+        ],
 		// Serbia: Districts
-		'SR' => array(
+		'SR' => [
 			'BOR' => 'Bor',
 			'BRA' => 'Branicevo',
 			'GBE' => 'Grad Beograd',
@@ -816,9 +816,9 @@ class Country
 			'SRB' => 'Srednji Banat',
 			'SRE' => 'Srem',
 			'ZBK' => 'Zapadna Backa [West Backa]'
-		),
+        ],
 		// Sweden: Counties ("län")
-		'SE' => array(
+		'SE' => [
 			'BLE' => 'Blekinge län',
 			'DAL' => 'Dalarnas län',
 			'GAV' => 'Gävleborgs län',
@@ -840,8 +840,8 @@ class Country
 			'VNL' => 'Västernorrlands län',
 			'VML' => 'Västmanlands län',
 			'VGO' => 'Västra Götalands län'
-		),
-		'US' => array(
+        ],
+		'US' => [
 			'AK' => 'Alaska',
 			'AL' => 'Alabama',
 			'AR' => 'Arkansas',
@@ -893,15 +893,15 @@ class Country
 			'WI' => 'Wisconsin',
 			'WV' => 'West Virginia',
 			'WY' => 'Wyoming'
-		),
-		'USAF' => array(
+        ],
+		'USAF' => [
 			'AA' => 'Americas',
 			'AE' => 'Europe',
 			'AP' => 'Pacific'
-		)
-	);
+        ]
+    ];
 
-	protected static $euCountries = array(
+	protected static $euCountries = [
 		'AT' => 'Austria',
 		'BE' => 'Belgium',
 		'BG' => 'Bulgaria',
@@ -929,11 +929,11 @@ class Country
 		'ES' => 'Spain',
 		'SE' => 'Sweden',
 		'GB' => 'United Kingdom'
-	);
+    ];
 
 	/** @var CoreOptions */
 	private static $options;
-	private static $cache = array();
+	private static $cache = [];
 
 	/**
 	 * @param CoreOptions $options Options object.
@@ -1100,7 +1100,7 @@ class Country
 			return self::$states[$countryCode];
 		}
 
-		return array();
+		return [];
 	}
 
 	/**

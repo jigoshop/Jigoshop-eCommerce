@@ -71,9 +71,9 @@ class CustomerService implements CustomerServiceInterface
 	public function findAll()
 	{
 		$guest = new Entity\Guest();
-		$customers = array(
+		$customers = [
 			$guest->getId() => $guest,
-		);
+        ];
 
 		$users = $this->wp->getUsers();
 		foreach ($users as $user) {

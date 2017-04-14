@@ -51,13 +51,13 @@ class External implements Type
 	 */
 	public function initialize(Wordpress $wp, array $enabledTypes)
 	{
-		$wp->addFilter('jigoshop\cart\add', array($this, 'addToCart'), 10, 2);
-		$wp->addFilter('jigoshop\core\types\variable\subtypes', array($this, 'addVariableSubtype'), 10, 1);
+		$wp->addFilter('jigoshop\cart\add', [$this, 'addToCart'], 10, 2);
+		$wp->addFilter('jigoshop\core\types\variable\subtypes', [$this, 'addVariableSubtype'], 10, 1);
 
-		$wp->addAction('jigoshop\admin\product\assets', array($this, 'addAssets'), 10, 0);
-		$wp->addFilter('jigoshop\admin\product\menu', array($this, 'addProductMenu'));
-		$wp->addFilter('jigoshop\product\tabs\general', array($this, 'addToGeneralTab'), 10, 1);
-		$wp->addAction('jigoshop\admin\variation', array($this, 'addVariationFields'), 10, 2);
+		$wp->addAction('jigoshop\admin\product\assets', [$this, 'addAssets'], 10, 0);
+		$wp->addFilter('jigoshop\admin\product\menu', [$this, 'addProductMenu']);
+		$wp->addFilter('jigoshop\product\tabs\general', [$this, 'addToGeneralTab'], 10, 1);
+		$wp->addAction('jigoshop\admin\variation', [$this, 'addVariationFields'], 10, 2);
 	}
 
 	/**
@@ -68,11 +68,11 @@ class External implements Type
 	 */
 	public function addVariationFields($variation, $product)
 	{
-		Render::output('admin/product/box/variations/variation/external', array(
+		Render::output('admin/product/box/variations/variation/external', [
 			'variation' => $variation,
 			'product' => $variation->getProduct(),
 			'parent' => $product,
-		));
+        ]);
 	}
 
 	/**
@@ -106,10 +106,10 @@ class External implements Type
 
 	public function addAssets()
 	{
-		Scripts::add('jigoshop.admin.product.external', \JigoshopInit::getUrl().'/assets/js/admin/product/external.js', array(
+		Scripts::add('jigoshop.admin.product.external', \JigoshopInit::getUrl().'/assets/js/admin/product/external.js', [
 			'jquery',
 			'jigoshop.helpers'
-		));
+        ]);
 	}
 
 	/**
@@ -133,8 +133,8 @@ class External implements Type
 	 */
 	public function addToGeneralTab($product)
 	{
-		Render::output('admin/product/box/general/external', array(
+		Render::output('admin/product/box/general/external', [
 			'product' => $product,
-		));
+        ]);
 	}
 }

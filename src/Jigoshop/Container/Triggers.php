@@ -39,7 +39,7 @@ class Triggers
      */
     private function _add1($key, $instance, $method, $params)
     {
-        $this->triggers[$key][] = array('instance' => $instance, 'method' => $method, 'params' => $params);
+        $this->triggers[$key][] = ['instance' => $instance, 'method' => $method, 'params' => $params];
     }
 
     /**
@@ -49,7 +49,7 @@ class Triggers
      */
     private function _add2($key, $method, $params)
     {
-        $this->triggers[$key][] = array('instance' => $key, 'method' => $method, 'params' => $params);
+        $this->triggers[$key][] = ['instance' => $key, 'method' => $method, 'params' => $params];
     }
 
     /**
@@ -58,7 +58,7 @@ class Triggers
      */
     private function _add3($key, $params)
     {
-        $this->triggers[$key][] = array('instance' => '', 'method' => '', 'params' => $params);
+        $this->triggers[$key][] = ['instance' => '', 'method' => '', 'params' => $params];
     }
 
     /**
@@ -91,7 +91,7 @@ class Triggers
     public function callMethod($object, $methodName, $params)
     {
         if ($object && $methodName) {
-            return call_user_func_array(array($object, $methodName), $params);
+            return call_user_func_array([$object, $methodName], $params);
         }
 
         return false;

@@ -131,7 +131,7 @@ class Products extends PostController implements ApiControllerContract
          * @apiUse ProductReturnObject
          * @apiPermission read_products
          */
-        $app->get('', array($this, 'findAll'));
+        $app->get('', [$this, 'findAll']);
 
         /**
          * @api {get} /products/:id Get Product information
@@ -146,7 +146,7 @@ class Products extends PostController implements ApiControllerContract
          * @apiUse validateObjectFindingError
          * @apiPermission read_products
          */
-        $app->get('/{id:[0-9]+}', array($this, 'findOne'));
+        $app->get('/{id:[0-9]+}', [$this, 'findOne']);
 
         /**
          * @api {post} /products Create a Product
@@ -158,7 +158,7 @@ class Products extends PostController implements ApiControllerContract
          * @apiUse StandardSuccessResponse
          * @apiPermission manage_products
          */
-        $app->post('', array($this, 'create'));
+        $app->post('', [$this, 'create']);
 
         /**
          * @api {put} /products/:id Update a Product
@@ -172,7 +172,7 @@ class Products extends PostController implements ApiControllerContract
          * @apiUse validateObjectFindingError
          * @apiPermission manage_products
          */
-        $app->put('/{id:[0-9]+}', array($this, 'update'));
+        $app->put('/{id:[0-9]+}', [$this, 'update']);
 
         /**
          * @api {delete} /products/:id Delete a Product
@@ -185,7 +185,7 @@ class Products extends PostController implements ApiControllerContract
          * @apiUse validateObjectFindingError
          * @apiPermission manage_products
          */
-        $app->delete('/{id:[0-9]+}', array($this, 'delete'));
+        $app->delete('/{id:[0-9]+}', [$this, 'delete']);
     }
 
     /**

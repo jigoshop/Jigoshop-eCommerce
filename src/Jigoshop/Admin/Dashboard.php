@@ -41,17 +41,17 @@ class Dashboard implements PageInterface
 
 		$wp->addAction('admin_enqueue_scripts', function () use ($wp){
 			// Weed out all admin pages except the Jigoshop Settings page hits
-			if (!in_array($wp->getPageNow(), array('admin.php', 'options.php'))) {
+			if (!in_array($wp->getPageNow(), ['admin.php', 'options.php'])) {
 				return;
 			}
 
 			$screen = $wp->getCurrentScreen();
-			if (!in_array($screen->base, array('toplevel_page_'.Dashboard::NAME, 'options'))) {
+			if (!in_array($screen->base, ['toplevel_page_'.Dashboard::NAME, 'options'])) {
 				return;
 			}
 
 			Styles::add('jigoshop.admin.dashboard', \JigoshopInit::getUrl().'/assets/css/admin/dashboard.css');
-            Scripts::add('jigoshop.vendors.flot', \JigoshopInit::getUrl().'/assets/js/vendors/flot.js', array('jquery'));
+            Scripts::add('jigoshop.vendors.flot', \JigoshopInit::getUrl().'/assets/js/vendors/flot.js', ['jquery']);
 		});
 	}
 
@@ -87,21 +87,21 @@ class Dashboard implements PageInterface
 		$this->wp->wpEnqueueScript('postbox');
 		Styles::add('wp-jquery-ui');
 
-		$this->wp->addMetaBox('jigoshop_dashboard_right_now', __('<span>Shop</span> Content', 'jigoshop'), array($this, 'rightNow'), 'jigoshop', 'side', 'core');
-		$this->wp->addMetaBox('jigoshop_dashboard_recent_orders', __('<span>Recent</span> Orders', 'jigoshop'), array($this, 'recentOrders'), 'jigoshop', 'side', 'core');
+		$this->wp->addMetaBox('jigoshop_dashboard_right_now', __('<span>Shop</span> Content', 'jigoshop'), [$this, 'rightNow'], 'jigoshop', 'side', 'core');
+		$this->wp->addMetaBox('jigoshop_dashboard_recent_orders', __('<span>Recent</span> Orders', 'jigoshop'), [$this, 'recentOrders'], 'jigoshop', 'side', 'core');
 		if ($this->options->get('products.manage_stock')) {
-			$this->wp->addMetaBox('jigoshop_dashboard_stock_report', __('<span>Stock</span> Report', 'jigoshop'), array($this, 'stockReport'), 'jigoshop', 'side', 'core');
+			$this->wp->addMetaBox('jigoshop_dashboard_stock_report', __('<span>Stock</span> Report', 'jigoshop'), [$this, 'stockReport'], 'jigoshop', 'side', 'core');
 		}
-		$this->wp->addMetaBox('jigoshop_dashboard_monthly_report', __('<span>Monthly</span> Report', 'jigoshop'), array($this, 'monthlyReport'), 'jigoshop', 'normal', 'core');
-		$this->wp->addMetaBox('jigoshop_dashboard_recent_reviews', __('<span>Recent</span> Reviews', 'jigoshop'), array($this, 'recentReviews'), 'jigoshop', 'normal', 'core');
-		$this->wp->addMetaBox('jigoshop_dashboard_latest_news', __('<span>Latest</span> News', 'jigoshop'), array($this, 'latestNews'), 'jigoshop', 'normal', 'core');
-		$this->wp->addMetaBox('jigoshop_dashboard_useful_links', __('<span>Useful</span> Links', 'jigoshop'), array($this, 'usefulLinks'), 'jigoshop', 'normal', 'core');
+		$this->wp->addMetaBox('jigoshop_dashboard_monthly_report', __('<span>Monthly</span> Report', 'jigoshop'), [$this, 'monthlyReport'], 'jigoshop', 'normal', 'core');
+		$this->wp->addMetaBox('jigoshop_dashboard_recent_reviews', __('<span>Recent</span> Reviews', 'jigoshop'), [$this, 'recentReviews'], 'jigoshop', 'normal', 'core');
+		$this->wp->addMetaBox('jigoshop_dashboard_latest_news', __('<span>Latest</span> News', 'jigoshop'), [$this, 'latestNews'], 'jigoshop', 'normal', 'core');
+		$this->wp->addMetaBox('jigoshop_dashboard_useful_links', __('<span>Useful</span> Links', 'jigoshop'), [$this, 'usefulLinks'], 'jigoshop', 'normal', 'core');
 
 		$submenu = $this->wp->getSubmenu();
 
-		Render::output('admin/dashboard', array(
+		Render::output('admin/dashboard', [
 			'submenu' => $submenu,
-		));
+        ]);
 	}
 
 	/**
@@ -122,7 +122,7 @@ class Dashboard implements PageInterface
 		$cancelledCount = $counts->{Order\Status::CANCELLED};
 		$refundedCount = $counts->{Order\Status::REFUNDED};
 
-		Render::output('admin/dashboard/rightNow', array(
+		Render::output('admin/dashboard/rightNow', [
 			'productCount' => $productCount,
 			'categoryCount' => $categoryCount,
 			'tagCount' => $tagCount,
@@ -133,7 +133,7 @@ class Dashboard implements PageInterface
 			'completedCount' => $completedCount,
 			'cancelledCount' => $cancelledCount,
 			'refundedCount' => $refundedCount,
-		));
+        ]);
 	}
 
 	/**
@@ -144,17 +144,17 @@ class Dashboard implements PageInterface
 		/** @noinspection PhpUnusedLocalVariableInspection */
 		$statuses = Order\Status::getStatuses();
 		unset($statuses[Order\Status::CANCELLED], $statuses[Order\Status::REFUNDED]);
-		$orders = $this->orderService->findByQuery(new \WP_Query(array(
+		$orders = $this->orderService->findByQuery(new \WP_Query([
 			'numberposts' => 10,
 			'orderby' => 'post_date',
 			'order' => 'DESC',
 			'post_type' => Types::ORDER,
 			'post_status' => array_keys($statuses),
-		)));
+        ]));
 
-		Render::output('admin/dashboard/recentOrders', array(
+		Render::output('admin/dashboard/recentOrders', [
 			'orders' => $orders,
-		));
+        ]);
 	}
 
 	/**
@@ -165,7 +165,7 @@ class Dashboard implements PageInterface
 		$lowStockThreshold = $this->options->get('advanced.low_stock_threshold', 2);
 		$notifyOufOfStock = $this->options->get('advanced.notify_out_of_stock', true);
 		$number = $this->options->get('advanced.dashboard_stock_number', 5);
-		$outOfStock = array();
+		$outOfStock = [];
 
 		if ($notifyOufOfStock) {
 			$outOfStock = $this->productService->findOutOfStock($number);
@@ -173,11 +173,11 @@ class Dashboard implements PageInterface
 
 		$lowStock = $this->productService->findLowStock($lowStockThreshold, $number);
 
-		Render::output('admin/dashboard/stockReport', array(
+		Render::output('admin/dashboard/stockReport', [
 			'notifyOutOfStock' => $notifyOufOfStock,
 			'outOfStock' => $outOfStock,
 			'lowStock' => $lowStock,
-		));
+        ]);
 	}
 
 	/**
@@ -207,14 +207,14 @@ class Dashboard implements PageInterface
 
 
 		$orderData = $this->getOrderData($orders, $days);
-		$orderAmounts = $orderCounts = array();
+		$orderAmounts = $orderCounts = [];
 
 		foreach ($days as $day) {
-			$orderCounts[] = array($day, $orderData['counts'][$day]);
-            $orderAmounts[] = array($day, $orderData['amounts'][$day]);
+			$orderCounts[] = [$day, $orderData['counts'][$day]];
+            $orderAmounts[] = [$day, $orderData['amounts'][$day]];
         }
 
-		Render::output('admin/dashboard/monthlyReport', array(
+		Render::output('admin/dashboard/monthlyReport', [
 			'orders' => $orders,
 			'selectedMonth' => $selectedMonth,
 			'selectedYear' => $selectedYear,
@@ -226,7 +226,7 @@ class Dashboard implements PageInterface
 			'previousYear' => $previousYear,
 			'orderCounts' => $orderCounts,
 			'orderAmounts' => $orderAmounts,
-		));
+        ]);
 	}
 
     /**
@@ -269,9 +269,9 @@ class Dashboard implements PageInterface
 				ORDER BY comment_date_gmt DESC
 				LIMIT 5");
 
-		Render::output('admin/dashboard/recentReviews', array(
+		Render::output('admin/dashboard/recentReviews', [
 			'comments' => $comments,
-		));
+        ]);
 	}
 
 	/**
@@ -284,7 +284,7 @@ class Dashboard implements PageInterface
 
 			$wp = $this->wp;
 			$rss = $wp->fetchFeed('http://www.jigoshop.com/feed');
-			$items = array();
+			$items = [];
 
 			if (!$wp->isWpError($rss)) {
 				$maxItems = $rss->get_item_quantity(5);
@@ -295,18 +295,18 @@ class Dashboard implements PageInterface
 						/** @var $item \SimplePie_Item */
 						$date = $item->get_date('U');
 
-						return array(
+						return [
 							'title' => $wp->getHelpers()->wptexturize($item->get_title()),
 							'link' => $item->get_permalink(),
 							'date' => (abs(time() - $date)) < 86400 ? sprintf(__('%s ago', 'jigoshop'), $wp->humanTimeDiff($date)) : date(__('F jS Y', 'jigoshop'), $date),
-						);
+                        ];
 					}, $rssItems);
 				}
 			}
 
-			Render::output('admin/dashboard/latestNews', array(
+			Render::output('admin/dashboard/latestNews', [
 				'items' => $items,
-			));
+            ]);
 		}
 	}
 
@@ -315,6 +315,6 @@ class Dashboard implements PageInterface
 	 */
 	public function usefulLinks()
 	{
-		Render::output('admin/dashboard/usefulLinks', array());
+		Render::output('admin/dashboard/usefulLinks', []);
 	}
 }

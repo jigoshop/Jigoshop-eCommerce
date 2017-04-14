@@ -11,18 +11,18 @@ class ProductTagCloud extends \WP_Widget
 
 	public function __construct()
 	{
-		$options = array(
+		$options = [
 			'classname' => self::ID,
 			'description' => __('Your most used product tags in cloud format', 'jigoshop'),
-		);
+        ];
 
 		// Create the widget
 		parent::__construct(self::ID, __('Jigoshop: Product Tag Cloud', 'jigoshop'), $options);
 
 		// Flush cache after every save
-		add_action('save_post', array($this, 'deleteTransient'));
-		add_action('deleted_post', array($this, 'deleteTransient'));
-		add_action('switch_theme', array($this, 'deleteTransient'));
+		add_action('save_post', [$this, 'deleteTransient']);
+		add_action('deleted_post', [$this, 'deleteTransient']);
+		add_action('switch_theme', [$this, 'deleteTransient']);
 	}
 
 	/**
@@ -56,9 +56,9 @@ class ProductTagCloud extends \WP_Widget
 			$this->id_base
 		);
 
-		Render::output('widget/product_tag_cloud/widget', array_merge($args, array(
+		Render::output('widget/product_tag_cloud/widget', array_merge($args, [
 			'title' => $title,
-		)));
+        ]));
 
 		// Flush output buffer and save to transient cache
 		$cache[$args['widget_id']] = ob_get_flush();
@@ -103,10 +103,10 @@ class ProductTagCloud extends \WP_Widget
 	{
 		$title = (isset($instance['title'])) ? esc_attr($instance['title']) : null;
 
-		Render::output('widget/product_tag_cloud/form', array(
+		Render::output('widget/product_tag_cloud/form', [
 			'title_id' => $this->get_field_id('title'),
 			'title_name' => $this->get_field_name('title'),
 			'title' => $title,
-		));
+        ]);
 	}
 }

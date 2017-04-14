@@ -17,7 +17,7 @@ use Jigoshop\Helper\Render;
  */
 ?>
 <h1><?php printf(__('My account &raquo; Orders &raquo; %s', 'jigoshop'), $order->getTitle()); ?></h1>
-<?php Render::output('shop/messages', array('messages' => $messages)); ?>
+<?php Render::output('shop/messages', ['messages' => $messages]); ?>
 <dl class="dl-horizontal">
 	<dt><?php _e('Made on', 'jigoshop'); ?></dt>
 	<dd><?= $order->getCreatedAt()->format(_x('d.m.Y, H:i', 'account', 'jigoshop')); ?></dd>
@@ -31,7 +31,7 @@ use Jigoshop\Helper\Render;
 			<h3 class="panel-title"><?php _e('Billing address', 'jigoshop'); ?></h3>
 		</div>
 		<div class="panel-body clearfix">
-			<?php Render::output('user/account/address', array('address' => $order->getCustomer()->getBillingAddress())); ?>
+			<?php Render::output('user/account/address', ['address' => $order->getCustomer()->getBillingAddress()]); ?>
 		</div>
 	</div>
 </div>
@@ -41,7 +41,7 @@ use Jigoshop\Helper\Render;
 			<h3 class="panel-title"><?php _e('Shipping address', 'jigoshop'); ?></h3>
 		</div>
 		<div class="panel-body">
-			<?php Render::output('user/account/address', array('address' => $order->getCustomer()->getShippingAddress())); ?>
+			<?php Render::output('user/account/address', ['address' => $order->getCustomer()->getShippingAddress()]); ?>
 		</div>
 	</div>
 </div>
@@ -61,7 +61,7 @@ use Jigoshop\Helper\Render;
 	</thead>
 	<tbody>
 		<?php foreach($order->getItems() as $key => $item): /** @var $item \Jigoshop\Entity\Order\Item */ ?>
-			<?php Render::output('shop/checkout/item/'.$item->getType(), array('cart' => $order, 'key' => $key, 'item' => $item, 'showWithTax' => $showWithTax, 'suffix' => $suffix)); ?>
+			<?php Render::output('shop/checkout/item/'.$item->getType(), ['cart' => $order, 'key' => $key, 'item' => $item, 'showWithTax' => $showWithTax, 'suffix' => $suffix]); ?>
 		<?php endforeach; ?>
 		<?php /** @deprecated */ do_action('jigoshop\checkout\table_body', $order); ?>
 		<?php do_action('jigoshop\template\checkout\table_body', $order); ?>
@@ -121,6 +121,6 @@ use Jigoshop\Helper\Render;
 </div>
 <a href="<?= $myAccountUrl; ?>" class="btn btn-default"><?php _e('Go back to My account', 'jigoshop'); ?></a>
 <a href="<?= $listUrl; ?>" class="btn btn-default"><?php _e('Go back to orders list', 'jigoshop'); ?></a>
-<?php if (in_array($order->getStatus(), array(Status::PENDING))): ?>
+<?php if (in_array($order->getStatus(), [Status::PENDING])): ?>
 	<a href="<?= Order::getPayLink($order); ?>" class="btn btn-success pull-right"><?php _e('Pay', 'jigoshop'); ?></a>
 <?php endif; ?>

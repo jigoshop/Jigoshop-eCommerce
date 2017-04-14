@@ -30,13 +30,13 @@ class MostPopular implements WidgetInterface
 
 	public function getArgs()
 	{
-		$args = array();
+		$args = [];
 		foreach($this->mostPopular as $coupon){
-			$args[] = array(
+			$args[] = [
 				'count' => $coupon['count'],
 				'url' => esc_url(add_query_arg('codes['.$this->type.']', $coupon['code'], add_query_arg('last_used', self::SLUG))),
 				'title' => $coupon['code']
-			);
+            ];
 		}
 
 		return $args;
@@ -49,6 +49,6 @@ class MostPopular implements WidgetInterface
 	
 	public function display()
 	{
-		Render::output('admin/reports/widget/most_popular', array('args' => $this->getArgs()));
+		Render::output('admin/reports/widget/most_popular', ['args' => $this->getArgs()]);
 	}
 }

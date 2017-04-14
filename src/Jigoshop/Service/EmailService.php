@@ -33,14 +33,14 @@ class EmailService implements EmailServiceInterface
     /** @var bool */
     private $suppressForWholeRequest = false;
     /** @var array  */
-    private $templates = array();
+    private $templates = [];
 
 	public function __construct(Wordpress $wp, Options $options, Factory $factory)
 	{
         $this->wp = $wp;
         $this->options = $options;
         $this->factory = $factory;
-        $wp->addAction('save_post_'.Types\Email::NAME, array($this, 'savePost'), 10);
+        $wp->addAction('save_post_'.Types\Email::NAME, [$this, 'savePost'], 10);
 	}
 
 	/**
@@ -99,7 +99,7 @@ class EmailService implements EmailServiceInterface
 	public function findByQuery($query)
 	{
 		$results = $query->get_posts();
-		$emails = array();
+		$emails = [];
 
 		// TODO: Maybe it is good to optimize this to fetch all found emails at once?
 		foreach ($results as $email) {
@@ -226,7 +226,7 @@ class EmailService implements EmailServiceInterface
 	 * @param array $args Arguments to the email.
 	 * @param       $to   string Receiver address.
 	 */
-	public function send($hook, array $args = array(), $to)
+	public function send($hook, array $args = [], $to)
 	{
 		if ($this->suppress) {
 			$this->suppress = false;
@@ -251,11 +251,11 @@ class EmailService implements EmailServiceInterface
                 $email->setSubject(empty($email->getSubject()) ? $email->getTitle() : $email->getSubject());
                 $this->filterEmail($email, $args);
 
-                $headers = array(
+                $headers = [
 					'MIME-Version: 1.0',
 					'Content-Type: text/html; charset=UTF-8',
 					'From: "'.$this->options->get('general.emails.from').'" <'.$this->options->get('general.email').'>',
-				);
+                ];
                 $footer = $this->options->get('general.emails.footer');
                 $post->post_content = $footer ? $post->post_content.'<br/><br/>'.$footer : $post->post_content;
 

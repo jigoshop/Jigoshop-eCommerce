@@ -22,74 +22,74 @@ class FactoriesConfiguration implements ConfigurationInterface
 	 */
 	public function addServices(Services $services)
 	{
-		$services->setDetails('jigoshop.factory.order_service', 'Jigoshop\Factory\OrderService', array(
+		$services->setDetails('jigoshop.factory.order_service', 'Jigoshop\Factory\OrderService', [
 			'wpal',
 			'jigoshop.options',
 			'jigoshop.factory.order'
-		));
-		$services->setDetails('jigoshop.factory.product_service', 'Jigoshop\Factory\ProductService', array(
+        ]);
+		$services->setDetails('jigoshop.factory.product_service', 'Jigoshop\Factory\ProductService', [
 			'wpal',
 			'jigoshop.options',
 			'jigoshop.factory.product'
-		));
-        $services->setDetails('jigoshop.factory.session_service', 'Jigoshop\Factory\SessionService', array(
+        ]);
+        $services->setDetails('jigoshop.factory.session_service', 'Jigoshop\Factory\SessionService', [
             'wpal',
             'jigoshop.options',
             'jigoshop.factory.session'
-        ));
-		$services->setDetails('jigoshop.factory.variable_product_service', 'Jigoshop\Factory\Product\VariableService', array(
+        ]);
+		$services->setDetails('jigoshop.factory.variable_product_service', 'Jigoshop\Factory\Product\VariableService', [
 			'wpal',
 			'jigoshop.options',
 			'jigoshop.factory.product.variable',
 			'jigoshop.service.product'
-		));
-		$services->setDetails('jigoshop.factory.tax_service', 'Jigoshop\Factory\TaxService', array(
+        ]);
+		$services->setDetails('jigoshop.factory.tax_service', 'Jigoshop\Factory\TaxService', [
 			'wpal',
 			'jigoshop.options',
 			'jigoshop.service.customer'
-		));
-		$services->setDetails('jigoshop.factory.customer_service', 'Jigoshop\Factory\CustomerService', array(
+        ]);
+		$services->setDetails('jigoshop.factory.customer_service', 'Jigoshop\Factory\CustomerService', [
 			'wpal',
 			'jigoshop.options',
 			'jigoshop.factory.customer',
             'jigoshop.service.session'
-		));
-		$services->setDetails('jigoshop.factory.product', 'Jigoshop\Factory\Product', array(
+        ]);
+		$services->setDetails('jigoshop.factory.product', 'Jigoshop\Factory\Product', [
 			'wpal',
 			'jigoshop.options'
-		));
-		$services->setDetails('jigoshop.factory.product.variable', 'Jigoshop\Factory\Product\Variable', array(
+        ]);
+		$services->setDetails('jigoshop.factory.product.variable', 'Jigoshop\Factory\Product\Variable', [
 			'wpal',
 			'jigoshop.service.product'
-		));
-        $services->setDetails('jigoshop.factory.session', 'Jigoshop\Factory\Session', array(
+        ]);
+        $services->setDetails('jigoshop.factory.session', 'Jigoshop\Factory\Session', [
             'wpal',
             'jigoshop.options'
-        ));
-		$services->setDetails('jigoshop.factory.order', 'Jigoshop\Factory\Order', array(
+        ]);
+		$services->setDetails('jigoshop.factory.order', 'Jigoshop\Factory\Order', [
 			'wpal',
 			'jigoshop.options',
 			'jigoshop.messages'
-		));
-		$services->setDetails('jigoshop.factory.customer', 'Jigoshop\Factory\Customer', array(
+        ]);
+		$services->setDetails('jigoshop.factory.customer', 'Jigoshop\Factory\Customer', [
 			'wpal',
             'jigoshop.service.session'
-		));
-		$services->setDetails('jigoshop.factory.shipping_service', 'Jigoshop\Factory\ShippingService', array(
+        ]);
+		$services->setDetails('jigoshop.factory.shipping_service', 'Jigoshop\Factory\ShippingService', [
 			'wpal',
 			'jigoshop.options'
-		));
-		$services->setDetails('jigoshop.factory.payment_service', 'Jigoshop\Factory\PaymentService', array(
+        ]);
+		$services->setDetails('jigoshop.factory.payment_service', 'Jigoshop\Factory\PaymentService', [
 			'wpal',
 			'jigoshop.options'
-		));
-		$services->setDetails('jigoshop.factory.email', 'Jigoshop\Factory\Email', array(
+        ]);
+		$services->setDetails('jigoshop.factory.email', 'Jigoshop\Factory\Email', [
 			'wpal',
 			'jigoshop.options'
-		));
-		$services->setDetails('jigoshop.factory.coupon', 'Jigoshop\Factory\Coupon', array(
+        ]);
+		$services->setDetails('jigoshop.factory.coupon', 'Jigoshop\Factory\Coupon', [
 			'wpal'
-		));
+        ]);
 
 		$services->setLazyStaus('jigoshop.factory.product', true);
 		$services->setLazyStaus('jigoshop.factory.session', true);
@@ -117,13 +117,13 @@ class FactoriesConfiguration implements ConfigurationInterface
 	 */
 	public function addTriggers(Triggers $triggers)
 	{
-		$triggers->add('jigoshop.service.order', 'jigoshop.factory.order', 'init', array(
+		$triggers->add('jigoshop.service.order', 'jigoshop.factory.order', 'init', [
 			'jigoshop.service.customer',
 			'jigoshop.service.product',
 			'jigoshop.service.shipping',
 			'jigoshop.service.payment',
 			'jigoshop.service.coupon'
-		));
+        ]);
 	}
 
 	/**

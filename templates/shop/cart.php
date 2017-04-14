@@ -19,10 +19,10 @@ use Jigoshop\Helper\Tax;
  */
 ?>
 <h1><?php _e('Cart', 'jigoshop'); ?></h1>
-<?php Render::output('shop/messages', array('messages' => $messages)); ?>
+<?php Render::output('shop/messages', ['messages' => $messages]); ?>
 <?= wpautop(wptexturize($content)); ?>
 <?php if ($cart->isEmpty()): ?>
-	<?php Render::output('shop/cart/empty', array('shopUrl' => $shopUrl)); ?>
+	<?php Render::output('shop/cart/empty', ['shopUrl' => $shopUrl]); ?>
 <?php else: ?>
     <?php do_action('jigoshop\template\cart\form\before'); ?>
 	<form id="cart" role="form" action="" method="post">
@@ -46,7 +46,7 @@ use Jigoshop\Helper\Tax;
 			</thead>
 			<tbody>
 				<?php foreach($cart->getItems() as $key => $item): /** @var $item \Jigoshop\Entity\Order\Item */ ?>
-					<?php Render::output('shop/cart/item/'.$item->getType(), array('cart' => $cart, 'key' => $key, 'item' => $item, 'showWithTax' => $showWithTax, 'suffix' => $suffix)); ?>
+					<?php Render::output('shop/cart/item/'.$item->getType(), ['cart' => $cart, 'key' => $key, 'item' => $item, 'showWithTax' => $showWithTax, 'suffix' => $suffix]); ?>
 				<?php endforeach; ?>
 				<?php /** @deprectated */ do_action('jigoshop\cart\table_body', $cart); ?>
                 <?php do_action('jigoshop\template\cart\table_body', $cart); ?>
@@ -54,12 +54,12 @@ use Jigoshop\Helper\Tax;
 			<tfoot>
 				<tr>
 					<td colspan="4">
-						<?php \Jigoshop\Helper\Forms::text(array(
+						<?php \Jigoshop\Helper\Forms::text([
 							'id' => 'jigoshop_coupons',
 							'name' => 'jigoshop_coupons',
 							'placeholder' => __('Enter coupons...', 'jigoshop'),
 							'value' => join(',', array_map(function($coupon){ return $coupon->getCode(); }, $cart->getCoupons())),
-						)); ?>
+                        ]); ?>
 					</td>
 					<?php $productSubtotal = $showWithTax ? $cart->getProductSubtotal() + $cart->getTotalTax() : $cart->getProductSubtotal(); ?>
 					<th scope="row" class="text-right"><?php _e('Products subtotal', 'jigoshop'); ?></th>
@@ -102,9 +102,9 @@ use Jigoshop\Helper\Tax;
 								<ul class="list-group" id="shipping-methods">
 									<?php foreach($shippingMethods as $method): /** @var $method \Jigoshop\Shipping\Method */ ?>
 										<?php if ($method instanceof \Jigoshop\Shipping\MultipleMethod): ?>
-											<?php Render::output('shop/cart/shipping/multiple_method', array('method' => $method, 'cart' => $cart)); ?>
+											<?php Render::output('shop/cart/shipping/multiple_method', ['method' => $method, 'cart' => $cart]); ?>
 										<?php else: ?>
-											<?php Render::output('shop/cart/shipping/method', array('method' => $method, 'cart' => $cart)); ?>
+											<?php Render::output('shop/cart/shipping/method', ['method' => $method, 'cart' => $cart]); ?>
 										<?php endif; ?>
 									<?php endforeach; ?>
 								</ul>
@@ -116,35 +116,35 @@ use Jigoshop\Helper\Tax;
 										</h3>
 									</div>
 									<div class="panel-body">
-										<?php \Jigoshop\Helper\Forms::select(array(
+										<?php \Jigoshop\Helper\Forms::select([
 											'name' => 'country',
 											'value' => $customer->getShippingAddress()->getCountry(),
 											'options' => Country::getAllowed(),
-										)); ?>
-										<?php \Jigoshop\Helper\Forms::hidden(array(
+                                        ]); ?>
+										<?php \Jigoshop\Helper\Forms::hidden([
 											'id' => 'state',
 											'name' => 'state',
 											'value' => $customer->getShippingAddress()->getState(),
-										)); ?>
+                                        ]); ?>
 										<?php if ($customer->getShippingAddress()->getCountry() && Country::hasStates($customer->getShippingAddress()->getCountry())): ?>
-											<?php \Jigoshop\Helper\Forms::select(array(
+											<?php \Jigoshop\Helper\Forms::select([
 												'id' => 'noscript_state',
 												'name' => 'state',
 												'value' => $customer->getShippingAddress()->getState(),
 												'options' => Country::getStates($customer->getShippingAddress()->getCountry()),
-											)); ?>
+                                            ]); ?>
 										<?php else: ?>
-											<?php \Jigoshop\Helper\Forms::text(array(
+											<?php \Jigoshop\Helper\Forms::text([
 												'id' => 'noscript_state',
 												'name' => 'state',
 												'value' => $customer->getShippingAddress()->getState(),
-											)); ?>
+                                            ]); ?>
 										<?php endif; ?>
-										<?php \Jigoshop\Helper\Forms::text(array(
+										<?php \Jigoshop\Helper\Forms::text([
 											'name' => 'postcode',
 											'value' => $customer->getShippingAddress()->getPostcode(),
 											'placeholder' => __('Postcode', 'jigoshop'),
-										)); ?>
+                                        ]); ?>
 									</div>
 								</div>
 								<button name="action" value="update-shipping" class="btn btn-default pull-right" id="change-destination"><?php _e('Change destination', 'jigoshop'); ?></button>

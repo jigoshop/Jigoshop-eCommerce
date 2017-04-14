@@ -83,7 +83,7 @@ class Attributes extends BaseController implements ApiControllerContract
          * @apiUse AttributeReturnObject
          * @apiPermission read_products
          */
-        $app->get('', array($this, 'findAll'));
+        $app->get('', [$this, 'findAll']);
 
         /**
          * @api {get} /attributes/:id Get Attribute information
@@ -97,7 +97,7 @@ class Attributes extends BaseController implements ApiControllerContract
          * @apiUse validateObjectFindingError
          * @apiPermission read_products
          */
-        $app->get('/{id:[0-9]+}', array($this, 'findOne'));
+        $app->get('/{id:[0-9]+}', [$this, 'findOne']);
 
         /**
          * @api {post} /attributes Create attribute
@@ -107,7 +107,7 @@ class Attributes extends BaseController implements ApiControllerContract
          * @apiUse AttributeData
          * @apiUse StandardSuccessResponse
          */
-        $app->post('', array($this, 'create'))->add(new RequiredFieldsMiddleware($app));
+        $app->post('', [$this, 'create'])->add(new RequiredFieldsMiddleware($app));
 
         /**
          * @api {put} /attributes/:id Update attribute
@@ -120,7 +120,7 @@ class Attributes extends BaseController implements ApiControllerContract
          * @apiUse StandardSuccessResponse
          * @apiUse validateObjectFindingError
          */
-        $app->put('/{id:[0-9]+}', array($this, 'update'))->add(new RequiredFieldsMiddleware($app));
+        $app->put('/{id:[0-9]+}', [$this, 'update'])->add(new RequiredFieldsMiddleware($app));
 
         /**
          * @api {delete} /attributes/:id Delete attribute
@@ -132,7 +132,7 @@ class Attributes extends BaseController implements ApiControllerContract
          * @apiUse StandardSuccessResponse
          * @apiUse validateObjectFindingError
          */
-        $app->delete('/{id:[0-9]+}', array($this, 'delete'));
+        $app->delete('/{id:[0-9]+}', [$this, 'delete']);
 
         //options single routes
         /**
@@ -147,7 +147,7 @@ class Attributes extends BaseController implements ApiControllerContract
          * @apiError UnprocessableEntity Attribute Id was not provided.
          * @apiError ObjectNotFound Attribute have not been found.
          */
-        $app->post('/{id:[0-9]+}/options', array($this, 'addOption'))
+        $app->post('/{id:[0-9]+}/options', [$this, 'addOption'])
             ->add(new RequiredFieldsMiddleware($app, ['requirementsName' => 'attributeOptions']));
 
         /**
@@ -164,7 +164,7 @@ class Attributes extends BaseController implements ApiControllerContract
          * @apiError UnprocessableEntity Attribute Id or Option Id was not provided.
          * @apiError ObjectNotFound Attribute have not been found or it does not have this option.
          */
-        $app->put('/{id:[0-9]+}/options/{optionId:[0-9]+}', array($this, 'updateOption'));
+        $app->put('/{id:[0-9]+}/options/{optionId:[0-9]+}', [$this, 'updateOption']);
 
         /**
          * @api {delete} /attributes/:id/options/:id Delete attribute option
@@ -178,7 +178,7 @@ class Attributes extends BaseController implements ApiControllerContract
          * @apiError UnprocessableEntity Attribute Id or Option Id was not provided.
          * @apiError ObjectNotFound Attribute have not been found or it does not have this option.
          */
-        $app->delete('/{id:[0-9]+}/options/{optionId:[0-9]+}', array($this, 'deleteOption'));
+        $app->delete('/{id:[0-9]+}/options/{optionId:[0-9]+}', [$this, 'deleteOption']);
     }
 
     /**
@@ -337,7 +337,7 @@ class Attributes extends BaseController implements ApiControllerContract
      */
     private function saveAttribute($data, $attributeId = null)
     {
-        $errors = array();
+        $errors = [];
         if (!isset($data['label']) || empty($data['label'])) {
             $errors[] = __('Attribute label is not set.', 'jigoshop');
         }

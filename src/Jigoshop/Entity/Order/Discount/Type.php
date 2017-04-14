@@ -46,10 +46,10 @@ class Type
     public static function getTypes()
     {
         if (self::$types === null) {
-            self::$types = self::$wp->applyFilters('jigoshop\order\discount\types', array(
+            self::$types = self::$wp->applyFilters('jigoshop\order\discount\types', [
                 Type::COUPON => __('Coupon', 'jigoshop'),
                 Type::USER_DEFINED => __('User Defined', 'jigoshop'),
-            ));
+            ]);
         }
 
         return self::$types;

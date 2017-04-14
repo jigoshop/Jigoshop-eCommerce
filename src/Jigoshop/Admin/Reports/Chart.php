@@ -21,11 +21,11 @@ abstract class Chart
 	/** @var Options  */
 	protected $options;
 	/** @var array  */
-	protected $charColors = array();
+	protected $charColors = [];
 	/** @var array  */
-	protected $range = array();
+	protected $range = [];
 	/** @var array  */
-	protected $orderStatus = array();
+	protected $orderStatus = [];
 	/** @var  string */
 	protected $currentRange;
 	/** @var  string */
@@ -42,10 +42,10 @@ abstract class Chart
 		$this->wp = $wp;
 		$this->options = $options;
 		$this->currentRange = $currentRange;
-		$this->orderStatus = isset($_GET['order_status']) && !empty($_GET['order_status']) ? $_GET['order_status'] : array('jigoshop-completed', 'jigoshop-processing');
+		$this->orderStatus = isset($_GET['order_status']) && !empty($_GET['order_status']) ? $_GET['order_status'] : ['jigoshop-completed', 'jigoshop-processing'];
 		$wp->addAction('admin_enqueue_scripts', function () use ($wp){
 			// Weed out all admin pages except the Jigoshop Settings page hits
-			if (!in_array($wp->getPageNow(), array('admin.php', 'options.php'))) {
+			if (!in_array($wp->getPageNow(), ['admin.php', 'options.php'])) {
 				return;
 			}
 
@@ -53,16 +53,16 @@ abstract class Chart
 			if ($screen->base != 'jigoshop_page_'.Reports::NAME) {
 				return;
 			}
-			Scripts::add('jigoshop.vendors.flot', \JigoshopInit::getUrl().'/assets/js/vendors/flot.js', array('jquery'));
+			Scripts::add('jigoshop.vendors.flot', \JigoshopInit::getUrl().'/assets/js/vendors/flot.js', ['jquery']);
 			/*Scripts::add('jigoshop.vendors.flot', \Jigoshop::getUrl().'/assets/js/flot/jquery.flot.min.js', array('jquery'));
 			Scripts::add('jigoshop.vendors.flot2', \Jigoshop::getUrl().'/assets/js/flot/jquery.flot.stack.min.js', array('jquery'));
 			Scripts::add('jigoshop.vendors.flot3', \Jigoshop::getUrl().'/assets/js/flot/jquery.flot.pie.min.js', array('jquery'));
 			Scripts::add('jigoshop.vendors.flot4', \Jigoshop::getUrl().'/assets/js/flot/jquery.flot.resize.min.js', array('jquery'));
 			Scripts::add('jigoshop.vendors.flot5', \Jigoshop::getUrl().'/assets/js/flot/jquery.flot.time.min.js', array('jquery'));*/
-			Scripts::add('jigoshop.reports.chart', \JigoshopInit::getUrl().'/assets/js/admin/reports/chart.js', array(
+			Scripts::add('jigoshop.reports.chart', \JigoshopInit::getUrl().'/assets/js/admin/reports/chart.js', [
 					'jquery',
 					'jigoshop.vendors.flot'
-			));
+            ]);
 		});
 	}
 
@@ -212,7 +212,7 @@ abstract class Chart
 	 */
 	protected function prepareChartData($data, $dateKey, $dataKey, $interval, $startDate, $groupBy)
 	{
-		$preparedData = array();
+		$preparedData = [];
 
 		// Ensure all days (or months) have values first in this range
 		for ($i = 0; $i <= $interval; $i++) {
@@ -230,7 +230,7 @@ abstract class Chart
 			}
 
 			if (!isset($preparedData[$time])) {
-				$preparedData[$time] = array(esc_js($time), 0);
+				$preparedData[$time] = [esc_js($time), 0];
 			}
 		}
 
@@ -289,17 +289,17 @@ abstract class Chart
 	 * @param  array $args
 	 * @return array|string depending on query_type
 	 */
-	public function prepareQuery($args = array())
+	public function prepareQuery($args = [])
 	{
-		$defaultArgs = array(
-			'select' => array(),
-			'from' => array(),
-			'join' => array(),
-			'where' => array(),
+		$defaultArgs = [
+			'select' => [],
+			'from' => [],
+			'join' => [],
+			'where' => [],
 			'group_by' => '',
 			'order_by' => '',
 			'filter_range' => false,
-		);
+        ];
 		$args = $this->wp->applyFilters('jigoshop\admin\reports\chart\report_query_args', $args);
 		$args = wp_parse_args($args, $defaultArgs);
 
@@ -307,14 +307,14 @@ abstract class Chart
 			return '';
 		}
 
-		$query = implode(' ', array(
+		$query = implode(' ', [
 			$this->prepareQuerySelect($args['select']),
 			$this->prepareQueryFrom($args['from']),
 			$this->prepareQueryJoin($args['join']),
 			$this->prepareQueryWhere($args['where'], $args['filter_range']),
 			$this->prepareQueryGroupBy($args['group_by']),
 			$this->prepareQueryOrderBy($args['order_by'])
-		));
+        ]);
 		return $query;
 	}
 

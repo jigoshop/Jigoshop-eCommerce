@@ -16,7 +16,7 @@ use Jigoshop\Helper\Render;
         <div class="tab-content">
             <?php foreach($menu as $id => $name) : ?>
             <div class="tab-pane<?= $id == 'gallery' ? ' active' : ''; ?>" id="<?= $id; ?>">
-                <?php Render::output('admin/product/attachments/'.$id, array()); ?>
+                <?php Render::output('admin/product/attachments/'.$id, []); ?>
             </div>
             <?php endforeach; ?>
         </div>

@@ -18,18 +18,18 @@ class BestSellers extends \WP_Widget
 
 	public function __construct()
 	{
-		$options = array(
+		$options = [
 			'classname' => self::ID,
 			'description' => __('Lists the best selling products', 'jigoshop')
-		);
+        ];
 
 		// Create the widget
 		parent::__construct(self::ID, __('Jigoshop: Best Sellers', 'jigoshop'), $options);
 
 		// Flush cache after every save
-		add_action('save_post', array($this, 'deleteTransient'));
-		add_action('deleted_post', array($this, 'deleteTransient'));
-		add_action('switch_theme', array($this, 'deleteTransient'));
+		add_action('save_post', [$this, 'deleteTransient']);
+		add_action('deleted_post', [$this, 'deleteTransient']);
+		add_action('switch_theme', [$this, 'deleteTransient']);
 	}
 
 	public static function setProductService($productService)
@@ -74,7 +74,7 @@ class BestSellers extends \WP_Widget
 		}
 
 		// Set up query
-		$query_args = array(
+		$query_args = [
 			'posts_per_page' => $number,
 			'post_type' => Types::PRODUCT,
 			'post_status' => 'publish',
@@ -82,24 +82,24 @@ class BestSellers extends \WP_Widget
 			'orderby' => 'meta_value_num+0',
 			'order' => 'desc',
 			'nopaging' => false,
-			'meta_query' => array(
-				array(
+			'meta_query' => [
+				[
 					'key' => 'visibility',
-					'value' => array(Product::VISIBILITY_CATALOG, Product::VISIBILITY_PUBLIC),
+					'value' => [Product::VISIBILITY_CATALOG, Product::VISIBILITY_PUBLIC],
 					'compare' => 'IN',
-				),
-			)
-		);
+                ],
+            ]
+        ];
 
 		// Run the query
 		$q = new \WP_Query($query_args);
 		$products = self::$productService->findByQuery($q);
 
 		if (!empty($products)) {
-			Render::output('widget/best_sellers/widget', array_merge($args, array(
+			Render::output('widget/best_sellers/widget', array_merge($args, [
 				'title' => $title,
 				'products' => $products,
-			)));
+            ]));
 		}
 
 		// Flush output buffer and save to transient cache
@@ -148,13 +148,13 @@ class BestSellers extends \WP_Widget
 		$title = isset($instance['title']) ? esc_attr($instance['title']) : null;
 		$number = isset($instance['number']) ? absint($instance['number']) : 5;
 
-		Render::output('widget/best_sellers/form', array(
+		Render::output('widget/best_sellers/form', [
 			'title_id' => $this->get_field_id('title'),
 			'title_name' => $this->get_field_name('title'),
 			'title' => $title,
 			'number_id' => $this->get_field_id('number'),
 			'number_name' => $this->get_field_name('number'),
 			'number' => $number,
-		));
+        ]);
 	}
 }

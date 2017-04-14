@@ -37,7 +37,7 @@ class CouponService implements CouponServiceInterface
         $this->wp = $wp;
         $this->options = $options;
         $this->factory = $factory;
-        $wp->addAction('save_post_' . Types\Coupon::NAME, array($this, 'savePost'), 10);
+        $wp->addAction('save_post_' . Types\Coupon::NAME, [$this, 'savePost'], 10);
     }
 
     /**
@@ -138,12 +138,12 @@ class CouponService implements CouponServiceInterface
     public function getTypes()
     {
         if ($this->types === null) {
-            $this->types = $this->wp->applyFilters('jigoshop\service\coupon\types', array(
+            $this->types = $this->wp->applyFilters('jigoshop\service\coupon\types', [
                 Entity::FIXED_CART => __('Cart Discount', 'jigoshop'),
                 Entity::PERCENT_CART => __('Cart % Discount', 'jigoshop'),
                 Entity::FIXED_PRODUCT => __('Product Discount', 'jigoshop'),
                 Entity::PERCENT_PRODUCT => __('Product % Discount', 'jigoshop')
-            ));
+            ]);
         }
 
         return $this->types;
@@ -156,7 +156,7 @@ class CouponService implements CouponServiceInterface
      */
     public function getByCodes(array $codes)
     {
-        $coupons = array();
+        $coupons = [];
         foreach ($codes as $code) {
             $coupons[] = $this->findByCode($code);
         }
@@ -189,10 +189,10 @@ class CouponService implements CouponServiceInterface
      */
     public function findByCode($code)
     {
-        $query = new \WP_Query(array(
+        $query = new \WP_Query([
             'post_type' => Types::COUPON,
             'name' => $code,
-        ));
+        ]);
 
         $results = $this->findByQuery($query);
 
@@ -224,7 +224,7 @@ class CouponService implements CouponServiceInterface
     public function findByQuery($query)
     {
         $results = $query->get_posts();
-        $coupons = array();
+        $coupons = [];
 
         // TODO: Maybe it is good to optimize this to fetch all found coupons at once?
         foreach ($results as $coupon) {

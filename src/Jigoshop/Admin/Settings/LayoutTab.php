@@ -42,7 +42,7 @@ class LayoutTab implements TabInterface
                 return;
             }
             Scripts::add('jigoshop.admin.layout', \JigoshopInit::getUrl() . '/assets/js/admin/settings/layout.js',
-                array('jquery'), array('page' => 'jigoshop_page_jigoshop_settings'));
+                ['jquery'], ['page' => 'jigoshop_page_jigoshop_settings']);
         });
     }
 

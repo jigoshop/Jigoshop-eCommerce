@@ -25,36 +25,36 @@ if ($product instanceof Product\Saleable) {
 ?>
 <fieldset>
 	<?php
-	Forms::checkbox(array(
+	Forms::checkbox([
 		'name' => 'product[sales_enabled]',
 		'id' => 'sales-enabled',
 		'label' => __('Put product on sale?', 'jigoshop'),
 		'checked' => $enabled,
-	));
+    ]);
 	?>
 </fieldset>
 <fieldset class="schedule" style="<?php !$enabled and print 'display: none;'; ?>">
 	<h3><?php _e('Schedule', 'jigoshop'); ?></h3>
 	<?php
-	Forms::text(array(
+	Forms::text([
 		'name' => 'product[sales_price]',
 		'label' => __('Sale price', 'jigoshop'),
 		'value' => $price,
 		'placeholder' => __('15% or 19.99', 'jigoshop'),
-	));
-	Forms::daterange(array(
+    ]);
+	Forms::daterange([
 		'id' => 'product_sales_date',
-		'name' => array(
+		'name' => [
 			'from' => 'product[sales_from]',
 			'to' => 'product[sales_to]',
-		),
+        ],
 		'id' => 'sales-range',
 		'label' => __('Sale date', 'jigoshop'),
-		'value' => array(
+		'value' => [
 			'from' => $from,
 			'to' => $to,
-		),
-	));
+        ],
+    ]);
 	?>
 </fieldset>
 <?php do_action('jigoshop\product\tabs\sales', $product); ?>

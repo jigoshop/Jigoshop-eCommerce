@@ -18,7 +18,7 @@ use Jigoshop\Helper\Render;
 ?>
 
 <h1><?php _e('My account', 'jigoshop'); ?></h1>
-<?php Render::output('shop/messages', array('messages' => $messages)); ?>
+<?php Render::output('shop/messages', ['messages' => $messages]); ?>
 <?= wpautop(wptexturize($content)); ?>
 <div class="col-md-8">
 		<div class="panel panel-default">
@@ -27,7 +27,7 @@ use Jigoshop\Helper\Render;
 				<a href="<?= $editBillingAddressUrl; ?>" class="btn btn-xs btn-primary pull-right"><?php _e('Edit', 'jigoshop'); ?></a>
 			</div>
 			<div class="panel-body clearfix">
-				<?php Render::output('user/account/address', array('address' => $customer->getBillingAddress())); ?>
+				<?php Render::output('user/account/address', ['address' => $customer->getBillingAddress()]); ?>
 			</div>
 		</div>
 		<div class="panel panel-default">
@@ -36,7 +36,7 @@ use Jigoshop\Helper\Render;
 				<a href="<?= $editShippingAddressUrl; ?>" class="btn btn-xs btn-primary pull-right"><?php _e('Edit', 'jigoshop'); ?></a>
 			</div>
 			<div class="panel-body">
-				<?php Render::output('user/account/address', array('address' => $customer->getShippingAddress())); ?>
+				<?php Render::output('user/account/address', ['address' => $customer->getShippingAddress()]); ?>
 			</div>
 		</div>
         <?php if(count($downloadableItems)): ?>

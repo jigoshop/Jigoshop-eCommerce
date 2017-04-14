@@ -31,13 +31,13 @@ class MostDiscount implements WidgetInterface
 
 	public function getArgs()
 	{
-		$args = array();
+		$args = [];
 		foreach($this->mostDiscount as $data){
-			$args[] = array(
+			$args[] = [
 				'total' => Product::formatPrice($data['amount']),
 				'url' => esc_url(add_query_arg('codes['.$this->type.']', $data['code'], add_query_arg('last_used', self::SLUG))),
 				'title' => $data['code']
-			);
+            ];
 		}
 
 		return $args;
@@ -50,6 +50,6 @@ class MostDiscount implements WidgetInterface
 	
 	public function display()
 	{
-		Render::output('admin/reports/widget/most_discount', array('args' => $this->getArgs()));
+		Render::output('admin/reports/widget/most_discount', ['args' => $this->getArgs()]);
 	}
 }

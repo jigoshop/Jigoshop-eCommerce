@@ -37,21 +37,21 @@ $hasLabel = !empty($label);
                             <?php if (isset($item['items'])): ?>
                                 <optgroup label="<?= $option; ?>">
                                     <?php foreach ($item['items'] as $subvalue => $subitem): $subitem['disabled'] = isset($subitem['disabled']) && $subitem['disabled'] ? true : false; ?>
-                                        <?php Render::output('admin/forms/select/option', array(
+                                        <?php Render::output('admin/forms/select/option', [
                                             'label' => $subitem['label'],
                                             'disabled' => $subitem['disabled'],
                                             'value' => $subvalue,
                                             'current' => $value
-                                        )); ?>
+                                        ]); ?>
                                     <?php endforeach; ?>
                                 </optgroup>
                             <?php else: $item['disabled'] = isset($item['disabled']) && $item['disabled'] ? true : false; ?>
-                                <?php Render::output('admin/forms/select/option', array(
+                                <?php Render::output('admin/forms/select/option', [
                                     'label' => $item['label'],
                                     'disabled' => $item['disabled'],
                                     'value' => $option,
                                     'current' => $value
-                                )); ?>
+                                ]); ?>
                             <?php endif; ?>
                         <?php endforeach; ?>
                     </select>

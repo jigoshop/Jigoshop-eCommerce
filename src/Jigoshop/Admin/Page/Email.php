@@ -26,22 +26,22 @@ class Email
 		$this->options = $options;
 		$this->emailService = $emailService;
 
-		add_action('wp_ajax_jigoshop.admin.email.update_variable_list', array($this, 'ajaxVariables'));
+		add_action('wp_ajax_jigoshop.admin.email.update_variable_list', [$this, 'ajaxVariables']);
 
 		$that = $this;
 		$wp->addAction('add_meta_boxes_'.Types::EMAIL, function () use ($wp, $that){
-			$wp->addMetaBox('jigoshop-email-data', __('Email Data', 'jigoshop'), array($that, 'box'), Types::EMAIL, 'normal', 'default');
-			$wp->addMetaBox('jigoshop-email-variable', __('Email Variables', 'jigoshop'), array($that, 'variablesBox'), Types::EMAIL, 'normal', 'default');
+			$wp->addMetaBox('jigoshop-email-data', __('Email Data', 'jigoshop'), [$that, 'box'], Types::EMAIL, 'normal', 'default');
+			$wp->addMetaBox('jigoshop-email-variable', __('Email Variables', 'jigoshop'), [$that, 'variablesBox'], Types::EMAIL, 'normal', 'default');
 			$wp->addMetaBox('jigoshop-email-attachments', __('Email Attachments', 'jigoshop'), [$that, 'attachmentsBox'], Types::EMAIL, 'side', 'default');
 		});
 
 		$wp->addAction('admin_enqueue_scripts', function () use ($wp){
 			if ($wp->getPostType() == Types::EMAIL) {
-				Scripts::add('jigoshop.admin.email', \JigoshopInit::getUrl().'/assets/js/admin/email.js', array(
+				Scripts::add('jigoshop.admin.email', \JigoshopInit::getUrl().'/assets/js/admin/email.js', [
 					'jquery',
 					'jigoshop.helpers',
                     'wp-util'
-				));
+                ]);
 				Styles::add('jigoshop.admin.email', \JigoshopInit::getUrl().'/assets/css/admin/email.css', ['jigoshop.admin']);
 
 				$wp->doAction('jigoshop\admin\email\assets', $wp);
@@ -68,18 +68,18 @@ class Email
 			$actions = array_intersect($_POST['actions'], $availableActions);
 			$email->setActions($actions);
 
-			$result = array(
+			$result = [
 				'success' => true,
-				'html' => Render::get('admin/email/variables', array(
+				'html' => Render::get('admin/email/variables', [
 					'email' => $email,
 					'emails' => $this->emailService->getMails(),
-				))
-			);
+                ])
+            ];
 		} catch (Exception $e) {
-			$result = array(
+			$result = [
 				'success' => false,
 				'error' => $e->getMessage(),
-			);
+            ];
 		}
 
 		echo json_encode($result);
@@ -96,15 +96,15 @@ class Email
 		$post = $this->wp->getGlobalPost();
 		$email = $this->emailService->findForPost($post);
 
-		$emails = array();
+		$emails = [];
 		foreach ($this->emailService->getMails() as $hook => $details) {
 			$emails[$hook] = $details['description'];
 		}
 
-		Render::output('admin/email/box', array(
+		Render::output('admin/email/box', [
 			'email' => $email,
 			'emails' => $emails,
-		));
+        ]);
 	}
 
 	/**
@@ -117,10 +117,10 @@ class Email
 		$post = $this->wp->getGlobalPost();
 		$email = $this->emailService->findForPost($post);
 
-		Render::output('admin/email/variablesBox', array(
+		Render::output('admin/email/variablesBox', [
 			'email' => $email,
 			'emails' => $this->emailService->getMails(),
-		));
+        ]);
 	}
 
     public function attachmentsBox()

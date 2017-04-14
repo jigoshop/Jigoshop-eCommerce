@@ -19,7 +19,7 @@ class Email implements EntityFactoryInterface
     /** @var Options */
     private $options;
     /** @var array */
-    private $actions = array();
+    private $actions = [];
 
     public function __construct(Wordpress $wp, Options $options)
     {
@@ -36,10 +36,10 @@ class Email implements EntityFactoryInterface
      */
     public function register($action, $description, array $arguments)
     {
-        $this->actions[$action] = array(
+        $this->actions[$action] = [
             'description' => $description,
             'arguments' => $arguments
-        );
+        ];
     }
 
     /**
@@ -111,7 +111,7 @@ class Email implements EntityFactoryInterface
         }
 
         $email = new Entity();
-        $state = array();
+        $state = [];
 
         if ($post) {
             $state = array_map(function ($item) {

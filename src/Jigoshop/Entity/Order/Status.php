@@ -55,14 +55,14 @@ class Status
 	public static function getStatuses()
 	{
 		if (self::$statuses === null) {
-			self::$statuses = self::$wp->applyFilters('jigoshop\order\statuses', array(
+			self::$statuses = self::$wp->applyFilters('jigoshop\order\statuses', [
 				Status::PENDING => __('Pending', 'jigoshop'),
 				Status::ON_HOLD => __('On-Hold', 'jigoshop'),
 				Status::PROCESSING => __('Processing', 'jigoshop'),
 				Status::COMPLETED => __('Completed', 'jigoshop'),
 				Status::CANCELLED => __('Cancelled', 'jigoshop'),
 				Status::REFUNDED => __('Refunded', 'jigoshop'),
-			));
+            ]);
 		}
 
 		return self::$statuses;

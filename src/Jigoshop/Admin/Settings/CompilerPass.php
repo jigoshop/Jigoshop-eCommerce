@@ -27,7 +27,7 @@ class CompilerPass implements CompilerPassInterface
 
 		$tabs = $container->tags->get('jigoshop.admin.settings.tab');
 		foreach ($tabs as $tab) {
-			$container->triggers->add('jigoshop.admin.settings', 'jigoshop.admin.settings', 'addTab', array($tab));
+			$container->triggers->add('jigoshop.admin.settings', 'jigoshop.admin.settings', 'addTab', [$tab]);
 		}
 	}
 }

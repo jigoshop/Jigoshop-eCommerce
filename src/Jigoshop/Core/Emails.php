@@ -27,20 +27,20 @@ class Emails
         $this->options = $options;
         $this->emailService = $emailService;
 
-        $wp->addAction('init', array($this, 'registerMails'), 100);
+        $wp->addAction('init', [$this, 'registerMails'], 100);
         $wp->addAction('jigoshop\order\\' . Order\Status::PENDING . '_to_' . Order\Status::PROCESSING,
-            array($this, 'orderPendingToProcessing'));
+            [$this, 'orderPendingToProcessing']);
         $wp->addAction('jigoshop\order\\' . Order\Status::PENDING . '_to_' . Order\Status::COMPLETED,
-            array($this, 'orderPendingToCompleted'));
+            [$this, 'orderPendingToCompleted']);
         $wp->addAction('jigoshop\order\\' . Order\Status::PENDING . '_to_' . Order\Status::ON_HOLD,
-            array($this, 'orderPendingToOnHold'));
+            [$this, 'orderPendingToOnHold']);
         $wp->addAction('jigoshop\order\\' . Order\Status::ON_HOLD . '_to_' . Order\Status::PROCESSING,
-            array($this, 'orderOnHoldToProcessing'));
-        $wp->addAction('jigoshop\order\\' . Order\Status::COMPLETED, array($this, 'orderCompleted'));
-        $wp->addAction('jigoshop\order\\' . Order\Status::REFUNDED, array($this, 'orderRefunded'));
-        $wp->addAction('jigoshop_low_stock_notification', array($this, 'productLowStock'));
-        $wp->addAction('jigoshop_no_stock_notification', array($this, 'productOutOfStock'));
-        $wp->addAction('jigoshop_product_on_backorders_notification', array($this, 'productBackorders'));
+            [$this, 'orderOnHoldToProcessing']);
+        $wp->addAction('jigoshop\order\\' . Order\Status::COMPLETED, [$this, 'orderCompleted']);
+        $wp->addAction('jigoshop\order\\' . Order\Status::REFUNDED, [$this, 'orderRefunded']);
+        $wp->addAction('jigoshop_low_stock_notification', [$this, 'productLowStock']);
+        $wp->addAction('jigoshop_no_stock_notification', [$this, 'productOutOfStock']);
+        $wp->addAction('jigoshop_product_on_backorders_notification', [$this, 'productBackorders']);
 
         $this->addOrderActions();
         $this->addProductActions();
@@ -62,7 +62,7 @@ class Emails
         $this->emailService->register('low_stock_notification', __('Low Stock Notification'), $stockArguments);
         $this->emailService->register('no_stock_notification', __('No Stock Notification'), $stockArguments);
         $this->emailService->register('product_on_backorders_notification', __('Backorders Notification'), array_merge(
-            $stockArguments, $orderArguments, array('amount' => __('Amount', 'jigoshop'))
+            $stockArguments, $orderArguments, ['amount' => __('Amount', 'jigoshop')]
         ));
         $this->emailService->register('send_customer_invoice', __('Send Customer Invoice'), $orderArguments);
     }
@@ -145,7 +145,7 @@ class Emails
         $arguments = array_merge(
             $this->getOrderEmailArguments($order),
             $this->getStockEmailArguments($product),
-            array('amount' => $amount)
+            ['amount' => $amount]
         );
 
         if ($product instanceof Product\Purchasable) {
@@ -183,7 +183,7 @@ class Emails
         $billingAddress = $order->getCustomer()->getBillingAddress();
         $shippingAddress = $order->getCustomer()->getShippingAddress();
 
-        return $this->wp->applyFilters('jigoshop\emails\order_variables', array(
+        return $this->wp->applyFilters('jigoshop\emails\order_variables', [
             'blog_name' => $this->wp->getBloginfo('name'),
             'order_number' => $order->getNumber(),
             'order_date' => $this->wp->getHelpers()->dateI18n($this->wp->getOption('date_format')),
@@ -232,7 +232,7 @@ class Emails
             'shipping_state' => Country::hasStates($shippingAddress->getCountry()) ? Country::getStateName($shippingAddress->getCountry(),
                 $shippingAddress->getState()) : $shippingAddress->getState(),
             'shipping_state_raw' => $shippingAddress->getState(),
-        ), $order);
+        ], $order);
     }
 
     /**
@@ -291,7 +291,7 @@ class Emails
 
     private function getOrderEmailArgumentsDescription()
     {
-        return apply_filters('jigoshop\email\order_variables_description', array(
+        return apply_filters('jigoshop\email\order_variables_description', [
             'blog_name' => __('Blog Name', 'jigoshop'),
             'order_number' => __('Order Number', 'jigoshop'),
             'order_date' => __('Order Date', 'jigoshop'),
@@ -338,7 +338,7 @@ class Emails
             'shipping_country_raw' => __('Raw Shipping Country', 'jigoshop'),
             'shipping_state' => __('Shipping State', 'jigoshop'),
             'shipping state_raw' => __('Raw Shipping State', 'jigoshop'),
-        ));
+        ]);
     }
 
     /**
@@ -348,7 +348,7 @@ class Emails
      */
     private function getStockEmailArguments($product)
     {
-        return array(
+        return [
             'blog_name' => $this->wp->getBloginfo('name'),
             'shop_name' => $this->options->get('general.company_name'),
             'shop_address_1' => $this->options->get('general.company_address_1'),
@@ -359,12 +359,12 @@ class Emails
             'product_id' => $product->getId(),
             'product_name' => $product->getName(),
             'sku' => $product->getSku(),
-        );
+        ];
     }
 
     private function getStockEmailArgumentsDescription()
     {
-        return array(
+        return [
             'blog_name' => __('Blog Name', 'jigoshop'),
             'shop_name' => __('Shop Name', 'jigoshop'),
             'shop_address_1' => __('Shop Address part 1', 'jigoshop'),
@@ -375,7 +375,7 @@ class Emails
             'product_id' => __('Product ID', 'jigoshop'),
             'product_name' => __('Product Name', 'jigoshop'),
             'sku' => __('SKU', 'jigoshop'),
-        );
+        ];
     }
 
     /**
@@ -389,20 +389,20 @@ class Emails
 
     private function addOrderActions()
     {
-        $this->wp->addAction(sprintf('jigoshop\order\%s_to_%s', Order\Status::PENDING, Order\Status::PROCESSING), array($this, 'orderPendingToProcessing'));
-        $this->wp->addAction(sprintf('jigoshop\order\%s_to_%s', Order\Status::PENDING, Order\Status::COMPLETED), array($this, 'orderPendingToCompleted'));
-        $this->wp->addAction(sprintf('jigoshop\order\%s_to_%s', Order\Status::PENDING, Order\Status::ON_HOLD), array($this, 'orderPendingToOnHold'));
-        $this->wp->addAction(sprintf('jigoshop\order\%s_to_%s', Order\Status::ON_HOLD, Order\Status::PROCESSING), array($this, 'orderOnHoldToProcessing'));
-        $this->wp->addAction(sprintf('jigoshop\order\%s_to_%s', Order\Status::PENDING, Order\Status::PROCESSING), array($this, 'orderPendingToProcessing'));
-        $this->wp->addAction(sprintf('jigoshop\order\%s', Order\Status::COMPLETED), array($this, 'orderCompleted'));
-        $this->wp->addAction(sprintf('jigoshop\order\%s', Order\Status::REFUNDED), array($this, 'orderRefunded'));
+        $this->wp->addAction(sprintf('jigoshop\order\%s_to_%s', Order\Status::PENDING, Order\Status::PROCESSING), [$this, 'orderPendingToProcessing']);
+        $this->wp->addAction(sprintf('jigoshop\order\%s_to_%s', Order\Status::PENDING, Order\Status::COMPLETED), [$this, 'orderPendingToCompleted']);
+        $this->wp->addAction(sprintf('jigoshop\order\%s_to_%s', Order\Status::PENDING, Order\Status::ON_HOLD), [$this, 'orderPendingToOnHold']);
+        $this->wp->addAction(sprintf('jigoshop\order\%s_to_%s', Order\Status::ON_HOLD, Order\Status::PROCESSING), [$this, 'orderOnHoldToProcessing']);
+        $this->wp->addAction(sprintf('jigoshop\order\%s_to_%s', Order\Status::PENDING, Order\Status::PROCESSING), [$this, 'orderPendingToProcessing']);
+        $this->wp->addAction(sprintf('jigoshop\order\%s', Order\Status::COMPLETED), [$this, 'orderCompleted']);
+        $this->wp->addAction(sprintf('jigoshop\order\%s', Order\Status::REFUNDED), [$this, 'orderRefunded']);
     }
 
     private function addProductActions()
     {
-        $this->wp->addAction('jigoshop\product\low_stock', array($this, 'productLowStock'));
-        $this->wp->addAction('jigoshop\product\out_of_stock', array($this, 'productOutOfStock'));
-        $this->wp->addAction('jigoshop\product\backorders', array($this, 'productBackorders'));
+        $this->wp->addAction('jigoshop\product\low_stock', [$this, 'productLowStock']);
+        $this->wp->addAction('jigoshop\product\out_of_stock', [$this, 'productOutOfStock']);
+        $this->wp->addAction('jigoshop\product\backorders', [$this, 'productBackorders']);
     }
 }
 

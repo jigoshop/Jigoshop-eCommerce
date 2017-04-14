@@ -5,9 +5,9 @@
  */
 ?>
 <div class="jigoshop">
-	<?php \Jigoshop\Helper\Render::output('admin/email/variables', array(
+	<?php \Jigoshop\Helper\Render::output('admin/email/variables', [
 		'email' => $email,
 		'emails' => $emails,
-	)); ?>
+    ]); ?>
 </div>
 <div class="clear"></div>

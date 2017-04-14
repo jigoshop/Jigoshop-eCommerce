@@ -69,16 +69,16 @@ class Downloadable implements Type
 	 */
 	public function initialize(Wordpress $wp, array $enabledTypes)
 	{
-		$wp->addFilter('jigoshop\cart\add', array($this, 'addToCart'), 10, 2);
-		$wp->addFilter('jigoshop\emails\order_item', array($this, 'emailLink'), 10, 3);
-		$wp->addFilter('jigoshop\core\types\variable\subtypes', array($this, 'addVariableSubtype'), 10, 1);
-		$wp->addAction('jigoshop\order\before\\'.Order\Status::PROCESSING, array($this, 'updateProcessingStatus'));
-		$wp->addFilter('jigoshop\product\reduce_stock_status', array($this, 'reduceStockStatus'), 10, 2);
+		$wp->addFilter('jigoshop\cart\add', [$this, 'addToCart'], 10, 2);
+		$wp->addFilter('jigoshop\emails\order_item', [$this, 'emailLink'], 10, 3);
+		$wp->addFilter('jigoshop\core\types\variable\subtypes', [$this, 'addVariableSubtype'], 10, 1);
+		$wp->addAction('jigoshop\order\before\\'.Order\Status::PROCESSING, [$this, 'updateProcessingStatus']);
+		$wp->addFilter('jigoshop\product\reduce_stock_status', [$this, 'reduceStockStatus'], 10, 2);
 
-		$wp->addAction('jigoshop\admin\product\assets', array($this, 'addAssets'), 10, 0);
-		$wp->addFilter('jigoshop\admin\product\menu', array($this, 'addProductMenu'));
-		$wp->addFilter('jigoshop\admin\product\tabs', array($this, 'addProductTab'), 10, 2);
-		$wp->addAction('jigoshop\admin\variation', array($this, 'addVariationFields'), 10, 2);
+		$wp->addAction('jigoshop\admin\product\assets', [$this, 'addAssets'], 10, 0);
+		$wp->addFilter('jigoshop\admin\product\menu', [$this, 'addProductMenu']);
+		$wp->addFilter('jigoshop\admin\product\tabs', [$this, 'addProductTab'], 10, 2);
+		$wp->addAction('jigoshop\admin\variation', [$this, 'addVariationFields'], 10, 2);
 	}
 
 	/**
@@ -128,11 +128,11 @@ class Downloadable implements Type
 	 */
 	public function addVariationFields($variation, $product)
 	{
-		Render::output('admin/product/box/variations/variation/downloadable', array(
+		Render::output('admin/product/box/variations/variation/downloadable', [
 			'variation' => $variation,
 			'product' => $variation->getProduct(),
 			'parent' => $product,
-		));
+        ]);
 	}
 
 	/**
@@ -189,8 +189,8 @@ class Downloadable implements Type
 		    $product = $product->getVariation($item->getMeta('variation_id')->getValue())->getProduct();
         }
 
-		if ($product instanceof Product\Downloadable && in_array($order->getStatus(), array(Order\Status::COMPLETED, Order\Status::PROCESSING))) {
-			$url = $this->wp->getHelpers()->addQueryArg(array('file' => $order->getKey().'.'.$order->getId().'.'.$item->getKey()), Endpoint::getUrl(DownloadFile::NAME));
+		if ($product instanceof Product\Downloadable && in_array($order->getStatus(), [Order\Status::COMPLETED, Order\Status::PROCESSING])) {
+			$url = $this->wp->getHelpers()->addQueryArg(['file' => $order->getKey().'.'.$order->getId().'.'.$item->getKey()], Endpoint::getUrl(DownloadFile::NAME));
 			$result .= PHP_EOL.__('Your download link for this file is:', 'jigoshop');
 			$result .= PHP_EOL.' - '.$url;
 		}
@@ -200,10 +200,10 @@ class Downloadable implements Type
 
 	public function addAssets()
 	{
-		Scripts::add('jigoshop.admin.product.downloadable', \JigoshopInit::getUrl().'/assets/js/admin/product/downloadable.js', array(
+		Scripts::add('jigoshop.admin.product.downloadable', \JigoshopInit::getUrl().'/assets/js/admin/product/downloadable.js', [
 			'jquery',
 			'jigoshop.helpers'
-		));
+        ]);
 	}
 
 	/**
@@ -215,7 +215,7 @@ class Downloadable implements Type
 	 */
 	public function addProductMenu($menu)
 	{
-		$menu['download'] = array('label' => __('Downloads', 'jigoshop'), 'visible' => array(Product\Downloadable::TYPE));
+		$menu['download'] = ['label' => __('Downloads', 'jigoshop'), 'visible' => [Product\Downloadable::TYPE]];
 		$menu['advanced']['visible'][] = Product\Downloadable::TYPE;
 		$menu['stock']['visible'][] = Product\Downloadable::TYPE;
 		$menu['sales']['visible'][] = Product\Downloadable::TYPE;
@@ -233,9 +233,9 @@ class Downloadable implements Type
 	 */
 	public function addProductTab($tabs, $product)
 	{
-		$tabs['download'] = array(
+		$tabs['download'] = [
 			'product' => $product,
-		);
+        ];
 
 		return $tabs;
 	}

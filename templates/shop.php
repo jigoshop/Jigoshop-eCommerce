@@ -16,15 +16,15 @@ use Jigoshop\Helper\Render;
 	<?= apply_filters('jigoshop\shop\content\title', '<h1 class="page-title">'.$title.'</h1>', $title); ?>
 <?php endif; ?>
 
-<?php Render::output('shop/messages', array('messages' => $messages)); ?>
+<?php Render::output('shop/messages', ['messages' => $messages]); ?>
 
 <?php if ($content): ?>
 	<?= apply_filters('the_content', $content); ?>
 <?php endif; ?>
 
 <?php
-Render::output('shop/list', array(
+Render::output('shop/list', [
 	'products' => $products,
 	'product_count' => $product_count,
-));
+]);
 ?>

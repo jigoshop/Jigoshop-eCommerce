@@ -37,7 +37,7 @@ class Order
 			$status = Status::PENDING;
 		}
 
-		return array('status' => $status, 'text' => $statuses[$status]);
+		return ['status' => $status, 'text' => $statuses[$status]];
 	}
 
 	/**
@@ -61,18 +61,18 @@ class Order
 	{
 		$status = static::checkGetStatus($order);
 
-		Render::output('admin/orders/status', array(
+		Render::output('admin/orders/status', [
 			'currentStatusText' => static::getStatus($order),
 			'pendingTo'         => $status['status'] == Status::PENDING ? Status::PENDING : '',
 			'processingTo'      => $status['status'] == Status::PROCESSING ? Status::PROCESSING : '',
 			'hideCancel'      => $status['status'] == Status::COMPLETED ? true : ($status['status'] == Status::CANCELLED ? true : false),
 			'orderId'           => $order->getId(),
-			'statuses'          => array(
+			'statuses'          => [
 				'processing' => Status::PROCESSING,
 				'completed'  => Status::COMPLETED,
 				'cancelled'  => Status::CANCELLED,
-			),
-		));
+            ],
+        ]);
 	}
 
     /**
@@ -105,12 +105,12 @@ class Order
 	 */
 	public static function getCancelLink($order)
 	{
-		$args = array(
+		$args = [
 			'action' => 'cancel_order',
 			'nonce' => wp_create_nonce('cancel_order'),
 			'id' => $order->getId(),
 			'key' => $order->getKey(),
-		);
+        ];
 		$url = add_query_arg($args, get_permalink(self::$options->getPageId(Pages::CART)));
 
 		return apply_filters('jigoshop\helper\order\cancel_url', $url);
@@ -123,7 +123,7 @@ class Order
 	 */
 	public static function getRemoveLink($key)
 	{
-		return add_query_arg(array('action' => 'remove-item', 'item' => $key));
+		return add_query_arg(['action' => 'remove-item', 'item' => $key]);
 	}
 
 	/**
@@ -134,9 +134,9 @@ class Order
 	 */
 	public static function getPayLink($order, $payment = null)
 	{
-	    $args = array(
+	    $args = [
 	        'key' => $order->getKey()
-        );
+        ];
 
 	    if($payment instanceof Method) {
 	        $args['payment'] = $payment->getId();
@@ -154,10 +154,10 @@ class Order
      */
     public static function getThankYouLink($order)
     {
-        $args = array(
+        $args = [
             'order' => $order->getId(),
             'key' => $order->getKey(),
-        );
+        ];
         $url = add_query_arg($args, get_permalink(self::$options->getPageId(Pages::THANK_YOU)));
 
         return apply_filters('jigoshop\helper\order\thank_you_url', $url);

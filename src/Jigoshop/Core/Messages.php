@@ -18,9 +18,9 @@ class Messages
 	const WARNINGS = 'jigoshop_warnings';
 	const ERRORS = 'jigoshop_errors';
 
-	private $notices = array();
-	private $warnings = array();
-	private $errors = array();
+	private $notices = [];
+	private $warnings = [];
+	private $errors = [];
     /** @var  Session  */
     private $session;
 
@@ -37,7 +37,7 @@ class Messages
             $this->errors = $this->session->getField(self::ERRORS);
 		}
 
-		$wp->addAction('shutdown', array($this, 'preserveMessages'), 9);
+		$wp->addAction('shutdown', [$this, 'preserveMessages'], 9);
 	}
 
 	/**
@@ -46,10 +46,10 @@ class Messages
 	 */
 	public function addNotice($message, $persistent = true)
 	{
-		$this->notices[] = array(
+		$this->notices[] = [
 			'message' => $message,
 			'persistent' => $persistent,
-		);
+        ];
 	}
 
 	/**
@@ -68,7 +68,7 @@ class Messages
 		$notices = array_map(function ($item){
 			return $item['message'];
 		}, $this->notices);
-		$this->notices = array();
+		$this->notices = [];
 
 		return $notices;
 	}
@@ -79,10 +79,10 @@ class Messages
 	 */
 	public function addWarning($message, $persistent = true)
 	{
-		$this->warnings[] = array(
+		$this->warnings[] = [
 			'message' => $message,
 			'persistent' => $persistent,
-		);
+        ];
 	}
 
 	/**
@@ -101,7 +101,7 @@ class Messages
 		$warnings = array_map(function ($item){
 			return $item['message'];
 		}, $this->warnings);
-		$this->warnings = array();
+		$this->warnings = [];
 
 		return $warnings;
 	}
@@ -112,10 +112,10 @@ class Messages
 	 */
 	public function addError($message, $persistent = true)
 	{
-		$this->errors[] = array(
+		$this->errors[] = [
 			'message' => $message,
 			'persistent' => $persistent,
-		);
+        ];
 	}
 
 	/**
@@ -134,7 +134,7 @@ class Messages
 		$errors = array_map(function ($item){
 			return $item['message'];
 		}, $this->errors);
-		$this->errors = array();
+		$this->errors = [];
 
 		return $errors;
 	}
@@ -160,9 +160,9 @@ class Messages
 	 */
 	public function clear()
 	{
-		$this->notices = array();
-		$this->warnings = array();
-		$this->errors = array();
+		$this->notices = [];
+		$this->warnings = [];
+		$this->errors = [];
 		$this->preserveMessages();
 	}
 }

@@ -49,7 +49,7 @@ class Render
 	 */
 	public static function locateTemplate($template)
 	{
-		$file = locate_template(array('jigoshop/'.$template.'.php'), false, false);
+		$file = locate_template(['jigoshop/'.$template.'.php'], false, false);
 		if (empty($file)) {
 			$file = \JigoshopInit::getDir().'/templates/'.$template.'.php';
 		}

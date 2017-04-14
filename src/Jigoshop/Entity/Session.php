@@ -119,11 +119,11 @@ class Session implements EntityInterface
      */
     public function getStateToSave()
     {
-        return array(
+        return [
             'id' => $this->id,
             'key' => $this->key,
             'fields' => $this->fields,
-        );
+        ];
     }
 
     /**

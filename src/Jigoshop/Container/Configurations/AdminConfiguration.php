@@ -20,53 +20,53 @@ class AdminConfiguration implements ConfigurationInterface
 	 */
 	public function addServices(Services $services)
 	{
-		$services->setDetails('jigoshop.admin', 'Jigoshop\Admin', array(
+		$services->setDetails('jigoshop.admin', 'Jigoshop\Admin', [
 			'wpal',
 			'jigoshop.admin.dashboard',
 			'jigoshop.admin.permalinks'
-		));
-		$services->setDetails('jigoshop.admin.pages', 'Jigoshop\Admin\Pages', array(
+        ]);
+		$services->setDetails('jigoshop.admin.pages', 'Jigoshop\Admin\Pages', [
 			'wpal',
 			'jigoshop.options'
-		));
-		$services->setDetails('jigoshop.admin.permalinks', 'Jigoshop\Admin\Permalinks', array(
+        ]);
+		$services->setDetails('jigoshop.admin.permalinks', 'Jigoshop\Admin\Permalinks', [
 			'wpal',
 			'jigoshop.options'
-		));
-		$services->setDetails('jigoshop.admin.dashboard', 'Jigoshop\Admin\Dashboard', array(
+        ]);
+		$services->setDetails('jigoshop.admin.dashboard', 'Jigoshop\Admin\Dashboard', [
 			'wpal',
 			'jigoshop.options',
 			'jigoshop.service.order',
 			'jigoshop.service.product'
-		));
-		$services->setDetails('jigoshop.admin.reports', 'Jigoshop\Admin\Reports', array(
+        ]);
+		$services->setDetails('jigoshop.admin.reports', 'Jigoshop\Admin\Reports', [
 			'wpal',
 			'jigoshop.messages',
 			'jigoshop.service.order'
-		));
-		$services->setDetails('jigoshop.admin.settings', 'Jigoshop\Admin\Settings', array(
+        ]);
+		$services->setDetails('jigoshop.admin.settings', 'Jigoshop\Admin\Settings', [
 			'wpal',
 			'jigoshop.options',
 			'jigoshop.messages'
-		));
-		$services->setDetails('jigoshop.admin.system_info', 'Jigoshop\Admin\SystemInfo', array(
+        ]);
+		$services->setDetails('jigoshop.admin.system_info', 'Jigoshop\Admin\SystemInfo', [
 			'wpal'
-		));
-		$services->setDetails('jigoshop.admin.licences', 'Jigoshop\Admin\Licences', array(
+        ]);
+		$services->setDetails('jigoshop.admin.licences', 'Jigoshop\Admin\Licences', [
 			'wpal',
 			'jigoshop.options',
 			'jigoshop.messages'
-		));
-		$services->setDetails('jigoshop.admin.migration', 'Jigoshop\Admin\Migration', array(
+        ]);
+		$services->setDetails('jigoshop.admin.migration', 'Jigoshop\Admin\Migration', [
 			'wpal',
 			'jigoshop.options',
 			'jigoshop.messages'
-		));
-		$services->setDetails('jigoshop.admin.product.attributes', 'Jigoshop\Admin\Product\Attributes', array(
+        ]);
+		$services->setDetails('jigoshop.admin.product.attributes', 'Jigoshop\Admin\Product\Attributes', [
 			'wpal',
 			'jigoshop.messages',
 			'jigoshop.service.product'
-		));
+        ]);
 		$services->setDetails('jigoshop.admin.notices', 'Jigoshop\Admin\Notices', [
 		    'wpal',
             'jigoshop.options',
@@ -96,7 +96,7 @@ class AdminConfiguration implements ConfigurationInterface
 	 */
 	public function addTriggers(Triggers $triggers)
 	{
-        $triggers->add('jigoshop.admin', 'jigoshop.admin.page_resolver', 'resolve', array('di'));
+        $triggers->add('jigoshop.admin', 'jigoshop.admin.page_resolver', 'resolve', ['di']);
         $triggers->add('jigoshop.admin', 'jigoshop.admin.notices', 'init', []);
 	}
 

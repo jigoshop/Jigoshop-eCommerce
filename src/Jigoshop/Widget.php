@@ -78,136 +78,136 @@ class Widget
 	 */
 	public function getDefaultWidgets()
 	{
-		return array(
-			'best_seller' => array(
+		return [
+			'best_seller' => [
 				'class' => '\\Jigoshop\\Widget\\BestSellers',
-				'calls' => array(
-					array(
+				'calls' => [
+					[
 						'setProductService',
 						'jigoshop.service.product',
-					),
-				),
-			),
-			'cart' => array(
+                    ],
+                ],
+            ],
+			'cart' => [
 				'class' => '\\Jigoshop\\Widget\\Cart',
-				'calls' => array(
-					array(
+				'calls' => [
+					[
 						'setOptions',
 						'jigoshop.options',
-					),
-					array(
+                    ],
+					[
 						'setCart',
 						'jigoshop.service.cart',
-					),
-				),
-			),
-			'featured_products' => array(
+                    ],
+                ],
+            ],
+			'featured_products' => [
 				'class' => '\\Jigoshop\\Widget\\FeaturedProducts',
-				'calls' => array(
-					array(
+				'calls' => [
+					[
 						'setProductService',
 						'jigoshop.service.product',
-					),
-				),
-			),
-			'layered_nav' => array(
+                    ],
+                ],
+            ],
+			'layered_nav' => [
 				'class' => '\\Jigoshop\\Widget\\LayeredNav',
-				'calls' => array(
-					array(
+				'calls' => [
+					[
 						'setProductService',
 						'jigoshop.service.product',
-					)
-				),
-			),
-			'price_filter' => array(
+                    ]
+                ],
+            ],
+			'price_filter' => [
 				'class' => '\\Jigoshop\\Widget\\PriceFilter',
-			),
-			'product_categories' => array(
+            ],
+			'product_categories' => [
 				'class' => '\\Jigoshop\\Widget\\ProductCategories',
-				'calls' => array(
-					array(
+				'calls' => [
+					[
 						'setWp',
 						'wpal',
-					),
-					array(
+                    ],
+					[
 						'setOptions',
 						'jigoshop.options',
-					),
-					array(
+                    ],
+					[
 						'setProductService',
 						'jigoshop.service.product',
-					),
-				),
-			),
-			'product_search' => array(
+                    ],
+                ],
+            ],
+			'product_search' => [
 				'class' => '\\Jigoshop\\Widget\\ProductSearch',
-			),
-			'products_on_sale' => array(
+            ],
+			'products_on_sale' => [
 				'class' => '\\Jigoshop\\Widget\\ProductsOnSale',
-				'calls' => array(
-					array(
+				'calls' => [
+					[
 						'setProductService',
 						'jigoshop.service.product',
-					),
-				),
-			),
-			'product_tag_cloud' => array(
+                    ],
+                ],
+            ],
+			'product_tag_cloud' => [
 				'class' => '\\Jigoshop\\Widget\\ProductTagCloud',
-			),
-			'random_products' => array(
+            ],
+			'random_products' => [
 				'class' => '\\Jigoshop\\Widget\\RandomProducts',
-				'calls' => array(
-					array(
+				'calls' => [
+					[
 						'setProductService',
 						'jigoshop.service.product',
-					),
-				),
-			),
-			'recently_viewed_products' => array(
+                    ],
+                ],
+            ],
+			'recently_viewed_products' => [
 				'class' => '\\Jigoshop\\Widget\\RecentlyViewedProducts',
-				'calls' => array(
-					array(
+				'calls' => [
+					[
 						'setProductService',
 						'jigoshop.service.product',
-					),
-				),
-			),
-			'recent_products' => array(
+                    ],
+                ],
+            ],
+			'recent_products' => [
 				'class' => '\\Jigoshop\\Widget\\RecentProducts',
-				'calls' => array(
-					array(
+				'calls' => [
+					[
 						'setProductService',
 						'jigoshop.service.product',
-					),
-				),
-			),
-			'recent_reviews' => array(
+                    ],
+                ],
+            ],
+			'recent_reviews' => [
 				'class' => '\\Jigoshop\\Widget\\RecentReviews',
-				'calls' => array(
-					array(
+				'calls' => [
+					[
 						'setProductService',
 						'jigoshop.service.product',
-					),
-				),
-			),
-			'top_rated' => array(
+                    ],
+                ],
+            ],
+			'top_rated' => [
 				'class' => '\\Jigoshop\\Widget\\TopRated',
-				'calls' => array(
-					array(
+				'calls' => [
+					[
 						'setProductService',
 						'jigoshop.service.product',
-					),
-				),
-			),
-			'user_login' => array(
+                    ],
+                ],
+            ],
+			'user_login' => [
 				'class' => '\\Jigoshop\\Widget\\UserLogin',
-				'calls' => array(
-					array(
+				'calls' => [
+					[
 						'setOptions',
 						'jigoshop.options',
-					),
-				),
-			),
-		);
+                    ],
+                ],
+            ],
+        ];
 	}
 }

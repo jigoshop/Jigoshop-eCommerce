@@ -14,14 +14,14 @@ use Jigoshop\Helper\Render;
  */
 ?>
 <h1><?php _e('My account &raquo; Orders', 'jigoshop'); ?></h1>
-<?php Render::output('shop/messages', array('messages' => $messages)); ?>
+<?php Render::output('shop/messages', ['messages' => $messages]); ?>
 <div class="panel panel-default">
 	<div class="panel-heading">
 		<h3 class="panel-title"><?php _e('Orders list', 'jigoshop'); ?></h3>
 	</div>
 	<ul class="list-group">
 		<?php foreach ($orders as $order): /** @var $order \Jigoshop\Entity\Order */?>
-			<?php $unpaid = in_array($order->getStatus(), array(Status::PENDING)); ?>
+			<?php $unpaid = in_array($order->getStatus(), [Status::PENDING]); ?>
 			<li class="list-group-item clearfix <?php $unpaid and print 'list-group-item-warning'; ?>">
 				<h4 class="list-group-item-heading">
 					<?= $order->getTitle(); ?>

@@ -22,7 +22,7 @@ if ($title) {
 		<input type="text" value="<?= get_search_query(); ?>" name="s" id="s" placeholder="<?php _e('Search for products', 'jigoshop'); ?>" />
 		<input type="submit" id="searchsubmit" value="<?php _e('Search', 'jigoshop'); ?>" />
 		<input type="hidden" value="product" name="post_type"/>
-		<?php \Jigoshop\Helper\Forms::printHiddenFields($fields, array('s', 'post_type')); ?>
+		<?php \Jigoshop\Helper\Forms::printHiddenFields($fields, ['s', 'post_type']); ?>
 	</div>
 </form>
 <?= $after_widget;

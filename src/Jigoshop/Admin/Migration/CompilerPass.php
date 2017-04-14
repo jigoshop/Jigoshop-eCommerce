@@ -29,7 +29,7 @@ class CompilerPass implements CompilerPassInterface
 
 		$tools = $container->tags->get('jigoshop.admin.migration');
 		foreach ($tools as $tool) {
-			$container->triggers->add('jigoshop.admin.migration', 'jigoshop.admin.migration', 'addTool', array($tool));
+			$container->triggers->add('jigoshop.admin.migration', 'jigoshop.admin.migration', 'addTool', [$tool]);
 		}
 	}
 }

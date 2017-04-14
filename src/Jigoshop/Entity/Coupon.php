@@ -44,15 +44,15 @@ class Coupon implements EntityInterface, \JsonSerializable
 	/** @var float */
 	private $orderTotalMaximum;
 	/** @var array */
-	private $products = array();
+	private $products = [];
 	/** @var array */
-	private $excludedProducts = array();
+	private $excludedProducts = [];
 	/** @var array */
-	private $categories = array();
+	private $categories = [];
 	/** @var array */
-	private $excludedCategories = array();
+	private $excludedCategories = [];
 	/** @var array */
-	private $paymentMethods = array();
+	private $paymentMethods = [];
 
 	/**
 	 * @return int
@@ -420,7 +420,7 @@ class Coupon implements EntityInterface, \JsonSerializable
 
 	public function getStateToSave()
 	{
-		return array(
+		return [
 			'type' => $this->type,
 			'amount' => $this->amount,
 			'from' => $this->from ? $this->from->getTimestamp() : 0,
@@ -435,7 +435,7 @@ class Coupon implements EntityInterface, \JsonSerializable
 			'categories' => $this->categories,
 			'excluded_categories' => $this->excludedCategories,
 			'payment_methods' => $this->paymentMethods,
-		);
+        ];
 	}
 
 	public function restoreState(array $state)
@@ -562,7 +562,7 @@ class Coupon implements EntityInterface, \JsonSerializable
      */
     function jsonSerialize()
     {
-        return array(
+        return [
             'id' => $this->id,
             'type' => $this->type,
             'amount' => $this->amount,
@@ -585,6 +585,6 @@ class Coupon implements EntityInterface, \JsonSerializable
             'categories' => $this->categories,
             'excluded_categories' => $this->excludedCategories,
             'payment_methods' => $this->paymentMethods,
-        );
+        ];
     }
 }

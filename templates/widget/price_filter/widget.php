@@ -24,7 +24,7 @@ if ($title) {
 			<?php _e('Price: ', 'jigoshop'); ?><span></span>
 			<input type="hidden" id="max_price" name="max_price" value="<?= esc_attr($max); ?>" />
 			<input type="hidden" id="min_price" name="min_price" value="0" />
-			<?php \Jigoshop\Helper\Forms::printHiddenFields($fields, array('max_price', 'min_price')); ?>
+			<?php \Jigoshop\Helper\Forms::printHiddenFields($fields, ['max_price', 'min_price']); ?>
 		</div>
 		<div class="clear"></div>
 	</div>

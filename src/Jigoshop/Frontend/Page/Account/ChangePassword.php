@@ -33,14 +33,14 @@ class ChangePassword implements PageInterface
 		$this->messages = $messages;
 
 		Styles::add('jigoshop.user.account', \JigoshopInit::getUrl().'/assets/css/user/account.css');
-		Styles::add('jigoshop.user.account.change_password', \JigoshopInit::getUrl().'/assets/css/user/account/change_password.css', array('jigoshop.user.account'));
+		Styles::add('jigoshop.user.account.change_password', \JigoshopInit::getUrl().'/assets/css/user/account/change_password.css', ['jigoshop.user.account']);
 		$this->wp->doAction('jigoshop\account\change_password\assets', $wp);
 	}
 
 	public function action()
 	{
 		if (isset($_POST['action']) && $_POST['action'] == 'change_password') {
-			$errors = array();
+			$errors = [];
 			$user = $this->wp->wpGetCurrentUser();
 
 			/** @noinspection PhpUndefinedFieldInspection */
@@ -57,7 +57,7 @@ class ChangePassword implements PageInterface
 			if (!empty($errors)) {
 				$this->messages->addError(join('<br/>', $errors), false);
 			} else {
-				$this->wp->wpUpdateUser(array('ID' => $user->ID, 'user_pass' => $_POST['new-password']));
+				$this->wp->wpUpdateUser(['ID' => $user->ID, 'user_pass' => $_POST['new-password']]);
 				$this->messages->addNotice(__('Password changed.', 'jigoshop'));
 				$this->wp->redirectTo($this->options->getPageId(Pages::ACCOUNT));
 			}
@@ -67,15 +67,15 @@ class ChangePassword implements PageInterface
 	public function render()
 	{
 		if (!$this->wp->isUserLoggedIn()) {
-			return Render::get('user/login', array());
+			return Render::get('user/login', []);
 		}
 
 		$customer = $this->customerService->getCurrent();
 
-		return Render::get('user/account/change_password', array(
+		return Render::get('user/account/change_password', [
 			'messages' => $this->messages,
 			'customer' => $customer,
 			'myAccountUrl' => $this->wp->getPermalink($this->options->getPageId(Pages::ACCOUNT)),
-		));
+        ]);
 	}
 }

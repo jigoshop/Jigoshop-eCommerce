@@ -83,7 +83,7 @@ class Attributes extends BaseController implements ApiControllerContract
          * @apiUse ProductAttributeReturnObject
          * @apiPermission read_products
          */
-        $app->get('', array($this, 'findAll'));
+        $app->get('', [$this, 'findAll']);
 
         /**
          * @api {get} /product/:productId/attributes/:id Get Attribute information
@@ -100,7 +100,7 @@ class Attributes extends BaseController implements ApiControllerContract
          * @apiError ObjectNotFound Product have not been found or it does not have this attribute.
          * @apiPermission read_products
          */
-        $app->get('/{id:[0-9]+}', array($this, 'findOne'));
+        $app->get('/{id:[0-9]+}', [$this, 'findOne']);
 
         /**
          * @api {post} /product/:productId/attributes Add attribute to a product
@@ -113,7 +113,7 @@ class Attributes extends BaseController implements ApiControllerContract
          * @apiUse StandardSuccessResponse
          * @apiPermission manage_products
          */
-        $app->post('', array($this, 'create'));
+        $app->post('', [$this, 'create']);
 
         /**
          * @api {put} /product/:productId/attributes/:id Update product attribute
@@ -130,7 +130,7 @@ class Attributes extends BaseController implements ApiControllerContract
          * @apiError ObjectNotFound Product have not been found or it does not have this attribute.
          * @apiPermission manage_products
          */
-        $app->put('/{id:[0-9]+}', array($this, 'update'));
+        $app->put('/{id:[0-9]+}', [$this, 'update']);
 
         /**
          * @api {delete} /product/:productId/attributes/:id Delete attribute from a product
@@ -146,7 +146,7 @@ class Attributes extends BaseController implements ApiControllerContract
          * @apiError ObjectNotFound Product have not been found or it does not have this attribute.
          * @apiPermission manage_products
          */
-        $app->delete('/{id:[0-9]+}', array($this, 'delete'));
+        $app->delete('/{id:[0-9]+}', [$this, 'delete']);
     }
 
     /**

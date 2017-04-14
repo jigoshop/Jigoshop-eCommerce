@@ -61,7 +61,7 @@ class Customer implements EntityFactoryInterface
      */
     public function fetch($user)
     {
-        $state = array();
+        $state = [];
 
         if ($user->ID == 0) {
             $customer = new Entity\Guest();

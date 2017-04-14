@@ -50,5 +50,5 @@ interface EmailServiceInterface extends ServiceInterface
 	 * @param array $args Arguments to the email.
 	 * @param       $to   string Receiver address.
 	 */
-	public function send($hook, array $args = array(), $to);
+	public function send($hook, array $args = [], $to);
 }

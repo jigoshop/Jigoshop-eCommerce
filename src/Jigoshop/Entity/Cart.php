@@ -117,10 +117,10 @@ class Cart extends Order
 		}
 
 		if ($quantity > $product->getStock()->getStock()) {
-			if (in_array($product->getStock()->getAllowBackorders(), array(
+			if (in_array($product->getStock()->getAllowBackorders(), [
 				StockStatus::BACKORDERS_ALLOW,
 				StockStatus::BACKORDERS_NOTIFY
-			))) {
+            ])) {
 				return true;
 			}
 

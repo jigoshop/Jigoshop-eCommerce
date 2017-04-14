@@ -26,8 +26,8 @@ class Cron
 		$this->emailService = $emailService;
 		$this->_scheduleEvents();
 
-		$wp->addAction('jigoshop\cron\pending_orders', array($this, 'updatePendingOrders'));
-		$wp->addAction('jigoshop\cron\processing_orders', array($this, 'completeProcessingOrders'));
+		$wp->addAction('jigoshop\cron\pending_orders', [$this, 'updatePendingOrders']);
+		$wp->addAction('jigoshop\cron\processing_orders', [$this, 'completeProcessingOrders']);
 	}
 
 	public function clear()

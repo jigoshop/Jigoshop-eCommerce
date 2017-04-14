@@ -11,26 +11,26 @@ use Jigoshop\Helper\Render;
 ?>
 <tr class="attribute" data-id="<?= $id; ?>">
 	<td>
-		<?php Forms::text(array(
+		<?php Forms::text([
 			'name' => 'attributes['.$id.'][label]',
-			'classes' => array('attribute-label'),
+			'classes' => ['attribute-label'],
 			'value' => $attribute->getLabel(),
-		)); ?>
+        ]); ?>
 	</td>
 	<td>
-		<?php Forms::text(array(
+		<?php Forms::text([
 			'name' => 'attributes['.$id.'][slug]',
-			'classes' => array('attribute-slug'),
+			'classes' => ['attribute-slug'],
 			'value' => $attribute->getSlug(),
-		)); ?>
+        ]); ?>
 	</td>
 	<td>
-		<?php Forms::select(array(
+		<?php Forms::select([
 			'name' => 'attributes['.$id.'][type]',
-			'classes' => array('attribute-type'),
+			'classes' => ['attribute-type'],
 			'value' => $attribute->getType(),
 			'options' => $types,
-		)); ?>
+        ]); ?>
 	</td>
 	<td>
 		<?php if ($attribute->getType() != Attribute\Text::TYPE): ?>
@@ -59,24 +59,24 @@ use Jigoshop\Helper\Render;
 				</thead>
 				<tbody>
 				<?php foreach($attribute->getOptions() as $option): ?>
-					<?php Render::output('admin/product_attributes/option', array('id' => $id, 'option_id' => $option->getId(), 'option' => $option)); ?>
+					<?php Render::output('admin/product_attributes/option', ['id' => $id, 'option_id' => $option->getId(), 'option' => $option]); ?>
 				<?php endforeach; ?>
 				</tbody>
 				<tfoot>
 				<tr>
 					<td>
-						<?php Forms::text(array(
+						<?php Forms::text([
 							'name' => 'option_label',
-							'classes' => array('new-option-label'),
+							'classes' => ['new-option-label'],
 							'placeholder' => __('New option label', 'jigoshop'),
-						)); ?>
+                        ]); ?>
 					</td>
 					<td>
-						<?php Forms::text(array(
+						<?php Forms::text([
 							'name' => 'option_value',
-							'classes' => array('new-option-value'),
+							'classes' => ['new-option-value'],
 							'placeholder' => __('New option value', 'jigoshop'),
-						)); ?>
+                        ]); ?>
 					</td>
 					<td>
 						<button type="button" class="btn btn-default add-option"><span class="glyphicon glyphicon-plus"></span> <?php _e('Add', 'jigoshop'); ?></button>

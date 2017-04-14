@@ -49,9 +49,9 @@ class Api
 
     public function run()
     {
-        $this->wp->addFilter('query_vars', array($this, 'addQueryVars'), 0);
-        $this->wp->addAction('init', array($this, 'addRewrite'), 1);
-        $this->wp->addAction('parse_request', array($this, 'parseRequest'), 0);
+        $this->wp->addFilter('query_vars', [$this, 'addQueryVars'], 0);
+        $this->wp->addAction('init', [$this, 'addRewrite'], 1);
+        $this->wp->addAction('parse_request', [$this, 'parseRequest'], 0);
     }
 
     /**

@@ -36,11 +36,11 @@ class EditAddress implements PageInterface
 		$this->messages = $messages;
 
 		Styles::add('jigoshop.vendors.select2', \JigoshopInit::getUrl().'/assets/css/vendors/select2.css');
-		Styles::add('jigoshop.user.account', \JigoshopInit::getUrl().'/assets/css/user/account.css', array('jigoshop.vendors.select2'));
-		Styles::add('jigoshop.user.account.edit_address', \JigoshopInit::getUrl().'/assets/css/user/account/edit_address.css', array('jigoshop.user.account'));
+		Styles::add('jigoshop.user.account', \JigoshopInit::getUrl().'/assets/css/user/account.css', ['jigoshop.vendors.select2']);
+		Styles::add('jigoshop.user.account.edit_address', \JigoshopInit::getUrl().'/assets/css/user/account/edit_address.css', ['jigoshop.user.account']);
 
-		Scripts::add('jigoshop.vendors.select2', \JigoshopInit::getUrl().'/assets/js/vendors/select2.js', array('jquery'));
-		Scripts::add('jigoshop.vendors.bs_tab_trans_tooltip_collapse', \JigoshopInit::getUrl().'/assets/js/vendors/bs_tab_trans_tooltip_collapse.js', array('jquery'));
+		Scripts::add('jigoshop.vendors.select2', \JigoshopInit::getUrl().'/assets/js/vendors/select2.js', ['jquery']);
+		Scripts::add('jigoshop.vendors.bs_tab_trans_tooltip_collapse', \JigoshopInit::getUrl().'/assets/js/vendors/bs_tab_trans_tooltip_collapse.js', ['jquery']);
 		$this->wp->doAction('jigoshop\account\edit_address\assets', $wp);
 	}
 
@@ -58,7 +58,7 @@ class EditAddress implements PageInterface
 					break;
 			}
 
-			$errors = array();
+			$errors = [];
 			if ($address instanceof CompanyAddress) {
 				$address->setCompany(trim(htmlspecialchars(strip_tags($_POST['address']['company']))));
 				$address->setVatNumber(trim(htmlspecialchars(strip_tags($_POST['address']['euvatno']))));
@@ -111,7 +111,7 @@ class EditAddress implements PageInterface
 	public function render()
 	{
 		if (!$this->wp->isUserLoggedIn()) {
-			return Render::get('user/login', array());
+			return Render::get('user/login', []);
 		}
 
 		$customer = $this->customerService->getCurrent();
@@ -125,11 +125,11 @@ class EditAddress implements PageInterface
 				break;
 		}
 
-		return Render::get('user/account/edit_address', array(
+		return Render::get('user/account/edit_address', [
 			'messages' => $this->messages,
 			'customer' => $customer,
 			'address' => $address,
 			'myAccountUrl' => $this->wp->getPermalink($this->options->getPageId(Pages::ACCOUNT)),
-		));
+        ]);
 	}
 }

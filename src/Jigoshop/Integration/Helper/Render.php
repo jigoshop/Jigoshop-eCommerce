@@ -12,7 +12,7 @@ use Jigoshop\Exception;
 class Render
 {
     /** @var array  */
-    private static $locations = array();
+    private static $locations = [];
 
     /**
      * @param $key
@@ -69,7 +69,7 @@ class Render
      */
     public static function locateTemplate($key, $template)
     {
-        $file = locate_template(array('jigoshop/'.strtolower($key).'/'.$template.'.php'), false, false);
+        $file = locate_template(['jigoshop/'.strtolower($key).'/'.$template.'.php'], false, false);
         if (empty($file)) {
             if(!isset(self::$locations[$key])) {
                 throw new Exception(sprintf(__('The key [%s] does not exist.', 'jigoshop'), $key));

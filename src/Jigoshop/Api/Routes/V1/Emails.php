@@ -50,7 +50,7 @@ class Emails extends PostController implements ApiControllerContract
          * @apiUse EmailReturnObject
          * @apiPermission read_emails
          */
-        $app->get('', array($this, 'findAll'));
+        $app->get('', [$this, 'findAll']);
 
         /**
          * @api {get} /emails/:id Get Email information
@@ -65,7 +65,7 @@ class Emails extends PostController implements ApiControllerContract
          * @apiUse validateObjectFindingError
          * @apiPermission manage_emails
          */
-        $app->get('/{id:[0-9]+}', array($this, 'findOne'));
+        $app->get('/{id:[0-9]+}', [$this, 'findOne']);
 
         /**
          * @api {post} /emails Create a Email
@@ -77,7 +77,7 @@ class Emails extends PostController implements ApiControllerContract
          * @apiUse StandardSuccessResponse
          * @apiPermission manage_emails
          */
-        $app->post('', array($this, 'create'));
+        $app->post('', [$this, 'create']);
 
         /**
          * @api {put} /emails/:id Update a Email
@@ -91,7 +91,7 @@ class Emails extends PostController implements ApiControllerContract
          * @apiUse validateObjectFindingError
          * @apiPermission manage_emails
          */
-        $app->put('/{id:[0-9]+}', array($this, 'update'));
+        $app->put('/{id:[0-9]+}', [$this, 'update']);
 
         /**
          * @api {delete} /emails/:id Delete a Email
@@ -104,6 +104,6 @@ class Emails extends PostController implements ApiControllerContract
          * @apiUse validateObjectFindingError
          * @apiPermission manage_emails
          */
-        $app->delete('/{id:[0-9]+}', array($this, 'delete'));
+        $app->delete('/{id:[0-9]+}', [$this, 'delete']);
     }
 }

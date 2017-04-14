@@ -61,7 +61,7 @@ class DownloadFile implements Processable
                 if ($order->getKey() !== $key) {
                     throw new Exception(__('Invalid security key. Unable to download file.', 'jigoshop'));
                 }
-                if (!in_array($order->getStatus(), array(Order\Status::COMPLETED, Order\Status::PROCESSING))) {
+                if (!in_array($order->getStatus(), [Order\Status::COMPLETED, Order\Status::PROCESSING])) {
                     throw new Exception(__('Invalid order.', 'jigoshop'));
                 }
                 $item = $order->getItem($itemKey);

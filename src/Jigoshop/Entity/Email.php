@@ -13,7 +13,7 @@ class Email implements EntityInterface, \JsonSerializable
 	/** @var string */
 	private $text;
 	/** @var array */
-	private $actions = array();
+	private $actions = [];
     /** @var array  */
     private $attachments = [];
 
@@ -134,11 +134,11 @@ class Email implements EntityInterface, \JsonSerializable
 
 	public function getStateToSave()
 	{
-		return array(
+		return [
 			'subject' => $this->subject,
 			'actions' => $this->actions,
             'attachments' => $this->attachments
-		);
+        ];
 	}
 
 	public function restoreState(array $state)
@@ -163,13 +163,13 @@ class Email implements EntityInterface, \JsonSerializable
      */
     function jsonSerialize()
     {
-        return array(
+        return [
             'id' => $this->id,
             'title' => $this->title,
             'text' => $this->text,
             'subject' => $this->subject,
             'actions' => $this->actions,
             'attachments' => $this->attachments,
-        );
+        ];
     }
 }

@@ -32,21 +32,21 @@ class Products
 		$this->productService = $productService;
 		$this->type = $type;
 
-		$wp->addFilter(sprintf('manage_edit-%s_columns', Types::PRODUCT), array($this, 'columns'));
-		$wp->addAction(sprintf('manage_%s_posts_custom_column', Types::PRODUCT), array($this, 'displayColumn'), 2);
-		$wp->addAction('restrict_manage_posts', array($this, 'categoryFilter'));
-		$wp->addAction('restrict_manage_posts', array($this, 'typeFilter'));
-		$wp->addAction('pre_get_posts', array($this, 'setTypeFilter'));
-		$wp->addAction('wp_ajax_jigoshop.admin.products.feature_product', array($this, 'ajaxFeatureProduct'));
+		$wp->addFilter(sprintf('manage_edit-%s_columns', Types::PRODUCT), [$this, 'columns']);
+		$wp->addAction(sprintf('manage_%s_posts_custom_column', Types::PRODUCT), [$this, 'displayColumn'], 2);
+		$wp->addAction('restrict_manage_posts', [$this, 'categoryFilter']);
+		$wp->addAction('restrict_manage_posts', [$this, 'typeFilter']);
+		$wp->addAction('pre_get_posts', [$this, 'setTypeFilter']);
+		$wp->addAction('wp_ajax_jigoshop.admin.products.feature_product', [$this, 'ajaxFeatureProduct']);
 
 		$wp->addAction('admin_enqueue_scripts', function () use ($wp){
 			if ($wp->getPostType() == Types::PRODUCT) {
-				Scripts::add('jigoshop.admin.products', \JigoshopInit::getUrl().'/assets/js/admin/products.js', array(
+				Scripts::add('jigoshop.admin.products', \JigoshopInit::getUrl().'/assets/js/admin/products.js', [
 					'jquery',
 					'jigoshop.helpers'
-				));
+                ]);
 
-				Styles::add('jigoshop.admin.products_list', \JigoshopInit::getUrl().'/assets/css/admin/products_list.css', array('jigoshop.admin'));
+				Styles::add('jigoshop.admin.products_list', \JigoshopInit::getUrl().'/assets/css/admin/products_list.css', ['jigoshop.admin']);
 
 				$wp->doAction('jigoshop\admin\products\assets', $wp);
 			}
@@ -60,15 +60,15 @@ class Products
 		$product->setFeatured(!$product->isFeatured());
 		$this->productService->save($product);
 
-		echo json_encode(array(
+		echo json_encode([
 			'success' => true,
-		));
+        ]);
 		exit;
 	}
 
 	public function columns()
 	{
-		$columns = array(
+		$columns = [
 			'cb' => '<input type="checkbox" />',
 			'thumbnail' => null,
 			'title' => _x('Name', 'product', 'jigoshop'),
@@ -81,7 +81,7 @@ class Products
 			'stock' => _x('Stock', 'product', 'jigoshop'),
 			'price' => _x('Price', 'product', 'jigoshop'),
 			'creation' => _x('Created at', 'product', 'jigoshop'),
-		);
+        ];
 
 		if ($this->options->get('products.enable_sku', 'yes') !== 'yes') {
 			unset($columns['sku']);
@@ -154,13 +154,13 @@ class Products
 			return;
 		}
 
-		$query = array(
+		$query = [
 			'pad_counts' => 1,
 			'hierarchical' => true,
 			'hide_empty' => true,
 			'show_count' => true,
 			'selected' => $this->wp->getQueryParameter(Types::PRODUCT_CATEGORY),
-		);
+        ];
 
 		$terms = $this->wp->getTerms(Types::PRODUCT_CATEGORY, $query);
 		if (!$terms) {
@@ -170,12 +170,12 @@ class Products
 		$current = isset($_GET[Types::PRODUCT_CATEGORY]) ? $_GET[Types::PRODUCT_CATEGORY] : '';
 		$walker = new \Jigoshop\Web\CategoryWalker($this->wp, 'admin/products/categoryFilter/item');
 
-		Render::output('admin/products/categoryFilter', array(
+		Render::output('admin/products/categoryFilter', [
 			'terms' => $terms,
 			'current' => $current,
 			'walker' => $walker,
 			'query' => $query,
-		));
+        ]);
 	}
 
 	/**
@@ -189,20 +189,20 @@ class Products
 		}
 
 		// Get all active terms
-		$types = array();
+		$types = [];
 		foreach ($this->type->getEnabledTypes() as $type) {
 			/** @var $type Types\Product\Type */
-			$types[$type->getId()] = array(
+			$types[$type->getId()] = [
 				'label' => $type->getName(),
 				'count' => $this->getTypeCount($type),
-			);
+            ];
 		}
 		$currentType = isset($_GET['product_type']) ? $_GET['product_type'] : '';
 
-		Render::output('admin/products/typeFilter', array(
+		Render::output('admin/products/typeFilter', [
 			'types' => $types,
 			'current' => $currentType
-		));
+        ]);
 	}
 
 	/**
@@ -220,7 +220,7 @@ class Products
 			SELECT COUNT(*) FROM {$wpdb->posts} p
 				LEFT JOIN {$wpdb->postmeta} pm ON pm.post_id = p.ID
 				WHERE pm.meta_key = %s AND pm.meta_value = %s
-		", array('type', $type->getId())));
+		", ['type', $type->getId()]));
 	}
 
 	/**
@@ -230,10 +230,10 @@ class Products
 	{
 		if (isset($_GET['product_type']) && in_array($_GET['product_type'], array_keys($this->type->getEnabledTypes()))) {
 			$meta = $query->meta_query;
-			$meta[] = array(
+			$meta[] = [
 				'key' => 'type',
 				'value' => $_GET['product_type'],
-			);
+            ];
 			$query->set('meta_query', $meta);
 		}
 	}
@@ -262,7 +262,7 @@ class Products
 				}
 				elseif ($type == 'stock')
 				{
-					$variation_name = array();
+					$variation_name = [];
 					$attributes = $product->getVariableAttributes();
 
 					foreach ($attributes as $attribute)

@@ -24,7 +24,7 @@ class PayPal implements Method, Processable
 	const TEST_URL = 'https://www.sandbox.paypal.com/webscr?test_ipn=1';
 
 	// based on PayPal currency rule: https://developer.paypal.com/docs/classic/api/currency_codes/
-	private static $noDecimalCurrencies = array('HUF', 'JPY', 'TWD');
+	private static $noDecimalCurrencies = ['HUF', 'JPY', 'TWD'];
 
 	/** @var Wordpress */
 	private $wp;
@@ -81,65 +81,65 @@ class PayPal implements Method, Processable
 	 */
 	public function getOptions()
 	{
-		return array(
-			array(
+		return [
+			[
 				'name' => sprintf('[%s][enabled]', self::ID),
 				'title' => __('Is enabled?', 'jigoshop'),
 				'type' => 'checkbox',
 				'checked' => $this->settings['enabled'],
-				'classes' => array('switch-medium'),
-			),
-			array(
+				'classes' => ['switch-medium'],
+            ],
+			[
 				'name' => sprintf('[%s][title]', self::ID),
 				'title' => __('Title', 'jigoshop'),
 				'type' => 'text',
 				'value' => $this->settings['title'],
-			),
-			array(
+            ],
+			[
 				'name' => sprintf('[%s][description]', self::ID),
 				'title' => __('Description', 'jigoshop'),
 				'tip' => sprintf(__('Allowed HTML tags are: %s', 'jigoshop'), '<p>, <a>, <strong>, <em>, <b>, <i>'),
 				'type' => 'text',
 				'value' => $this->settings['description'],
-			),
-			array(
+            ],
+			[
 				'name' => sprintf('[%s][email]', self::ID),
 				'title' => __('PayPal email address', 'jigoshop'),
 				'tip' => __('Please enter your PayPal email address; this is needed in order to take payment!', 'jigoshop'),
 				'type' => 'text',
 				'value' => $this->settings['email'],
-			),
-			array(
+            ],
+			[
 				'name' => sprintf('[%s][send_shipping]', self::ID),
 				'title' => __('Send shipping details to PayPal', 'jigoshop'),
 				'tip' => __('If your checkout page does not ask for shipping details, or if you do not want to send shipping information to PayPal, set this option to no. If you enable this option PayPal may restrict where things can be sent, and will prevent some orders going through for your protection.', 'jigoshop'),
 				'type' => 'checkbox',
 				'checked' => $this->settings['send_shipping'],
-				'classes' => array('switch-medium'),
-			),
-			array(
+				'classes' => ['switch-medium'],
+            ],
+			[
 				'name' => sprintf('[%s][force_payment]', self::ID),
 				'title' => __('Force payment', 'jigoshop'),
 				'tip' => __('If product totals are free and shipping is also free (excluding taxes), this will force 0.01 to allow paypal to process payment. Shop owner is responsible for refunding customer.', 'jigoshop'),
 				'type' => 'checkbox',
 				'checked' => $this->settings['force_payment'],
-				'classes' => array('switch-medium'),
-			),
-			array(
+				'classes' => ['switch-medium'],
+            ],
+			[
 				'name' => sprintf('[%s][test_mode]', self::ID),
 				'title' => __('Enable Sandbox', 'jigoshop'),
 				'type' => 'checkbox',
 				'checked' => $this->settings['test_mode'],
-				'classes' => array('switch-medium'),
-			),
-			array(
+				'classes' => ['switch-medium'],
+            ],
+			[
 				'name' => sprintf('[%s][test_email]', self::ID),
 				'title' => __('PayPal test email address', 'jigoshop'),
 				'tip' => __('Please enter your test PayPal email address; this is needed for testing purposes and used when test mode is enabled.', 'jigoshop'),
 				'type' => 'text',
 				'value' => $this->settings['test_email'],
-			),
-		);
+            ],
+        ];
 	}
 
 	/**
@@ -198,25 +198,25 @@ class PayPal implements Method, Processable
 		}
 
 		$billingAddress = $order->getCustomer()->getBillingAddress();
-		if (in_array($billingAddress->getCountry(), array('US', 'CA'))) {
-			$phone = str_replace(array('(', '-', ' ', ')'), '', $billingAddress->getPhone());
-			$phone = array(
+		if (in_array($billingAddress->getCountry(), ['US', 'CA'])) {
+			$phone = str_replace(['(', '-', ' ', ')'], '', $billingAddress->getPhone());
+			$phone = [
 				'night_phone_a' => substr($phone, 0, 3),
 				'night_phone_b' => substr($phone, 3, 3),
 				'night_phone_c' => substr($phone, 6, 4),
 				'day_phone_a' => substr($phone, 0, 3),
 				'day_phone_b' => substr($phone, 3, 3),
 				'day_phone_c' => substr($phone, 6, 4),
-			);
+            ];
 		} else {
-			$phone = array(
+			$phone = [
 				'night_phone_b' => $billingAddress->getPhone(),
 				'day_phone_b' => $billingAddress->getPhone(),
-			);
+            ];
 		}
 
 		$args = array_merge(
-			array(
+			[
 				'cmd' => '_cart',
 				'business' => $this->settings['test_mode'] ? $this->settings['test_email'] : $this->settings['email'],
 				'no_note' => 1,
@@ -246,7 +246,7 @@ class PayPal implements Method, Processable
 				'amount' => number_format($order->getTotal(), $this->options->get('general.currency_decimals')),
 				//BN code
 				'bn' => 'Jigoshop_SP'
-			),
+            ],
 			$phone
 		);
 
@@ -333,7 +333,7 @@ class PayPal implements Method, Processable
 
 			// 'custom' holds post ID (Order ID)
 			if (!empty($posted['custom']) && !empty($posted['txn_type']) && !empty($posted['invoice'])) {
-				$accepted_types = array('cart', 'instant', 'express_checkout', 'web_accept', 'masspay', 'send_money', 'subscr_payment');
+				$accepted_types = ['cart', 'instant', 'express_checkout', 'web_accept', 'masspay', 'send_money', 'subscr_payment'];
 				/** @var \Jigoshop\Service\OrderService $service */
 				$service = $this->di->get('jigoshop.service.order');
 				$order = $service->find((int)$posted['custom']);
@@ -418,12 +418,12 @@ class PayPal implements Method, Processable
 		$values['cmd'] = '_notify-validate';
 
 		// Send back post vars to PayPal
-		$params = array(
+		$params = [
 			'body' => $values,
 			'sslverify' => false,
 			'timeout' => 30,
 			'user-agent' => 'Jigoshop/'.Core::VERSION,
-		);
+        ];
 
 		// Get url
 		if ($this->settings['test_mode']) {
@@ -440,7 +440,7 @@ class PayPal implements Method, Processable
 			return true;
 		}
 
-		Registry::getInstance(JIGOSHOP_LOGGER)->addWarning('Received invalid response from PayPal!', array('response' => $response));
+		Registry::getInstance(JIGOSHOP_LOGGER)->addWarning('Received invalid response from PayPal!', ['response' => $response]);
 
 		return false;
 	}

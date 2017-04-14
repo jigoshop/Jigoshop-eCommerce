@@ -49,24 +49,24 @@ class Account implements PageInterface
 	public function render()
 	{
 		if (!$this->wp->isUserLoggedIn()) {
-			return Render::get('user/login', array());
+			return Render::get('user/login', []);
 		}
 
 		$content = $this->wp->getPostField('post_content', $this->options->getPageId(Pages::ACCOUNT));
 		$content = do_shortcode($content);
 		$customer = $this->customerService->getCurrent();
-		$query = new \WP_Query(array(
+		$query = new \WP_Query([
 			'post_type' => Types::ORDER,
 			'post_status' => array_keys(Status::getStatuses()),
 			'posts_per_page' => $this->options->get('shopping.unpaid_orders_number'),
-			'meta_query' => array(
-				array(
+			'meta_query' => [
+				[
 					'key'     => 'customer_id',
 					'value'   => $this->wp->getCurrentUserId(),
 					'compare' => '=',
-				),
-			),
-		));
+                ],
+            ],
+        ]);
 		/** @var Order[] $orders */
 		$orders = $this->orderService->findByQuery($query);
 		$unpaidOrders = array_filter($orders, function ($order) {
@@ -88,7 +88,7 @@ class Account implements PageInterface
         }
         $permalink = get_permalink();
 
-		return Render::get('user/account', array(
+		return Render::get('user/account', [
 			'content' => $content,
 			'messages' => $this->messages,
 			'customer' => $customer,
@@ -98,6 +98,6 @@ class Account implements PageInterface
 			'editShippingAddressUrl' => Endpoint::getEndpointUrl('edit-address', 'shipping', $permalink),
 			'changePasswordUrl' => Endpoint::getEndpointUrl('change-password', '', $permalink),
 			'myOrdersUrl' => Endpoint::getEndpointUrl('orders', '', $permalink),
-		));
+        ]);
 	}
 }

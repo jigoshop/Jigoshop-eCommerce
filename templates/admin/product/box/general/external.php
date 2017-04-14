@@ -8,12 +8,12 @@ use Jigoshop\Entity\Product;
 ?>
 <fieldset class="<?= $product instanceof Product\External ? '' : 'not-active'; ?>">
 	<?php
-	Forms::text(array(
+	Forms::text([
 		'name' => 'product[external_url]',
 		'label' => __('Product URL', 'jigoshop'),
-		'classes' => array('product-external'),
+		'classes' => ['product-external'],
 		'placeholder' => __('Enter external product URL...', 'jigoshop'),
 		'value' => $product instanceof Product\External ? $product->getUrl() : '',
-	));
+    ]);
 	?>
 </fieldset>

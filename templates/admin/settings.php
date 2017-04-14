@@ -11,7 +11,7 @@ use Jigoshop\Helper\Render;
 <div class="wrap jigoshop">
 	<h1><?php _e('Jigoshop &raquo; Settings', 'jigoshop'); ?></h1>
 	<?php settings_errors(); ?>
-	<?php Render::output('shop/messages', array('messages' => $messages));
+	<?php Render::output('shop/messages', ['messages' => $messages]);
 	$menuContent = '';
 	$activeTitle = '';
 	foreach ($tabs as $tab): /** @var $tab \Jigoshop\Admin\Settings\TabInterface */

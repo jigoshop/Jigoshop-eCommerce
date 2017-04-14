@@ -65,7 +65,7 @@ class Dummy implements Method
 	 */
 	public function getOptions()
 	{
-		return array();
+		return [];
 	}
 
 	/**
@@ -100,7 +100,7 @@ class Dummy implements Method
 	 */
 	public function getTaxClasses()
 	{
-		return array();
+		return [];
 	}
 
 	/**
@@ -108,7 +108,7 @@ class Dummy implements Method
 	 */
 	public function getState()
 	{
-		return array();
+		return [];
 	}
 
 	/**

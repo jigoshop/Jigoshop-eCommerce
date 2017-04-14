@@ -7,7 +7,7 @@
     <h4><?php _e('Related products', 'jigoshop'); ?></h4>
     <ul id="related_products" class="product-list list-inline">
         <?php foreach ($products as $product): ?>
-            <?php \Jigoshop\Helper\Render::output('shop/list/product', array('product' => $product)); ?>
+            <?php \Jigoshop\Helper\Render::output('shop/list/product', ['product' => $product]); ?>
         <?php endforeach; ?>
     </ul>
 <?php endif; ?>

@@ -19,28 +19,28 @@ class ProductCategories
 	{
 		$this->wp = $wp;
 
-		$wp->addAction(sprintf('%s_add_form_fields', Types::PRODUCT_CATEGORY), array(
+		$wp->addAction(sprintf('%s_add_form_fields', Types::PRODUCT_CATEGORY), [
 			$this,
 			'showThumbnail'
-		));
-		$wp->addAction(sprintf('%s_edit_form_fields', Types::PRODUCT_CATEGORY), array(
+        ]);
+		$wp->addAction(sprintf('%s_edit_form_fields', Types::PRODUCT_CATEGORY), [
 			$this,
 			'showThumbnail'
-		));
-		$wp->addAction('created_term', array($this, 'saveThumbnail'), 10, 3);
-		$wp->addAction('edit_term', array($this, 'saveThumbnail'), 10, 3);
-		$wp->addAction(sprintf('delete_%s', Types::PRODUCT_CATEGORY), array($this, 'delete'));
+        ]);
+		$wp->addAction('created_term', [$this, 'saveThumbnail'], 10, 3);
+		$wp->addAction('edit_term', [$this, 'saveThumbnail'], 10, 3);
+		$wp->addAction(sprintf('delete_%s', Types::PRODUCT_CATEGORY), [$this, 'delete']);
 
 		$wp->addAction('admin_enqueue_scripts', function () use ($wp){
 			$wp->wpEnqueueMedia();
-			Scripts::add('jigoshop.admin.product_categories', \JigoshopInit::getUrl().'/assets/js/admin/product_categories.js', array(
+			Scripts::add('jigoshop.admin.product_categories', \JigoshopInit::getUrl().'/assets/js/admin/product_categories.js', [
 				'jquery',
 				'jigoshop.media'
-			));
-			Scripts::localize('jigoshop.admin.product_categories', 'jigoshop_admin_product_categories', array(
+            ]);
+			Scripts::localize('jigoshop.admin.product_categories', 'jigoshop_admin_product_categories', [
 				'category_name' => Types::PRODUCT_CATEGORY,
 				'placeholder' => \JigoshopInit::getUrl().'/assets/images/placeholder.png',
-			));
+            ]);
 
 			$wp->doAction('jigoshop\admin\product_categories\assets', $wp);
 		});
@@ -54,9 +54,9 @@ class ProductCategories
 		}
 
 		$image = ProductCategory::getImage($termId);
-		Render::output('admin/product_categories/thumbnail', array(
+		Render::output('admin/product_categories/thumbnail', [
 			'image' => $image,
-		));
+        ]);
 	}
 
 	public function saveThumbnail($termId, $ttId, $taxonomy)

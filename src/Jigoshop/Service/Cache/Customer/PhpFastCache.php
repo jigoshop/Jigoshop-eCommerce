@@ -12,7 +12,7 @@ class PhpFastCache implements CustomerServiceInterface
     /** @var \Jigoshop\Service\CustomerServiceInterface */
     private $service;
     private $current;
-    private $customers = array();
+    private $customers = [];
     private $fetchedAll = false;
 
     public function __construct(CustomerServiceInterface $service)

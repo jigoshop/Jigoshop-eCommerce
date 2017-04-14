@@ -37,40 +37,40 @@ class Attributes implements PageInterface
 
 		$wp->addAction('admin_enqueue_scripts', function () use ($wp){
 			// Weed out all admin pages except the Jigoshop Settings page hits
-			if (!in_array($wp->getPageNow(), array('edit.php'))) {
+			if (!in_array($wp->getPageNow(), ['edit.php'])) {
 				return;
 			}
 
 			$screen = $wp->getCurrentScreen();
-			if (!in_array($screen->base, array('product_page_'.Attributes::NAME))) {
+			if (!in_array($screen->base, ['product_page_'.Attributes::NAME])) {
 				return;
 			}
 
 			Styles::add('jigoshop.admin.product_attributes', \JigoshopInit::getUrl().'/assets/css/admin/product_attributes.css');
-			Scripts::add('jigoshop.admin.product_attributes', \JigoshopInit::getUrl().'/assets/js/admin/product_attributes.js', array(
+			Scripts::add('jigoshop.admin.product_attributes', \JigoshopInit::getUrl().'/assets/js/admin/product_attributes.js', [
 				'jquery',
 				'jigoshop.helpers'
-			));
-			Scripts::localize('jigoshop.admin.product_attributes', 'jigoshop_admin_product_attributes', array(
-				'i18n' => array(
+            ]);
+			Scripts::localize('jigoshop.admin.product_attributes', 'jigoshop_admin_product_attributes', [
+				'i18n' => [
 					'saved' => __('Changes saved.', 'jigoshop'),
 					'removed' => __('Attribute has been successfully removed.', 'jigoshop'),
 					'option_removed' => __('Attribute option has been successfully removed.', 'jigoshop'),
 					'confirm_remove' => __('Are you sure?', 'jigoshop'),
-				),
-			));
+                ],
+            ]);
 		});
 
-		$wp->addAction('wp_ajax_jigoshop.admin.product_attributes.save', array($this, 'ajaxSaveAttribute'));
-		$wp->addAction('wp_ajax_jigoshop.admin.product_attributes.remove', array($this, 'ajaxRemoveAttribute'));
-		$wp->addAction('wp_ajax_jigoshop.admin.product_attributes.save_option', array($this, 'ajaxSaveAttributeOption'));
-		$wp->addAction('wp_ajax_jigoshop.admin.product_attributes.remove_option', array($this, 'ajaxRemoveAttributeOption'));
+		$wp->addAction('wp_ajax_jigoshop.admin.product_attributes.save', [$this, 'ajaxSaveAttribute']);
+		$wp->addAction('wp_ajax_jigoshop.admin.product_attributes.remove', [$this, 'ajaxRemoveAttribute']);
+		$wp->addAction('wp_ajax_jigoshop.admin.product_attributes.save_option', [$this, 'ajaxSaveAttributeOption']);
+		$wp->addAction('wp_ajax_jigoshop.admin.product_attributes.remove_option', [$this, 'ajaxRemoveAttributeOption']);
 	}
 
 	public function ajaxSaveAttribute()
 	{
 		try {
-			$errors = array();
+			$errors = [];
 			if (!isset($_POST['label']) || empty($_POST['label'])) {
 				$errors[] = __('Attribute label is not set.', 'jigoshop');
 			}
@@ -100,19 +100,19 @@ class Attributes implements PageInterface
 
 			$this->productService->saveAttribute($attribute);
 
-			echo json_encode(array(
+			echo json_encode([
 				'success' => true,
-				'html' => Render::get('admin/product_attributes/attribute', array(
+				'html' => Render::get('admin/product_attributes/attribute', [
 					'id' => $attribute->getId(),
 					'attribute' => $attribute,
 					'types' => Attribute::getTypes(),
-				)),
-			));
+                ]),
+            ]);
 		} catch (Exception $e) {
-			echo json_encode(array(
+			echo json_encode([
 				'success' => false,
 				'error' => $e->getMessage(),
-			));
+            ]);
 		}
 
 		exit;
@@ -120,30 +120,30 @@ class Attributes implements PageInterface
 
 	public function ajaxRemoveAttribute()
 	{
-		$errors = array();
+		$errors = [];
 		if (!isset($_POST['id']) || empty($_POST['id'])) {
 			$errors[] = __('Attribute does not exist.', 'jigoshop');
 		}
 
 		if (!empty($errors)) {
-			echo json_encode(array(
+			echo json_encode([
 				'success' => false,
 				'error' => join('<br/>', $errors),
-			));
+            ]);
 			exit;
 		}
 
 		$this->productService->removeAttribute((int)$_POST['id']);
 
-		echo json_encode(array(
+		echo json_encode([
 			'success' => true,
-		));
+        ]);
 		exit;
 	}
 
 	public function ajaxSaveAttributeOption()
 	{
-		$errors = array();
+		$errors = [];
 		if (!isset($_POST['attribute_id']) || !is_numeric($_POST['attribute_id'])) {
 			$errors[] = __('Respective attribute is not set.', 'jigoshop');
 		}
@@ -152,10 +152,10 @@ class Attributes implements PageInterface
 		}
 
 		if (!empty($errors)) {
-			echo json_encode(array(
+			echo json_encode([
 				'success' => false,
 				'error' => join('<br/>', $errors),
-			));
+            ]);
 			exit;
 		}
 
@@ -177,16 +177,16 @@ class Attributes implements PageInterface
 		$attribute->addOption($option);
 		$this->productService->saveAttribute($attribute);
 
-		echo json_encode(array(
+		echo json_encode([
 			'success' => true,
-			'html' => Render::get('admin/product_attributes/option', array('id' => $attribute->getId(), 'option_id' => $option->getId(), 'option' => $option)),
-		));
+			'html' => Render::get('admin/product_attributes/option', ['id' => $attribute->getId(), 'option_id' => $option->getId(), 'option' => $option]),
+        ]);
 		exit;
 	}
 
 	public function ajaxRemoveAttributeOption()
 	{
-		$errors = array();
+		$errors = [];
 		if (!isset($_POST['attribute_id']) || !is_numeric($_POST['attribute_id'])) {
 			$errors[] = __('Respective attribute is not set.', 'jigoshop');
 		}
@@ -195,10 +195,10 @@ class Attributes implements PageInterface
 		}
 
 		if (!empty($errors)) {
-			echo json_encode(array(
+			echo json_encode([
 				'success' => false,
 				'error' => join('<br/>', $errors),
-			));
+            ]);
 			exit;
 		}
 
@@ -206,9 +206,9 @@ class Attributes implements PageInterface
 		$attribute->removeOption($_POST['id']);
 		$this->productService->saveAttribute($attribute);
 
-		echo json_encode(array(
+		echo json_encode([
 			'success' => true,
-		));
+        ]);
 		exit;
 	}
 
@@ -247,10 +247,10 @@ class Attributes implements PageInterface
 	 */
 	public function display()
 	{
-		Render::output('admin/product_attributes', array(
+		Render::output('admin/product_attributes', [
 			'messages' => $this->messages,
 			'attributes' => $this->productService->findAllAttributes(),
 			'types' => Attribute::getTypes(),
-		));
+        ]);
 	}
 }

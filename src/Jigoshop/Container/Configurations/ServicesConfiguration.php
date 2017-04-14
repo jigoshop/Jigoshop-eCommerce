@@ -22,15 +22,15 @@ class ServicesConfiguration implements ConfigurationInterface
 	 */
 	public function addServices(Services $services)
 	{
-		$services->setDetails('jigoshop.service.order', 'Jigoshop\Service\OrderService', array());
-		$services->setDetails('jigoshop.service.product', 'Jigoshop\Service\ProductService', array());
-		$services->setDetails('jigoshop.service.product.variable', 'Jigoshop\Service\Product\VariableService', array());
-		$services->setDetails('jigoshop.service.tax', 'Jigoshop\Service\TaxService', array());
-		$services->setDetails('jigoshop.service.customer', 'Jigoshop\Service\CustomerService', array());
-		$services->setDetails('jigoshop.service.shipping', 'Jigoshop\Service\ShippingService', array());
-		$services->setDetails('jigoshop.service.payment', 'Jigoshop\Service\PaymentService', array());
-        $services->setDetails('jigoshop.service.session', 'Jigoshop\Service\SessionService', array());
-		$services->setDetails('jigoshop.service.cart', 'Jigoshop\Service\CartService', array(
+		$services->setDetails('jigoshop.service.order', 'Jigoshop\Service\OrderService', []);
+		$services->setDetails('jigoshop.service.product', 'Jigoshop\Service\ProductService', []);
+		$services->setDetails('jigoshop.service.product.variable', 'Jigoshop\Service\Product\VariableService', []);
+		$services->setDetails('jigoshop.service.tax', 'Jigoshop\Service\TaxService', []);
+		$services->setDetails('jigoshop.service.customer', 'Jigoshop\Service\CustomerService', []);
+		$services->setDetails('jigoshop.service.shipping', 'Jigoshop\Service\ShippingService', []);
+		$services->setDetails('jigoshop.service.payment', 'Jigoshop\Service\PaymentService', []);
+        $services->setDetails('jigoshop.service.session', 'Jigoshop\Service\SessionService', []);
+		$services->setDetails('jigoshop.service.cart', 'Jigoshop\Service\CartService', [
 			'wpal',
 			'jigoshop.options',
 			'jigoshop.service.customer',
@@ -39,17 +39,17 @@ class ServicesConfiguration implements ConfigurationInterface
 			'jigoshop.service.session',
 			'jigoshop.service.payment',
 			'jigoshop.factory.order'
-		));
-		$services->setDetails('jigoshop.service.email', 'Jigoshop\Service\EmailService', array(
+        ]);
+		$services->setDetails('jigoshop.service.email', 'Jigoshop\Service\EmailService', [
 			'wpal',
 			'jigoshop.options',
 			'jigoshop.factory.email'
-		));
-		$services->setDetails('jigoshop.service.coupon', 'Jigoshop\Service\CouponService', array(
+        ]);
+		$services->setDetails('jigoshop.service.coupon', 'Jigoshop\Service\CouponService', [
 			'wpal',
 			'jigoshop.options',
 			'jigoshop.factory.coupon'
-		));
+        ]);
 
 		$services->setLazyStaus('jigoshop.service.order', true);
 		$services->setLazyStaus('jigoshop.service.product', true);
@@ -80,7 +80,7 @@ class ServicesConfiguration implements ConfigurationInterface
 	 */
 	public function addTriggers(Triggers $triggers)
 	{
-		$triggers->add('jigoshop.service.cart', 'jigoshop.service.cart', 'init', array());
+		$triggers->add('jigoshop.service.cart', 'jigoshop.service.cart', 'init', []);
 	}
 
 	/**

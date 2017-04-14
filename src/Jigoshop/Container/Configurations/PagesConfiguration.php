@@ -21,43 +21,43 @@ class PagesConfiguration implements ConfigurationInterface
 	 */
 	public function addServices(Services $services)
 	{
-		$services->setDetails('jigoshop.query.interceptor', 'Jigoshop\Query\Interceptor', array(
+		$services->setDetails('jigoshop.query.interceptor', 'Jigoshop\Query\Interceptor', [
 			'wpal',
 			'jigoshop.options'
-		));
-		$services->setDetails('jigoshop.frontend', 'Jigoshop\Frontend', array());
-        $services->setDetails('jigoshop.frontend.page_resolver', 'Jigoshop\Frontend\PageResolver', array(
+        ]);
+		$services->setDetails('jigoshop.frontend', 'Jigoshop\Frontend', []);
+        $services->setDetails('jigoshop.frontend.page_resolver', 'Jigoshop\Frontend\PageResolver', [
             'wpal'
-        ));
-		$services->setDetails('jigoshop.page.product_list', 'Jigoshop\Frontend\Page\ProductList', array(
+        ]);
+		$services->setDetails('jigoshop.page.product_list', 'Jigoshop\Frontend\Page\ProductList', [
 			'wpal',
 			'jigoshop.options',
 			'jigoshop.service.product',
 			'jigoshop.service.cart',
 			'jigoshop.messages'
-		));
-		$services->setDetails('jigoshop.page.product_category_list', 'Jigoshop\Frontend\Page\ProductCategoryList', array(
+        ]);
+		$services->setDetails('jigoshop.page.product_category_list', 'Jigoshop\Frontend\Page\ProductCategoryList', [
 			'wpal',
 			'jigoshop.options',
 			'jigoshop.service.product',
 			'jigoshop.service.cart',
 			'jigoshop.messages'
-		));
-		$services->setDetails('jigoshop.page.product_tag_list', 'Jigoshop\Frontend\Page\ProductTagList', array(
+        ]);
+		$services->setDetails('jigoshop.page.product_tag_list', 'Jigoshop\Frontend\Page\ProductTagList', [
 			'wpal',
 			'jigoshop.options',
 			'jigoshop.service.product',
 			'jigoshop.service.cart',
 			'jigoshop.messages'
-		));
-		$services->setDetails('jigoshop.page.product', 'Jigoshop\Frontend\Page\Product', array(
+        ]);
+		$services->setDetails('jigoshop.page.product', 'Jigoshop\Frontend\Page\Product', [
 			'wpal',
 			'jigoshop.options',
 			'jigoshop.service.product',
 			'jigoshop.service.cart',
 			'jigoshop.messages'
-		));
-		$services->setDetails('jigoshop.page.cart', 'Jigoshop\Frontend\Page\Cart', array(
+        ]);
+		$services->setDetails('jigoshop.page.cart', 'Jigoshop\Frontend\Page\Cart', [
 			'wpal',
 			'jigoshop.options',
 			'jigoshop.messages',
@@ -67,8 +67,8 @@ class PagesConfiguration implements ConfigurationInterface
 			'jigoshop.service.order',
 			'jigoshop.service.shipping',
 			'jigoshop.service.coupon'
-		));
-		$services->setDetails('jigoshop.page.checkout', 'Jigoshop\Frontend\Page\Checkout', array(
+        ]);
+		$services->setDetails('jigoshop.page.checkout', 'Jigoshop\Frontend\Page\Checkout', [
 			'wpal',
 			'jigoshop.options',
 			'jigoshop.messages',
@@ -77,53 +77,53 @@ class PagesConfiguration implements ConfigurationInterface
 			'jigoshop.service.shipping',
 			'jigoshop.service.payment',
 			'jigoshop.service.order'
-		));
-		$services->setDetails('jigoshop.page.checkout.thank_you', 'Jigoshop\Frontend\Page\Checkout\ThankYou', array(
+        ]);
+		$services->setDetails('jigoshop.page.checkout.thank_you', 'Jigoshop\Frontend\Page\Checkout\ThankYou', [
 			'wpal',
 			'jigoshop.options',
 			'jigoshop.messages',
 			'jigoshop.service.order'
-		));
-		$services->setDetails('jigoshop.page.checkout.pay', 'Jigoshop\Frontend\Page\Checkout\Pay', array(
+        ]);
+		$services->setDetails('jigoshop.page.checkout.pay', 'Jigoshop\Frontend\Page\Checkout\Pay', [
 			'wpal',
 			'jigoshop.options',
 			'jigoshop.messages',
 			'jigoshop.service.order',
 			'jigoshop.service.payment'
-		));
-		$services->setDetails('jigoshop.page.account', 'Jigoshop\Frontend\Page\Account', array(
+        ]);
+		$services->setDetails('jigoshop.page.account', 'Jigoshop\Frontend\Page\Account', [
 			'wpal',
 			'jigoshop.options',
 			'jigoshop.service.customer',
 			'jigoshop.service.order',
 			'jigoshop.messages'
-		));
-		$services->setDetails('jigoshop.page.account.edit_address', 'Jigoshop\Frontend\Page\Account\EditAddress', array(
+        ]);
+		$services->setDetails('jigoshop.page.account.edit_address', 'Jigoshop\Frontend\Page\Account\EditAddress', [
 			'wpal',
 			'jigoshop.options',
 			'jigoshop.service.customer',
 			'jigoshop.messages'
-		));
-		$services->setDetails('jigoshop.page.account.change_password', 'Jigoshop\Frontend\Page\Account\ChangePassword', array(
+        ]);
+		$services->setDetails('jigoshop.page.account.change_password', 'Jigoshop\Frontend\Page\Account\ChangePassword', [
 			'wpal',
 			'jigoshop.options',
 			'jigoshop.service.customer',
 			'jigoshop.messages'
-		));
-		$services->setDetails('jigoshop.page.account.orders', 'Jigoshop\Frontend\Page\Account\Orders', array(
+        ]);
+		$services->setDetails('jigoshop.page.account.orders', 'Jigoshop\Frontend\Page\Account\Orders', [
 			'wpal',
 			'jigoshop.options',
 			'jigoshop.service.customer',
 			'jigoshop.service.order',
 			'jigoshop.messages'
-		));
-        $services->setDetails('jigoshop.page.dummy', 'Jigoshop\Frontend\Page\Dummy', array(
+        ]);
+        $services->setDetails('jigoshop.page.dummy', 'Jigoshop\Frontend\Page\Dummy', [
             'wpal',
             'jigoshop.options',
             'jigoshop.service.product',
             'jigoshop.service.cart',
             'jigoshop.messages'
-        ));
+        ]);
 	}
 
 	/**
@@ -143,7 +143,7 @@ class PagesConfiguration implements ConfigurationInterface
 	 */
 	public function addTriggers(Triggers $triggers)
 	{
-        $triggers->add('jigoshop.frontend', 'jigoshop.frontend.page_resolver', 'resolve', array('di'));
+        $triggers->add('jigoshop.frontend', 'jigoshop.frontend.page_resolver', 'resolve', ['di']);
 	}
 
 	/**

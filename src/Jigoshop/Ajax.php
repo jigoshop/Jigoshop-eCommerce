@@ -44,10 +44,10 @@ class Ajax
                     throw new Exception('Invalid service instance.');
                 }
             } catch (Exception $e) {
-                $response = array(
+                $response = [
                     'success' => false,
                     'message' => $e->getMessage()
-                );
+                ];
             }
             echo json_encode($response);
             exit;

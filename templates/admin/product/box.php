@@ -22,14 +22,14 @@ $isHidden = function($options) use ($product) {
 <div class="jigoshop" data-id="<?= $product->getId(); ?>">
 	<div id="messages"></div>
 	<div class="form-horizontal">
-		<?php Forms::select(array(
+		<?php Forms::select([
 			'id' => 'product-type',
 			'name' => 'product[type]',
 			'label' => __('Product type', 'jigoshop'),
 			'options' => $types,
 			'value' => $product->getType(),
 			'size' => 10,
-		)); ?>
+        ]); ?>
 		<ul class="jigoshop_product_data nav nav-tabs" role="tablist">
 			<?php foreach ($menu as $id => $options): ?>
 			<li class="<?= $id; ?><?php $id == $current_tab and print ' active'; ?><?php $isHidden($options) and print ' not-active' ?>">

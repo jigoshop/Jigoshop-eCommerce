@@ -6,5 +6,5 @@
  */
 ?>
 <?php foreach ($method->getRates($cart) as $rate): /** @var $rate \Jigoshop\Shipping\Rate */ ?>
-	<?php \Jigoshop\Helper\Render::output('shop/checkout/shipping/rate', array('method' => $method, 'rate' => $rate, 'cart' => $cart)); ?>
+	<?php \Jigoshop\Helper\Render::output('shop/checkout/shipping/rate', ['method' => $method, 'rate' => $rate, 'cart' => $cart]); ?>
 <?php endforeach; ?>

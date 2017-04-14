@@ -18,10 +18,10 @@ class Cart extends \WP_Widget
 
 	public function __construct()
 	{
-		$options = array(
+		$options = [
 			'classname' => self::ID,
 			'description' => __('Shopping Cart for the sidebar', 'jigoshop')
-		);
+        ];
 
 		parent::__construct(self::ID, __('Jigoshop: Cart', 'jigoshop'), $options);
 	}
@@ -63,12 +63,12 @@ class Cart extends \WP_Widget
 			$this->id_base
 		);
 
-		Render::output('widget/cart/widget', array_merge($args, array(
+		Render::output('widget/cart/widget', array_merge($args, [
 			'title' => $title,
 			'cart' => self::$cart->getCurrent(),
 			'cart_url' => get_permalink(self::$options->getPageId(\Jigoshop\Frontend\Pages::CART)),
 			'checkout_url' => get_permalink(self::$options->getPageId(\Jigoshop\Frontend\Pages::CHECKOUT)),
-		)));
+        ]));
 	}
 
 	/**
@@ -105,7 +105,7 @@ class Cart extends \WP_Widget
 		$view_cart_button = isset($instance['view_cart_button']) ? esc_attr($instance['view_cart_button']) : 'View Cart &rarr;';
 		$checkout_button = isset($instance['checkout_button']) ? esc_attr($instance['checkout_button']) : 'Checkout &rarr;';
 
-		Render::output('widget/cart/form', array(
+		Render::output('widget/cart/form', [
 			'title_id' => $this->get_field_id('title'),
 			'title_name' => $this->get_field_name('title'),
 			'title' => $title,
@@ -115,6 +115,6 @@ class Cart extends \WP_Widget
 			'checkout_button_id' => $this->get_field_id('checkout_button'),
 			'checkout_button_name' => $this->get_field_name('checkout_button'),
 			'checkout_button' => $checkout_button,
-		));
+        ]);
 	}
 }

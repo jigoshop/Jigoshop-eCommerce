@@ -39,9 +39,9 @@ use Jigoshop\Helper\Render;
 						</thead>
 						<tbody>
 						<?php foreach($rules as $rule): ?>
-							<?php Render::output('admin/settings/tax/rule', array(
+							<?php Render::output('admin/settings/tax/rule', [
 								'rule' => $rule, 'classes' => $classes, 'countries' => $countries,
-							)); ?>
+                            ]); ?>
 						<?php endforeach; ?>
 						</tbody>
 						<tfoot>

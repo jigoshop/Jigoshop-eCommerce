@@ -50,11 +50,11 @@ class Simple implements Type
 	 */
 	public function initialize(Wordpress $wp, array $enabledTypes)
 	{
-		$wp->addFilter('jigoshop\cart\add', array($this, 'addToCart'), 10, 2);
-		$wp->addFilter('jigoshop\core\types\variable\subtypes', array($this, 'addVariableSubtype'), 10, 1);
-		$wp->addFilter('jigoshop\product\get_stock', array($this, 'getStock'), 10, 2);
-		$wp->addAction('jigoshop\admin\product\assets', array($this, 'addAssets'), 10, 0);
-        $wp->addAction('jigoshop\admin\variation', array($this, 'addVariationFields'), 10, 2);
+		$wp->addFilter('jigoshop\cart\add', [$this, 'addToCart'], 10, 2);
+		$wp->addFilter('jigoshop\core\types\variable\subtypes', [$this, 'addVariableSubtype'], 10, 1);
+		$wp->addFilter('jigoshop\product\get_stock', [$this, 'getStock'], 10, 2);
+		$wp->addAction('jigoshop\admin\product\assets', [$this, 'addAssets'], 10, 0);
+        $wp->addAction('jigoshop\admin\variation', [$this, 'addVariationFields'], 10, 2);
     }
 
     /**
@@ -65,11 +65,11 @@ class Simple implements Type
      */
     public function addVariationFields($variation, $product)
     {
-        Render::output('admin/product/box/variations/variation/simple', array(
+        Render::output('admin/product/box/variations/variation/simple', [
             'variation' => $variation,
             'product' => $variation->getProduct(),
             'parent' => $product,
-        ));
+        ]);
     }
 
 	/**
@@ -122,6 +122,6 @@ class Simple implements Type
 
 	public function addAssets()
 	{
-		Scripts::add('jigoshop.admin.product.simple', \JigoshopInit::getUrl().'/assets/js/admin/product/simple.js', array('jquery'));
+		Scripts::add('jigoshop.admin.product.simple', \JigoshopInit::getUrl().'/assets/js/admin/product/simple.js', ['jquery']);
 	}
 }

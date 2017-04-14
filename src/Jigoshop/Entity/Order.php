@@ -34,7 +34,7 @@ class Order implements OrderInterface, \JsonSerializable
 	/** @var Customer */
 	private $customer;
 	/** @var Item[] */
-	private $items = array();
+	private $items = [];
 	/** @var Shipping\Method */
 	private $shippingMethod;
 	/** @var int */
@@ -48,11 +48,11 @@ class Order implements OrderInterface, \JsonSerializable
 	/** @var Discount[] */
 	private $discounts = [];
 	/** @var array */
-	private $tax = array();
+	private $tax = [];
 	/** @var array */
-	private $taxDefinitions = array();
+	private $taxDefinitions = [];
 	/** @var array */
-	private $shippingTax = array();
+	private $shippingTax = [];
 	/** @var float */
 	private $totalTax;
 	/** @var float */
@@ -64,7 +64,7 @@ class Order implements OrderInterface, \JsonSerializable
 	/** @var string */
 	private $customerNote;
 	/** @var array */
-	private $updateMessages = array();
+	private $updateMessages = [];
     /** @var bool  */
     private $taxIncluded = false;
 
@@ -321,7 +321,7 @@ class Order implements OrderInterface, \JsonSerializable
 	public function removeItems()
 	{
 		$this->removeShippingMethod();
-		$this->items = array();
+		$this->items = [];
 		$this->productSubtotal = 0.0;
 		$this->subtotal = 0.0;
 		$this->tax = array_map(function (){
@@ -464,11 +464,11 @@ class Order implements OrderInterface, \JsonSerializable
 		$this->status = $status;
 
 		if ($currentStatus != $status) {
-			$this->updateMessages[] = array(
+			$this->updateMessages[] = [
 				'message' => (!$message ? '' : $message . '<br />'),
 				'old_status' => $currentStatus,
 				'new_status' => $status,
-			);
+            ];
 		}
 	}
 
@@ -702,7 +702,7 @@ class Order implements OrderInterface, \JsonSerializable
 			$payment = $this->paymentMethod->getId();
 		}
 
-		return array(
+		return [
 			'id' => $this->id,
 			'number' => $this->number,
 			'updated_at' => $this->updatedAt->getTimestamp(),
@@ -710,11 +710,11 @@ class Order implements OrderInterface, \JsonSerializable
 			'items' => $this->items,
 			'customer' => serialize($this->customer),
 			'customer_id' => $this->customer->getId(),
-			'shipping' => array(
+			'shipping' => [
 				'method' => $shipping,
 				'price' => $this->shippingPrice,
 				'rate' => $this->shippingMethodRate,
-			),
+            ],
 			'payment' => $payment,
 			'customer_note' => $this->customerNote,
 			'subtotal' => $this->subtotal,
@@ -723,7 +723,7 @@ class Order implements OrderInterface, \JsonSerializable
 			'status' => $this->status,
 			'update_messages' => $this->updateMessages,
             'tax_included' => $this->taxIncluded
-		);
+        ];
 	}
 
     /**

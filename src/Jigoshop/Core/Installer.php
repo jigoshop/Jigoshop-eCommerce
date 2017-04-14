@@ -27,7 +27,7 @@ class Installer
     /** @var EmailServiceInterface */
     private $emailService;
     /** @var array */
-    private $initializers = array();
+    private $initializers = [];
 
     public function __construct(Wordpress $wp, Options $options, Cron $cron, EmailServiceInterface $emailService)
     {
@@ -57,7 +57,7 @@ class Installer
             $this->_createPages();
 
             $wpdb = $this->wp->getWPDB();
-            $hasEmails = $wpdb->get_var($wpdb->prepare("SELECT COUNT(*) FROM {$wpdb->posts} WHERE post_type = %s", array(Types::EMAIL))) > 0;
+            $hasEmails = $wpdb->get_var($wpdb->prepare("SELECT COUNT(*) FROM {$wpdb->posts} WHERE post_type = %s", [Types::EMAIL])) > 0;
 
             if (!$hasEmails) {
                 $this->installEmails();
@@ -326,7 +326,7 @@ class Installer
     private function _createPages()
     {
         // start out with basic page parameters, modify as we go
-        $data = array(
+        $data = [
             'post_status' => 'publish',
             'post_type' => 'page',
             'post_author' => $this->wp->getCurrentUserId(),
@@ -334,23 +334,23 @@ class Installer
             'post_content' => '',
             'comment_status' => 'closed',
             'ping_status' => false,
-        );
+        ];
 
-        $this->_createPage(Pages::SHOP, array_merge($data, array(
+        $this->_createPage(Pages::SHOP, array_merge($data, [
             'post_title' => __('Shop', 'jigoshop'),
-        )));
-        $this->_createPage(Pages::CART, array_merge($data, array(
+        ]));
+        $this->_createPage(Pages::CART, array_merge($data, [
             'post_title' => __('Cart', 'jigoshop'),
-        )));
-        $this->_createPage(Pages::CHECKOUT, array_merge($data, array(
+        ]));
+        $this->_createPage(Pages::CHECKOUT, array_merge($data, [
             'post_title' => __('Checkout', 'jigoshop'),
-        )));
-        $this->_createPage(Pages::THANK_YOU, array_merge($data, array(
+        ]));
+        $this->_createPage(Pages::THANK_YOU, array_merge($data, [
             'post_title' => __('Checkout - thank you', 'jigoshop'),
-        )));
-        $this->_createPage(Pages::ACCOUNT, array_merge($data, array(
+        ]));
+        $this->_createPage(Pages::ACCOUNT, array_merge($data, [
             'post_title' => __('My account', 'jigoshop'),
-        )));
+        ]));
         $this->options->saveOptions();
     }
 
@@ -375,7 +375,7 @@ class Installer
      */
     public function installEmails()
     {
-        $default_emails = array(
+        $default_emails = [
             'new_order_admin_notification',
             'customer_order_status_pending_to_processing',
             'customer_order_status_pending_to_on_hold',
@@ -386,7 +386,7 @@ class Installer
             'low_stock_notification',
             'no_stock_notification',
             'product_on_backorders_notification'
-        );
+        ];
         $invoice = '==============================<wbr />==============================
 		Order details:
 		<span class="il">ORDER</span> [order_number]                                              Date: [order_date]
@@ -474,7 +474,7 @@ class Installer
                     $message = '#[product_id] [product_name] ([sku]) was found to be on backorder.<br/>'.$invoice;
                     break;
             }
-            $post_data = array(
+            $post_data = [
                 'post_content' => $message,
                 'post_title' => $post_title,
                 'post_status' => 'publish',
@@ -482,7 +482,7 @@ class Installer
                 'post_author' => 1,
                 'ping_status' => 'closed',
                 'comment_status' => 'closed',
-            );
+            ];
             $post_id = $this->wp->wpInsertPost($post_data);
             $this->wp->updatePostMeta($post_id, 'subject', $title);
             if ($email == 'new_order_admin_notification') {
@@ -491,14 +491,14 @@ class Installer
 //                    'admin_order_status_pending_to_completed',
 //                    'admin_order_status_pending_to_on_hold'
 //                ));
-                $this->wp->updatePostMeta($post_id, 'actions', array(
+                $this->wp->updatePostMeta($post_id, 'actions', [
                     'admin_order_status_pending_to_processing',
                     'admin_order_status_pending_to_completed',
                     'admin_order_status_pending_to_on_hold'
-                ));
+                ]);
             } else {
 //                $this->emailService->addTemplate($post_id, array($email));
-                $this->wp->updatePostMeta($post_id, 'actions', array($email));
+                $this->wp->updatePostMeta($post_id, 'actions', [$email]);
             }
         }
     }

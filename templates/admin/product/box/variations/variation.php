@@ -30,14 +30,14 @@ $stock = $product instanceof Product\Purchasable ? $product->getStock() : new St
 			</span>
 		</label>
 		<?php foreach($attributes as $attribute): /** @var $attribute Attribute */ $value = $variation->getAttribute($attribute->getId());?>
-			<?php Forms::select(array(
+			<?php Forms::select([
 				'name' => 'product[variation]['.$variation->getId().'][attribute]['.$attribute->getId().']',
-				'classes' => array('variation-attribute'),
+				'classes' => ['variation-attribute'],
 				'placeholder' => $attribute->getLabel(),
 				'value' => $value !== null ? $value->getValue() : '',
 				'options' => ProductHelper::getSelectOption($attribute->getOptions(), sprintf(__('Any of %s', 'jigoshop'), $attribute->getLabel())),
 				'size' => 12,
-			)); ?>
+            ]); ?>
 		<?php endforeach; ?>
 	</h4>
 	<div class="list-group-item-text row clearfix">
@@ -49,131 +49,131 @@ $stock = $product instanceof Product\Purchasable ? $product->getStock() : new St
 		<div class="col-md-10">
 			<fieldset>
 			<?php
-			Forms::select(array(
+			Forms::select([
 				'name' => 'product[variation]['.$variation->getId().'][product][type]',
-				'classes' => array('variation-type'),
+				'classes' => ['variation-type'],
 				'label' => __('Type', 'jigoshop'),
 				'value' => $product->getType(),
 				'options' => $allowedSubtypes,
 				'size' => 11,
-			));
-			Forms::text(array(
+            ]);
+			Forms::text([
 				'name' => 'product[variation]['.$variation->getId().'][product][regular_price]',
 				'label' => __('Price', 'jigoshop'),
 				'placeholder' => __('Price not announced', 'jigoshop'),
 				'value' => $product->getPrice(),
 				'size' => 11,
-			));
-			Forms::select(array(
+            ]);
+			Forms::select([
 				'name' => 'product[variation]['.$variation->getId().'][product][tax_classes]',
 				'label' => __('Tax classes', 'jigoshop'),
 				'multiple' => true,
 				'value' => $variation->getProduct()->getTaxClasses(),
 				'options' => $taxClasses,
-				'classes' => array($product->isTaxable() ? '' : 'not-active'),
+				'classes' => [$product->isTaxable() ? '' : 'not-active'],
 				'size' => 11,
-			));
+            ]);
 			?>
 			</fieldset>
 			<fieldset>
 			<?php
-			Forms::text(array(
+			Forms::text([
 				'name' => 'product[variation]['.$variation->getId().'][product][sku]',
 				'label' => __('SKU', 'jigoshop'),
 				'value' => $product->getSku(),
 				'placeholder' => $variation->getParent()->getId().' - '.$variation->getId(),
 				'size' => 11,
-			));
-			Forms::text(array(
+            ]);
+			Forms::text([
 				'name' => 'product[variation]['.$variation->getId().'][product][brand]',
 				'label' => __('Brand', 'jigoshop'),
 				'value' => $product->getBrand(),
 				'size' => 11,
-			));
-			Forms::text(array(
+            ]);
+			Forms::text([
 				'name' => 'product[variation]['.$variation->getId().'][product][gtin]',
 				'label' => __('GTIN', 'jigoshop'),
 				'tip' => 'Global Trade Item Number',
 				'value' => $product->getGtin(),
 				'size' => 11,
-			));
-			Forms::text(array(
+            ]);
+			Forms::text([
 				'name' => 'product[variation]['.$variation->getId().'][product][mpn]',
 				'label' => __('MPN', 'jigoshop'),
 				'tip' => 'Manufacturer Part Number',
 				'value' => $product->getMpn(),
 				'size' => 11,
-			));
+            ]);
 			?>
 			</fieldset>
             <fieldset class="stock" class="<?php $product instanceof Product\External and print 'display: none;'; ?>">
                 <?php
-                Forms::checkbox(array(
+                Forms::checkbox([
                     'name' => 'product[variation]['.$variation->getId().'][product][stock_manage]',
                     'classes' => ['stock-manage'],
                     'label' => __('Manage stock?', 'jigoshop'),
                     'checked' => $stock->getManage(),
                     'size' => 11,
-                ));
-                Forms::select(array(
+                ]);
+                Forms::select([
                     'name' => 'product[variation]['.$variation->getId().'][product][stock_status]',
                     'label' => __('Status', 'jigoshop'),
                     'value' => $stock->getStatus(),
-                    'options' => array(
+                    'options' => [
                         StockStatus::IN_STOCK => __('In stock', 'jigoshop'),
                         StockStatus::OUT_STOCK => __('Out of stock', 'jigoshop'),
-                    ),
-                    'classes' => array($stock->getManage() ? 'not-active' : '', 'manual-stock-status'),
+                    ],
+                    'classes' => [$stock->getManage() ? 'not-active' : '', 'manual-stock-status'],
                     'size' => 11,
-                ));
+                ]);
                 ?>
                 <div class="stock-status" style="<?php !$stock->getManage() and print 'display: none;'; ?>">
                     <?php
-                    Forms::number(array(
+                    Forms::number([
                         'name' => 'product[variation]['.$variation->getId().'][product][stock_stock]',
                         'label' => __('Items in stock', 'jigoshop'),
                         'value' => $stock->getStock(),
                         'min' => 0,
                         'size' => 11,
-                    ));
-                    Forms::select(array(
+                    ]);
+                    Forms::select([
                         'name' => 'product[variation]['.$variation->getId().'][product][stock_allow_backorders]',
                         'label' => __('Allow backorders?', 'jigoshop'),
                         'value' => $stock->getAllowBackorders(),
-                        'options' => array(
+                        'options' => [
                             StockStatus::BACKORDERS_FORBID => __('Do not allow', 'jigoshop'),
                             StockStatus::BACKORDERS_NOTIFY => __('Allow, but notify customer', 'jigoshop'),
                             StockStatus::BACKORDERS_ALLOW => __('Allow', 'jigoshop')
-                        ),
+                        ],
                         'size' => 11,
-                    ));
+                    ]);
                     ?>
                 </div>
             </fieldset>
 			<fieldset>
 			<?php
-			Forms::text(array(
+			Forms::text([
 				'name' => 'product[variation]['.$variation->getId().'][product][sales_price]',
 				'label' => __('Sale price', 'jigoshop'),
 				'value' => $product->getSales()->getPrice(),
 				'placeholder' => ProductHelper::formatNumericPrice(0),
 				'size' => 11,
-			));
-			Forms::daterange(array(
+            ]);
+			Forms::daterange([
 				'id' => 'product_variation_'.$variation->getId().'_product_sales_date',
-				'name' => array(
+				'name' => [
 					'from' => 'product[variation]['.$variation->getId().'][product][sales_from]',
 					'to' => 'product[variation]['.$variation->getId().'][product][sales_to]',
-				),
+                ],
 				'label' => __('Sale date', 'jigoshop'),
-				'value' => array(
+				'value' => [
 					'from' => $product->getSales()->getFrom()->format('m/d/Y'),
 					'to' => $product->getSales()->getTo()->format('m/d/Y'),
-				),
+                ],
 				'size' => 11,
 				'startDate' => $variation->getParent()->getSales()->getFrom()->format('m/d/Y'),
 				'endDate' => $variation->getParent()->getSales()->getTo()->format('m/d/Y'),
-			));
+            ]);
 			?>
 			</fieldset>
 			<?php do_action('jigoshop\admin\variation', $variation, $product); ?>

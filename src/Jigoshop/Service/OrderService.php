@@ -33,7 +33,7 @@ class OrderService implements OrderServiceInterface
         $this->options = $options;
         $this->factory = $factory;
 
-        $wp->addAction('save_post_' . Types\Order::NAME, array($this, 'savePost'), 10);
+        $wp->addAction('save_post_' . Types\Order::NAME, [$this, 'savePost'], 10);
     }
 
     /**
@@ -125,7 +125,7 @@ class OrderService implements OrderServiceInterface
             $date = $this->wp->getHelpers()->currentTime('mysql');
             $dateGmt = $this->wp->getHelpers()->currentTime('mysql', true);
 
-            $wpdb->insert($wpdb->posts, array(
+            $wpdb->insert($wpdb->posts, [
                 'post_author' => $object->getCustomer()->getId() ? $object->getCustomer()->getId() : 0,
                 'post_date' => $date,
                 'post_date_gmt' => $dateGmt,
@@ -138,7 +138,7 @@ class OrderService implements OrderServiceInterface
                 'post_name' => sanitize_title($object->getTitle()),
                 'comment_status' => 'open',
                 'ping_status' => 'closed',
-            ));
+            ]);
 
             $id = $wpdb->insert_id;
             if (!is_int($id) || $id === 0) {
@@ -156,11 +156,11 @@ class OrderService implements OrderServiceInterface
         }
 
         if (isset($fields['status']) || isset($fields['customer_note'])) {
-            $wpdb->update($wpdb->posts, array(
+            $wpdb->update($wpdb->posts, [
                 'post_title' => $object->getTitle(),
                 'post_status' => $object->getStatus(),
                 'post_excerpt' => $object->getCustomerNote(),
-            ), array('ID' => $object->getId()));
+            ], ['ID' => $object->getId()]);
 
             unset($fields['customer_note'], $fields['status']);
         }
@@ -193,7 +193,7 @@ class OrderService implements OrderServiceInterface
 
             foreach ($fields['items'] as $item) {
                 /** @var $item Order\Item */
-                $data = array(
+                $data = [
                     'order_id' => $object->getId(),
                     'product_id' => $item->getProduct() ? $item->getProduct()->getId() : null,
                     'product_type' => $item->getType(),
@@ -203,10 +203,10 @@ class OrderService implements OrderServiceInterface
                     'tax' => $item->getTax(),
                     'quantity' => $item->getQuantity(),
                     'cost' => $item->getCost(),
-                );
+                ];
 
                 if ($item->getId() !== null) {
-                    $wpdb->update($wpdb->prefix . 'jigoshop_order_item', $data, array('id' => $item->getId()));
+                    $wpdb->update($wpdb->prefix . 'jigoshop_order_item', $data, ['id' => $item->getId()]);
                 } else {
                     $wpdb->insert($wpdb->prefix . 'jigoshop_order_item', $data);
                     $item->setId($wpdb->insert_id);
@@ -345,7 +345,7 @@ class OrderService implements OrderServiceInterface
     private function recalculateTax(EntityInterface $object)
     {
         /** @var Order $order */
-        $order = new Order(array());
+        $order = new Order([]);
         $order = $this->factory->fill($order, $object->getStateToSave());
         $object->setTaxDefinitions($order->getTaxDefinitions());
     }
@@ -366,7 +366,7 @@ class OrderService implements OrderServiceInterface
             "SELECT MAX(meta.meta_value*1)+1 FROM {$wpdb->posts} as posts 
 			LEFT JOIN {$wpdb->postmeta} as meta ON (posts.ID = meta.post_id AND meta.meta_key = %s)
 			WHERE post_type = %s AND post_status != %s",
-            array('number', Types::ORDER, 'auto-draft')
+            ['number', Types::ORDER, 'auto-draft']
         )));
 
         return $nextNumber > 0 ? $nextNumber : 1;
@@ -406,7 +406,7 @@ class OrderService implements OrderServiceInterface
      */
     public function addNote($order, $note, $private = true)
     {
-        $comment = array(
+        $comment = [
             'comment_post_ID' => $order->getId(),
             'comment_author' => __('Jigoshop', 'jigoshop'),
             'comment_author_email' => '',
@@ -418,7 +418,7 @@ class OrderService implements OrderServiceInterface
             'comment_date' => $this->wp->getHelpers()->currentTime('mysql'),
             'comment_date_gmt' => $this->wp->getHelpers()->currentTime('mysql', true),
             'comment_approved' => true
-        );
+        ];
 
         $comment = $this->wp->applyFilters('jigoshop\service\order\add_note', $comment, $order, $note, $private);
         $comment_id = $this->wp->wpInsertComment($comment);
@@ -442,7 +442,7 @@ class OrderService implements OrderServiceInterface
             $ids = '0';
         }
         $query = $wpdb->prepare("DELETE FROM {$wpdb->prefix}jigoshop_order_item WHERE id NOT IN ({$ids}) AND order_id = %d",
-            array($order));
+            [$order]);
         $wpdb->query($query);
     }
 
@@ -474,11 +474,11 @@ class OrderService implements OrderServiceInterface
     public function saveItemMeta($item, $meta)
     {
         $wpdb = $this->wp->getWPDB();
-        $wpdb->replace($wpdb->prefix . 'jigoshop_order_item_meta', array(
+        $wpdb->replace($wpdb->prefix . 'jigoshop_order_item_meta', [
             'item_id' => $item->getId(),
             'meta_key' => $meta->getKey(),
             'meta_value' => $meta->getValue(),
-        ));
+        ]);
     }
 
     /**
@@ -520,13 +520,13 @@ class OrderService implements OrderServiceInterface
         };
 
         $this->wp->addFilter('posts_where', $restriction);
-        $query = new \WP_Query(array(
-            'post_status' => array(Order\Status::COMPLETED),
+        $query = new \WP_Query([
+            'post_status' => [Order\Status::COMPLETED],
             'post_type' => Types::ORDER,
             'order' => 'DESC',
             'orderby' => 'post_date',
             'posts_per_page' => -1
-        ));
+        ]);
 
         $results = $this->findByQuery($query);
         $this->wp->removeFilter('posts_where', $restriction);
@@ -579,15 +579,15 @@ class OrderService implements OrderServiceInterface
      */
     public function findOldPending()
     {
-        $this->wp->addFilter('posts_where', array($this, 'ordersFilter'));
-        $query = new \WP_Query(array(
+        $this->wp->addFilter('posts_where', [$this, 'ordersFilter']);
+        $query = new \WP_Query([
             'post_status' => Order\Status::PENDING,
             'post_type' => Types::ORDER,
             'suppress_filters' => false,
             'fields' => 'ids',
-        ));
+        ]);
         $results = $this->findByQuery($query);
-        $this->wp->removeFilter('posts_where', array($this, 'ordersFilter'));
+        $this->wp->removeFilter('posts_where', [$this, 'ordersFilter']);
 
         return $results;
     }
@@ -597,15 +597,15 @@ class OrderService implements OrderServiceInterface
      */
     public function findOldProcessing()
     {
-        $this->wp->addFilter('posts_where', array($this, 'ordersFilter'));
-        $query = new \WP_Query(array(
+        $this->wp->addFilter('posts_where', [$this, 'ordersFilter']);
+        $query = new \WP_Query([
             'post_status' => Order\Status::PROCESSING,
             'post_type' => Types::ORDER,
             'suppress_filters' => false,
             'fields' => 'ids',
-        ));
+        ]);
         $results = $this->findByQuery($query);
-        $this->wp->removeFilter('posts_where', array($this, 'ordersFilter'));
+        $this->wp->removeFilter('posts_where', [$this, 'ordersFilter']);
 
         return $results;
     }
@@ -630,7 +630,7 @@ class OrderService implements OrderServiceInterface
      */
     public function findForUser($userId)
     {
-        $query = new \WP_Query(array(
+        $query = new \WP_Query([
             'post_status' => array_keys(Order\Status::getStatuses()),
             'post_type' => Types::ORDER,
             'suppress_filters' => false,
@@ -639,13 +639,13 @@ class OrderService implements OrderServiceInterface
             'orderby' => 'post_date',
             'numberposts' => -1, // TODO: Pagination?
             'posts_per_page' => -1,
-            'meta_query' => array(
-                array(
+            'meta_query' => [
+                [
                     'key' => 'customer_id',
                     'value' => $userId,
-                ),
-            ),
-        ));
+                ],
+            ],
+        ]);
 
         return $this->wp->applyFilters('jigoshop\service\order\find_for_user', $this->findByQuery($query), $userId);
     }

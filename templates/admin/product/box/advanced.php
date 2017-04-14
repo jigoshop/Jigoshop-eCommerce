@@ -9,21 +9,21 @@ use Jigoshop\Entity\Product;
 ?>
 <fieldset>
 	<?php
-	Forms::checkbox(array(
+	Forms::checkbox([
 		'name' => 'product[is_taxable]',
 		'id' => 'is_taxable',
 		'label' => __('Is taxable?', 'jigoshop'),
 		'checked' => $product->isTaxable(),
-	));
-	Forms::select(array(
+    ]);
+	Forms::select([
 		'name' => 'product[tax_classes]',
 		'id' => 'tax_classes',
 		'label' => __('Tax classes', 'jigoshop'),
 		'multiple' => true,
 		'value' => $product->getTaxClasses(),
 		'options' => $taxClasses,
-		'classes' => array($product->isTaxable() ? '' : 'not-active'),
-	));
+		'classes' => [$product->isTaxable() ? '' : 'not-active'],
+    ]);
 	?>
 </fieldset>
 <?php do_action('jigoshop\product\tabs\advanced', $product); ?>

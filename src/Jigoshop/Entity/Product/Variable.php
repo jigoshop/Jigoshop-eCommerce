@@ -11,7 +11,7 @@ class Variable extends Product implements Shippable, Saleable
 	const TYPE = 'variable';
 
     /** @var Product\Variable\Variation[] */
-	private $variations = array();
+	private $variations = [];
 	/** @var Attributes\Sales */
 	private $sales;
     /** @var int */
@@ -268,10 +268,10 @@ class Variable extends Product implements Shippable, Saleable
 	 */
 	public function getState()
 	{
-		return array(
+		return [
 			'type' => $this->getType(),
 			'id' => $this->getId(),
-		);
+        ];
 	}
 
     /**

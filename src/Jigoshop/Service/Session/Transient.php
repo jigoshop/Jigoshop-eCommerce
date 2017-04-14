@@ -13,7 +13,7 @@ use Jigoshop\Service\SessionService;
 class Transient extends SessionService
 {
     /** @var Session[] */
-    private $sessions = array();
+    private $sessions = [];
 
     /**
      * @param string $key
@@ -23,7 +23,7 @@ class Transient extends SessionService
     public function get($key)
     {
         if (!isset($this->sessions[$key])) {
-            $data = array('key' => $key);
+            $data = ['key' => $key];
             $transient = get_transient('jigoshop_session_'.$key);
             if($transient) {
                 $data['fields'] = $transient;

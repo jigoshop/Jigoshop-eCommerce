@@ -89,7 +89,7 @@ class Currency
 	 */
 	public static function symbols()
 	{
-		$symbols = array(
+		$symbols = [
 			'AED' => '&#1583;&#46;&#1573;', /*'United Arab Emirates dirham'*/
 			'AFN' => '&#1547;', /*'Afghanistan Afghani'*/
 			'ALL' => 'Lek', /*'Albania Lek'*/
@@ -206,7 +206,7 @@ class Currency
 			'YER' => '&#65020;', /*'Yemen Rial'*/
 			'ZAR' => 'R', /*'South Africa Rand'*/
 			'ZWD' => 'Z$', /*'Zimbabwe Dollar'*/
-		);
+        ];
 
 		ksort($symbols);
 
@@ -218,7 +218,7 @@ class Currency
 	 */
 	public static function countries()
 	{
-		$countries = array(
+		$countries = [
 			'AED' => __('United Arab Emirates dirham', 'jigoshop'),
 			'AFN' => __('Afghanistan Afghani', 'jigoshop'),
 			'ALL' => __('Albania Lek', 'jigoshop'),
@@ -335,7 +335,7 @@ class Currency
 			'YER' => __('Yemen Rial', 'jigoshop'),
 			'ZAR' => __('South Africa Rand', 'jigoshop'),
 			'ZWD' => __('Zimbabwe Dollar', 'jigoshop'),
-		);
+        ];
 
 		asort($countries);
 
@@ -372,7 +372,7 @@ class Currency
 		$separator = self::decimalSeparator();
 		$code = self::code();
 
-		return array(
+		return [
 			'%1$s%3$s' => sprintf('%1$s0%2$s00', $symbol, $separator),// symbol.'0'.separator.'00'
 			'%1$s %3$s' => sprintf('%1$s 0%2$s00', $symbol, $separator),// symbol.' 0'.separator.'00'
 			'%3$s%1$s' => sprintf('0%2$s00%1$s', $symbol, $separator),// '0'.separator.'00'.symbol
@@ -385,6 +385,6 @@ class Currency
 			'%1$s %3$s %2$s' => sprintf('%1$s 0%2$s00 %3$s', $symbol, $separator, $code),// symbol.' 0'.separator.'00 '.code
 			'%2$s%3$s%1$s' => sprintf('%3$s0%2$s00%1$s', $symbol, $separator, $code),// code.'0'.separator.'00'.symbol
 			'%2$s %3$s %1$s' => sprintf('%3$s 0%2$s00 %1$s', $symbol, $separator, $code),// code.' 0'.separator.'00 '.symbol
-		);
+        ];
 	}
 }

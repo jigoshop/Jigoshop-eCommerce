@@ -20,7 +20,7 @@ class Emails implements Tool
 	{
 		$this->wp = $wp;
 		$this->options = $options;
-		$wp->addAction('wp_ajax_jigoshop.admin.migration.emails', array($this, 'ajaxMigrationEmails'), 10, 0);
+		$wp->addAction('wp_ajax_jigoshop.admin.migration.emails', [$this, 'ajaxMigrationEmails'], 10, 0);
 
 	}
 
@@ -44,7 +44,7 @@ class Emails implements Tool
 			LEFT JOIN {$wpdb->postmeta} pm ON pm.post_id = p.ID
 				WHERE p.post_type IN (%s) AND p.post_status <> %s
 			GROUP BY p.ID",
-			array('shop_email', 'auto-draft'))));
+			['shop_email', 'auto-draft'])));
 
 		$countRemain = 0;
 		$countDone = 0;
@@ -55,7 +55,7 @@ class Emails implements Tool
 			$countDone = $countAll - $countRemain;
 		}
 
-		Render::output('admin/migration/emails', array('countAll' => $countAll, 'countDone' => $countDone));
+		Render::output('admin/migration/emails', ['countAll' => $countAll, 'countDone' => $countDone]);
 	}
 
 	/**
@@ -99,11 +99,11 @@ class Emails implements Tool
 					if ($key !== null) {
 						$wpdb->query($wpdb->prepare(
 							"UPDATE {$wpdb->postmeta} SET meta_value = %s, meta_key = %s WHERE meta_id = %d;",
-							array(
+							[
 								$this->_transform($emails[$i]->meta_key, $emails[$i]->meta_value),
 								$key,
 								$emails[$i]->meta_id,
-							)
+                            ]
 						));
 						$this->checkSql();
 					}
@@ -184,11 +184,11 @@ class Emails implements Tool
 				SELECT DISTINCT p.ID, pm.* FROM {$wpdb->posts} p
 				LEFT JOIN {$wpdb->postmeta} pm ON pm.post_id = p.ID
 					WHERE p.post_type IN (%s) AND p.post_status <> %s",
-				array('shop_email', 'auto-draft'));
+				['shop_email', 'auto-draft']);
 			$emails = $wpdb->get_results($query);
 
-			$joinEmails = array();
-			$emailsIdsMigration = array();
+			$joinEmails = [];
+			$emailsIdsMigration = [];
 
 			for ($aa = 0; $aa < count($emails); $aa++)
 			{
@@ -213,13 +213,13 @@ class Emails implements Tool
 
 			sort($joinEmails[$singleEmailsId]);
 
-			$ajax_response = array(
+			$ajax_response = [
 				'success' => true,
 				'percent' => floor(($countAll - $countRemain) / $countAll * 100),
 				'processed' => $countAll - $countRemain,
 				'remain' => $countRemain,
 				'total' => $countAll,
-			);
+            ];
 
 			if($singleEmailsId)
 			{
@@ -246,9 +246,9 @@ class Emails implements Tool
 			{
 				\Monolog\Registry::getInstance(JIGOSHOP_LOGGER)->addDebug($e);
 			}
-			echo json_encode(array(
+			echo json_encode([
 				'success' => false,
-			));
+            ]);
 
 			Migration::saveLog(__('Migration emails end with error: ', 'jigoshop') . $e);
 		}

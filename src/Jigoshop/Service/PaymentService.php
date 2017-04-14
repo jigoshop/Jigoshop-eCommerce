@@ -14,7 +14,7 @@ use Monolog\Registry;
  */
 class PaymentService implements PaymentServiceInterface
 {
-	private $methods = array();
+	private $methods = [];
 
 	/**
 	 * Adds new method to service.

@@ -244,8 +244,8 @@ class Address implements \Serializable, \JsonSerializable
     public function __toString()
     {
         $result = trim(str_replace(
-            array(', ,', ', <'),
-            array('', '<'),
+            [', ,', ', <'],
+            ['', '<'],
             sprintf(
                 _x('<strong>%1$s</strong><br/>%2$s, %3$s, %4$s<br/>%5$s, %6$s', 'order-address', 'jigoshop'),
                 $this->getName(), $this->address, $this->city, $this->postcode, Country::getName($this->country),
@@ -298,7 +298,7 @@ class Address implements \Serializable, \JsonSerializable
      */
     public function serialize()
     {
-        return serialize(array(
+        return serialize([
             'first_name' => $this->firstName,
             'last_name' => $this->lastName,
             'address' => $this->address,
@@ -308,7 +308,7 @@ class Address implements \Serializable, \JsonSerializable
             'state' => $this->state,
             'email' => $this->email,
             'phone' => $this->phone,
-        ));
+        ]);
     }
 
     /**

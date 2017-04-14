@@ -28,7 +28,7 @@ class Item implements Product\Purchasable, Product\Taxable, \Serializable, \Json
 	/** @var float */
 	private $tax = 0.0;
 	/** @var array */
-	private $taxClasses = array();
+	private $taxClasses = [];
 	/** @var int */
 	private $productId;
 	/** @var Product|Product\Purchasable|Product\Shippable */
@@ -36,7 +36,7 @@ class Item implements Product\Purchasable, Product\Taxable, \Serializable, \Json
 	/** @var string */
 	private $type;
 	/** @var array */
-	private $meta = array();
+	private $meta = [];
 
 	/**
 	 * @return int Item ID.
@@ -299,7 +299,7 @@ class Item implements Product\Purchasable, Product\Taxable, \Serializable, \Json
 	 */
 	public function serialize()
 	{
-		return serialize(array(
+		return serialize([
 			'id' => $this->id,
 			'key' => $this->key,
 			'name' => $this->name,
@@ -311,7 +311,7 @@ class Item implements Product\Purchasable, Product\Taxable, \Serializable, \Json
 			'product_id' => $this->product->getId(),
 			'product' => $this->product->getState(),
 			'meta' => serialize($this->meta),
-		));
+        ]);
 	}
 
 	/**

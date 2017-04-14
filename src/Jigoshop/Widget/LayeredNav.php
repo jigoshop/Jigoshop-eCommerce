@@ -16,27 +16,27 @@ class LayeredNav extends \WP_Widget
 	/** @var ProductServiceInterface */
 	private static $productService;
 	/** @var array */
-	private static $parameters = array();
+	private static $parameters = [];
 
 	/** @var array */
 	private $products;
 
 	public function __construct()
 	{
-		$options = array(
+		$options = [
 			'classname' => self::ID,
 			'description' => __('Shows a custom attribute in a widget which lets you narrow down the list of shown products in categories.', 'jigoshop'),
-		);
+        ];
 
 		// Create the widget
 		parent::__construct(self::ID, __('Jigoshop: Layered Nav', 'jigoshop'), $options);
 
-		add_action('wp_enqueue_scripts', array($this, 'assets'));
-		add_filter('jigoshop\service\product\find_by_query', array($this, 'query'));
+		add_action('wp_enqueue_scripts', [$this, 'assets']);
+		add_filter('jigoshop\service\product\find_by_query', [$this, 'query']);
 		add_action('init', '\Jigoshop\Widget\LayeredNav::loadParameters');
 
 		// Add own hidden fields to filter
-		add_filter('jigoshop\get_fields', array($this, 'hiddenFields'));
+		add_filter('jigoshop\get_fields', [$this, 'hiddenFields']);
 	}
 
 	public static function setProductService($productService)
@@ -46,12 +46,12 @@ class LayeredNav extends \WP_Widget
 
 	public static function loadParameters()
 	{
-		self::$parameters = array();
+		self::$parameters = [];
 		$attributes = self::$productService->findAllAttributes();
 
 		foreach ($attributes as $attribute) {
 			/** @var $attribute Product\Attribute */
-			self::$parameters[$attribute->getId()] = isset($_GET['filter_'.$attribute->getSlug()]) ? array_filter(explode('|', $_GET['filter_'.$attribute->getSlug()])) : array();
+			self::$parameters[$attribute->getId()] = isset($_GET['filter_'.$attribute->getSlug()]) ? array_filter(explode('|', $_GET['filter_'.$attribute->getSlug()])) : [];
 		}
 	}
 
@@ -123,7 +123,7 @@ class LayeredNav extends \WP_Widget
 
 		if ($attribute && $attribute->hasOptions()) {
 			$selected = self::$parameters[$attribute->getId()];
-			$productsPerOption = array();
+			$productsPerOption = [];
 			$products = array_filter($this->products, function ($product) use ($attribute, $selected, &$productsPerOption){
 				/** @var $product Product */
 				if (!$product->hasAttribute($attribute->getId())) {
@@ -152,16 +152,16 @@ class LayeredNav extends \WP_Widget
 			});
 
 			if (empty($selected) || !empty($products)) {
-				$fields = apply_filters('jigoshop_get_hidden_fields', array());
+				$fields = apply_filters('jigoshop_get_hidden_fields', []);
 
-				Render::output('widget/layered_nav/widget', array(
+				Render::output('widget/layered_nav/widget', [
 					'title' => $title,
 					'attribute' => $attribute,
 					'selected' => $selected,
 					'productsPerOption' => $productsPerOption,
 					'baseUrl' => remove_query_arg('filter_'.$attribute->getSlug()),
 					'fields' => $fields,
-				));
+                ]);
 			}
 		}
 	}
@@ -199,7 +199,7 @@ class LayeredNav extends \WP_Widget
 		$attribute = (isset($instance['attribute'])) ? esc_attr($instance['attribute']) : null;
 		$attributes = self::$productService->findAllAttributes();
 
-		Render::output('widget/layered_nav/form', array(
+		Render::output('widget/layered_nav/form', [
 			'title_id' => $this->get_field_id('title'),
 			'title_name' => $this->get_field_name('title'),
 			'title' => $title,
@@ -207,7 +207,7 @@ class LayeredNav extends \WP_Widget
 			'attribute_name' => $this->get_field_name('attribute'),
 			'attribute' => $attribute,
 			'attributes' => $attributes,
-		));
+        ]);
 	}
 }
 
@@ -216,7 +216,7 @@ function jigoshop_layered_nav_query($filtered_posts)
 	global $_chosen_attributes;
 
 	if (sizeof($_chosen_attributes) > 0) {
-		$matched_products = array();
+		$matched_products = [];
 		$filtered = false;
 
 		foreach ($_chosen_attributes as $attribute => $values) {

@@ -14,9 +14,9 @@ use Jigoshop\Container\Lazy\ProxyLoader;
 class Services
 {
     /** @var array $serviceDetails */
-    public $serviceDetails = array();
+    public $serviceDetails = [];
     /** @var array $services */
-    private $services = array();
+    private $services = [];
 
     /*	public function __construct()
         {
@@ -33,11 +33,11 @@ class Services
             throw new Exception(sprintf('Details info for %s are already set.', $key));
         }
 
-        $serviceDetails = array(
+        $serviceDetails = [
             'name' => $name,
             'params' => $params,
             'lazy' => false
-        );
+        ];
 
         $this->serviceDetails[$key] = $serviceDetails;
     }
