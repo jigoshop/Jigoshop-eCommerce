@@ -24,7 +24,7 @@ class VariableService implements VariableServiceInterface
 		$this->factory = $factory;
 		$this->productService = $productService;
 		if(defined('DOING_AJAX') && DOING_AJAX) {
-			$wp->addAction('jigoshop\service\product\save', array($this, 'save'));
+			$wp->addAction('jigoshop\service\product\save', [$this, 'save']);
 		}
 	}
 
@@ -54,25 +54,27 @@ class VariableService implements VariableServiceInterface
 			foreach ($object->getVariations() as $variation) {
 				/** @var Product\Variable\Variation $variation */
 				if ($variation->getProduct() === null) {
-					$variation->setProduct($this->_createVariableProduct($variation, $object));
+                    $variation->setProduct($this->_createVariableProduct($variation, $object));
 					$variation->setId($variation->getProduct()->getId());
-				}
+				} else {
+				    $variation->getProduct()->setName($variation->getTitle());
+                }
 
 				$this->productService->save($variation->getProduct());
 
 				foreach ($variation->getAttributes() as $attribute) {
 					/** @var Product\Variable\Attribute $attribute */
-					$data = array(
+					$data = [
 						'variation_id' => $variation->getId(),
 						'attribute_id' => $attribute->getAttribute()->getId(),
 						'value' => $attribute->getValue(),
-					);
+                    ];
 
 					if ($attribute->exists()) {
-						$wpdb->update($wpdb->prefix.'jigoshop_product_variation_attribute', $data, array(
+						$wpdb->update($wpdb->prefix.'jigoshop_product_variation_attribute', $data, [
 							'variation_id' => $variation->getId(),
 							'attribute_id' => $attribute->getAttribute()->getId(),
-						));
+                        ]);
 					} else {
 						$wpdb->insert($wpdb->prefix.'jigoshop_product_variation_attribute', $data);
 						$attribute->setExists(Product\Variable\Attribute::VARIATION_ATTRIBUTE_EXISTS);
@@ -96,7 +98,7 @@ class VariableService implements VariableServiceInterface
 		if (empty($ids)) {
 			$ids = '0';
 		}
-		$query = $wpdb->prepare("DELETE FROM {$wpdb->posts} WHERE ID NOT IN ({$ids}) AND post_parent = %d AND post_type = %s", array($productId, Variable::TYPE));
+		$query = $wpdb->prepare("DELETE FROM {$wpdb->posts} WHERE ID NOT IN ({$ids}) AND post_parent = %d AND post_type = %s", [$productId, Variable::TYPE]);
 		$wpdb->query($query);
 	}
 
@@ -130,13 +132,13 @@ class VariableService implements VariableServiceInterface
 	private function createVariablePost($variation)
 	{
 		$wpdb = $this->wp->getWPDB();
-		$wpdb->insert($wpdb->posts, array(
+		$wpdb->insert($wpdb->posts, [
 			'post_title' => $variation->getTitle(),
 			'post_type' => \Jigoshop\Core\Types\Product\Variable::TYPE,
 			'post_parent' => $variation->getParent()->getId(),
 			'comment_status' => 'closed',
 			'ping_status' => 'closed',
-		));
+        ]);
 
 		return $wpdb->insert_id;
 	}
@@ -154,8 +156,8 @@ class VariableService implements VariableServiceInterface
 	private function removeVariablePost($product)
 	{
 		$wpdb = $this->wp->getWPDB();
-		$wpdb->delete($wpdb->posts, array(
+		$wpdb->delete($wpdb->posts, [
 			'ID' => $product->getId(),
-		));
+        ]);
 	}
 }

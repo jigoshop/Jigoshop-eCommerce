@@ -22,33 +22,33 @@ class PaymentConfiguration implements ConfigurationInterface
 	 */
 	public function addServices(Services $services)
 	{
-		$services->setDetails('jigoshop.payment.cheque', 'Jigoshop\Payment\Cheque', array(
+		$services->setDetails('jigoshop.payment.cheque', 'Jigoshop\Payment\Cheque', [
 			'wpal',
 			'jigoshop.options',
             'jigoshop.service.order'
-		));
-		$services->setDetails('jigoshop.payment.on_delivery', 'Jigoshop\Payment\OnDelivery', array(
+        ]);
+		$services->setDetails('jigoshop.payment.on_delivery', 'Jigoshop\Payment\OnDelivery', [
 			'wpal',
 			'jigoshop.options',
             'jigoshop.service.order'
-        ));
-		$services->setDetails('jigoshop.payment.paypal', 'Jigoshop\Payment\PayPal', array(
+        ]);
+		$services->setDetails('jigoshop.payment.paypal', 'Jigoshop\Payment\PayPal', [
 			'wpal',
 			'di',
 			'jigoshop.options',
 			'jigoshop.messages',
-		));
-        $services->setDetails('jigoshop.endpoint.paypal', 'Jigoshop\Payment\PayPal', array(
+        ]);
+        $services->setDetails('jigoshop.endpoint.paypal', 'Jigoshop\Payment\PayPal', [
             'wpal',
             'di',
             'jigoshop.options',
             'jigoshop.messages',
-        ));
-		$services->setDetails('jigoshop.payment.bank_transfer', 'Jigoshop\Payment\BankTransfer', array(
+        ]);
+		$services->setDetails('jigoshop.payment.bank_transfer', 'Jigoshop\Payment\BankTransfer', [
 			'wpal',
 			'jigoshop.options',
             'jigoshop.service.order'
-        ));
+        ]);
 	}
 
 	/**

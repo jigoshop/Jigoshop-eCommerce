@@ -50,18 +50,17 @@ class LocalPickup implements Method
 	 */
 	public function isEnabled()
 	{
-		$cart = $this->cartService->getCurrent();
 		$post = $this->wp->getGlobalPost();
 
 		if ($post === null || $post->post_type != Types::ORDER) {
+            $cart = $this->cartService->getCurrent();
 			$customer = $cart->getCustomer();
 		} else {
 			// TODO: Get rid of this hack for customer fetching
 			$customer = maybe_unserialize($this->wp->getPostMeta($post->ID, 'customer', true));
 		}
 
-		if(empty($customer))
-		{
+		if(empty($customer)) {
 			return $this->options['enabled'];
 		}
 
@@ -81,27 +80,27 @@ class LocalPickup implements Method
 	 */
 	public function getOptions()
 	{
-		return array(
-			array(
+		return [
+			[
 				'name' => sprintf('[%s][enabled]', self::NAME),
 				'title' => __('Is enabled?', 'jigoshop'),
 				'type' => 'checkbox',
 				'checked' => $this->options['enabled'],
-				'classes' => array('switch-medium'),
-			),
-			array(
+				'classes' => ['switch-medium'],
+            ],
+			[
 				'name' => sprintf('[%s][title]', self::NAME),
 				'title' => __('Method title', 'jigoshop'),
 				'type' => 'text',
 				'value' => $this->options['title'],
-			),
-			array(
+            ],
+			[
 				'name' => sprintf('[%s][fee]', self::NAME),
 				'title' => __('Handling Fee', 'jigoshop'),
 				'type' => 'text',
 				'value' => $this->options['fee'],
-			),
-		);
+            ],
+        ];
 	}
 
 	/**
@@ -133,7 +132,7 @@ class LocalPickup implements Method
 	 */
 	public function getTaxClasses()
 	{
-		return array();
+		return [];
 	}
 
 	/**
@@ -141,9 +140,9 @@ class LocalPickup implements Method
 	 */
 	public function getState()
 	{
-		return array(
+		return [
 			'id' => $this->getId(),
-		);
+        ];
 	}
 
 	/**

@@ -1,5 +1,30 @@
 ## Changelog
-* 2.0.10:
+* 2.1:
+    * New: Admin notices.
+    * New: My Downloads panel in my account.
+    * New: Continents in Advanced flat rate shipping.
+    * New: Dimensions and weight fields for product variations.
+    * New: Replace product featured image with image from selected variation.
+    * New: Discount entity.
+    * New: Blueimp gallery for products.
+    * New: Ability to add attachments to email.
+    * New: RenderPay Interface
+    * Fix: Product and order search.
+    * Fix: Product filtering in admin panel.
+    * Fix: Do not show migration if there is no reason to migrate.
+    * Fix: Properly save and downloa all downloadable items.
+    * Fix: Download link for variation.
+    * Fix: Product category and tag queries.
+    * Fix: Discount summary report.
+* 2.0.10.2 - 2017.03.22:
+    * Fix: Sanitized product title on product save in Wordpress panel.
+    * Fix: Post excerpt was saved as product description.
+    * Fix: Fatal error on Order page when DOMDocument is missing.
+    * Fix: Discounts not being removed.
+    * Disabled: Discount Summary report due to serious issue.
+* 2.0.10.1 - 2017.03.21:
+    * Fix: Fatal error on product save.
+* 2.0.10 - 2017.03.21:
     * Fix: Added Layout settings tab.
     * Fix: Some action hook names.
     * Fix: Fatal error when order was saved in admin panel triggered by multiple method shippings.
@@ -21,6 +46,12 @@
     * Fix: Notice caused by dashboard monthly report.
     * Fix: Order migration when product no longer exists.
     * Fix: Input coupon field on checkout page.
+    * Fix: Fatal error when product does not have default tax classes selected.
+    * Fix: Fatal error when attribute was removed from product.
+    * Fix: Query Interceptor for custom Jigoshop pages.
+    * Fix: Default payment gateway select.
+    * Fix: Reports for variable products.
+    * Fix: Custom permalinks for products.
 * 2.0.9 - 2017.02.13:
     * Fix: Support Twentyseventeen theme.
     * Fix: Improve product reviews.

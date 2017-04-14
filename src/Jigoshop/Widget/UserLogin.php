@@ -16,10 +16,10 @@ class UserLogin extends \WP_Widget
 
 	public function __construct()
 	{
-		$options = array(
+		$options = [
 			'classname' => self::ID,
 			'description' => __('Displays a handy login form for users', 'jigoshop')
-		);
+        ];
 
 		parent::__construct(self::ID, __('Jigoshop: Login', 'jigoshop'), $options);
 	}
@@ -45,22 +45,22 @@ class UserLogin extends \WP_Widget
 			global $current_user;
 
 			$title = !empty($instance['title_user']) ? $instance['title_user'] : __('Hey %s!', 'jigoshop');
-			$links = apply_filters('jigoshop_widget_logout_user_links', array(
+			$links = apply_filters('jigoshop_widget_logout_user_links', [
 				__('My Account', 'jigoshop') => $accountUrl,
 				__('My Orders', 'jigoshop') => Api::getEndpointUrl('orders', '', $accountUrl),
 				__('Change Password', 'jigoshop') => Api::getEndpointUrl('change-password', '', $accountUrl),
 				__('Logout', 'jigoshop') => wp_logout_url(home_url()),
-			));
+            ]);
 
 			/** @noinspection PhpUndefinedFieldInspection */
-			Render::output('widget/user_login/logged_in', array_merge($args, array(
+			Render::output('widget/user_login/logged_in', array_merge($args, [
 				'title' => sprintf($title, ucwords($current_user->display_name)),
 				'links' => $links,
-			)));
+            ]));
 		} else {
 			// Print title
 			$title = ($instance['title_guest']) ? $instance['title_guest'] : __('Login', 'jigoshop');
-			$links = apply_filters('jigoshop_widget_login_user_links', array());
+			$links = apply_filters('jigoshop_widget_login_user_links', []);
 			$url = apply_filters('jigoshop_widget_login_redirect', $accountUrl);
 			$loginUrl = wp_login_url($url);
 			$passwordUrl = wp_lostpassword_url($url);
@@ -69,12 +69,12 @@ class UserLogin extends \WP_Widget
 //			// Support for other plugins which uses GET parameters
 //			$fields = apply_filters('jigoshop_get_hidden_fields', $fields);
 
-			Render::output('widget/user_login/log_in', array_merge($args, array(
+			Render::output('widget/user_login/log_in', array_merge($args, [
 				'title' => $title,
 				'links' => $links,
 				'loginUrl' => $loginUrl,
 				'passwordUrl' => $passwordUrl,
-			)));
+            ]));
 		}
 	}
 
@@ -113,13 +113,13 @@ class UserLogin extends \WP_Widget
 		$title_guest = isset($instance['title_guest']) ? esc_attr($instance['title_guest']) : null;
 		$title_user = isset($instance['title_user']) ? esc_attr($instance['title_user']) : null;
 
-		Render::output('widget/user_login/form', array(
+		Render::output('widget/user_login/form', [
 			'title_guest_id' => $this->get_field_id('title_guest'),
 			'title_guest_name' => $this->get_field_name('title_guest'),
 			'title_guest' => $title_guest,
 			'title_user_id' => $this->get_field_id('title_user'),
 			'title_user_name' => $this->get_field_name('title_user'),
 			'title_user' => $title_user,
-		));
+        ]);
 	}
 }

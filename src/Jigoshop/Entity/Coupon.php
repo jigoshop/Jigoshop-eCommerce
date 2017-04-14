@@ -2,6 +2,7 @@
 
 namespace Jigoshop\Entity;
 
+use Jigoshop\Entity\Order\Discount;
 use Jigoshop\Entity\Order\Item;
 
 /**
@@ -43,15 +44,15 @@ class Coupon implements EntityInterface, \JsonSerializable
 	/** @var float */
 	private $orderTotalMaximum;
 	/** @var array */
-	private $products = array();
+	private $products = [];
 	/** @var array */
-	private $excludedProducts = array();
+	private $excludedProducts = [];
 	/** @var array */
-	private $categories = array();
+	private $categories = [];
 	/** @var array */
-	private $excludedCategories = array();
+	private $excludedCategories = [];
 	/** @var array */
-	private $paymentMethods = array();
+	private $paymentMethods = [];
 
 	/**
 	 * @return int
@@ -419,7 +420,7 @@ class Coupon implements EntityInterface, \JsonSerializable
 
 	public function getStateToSave()
 	{
-		return array(
+		return [
 			'type' => $this->type,
 			'amount' => $this->amount,
 			'from' => $this->from ? $this->from->getTimestamp() : 0,
@@ -434,7 +435,7 @@ class Coupon implements EntityInterface, \JsonSerializable
 			'categories' => $this->categories,
 			'excluded_categories' => $this->excludedCategories,
 			'payment_methods' => $this->paymentMethods,
-		);
+        ];
 	}
 
 	public function restoreState(array $state)
@@ -488,38 +489,46 @@ class Coupon implements EntityInterface, \JsonSerializable
 	/**
 	 * @param $order OrderInterface
 	 *
-	 * @return float
+	 * @return Discount
 	 */
 	public function getDiscount($order)
 	{
+	    $amount = 0;
 		switch ($this->type) {
 			case self::FIXED_CART:
-				return $this->amount;
+				$amount = $this->amount;
+				break;
 			case self::PERCENT_CART:
-				return $this->amount * $order->getSubtotal() / 100;
+                $amount = $this->amount * $order->getSubtotal() / 100;
+                break;
 			case self::FIXED_PRODUCT:
-				$discount = 0.0;
+                $amount = 0.0;
 				foreach ($order->getItems() as $item) {
 					/** @var $item Item */
 					if ($this->productMatchesCoupon($item->getProduct())) {
-						$discount += $item->getQuantity() * $this->amount;
+                        $amount += $item->getQuantity() * $this->amount;
 					}
-				}
-
-				return $discount;
+				};
+                break;
 			case self::PERCENT_PRODUCT:
-				$discount = 0.0;
+                $amount = 0.0;
 				foreach ($order->getItems() as $item) {
 					/** @var $item Item */
 					if ($this->productMatchesCoupon($item->getProduct())) {
-						$discount += $this->amount * $item->getCost() / 100;
+                        $amount += $this->amount * $item->getCost() / 100;
 					}
 				}
-
-				return $discount;
+                break;
 		}
 
-		return 0;
+		$discount = new Discount();
+		$discount->setCode($this->code);
+		$discount->setType(Discount\Type::COUPON);
+		$discount->setAmount($amount);
+		$discount->addMeta(new Discount\Meta('coupon_data', json_encode($this)));
+		$discount->addMeta(new Discount\Meta('free_shipping', $this->freeShipping ? 1 : 0));
+
+		return $discount;
 	}
 
 	/**
@@ -553,7 +562,7 @@ class Coupon implements EntityInterface, \JsonSerializable
      */
     function jsonSerialize()
     {
-        return array(
+        return [
             'id' => $this->id,
             'type' => $this->type,
             'amount' => $this->amount,
@@ -576,6 +585,6 @@ class Coupon implements EntityInterface, \JsonSerializable
             'categories' => $this->categories,
             'excluded_categories' => $this->excludedCategories,
             'payment_methods' => $this->paymentMethods,
-        );
+        ];
     }
 }

@@ -57,60 +57,60 @@ class ShippingTab implements TabInterface
 	 */
 	public function getSections()
 	{
-		$options = array(
-			array(
+		$options = [
+			[
 				'title' => __('Main', 'jigoshop'),
 				'id' => 'main',
-				'fields' => array(
-					array(
+				'fields' => [
+					[
 						'name' => '[enabled]',
 						'title' => __('Enable shipping', 'jigoshop'),
 						'type' => 'checkbox',
 						'checked' => $this->options['enabled'],
-						'classes' => array('switch-medium'),
-					),
-					array(
+						'classes' => ['switch-medium'],
+                    ],
+					[
 						'name' => '[calculator]',
 						'title' => __('Enable shipping calculator', 'jigoshop'),
 						'description' => __('This enables calculator in cart for available shipping methods.', 'jigoshop'),
 						'type' => 'checkbox',
 						'checked' => $this->options['calculator'],
-						'classes' => array('switch-medium'),
-					),
-				),
-			),
-			array(
+						'classes' => ['switch-medium'],
+                    ],
+                ],
+            ],
+			[
 				'title' => __('Options', 'jigoshop'),
 				'id' => 'options',
-				'fields' => array(
-					array(
+				'fields' => [
+					[
 						'name' => '[only_to_billing]',
 						'title' => __('Ship only to billing address?', 'jigoshop'),
 						'description' => __('This forces customer to use billing address as shipping address.', 'jigoshop'),
 						'type' => 'checkbox',
 						'checked' => $this->options['only_to_billing'],
-						'classes' => array('switch-medium'),
-					),
-					array(
+						'classes' => ['switch-medium'],
+                    ],
+					[
 						'name' => '[always_show_shipping]',
 						'title' => __('Always show shipping fields', 'jigoshop'),
 						'description' => __('This forces shipping fields to be always visible in checkout.', 'jigoshop'),
 						'type' => 'checkbox',
 						'checked' => $this->options['always_show_shipping'],
-						'classes' => array('switch-medium'),
-					),
-				),
-			),
-		);
+						'classes' => ['switch-medium'],
+                    ],
+                ],
+            ],
+        ];
 
 		foreach ($this->shippingService->getAvailable() as $method) {
 			/** @var $method Method */
-			$options[] = array(
+			$options[] = [
 				'title' => $method->getName(),
                 'description' => apply_filters('jigoshop\admin\settings\shipping\method\description', '', $method),
 				'id' => $method->getId(),
 				'fields' => $method->getOptions(),
-			);
+            ];
 		}
 
 		return $options;

@@ -10,16 +10,16 @@ class ProductSearch extends \WP_Widget
 
 	public function __construct()
 	{
-		$options = array(
+		$options = [
 			'classname' => self::ID,
 			'description' => __('A search form for your products', 'jigoshop')
-		);
+        ];
 
 		// Create the widget
 		parent::__construct(self::ID, __('Jigoshop: Product Search', 'jigoshop'), $options);
 
 		// Add own hidden fields to filter
-		add_filter('jigoshop\get_fields', array($this, 'hiddenFields'));
+		add_filter('jigoshop\get_fields', [$this, 'hiddenFields']);
 	}
 
 	public function hiddenFields($fields)
@@ -52,11 +52,11 @@ class ProductSearch extends \WP_Widget
 			$this->id_base
 		);
 
-		$fields = apply_filters('jigoshop\get_fields', array());
-		Render::output('widget/product_search/widget', array_merge($args, array(
+		$fields = apply_filters('jigoshop\get_fields', []);
+		Render::output('widget/product_search/widget', array_merge($args, [
 			'title' => $title,
 			'fields' => $fields,
-		)));
+        ]));
 	}
 
 	/**
@@ -89,10 +89,10 @@ class ProductSearch extends \WP_Widget
 		// Get instance data
 		$title = isset($instance['title']) ? esc_attr($instance['title']) : null;
 
-		Render::output('widget/product_search/form', array(
+		Render::output('widget/product_search/form', [
 			'title_id' => $this->get_field_id('title'),
 			'title_name' => $this->get_field_name('title'),
 			'title' => $title,
-		));
+        ]);
 	}
 }

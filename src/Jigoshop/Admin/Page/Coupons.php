@@ -25,8 +25,8 @@ class Coupons
 		$this->options = $options;
 		$this->couponService = $couponService;
 
-		$wp->addFilter(sprintf('manage_edit-%s_columns', Types::COUPON), array($this, 'columns'));
-		$wp->addAction(sprintf('manage_%s_posts_custom_column', Types::COUPON), array($this, 'displayColumn'), 2);
+		$wp->addFilter(sprintf('manage_edit-%s_columns', Types::COUPON), [$this, 'columns']);
+		$wp->addAction(sprintf('manage_%s_posts_custom_column', Types::COUPON), [$this, 'displayColumn'], 2);
 
 		$wp->addAction('admin_enqueue_scripts', function () use ($wp){
 			if ($wp->getPostType() == Types::COUPON) {
@@ -37,7 +37,7 @@ class Coupons
 
 	public function columns()
 	{
-		return $this->wp->applyFilters('jigoshop\admin\coupons\columns', array(
+		return $this->wp->applyFilters('jigoshop\admin\coupons\columns', [
 			'cb' => '<input type="checkbox" />',
 			'title' => _x('Title', 'coupon', 'jigoshop'),
 			'code' => _x('Code', 'coupon', 'jigoshop'),
@@ -48,7 +48,7 @@ class Coupons
 			'from' => _x('From', 'coupon', 'jigoshop'),
 			'to' => _x('To', 'coupon', 'jigoshop'),
 			'is_individual' => _x('For individual use?', 'coupon', 'jigoshop'),
-		));
+        ]);
 	}
 
 	public function displayColumn($column)

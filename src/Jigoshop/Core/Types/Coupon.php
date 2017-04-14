@@ -24,8 +24,8 @@ class Coupon implements Post
 
 	public function getDefinition()
 	{
-		return array(
-			'labels' => array(
+		return [
+			'labels' => [
 				'menu_name' => __('Coupons', 'jigoshop'),
 				'name' => __('Coupons', 'jigoshop'),
 				'singular_name' => __('Coupon', 'jigoshop'),
@@ -40,7 +40,7 @@ class Coupon implements Post
 				'not_found' => __('No Coupons found', 'jigoshop'),
 				'not_found_in_trash' => __('No Coupons found in trash', 'jigoshop'),
 				'parent' => __('Parent Coupon', 'jigoshop')
-			),
+            ],
 			'description' => __('This is where you can add new coupons that customers can use in your store.', 'jigoshop'),
 			'public' => true,
 			'show_ui' => true,
@@ -51,9 +51,9 @@ class Coupon implements Post
 			'hierarchical' => false,
 			'rewrite' => false,
 			'query_var' => true,
-			'supports' => array('title'),
+			'supports' => ['title'],
 			'show_in_nav_menus' => false,
 			'show_in_menu' => 'jigoshop'
-		);
+        ];
 	}
 }

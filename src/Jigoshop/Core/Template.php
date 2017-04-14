@@ -90,9 +90,9 @@ class Template
                 $template = 'default';
             }
 
-            Render::output('layout/' . $template, array(
+            Render::output('layout/' . $template, [
                 'content' => $content,
-            ));
+            ]);
         }
 
 		return false;

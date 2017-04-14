@@ -28,7 +28,7 @@ class CompilerPass implements CompilerPassInterface
 
 		$installers = $container->tags->get('jigoshop.installer');
 		foreach ($installers as $installer) {
-			$container->triggers->add('jigoshop.installer', 'jigoshop.installer', 'addInitializer', array($installer));
+			$container->triggers->add('jigoshop.installer', 'jigoshop.installer', 'addInitializer', [$installer]);
 		}
 	}
 }

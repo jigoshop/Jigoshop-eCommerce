@@ -24,8 +24,8 @@ class Email implements Post
 
 	public function getDefinition()
 	{
-		return array(
-			'labels' => array(
+		return [
+			'labels' => [
 				'menu_name' => __('Emails', 'jigoshop'),
 				'name' => __('Emails', 'jigoshop'),
 				'singular_name' => __('Emails', 'jigoshop'),
@@ -40,7 +40,7 @@ class Email implements Post
 				'not_found' => __('No Emils found', 'jigoshop'),
 				'not_found_in_trash' => __('No Emails found in trash', 'jigoshop'),
 				'parent' => __('Parent Email', 'jigoshop')
-			),
+            ],
 			'description' => __('This is where you can add new emails that customers can receive in your store.', 'jigoshop'),
 			'public' => true,
 			'show_ui' => true,
@@ -51,9 +51,9 @@ class Email implements Post
 			'hierarchical' => false,
 			'rewrite' => false,
 			'query_var' => true,
-			'supports' => array('title', 'editor'),
+			'supports' => ['title', 'editor'],
 			'show_in_nav_menus' => false,
 			'show_in_menu' => 'jigoshop'
-		);
+        ];
 	}
 }

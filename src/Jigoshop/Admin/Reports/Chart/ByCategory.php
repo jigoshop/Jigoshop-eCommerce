@@ -14,10 +14,10 @@ use WPAL\Wordpress;
 
 class ByCategory extends Chart
 {
-	public $chartColours = array();
-	public $showCategories = array();
-	private $itemSales = array();
-	private $itemSalesAndTimes = array();
+	public $chartColours = [];
+	public $showCategories = [];
+	private $itemSales = [];
+	private $itemSalesAndTimes = [];
 	private $reportData;
 
 	/**
@@ -30,13 +30,13 @@ class ByCategory extends Chart
 		parent::__construct($wp, $options, $currentRange);
 		if (isset($_GET['show_categories'])) {
 			if(in_array(-1, $_GET['show_categories'])) {
-				$allCategories = get_terms('product_category', array('orderby' => 'name', 'hide_empty' => false));
+				$allCategories = get_terms('product_category', ['orderby' => 'name', 'hide_empty' => false]);
 				$this->showCategories = array_map(function($category){
 					return $category->term_id;
 				}, $allCategories);
 			} else {
 				$this->showCategories = is_array($_GET['show_categories']) ? array_map('absint',
-					$_GET['show_categories']) : array(absint($_GET['show_categories']));
+					$_GET['show_categories']) : [absint($_GET['show_categories'])];
 			}
 		} else {
 			$this->showCategories = $this->getLastCategoryID();
@@ -48,7 +48,7 @@ class ByCategory extends Chart
 
 		$wp->addAction('admin_enqueue_scripts', function () use ($wp){
 			// Weed out all admin pages except the Jigoshop Settings page hits
-			if (!in_array($wp->getPageNow(), array('admin.php', 'options.php'))) {
+			if (!in_array($wp->getPageNow(), ['admin.php', 'options.php'])) {
 				return;
 			}
 
@@ -56,8 +56,8 @@ class ByCategory extends Chart
 			if ($screen->base != 'jigoshop_page_'.Reports::NAME) {
 				return;
 			}
-			Styles::add('jigoshop.vendors.select2', \JigoshopInit::getUrl().'/assets/css/vendors/select2.css', array('jigoshop.admin.reports'));
-			Scripts::add('jigoshop.vendors.select2', \JigoshopInit::getUrl().'/assets/js/vendors/select2.js', array('jigoshop.admin.reports'), array('in_footer' => true));
+			Styles::add('jigoshop.vendors.select2', \JigoshopInit::getUrl().'/assets/css/vendors/select2.css', ['jigoshop.admin.reports']);
+			Scripts::add('jigoshop.vendors.select2', \JigoshopInit::getUrl().'/assets/js/vendors/select2.js', ['jigoshop.admin.reports'], ['in_footer' => true]);
 			Scripts::localize('jigoshop.reports.chart', 'chart_data', $this->getMainChart());
 		});
 	}
@@ -70,10 +70,10 @@ class ByCategory extends Chart
 	public function getChartLegend()
 	{
 		if (!$this->showCategories) {
-			return array();
+			return [];
 		}
 
-		$legend = array();
+		$legend = [];
 		$index = 0;
 
 		foreach ($this->showCategories as $category) {
@@ -87,11 +87,11 @@ class ByCategory extends Chart
 				}
 			}
 
-			$legend[] = array(
+			$legend[] = [
 				'title' => sprintf(__('%s sales in %s', 'jigoshop'), '<strong>'.Product::formatPrice($total).'</strong>', $category->name),
 				'color' => $this->chartColours[$index % sizeof($this->chartColours)],
 				'highlight_series' => $index
-			);
+            ];
 
 			$index++;
 		}
@@ -114,49 +114,49 @@ class ByCategory extends Chart
 		$wpdb = $this->wp->getWPDB();
 		// Get item sales data
 		if ($this->showCategories) {
-			$query = $this->prepareQuery(array(
-				'select' => array(
-					'order_item' => array(
-						array(
+			$query = $this->prepareQuery([
+				'select' => [
+					'order_item' => [
+						[
 							'field' => 'cost',
 							'function' => '',
 							'name' => 'price',
-						),
-						array(
+                        ],
+						[
 							'field' => 'product_id',
 							'function' => '',
 							'name' => 'id',
-						)
-					),
-					'posts' => array(
-						array(
+                        ]
+                    ],
+					'posts' => [
+						[
 							'field' => 'post_date',
 							'function' => '',
 							'name' => 'post_date'
-						)
-					),
-				),
-				'from' => array(
+                        ]
+                    ],
+                ],
+				'from' => [
 					'order_item' => $wpdb->prefix.'jigoshop_order_item',
-				),
-				'join' => array(
-					'posts' => array(
+                ],
+				'join' => [
+					'posts' => [
 						'table' => $wpdb->posts,
-						'on' => array(
-							array(
+						'on' => [
+							[
 								'key' => 'ID',
 								'value' => 'order_item.order_id',
 								'compare' => '=',
-							)
-						),
-					),
-				),
+                            ]
+                        ],
+                    ],
+                ],
 				'filter_range' => true,
-			));
+            ]);
 			$orders = $this->getOrderReportData($query);
 
-			$this->reportData->itemSales = array();
-			$this->reportData->itemSalesAndTimes = array();
+			$this->reportData->itemSales = [];
+			$this->reportData->itemSalesAndTimes = [];
 
 			if (is_array($orders)) {
 				foreach ($orders as $orderItem) {
@@ -199,7 +199,7 @@ class ByCategory extends Chart
 	public function display()
 	{
 		/** @noinspection PhpUnusedLocalVariableInspection */
-		$ranges = array(
+		$ranges = [
 			'all' => __('All Time', 'jigoshop'),
 			'year' => __('Year', 'jigoshop'),
 			'last_month' => __('Last Month', 'jigoshop'),
@@ -207,29 +207,29 @@ class ByCategory extends Chart
 			'30day' => __('Last 30 Days', 'jigoshop'),
 			'7day' => __('Last 7 Days', 'jigoshop'),
 			'today' => __('Today', 'jigoshop'),
-		);
+        ];
 
 		$this->calculateCurrentRange();
 
-		Render::output('admin/reports/chart', array(
+		Render::output('admin/reports/chart', [
 			/** TODO This is ugly... */
 			'current_tab' => Reports\SalesTab::SLUG,
 			'current_type' => 'by_category',
 			'ranges' => $ranges,
-			'url' => remove_query_arg(array('start_date', 'end_date')),
+			'url' => remove_query_arg(['start_date', 'end_date']),
 			'current_range' => $this->currentRange,
 			'legends' => $this->getChartLegend(),
 			'widgets' => $this->getChartWidgets(),
 			'export' => $this->getExportButton(),
 			'group_by' => $this->chartGroupBy
-		));
+        ]);
 	}
 
 	public function getChartWidgets()
 	{
-		$widgets = array();
-		$categories = get_terms('product_category', array('orderby' => 'name', 'hide_empty' => false));
-		$allCategories = array();
+		$widgets = [];
+		$categories = get_terms('product_category', ['orderby' => 'name', 'hide_empty' => false]);
+		$allCategories = [];
 		foreach ($categories as $category) {
 			$allCategories[$category->term_id] = $category->name;
 		}
@@ -243,24 +243,24 @@ class ByCategory extends Chart
 
 	public function getExportButton()
 	{
-		return array(
+		return [
 			'download' => 'report-'.esc_attr($this->currentRange).'-'.date_i18n('Y-m-d', current_time('timestamp')).'.csv',
 			'xaxes' => __('Date', 'jigoshop'),
 			'groupby' => $this->chartGroupBy,
-		);
+        ];
 	}
 
 	public function getMainChart()
 	{
 		global $wp_locale;
 
-		$chartData = array();
+		$chartData = [];
 		$index = 0;
 		foreach ($this->showCategories as $category) {
 			$category = get_term($category, 'product_category');
 			$productIds = $this->getProductsInCategory($category->term_id);;
 			$categoryTotal = 0;
-			$categoryChartData = array();
+			$categoryChartData = [];
 			for ($i = 0; $i <= $this->chartInterval; $i++) {
 				$intervalTotal = 0;
 				switch ($this->chartGroupBy) {
@@ -281,7 +281,7 @@ class ByCategory extends Chart
 						$categoryTotal += $this->reportData->itemSalesAndTimes[$time][$id];
 					}
 				}
-				$categoryChartData[] = array($time, $intervalTotal);
+				$categoryChartData[] = [$time, $intervalTotal];
 			}
 			$chartData[$category->term_id]['category'] = $category->name;
 			$chartData[$category->term_id]['data'] = $categoryChartData;
@@ -289,19 +289,19 @@ class ByCategory extends Chart
 		}
 
 		$index = 0;
-		$data = array();
-		$data['series'] = array();
+		$data = [];
+		$data['series'] = [];
 		foreach ($chartData as $singleData) {
 			$width = $this->barwidth / sizeof($chartData);
 			$offset = ($width * $index);
 			foreach ($singleData['data'] as $key => $seriesData) {
 				$singleData['data'][$key][0] = $seriesData[0] + $offset;
 			}
-			$data['series'][] = $this->arrayToObject(array(
+			$data['series'][] = $this->arrayToObject([
 				'label' => esc_js($singleData['category']),
 				'data' => $singleData['data'],
 				'color' => $this->chartColours[$index % sizeof($this->chartColours)],
-				'bars' => $this->arrayToObject(array(
+				'bars' => $this->arrayToObject([
 					'fillColor' => $this->chartColours[$index % sizeof($this->chartColours)],
 					'fill' => true,
 					'show' => true,
@@ -309,22 +309,22 @@ class ByCategory extends Chart
 					'align' => 'center',
 					'barWidth' => $width * 0.8,
 					'stack' => false
-				)),
+                ]),
 				'append_tooltip' => Currency::symbol(),
 				'enable_tooltip' => true
-			));
+            ]);
 			$index++;
 		}
-		$data['options'] = $this->arrayToObject(array(
-			'legend' => $this->arrayToObject(array('show' => false)),
-			'grid' => $this->arrayToObject(array(
+		$data['options'] = $this->arrayToObject([
+			'legend' => $this->arrayToObject(['show' => false]),
+			'grid' => $this->arrayToObject([
 				'color' => '#aaa',
 				'borderColor' => 'transparent',
 				'borderWidth' => 0,
 				'hoverable' => true
-			)),
-			'xaxes' => array(
-				$this->arrayToObject(array(
+            ]),
+			'xaxes' => [
+				$this->arrayToObject([
 					'color' => '#aaa',
 					'reserveSpace' => false,
 					'position' => 'bottom',
@@ -333,20 +333,20 @@ class ByCategory extends Chart
 					'timeformat' => $this->chartGroupBy == 'hour' ? '%H' : $this->chartGroupBy == 'day' ? '%d %b' : '%b',
 					'monthNames' => array_values($wp_locale->month_abbrev),
 					'tickLength' => 1,
-					'minTickSize' => array(1, $this->chartGroupBy),
-					'tickSize' => array(1, $this->chartGroupBy),
-					'font' => $this->arrayToObject(array('color' => '#aaa')),
-				)),
-			),
-			'yaxes' => array(
-				$this->arrayToObject(array(
+					'minTickSize' => [1, $this->chartGroupBy],
+					'tickSize' => [1, $this->chartGroupBy],
+					'font' => $this->arrayToObject(['color' => '#aaa']),
+                ]),
+            ],
+			'yaxes' => [
+				$this->arrayToObject([
 					'min' => 0,
 					'tickDecimals' => 2,
 					'color' => '#d4d9dc',
-					'font' => $this->arrayToObject(array('color' => '#aaa'))
-				)),
-			),
-		));
+					'font' => $this->arrayToObject(['color' => '#aaa'])
+                ]),
+            ],
+        ]);
 		if ($this->chartGroupBy == 'hour') {
 			$data['options']->xaxes[0]->min = 0;
 			$data['options']->xaxes[0]->max = 24 * 60 * 60 * 1000;
@@ -357,7 +357,7 @@ class ByCategory extends Chart
 
 	private function getChartColours()
 	{
-		$this->chartColours = $this->wp->applyFilters('jigoshop\admin\reports\by_category\chart_colours', array(
+		$this->chartColours = $this->wp->applyFilters('jigoshop\admin\reports\by_category\chart_colours', [
 			'#3498db',
 			'#2ecc71',
 			'#f1c40f',
@@ -370,7 +370,7 @@ class ByCategory extends Chart
 			'#AAAAFF',
 			'#B6BA18',
 
-		));
+        ]);
 	}
 
 	private function getLastCategoryID()
@@ -378,6 +378,6 @@ class ByCategory extends Chart
 		$wpdb = $this->wp->getWPDB();
 		$productID = $wpdb->get_var($wpdb->prepare("SELECT term_id FROM $wpdb->term_taxonomy WHERE taxonomy = %s ORDER BY term_taxonomy_id DESC LIMIT 1", 'product_category'));
 
-		return $productID ? array($productID) : array();
+		return $productID ? [$productID] : [];
 	}
 }

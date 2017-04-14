@@ -26,7 +26,7 @@ class Products implements Tool
 	private $options;
 	/** @var ProductServiceInterface */
 	private $productService;
-	private $taxClasses = array();
+	private $taxClasses = [];
 
 	public function __construct(Wordpress $wp, \Jigoshop\Core\Options $options, ProductServiceInterface $productService, TaxServiceInterface $taxService) {
 
@@ -34,7 +34,7 @@ class Products implements Tool
 		$this->options = $options;
 		$this->productService = $productService;
 
-		$wp->addAction('wp_ajax_jigoshop.admin.migration.products', array($this, 'ajaxMigrationProducts'), 10, 0);
+		$wp->addAction('wp_ajax_jigoshop.admin.migration.products', [$this, 'ajaxMigrationProducts'], 10, 0);
 	}
 
 	/**
@@ -65,7 +65,7 @@ class Products implements Tool
 			$countDone = $countAll - $countRemain;
 		}
 
-		Render::output('admin/migration/products', array('countAll' => $countAll, 'countDone' => $countDone));
+		Render::output('admin/migration/products', ['countAll' => $countAll, 'countDone' => $countDone]);
 	}
 
 	/**
@@ -98,21 +98,21 @@ class Products implements Tool
 			$this->checkSql();
 
 			// Register product type taxonomy to fetch old product types
-			$this->wp->registerTaxonomy('product_type', array('product'), array(
+			$this->wp->registerTaxonomy('product_type', ['product'], [
 				'hierarchical' => false,
 				'show_ui' => false,
 				'query_var' => true,
 				'show_in_nav_menus' => false,
-			));
+            ]);
 			$this->checkSql();
 
             if($this->wp->getOption('jigoshop_migration_product_first', false) == false) {
                 // Update product_cat into product_category
                 $wpdb->query($wpdb->prepare("UPDATE {$wpdb->term_taxonomy} SET taxonomy = %s WHERE taxonomy = %s",
-                    array('product_category', 'product_cat')));
+                    ['product_category', 'product_cat']));
                 $this->checkSql();
                 $wpdb->query($wpdb->prepare("UPDATE {$wpdb->postmeta} SET meta_value = %s WHERE meta_key = %s AND meta_value = %s",
-                    array('product_category', '_menu_item_object', 'product_cat')));
+                    ['product_category', '_menu_item_object', 'product_cat']));
                 $this->checkSql();
 
                 foreach($wpdb->get_results("SELECT * FROM {$wpdb->prefix}jigoshop_termmeta", ARRAY_A) as $termMeta) {
@@ -122,10 +122,10 @@ class Products implements Tool
                 $this->wp->updateOption('jigoshop_migration_product_first', true);
             }
 
-			$productIds = array();
-			$attributes = array();
-			$productAttributes = array();
-			$globalAttributes = array();
+			$productIds = [];
+			$attributes = [];
+			$productAttributes = [];
+			$globalAttributes = [];
 			foreach ($wpdb->get_results("SELECT * FROM {$wpdb->prefix}jigoshop_attribute_taxonomies") as $attribute) {
 				$this->checkSql();
 				$globalAttributes[$this->wp->getHelpers()
@@ -140,23 +140,23 @@ class Products implements Tool
 			for ($i = 0, $endI = count($products); $i < $endI;) {
 				$product = $products[$i];
 				$productIds[] = $product->ID;
-				$productAttributes[$product->ID] = array(
-					'attributes' => array(),
-					'variations' => array(),
-				);
+				$productAttributes[$product->ID] = [
+					'attributes' => [],
+					'variations' => [],
+                ];
 
 				// Add product types
 				$types = $this->wp->getTheTerms($product->ID, 'product_type');
 				$this->checkSql();
                 $productType = Product\Simple::TYPE;
 				if (is_array($types)) {
-					if (!in_array($types[0]->slug, array(
+					if (!in_array($types[0]->slug, [
 						Product\Simple::TYPE,
 						Product\Virtual::TYPE,
 						Product\Downloadable::TYPE,
 						Product\External::TYPE,
 						Product\Variable::TYPE,
-					))
+                    ])
 					) {
 						Migration::saveLog(sprintf(__('We detected a product <a href="%s" target="_blank">(#%d) %s </a> of type "subscription" - this type is not supported by Jigoshop without an additional plugin. We changed its type to "simple" and set it as private.',
 							'jigoshop'), get_permalink($product->ID), $product->ID, get_the_title($product->ID),
@@ -169,23 +169,23 @@ class Products implements Tool
                     $productType = $types[0]->slug;
 
 					$wpdb->query($wpdb->prepare("INSERT INTO {$wpdb->postmeta} VALUES (NULL, %d, %s, %s)",
-						array($product->ID, 'type', $types[0]->slug)));
+						[$product->ID, 'type', $types[0]->slug]));
 					$this->checkSql();
 				}
 
 				$regularPrice = 0.0;
-				$taxClasses = array();
+				$taxClasses = [];
 
 				// Update columns
 				do {
 					// Sales support
 					if ($products[$i]->meta_key == 'sale_price' && !empty($products[$i]->meta_value)) {
 						$wpdb->query($wpdb->prepare("INSERT INTO {$wpdb->postmeta} (post_id, meta_key, meta_value) VALUES (%d, %s, %s)",
-							array(
+							[
 								$product->ID,
 								'sales_enabled',
 								true
-							)));
+                            ]));
 						$this->checkSql();
 					}
 
@@ -202,12 +202,12 @@ class Products implements Tool
 								$changeLocalToGlobal = (isset($source['variation']) && $source['variation'] == true
 									&& $source['is_taxonomy'] != true && $productType == Product\Variable::TYPE);
 
-								$productAttributes[$product->ID]['attributes'][$slug] = array(
+								$productAttributes[$product->ID]['attributes'][$slug] = [
 									'is_visible' => $source['visible'],
 									'is_variable' => isset($source['variation']) && $source['variation'] == true,
 									'values' => $changeLocalToGlobal ? str_replace(',', '|',
 										$source['value']) : $source['value'],
-								);
+                                ];
 
 								if (!isset($attributes[$slug])) {
 									$type = isset($globalAttributes[$slug]) ? $this->_getAttributeType($globalAttributes[$slug]) : Text::TYPE;
@@ -266,11 +266,11 @@ class Products implements Tool
 						}
 
 						$wpdb->query($wpdb->prepare("UPDATE {$wpdb->postmeta} SET meta_value = %s, meta_key = %s WHERE meta_id = %d",
-							array(
+							[
 								$value,
 								$key,
 								$products[$i]->meta_id,
-							)));
+                            ]));
 						$this->checkSql();
 					}
 
@@ -297,7 +297,7 @@ class Products implements Tool
 			foreach ($attributes as $slug => $attribute) {
 				/** @var $attribute Product\Attribute */
 				$antiDuplicateAttributes = unserialize($this->wp->getOption('jigoshop_attributes_anti_duplicate',
-					serialize(array())));
+					serialize([])));
 				if (!isset($antiDuplicateAttributes[$attribute->getSlug()]) || $attribute->isLocal()) {
 					if (!$attribute->isLocal()) {
 						// Fetch options if attribute is a taxonomy
@@ -308,7 +308,7 @@ class Products implements Tool
 				  	     ");
 						$this->checkSql();
 
-						$createdOptions = array();
+						$createdOptions = [];
 						foreach ($options as $source) {
 							$option = new Option();
 							$option->setLabel($source->name);
@@ -350,7 +350,7 @@ class Products implements Tool
 					foreach ($productIds as $id) {
 						if (isset($productAttributes[$id]['attributes'][$attribute->getSlug()])) {
 							$data = $productAttributes[$id]['attributes'][$attribute->getSlug()];
-							$value = array();
+							$value = [];
 							if (is_array($data['values'])) {
 								foreach ($attribute->getOptions() as $option) {
 									/** @var $option Option */
@@ -364,28 +364,28 @@ class Products implements Tool
 								$value = $data['values'];
 							}
 
-							$wpdb->insert($wpdb->prefix . 'jigoshop_product_attribute', array(
+							$wpdb->insert($wpdb->prefix . 'jigoshop_product_attribute', [
 								'product_id' => $id,
 								'attribute_id' => $attribute->getId(),
 								'value' => is_array($value) ? join('|', $value) : $value,
-							));
+                            ]);
 							$this->checkSql();
 
-							$query = array(
+							$query = [
 								'product_id' => $id,
 								'attribute_id' => $attribute->getId(),
 								'meta_key' => 'is_visible',
 								'meta_value' => $data['is_visible'],
-							);
+                            ];
 							$wpdb->insert($wpdb->prefix . 'jigoshop_product_attribute_meta', $query);
 							$this->checkSql();
 							if ($data['is_variable']) {
-								$query = array(
+								$query = [
 									'product_id' => $id,
 									'attribute_id' => $attribute->getId(),
 									'meta_key' => 'is_variable',
 									'meta_value' => true,
-								);
+                                ];
 								$wpdb->insert($wpdb->prefix . 'jigoshop_product_attribute_meta', $query);
 								$this->checkSql();
 							}
@@ -402,11 +402,11 @@ class Products implements Tool
 
 					$attribute = $attributes[$taxonomy];
 					$option = $this->_findOption($attribute->getOptions(), $value);
-					$query = array(
+					$query = [
 						'variation_id' => $id,
 						'attribute_id' => $attribute->getId(),
 						'value' => $option,
-					);
+                    ];
 					$wpdb->insert($wpdb->prefix . 'jigoshop_product_variation_attribute', $query);
 					$this->checkSql();
 				}
@@ -423,10 +423,10 @@ class Products implements Tool
 				});
 
 			foreach ($this->taxClasses as $class) {
-				$currentTaxClasses[] = array(
+				$currentTaxClasses[] = [
 					'label' => ucfirst($class),
 					'class' => $class,
-				);
+                ];
 			}
 
 			$this->options->update('tax.classes', $currentTaxClasses);
@@ -472,10 +472,10 @@ class Products implements Tool
 				return false;
 			case 'tax_classes':
 				$value = unserialize($value);
-				$result = array();
+				$result = [];
 
 				if (!is_array($value)) {
-					$value = array();
+					$value = [];
 				}
 
 				foreach ($value as $taxClass) {
@@ -585,7 +585,7 @@ class Products implements Tool
 			}
 
 			$wpdb = $this->wp->getWPDB();
-			$productsIdsMigration = array();
+			$productsIdsMigration = [];
 			if (($TMP_productsIdsMigration = $this->wp->getOption('jigoshop_products_migrate_id')) === false) {
 				$query = $wpdb->prepare("
 				SELECT ID FROM {$wpdb->posts}
@@ -619,13 +619,13 @@ class Products implements Tool
 				'product', 'product_variation', 'auto-draft', $singleProductId);
 			$product = $wpdb->get_results($query);
 
-			$ajax_response = array(
+			$ajax_response = [
 				'success' => true,
 				'percent' => floor(($countAll - $countRemain) / $countAll * 100),
 				'processed' => $countAll - $countRemain,
 				'remain' => $countRemain,
 				'total' => $countAll,
-			);
+            ];
 
 			if ($singleProductId) {
 				if ($this->migrate($product)) {
@@ -646,9 +646,9 @@ class Products implements Tool
 			if (WP_DEBUG) {
 				\Monolog\Registry::getInstance(JIGOSHOP_LOGGER)->addDebug($e);
 			}
-			echo json_encode(array(
+			echo json_encode([
 				'success' => false,
-			));
+            ]);
 
 			Migration::saveLog(__('Migration products end with error: ', 'jigoshop') . $e);
 		}

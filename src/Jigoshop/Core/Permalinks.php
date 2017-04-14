@@ -17,8 +17,8 @@ class Permalinks
 		$this->wp = $wp;
 		$this->options = $options;
 
-		$wp->addAction('init', array($this, 'initFix'));
-		$wp->addFilter('rewrite_rules_array', array($this, 'fix'));
+		$wp->addAction('init', [$this, 'initFix']);
+		$wp->addFilter('rewrite_rules_array', [$this, 'fix']);
 	}
 
 	public function initFix()

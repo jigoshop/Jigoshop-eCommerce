@@ -7,6 +7,7 @@ use Jigoshop\Core\Messages;
 use Jigoshop\Core\Options;
 use Jigoshop\Core\Types;
 use Jigoshop\Entity\Coupon;
+use Jigoshop\Entity\Order\Discount;
 use Jigoshop\Entity\OrderInterface;
 use Jigoshop\Helper\Country;
 use Jigoshop\Helper\Scripts;
@@ -35,19 +36,19 @@ class FreeShipping implements Method
 		$this->cartService = $cartService;
 		$this->messages = $messages;
 
-		$this->availability = array(
+		$this->availability = [
 			'all' => __('All allowed countries', 'jigoshop'),
 			'specific' => __('Selected countries', 'jigoshop'),
-		);
+        ];
 
 		$wp->addAction('admin_enqueue_scripts', function () use ($wp){
 			// Weed out all admin pages except the Jigoshop Settings page hits
-			if (!in_array($wp->getPageNow(), array('admin.php', 'options.php'))) {
+			if (!in_array($wp->getPageNow(), ['admin.php', 'options.php'])) {
 				return;
 			}
 
 			$screen = $wp->getCurrentScreen();
-			if (!in_array($screen->base, array('jigoshop_page_'.Settings::NAME, 'options'))) {
+			if (!in_array($screen->base, ['jigoshop_page_'.Settings::NAME, 'options'])) {
 				return;
 			}
 
@@ -55,10 +56,10 @@ class FreeShipping implements Method
 				return;
 			}
 
-			Scripts::add('jigoshop.admin.shipping.free_shipping', \JigoshopInit::getUrl().'/assets/js/admin/shipping/free_shipping.js', array(
+			Scripts::add('jigoshop.admin.shipping.free_shipping', \JigoshopInit::getUrl().'/assets/js/admin/shipping/free_shipping.js', [
 				'jquery',
 				'jigoshop.admin'
-			));
+            ]);
 		});
 	}
 
@@ -83,22 +84,22 @@ class FreeShipping implements Method
 	 */
 	public function isEnabled()
 	{
-		$cart = $this->cartService->getCurrent();
 		$post = $this->wp->getGlobalPost();
+        $freeShippingDiscount = false;
 
 		if ($post === null || $post->post_type != Types::ORDER) {
-			$customer = $cart->getCustomer();
+            $order = $this->cartService->getCurrent();
+			$customer = $order->getCustomer();
+            $freeShippingDiscount = array_reduce($order->getDiscounts(), function ($value, $discount){
+                /** @var $discount Discount */
+                return $value || $discount->getMeta('free_shipping') ? $discount->getMeta('free_shipping')->getValue() : 0;
+            }, false);
 		} else {
 			// TODO: Get rid of this hack for customer fetching
 			$customer = unserialize($this->wp->getPostMeta($post->ID, 'customer', true));
 		}
 
-		$freeShippingCoupon = array_reduce($cart->getCoupons(), function ($value, $coupon){
-			/** @var $coupon Coupon */
-			return $value || $coupon->isFreeShipping();
-		}, false);
-
-		return $this->options['enabled'] && ($freeShippingCoupon || ($cart->getProductSubtotal() >= $this->options['minimum'] &&
+		return $this->options['enabled'] && ($freeShippingDiscount || ($order->getProductSubtotal() >= $this->options['minimum'] &&
 				($this->options['available_for'] === 'all' || in_array($customer->getShippingAddress()->getCountry(), $this->options['countries']))));
 	}
 
@@ -115,36 +116,36 @@ class FreeShipping implements Method
 	 */
 	public function getOptions()
 	{
-		return array(
-			array(
+		return [
+			[
 				'name' => sprintf('[%s][enabled]', self::NAME),
 				'title' => __('Is enabled?', 'jigoshop'),
 				'type' => 'checkbox',
 				'checked' => $this->options['enabled'],
-				'classes' => array('switch-medium'),
-			),
-			array(
+				'classes' => ['switch-medium'],
+            ],
+			[
 				'name' => sprintf('[%s][title]', self::NAME),
 				'title' => __('Method title', 'jigoshop'),
 				'type' => 'text',
 				'value' => $this->getTitle(),
-			),
-			array(
+            ],
+			[
 				'name' => sprintf('[%s][minimum]', self::NAME),
 				'title' => __('Minimum cart value', 'jigoshop'),
 				'description' => __('Minimum cart value above which the Free Shipping method should be available.', 'jigoshop'),
 				'type' => 'text',
 				'value' => $this->options['minimum'],
-			),
-			array(
+            ],
+			[
 				'name' => sprintf('[%s][available_for]', self::NAME),
 				'id' => 'free_shipping_available_for',
 				'title' => __('Available for', 'jigoshop'),
 				'type' => 'select',
 				'value' => $this->options['available_for'],
 				'options' => $this->availability,
-			),
-			array(
+            ],
+			[
 				'name' => sprintf('[%s][countries]', self::NAME),
 				'id' => 'free_shipping_countries',
 				'title' => __('Select countries', 'jigoshop'),
@@ -153,8 +154,8 @@ class FreeShipping implements Method
 				'options' => Country::getAllowed(),
 				'multiple' => true,
 				'hidden' => $this->options['available_for'] == 'all',
-			),
-		);
+            ],
+        ];
 	}
 
 	/**
@@ -190,7 +191,7 @@ class FreeShipping implements Method
 				return Country::exists($item);
 			});
 		} else {
-			$settings['countries'] = array();
+			$settings['countries'] = [];
 		}
 
 		return $settings;
@@ -211,7 +212,7 @@ class FreeShipping implements Method
 	 */
 	public function getTaxClasses()
 	{
-		return array();
+		return [];
 	}
 
 	/**
@@ -219,9 +220,9 @@ class FreeShipping implements Method
 	 */
 	public function getState()
 	{
-		return array(
+		return [
 			'id' => $this->getId(),
-		);
+        ];
 	}
 
 	/**

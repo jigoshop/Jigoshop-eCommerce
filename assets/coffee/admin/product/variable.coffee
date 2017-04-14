@@ -14,11 +14,21 @@ class AdminProductVariable
         jQuery('.list-group-item-text', $item.closest('li')).slideToggle ->
           jQuery('span', $item).toggleClass('glyphicon-collapse-down').toggleClass('glyphicon-collapse-up')
       .on 'change', 'select.variation-attribute', @updateVariation
-      .on 'change', '.list-group-item-text input.form-control, .list-group-item-text select.form-control', @updateVariation
+      .on 'change', '.list-group-item-text input.form-control' , @updateVariation
+      .on 'change', '.list-group-item-text input[type="checkbox"]', @updateVariation
+      .on 'change', '.list-group-item-text select.form-control', @updateVariation
       .on 'click', '.set_variation_image', @setImage
       .on 'click', '.remove_variation_image', @removeImage
       .on 'change', 'input[type="checkbox"].default_variation', (event) ->
         jQuery('input[type="checkbox"].default_variation').not(jQuery(event.target)).prop 'checked', false
+      .on 'change', 'input[type="checkbox"].stock-manage', (event) ->
+        $parent = jQuery(event.target).closest 'li'
+        if jQuery(event.target).is(':checked')
+          jQuery('div.manual-stock-status', $parent).slideUp()
+          jQuery('.stock-status', $parent).slideDown()
+        else
+          jQuery('div.manual-stock-status', $parent).slideDown()
+          jQuery('.stock-status', $parent).slideUp()
     jQuery('.set_variation_image').each @connectImage
     jQuery('#product-variations')
 
@@ -59,7 +69,10 @@ class AdminProductVariable
       attributes[results[1]] = getOptionValue(option)
 
     product = {}
-    productData = jQuery('.list-group-item-text input.form-control, .list-group-item-text select.form-control', $parent).toArray()
+    productData = jQuery('.list-group-item-text input.form-control,
+                          .list-group-item-text input[type="checkbox"],
+                          .list-group-item-text select.form-control', $parent).toArray()
+
     for option in productData
       results = /(?:^|\s)product\[variation]\[\d+]\[product]\[(.*?)](\[(.*?)])?(?:\s|$)/g.exec(option.name)
       if results[3]?

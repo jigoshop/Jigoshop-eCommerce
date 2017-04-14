@@ -28,14 +28,14 @@ class TopEarners implements WidgetInterface
 
 	public function getArgs()
 	{
-		$args = array();
+		$args = [];
 		foreach($this->topEarners as $product){
-			$args[] = array(
+			$args[] = [
 				'total' => Product::formatPrice($product->price),
 				'id' => $product->id,
 				'url' => esc_url(add_query_arg('product_ids', $product->id, add_query_arg('last_used', self::SLUG))),
 				'title' => $product->title
-			);
+            ];
 		}
 
 		return $args;
@@ -48,6 +48,6 @@ class TopEarners implements WidgetInterface
 	
 	public function display()
 	{
-		Render::output('admin/reports/widget/top_earners', array('args' => $this->getArgs()));
+		Render::output('admin/reports/widget/top_earners', ['args' => $this->getArgs()]);
 	}
 }

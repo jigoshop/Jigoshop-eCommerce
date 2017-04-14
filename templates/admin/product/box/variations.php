@@ -13,12 +13,12 @@ use Jigoshop\Helper\Render;
 <ul id="product-variations" class="list-group">
 	<?php if ($product instanceof Product\Variable): ?>
 		<?php foreach($product->getVariations() as $variation): /** @var $variation \Jigoshop\Entity\Product */?>
-			<?php Render::output('admin/product/box/variations/variation', array(
+			<?php Render::output('admin/product/box/variations/variation', [
 				'variation' => $variation,
 				'attributes' => $product->getVariableAttributes(),
 				'allowedSubtypes' => $allowedSubtypes,
 				'taxClasses' => $taxClasses,
-			)); ?>
+            ]); ?>
 		<?php endforeach; ?>
 	<?php endif; ?>
 </ul>

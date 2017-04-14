@@ -104,7 +104,7 @@ class ProxyLoader
 	{
 		$instance = $this->getInstance();
 
-		return call_user_func_array(array($instance, $name), $params);
+		return call_user_func_array([$instance, $name], $params);
 	}
 
 	/**

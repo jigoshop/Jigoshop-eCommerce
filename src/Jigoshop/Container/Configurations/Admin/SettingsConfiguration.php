@@ -22,47 +22,47 @@ class SettingsConfiguration implements ConfigurationInterface
 	 */
 	public function addServices(Services $services)
 	{
-		$services->setDetails('jigoshop.admin.settings.general', 'Jigoshop\Admin\Settings\GeneralTab', array(
+		$services->setDetails('jigoshop.admin.settings.general', 'Jigoshop\Admin\Settings\GeneralTab', [
 			'wpal',
 			'jigoshop.options',
 			'jigoshop.messages'
-		));
-		$services->setDetails('jigoshop.admin.settings.shopping', 'Jigoshop\Admin\Settings\ShoppingTab', array(
+        ]);
+		$services->setDetails('jigoshop.admin.settings.shopping', 'Jigoshop\Admin\Settings\ShoppingTab', [
 			'wpal',
 			'jigoshop.options',
 			'jigoshop.messages'
-		));
-		$services->setDetails('jigoshop.admin.settings.products', 'Jigoshop\Admin\Settings\ProductsTab', array(
+        ]);
+		$services->setDetails('jigoshop.admin.settings.products', 'Jigoshop\Admin\Settings\ProductsTab', [
 			'wpal',
 			'jigoshop.options',
 			'jigoshop.messages'
-		));
-		$services->setDetails('jigoshop.admin.settings.taxes', 'Jigoshop\Admin\Settings\TaxesTab', array(
+        ]);
+		$services->setDetails('jigoshop.admin.settings.taxes', 'Jigoshop\Admin\Settings\TaxesTab', [
 			'wpal',
 			'jigoshop.options',
 			'jigoshop.service.tax',
 			'jigoshop.messages'
-		));
-		$services->setDetails('jigoshop.admin.settings.shipping', 'Jigoshop\Admin\Settings\ShippingTab', array(
+        ]);
+		$services->setDetails('jigoshop.admin.settings.shipping', 'Jigoshop\Admin\Settings\ShippingTab', [
 		    'wpal',
             'jigoshop.options',
             'jigoshop.service.shipping',
-		));
-		$services->setDetails('jigoshop.admin.settings.payment', 'Jigoshop\Admin\Settings\PaymentTab', array(
+        ]);
+		$services->setDetails('jigoshop.admin.settings.payment', 'Jigoshop\Admin\Settings\PaymentTab', [
 			'jigoshop.options',
 			'jigoshop.service.payment'
-		));
-        $services->setDetails('jigoshop.admin.settings.layout', 'Jigoshop\Admin\Settings\LayoutTab', array(
+        ]);
+        $services->setDetails('jigoshop.admin.settings.layout', 'Jigoshop\Admin\Settings\LayoutTab', [
             'wpal',
             'jigoshop.options',
             'jigoshop.messages'
-        ));
-		$services->setDetails('jigoshop.admin.settings.advanced', 'Jigoshop\Admin\Settings\AdvancedTab', array(
+        ]);
+		$services->setDetails('jigoshop.admin.settings.advanced', 'Jigoshop\Admin\Settings\AdvancedTab', [
 			'wpal',
 			'di',
 			'jigoshop.options',
 			'jigoshop.messages'
-		));
+        ]);
 	}
 
 	/**

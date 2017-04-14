@@ -33,10 +33,10 @@ class ProductService implements ProductServiceInterface
     {
         $this->wp = $wp;
         $this->factory = $factory;
-        $wp->addAction('save_post_' . Types\Product::NAME, array($this, 'savePost'), 10);
-        $wp->addAction('comment_post', array($this, 'saveReview'), 10, 2);
-        $wp->addAction('jigoshop\product\sold', array($this, 'addSoldQuantity'), 10, 2);
-        $wp->addAction('jigoshop\product\restore', array($this, 'restoreQuantity'), 10, 2);
+        $wp->addAction('save_post_' . Types\Product::NAME, [$this, 'savePost'], 10);
+        $wp->addAction('comment_post', [$this, 'saveReview'], 10, 2);
+        $wp->addAction('jigoshop\product\sold', [$this, 'addSoldQuantity'], 10, 2);
+        $wp->addAction('jigoshop\product\restore', [$this, 'restoreQuantity'], 10, 2);
     }
 
     /**
@@ -127,10 +127,10 @@ class ProductService implements ProductServiceInterface
      */
     public function findLike($name)
     {
-        $query = new \WP_Query(array(
+        $query = new \WP_Query([
             'post_type' => Types::PRODUCT,
             's' => $name,
-        ));
+        ]);
 
         return $this->wp->applyFilters('jigoshop\service\product\find_like', $this->findByQuery($query), $name);
     }
@@ -144,7 +144,7 @@ class ProductService implements ProductServiceInterface
      */
     public function findByQuery($query)
     {
-        $products = array();
+        $products = [];
         if (isset($query->posts) && count($query->posts)) {
             $results = $query->posts;
         } else {
@@ -195,10 +195,22 @@ class ProductService implements ProductServiceInterface
 
         $fields = $object->getStateToSave();
 
-        if (isset($fields['id']) || isset($fields['name']) || isset($fields['description'])) {
-            // We do not need to save ID, name and description (excerpt) as they are saved by WordPress itself.
-            unset($fields['id'], $fields['name'], $fields['description']);
-        }
+		if (isset($fields['id']) || isset($fields['name']) || isset($fields['description'])) {
+			$post = [];
+
+		    if(isset($fields['name'])) {
+			    $post['post_title'] = $fields['name'];
+            }
+            if(isset($fields['description'])) {
+                $post['post_content'] = $fields['description'];
+            }
+            if(count($post)) {
+                $wpdb = $this->wp->getWPDB();
+                $wpdb->update($wpdb->posts, $post, ['ID' => $object->getId()]);
+            }
+
+			unset($fields['id'], $fields['name'], $fields['description']);
+		}
 
         if (isset($fields['attributes'])) {
             $this->_removeAllProductAttributesExcept($object->getId(), array_map(function ($item) {
@@ -255,7 +267,7 @@ class ProductService implements ProductServiceInterface
             $ids = '0';
         }
         $query = $wpdb->prepare("DELETE FROM {$wpdb->prefix}jigoshop_product_attribute WHERE attribute_id NOT IN ({$ids}) AND product_id = %d",
-            array($productId));
+            [$productId]);
         $wpdb->query($query);
     }
 
@@ -272,17 +284,17 @@ class ProductService implements ProductServiceInterface
             $value = join('|', $value);
         }
 
-        $data = array(
+        $data = [
             'product_id' => $object->getId(),
             'attribute_id' => $attribute->getId(),
             'value' => $value,
-        );
+        ];
 
         if ($attribute->exists()) {
-            $wpdb->update($wpdb->prefix . 'jigoshop_product_attribute', $data, array(
+            $wpdb->update($wpdb->prefix . 'jigoshop_product_attribute', $data, [
                 'product_id' => $object->getId(),
                 'attribute_id' => $attribute->getId(),
-            ));
+            ]);
         } else {
             $wpdb->insert($wpdb->prefix . 'jigoshop_product_attribute', $data);
             $attribute->setExists(Attribute::PRODUCT_ATTRIBUTE_EXISTS);
@@ -290,16 +302,16 @@ class ProductService implements ProductServiceInterface
 
         foreach ($attribute->getFieldsToSave() as $field) {
             /** @var $field Attribute\Field */
-            $data = array(
+            $data = [
                 'product_id' => $object->getId(),
                 'attribute_id' => $attribute->getId(),
                 'meta_key' => $field->getKey(),
                 'meta_value' => esc_sql($field->getValue()),
-            );
+            ];
             if ($field->getId()) {
-                $wpdb->update($wpdb->prefix . 'jigoshop_product_attribute_meta', $data, array(
+                $wpdb->update($wpdb->prefix . 'jigoshop_product_attribute_meta', $data, [
                     'id' => $field->getId(),
-                ));
+                ]);
             } else {
                 $wpdb->insert($wpdb->prefix . 'jigoshop_product_attribute_meta', $data);
                 $field->setId($wpdb->insert_id);
@@ -314,7 +326,7 @@ class ProductService implements ProductServiceInterface
     {
         $wpdb = $this->wp->getWPDB();
         $query = $wpdb->prepare("DELETE FROM {$wpdb->prefix}jigoshop_product_attachment WHERE product_id = %d",
-            array($productId));
+            [$productId]);
         $wpdb->query($query);
     }
 
@@ -325,11 +337,11 @@ class ProductService implements ProductServiceInterface
     private function _saveProductAttachment($productId, $attachment)
     {
         $wpdb = $this->wp->getWPDB();
-        $wpdb->insert($wpdb->prefix . 'jigoshop_product_attachment', array(
+        $wpdb->insert($wpdb->prefix . 'jigoshop_product_attachment', [
             'product_id' => $productId,
             'attachment_id' => $attachment['id'],
             'type' => $attachment['type'],
-        ));
+        ]);
     }
 
 
@@ -340,23 +352,23 @@ class ProductService implements ProductServiceInterface
      */
     public function findOutOfStock($number)
     {
-        $query = new \WP_Query(array(
+        $query = new \WP_Query([
             'post_type' => Types::PRODUCT,
             'post_status' => 'publish',
             'posts_per_page' => $number,
-            'meta_query' => array(
-                array(
+            'meta_query' => [
+                [
                     'key' => 'stock_manage',
                     'value' => 1,
                     'compare' => '=',
-                ),
-                array(
+                ],
+                [
                     'key' => 'stock_stock',
                     'value' => 0,
                     'compare' => '=',
-                ),
-            ),
-        ));
+                ],
+            ],
+        ]);
 
         return $this->findByQuery($query);
     }
@@ -369,23 +381,23 @@ class ProductService implements ProductServiceInterface
      */
     public function findLowStock($threshold, $number)
     {
-        $query = new \WP_Query(array(
+        $query = new \WP_Query([
             'post_type' => Types::PRODUCT,
             'post_status' => 'publish',
             'posts_per_page' => $number,
-            'meta_query' => array(
-                array(
+            'meta_query' => [
+                [
                     'key' => 'stock_manage',
                     'value' => 1,
                     'compare' => '=',
-                ),
-                array(
+                ],
+                [
                     'key' => 'stock_stock',
                     'value' => $threshold,
                     'compare' => '<=',
-                ),
-            ),
-        ));
+                ],
+            ],
+        ]);
 
         return $this->findByQuery($query);
     }
@@ -503,7 +515,7 @@ class ProductService implements ProductServiceInterface
 			WHERE a.is_local = 0
 		";
         $results = $wpdb->get_results($query, ARRAY_A);
-        $attributes = array();
+        $attributes = [];
 
         for ($i = 0, $endI = count($results); $i < $endI;) {
             $attribute = $this->factory->createAttribute($results[$i]['type']);
@@ -594,15 +606,15 @@ class ProductService implements ProductServiceInterface
     public function saveAttribute(Attribute $attribute)
     {
         $wpdb = $this->wp->getWPDB();
-        $data = array(
+        $data = [
             'label' => $attribute->getLabel(),
             'slug' => $attribute->getSlug(),
             'type' => $attribute->getType(),
             'is_local' => $attribute->isLocal(),
-        );
+        ];
 
         if ($attribute->getId()) {
-            $wpdb->update($wpdb->prefix . 'jigoshop_attribute', $data, array('id' => $attribute->getId()));
+            $wpdb->update($wpdb->prefix . 'jigoshop_attribute', $data, ['id' => $attribute->getId()]);
         } else {
             $wpdb->insert($wpdb->prefix . 'jigoshop_attribute', $data);
             $attribute->setId($wpdb->insert_id);
@@ -617,13 +629,13 @@ class ProductService implements ProductServiceInterface
 
         foreach ($attribute->getOptions() as $option) {
             /** @var $option Attribute\Option */
-            $data = array(
+            $data = [
                 'attribute_id' => $option->getAttribute()->getId(),
                 'label' => $option->getLabel(),
                 'value' => $option->getValue(),
-            );
+            ];
             if ($option->getId()) {
-                $wpdb->update($wpdb->prefix . 'jigoshop_attribute_option', $data, array('id' => $option->getId()));
+                $wpdb->update($wpdb->prefix . 'jigoshop_attribute_option', $data, ['id' => $option->getId()]);
             } else {
                 $wpdb->suppress_errors = true;
                 $wpdb->insert($wpdb->prefix . 'jigoshop_attribute_option', $data);
@@ -653,7 +665,7 @@ class ProductService implements ProductServiceInterface
             $ids = '0';
         }
         $query = $wpdb->prepare("DELETE FROM {$wpdb->prefix}jigoshop_attribute_option WHERE id NOT IN ({$ids}) AND attribute_id = %d",
-            array($attributeId));
+            [$attributeId]);
         $wpdb->query($query);
     }
 
@@ -665,7 +677,7 @@ class ProductService implements ProductServiceInterface
     public function removeAttribute($id)
     {
         $wpdb = $this->wp->getWPDB();
-        $wpdb->delete($wpdb->prefix . 'jigoshop_attribute', array('id' => $id));
+        $wpdb->delete($wpdb->prefix . 'jigoshop_attribute', ['id' => $id]);
     }
 
     /**
@@ -677,9 +689,9 @@ class ProductService implements ProductServiceInterface
      */
     public function generateItemKey(Item $item)
     {
-        $parts = array(
+        $parts = [
             $item->getProduct()->getId(),
-        );
+        ];
 
         $parts = $this->wp->applyFilters('jigoshop\cart\generate_item_key', $parts, $item);
 

@@ -4,10 +4,11 @@ Tags: ecommerce, wordpress ecommerce, store, shop, shopping, cart, checkout, wid
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=XTG9C24KAA7VA
 
 Requires at least: 4.0
-Tested up to: 4.7.2
-Stable tag: 2.0.9
+Tested up to: 4.7.3
+Stable tag: 2.1
 
-A feature-packed eCommerce plugin built upon WordPress core functionality ensuring excellent performance and customizability.
+A feature-packed eCommerce plugin built upon WordPress core functionality ensuring excellent performance, customizability and control - robust Tax Settings, Stock Level Management, Free and Premium Extensions - you name it.
+
 
 == Description ==
 
@@ -24,15 +25,19 @@ With the option to create a multitude of product types and apply detailed attrib
 * Downloadable or Virtual products
 * Variable products (eg, offer `Size: S,M,L` for one product)
 * Affiliate (External) products (ie, link your `Add to cart` button off-site)
-* Grouped products
+* Simple products
 
 = DETAILED REPORTS =
 
 Inside the custom dashboard you get sortable sales graphs, incoming order / review notifications as well as stats on your stores performance.
 
+= STYLING =
+
+Adapt and customize your theme using the built-in Layout Manager. If you don't have one - no worries, the Simply Jigoshop theme is available for free!
+
 = MANAGE STOCK =
 
-Manage your stock levels and customer orders easily. Jigoshop has been engineered to make the boring parts of eCommerce, well, less boring!
+Manage your stock levels and customer orders easily. Jigoshop eCommerce has been engineered to make the boring parts of eCommerce, well, less boring!
 
 = EXTEND YOUR SHOP =
 
@@ -40,6 +45,28 @@ Extend Jigoshop eCommerce with Payment Gateways, Shipping Methods, and various o
 
 http://www.jigoshop.com/product-category/extensions/
 
+To list some important ones:
+
+1. Payment Gateways
+* Authorize.Net
+* SagePay
+* 2Checkout
+* Braintree
+* Paypal
+
+2. Shipping Methods
+* Table Rate Shipping
+* Premium Shipping
+* Official UPS Shipping
+* Per Product Shipping
+* USPS Shipping
+
+3. Misc Premium Extensions
+* PDF Invoices
+* Checkout Fields Manager
+* Customer Discounts
+* Official Duplicate Product
+* Official Duplicate Orders
 
 = MORE INFO =
 
@@ -48,6 +75,18 @@ Built upon the WordPress core you get all the benefits of this global leading pl
 Find out more on our official Jigoshop website:
 
 http://www.jigoshop.com/
+
+= BECOME A PART OF THE COMMUNITY =
+
+You can become a part of the Jigoshop eCommerce in a variety of ways - either passively, by being a Jigoshop eCommerce user, or actively - let's focus on the latter:
+
+* Core Development - Resolve potential bugs and make improvements to the core of the plugin and get rewarded for it - check out our <a href="https://www.jigoshop.com/development/core-contributors/" title="Core Contributors">Core Contributors</a> Section for more information.
+
+* Theme Development - Create themes and increase their exposure by submitting them on our website - For more information visit our <a href="https://www.jigoshop.com/development/theme-developers/" title="Theme Developers">Theme Developers</a> Section.
+
+* Extension Development -
+
+* Language Translation - Provide Jigoshop eCommerce with your native language's translation. Check out our <a href="https://www.jigoshop.com/development/language-translations/" title="Language Translations">Language Translations</a> Section.
 
 == Installation ==
 
@@ -58,12 +97,20 @@ http://www.jigoshop.com/
 * The mod_rewrite Apache module (for permalinks)
 * Some payment gateways require fsockopen support (for IPN access)
 
-= Installation =
+= Manual Installation =
 
 1.  Download the Jigoshop eCommerce plugin file
 2.  Unzip the file into a folder to your computer
-3.  Upload the `/jigoshop/` folder to the `/wp-content/plugins/` folder on your site
+3.  Upload the `/jigoshop-ecommerce/` folder to the `/wp-content/plugins/` folder on your site
 4.  Visit the plugins page in WordPress Admin to activate the Jigoshop plugin
+
+= Automatic Installation =
+
+1.  Login to your WordPress Dashboard.
+2.  Go to Plugins -> Add New
+3.  Type "Jigoshop eCommerce" into the Search input
+4.  Click on "Install Now"
+5. 	Click on "Activate"
 
 = Setting up Jigoshop =
 
@@ -73,7 +120,7 @@ Take a look through our <a href="http://forum.jigoshop.com/kb/" title="Jigoshop 
 
 = Will Jigoshop eCommerce work with X theme? =
 
-Jigoshop eCommerce will in theory work with any theme, but of course, certain parts may need to be styled using CSS to make them match up. We've added default styling for Twenty Thirteen,Twenty Fourteen,Twenty Fifteen,Twenty Sixteen and...WooThemes. We're developing custom themes for the plugin - they should be available soon!
+Jigoshop eCommerce will in theory work with any theme, but of course, certain parts may need to be styled using CSS to make them match up - that's why we created the Layout Manager. We've added default styling for Twenty Thirteen,Twenty Fourteen,Twenty Fifteen,Twenty Sixteen and...WooThemes. We're developing custom themes for the plugin - they should be available soon!
 
 If you need a theme built, or have a theme that needs styling, <a href="http://www.jigoshop.com/contact/">give us a shout</a> and we may be able to assist.
 
@@ -104,6 +151,59 @@ However, if you want priority, dedicated support from Jigoshop staff, we dp offe
 
 == Changelog ==
 
+= 2.1 =
+* New: Admin notices.
+* New: My Downloads panel in my account.
+* New: Continents in Advanced flat rate shipping.
+* New: Dimensions and weight fields for product variations.
+* New: Replace product featured image with image from selected variation.
+* New: Discount entity.
+* New: Blueimp gallery for products.
+* New: Ability to add attachments to email.
+* New: RenderPay Interface
+* Fix: Product and order search.
+* Fix: Product filtering in admin panel.
+* Fix: Do not show migration if there is no reason to migrate.
+* Fix: Properly save and downloa all downloadable items.
+* Fix: Download link for variation.
+* Fix: Product category and tag queries.
+* Fix: Discount summary report.
+= 2.0.10.2 - 2017.03.22 =
+* Fix: Sanitized product title on product save in Wordpress panel.
+* Fix: Post excerpt was saved as product description.
+* Fix: Fatal error on Order page when DOMDocument is missing.
+* Fix: Discounts not being removed.
+* Disabled: Discount Summary report due to serious issue.
+= 2.0.10.1 - 2017.03.21 =
+* Fix: Fatal error on product save.
+= 2.0.10 - 2017.03.21 =
+* Fix: Added Layout settings tab.
+* Fix: Some action hook names.
+* Fix: Fatal error when order was saved in admin panel triggered by multiple method shippings.
+* Fix: Variation prices on product page.
+* Fix: Item price suffix is Account Orders, Checkout Pay, Thant You pages.
+* Fix: Displaying file attachments on product page.
+* Fix: Fix fatal error on activation triggered by options helper.
+* Fix: Tax helper should return tax for Taxable products.
+* Fix: Properly interpret ignore meta queries option.
+* Fix: Now coupons and emails are available via api.
+* Fix: Displaying free instead of price not announced.
+* Fix: Edit address button.
+* Fix: External view product button on product list.
+* Fix: Notice on order list when product was removed.
+* Fix: Show all orders on Account Orders page.
+* Fix: Show view product button when product doesn't have price.
+* Fix: Notice about undefined key in session for recently viewed products widget.
+* Fix: Don't set shipping method when shipping is not required.
+* Fix: Notice caused by dashboard monthly report.
+* Fix: Order migration when product no longer exists.
+* Fix: Input coupon field on checkout page.
+* Fix: Fatal error when product does not have default tax classes selected.
+* Fix: Fatal error when attribute was removed from product.
+* Fix: Query Interceptor for custom Jigoshop pages.
+* Fix: Default payment gateway select.
+* Fix: Reports for variable products.
+* Fix: Custom permalinks for products.
 = 2.0.9 - 2017.02.13 =
 * Fix: Support Twentyseventeen theme.
 * Fix: Improve product reviews.

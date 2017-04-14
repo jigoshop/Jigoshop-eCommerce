@@ -17,27 +17,27 @@ use Jigoshop\Admin\Helper\Forms;
  */
 $hasLabel = !empty($label);
 ?>
-<div class="form-group <?php echo $id; ?>_field <?php echo join(' ', $classes); ?><?php $hidden and print ' not-active'; ?>">
+<div class="form-group <?= $id; ?>_field <?= join(' ', $classes); ?><?php $hidden and print ' not-active'; ?>">
 	<div class="row">
-		<div class="col-sm-<?php echo $size; ?>">
+		<div class="col-sm-<?= $size; ?>">
 			<?php if ($hasLabel): $size -= 2; ?>
-				<label for="<?php echo $id; ?>" class="col-xs-12 col-sm-2 margin-top-bottom-9">
-					<?php echo $label; ?>
+				<label for="<?= $id; ?>" class="col-xs-12 col-sm-2 margin-top-bottom-9">
+					<?= $label; ?>
 				</label>
 			<?php endif; ?>
-			<div class="col-xs-12 col-sm-<?php echo $size ?> clearfix">
+			<div class="col-xs-12 col-sm-<?= $size ?> clearfix">
 				<div class="tooltip-inline-badge">
 					<?php if (!empty($tip)): ?>
-						<span data-toggle="tooltip" class="badge margin-top-bottom-9" data-placement="top" title="<?php echo $tip; ?>">?</span>
+						<span data-toggle="tooltip" class="badge margin-top-bottom-9" data-placement="top" title="<?= $tip; ?>">?</span>
 					<?php endif; ?>
 				</div>
 				<div class="tooltip-inline-input">
 					<?php if (!$multiple): ?>
-						<input type="hidden" name="<?php echo $name; ?>" value="off"/>
+						<input type="hidden" name="<?= $name; ?>" value="off"/>
 					<?php endif; ?>
-					<input type="checkbox" id="<?php echo $id; ?>" name="<?php echo $name; ?>" class="<?php echo join(' ', $classes); ?>" <?php echo Forms::checked($checked, true); ?> value="<?php echo $value; ?>"<?php echo Forms::disabled($disabled); ?>/>
+					<input type="checkbox" id="<?= $id; ?>" name="<?= $name; ?>" class="<?= join(' ', $classes); ?>" <?= Forms::checked($checked, true); ?> value="<?= $value; ?>"<?= Forms::disabled($disabled); ?>/>
 					<?php if (!empty($description)): ?>
-						<label for="<?php echo $id; ?>"><span class="help"><?php echo $description; ?></span></label>
+						<label for="<?= $id; ?>"><span class="help"><?= $description; ?></span></label>
 					<?php endif; ?>
 				</div>
 			</div>

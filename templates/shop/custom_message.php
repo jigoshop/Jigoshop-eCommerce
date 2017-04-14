@@ -4,5 +4,5 @@
  */
 ?>
 <div class="jigoshop" id="custom_message">
-	<div class="alert alert-warning"><?php echo $message; ?></div>
+	<div class="alert alert-warning"><?= $message; ?></div>
 </div>

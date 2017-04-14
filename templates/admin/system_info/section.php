@@ -5,5 +5,5 @@
  */
 ?>
 <?php if(isset($section['description'])): ?>
-	<p class="help"><?php echo $section['description']; ?></p>
+	<p class="help"><?= $section['description']; ?></p>
 <?php endif; ?>

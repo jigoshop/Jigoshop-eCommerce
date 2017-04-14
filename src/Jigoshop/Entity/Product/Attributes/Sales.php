@@ -127,12 +127,12 @@ class Sales implements \Serializable, \JsonSerializable
 	 */
 	public function serialize()
 	{
-		return serialize(array(
+		return serialize([
 			'enabled' => $this->enabled && !empty($this->price),
 			'from' => $this->from->getTimestamp(),
 			'to' => $this->to->getTimestamp(),
 			'price' => $this->price,
-		));
+        ]);
 	}
 
 	/**
@@ -163,14 +163,14 @@ class Sales implements \Serializable, \JsonSerializable
         return [
             'enabled' => $this->enabled,
             'price' => $this->price,
-            'from' => array(
+            'from' => [
                 'timestamp' => $this->from->getTimestamp(),
                 'date' => $this->from->format('Y-m-d'),
-            ),
-            'to' => array(
+            ],
+            'to' => [
                 'timestamp' => $this->to->getTimestamp(),
                 'date' => $this->to->format('Y-m-d'),
-            ),
+            ],
         ];
     }
 }

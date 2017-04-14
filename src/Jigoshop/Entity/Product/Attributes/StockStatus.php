@@ -161,12 +161,12 @@ class StockStatus implements \Serializable, \JsonSerializable
 	 */
 	public function serialize()
 	{
-		return serialize(array(
+		return serialize([
 			'manage' => $this->manage,
 			'status' => $this->status,
 			'allow_backorders' => $this->allowBackorders,
 			'stock' => $this->stock,
-		));
+        ]);
 	}
 
 	/**

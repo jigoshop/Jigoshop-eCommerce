@@ -14,7 +14,7 @@ use Jigoshop\Service\Product\VariableServiceInterface;
  */
 class Simple implements VariableServiceInterface
 {
-	private $objects = array();
+	private $objects = [];
 
 	/** @var VariableServiceInterface */
 	private $service;

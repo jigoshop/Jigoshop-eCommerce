@@ -43,7 +43,7 @@ class Routes
          * @apiSuccess {Bool} success Request status .
          * @apiSuccess {String} time Response time.
          */
-        $app->get('/ping', array($this, 'ping'));
+        $app->get('/ping', [$this, 'ping']);
         if ($version == 1) {
             /**
              * @api {post} /token setting token variable for authorization header
@@ -54,7 +54,7 @@ class Routes
              * @apiSuccess {String} token Token that is needed to include in authorization header.
              * @apiError UserNotFound User not found.
              */
-            $app->post('/token', array($this, 'token'));
+            $app->post('/token', [$this, 'token']);
             $app->group('/attributes', function () use ($app) {
                 new Routes\V1\Attributes($app);
             });

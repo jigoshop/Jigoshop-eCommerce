@@ -18,6 +18,6 @@ if ($title) {
 }
 ?>
 <div class="tagcloud">
-	<?php echo wp_tag_cloud(apply_filters('widget_tag_cloud_args', array('taxonomy' => Types::PRODUCT_TAG))); ?>
+	<?= wp_tag_cloud(apply_filters('widget_tag_cloud_args', ['taxonomy' => Types::PRODUCT_TAG])); ?>
 </div>
-<?php echo $after_widget;
+<?= $after_widget;

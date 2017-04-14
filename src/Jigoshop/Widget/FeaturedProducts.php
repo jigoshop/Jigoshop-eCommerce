@@ -18,10 +18,10 @@ class FeaturedProducts extends \WP_Widget
 
 	public function __construct()
 	{
-		$options = array(
+		$options = [
 			'classname' => self::ID,
 			'description' => __('Featured products on your site', 'jigoshop')
-		);
+        ];
 
 		// Create the widget
 		parent::__construct(self::ID, __('Jigoshop: Featured Products', 'jigoshop'), $options);
@@ -58,30 +58,30 @@ class FeaturedProducts extends \WP_Widget
 		}
 
 		// Set up query
-		$query_args = array(
+		$query_args = [
 			'posts_per_page' => $number,
 			'post_type' => Types::PRODUCT,
 			'post_status' => 'publish',
 			'meta_key' => 'featured',
 			'meta_value' => '1',
-			'meta_query' => array(
-				array(
+			'meta_query' => [
+				[
 					'key' => 'visibility',
-					'value' => array(Product::VISIBILITY_CATALOG, Product::VISIBILITY_PUBLIC),
+					'value' => [Product::VISIBILITY_CATALOG, Product::VISIBILITY_PUBLIC],
 					'compare' => 'IN',
-				),
-			)
-		);
+                ],
+            ]
+        ];
 
 		// Run the query
 		$q = new \WP_Query($query_args);
 		$products = self::$productService->findByQuery($q);
 
 		if (!empty($products)) {
-			Render::output('widget/featured_products/widget', array_merge($args, array(
+			Render::output('widget/featured_products/widget', array_merge($args, [
 				'title' => $title,
 				'products' => $products,
-			)));
+            ]));
 		}
 	}
 
@@ -117,13 +117,13 @@ class FeaturedProducts extends \WP_Widget
 		$title = isset($instance['title']) ? esc_attr($instance['title']) : null;
 		$number = isset($instance['number']) ? absint($instance['number']) : 5;
 
-		Render::output('widget/featured_products/form', array(
+		Render::output('widget/featured_products/form', [
 			'title_id' => $this->get_field_id('title'),
 			'title_name' => $this->get_field_name('title'),
 			'title' => $title,
 			'number_id' => $this->get_field_id('number'),
 			'number_name' => $this->get_field_name('number'),
 			'number' => $number,
-		));
+        ]);
 	}
 }

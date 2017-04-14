@@ -19,4 +19,4 @@ if ($title) {
 <ul>
 	<?php wp_list_categories(apply_filters('widget_product_categories_args', $args)); ?>
 </ul>
-<?php echo $after_widget;
+<?= $after_widget;

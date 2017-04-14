@@ -16,20 +16,20 @@ use Jigoshop\Helper\Forms;
  * @var $size int Size of form widget.
  */
 ?>
-<div class="form-group <?php echo $id; ?>_field clearfix<?php $hidden and print ' not-active'; ?>">
-	<label for="<?php echo $id; ?>" class="col-sm-<?php echo $size == 12 ? 12 : 12 - $size; ?> control-label">
-		<?php echo $label; ?>
+<div class="form-group <?= $id; ?>_field <?= join(' ', $classes); ?> clearfix<?php $hidden and print ' not-active'; ?>">
+	<label for="<?= $id; ?>" class="col-sm-<?= $size == 12 ? 12 : 12 - $size; ?> control-label">
+		<?= $label; ?>
 		<?php if(!empty($tip)): ?>
-			<a href="#" data-toggle="tooltip" class="badge" data-placement="top" title="<?php echo $tip; ?>">?</a>
+			<a href="#" data-toggle="tooltip" class="badge" data-placement="top" title="<?= $tip; ?>">?</a>
 		<?php endif; ?>
 	</label>
-	<div class="col-sm-<?php echo $size; ?> checkbox-inline">
+	<div class="col-sm-<?= $size; ?> checkbox-inline">
 		<?php if(!$multiple): ?>
-			<input type="hidden" name="<?php echo $name; ?>" value="off" />
+			<input type="hidden" name="<?= $name; ?>" value="off" />
 		<?php endif; ?>
-		<input type="checkbox" id="<?php echo $id; ?>" name="<?php echo $name; ?>" class="<?php echo join(' ', $classes); ?>" <?php echo Forms::checked($checked, true); ?> value="<?php echo $value; ?>"<?php $disabled and print ' disabled'; ?> />
+		<input type="checkbox" id="<?= $id; ?>" name="<?= $name; ?>" class="<?= join(' ', $classes); ?>" <?= Forms::checked($checked, true); ?> value="<?= $value; ?>"<?php $disabled and print ' disabled'; ?> />
 		<?php if(!empty($description)): ?>
-			<label for="<?php echo $id; ?>"><span class="help"><?php echo $description; ?></span></label>
+			<label for="<?= $id; ?>"><span class="help"><?= $description; ?></span></label>
 		<?php endif; ?>
 	</div>
 </div>

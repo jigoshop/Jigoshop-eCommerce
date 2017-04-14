@@ -75,7 +75,7 @@ class Items extends BaseController implements ApiControllerContract
          * @apiUse OrderItemReturnObject
          * @apiPermission read_orders
          */
-        $app->get('', array($this, 'findAll'));
+        $app->get('', [$this, 'findAll']);
 
         /**
          * @api {get} /orders/:id/items/:itemId Get Order Item information
@@ -92,7 +92,7 @@ class Items extends BaseController implements ApiControllerContract
          * @apiError ObjectNotFound Order have not been found or it does not have this item.
          * @apiPermission read_orders
          */
-        $app->get('/{id:[0-9]+}', array($this, 'findOne'));
+        $app->get('/{id:[0-9]+}', [$this, 'findOne']);
 
         /**
          * @api {post} /orders/:id/items Add item to an order
@@ -108,7 +108,7 @@ class Items extends BaseController implements ApiControllerContract
          * @apiError ObjectNotFound Order have not been found.
          * @apiPermission manage_orders
          */
-        $app->post('/{id:[0-9]+}', array($this, 'create'));
+        $app->post('/{id:[0-9]+}', [$this, 'create']);
 
         /**
          * @api {put} /orders/:id/items/:itemId Update a Item in the Order
@@ -125,7 +125,7 @@ class Items extends BaseController implements ApiControllerContract
          * @apiError ObjectNotFound Order have not been found or it does not have this item.
          * @apiPermission manage_orders
          */
-        $app->put('/{id:[0-9]+}', array($this, 'update'));
+        $app->put('/{id:[0-9]+}', [$this, 'update']);
 
         /**
          * @api {delete} /orders/:id/items/:itemId Delete Item from an order
@@ -141,7 +141,7 @@ class Items extends BaseController implements ApiControllerContract
          * @apiError ObjectNotFound Order have not been found or it does not have this item.
          * @apiPermission manage_orders
          */
-        $app->delete('/{id:[0-9]+}', array($this, 'delete'));
+        $app->delete('/{id:[0-9]+}', [$this, 'delete']);
     }
 
     /**

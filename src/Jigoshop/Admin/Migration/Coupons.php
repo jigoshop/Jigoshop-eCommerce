@@ -21,7 +21,7 @@ class Coupons implements Tool
 	{
 		$this->wp = $wp;
 		$this->options = $options;
-		$wp->addAction('wp_ajax_jigoshop.admin.migration.coupons', array($this, 'ajaxMigrationCoupons'), 10, 0);
+		$wp->addAction('wp_ajax_jigoshop.admin.migration.coupons', [$this, 'ajaxMigrationCoupons'], 10, 0);
 	}
 
 	/**
@@ -44,7 +44,7 @@ class Coupons implements Tool
 			LEFT JOIN {$wpdb->postmeta} pm ON pm.post_id = p.ID
 				WHERE p.post_type IN (%s) AND p.post_status <> %s
 			GROUP BY p.ID",
-			array('shop_coupon', 'auto-draft'))));
+			['shop_coupon', 'auto-draft'])));
 
 		$countRemain = 0;
 		$countDone = 0;
@@ -55,7 +55,7 @@ class Coupons implements Tool
 			$countDone = $countAll - $countRemain;
 		}
 
-		Render::output('admin/migration/coupons', array('countAll' => $countAll, 'countDone' => $countDone));
+		Render::output('admin/migration/coupons', ['countAll' => $countAll, 'countDone' => $countDone]);
 	}
 
 	/**
@@ -99,11 +99,11 @@ class Coupons implements Tool
 					if (!empty($key)) {
 						$wpdb->query($wpdb->prepare(
 							"UPDATE {$wpdb->postmeta} SET meta_value = %s, meta_key = %s WHERE meta_id = %d;",
-							array(
+							[
 								$this->_transform($coupons[$i]->meta_key, $coupons[$i]->meta_value),
 								$key,
 								$coupons[$i]->meta_id,
-							)
+                            ]
 						));
 						$this->checkSql();
 					}
@@ -192,11 +192,11 @@ class Coupons implements Tool
 			SELECT DISTINCT p.ID, pm.* FROM {$wpdb->posts} p
 			LEFT JOIN {$wpdb->postmeta} pm ON pm.post_id = p.ID
 				WHERE p.post_type IN (%s) AND p.post_status <> %s",
-				array('shop_coupon', 'auto-draft'));
+				['shop_coupon', 'auto-draft']);
 			$coupons = $wpdb->get_results($query);
 
-			$joinCoupons = array();
-			$couponsIdsMigration = array();
+			$joinCoupons = [];
+			$couponsIdsMigration = [];
 
 			for ($aa = 0; $aa < count($coupons); $aa++)
 			{
@@ -221,13 +221,13 @@ class Coupons implements Tool
 
 			sort($joinCoupons[$singleCouponsId]);
 
-			$ajax_response = array(
+			$ajax_response = [
 				'success' => true,
 				'percent' => floor(($countAll - $countRemain) / $countAll * 100),
 				'processed' => $countAll - $countRemain,
 				'remain' => $countRemain,
 				'total' => $countAll,
-			);
+            ];
 
 			if($countRemain > 0)
 			{
@@ -254,9 +254,9 @@ class Coupons implements Tool
 			{
 				\Monolog\Registry::getInstance(JIGOSHOP_LOGGER)->addDebug($e);
 			}
-			echo json_encode(array(
+			echo json_encode([
 				'success' => false,
-			));
+            ]);
 
 			Migration::saveLog(__('Migration coupons end with error: ', 'jigoshop') . $e);
 		}

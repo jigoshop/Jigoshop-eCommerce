@@ -19,7 +19,7 @@ class Email implements EntityFactoryInterface
     /** @var Options */
     private $options;
     /** @var array */
-    private $actions = array();
+    private $actions = [];
 
     public function __construct(Wordpress $wp, Options $options)
     {
@@ -36,10 +36,10 @@ class Email implements EntityFactoryInterface
      */
     public function register($action, $description, array $arguments)
     {
-        $this->actions[$action] = array(
+        $this->actions[$action] = [
             'description' => $description,
             'arguments' => $arguments
-        );
+        ];
     }
 
     /**
@@ -111,17 +111,20 @@ class Email implements EntityFactoryInterface
         }
 
         $email = new Entity();
-        $state = array();
+        $state = [];
 
         if ($post) {
             $state = array_map(function ($item) {
                 return $item[0];
             }, $this->wp->getPostMeta($post->ID));
 
-            $email->setId($post->ID);
-            $email->setTitle($post->post_title);
-            $email->setText($post->post_content);
-            $state['actions'] = unserialize($state['actions']);
+			$email->setId($post->ID);
+			$email->setTitle($post->post_title);
+			$email->setText($post->post_content);
+			$state['actions'] = unserialize($state['actions']);
+			if(isset($state['attachments'])) {
+			    $state['attachments'] = unserialize($state['attachments']);
+            }
 
             $email->restoreState($state);
         }

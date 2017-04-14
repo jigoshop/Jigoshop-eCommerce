@@ -4,18 +4,16 @@ namespace Jigoshop\Frontend\Page\Checkout;
 
 use Jigoshop\Core\Messages;
 use Jigoshop\Core\Options;
-use Jigoshop\Core\Types;
 use Jigoshop\Entity\Order;
-use Jigoshop\Entity\Order\Item;
-use Jigoshop\Entity\Product;
 use Jigoshop\Exception;
 use Jigoshop\Frontend\Page\PageInterface;
 use Jigoshop\Frontend\Pages;
-use Jigoshop\Helper\Api;
+use Jigoshop\Helper\Endpoint;
 use Jigoshop\Helper\Render;
 use Jigoshop\Helper\Scripts;
 use Jigoshop\Helper\Styles;
 use Jigoshop\Helper\Tax;
+use Jigoshop\Payment\RenderPayInterface;
 use Jigoshop\Service\OrderServiceInterface;
 use Jigoshop\Service\PaymentServiceInterface;
 use WPAL\Wordpress;
@@ -41,12 +39,12 @@ class Pay implements PageInterface
 		$this->orderService = $orderService;
 		$this->paymentService = $paymentService;
 
-		Styles::add('jigoshop.checkout.pay', \JigoshopInit::getUrl().'/assets/css/shop/checkout/pay.css', array('jigoshop.shop'));
-		Scripts::add('jigoshop.checkout.pay', \JigoshopInit::getUrl().'/assets/js/shop/checkout/pay.js', array(
+		Styles::add('jigoshop.checkout.pay', \JigoshopInit::getUrl().'/assets/css/shop/checkout/pay.css', ['jigoshop.shop']);
+		Scripts::add('jigoshop.checkout.pay', \JigoshopInit::getUrl().'/assets/js/shop/checkout/pay.js', [
 			'jquery',
 			'jigoshop.helpers.payment',
 
-		));
+        ]);
 		$wp->doAction('jigoshop\checkout\pay\assets', $wp);
 	}
 
@@ -83,7 +81,7 @@ class Pay implements PageInterface
 				// Redirect to thank you page
 				if (empty($url)) {
 					$url = $this->wp->getPermalink($this->wp->applyFilters('jigoshop\checkout\redirect_page_id', $this->options->getPageId(Pages::THANK_YOU)));
-					$url = $this->wp->getHelpers()->addQueryArg(array('order' => $order->getId(), 'key' => $order->getKey()), $url);
+					$url = $this->wp->getHelpers()->addQueryArg(['order' => $order->getId(), 'key' => $order->getKey()], $url);
 				}
 
 				$this->wp->wpRedirect($url);
@@ -98,14 +96,27 @@ class Pay implements PageInterface
 	{
 		/** @var Order $order */
 		$order = $this->orderService->find((int)$this->wp->getQueryParameter('pay'));
+
+		if(isset($_GET['payment'])) {
+		    $payment = $this->paymentService->get($_GET['payment']);
+		    if($payment instanceof RenderPayInterface) {
+                return Render::get('shop/checkout/payment', [
+                    'messages' => $this->messages,
+                    'content' => $payment->renderPay($order),
+                    'order' => $order,
+                ]);
+            }
+        }
+
+        /** @deprecated since 2.1 */
 		$render = $this->wp->applyFilters('jigoshop\pay\render', '', $order);
 
 		if (!empty($render)) {
-			return Render::get('shop/checkout/payment', array(
+			return Render::get('shop/checkout/payment', [
 				'messages' => $this->messages,
 				'content' => $render,
 				'order' => $order,
-			));
+            ]);
 		}
 
 		$termsUrl = '';
@@ -120,18 +131,18 @@ class Pay implements PageInterface
         $suffix = $showWithTax ? $this->options->get('tax.suffix_for_included', '') : $this->options->get('tax.suffix_for_excluded', '');
 
 
-        return Render::get('shop/checkout/pay', array(
+        return Render::get('shop/checkout/pay', [
 			'messages' => $this->messages,
 			'order' => $order,
             'showWithTax' => $showWithTax,
             'suffix' => $suffix,
 			'termsUrl' => $termsUrl,
 			'myAccountUrl' => $accountUrl,
-			'myOrdersUrl' => Api::getEndpointUrl('orders', '', $accountUrl),
+			'myOrdersUrl' => Endpoint::getEndpointUrl('orders', '', $accountUrl),
 			'paymentMethods' => $this->paymentService->getEnabled(),
 			'getTaxLabel' => function ($taxClass) use ($order){
 				return Tax::getLabel($taxClass, $order);
 			},
-		));
+        ]);
 	}
 }

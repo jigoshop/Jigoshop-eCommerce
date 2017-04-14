@@ -19,28 +19,28 @@ class ProductTags
 	{
 		$this->wp = $wp;
 
-		$wp->addAction(sprintf('%s_add_form_fields', Types::PRODUCT_TAG), array(
+		$wp->addAction(sprintf('%s_add_form_fields', Types::PRODUCT_TAG), [
 			$this,
 			'showThumbnail'
-		));
-		$wp->addAction(sprintf('%s_edit_form_fields', Types::PRODUCT_TAG), array(
+        ]);
+		$wp->addAction(sprintf('%s_edit_form_fields', Types::PRODUCT_TAG), [
 			$this,
 			'showThumbnail'
-		));
-		$wp->addAction('created_term', array($this, 'saveThumbnail'), 10, 3);
-		$wp->addAction('edit_term', array($this, 'saveThumbnail'), 10, 3);
-		$wp->addAction(sprintf('delete_%s', Types::PRODUCT_TAG), array($this, 'delete'));
+        ]);
+		$wp->addAction('created_term', [$this, 'saveThumbnail'], 10, 3);
+		$wp->addAction('edit_term', [$this, 'saveThumbnail'], 10, 3);
+		$wp->addAction(sprintf('delete_%s', Types::PRODUCT_TAG), [$this, 'delete']);
 
 		$wp->addAction('admin_enqueue_scripts', function () use ($wp){
 			$wp->wpEnqueueMedia();
-			Scripts::add('jigoshop.admin.product_tags', \JigoshopInit::getUrl().'/assets/js/admin/product_tags.js', array(
+			Scripts::add('jigoshop.admin.product_tags', \JigoshopInit::getUrl().'/assets/js/admin/product_tags.js', [
 				'jquery',
 				'jigoshop.media'
-			));
-			Scripts::localize('jigoshop.admin.product_tags', 'jigoshop_admin_product_tags', array(
+            ]);
+			Scripts::localize('jigoshop.admin.product_tags', 'jigoshop_admin_product_tags', [
 				'tag_name' => Types::PRODUCT_TAG,
 				'placeholder' => \JigoshopInit::getUrl().'/assets/images/placeholder.png',
-			));
+            ]);
 
 			$wp->doAction('jigoshop\admin\product_tags\assets', $wp);
 		});
@@ -54,9 +54,9 @@ class ProductTags
 		}
 
 		$image = ProductCategory::getImage($termId);
-		Render::output('admin/product_tags/thumbnail', array(
+		Render::output('admin/product_tags/thumbnail', [
 			'image' => $image,
-		));
+        ]);
 	}
 
 	public function saveThumbnail($termId, $ttId, $taxonomy)

@@ -127,7 +127,7 @@ class Forms
 	 */
 	public static function text($field)
 	{
-		$defaults = array(
+		$defaults = [
 			'id' => null,
 			'name' => null,
 			'type' => 'text',
@@ -135,12 +135,12 @@ class Forms
 			'value' => false,
 			'placeholder' => '',
 			'disabled' => false,
-			'classes' => array(),
+			'classes' => [],
 			'description' => false,
 			'tip' => false,
 			'hidden' => false,
 			'size' => 12,
-		);
+        ];
 		$field = wp_parse_args($field, $defaults);
 
 		if (empty($field['name'])) {
@@ -148,7 +148,7 @@ class Forms
 				throw new Exception(sprintf('Field "%s" must have a name!', serialize($field)));
 			}
 
-			Registry::getInstance(JIGOSHOP_LOGGER)->addCritical('Field must have a name!', array('field' => $field));
+			Registry::getInstance(JIGOSHOP_LOGGER)->addCritical('Field must have a name!', ['field' => $field]);
 
 			return;
 		}
@@ -188,7 +188,7 @@ class Forms
 	 */
 	public static function number($field)
 	{
-		$defaults = array(
+		$defaults = [
 			'id' => null,
 			'name' => null,
 			'type' => 'number',
@@ -196,7 +196,7 @@ class Forms
 			'value' => false,
 			'placeholder' => '',
 			'disabled' => false,
-			'classes' => array(),
+			'classes' => [],
 			'description' => false,
 			'tip' => false,
 			'hidden' => false,
@@ -204,7 +204,7 @@ class Forms
 			'min' => false,
 			'max' => false,
 			'step' => 1,
-		);
+        ];
 
 		$field = wp_parse_args($field, $defaults);
 
@@ -213,7 +213,7 @@ class Forms
 				throw new Exception(sprintf('Field "%s" must have a name!', serialize($field)));
 			}
 
-			Registry::getInstance(JIGOSHOP_LOGGER)->addCritical('Field must have a name!', array('field' => $field));
+			Registry::getInstance(JIGOSHOP_LOGGER)->addCritical('Field must have a name!', ['field' => $field]);
 
 			return;
 		}
@@ -234,7 +234,7 @@ class Forms
 	 */
 	public static function prepareIdFromName($name)
 	{
-		return str_replace(array('[', ']'), array('_', ''), $name);
+		return str_replace(['[', ']'], ['_', ''], $name);
 	}
 
 	/**
@@ -263,7 +263,7 @@ class Forms
 	 */
 	public static function select($field)
 	{
-		$defaults = array(
+		$defaults = [
 			'id' => null,
 			'name' => null,
 			'label' => null,
@@ -271,14 +271,14 @@ class Forms
 			'multiple' => false,
 			'placeholder' => '',
 			'disabled' => false,
-			'classes' => array(),
+			'classes' => [],
 			'description' => false,
 			'tip' => false,
-			'options' => array(),
+			'options' => [],
 			'hidden' => false,
 			'size' => 12,
-            'args' => array(),
-		);
+            'args' => [],
+        ];
 		$field = wp_parse_args($field, $defaults);
 
 		if (empty($field['name'])) {
@@ -286,7 +286,7 @@ class Forms
 				throw new Exception(sprintf('Field "%s" must have a name!', serialize($field)));
 			}
 
-			Registry::getInstance(JIGOSHOP_LOGGER)->addCritical('Field must have a name!', array('field' => $field));
+			Registry::getInstance(JIGOSHOP_LOGGER)->addCritical('Field must have a name!', ['field' => $field]);
 
 			return;
 		}
@@ -307,12 +307,12 @@ class Forms
 
 			if (!is_array($firstElement)) {
 				foreach ($field['options'] as $option => $label) {
-					$field['options'][$option] = array('label' => $label);
+					$field['options'][$option] = ['label' => $label];
 				}
 			} else if (!isset($firstElement['label']) && !isset($firstElement['items'])) { // TODO: Is this sufficient?
 				foreach ($field['options'] as $option => $items) {
 					foreach ($items as $suboption => $sublabel) {
-						$field['options'][$option]['items'][$suboption] = array('label' => $sublabel);
+						$field['options'][$option]['items'][$suboption] = ['label' => $sublabel];
 					}
 				}
 			}
@@ -347,7 +347,7 @@ class Forms
 	 */
 	public static function checkbox($field)
 	{
-		$defaults = array(
+		$defaults = [
 			'id' => null,
 			'name' => null,
 			'label' => null,
@@ -355,12 +355,12 @@ class Forms
 			'multiple' => false,
 			'checked' => false,
 			'disabled' => false,
-			'classes' => array(),
+			'classes' => [],
 			'description' => false,
 			'tip' => false,
 			'hidden' => false,
 			'size' => 12,
-		);
+        ];
 		$field = wp_parse_args($field, $defaults);
 
 		if (empty($field['name'])) {
@@ -368,7 +368,7 @@ class Forms
 				throw new Exception('Field "%s" must have a name!', serialize($field));
 			}
 
-			Registry::getInstance(JIGOSHOP_LOGGER)->addCritical('Field must have a name!', array('field' => $field));
+			Registry::getInstance(JIGOSHOP_LOGGER)->addCritical('Field must have a name!', ['field' => $field]);
 
 			return;
 		}
@@ -408,19 +408,19 @@ class Forms
 	 */
 	public static function textarea($field)
 	{
-		$defaults = array(
+		$defaults = [
 			'id' => null,
 			'name' => null,
 			'label' => null,
 			'value' => false,
 			'rows' => 3,
 			'disabled' => false,
-			'classes' => array(),
+			'classes' => [],
 			'description' => false,
 			'tip' => false,
 			'hidden' => false,
 			'size' => 12,
-		);
+        ];
 		$field = wp_parse_args($field, $defaults);
 
 		if (empty($field['name'])) {
@@ -428,7 +428,7 @@ class Forms
 				throw new Exception(sprintf('Field "%s" must have a name!', serialize($field)));
 			}
 
-			Registry::getInstance(JIGOSHOP_LOGGER)->addCritical('Field must have a name!', array('field' => $field));
+			Registry::getInstance(JIGOSHOP_LOGGER)->addCritical('Field must have a name!', ['field' => $field]);
 
 			return;
 		}
@@ -464,20 +464,20 @@ class Forms
 	 */
 	public static function daterange($field)
 	{
-		$defaults = array(
+		$defaults = [
 			'id' => null,
 			'name' => null,
 			'type' => 'text',
 			'label' => null,
 			'value' => false,
 			'placeholder' => '',
-			'classes' => array(),
+			'classes' => [],
 			'description' => false,
 			'tip' => false,
 			'size' => 12,
 			'startDate' => false,
 			'endDate' => false,
-		);
+        ];
 		$field = wp_parse_args($field, $defaults);
 
 		if (empty($field['name'])) {
@@ -485,7 +485,7 @@ class Forms
 				throw new Exception(sprintf('Field "%s" must have a name!', serialize($field)));
 			}
 
-			Registry::getInstance(JIGOSHOP_LOGGER)->addCritical('Field must have a name!', array('field' => $field));
+			Registry::getInstance(JIGOSHOP_LOGGER)->addCritical('Field must have a name!', ['field' => $field]);
 
 			return;
 		}
@@ -511,12 +511,12 @@ class Forms
 	 */
 	public static function hidden($field)
 	{
-		$defaults = array(
+		$defaults = [
 			'id' => null,
 			'name' => null,
 			'value' => false,
-			'classes' => array(),
-		);
+			'classes' => [],
+        ];
 		$field = wp_parse_args($field, $defaults);
 
 		if (empty($field['name'])) {
@@ -524,7 +524,7 @@ class Forms
 				throw new Exception(sprintf('Field "%s" must have a name!', serialize($field)));
 			}
 
-			Registry::getInstance(JIGOSHOP_LOGGER)->addCritical('Field must have a name!', array('field' => $field));
+			Registry::getInstance(JIGOSHOP_LOGGER)->addCritical('Field must have a name!', ['field' => $field]);
 
 			return;
 		}
@@ -559,20 +559,20 @@ class Forms
 	 */
 	public static function constant($field)
 	{
-		$defaults = array(
+		$defaults = [
 			'id' => null,
 			'name' => null,
 			'label' => null,
 			'value' => false,
 			'placeholder' => '',
-			'classes' => array(),
+			'classes' => [],
 			'description' => false,
 			'tip' => false,
 			'hidden' => false,
 			'size' => 11,
 			'startDate' => false,
 			'endDate' => false,
-		);
+        ];
 		$field = wp_parse_args($field, $defaults);
 
 		if (empty($field['name'])) {
@@ -580,7 +580,7 @@ class Forms
 				throw new Exception(sprintf('Field "%s" must have a name!', serialize($field)));
 			}
 
-			Registry::getInstance(JIGOSHOP_LOGGER)->addCritical('Field must have a name!', array('field' => $field));
+			Registry::getInstance(JIGOSHOP_LOGGER)->addCritical('Field must have a name!', ['field' => $field]);
 
 			return;
 		}
@@ -592,7 +592,7 @@ class Forms
 		Render::output(static::$constantTemplate, $field);
 	}
 
-	public static function printHiddenFields($fields, $exceptions = array())
+	public static function printHiddenFields($fields, $exceptions = [])
 	{
 		foreach ($fields as $key => $value) {
 			if (!in_array($key, $exceptions)) {

@@ -10,45 +10,45 @@ $stock = $product instanceof Product\Purchasable ? $product->getStock() : new St
 ?>
 <fieldset>
 	<?php
-	Forms::checkbox(array(
+	Forms::checkbox([
 		'name' => 'product[stock_manage]',
 		'id' => 'stock-manage',
 		'label' => __('Manage stock?', 'jigoshop'),
 		'checked' => $stock->getManage(),
-	));
-	Forms::select(array(
+    ]);
+	Forms::select([
 		'name' => 'product[stock_status]',
 		'id' => 'stock-status',
 		'label' => __('Status', 'jigoshop'),
 		'value' => $stock->getStatus(),
-		'options' => array(
+		'options' => [
 			StockStatus::IN_STOCK => __('In stock', 'jigoshop'),
 			StockStatus::OUT_STOCK => __('Out of stock', 'jigoshop'),
-		),
-		'classes' => array($stock->getManage() ? 'not-active' : ''),
-	));
+        ],
+		'classes' => [$stock->getManage() ? 'not-active' : ''],
+    ]);
 	?>
 </fieldset>
 <fieldset class="stock-status" style="<?php !$stock->getManage() and print 'display: none;'; ?>">
 	<?php
-	Forms::number(array(
+	Forms::number([
 		'name' => 'product[stock_stock]',
 		'label' => __('Items in stock', 'jigoshop'),
 		'value' => $stock->getStock(),
 		'min' => 0,
-	));
+    ]);
 	?>
 	<?php
-	Forms::select(array(
+	Forms::select([
 		'name' => 'product[stock_allow_backorders]',
 		'label' => __('Allow backorders?', 'jigoshop'),
 		'value' => $stock->getAllowBackorders(),
-		'options' => array(
+		'options' => [
 			StockStatus::BACKORDERS_FORBID => __('Do not allow', 'jigoshop'),
 			StockStatus::BACKORDERS_NOTIFY => __('Allow, but notify customer', 'jigoshop'),
 			StockStatus::BACKORDERS_ALLOW => __('Allow', 'jigoshop')
-		),
-	));
+        ],
+    ]);
 	?>
 </fieldset>
 <?php do_action('jigoshop\product\tabs\stock', $product); ?>

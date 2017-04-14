@@ -25,8 +25,8 @@ class Options
 	/** @var Wordpress */
 	private $wp;
 
-	private $defaults = array(
-		'general' => array(
+	private $defaults = [
+		'general' => [
 			'country' => 'GB',
 			'state' => '',
 			'email' => '',
@@ -44,12 +44,12 @@ class Options
 			'currency_decimals' => 2,
 			'currency_thousand_separator' => ',',
 			'currency_decimal_separator' => '.',
-			'emails' => array(
+			'emails' => [
 				'from' => 'Jigoshop',
 				'footer' => '',
-			),
-		),
-		'shopping' => array(
+            ],
+        ],
+		'shopping' => [
 			'catalog_per_page' => 12,
 			'catalog_order_by' => 'post_date',
 			'catalog_order' => 'DESC',
@@ -65,12 +65,12 @@ class Options
 			'unpaid_orders_number' => 5,
 			'validate_zip' => true,
 			'restrict_selling_locations' => false,
-			'selling_locations' => array(),
+			'selling_locations' => [],
 			'force_ssl' => false,
 			'enable_verification_message' => false,
 			'verification_message' => '',
-		),
-		'products' => array(
+        ],
+		'products' => [
 			'related' => false,
             'reviews' => false,
             'up_sells_product_limit' => 3,
@@ -83,30 +83,30 @@ class Options
 			'notify_low_stock' => false,
 			'notify_out_of_stock' => true,
 			'notify_on_backorders' => false,
-			'images' => array(
-				'tiny' => array(
+			'images' => [
+				'tiny' => [
 					'width' => 36,
 					'height' => 36,
 					'crop' => false,
-				),
-				'thumbnail' => array(
+                ],
+				'thumbnail' => [
 					'width' => 90,
 					'height' => 90,
 					'crop' => false,
-				),
-				'small' => array(
+                ],
+				'small' => [
 					'width' => 150,
 					'height' => 150,
 					'crop' => false,
-				),
-				'large' => array(
+                ],
+				'large' => [
 					'width' => 300,
 					'height' => 300,
 					'crop' => false,
-				),
-			),
-		),
-		'tax' => array(
+                ],
+            ],
+        ],
+		'tax' => [
             'shipping' => false,
             'prices_entered' => 'without_tax',
             'item_prices' => 'excluding_tax',
@@ -115,20 +115,20 @@ class Options
             'suffix_for_included' => 'inc. Tax',
             'suffix_for_excluded' => '',
             'price_tax' => 'without_tax',
-			'classes' => array(
-				array('label' => 'Standard', 'class' => 'standard'),
-			),
-			'defaults' => array(
+			'classes' => [
+				['label' => 'Standard', 'class' => 'standard'],
+            ],
+			'defaults' => [
 				'taxable' => true,
-				'classes' => array('standard'),
-			),
-		),
-		'shipping' => array(
+				'classes' => ['standard'],
+            ],
+        ],
+		'shipping' => [
 			'enabled' => true,
 			'calculator' => true,
 			'only_to_billing' => false,
 			'always_show_shipping' => false,
-			'flat_rate' => array(
+			'flat_rate' => [
 				'enabled' => true,
 				'title' => 'Flat rate',
 				'type' => 'per_order',
@@ -136,34 +136,43 @@ class Options
 				'cost' => 0,
 				'fee' => 0,
 				'available_for' => 'all',
-				'countries' => array(),
-			),
-			'free_shipping' => array(
+				'countries' => [],
+            ],
+			'free_shipping' => [
 				'enabled' => false,
 				'title' => 'Free',
 				'minimum' => 0,
 				'available_for' => 'all',
-				'countries' => array(),
-			),
-			'local_pickup' => array(
+				'countries' => [],
+            ],
+			'local_pickup' => [
 				'enabled' => false,
 				'title' => 'Local pickup',
 				'fee' => 0,
-			),
-		),
-		'payment' => array(
+            ],
+            'advanced_flat_rate' => [
+                'enabled' => false,
+                'title' => '',
+                'taxable' => false,
+                'fee' => 0,
+                'available_for' => 'all',
+                'countries' => [],
+                'rates' => []
+            ],
+        ],
+		'payment' => [
 			'default_gateway' => 'no_default_gateway',
-			'cheque' => array(
+			'cheque' => [
 				'enabled' => false,
 				'title' => 'Cheque',
 				'description' => 'Pay with cheque sent to shop prior to dispatching your order.',
-			),
-			'on_delivery' => array(
+            ],
+			'on_delivery' => [
 				'enabled' => false,
 				'title' => 'On delivery',
 				'description' => 'Pay when your order arrives at your doorstep!',
-			),
-			'paypal' => array(
+            ],
+			'paypal' => [
 				'enabled' => false,
 				'title' => 'PayPal',
 				'description' => "Pay via PayPal; you can pay with your credit card if you don't have a PayPal account.",
@@ -172,7 +181,7 @@ class Options
 				'force_payment' => false,
 				'test_mode' => true,
 				'test_email' => '',
-			),
+            ],
             'bank_transfer' => [
                 'enabled' => false,
                 'title' => 'Bank Transfer',
@@ -185,7 +194,7 @@ class Options
                 'bic' => '',
                 'additional_info' => '',
             ],
-		),
+        ],
         'layout' => [
             'enabled' => false,
             'page_width' => '960px',
@@ -289,41 +298,41 @@ class Options
                 'css' => ''
             ],
         ],
-		'advanced' => array(
+		'advanced' => [
 			'automatic_complete' => false,
 			'automatic_reset' => false,
-			'integration' => array(
+			'integration' => [
 				'share_this' => '',
 				'google_analytics' => '',
-			),
-			'products_list' => array(
+            ],
+			'products_list' => [
 				'variations_sku_stock' => false,
-			),
+            ],
 			'cache' => 'simple',
             'session' => 'php',
             'ignore_meta_queries' => false,
-			'api' => array(
+			'api' => [
 			    'enable' => false,
 			    'secret' => '',
-			    'users' => array()
-            ),
-			'pages' => array(
+			    'users' => []
+            ],
+			'pages' => [
 				'shop' => 0,
 				'cart' => 0,
 				'checkout' => 0,
 				'checkout_thank_you' => 0,
 				'account' => 0,
 				'terms' => 0,
-			),
-		),
-		'permalinks' => array(
+            ],
+        ],
+		'permalinks' => [
 			'product' => '',
 			'category' => 'product-category',
 			'tag' => 'product-tag',
 			'verbose' => false,
-		),
-	);
-	private $options = array();
+        ],
+    ];
+	private $options = [];
 	private $dirty = false;
 
 	public function __construct(Wordpress $wp)
@@ -340,7 +349,7 @@ class Options
 	{
 		$options = (array)$this->wp->getOption(self::NAME);
 		foreach ($this->defaults as $key => $value) {
-			$options[$key] = array_replace_recursive($value, isset($options[$key]) ? $options[$key] : array());
+			$options[$key] = array_replace_recursive($value, isset($options[$key]) ? $options[$key] : []);
 		}
 		$this->options = array_merge($this->defaults, $options);
 	}
@@ -360,28 +369,28 @@ class Options
 	{
 		$sizes = $this->get('products.images');
 
-		return $this->wp->applyFilters('jigoshop\image\sizes', array(
-			self::IMAGE_TINY => array(
+		return $this->wp->applyFilters('jigoshop\image\sizes', [
+			self::IMAGE_TINY => [
 				'crop' => $this->wp->applyFilters('jigoshop\image\size\crop', $sizes['tiny']['crop'], self::IMAGE_TINY),
 				'width' => $sizes['tiny']['width'],
 				'height' => $sizes['tiny']['height'],
-			),
-			self::IMAGE_THUMBNAIL => array(
+            ],
+			self::IMAGE_THUMBNAIL => [
 				'crop' => $this->wp->applyFilters('jigoshop\image\size\crop', $sizes['thumbnail']['crop'], self::IMAGE_THUMBNAIL),
 				'width' => $sizes['thumbnail']['width'],
 				'height' => $sizes['thumbnail']['height'],
-			),
-			self::IMAGE_SMALL => array(
+            ],
+			self::IMAGE_SMALL => [
 				'crop' => $this->wp->applyFilters('jigoshop\image\size\crop', $sizes['small']['crop'], self::IMAGE_SMALL),
 				'width' => $sizes['small']['width'],
 				'height' => $sizes['small']['height'],
-			),
-			self::IMAGE_LARGE => array(
+            ],
+			self::IMAGE_LARGE => [
 				'crop' => $this->wp->applyFilters('jigoshop\image\size\crop', $sizes['large']['crop'], self::IMAGE_LARGE),
 				'width' => $sizes['large']['width'],
 				'height' => $sizes['large']['height'],
-			),
-		));
+            ],
+        ]);
 	}
 
 	/**
@@ -447,7 +456,7 @@ class Options
 		}
 
 		if (!isset($options[$name])) {
-			$options[$name] = array();
+			$options[$name] = [];
 		}
 
 		$this->_update($names, $options[$name], $value);
@@ -519,12 +528,12 @@ class Options
 	public function getEnabledProductTypes()
 	{
 		// TODO: Add product types to extensions tab
-		return $this->wp->applyFilters('jigoshop\product\types', $this->get('enabled_product_types', array(
+		return $this->wp->applyFilters('jigoshop\product\types', $this->get('enabled_product_types', [
 			'jigoshop.product_type.simple',
 			'jigoshop.product_type.virtual',
 			'jigoshop.product_type.variable',
 			'jigoshop.product_type.external',
 			'jigoshop.product_type.downloadable',
-		)));
+        ]));
 	}
 }

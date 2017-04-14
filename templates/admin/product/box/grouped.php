@@ -8,7 +8,7 @@ $posts_in = array_unique($posts_in);
 
 if ((bool)$posts_in) {
 
-	$args = array(
+	$args = [
 		'post_type' => 'product',
 		'post_status' => 'publish',
 		'numberposts' => -1,
@@ -16,11 +16,11 @@ if ((bool)$posts_in) {
 		'order' => 'asc',
 		'post_parent' => 0,
 		'include' => $posts_in,
-	);
+    ];
 
 	$grouped_products = get_posts($args);
 
-	$options = array(null => '&ndash; Pick a Product Group &ndash;');
+	$options = [null => '&ndash; Pick a Product Group &ndash;'];
 
 	if ($grouped_products) {
 		foreach ($grouped_products as $product) {
@@ -32,20 +32,20 @@ if ((bool)$posts_in) {
 		}
 	}
 	// Only echo the form if we have grouped products
-	$args = array(
+	$args = [
 		'id' => 'parent_id',
 		'label' => __('Product Group', 'jigoshop'),
 		'options' => $options,
 		'selected' => $post->post_parent,
-	);
+    ];
 	echo Jigoshop_Forms::select($args);
 }
 
 // Ordering
-$args = array(
+$args = [
 	'id' => 'menu_order',
 	'label' => __('Sort Order', 'jigoshop'),
 	'type' => 'number',
 	'value' => $post->menu_order,
-);
+];
 echo Jigoshop_Forms::input($args);

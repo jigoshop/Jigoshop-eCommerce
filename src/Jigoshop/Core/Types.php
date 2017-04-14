@@ -27,9 +27,9 @@ class Types
 	/** @var \WPAL\Wordpress */
 	private $wp;
 	/** @var array */
-	private $types = array();
+	private $types = [];
 	/** @var array */
-	private $taxonomies = array();
+	private $taxonomies = [];
 
 	public function __construct(Wordpress $wp)
 	{

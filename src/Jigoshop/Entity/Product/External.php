@@ -219,10 +219,10 @@ class External extends Product implements Purchasable, Saleable
 	 */
 	public function getState()
 	{
-		return array(
+		return [
 			'type' => $this->getType(),
 			'id' => $this->getId(),
-		);
+        ];
 	}
 
 	/**

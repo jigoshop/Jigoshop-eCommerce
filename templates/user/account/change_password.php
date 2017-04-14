@@ -9,26 +9,26 @@ use Jigoshop\Helper\Render;
  */
 ?>
 <h1><?php _e('My account &raquo; Change password', 'jigoshop'); ?></h1>
-<?php Render::output('shop/messages', array('messages' => $messages)); ?>
+<?php Render::output('shop/messages', ['messages' => $messages]); ?>
 <form class="" role="form" method="post">
-	<?php \Jigoshop\Helper\Forms::text(array(
+	<?php \Jigoshop\Helper\Forms::text([
 		'name' => 'password',
 		'type' => 'password',
 		'label' => __('Current password', 'jigoshop'),
 		'value' => '',
-	)); ?>
-	<?php \Jigoshop\Helper\Forms::text(array(
+    ]); ?>
+	<?php \Jigoshop\Helper\Forms::text([
 		'name' => 'new-password',
 		'type' => 'password',
 		'label' => __('New password', 'jigoshop'),
 		'value' => '',
-	)); ?>
-	<?php \Jigoshop\Helper\Forms::text(array(
+    ]); ?>
+	<?php \Jigoshop\Helper\Forms::text([
 		'name' => 'new-password-2',
 		'type' => 'password',
 		'label' => __('Re-type new password', 'jigoshop'),
 		'value' => '',
-	)); ?>
-	<a href="<?php echo $myAccountUrl; ?>" class="btn btn-default"><?php _e('Go back to My account', 'jigoshop'); ?></a>
+    ]); ?>
+	<a href="<?= $myAccountUrl; ?>" class="btn btn-default"><?php _e('Go back to My account', 'jigoshop'); ?></a>
 	<button class="btn btn-success pull-right" name="action" value="change_password"><?php _e('Change password', 'jigoshop'); ?></button>
 </form>

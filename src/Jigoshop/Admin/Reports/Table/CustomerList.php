@@ -19,8 +19,8 @@ class CustomerList implements TableInterface
 	private $totalItems;
 	private $activePageNumber;
 	private $totalPages;
-	private $items = array();
-	private $columns = array();
+	private $items = [];
+	private $columns = [];
 	private $slugCsv = 'export_csv';
 	private $csvExportStart = false;
 
@@ -51,40 +51,40 @@ class CustomerList implements TableInterface
 		if (!empty($this->columns)) {
 			return $this->columns;
 		}
-		$this->columns = array(
-			'customer_name' => array(
+		$this->columns = [
+			'customer_name' => [
 				'name' => __('Name (Last, First)', 'jigoshop'),
 				'size' => 2
-			),
-			'username' => array(
+            ],
+			'username' => [
 				'name' => __('Username', 'jigoshop'),
 				'size' => 1
-			),
-			'email' => array(
+            ],
+			'email' => [
 				'name' => __('Email', 'jigoshop'),
 				'size' => 2
-			),
-			'location' => array(
+            ],
+			'location' => [
 				'name' => __('Location', 'jigoshop'),
 				'size' => 2
-			),
-			'orders' => array(
+            ],
+			'orders' => [
 				'name' => __('Orders', 'jigoshop'),
 				'size' => 1
-			),
-			'spent' => array(
+            ],
+			'spent' => [
 				'name' => __('Money Spent', 'jigoshop'),
 				'size' => 1
-			),
-			'last_order' => array(
+            ],
+			'last_order' => [
 				'name' => __('Last order', 'jigoshop'),
 				'size' => 2
-			),
-			'user_actions' => array(
+            ],
+			'user_actions' => [
 				'name' => __('Actions', 'jigoshop'),
 				'size' => 1
-			)
-		);
+            ]
+        ];
 
 		return $this->wp->applyFilters('jigoshop\admin\reports\table\customer_list\columns', $this->columns);
 	}
@@ -98,7 +98,7 @@ class CustomerList implements TableInterface
 	{
 		$users = $this->getUsers();
 		foreach ($users as $user) {
-			$item = array();
+			$item = [];
 			foreach ($columns as $columnKey => $columnName) {
 				$item[$columnKey] = $this->getRow($user, $columnKey);
 			}
@@ -115,7 +115,7 @@ class CustomerList implements TableInterface
 
 	public function display()
 	{
-		Render::output('admin/reports/table', array(
+		Render::output('admin/reports/table', [
 			'columns' => $this->getColumns(),
 			'items' => $this->getItems($this->getColumns()),
 			'no_items' => $this->noItems(),
@@ -125,31 +125,31 @@ class CustomerList implements TableInterface
 			'search_title' => __('Search Customers'),
 			'search' => $this->getSearch(),
 			'csv_download_link' => $this->getDownloadLink(),
-		));
+        ]);
 	}
 
 	private function getUsers()
 	{
 		$adminUsers = new \WP_User_Query(
-			array(
+			[
 				'role' => 'administrator',
 				'fields' => 'ID'
-			)
+            ]
 		);
 
 		$managerUsers = new \WP_User_Query(
-			array(
+			[
 				'role' => 'shop_manager',
 				'fields' => 'ID'
-			)
+            ]
 		);
 
-		$query = new \WP_User_Query(array(
+		$query = new \WP_User_Query([
 			'exclude' => array_merge($adminUsers->get_results(), $managerUsers->get_results()),
 			'number' => $this->csvExportStart ? 0 : 20,
 			'offset' => $this->csvExportStart ? 0 : ($this->getCurrentPage() - 1) * 20,
 			'search' => '*'.$this->getSearch().'*'
-		));
+        ]);
 
 		$this->totalItems = $query->get_total();
 		$this->totalPages = ceil($query->get_total() / 20);
@@ -198,12 +198,12 @@ class CustomerList implements TableInterface
 				}
 				return '-';
 			case 'user_actions' :
-				$actions = array();
-				$actions['edit'] = array(
+				$actions = [];
+				$actions['edit'] = [
 					'url' => admin_url('user-edit.php?user_id='.$user->ID),
 					'name' => __('Edit', 'jigoshop'),
 					'action' => 'edit'
-				);
+                ];
 				$actions = $this->wp->applyFilters('jigoshop\admin\reports\table\customer_list\user_actions', $actions, $user);
 
 				return $actions;
@@ -245,12 +245,12 @@ class CustomerList implements TableInterface
 
 	private function getDownloadLink()
 	{
-		return add_query_arg(array(
+		return add_query_arg([
 			'page'   => $_GET['page'],
 			'tab'    => $_GET['tab'],
 			'type'   => $this->getSlug(),
 			'action' => $this->slugCsv,
-		), '');
+        ], '');
 	}
 
 	private function exportCsv()
@@ -272,12 +272,12 @@ class CustomerList implements TableInterface
 
 	private function getCsvColumns()
 	{
-		return array(
+		return [
 			'username'   => __('Username', 'jigoshop'),
 //			'email'      => __('Email', 'jigoshop'),
 			'orders'     => __('Orders', 'jigoshop'),
 			'spent'      => __('Money Spent', 'jigoshop'),
 //			'last_order' => __('Last order', 'jigoshop'),
-		);
+        ];
 	}
 }

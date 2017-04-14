@@ -10,20 +10,20 @@ $show_add_to_cart_form = !isset($show_add_to_cart_form) || $show_add_to_cart_for
 ?>
 <li class="product">
 	<?php do_action('jigoshop\shop\list\product\before', $product); ?>
-	<a class="image" href="<?php echo $product->getLink(); ?>">
+	<a class="image" href="<?= $product->getLink(); ?>">
 		<?php do_action('jigoshop\shop\list\product\before_thumbnail', $product); ?>
 		<?php if (Product::isOnSale($product)): ?>
-			<span class="on-sale"><?php echo apply_filters('jigoshop\shop\list\product\sale_text', __('Sale!', 'jigoshop'), $product) ?></span>
+			<span class="on-sale"><?= apply_filters('jigoshop\shop\list\product\sale_text', __('Sale!', 'jigoshop'), $product) ?></span>
 		<?php endif; ?>
-		<?php echo Product::getFeaturedImage($product, Options::IMAGE_SMALL); ?>
+		<?= Product::getFeaturedImage($product, Options::IMAGE_SMALL); ?>
 	</a>
-	<a href="<?php echo $product->getLink(); ?>">
+	<a href="<?= $product->getLink(); ?>">
 		<?php do_action('jigoshop\shop\list\product\before_title', $product); ?>
-		<strong><?php echo $product->getName(); ?></strong>
+		<strong><?= $product->getName(); ?></strong>
 		<?php do_action('jigoshop\shop\list\product\after_title', $product); ?>
 	</a>
 	<?php do_action('jigoshop\shop\list\product\before_button', $product); ?>
-	<span class="price"><?php echo Product::getPriceHtml($product); ?></span>
+	<span class="price"><?= Product::getPriceHtml($product); ?></span>
     <?php if($show_add_to_cart_form) : ?>
 	    <?php Product::printAddToCartForm($product, 'list'); ?>
     <?php endif; ?>

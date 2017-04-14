@@ -1,0 +1,63 @@
+@import '../../bower/bootstrap/less/variables';
+@import '../../bower/bootstrap/less/mixins';
+
+.jigoshop {
+  @import '../../bower/bootstrap/less/grid';
+  @import '../../bower/bootstrap/less/buttons';
+  @import '../../bower/bootstrap/less/utilities';
+
+  #email-attachments {
+    .email-attachment {
+      position: relative;
+      padding: 5px 15px;
+
+      &:nth-of-type(odd) {
+        background: #f3f3f3;
+      }
+      &:hover {
+        .delete {
+          display: block;
+        }
+      }
+    }
+    .delete {
+      background: #ce0404;
+      border-radius: 1em;
+      display: none;
+      height: 16px;
+      position: absolute;
+      width: 16px;
+      top: 5px;
+      right: 0px;
+
+      &:hover {
+        background: #e60404;
+      }
+      &:before {
+        background: #ffffff;
+        content: "";
+        display: block;
+        height: 2px;
+        right: 3px;
+        position: absolute;
+        top: 7px;
+        transform: rotateZ(45deg);
+        width: 10px;
+      }
+      &:after {
+        background: #ffffff;
+        content: "";
+        display: block;
+        height: 2px;
+        right: 3px;
+        position: absolute;
+        top: 7px;
+        transform: rotateZ(-45deg);
+        width: 10px;
+      }
+    }
+    .email-attachment ~ .empty-attachments {
+      display: none;
+    }
+  }
+}

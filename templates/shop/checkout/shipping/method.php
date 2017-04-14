@@ -7,10 +7,10 @@ use Jigoshop\Helper\Product;
  * @var $cart \Jigoshop\Entity\Cart Current cart.
  */
 ?>
-<li class="list-group-item shipping-<?php echo $method->getId(); ?> clearfix">
+<li class="list-group-item shipping-<?= $method->getId(); ?> clearfix">
 	<label>
-		<input type="radio" name="jigoshop_order[shipping_method]" value="<?php echo $method->getId(); ?>" <?php echo Forms::checked($cart->hasShippingMethod($method), true); ?> />
-		<?php echo $method->getTitle(); ?>
+		<input type="radio" name="jigoshop_order[shipping_method]" value="<?= $method->getId(); ?>" <?= Forms::checked($cart->hasShippingMethod($method), true); ?> />
+		<?= $method->getTitle(); ?>
 	</label>
-	<span class="pull-right"><?php echo Product::formatPrice($method->calculate($cart)); ?></span>
+	<span class="pull-right"><?= Product::formatPrice($method->calculate($cart)); ?></span>
 </li>

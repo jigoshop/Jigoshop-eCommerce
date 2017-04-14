@@ -26,10 +26,11 @@
         'value' => [
             'label' => __('New rate', 'jigoshop'),
             'cost' => '0',
-            'country' => '',
+            'continents' => [],
+            'countries' => [],
             'states' => [],
             'postcode' => ''
         ]
     ]); ?>
-    <?php echo preg_replace('/<script\b[^>]*>(.*?)<\/script>/is', "", ob_get_clean()); ?>
+    <?= preg_replace('/<script\b[^>]*>(.*?)<\/script>/is', "", ob_get_clean()); ?>
 </script>

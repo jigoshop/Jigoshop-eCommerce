@@ -9,10 +9,10 @@
  */
 ?>
 <p>
-	<label for="<?php echo $title_id; ?>"><?php _e('Title:', 'jigoshop'); ?></label>
-	<input class="widefat" id="<?php echo $title_id; ?>"  name="<?php echo $title_name; ?>" type="text" value="<?php echo $title; ?>" />
+	<label for="<?= $title_id; ?>"><?php _e('Title:', 'jigoshop'); ?></label>
+	<input class="widefat" id="<?= $title_id; ?>"  name="<?= $title_name; ?>" type="text" value="<?= $title; ?>" />
 </p>
 <p>
-	<label for="<?php echo $number_id; ?>"><?php _e('Number of products to show:', 'jigoshop'); ?></label>
-	<input class="widefat" id="<?php echo $number_id; ?>"  name="<?php echo $number_name; ?>" type="number" min="1" value="<?php echo $number; ?>" />
+	<label for="<?= $number_id; ?>"><?php _e('Number of products to show:', 'jigoshop'); ?></label>
+	<input class="widefat" id="<?= $number_id; ?>"  name="<?= $number_name; ?>" type="number" min="1" value="<?= $number; ?>" />
 </p>

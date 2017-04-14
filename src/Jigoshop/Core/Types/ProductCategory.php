@@ -33,7 +33,7 @@ class ProductCategory implements Taxonomy
 	 */
 	public function getPostTypes()
 	{
-		return array(Product::NAME);
+		return [Product::NAME];
 	}
 
 	/**
@@ -43,8 +43,8 @@ class ProductCategory implements Taxonomy
 	 */
 	public function getDefinition()
 	{
-		return array(
-			'labels' => array(
+		return [
+			'labels' => [
 				'menu_name' => __('Categories', 'jigoshop'),
 				'name' => __('Product Categories', 'jigoshop'),
 				'singular_name' => __('Product Category', 'jigoshop'),
@@ -56,23 +56,23 @@ class ProductCategory implements Taxonomy
 				'update_item' => __('Update Product Category', 'jigoshop'),
 				'add_new_item' => __('Add New Product Category', 'jigoshop'),
 				'new_item_name' => __('New Product Category Name', 'jigoshop'),
-			),
-			'capabilities' => array(
+            ],
+			'capabilities' => [
 				'manage_terms' => 'manage_product_terms',
 				'edit_terms' => 'edit_product_terms',
 				'delete_terms' => 'delete_product_terms',
 				'assign_terms' => 'assign_product_terms',
-			),
+            ],
 			'hierarchical' => true,
 			'show_ui' => true,
-			'query_var' => self::NAME,
-			'rewrite' => array(
+			'query_var' => true,
+			'rewrite' => [
 				'slug' => $this->options->get('permalinks.category'),
 				'with_front' => true,
 				'feeds' => false,
 				'pages' => true,
 				'ep_mask' => EP_ALL,
-			),
-		);
+            ],
+        ];
 	}
 }

@@ -2,7 +2,7 @@
 	<div class="col-sm-12">
 		<div class="col-xs-2 col-sm-1 text-right"></div>
 		<div class="col-xs-10 col-sm-11">
-			<button type="submit" class="btn btn-default" name="<?php echo \Jigoshop\Core\Options::NAME; ?>[install_emails]" value="yes"><?php _e('Create', 'jigoshop'); ?></button>
+			<button type="submit" class="btn btn-default" name="<?= \Jigoshop\Core\Options::NAME; ?>[install_emails]" value="yes"><?php _e('Create', 'jigoshop'); ?></button>
 		</div>
 	</div>
 </div>

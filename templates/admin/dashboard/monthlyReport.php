@@ -14,9 +14,9 @@
 <div class="stats" id="jigoshop-stats">
 	<p>
 		<?php if ($currentMonth != $selectedMonth) : ?>
-			<a href="admin.php?page=jigoshop&amp;month=<?php echo $nextMonth; ?>&amp;year=<?php echo $nextYear; ?>" class="next"><?php _e('Next Month &rarr;', 'jigoshop'); ?></a>
+			<a href="admin.php?page=jigoshop&amp;month=<?= $nextMonth; ?>&amp;year=<?= $nextYear; ?>" class="next"><?php _e('Next Month &rarr;', 'jigoshop'); ?></a>
 		<?php endif; ?>
-		<a href="admin.php?page=jigoshop&amp;month=<?php echo $previousMonth; ?>&amp;year=<?php echo $previousYear; ?>" class="previous"><?php _e('&larr; Previous Month', 'jigoshop'); ?></a>
+		<a href="admin.php?page=jigoshop&amp;month=<?= $previousMonth; ?>&amp;year=<?= $previousYear; ?>" class="previous"><?php _e('&larr; Previous Month', 'jigoshop'); ?></a>
 	</p>
 
 	<div class="inside">
@@ -44,11 +44,11 @@
 					return markings;
 				}
 
-				var d = <?php echo json_encode($orderCounts); ?>;
+				var d = <?= json_encode($orderCounts); ?>;
 				// TODO: Think if this adding is required
 				//for (var i = 0; i < d.length; ++i) d[i][0] += 60 * 60 * 1000;
 				for (var i = 0; i < d.length; ++i) d[i][0] *= 1000;
-				var d2 = <?php echo json_encode($orderAmounts); ?>;
+				var d2 = <?= json_encode($orderAmounts); ?>;
 				// TODO: Think if this adding is required
 				//for (var i = 0; i < d2.length; ++i) d2[i][0] += 60 * 60 * 1000;
 				for (var i = 0; i < d2.length; ++i) d2[i][0] *= 1000;
@@ -56,8 +56,8 @@
 				$.plot(
 					$plot,
 					[
-						{ label: "<?php echo __('Number of sales','jigoshop'); ?>", data: d },
-						{ label: "<?php echo\ __('Sales amount','jigoshop'); ?>", data: d2, yaxis: 2 }
+						{ label: "<?= __('Number of sales','jigoshop'); ?>", data: d },
+						{ label: "<?=\ __('Sales amount','jigoshop'); ?>", data: d2, yaxis: 2 }
 					],
 					{
 						series: {
@@ -108,7 +108,7 @@
 							var y;
 							previousPoint = item.dataIndex;
 							$("#tooltip").remove();
-							if(item.series.label == "<?php echo __('Number of sales','jigoshop'); ?>"){
+							if(item.series.label == "<?= __('Number of sales','jigoshop'); ?>"){
 								y = item.datapoint[1];
 								showTooltip(item.pageX, item.pageY, item.series.label + " - " + y);
 							} else {

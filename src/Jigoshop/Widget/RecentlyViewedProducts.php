@@ -16,10 +16,10 @@ class RecentlyViewedProducts extends \WP_Widget
 
 	public function __construct()
 	{
-		$options = array(
+		$options = [
 			'classname' => self::ID,
 			'description' => __('A list of your customers most recently viewed products', 'jigoshop')
-		);
+        ];
 
 		// Create the widget
 		parent::__construct(self::ID, __('Jigoshop: Recently Viewed', 'jigoshop'), $options);
@@ -56,7 +56,7 @@ class RecentlyViewedProducts extends \WP_Widget
 		}
 
 		if (!isset($_SESSION[self::SESSION_KEY]) || !is_array($_SESSION[self::SESSION_KEY])) {
-			$_SESSION[self::SESSION_KEY] = array();
+			$_SESSION[self::SESSION_KEY] = [];
 		}
 
 		$key = array_search($product->getId(), $_SESSION[self::SESSION_KEY]);
@@ -103,26 +103,26 @@ class RecentlyViewedProducts extends \WP_Widget
 		}
 
 		// Set up query
-		$query_args = array(
+		$query_args = [
 			'posts_per_page' => $number,
 			'post_type' => Core\Types::PRODUCT,
 			'post_status' => 'publish',
 			'nopaging' => true,
 			'post__in' => $_SESSION[self::SESSION_KEY],
-			'meta_query' => array(
-				array(
+			'meta_query' => [
+				[
 					'key' => 'visibility',
-					'value' => array(Product::VISIBILITY_CATALOG, Product::VISIBILITY_PUBLIC),
+					'value' => [Product::VISIBILITY_CATALOG, Product::VISIBILITY_PUBLIC],
 					'compare' => 'IN',
-				),
-			)
-		);
+                ],
+            ]
+        ];
 
 		// Run the query
 		$q = new \WP_Query($query_args);
 		$products = self::$productService->findByQuery($q);
 
-		$ordered = array();
+		$ordered = [];
 		foreach ($_SESSION[self::SESSION_KEY] as $key) {
 			if (isset($products[$key])) {
 				$ordered[$key] = $products[$key];
@@ -131,10 +131,10 @@ class RecentlyViewedProducts extends \WP_Widget
 		$products = $ordered;
 
 		if (!empty($products)) {
-			Render::output('widget/recently_viewed_products/widget', array_merge($args, array(
+			Render::output('widget/recently_viewed_products/widget', array_merge($args, [
 				'title' => $title,
 				'products' => $products,
-			)));
+            ]));
 		}
 	}
 
@@ -174,13 +174,13 @@ class RecentlyViewedProducts extends \WP_Widget
 		$title = isset($instance['title']) ? esc_attr($instance['title']) : null;
 		$number = isset($instance['number']) ? absint($instance['number']) : 5;
 
-		Render::output('widget/recently_viewed_products/form', array(
+		Render::output('widget/recently_viewed_products/form', [
 			'title_id' => $this->get_field_id('title'),
 			'title_name' => $this->get_field_name('title'),
 			'title' => $title,
 			'number_id' => $this->get_field_id('number'),
 			'number_name' => $this->get_field_name('number'),
 			'number' => $number,
-		));
+        ]);
 	}
 }

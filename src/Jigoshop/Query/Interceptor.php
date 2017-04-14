@@ -21,19 +21,19 @@ class Interceptor
 		$this->wp = $wp;
 		$this->options = $options;
 
-		$this->endpoints = array(
+		$this->endpoints = [
 			'edit-address',
 			'change-password',
 			'orders',
 			'pay',
-		);
+        ];
 	}
 
 	public function run()
 	{
 		$this->addEndpoints();
-		$this->wp->addFilter('request', array($this, 'intercept'));
-		$this->wp->addFilter('wp_nav_menu_objects', array($this, 'menu'));
+		$this->wp->addFilter('request', [$this, 'intercept']);
+		$this->wp->addFilter('wp_nav_menu_objects', [$this, 'menu']);
 	}
 
 	/**
@@ -121,18 +121,23 @@ class Interceptor
 
 	private function isCart($request)
 	{
-		return isset($request['pagename']) && $request['pagename'] == Pages::CART;
+		return isset($request['pagename']) && $request['pagename'] == get_post_field('post_name', $this->options->getPageId(Pages::CART));
 	}
 
 	private function isProductCategory($request)
 	{
-		return isset($request[Types\ProductCategory::NAME]);
+		return isset($request[Types\ProductCategory::NAME]) || (isset($request['taxonomy']) && $request['taxonomy'] == Types\ProductCategory::NAME);
 	}
 
 	private function getProductCategoryListQuery($request)
 	{
 		$result = $this->_getProductListBaseQuery($request);
-		$result[Types\ProductCategory::NAME] = $request[Types\ProductCategory::NAME];
+		if(isset($request[Types\ProductCategory::NAME])) {
+		    $result[Types\ProductCategory::NAME] = $request[Types\ProductCategory::NAME];
+        } elseif(isset($request['taxonomy']) && $request['taxonomy'] == Types\ProductCategory::NAME) {
+            $result['taxonomy'] = Types\ProductCategory::NAME;
+            $result['term'] = $request['term'];
+        }
 
 		return $this->wp->applyFilters('jigoshop\query\product_category_list', $result, $request);
 	}
@@ -140,7 +145,7 @@ class Interceptor
 	private function _getProductListBaseQuery($request)
 	{
 		$options = $this->options->get('shopping');
-		$result = array(
+		$result = [
 			'post_type' => Types::PRODUCT,
 			'post_status' => 'publish',
 			'ignore_sticky_posts' => true,
@@ -148,41 +153,31 @@ class Interceptor
 			'paged' => isset($request['paged']) ? $request['paged'] : 1,
 			'orderby' => $options['catalog_order_by'],
 			'order' => $options['catalog_order']
-		);
+        ];
 
         if($this->options->get('advanced.ignore_meta_queries', false) == false) {
-            $result['meta_query'] = array(
-                array(
+            $result['meta_query'] = [
+                [
                     'key' => 'visibility',
-                    'value' => array(Product::VISIBILITY_CATALOG, Product::VISIBILITY_PUBLIC),
+                    'value' => [Product::VISIBILITY_CATALOG, Product::VISIBILITY_PUBLIC],
                     'compare' => 'IN'
-                )
-            );
+                ]
+            ];
             if ($options['hide_out_of_stock'] == 'on') {
-                $result['meta_query'][] = array(
-                    array(
+                $result['meta_query'][] = [
+                    [
                         'key' => 'stock_status',
                         'value' => 1,
                         'compare' => '='
-                    ),
-                );
+                    ],
+                ];
             }
         }
 
         // Support for search queries
         if (isset($request['s'])) {
-            $wpdb = $this->wp->getWPDB();
-
-            $query = $wpdb->prepare("SELECT posts.ID as ID FROM {$wpdb->posts} as posts
-                INNER JOIN {$wpdb->postmeta} as meta ON (meta.post_id = posts.ID AND meta.meta_key = 'sku')
-                WHERE meta.meta_value LIKE %s OR posts.post_title LIKE %s OR posts.post_content LIKE %s",
-                '%'.$request['s'].'%', '%'.$request['s'].'%', '%'.$request['s'].'%');
-
-            $query = $this->wp->applyFilters('jigoshop\query\product_list_base\search', $query, $request);
-            $ids = $wpdb->get_results($query, ARRAY_A);
-
-            $result['post__in'] = array_map(function($item){ return $item['ID']; }, $ids);
-            $result['post__in'] = count($result['post__in']) ? $result['post__in'] : [0];
+            $result['s'] = $request['s'];
+            $this->improveSearchQuery(['sku']);
 		}
 
 		return $this->wp->applyFilters('jigoshop\query\product_list_base', $result, $request);
@@ -190,21 +185,27 @@ class Interceptor
 
 	private function isProductTag($request)
 	{
-		return isset($request[Types\ProductTag::NAME]);
+        return isset($request[Types\ProductTag::NAME]) || (isset($request['taxonomy']) && $request['taxonomy'] == Types\ProductTag::NAME);
 	}
 
 	private function getProductTagListQuery($request)
 	{
-		$result = $this->_getProductListBaseQuery($request);
-		$result[Types\ProductTag::NAME] = $request[Types\ProductTag::NAME];
+        $result = $this->_getProductListBaseQuery($request);
+        if(isset($request[Types\ProductTag::NAME])) {
+            $result[Types\ProductTag::NAME] = $request[Types\ProductTag::NAME];
+        } elseif(isset($request['taxonomy']) && $request['taxonomy'] == Types\ProductTag::NAME) {
+            $result['taxonomy'] = Types\ProductTag::NAME;
+            $result['term'] = $request['term'];
+        }
 
-		return $this->wp->applyFilters('jigoshop\query\product_tag_list', $result, $request);
+
+        return $this->wp->applyFilters('jigoshop\query\product_tag_list', $result, $request);
 	}
 
 	private function isProductList($request)
 	{
 		return !isset($request['product']) && !isset($request['preview']) && (
-			(isset($request['pagename']) && $request['pagename'] == Pages::SHOP) ||
+			(isset($request['pagename']) && $request['pagename'] == get_post_field('post_name', $this->options->getPageId(Pages::SHOP))) ||
 			(isset($request['post_type']) && $request['post_type'] == Types::PRODUCT)
 		);
 	}
@@ -223,12 +224,12 @@ class Interceptor
 
 	private function getProductQuery($request)
 	{
-		$result = array(
+		$result = [
 			'name' => isset($request['product']) ? $request['product'] : '',
 			'post_type' => Types::PRODUCT,
 			'post_status' => 'publish',
 			'posts_per_page' => 1,
-		);
+        ];
 
         if(isset($request['p'], $request['preview']) && $request['preview'] == "true") {
             $result = array_merge($result, $request);
@@ -240,7 +241,7 @@ class Interceptor
 
 	private function isAccount($request)
 	{
-		return isset($request['pagename']) && $request['pagename'] == Pages::SHOP;
+		return isset($request['pagename']) && $request['pagename'] == get_post_field('post_name', $this->options->getPageId(Pages::ACCOUNT));
 	}
 
 	private function isAdminOrderList($request)
@@ -250,18 +251,8 @@ class Interceptor
 
     private function getAdminOrderListQuery($request)
     {
-        if(isset($request['s']) && $request['s']) {
-            $wpdb = $this->wp->getWPDB();
-            $ids = $wpdb->get_results($wpdb->prepare("SELECT posts.ID as ID FROM {$wpdb->posts} as posts
-                INNER JOIN {$wpdb->postmeta} as meta ON (meta.post_id = posts.ID AND meta.meta_key = 'number')
-                INNER JOIN {$wpdb->postmeta} as meta2 ON (meta2.post_id = posts.ID AND meta2.meta_key = 'customer')
-                WHERE meta.meta_value LIKE %s OR meta2.meta_value LIKE %s OR posts.ID = %d",
-                '%'.$request['s'].'%', '%:"%'.$request['s'].'%";%', $request['s']), ARRAY_A);
-
-            unset($request['s']);
-            unset($request['m']);
-            $request['post__in'] = array_map(function($item){ return $item['ID']; }, $ids);
-            $request['post__in'] = count($request['post__in']) ? $request['post__in'] : [0];
+        if(isset($request['s']) && $request['s'] !== '') {
+            $this->improveSearchQuery(['number', 'customer']);
         }
 
         return $request;
@@ -274,19 +265,42 @@ class Interceptor
 
     private function getAdminProductListQuery($request)
     {
-        if(isset($request['s']) && $request['s']) {
-            $wpdb = $this->wp->getWPDB();
-            $ids = $wpdb->get_results($wpdb->prepare("SELECT posts.ID as ID FROM {$wpdb->posts} as posts
-                INNER JOIN {$wpdb->postmeta} as meta ON (meta.post_id = posts.ID AND meta.meta_key = 'sku')
-                WHERE meta.meta_value LIKE %s OR posts.post_title LIKE %s OR posts.post_content LIKE %s OR posts.ID = %d",
-                '%'.$request['s'].'%', '%'.$request['s'].'%', '%'.$request['s'].'%', $request['s']), ARRAY_A);
-
-            unset($request['s']);
-            unset($request['m']);
-            $request['post__in'] = array_map(function($item){ return $item['ID']; }, $ids);
-            $request['post__in'] = count($request['post__in']) ? $request['post__in'] : [0];
+        if(isset($request['s']) && $request['s'] !== '') {
+            $this->improveSearchQuery(['sku']);
         }
 
         return $request;
+    }
+
+    private function improveSearchQuery($fields)
+    {
+        $wpdb = $this->wp->getWPDB();
+
+        $joinClosure = function($join) use ($wpdb, $fields, &$joinClosure) {
+            if ( is_search() ) {
+                for($i = 0; $i < count($fields); $i++) {
+                    $join .=" LEFT JOIN {$wpdb->postmeta} as jse_search_{$i} ON ({$wpdb->posts}.ID = jse_search_{$i}.post_id  AND jse_search_{$i}.meta_key = '{$fields[$i]}')";
+                }
+            }
+
+            remove_filter('posts_join', $joinClosure);
+            return $join;
+        };
+
+        $whereClosure = function($where) use ($wpdb, $fields, &$whereClosure) {
+            if ( is_search() ) {
+                for($i = 0; $i < count($fields); $i++) {
+                    $where = preg_replace(
+                        "/\(\s*{$wpdb->posts}.post_title\s+LIKE\s*(\'[^\']+\')\s*\)/",
+                        "({$wpdb->posts}.post_title LIKE $1) OR (jse_search_{$i}.meta_value LIKE $1)", $where);
+                }
+            }
+
+            remove_filter('posts_where', $whereClosure);
+            return $where;
+        };
+
+        add_filter('posts_join', $joinClosure);
+        add_filter('posts_where', $whereClosure);
     }
 }

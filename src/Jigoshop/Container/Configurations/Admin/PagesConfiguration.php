@@ -22,57 +22,57 @@ class PagesConfiguration implements ConfigurationInterface
 	 */
 	public function addServices(Services $services)
 	{
-		$services->setDetails('jigoshop.admin.page_resolver', 'Jigoshop\Admin\PageResolver', array(
+		$services->setDetails('jigoshop.admin.page_resolver', 'Jigoshop\Admin\PageResolver', [
 			'wpal',
 			'jigoshop.admin.pages'
-		));
-		$services->setDetails('jigoshop.admin.page.orders', 'Jigoshop\Admin\Page\Orders', array(
+        ]);
+		$services->setDetails('jigoshop.admin.page.orders', 'Jigoshop\Admin\Page\Orders', [
 			'wpal',
 			'jigoshop.options',
 			'jigoshop.service.order'
-		));
-		$services->setDetails('jigoshop.admin.page.order', 'Jigoshop\Admin\Page\Order', array(
+        ]);
+		$services->setDetails('jigoshop.admin.page.order', 'Jigoshop\Admin\Page\Order', [
 			'wpal',
 			'jigoshop.options',
 			'jigoshop.service.order',
 			'jigoshop.service.product',
 			'jigoshop.service.customer',
 			'jigoshop.service.shipping'
-		));
-		$services->setDetails('jigoshop.admin.page.products', 'Jigoshop\Admin\Page\Products', array(
+        ]);
+		$services->setDetails('jigoshop.admin.page.products', 'Jigoshop\Admin\Page\Products', [
 			'wpal',
 			'jigoshop.options',
 			'jigoshop.post_type.product',
 			'jigoshop.service.product'
-		));
-		$services->setDetails('jigoshop.admin.page.product', 'Jigoshop\Admin\Page\Product', array(
+        ]);
+		$services->setDetails('jigoshop.admin.page.product', 'Jigoshop\Admin\Page\Product', [
 			'wpal',
 			'jigoshop.options',
 			'jigoshop.post_type.product',
 			'jigoshop.service.product'
-		));
-		$services->setDetails('jigoshop.admin.page.email', 'Jigoshop\Admin\Page\Email', array(
+        ]);
+		$services->setDetails('jigoshop.admin.page.email', 'Jigoshop\Admin\Page\Email', [
 			'wpal',
 			'jigoshop.options',
 			'jigoshop.service.email'
-		));
-		$services->setDetails('jigoshop.admin.page.coupons', 'Jigoshop\Admin\Page\Coupons', array(
+        ]);
+		$services->setDetails('jigoshop.admin.page.coupons', 'Jigoshop\Admin\Page\Coupons', [
 			'wpal',
 			'jigoshop.options',
 			'jigoshop.service.coupon'
-		));
-		$services->setDetails('jigoshop.admin.page.coupon', 'Jigoshop\Admin\Page\Coupon', array(
+        ]);
+		$services->setDetails('jigoshop.admin.page.coupon', 'Jigoshop\Admin\Page\Coupon', [
 			'wpal',
 			'jigoshop.options',
 			'jigoshop.service.coupon',
 			'jigoshop.service.payment'
-		));
-		$services->setDetails('jigoshop.admin.page.product_categories', 'Jigoshop\Admin\Page\ProductCategories', array(
+        ]);
+		$services->setDetails('jigoshop.admin.page.product_categories', 'Jigoshop\Admin\Page\ProductCategories', [
 			'wpal'
-		));
-		$services->setDetails('jigoshop.admin.page.product_tags', 'Jigoshop\Admin\Page\ProductTags', array(
+        ]);
+		$services->setDetails('jigoshop.admin.page.product_tags', 'Jigoshop\Admin\Page\ProductTags', [
 			'wpal'
-		));
+        ]);
 	}
 
 	/**

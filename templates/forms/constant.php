@@ -12,17 +12,17 @@
  * @var $size int Size of form widget.
  */
 ?>
-<div class="form-group <?php echo $id; ?>_field clearfix<?php $hidden and print ' not-active'; ?>">
-	<label for="<?php echo $id; ?>" class="col-sm-<?php echo $size == 12 ? 12 : 12 - $size; ?> control-label">
-		<?php echo $label; ?>
+<div class="form-group <?= $id; ?>_field <?= join(' ', $classes); ?> clearfix<?php $hidden and print ' not-active'; ?>">
+	<label for="<?= $id; ?>" class="col-sm-<?= $size == 12 ? 12 : 12 - $size; ?> control-label">
+		<?= $label; ?>
 		<?php if(!empty($tip)): ?>
-			<a href="#" data-toggle="tooltip" class="badge" data-placement="top" title="<?php echo $tip; ?>">?</a>
+			<a href="#" data-toggle="tooltip" class="badge" data-placement="top" title="<?= $tip; ?>">?</a>
 		<?php endif; ?>
 	</label>
-	<div class="col-sm-<?php echo $size; ?>">
-		<p class="form-control-static <?php echo join(' ', $classes); ?>" id="<?php echo $id; ?>"><?php echo $value; ?></p>
+	<div class="col-sm-<?= $size; ?>">
+		<p class="form-control-static <?= join(' ', $classes); ?>" id="<?= $id; ?>"><?= $value; ?></p>
 		<?php if(!empty($description)): ?>
-			<span class="help-block"><?php echo $description; ?></span>
+			<span class="help-block"><?= $description; ?></span>
 		<?php endif; ?>
 	</div>
 </div>

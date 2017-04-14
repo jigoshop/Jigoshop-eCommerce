@@ -5,6 +5,7 @@ namespace Jigoshop\Admin\Migration;
 use Jigoshop\Admin\Helper\Migration;
 use Jigoshop\Core\Messages;
 use Jigoshop\Entity\Customer;
+use Jigoshop\Entity\Order\Discount\Type;
 use Jigoshop\Entity\Order\Status;
 use Jigoshop\Entity\Product;
 use Jigoshop\Exception;
@@ -53,7 +54,7 @@ class Orders implements Tool
         $this->paymentService = $paymentService;
         $this->productService = $productService;
 
-        $wp->addAction('wp_ajax_jigoshop.admin.migration.orders', array($this, 'ajaxMigrationOrders'), 10, 0);
+        $wp->addAction('wp_ajax_jigoshop.admin.migration.orders', [$this, 'ajaxMigrationOrders'], 10, 0);
     }
 
     /**
@@ -76,7 +77,7 @@ class Orders implements Tool
 				LEFT JOIN {$wpdb->postmeta} pm ON pm.post_id = p.ID
 					WHERE p.post_type = %s AND p.post_status <> %s
 				ORDER BY p.ID",
-            array('shop_order', 'auto-draft'))));
+            ['shop_order', 'auto-draft'])));
 
         $countRemain = 0;
         $countDone = 0;
@@ -86,7 +87,7 @@ class Orders implements Tool
             $countDone = $countAll - $countRemain;
         }
 
-        Render::output('admin/migration/orders', array('countAll' => $countAll, 'countDone' => $countDone));
+        Render::output('admin/migration/orders', ['countAll' => $countAll, 'countDone' => $countDone]);
     }
 
     /**
@@ -119,11 +120,11 @@ class Orders implements Tool
 
             // Register order status taxonomy to fetch old statuses
             $this->wp->registerTaxonomy('shop_order_status',
-                array('shop_order'),
-                array(
+                ['shop_order'],
+                [
                     'hierarchical' => true,
                     'update_count_callback' => '_update_post_term_count',
-                    'labels' => array(
+                    'labels' => [
                         'name' => __('Order statuses', 'jigoshop'),
                         'singular_name' => __('Order status', 'jigoshop'),
                         'search_items' => __('Search Order statuses', 'jigoshop'),
@@ -134,13 +135,13 @@ class Orders implements Tool
                         'update_item' => __('Update Order status', 'jigoshop'),
                         'add_new_item' => __('Add New Order status', 'jigoshop'),
                         'new_item_name' => __('New Order status Name', 'jigoshop')
-                    ),
+                    ],
                     'public' => false,
                     'show_ui' => false,
                     'show_in_nav_menus' => false,
                     'query_var' => true,
                     'rewrite' => false,
-                )
+                ]
             );
 
             for ($i = 0, $endI = count($orders); $i < $endI;) {
@@ -200,6 +201,28 @@ class Orders implements Tool
                             $this->checkSql();
 
                             // Migrate coupons
+                            if(is_array($data['order_discount_coupons']) && count($data['order_discount_coupons']) && $data['order_discount']) {
+                                $discounts = $this->convertCouponsToDiscounts($data);
+                                foreach ($discounts as $discount) {
+                                    $wpdb->insert($wpdb->prefix . 'jigoshop_order_discount', [
+                                        'order_id' => $order->ID,
+                                        'type' => $discount['type'],
+                                        'code' => $discount['code'],
+                                        'amount' => $discount['amount'],
+                                    ]);
+                                    $discountId = $wpdb->insert_id;
+                                    if (isset($discount['meta']) && is_array($discount['meta'])) {
+                                        foreach ($discount['meta'] as $key => $value) {
+                                            $value = is_array($value) ? serialize($value) : $value;
+                                            $wpdb->insert($wpdb->prefix . 'jigoshop_order_discount_meta', [
+                                                'discount_id' => $discountId,
+                                                'meta_mey' => $key,
+                                                'meta_value' => $value,
+                                            ]);
+                                        }
+                                    }
+                                }
+                            }
                             $wpdb->query($wpdb->prepare("INSERT INTO {$wpdb->postmeta} (post_id, meta_key, meta_value) VALUES (%d, %s, %s)",
                                 $order->ID,
                                 'coupons',
@@ -213,13 +236,12 @@ class Orders implements Tool
                                 $wpdb->query($wpdb->prepare("INSERT INTO {$wpdb->postmeta} (post_id, meta_key, meta_value) VALUES (%d, %s, %s)",
                                     $order->ID,
                                     'shipping',
-                                    serialize(array(
+                                    serialize([
                                         'method' => $method->getState(),
                                         'price' => $data['order_shipping'],
-                                        // TODO do usuniecia, gdyz jest na dole w osobnej mecie
                                         'rate' => '',
                                         // Rates are stored nowhere - so no rate here
-                                    ))
+                                    ])
                                 ));
                                 $this->checkSql();
                             } catch (Exception $e) {
@@ -260,13 +282,6 @@ class Orders implements Tool
                                 $data['order_total']
                             ));
                             $this->checkSql();
-                            // TODO: Add new meta for shipping total price
-                            /*$wpdb->query($wpdb->prepare("INSERT INTO {$wpdb->postmeta} (post_id, meta_key, meta_value) VALUES (%d, %s, %s)",
-                                $order->ID,
-                                'shipping',
-                                $data['order_shipping']
-                            ));
-                            $this->checkSql();*/
                             break;
                         case 'customer_user':
                             if ($this->customer == null) {
@@ -359,7 +374,7 @@ class Orders implements Tool
                                     $productGetType = $product->getType();
                                 }
 
-                                $insertOrderData = array(
+                                $insertOrderData = [
                                     'order_id' => $order->ID,
                                     'product_type' => $productGetType,
                                     'title' => $itemData['name'],
@@ -368,7 +383,7 @@ class Orders implements Tool
                                     'tax' => $tax,
                                     'quantity' => $itemData['qty'],
                                     'cost' => $itemData['cost'],
-                                );
+                                ];
 
                                 if ($productGetId != null) {
                                     $insertOrderData['product_id'] = $productGetId;
@@ -378,12 +393,17 @@ class Orders implements Tool
                                 $this->checkSql();
                                 $itemId = $wpdb->insert_id;
 
+                                if($productGetId != null) {
+                                    $this->_addDownloadableMeta($order->ID, $productGetId, $itemId);
+                                }
+
                                 if (isset($itemData['variation_id']) && !empty($itemData['variation_id']) && ($productGetId == null || $product instanceof Product\Variable)) {
                                     $wpdb->query($wpdb->prepare(
                                         "INSERT INTO {$wpdb->prefix}jigoshop_order_item_meta (item_id, meta_key, meta_value) VALUES (%d, %s, %s)",
                                         $itemId, 'variation_id', $itemData['variation_id'] // TODO: HERE
                                     ));
                                     $this->checkSql();
+                                    $this->_addDownloadableMeta($order->ID, $itemData['variation_id'], $itemId);
 
                                     if ($productGetId !== null) {
                                         /** @var Product\Variable\Variation $variationProduct */
@@ -567,7 +587,7 @@ class Orders implements Tool
 
             $wpdb = $this->wp->getWPDB();
 
-            $ordersIdsMigration = array();
+            $ordersIdsMigration = [];
 
             if (($TMP_ordersIdsMigration = $this->wp->getOption('jigoshop_orders_migrate_id')) === false) {
                 $query = $wpdb->prepare("
@@ -602,13 +622,13 @@ class Orders implements Tool
                 'shop_order', 'auto-draft', $singleOrdersId);
             $order = $wpdb->get_results($query);
 
-            $ajax_response = array(
+            $ajax_response = [
                 'success' => true,
                 'percent' => floor(($countAll - $countRemain) / $countAll * 100),
                 'processed' => $countAll - $countRemain,
                 'remain' => $countRemain,
                 'total' => $countAll,
-            );
+            ];
 
             if ($singleOrdersId) {
                 if ($this->migrate($order)) {
@@ -628,9 +648,9 @@ class Orders implements Tool
             if (WP_DEBUG) {
                 \Monolog\Registry::getInstance(JIGOSHOP_LOGGER)->addDebug($e);
             }
-            echo json_encode(array(
+            echo json_encode([
                 'success' => false,
-            ));
+            ]);
 
             Migration::saveLog(__('Migration orders end with error: ', 'jigoshop') . $e);
         }
@@ -644,7 +664,7 @@ class Orders implements Tool
 
     protected function _fetchCustomerData($args)
     {
-        $defaults = array(
+        $defaults = [
             'billing_company' => '',
             'billing_euvatno' => '',
             'billing_first_name' => '',
@@ -664,14 +684,14 @@ class Orders implements Tool
             'shipping_country' => '',
             'shipping_state' => '',
             'shipping_postcode' => '',
-        );
+        ];
 
         return $this->_fetchData($defaults, $args);
     }
 
-    protected function _fetchOrderData($args) 
+    protected function _fetchOrderData($args)
     {
-        $defaults = array(
+        $defaults = [
             'shipping_method' => '',
             'shipping_service' => '',
             'payment_method' => '',
@@ -685,25 +705,25 @@ class Orders implements Tool
             'order_tax_divisor' => 0,
             'order_shipping_tax' => 0,
             'order_total' => 0,
-            'order_total_prices_per_tax_class_ex_tax' => array(),
-            'order_discount_coupons' => array(),
-        );
+            'order_total_prices_per_tax_class_ex_tax' => [],
+            'order_discount_coupons' => [],
+        ];
 
         return $this->_fetchData($defaults, $args);
     }
 
     protected function _fetchItemData($args)
     {
-        $defaults = array(
+        $defaults = [
             'id' => 0,
             'variation_id' => 0,
-            'variation' => array(),
+            'variation' => [],
             'cost_inc_tax' => 0,
             'name' => '',
             'qty' => 1,
             'cost' => 0,
             'taxrate' => 0,
-        );
+        ];
 
         if ($args['variation_id'] > 0) {
             $post = $this->wp->getPost($args['variation_id']);
@@ -717,5 +737,89 @@ class Orders implements Tool
         }
 
         return $this->_fetchData($defaults, $args);
+    }
+
+    /**
+     * @param array $data
+     *
+     * @return array
+     */
+    private function convertCouponsToDiscounts($data)
+    {
+        $discounts = [];
+        $percentProductsCoupons = [];
+        foreach ($data['order_discount_coupons'] as $coupon) {
+            $discountAmount = 0;
+            if ($coupon['type'] == 'fixed_cart' || $coupon['type'] == 'fixed_product') {
+                $discountAmount = $coupon['amount'];
+            } else if ($coupon['type'] == 'percent') {
+                $discountAmount = $data['order_subtotal'] * $coupon['amount'] / 100;
+            } else {
+                $percentProductsCoupons[] = $coupon['amount'];
+                continue;
+            }
+
+            $discount = [
+                'type' => Type::COUPON,
+                'code' => $coupon['code'],
+                'amount' => $discountAmount,
+                'meta' => ['js1_coupon' => $coupon]
+            ];
+            $discounts[] = $discount;
+
+            $data['order_discount'] -= $discountAmount;
+        }
+
+        if ($data['order_discount'] < 0) {
+            for ($i = 0; $i < count($discounts); $i++) {
+                $discounts[$i]['amount'] -= abs($data['order_discount']) / count($discounts);
+            }
+        }
+
+        if ($data['order_discount'] > 0 && count($percentProductsCoupons)) {
+            foreach ($percentProductsCoupons as $coupon) {
+                $discount = [
+                    'type' => Type::COUPON,
+                    'code' => $coupon['code'],
+                    'amount' => $data['order_discount'] / count($percentProductsCoupons),
+                    'meta' => ['js1_coupon' => $coupon]
+                ];
+                $discounts[] = $discount;
+            }
+        } elseif ($data['order_discount'] > 0) {
+            $discount = [
+                'type' => Type::USER_DEFINED,
+                'code' => 'manually_added',
+                'amount' => $data['order_discount'] / count($percentProductsCoupons),
+                'meta' => ['js1_coupon' => $coupon]
+            ];
+            $discounts[] = $discount;
+        }
+
+        return $discounts;
+    }
+
+    /*
+     * @param $orderId
+     * @param $productId
+     * @param $itemId
+     */
+    private function _addDownloadableMeta($orderId, $productId, $itemId) {
+        $wpdb = $this->wp->getWPDB();
+        $results = $wpdb->get_results($wpdb->prepare(
+            "SELECT meta1.post_id as order_id, product.downloads_remaining as downloads, meta2.meta_value as file 
+                    FROM {$wpdb->prefix}jigoshop_downloadable_product_permissions as product
+                    LEFT JOIN {$wpdb->postmeta} as meta1 ON (meta1.meta_key = 'order_key' AND product.order_key = meta1.meta_value)
+                    LEFT JOIN {$wpdb->postmeta} as meta2 ON (meta2.post_id = product.product_id AND meta2.meta_key = 'file_path')
+                    WHERE product.product_id = %d", $productId), ARRAY_A);
+        foreach ($results as $result) {
+            if ($result['order_id'] == $orderId) {
+                $wpdb->query($wpdb->prepare(
+                    "INSERT INTO {$wpdb->prefix}jigoshop_order_item_meta (item_id, meta_key, meta_value) VALUES (%d, %s, %s) , (%d, %s, %s)",
+                    $itemId, 'downloads', $result['downloads'], $itemId, 'file', $result['file']
+                ));
+                $this->checkSql();
+            }
+        }
     }
 }

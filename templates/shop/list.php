@@ -9,14 +9,14 @@ do_action('jigoshop\template\shop\list\before');
 ?>
 <ul id="products" class="list-inline">
 	<?php foreach($products as $product): ?>
-		<?php Render::output('shop/list/product', array(
+		<?php Render::output('shop/list/product', [
 			'product' => $product,
-		)); ?>
+        ]); ?>
 	<?php endforeach; ?>
 </ul>
 <?php
 do_action('jigoshop\template\shop\list\after');
-Render::output('shop/pagination', array(
+Render::output('shop/pagination', [
 	'product_count' => $product_count,
-));
+]);
 ?>

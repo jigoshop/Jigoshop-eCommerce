@@ -11,9 +11,9 @@ use Jigoshop\Entity\Order\Status;
  * @var $shippingTax boolean Whether taxes are based on shipping country.
  */
 ?>
-<div class="panels jigoshop jigoshop-data" data-order="<?php echo $order->getId(); ?>">
+<div class="panels jigoshop jigoshop-data" data-order="<?= $order->getId(); ?>">
 	<div id="messages"></div>
-	<input name="post_title" type="hidden" value="<?php echo $order->getTitle(); ?>" />
+	<input name="post_title" type="hidden" value="<?= $order->getTitle(); ?>" />
 
 	<ul class="nav nav-tabs nav-justified" role="tablist">
 		<li class="active"><a href="#order" role="tab" data-toggle="tab"><?php _e('Order', 'jigoshop'); ?></a></li>
@@ -28,23 +28,23 @@ use Jigoshop\Entity\Order\Status;
 	</noscript>
 	<div class="tab-content form-horizontal">
 		<div class="tab-pane active" id="order">
-			<?php Forms::select(array(
+			<?php Forms::select([
 				'name' => 'jigoshop_order[status]',
 				'label' => __('Order status', 'jigoshop'),
 				'value' => $order->getStatus(),
 				'options' => Status::getStatuses(),
-			)); ?>
-			<?php Forms::select(array(
+            ]); ?>
+			<?php Forms::select([
 				'name' => 'jigoshop_order[customer]',
 				'label' => __('Customer', 'jigoshop'),
 				'value' => $order->getCustomer() ? $order->getCustomer()->getId() : '',
 				'options' => $customers,
-			)); ?>
-			<?php Forms::textarea(array(
+            ]); ?>
+			<?php Forms::textarea([
 				'name' => 'post_excerpt',
 				'label' => __("Customer's note", 'jigoshop'),
 				'value' => $order->getCustomerNote(),
-			)); ?>
+            ]); ?>
 		</div>
 		<div class="tab-pane" id="billing-address">
 			<?php foreach ($billingFields as $field): ?>

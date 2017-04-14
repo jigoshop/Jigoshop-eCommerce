@@ -36,7 +36,7 @@ class Integration
     public static function initializeSettings()
     {
         $service = self::getAdminSettings();
-        $tabs = apply_filters('jigoshop\admin\settings', array());
+        $tabs = apply_filters('jigoshop\admin\settings', []);
 
         foreach ($tabs as $tab) {
             $service->addTab($tab);
@@ -49,7 +49,7 @@ class Integration
     public static function initializeGateways()
     {
         $service = self::getPaymentService();
-        $gateways = apply_filters('jigoshop\payment\gateways', array());
+        $gateways = apply_filters('jigoshop\payment\gateways', []);
 
         foreach ($gateways as $gateway) {
              $service->addMethod($gateway);
@@ -62,7 +62,7 @@ class Integration
     public static function initializeShipping()
     {
         $service = self::getShippingService();
-        $methods = apply_filters('Jigoshop\shipping\methods', array());
+        $methods = apply_filters('Jigoshop\shipping\methods', []);
 
         foreach ($methods as $method) {
             $service->addMethod($method);
@@ -218,7 +218,7 @@ class Integration
 
     public static function addPsr4Autoload($namespace, $dir)
     {
-        self::$classLoader->addPsr4($namespace, array($dir));
+        self::$classLoader->addPsr4($namespace, [$dir]);
     }
 
     public static function addComposerFiles($dir)

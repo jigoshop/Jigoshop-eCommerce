@@ -5,6 +5,7 @@ namespace Jigoshop\Admin\Reports;
 use Jigoshop\Admin\Reports;
 use Jigoshop\Core\Options;
 use Jigoshop\Helper\Render;
+use Jigoshop\Integration;
 use WPAL\Wordpress;
 
 class SalesTab implements TabInterface
@@ -22,7 +23,7 @@ class SalesTab implements TabInterface
 		$this->wp = $wp;
 		$this->options = $options;
 
-        if (in_array($this->wp->getPageNow(), array('admin.php', 'options.php')) &&
+        if (in_array($this->wp->getPageNow(), ['admin.php', 'options.php']) &&
             isset($_GET['page']) && $_GET['page'] == Reports::NAME
         ) {
             $this->chart = $this->getChart();
@@ -50,21 +51,21 @@ class SalesTab implements TabInterface
 	 */
 	public function display()
 	{
-		Render::output('admin/reports/sales', array(
+		Render::output('admin/reports/sales', [
 			'types' => $this->getTypes(),
 			'current_type' => $this->getCurrentType(),
 			'chart' => $this->chart
-		));
+        ]);
 	}
 
 	private function getTypes()
 	{
-		return $this->wp->applyFilters('jigoshop\admin\reports\sales\types', array(
+		return $this->wp->applyFilters('jigoshop\admin\reports\sales\types', [
 			'by_date' => __('By Date', 'jigoshop'),
 			'by_product' => __('By Product', 'jigoshop'),
 			'by_category' => __('By Category', 'jigoshop'),
 			'discount_summary' => __('Discount Summary', 'jigoshop')
-		));
+        ]);
 	}
 
 	private function getCurrentType()

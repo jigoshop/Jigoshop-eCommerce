@@ -12,7 +12,7 @@ use Jigoshop\Service\SessionService;
 class Php extends SessionService
 {
     /** @var Session[] */
-    private $sessions = array();
+    private $sessions = [];
 
     /**
      * @param string $key
@@ -22,7 +22,7 @@ class Php extends SessionService
     public function get($key)
     {
         if (!isset($this->sessions[$key])) {
-            $data = array('key' => $key);
+            $data = ['key' => $key];
             if (isset($_SESSION[$key])) {
                 $data['fields'] = $_SESSION[$key];
             }

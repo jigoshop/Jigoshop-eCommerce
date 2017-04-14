@@ -35,7 +35,7 @@ class Licences implements PageInterface
 
 		$wp->addAction('admin_enqueue_scripts', function () use ($wp){
 			// Weed out all admin pages except the Jigoshop Settings page hits
-			if (!in_array($wp->getPageNow(), array('admin.php', 'options.php'))) {
+			if (!in_array($wp->getPageNow(), ['admin.php', 'options.php'])) {
 				return;
 			}
 
@@ -84,7 +84,7 @@ class Licences implements PageInterface
 	public function display()
 	{
 		$user_email = $this->get_current_user_email();
-		$messages = array();
+		$messages = [];
 
 		// getting new keys after they were updated
 		$keys = $this->getKeys();

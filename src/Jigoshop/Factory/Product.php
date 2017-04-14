@@ -18,7 +18,7 @@ class Product implements EntityFactoryInterface
     private $wp;
     /** @var Options */
     private $options;
-    private $types = array();
+    private $types = [];
 
     public function __construct(Wordpress $wp, Options $options)
     {
@@ -183,7 +183,7 @@ class Product implements EntityFactoryInterface
         }
 
         $product = $this->get($type);
-        $state = array();
+        $state = [];
 
         if ($post) {
             $state = array_map(function ($item) {
@@ -202,22 +202,24 @@ class Product implements EntityFactoryInterface
                 $state['tax_classes'] = unserialize($state['tax_classes']);
             }
 
-            if (isset($state['attribute_order']) && $state['attribute_order']) {
-                $state['attribute_order'] = maybe_unserialize($state['attribute_order']);
-                $attributes = array();
-                foreach ($state['attribute_order'] as $attributeId) {
-                    $attributes[$attributeId] = $state['attributes'][$attributeId];
-                }
-                foreach ($state['attributes'] as $attributeId => $attribute) {
-                    if (!isset($attributes[$attributeId])) {
-                        $attributes[$attributeId] = $attribute;
+			if (isset($state['attribute_order']) && $state['attribute_order']) {
+				$state['attribute_order'] = maybe_unserialize($state['attribute_order']);
+				$attributes = [];
+				foreach($state['attribute_order'] as $attributeId) {
+				    if(isset($state['attributes'][$attributeId])) {
+                        $attributes[$attributeId] = $state['attributes'][$attributeId];
                     }
-                }
-                $state['attributes'] = $attributes;
-            }
-
-            if (isset($state['cross_sells'])) {
-                $state['cross_sells'] = maybe_unserialize($state['cross_sells']);
+				}
+				foreach ($state['attributes'] as $attributeId => $attribute) {
+					if(!isset($attributes[$attributeId])) {
+						$attributes[$attributeId] = $attribute;
+					}
+				}
+				$state['attributes'] = $attributes;
+			}
+			
+			if (isset($state['cross_sells'])) {
+			    $state['cross_sells'] = maybe_unserialize($state['cross_sells']);
                 $state['cross_sells'] = empty($state['cross_sells']) ? [] : $state['cross_sells'];
             }
             if (isset($state['up_sells'])) {
@@ -243,17 +245,17 @@ class Product implements EntityFactoryInterface
         }
 
         if (!is_array($items)) {
-            return array();
+            return [];
         }
 
         return array_map(function ($item) use ($wp, $taxonomy) {
-            return array(
+            return [
                 'id' => $item->term_id,
                 'name' => $item->name,
                 'slug' => $item->slug,
                 'link' => $wp->getTermLink($item, $taxonomy),
                 'object' => $item,
-            );
+            ];
         }, $items);
     }
 
@@ -275,7 +277,7 @@ class Product implements EntityFactoryInterface
 		FROM {$wpdb->prefix}jigoshop_attribute a
 			LEFT JOIN {$wpdb->prefix}jigoshop_attribute_option ao ON a.id = ao.attribute_id
 			WHERE a.id = %d
-		", array($id));
+		", [$id]);
 
         $results = $wpdb->get_results($query, ARRAY_A);
 
@@ -325,9 +327,9 @@ class Product implements EntityFactoryInterface
 			LEFT JOIN {$wpdb->prefix}jigoshop_product_attribute pa ON pa.attribute_id = a.id
 			LEFT JOIN {$wpdb->prefix}jigoshop_product_attribute_meta pam ON pa.attribute_id = pam.attribute_id AND pa.product_id = pam.product_id
 			WHERE pa.product_id = %d
-		", array($productId));
+		", [$productId]);
         $results = $wpdb->get_results($query, ARRAY_A);
-        $attributes = array();
+        $attributes = [];
 
         for ($i = 0, $endI = count($results); $i < $endI;) {
             $attribute = $this->createAttribute($results[$i]['type'], Attribute::PRODUCT_ATTRIBUTE_EXISTS);
@@ -336,7 +338,7 @@ class Product implements EntityFactoryInterface
             $attribute->setLabel($results[$i]['label']);
             $attribute->setLocal((bool)$results[$i]['is_local']);
             $attribute->setValue($results[$i]['value']);
-            $fields = array();
+            $fields = [];
 
             while ($i < $endI && $results[$i]['id'] == $attribute->getId()) {
                 $option = new Attribute\Option();
@@ -372,7 +374,7 @@ class Product implements EntityFactoryInterface
     {
         $wpdb = $this->wp->getWPDB();
         $query = $wpdb->prepare("SELECT attachment_id as id, type as type FROM {$wpdb->prefix}jigoshop_product_attachment WHERE product_id = %d",
-            array($productId));
+            [$productId]);
 
         return $wpdb->get_results($query, ARRAY_A);
     }
@@ -425,16 +427,16 @@ class Product implements EntityFactoryInterface
     private function convertData(array &$data, $id, $withAttributes = false)
     {
         $data['product']['categories'] = $this->getTerms($id, Types::PRODUCT_CATEGORY,
-            $this->wp->getTerms(Types::PRODUCT_CATEGORY, array(
+            $this->wp->getTerms(Types::PRODUCT_CATEGORY, [
                 'posts__in' => $data['tax_input']['product_category'],
-            )));
+            ]));
         $data['product']['tags'] = $this->getTerms($id, Types::PRODUCT_TAG,
-            $this->wp->getTerms(Types::PRODUCT_TAG, array(
+            $this->wp->getTerms(Types::PRODUCT_TAG, [
                 'posts__in' => $data['tax_input']['product_tag'],
-            )));
+            ]));
 
         if (!isset($data['product']['tax_classes'])) {
-            $data['product']['tax_classes'] = array();
+            $data['product']['tax_classes'] = [];
         }
 
         if (isset($data['product']['attributes'])) {
@@ -452,17 +454,17 @@ class Product implements EntityFactoryInterface
         }
         if (isset($data['product']['attachments'])) {
             $temp = $data['product']['attachments'];
-            $data['product']['attachments'] = array();
+            $data['product']['attachments'] = [];
             foreach ($temp as $type => $ids) {
                 for ($i = 0; $i < sizeof($ids); $i++) {
-                    $data['product']['attachments'][] = array(
+                    $data['product']['attachments'][] = [
                         'id' => $ids[$i],
                         'type' => $type
-                    );
+                    ];
                 }
             }
         } else {
-            $data['product']['attachments'] = array();
+            $data['product']['attachments'] = [];
         }
 
         if (isset($data['product']['cross_sells']) && $data['product']['cross_sells']) {

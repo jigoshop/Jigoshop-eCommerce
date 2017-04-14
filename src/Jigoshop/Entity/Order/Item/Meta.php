@@ -76,11 +76,11 @@ class Meta implements \Serializable, \JsonSerializable
 	 */
 	public function serialize()
 	{
-		return serialize(array(
+		return serialize([
 			'item' => $this->item->getId(),
 			'key' => $this->key,
 			'value' => $this->value,
-		));
+        ]);
 	}
 
 	/**

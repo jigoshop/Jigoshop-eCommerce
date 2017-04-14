@@ -9,23 +9,23 @@
  */
 ?>
 <div class="status">
-    <?php echo $currentStatusText; ?>
+    <?= $currentStatusText; ?>
     <?php if (!empty($pendingTo)): ?>
         <span class="btn-status glyphicon glyphicon-arrow-right" aria-hidden="true"
-              data-order_id="<?php echo $orderId; ?>"
+              data-order_id="<?= $orderId; ?>"
               title="<?php _e('Change to &quot;Processing&quot;', 'jigoshop'); ?>"
-              data-status_to="<?php echo $statuses['processing']; ?>"></span>
+              data-status_to="<?= $statuses['processing']; ?>"></span>
     <?php endif; ?>
     <?php if (!empty($processingTo)): ?>
         <span class="btn-status glyphicon glyphicon-ok" aria-hidden="true"
-              data-order_id="<?php echo $orderId; ?>"
+              data-order_id="<?= $orderId; ?>"
               title="<?php _e('Change to &quot;Completed&quot;', 'jigoshop'); ?>"
-              data-status_to="<?php echo $statuses['completed']; ?>"></span>
+              data-status_to="<?= $statuses['completed']; ?>"></span>
     <?php endif; ?>
     <?php if (!$hideCancel): ?>
         <span class="btn-status glyphicon glyphicon-remove" aria-hidden="true"
-              data-order_id="<?php echo $orderId; ?>"
+              data-order_id="<?= $orderId; ?>"
               title="<?php _e('Change to &quot;Cancelled&quot;', 'jigoshop'); ?>"
-              data-status_to="<?php echo $statuses['cancelled']; ?>"></span>
+              data-status_to="<?= $statuses['cancelled']; ?>"></span>
     <?php endif; ?>
 </div>

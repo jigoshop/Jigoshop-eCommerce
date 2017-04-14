@@ -227,10 +227,10 @@ class Simple extends Product implements Purchasable, Shippable, Saleable
 	 */
 	public function getState()
 	{
-		return array(
+		return [
 			'type' => $this->getType(),
 			'id' => $this->getId(),
-		);
+        ];
 	}
 
 	/**

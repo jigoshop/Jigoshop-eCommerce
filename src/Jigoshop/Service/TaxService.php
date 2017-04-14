@@ -25,7 +25,7 @@ class TaxService implements TaxServiceInterface
 	private $wp;
 	/** @var \Jigoshop\Service\CustomerServiceInterface */
 	private $customers;
-	private $taxClasses = array();
+	private $taxClasses = [];
 	private $rules;
 
 	public function __construct(Wordpress $wp, array $classes, CustomerServiceInterface $customers)
@@ -50,18 +50,18 @@ class TaxService implements TaxServiceInterface
 
 			// Fetch definitions for the order
 			$wpdb = $wp->getWPDB();
-			$tax = array();
+			$tax = [];
             if(!$order instanceof Cart && $order->getId()) {
                 $results = $wpdb->get_results($wpdb->prepare("SELECT * FROM {$wpdb->prefix}jigoshop_order_tax jot WHERE jot.order_id = %d",
-                    array($order->getId())));
+                    [$order->getId()]));
 
                 foreach ($results as $result) {
-                    $tax[$result->tax_class] = array(
+                    $tax[$result->tax_class] = [
                         'label' => $result->label,
                         'rate' => (float)$result->rate,
                         'is_compound' => $result->is_compound,
                         'class' => $result->tax_class,
-                    );
+                    ];
                 }
             } else {
                 foreach ($definitions as $class => $definition) {
@@ -85,13 +85,13 @@ class TaxService implements TaxServiceInterface
 			/** @var $order Order */
 			$wpdb = $wp->getWPDB();
 			foreach ($order->getTaxDefinitions() as $class => $definition) {
-				$data = array(
+				$data = [
 					'order_id' => $order->getId(),
 					'label' => $definition['label'],
 					'tax_class' => $class,
 					'rate' => $definition['rate'],
 					'is_compound' => $definition['is_compound'],
-				);
+                ];
 				$wpdb->replace($wpdb->prefix.'jigoshop_order_tax', $data);
 			};
 		}, 10, 1);
@@ -167,7 +167,7 @@ class TaxService implements TaxServiceInterface
 	 */
 	public function getDefinitions(Customer\Address $address)
 	{
-		$definitions = array();
+		$definitions = [];
 		foreach ($this->taxClasses as $class) {
 			$definition = $this->getDefinition($class, $address);
 			$definitions[$class] = $definition['standard'];
@@ -236,7 +236,7 @@ class TaxService implements TaxServiceInterface
 		usort($standard, $comparator);
 		usort($compound, $comparator);
 
-		return array('standard' => array_pop($standard), 'compound' => array_pop($compound));
+		return ['standard' => array_pop($standard), 'compound' => array_pop($compound)];
 	}
 
 	/**
@@ -254,8 +254,8 @@ class TaxService implements TaxServiceInterface
 				ORDER BY t.id
 			";
 			$taxes = $wpdb->get_results($query, ARRAY_A);
-			$result = array();
-			$processed = array();
+			$result = [];
+			$processed = [];
 
 			foreach ($taxes as $tax) {
 				if (in_array($tax['id'], $processed)) {
@@ -278,16 +278,16 @@ class TaxService implements TaxServiceInterface
 	private function formatRule(array $source)
 	{
 		$item = reset($source);
-		$rule = array(
+		$rule = [
 			'id' => $item['id'],
 			'rate' => (float)$item['rate'],
 			'label' => $item['label'],
 			'class' => $item['class'],
 			'is_compound' => $item['is_compound'] == 1,
 			'country' => $item['country'],
-			'states' => array(),
-			'postcodes' => array(),
-		);
+			'states' => [],
+			'postcodes' => [],
+        ];
 
 		foreach ($source as $item) {
 			if (!in_array($item['state'], $rule['states']) && !empty($item['state'])) {
@@ -332,10 +332,10 @@ class TaxService implements TaxServiceInterface
 	 */
 	public function get($price, array $taxClasses, array $definitions)
 	{
-		$tax = array();
+		$tax = [];
 		$cost = $price;
-		$standard = array();
-		$compound = array();
+		$standard = [];
+		$compound = [];
 
 		foreach ($taxClasses as $class) {
 			if (!isset($definitions[$class])) {
@@ -469,21 +469,21 @@ class TaxService implements TaxServiceInterface
 	public function save(array $rule)
 	{
 		$wpdb = $this->wp->getWPDB();
-		$data = array(
+		$data = [
 			'class' => $rule['class'],
 			'label' => $rule['label'],
 			'rate' => (float)$rule['rate'],
 			'is_compound' => $rule['is_compound'],
-		);
+        ];
 
 		// Process main rule data
 		if ($rule['id'] === '') {
 			$wpdb->insert($wpdb->prefix.'jigoshop_tax', $data);
 			$rule['id'] = $wpdb->insert_id;
 		} else {
-			$wpdb->update($wpdb->prefix.'jigoshop_tax', $data, array(
+			$wpdb->update($wpdb->prefix.'jigoshop_tax', $data, [
 				'id' => $rule['id'],
-			));
+            ]);
 		}
 
 		// Process rule locations
@@ -520,7 +520,7 @@ class TaxService implements TaxServiceInterface
 		}
 		$query = $wpdb->prepare(
 			"DELETE FROM {$wpdb->prefix}jigoshop_tax_location WHERE state NOT IN ({$values}) AND tax_id = %d",
-			array($rule['id'])
+			[$rule['id']]
 		);
 		$wpdb->query($query);
 	}
@@ -539,7 +539,7 @@ class TaxService implements TaxServiceInterface
 		}
 		$query = $wpdb->prepare(
 			"DELETE FROM {$wpdb->prefix}jigoshop_tax_location WHERE postcode NOT IN ({$values}) AND state = %s AND tax_id = %d",
-			array($state, $rule['id'])
+			[$state, $rule['id']]
 		);
 		$wpdb->query($query);
 	}
@@ -547,21 +547,21 @@ class TaxService implements TaxServiceInterface
 	private function _addPostcodes($rule, $state, $postcodes)
 	{
 		$wpdb = $this->wp->getWPDB();
-		$ids = array();
+		$ids = [];
 		$query = $wpdb->prepare("
 			SELECT postcode FROM {$wpdb->prefix}jigoshop_tax_location
 			WHERE tax_id = %d AND country = %s AND state = %s
-		", array($rule['id'], $rule['country'], $state));
+		", [$rule['id'], $rule['country'], $state]);
 		$existing = $wpdb->get_col($query);
 
 		foreach ($postcodes as $postcode) {
 			if (!in_array($postcode, $existing)) {
-				$wpdb->insert($wpdb->prefix.'jigoshop_tax_location', array(
+				$wpdb->insert($wpdb->prefix.'jigoshop_tax_location', [
 					'tax_id' => $rule['id'],
 					'country' => $rule['country'],
 					'state' => $state,
 					'postcode' => $postcode,
-				));
+                ]);
 				$ids[] = $wpdb->insert_id;
 			}
 		}

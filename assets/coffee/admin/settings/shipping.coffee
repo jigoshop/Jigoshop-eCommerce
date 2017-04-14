@@ -5,37 +5,27 @@ class Shipping
     @ruleCount = jQuery('#advanced-flat-rate li.list-group-item').length
     jQuery('div.advanced_flat_rate_countries_field').show()
     jQuery('#advanced_flat_rate_available_for').on 'change', @toggleSpecificCountires
-    jQuery('#advanced-flat-rate').on 'click', '.add-rate', (event) =>
-      @addRate(event)
-    jQuery('#advanced-flat-rate').on 'click', '.toggle-rate', @toggleRate
-    jQuery('#advanced-flat-rate').on 'click', '.remove-rate', @removeRate
-    jQuery('#advanced-flat-rate').on 'keyup', '.input-label, .input-cost', @updateTitle
-    jQuery('#advanced-flat-rate').on 'change', 'select.country-select', @updateStates
+    jQuery('#advanced-flat-rate').on( 'click', '.add-rate', (event) =>
+      @addRate(event))
+    .on('click', '.toggle-rate', @toggleRate)
+    .on('click', '.remove-rate', @removeRate)
+    .on('keyup', '.input-label, .input-cost', @updateTitle)
+    .on('change', 'input.rest-of-the-world', @toggleLocationFields)
+    jQuery('input.rest-of-the-world').trigger 'change'
+
+  toggleLocationFields: (event) ->
+    $container = jQuery(event.target).closest('.list-group-item-text')
+    $fields = jQuery('div.continents, div.countries, div.states, div.postcode', $container)
+    if jQuery(event.target).is ':checked'
+      $fields.slideUp()
+    else
+      $fields.slideDown()
 
   updateTitle: (event) ->
     $rule = jQuery(event.target).closest 'li'
     label = $rule.find('.input-label').val()
     cost = $rule.find('.input-cost').val()
     $rule.find('span.title').html label + ' - ' + cost
-
-  updateStates: (event) ->
-    country = jQuery(event.target).val()
-    jQuery.ajax(
-      url: jigoshop.getAjaxUrl()
-      type: 'POST'
-      dataType: 'JSON'
-      data:
-        action: 'jigoshop.ajax',
-        service: 'jigoshop.ajax.get_states',
-        country: country
-    ).done (response) ->
-      if response.success? and response.success
-        $stateSelect = jQuery(event.target).closest('li').find('select.states-select')
-        $stateSelect.find('option').remove()
-        for key of response.states
-          element = response.states[key]
-          $stateSelect.append jQuery('<option></option>').attr('value', key).text(element)
-        $stateSelect.select2()
 
   addRate: (event) ->
     event.preventDefault()

@@ -80,9 +80,9 @@ class Order implements EntityFactoryInterface
         }
 
         $order = $this->fetch($post);
-        $data = array(
+        $data = [
             'updated_at' => time(),
-        );
+        ];
 
         if (isset($_POST['jigoshop_order']['status'])) {
             $order->setStatus($_POST['jigoshop_order']['status']);
@@ -96,13 +96,14 @@ class Order implements EntityFactoryInterface
         }
 
         $data['items'] = $this->getItems($id);
+        $data['discounts'] = $this->getDiscounts($id);
 
         if (isset($_POST['order']['shipping'])) {
-            $data['shipping'] = array(
+            $data['shipping'] = [
                 'method' => null,
                 'rate' => null,
                 'price' => -1,
-            );
+            ];
 
             $method = $this->shippingService->get($_POST['order']['shipping']);
             if ($method instanceof MultipleMethod && isset($_POST['order']['shipping_rate'], $_POST['order']['shipping_rate'][$method->getId()])) {
@@ -132,7 +133,7 @@ class Order implements EntityFactoryInterface
         $order = new Entity($this->options->get('tax.classes'));
         /** @var Entity $order */
         $order = $this->wp->applyFilters('jigoshop\factory\order\fetch\before', $order);
-        $state = array();
+        $state = [];
 
         if ($post) {
             $state = array_map(function ($item) {
@@ -158,14 +159,15 @@ class Order implements EntityFactoryInterface
             $state['status'] = $post->post_status;
             $state['created_at'] = strtotime($post->post_date);
             $state['items'] = $this->getItems($post->ID);
+            $state['discounts'] = $this->getDiscounts($post->ID);
             if (isset($state['shipping'])) {
                 $shipping = unserialize($state['shipping']);
                 if (!empty($shipping['method'])) {
-                    $state['shipping'] = array(
+                    $state['shipping'] = [
                         'method' => $this->shippingService->findForState($shipping['method']),
                         'price' => $shipping['price'],
                         'rate' => isset($shipping['rate']) ? $shipping['rate'] : null,
-                    );
+                    ];
                 }
             }
             if (isset($state['payment'])) {
@@ -191,9 +193,9 @@ class Order implements EntityFactoryInterface
 			LEFT JOIN {$wpdb->prefix}jigoshop_order_item_meta joim ON joim.item_id = joi.id
 			WHERE joi.order_id = %d
 			ORDER BY joi.id",
-            array($id));
+            [$id]);
         $results = $wpdb->get_results($query, ARRAY_A);
-        $items = array();
+        $items = [];
 
         for ($i = 0, $endI = count($results); $i < $endI;) {
             $id = $results[$i]['id'];
@@ -251,6 +253,47 @@ class Order implements EntityFactoryInterface
         return $order;
     }
 
+    /**
+     * @param $id int Order ID.
+     *
+     * @return array List of items assigned to the order.
+     */
+    private function getDiscounts($id)
+    {
+        $wpdb = $this->wp->getWPDB();
+        $query = $wpdb->prepare("
+			SELECT * FROM {$wpdb->prefix}jigoshop_order_discount jod
+			LEFT JOIN {$wpdb->prefix}jigoshop_order_discount_meta jodm ON jodm.discount_id = jod.id
+			WHERE jod.order_id = %d
+			ORDER BY jod.id",
+            [$id]);
+        $results = $wpdb->get_results($query, ARRAY_A);
+        $discounts = [];
+
+        for ($i = 0, $endI = count($results); $i < $endI;) {
+            $id = $results[$i]['id'];
+            $discount = new Entity\Discount();
+            $discount->setId($results[$i]['id']);
+            $discount->setType($results[$i]['type']);
+            $discount->setCode($results[$i]['code']);
+            $discount->setAmount($results[$i]['amount']);
+
+            while ($i < $endI && $results[$i]['id'] == $id) {
+//				Securing against empty meta's, but still no piece of code does not add the meta.
+                if ($results[$i]['meta_key']) {
+                    $meta = new Entity\Discount\Meta();
+                    $meta->setKey($results[$i]['meta_key']);
+                    $meta->setValue($results[$i]['meta_value']);
+                    $discount->addMeta($meta);
+                }
+                $i++;
+            }
+            $discounts[] = $discount;
+        }
+
+        return $discounts;
+    }
+
     public function fill(OrderInterface $order, array $data)
     {
         if (!empty($data['customer']) && is_numeric($data['customer'])) {
@@ -293,6 +336,10 @@ class Order implements EntityFactoryInterface
 
         if (isset($data['items'])) {
             $order->removeItems();
+        }
+
+        if (isset($data['discounts'])) {
+            $order->removeDiscounts();
         }
 
         $order->restoreState($data);

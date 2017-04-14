@@ -32,18 +32,18 @@ class ProductsTab implements TabInterface
 		$this->options = $options->get(self::SLUG);
 		$this->messages = $messages;
 
-		$this->weightUnit = array(
+		$this->weightUnit = [
 			'kg' => __('Kilograms', 'jigoshop'),
 			'lbs' => __('Pounds', 'jigoshop'),
-		);
-		$this->dimensionUnit = array(
+        ];
+		$this->dimensionUnit = [
 			'cm' => __('Centimeters', 'jigoshop'),
 			'in' => __('Inches', 'jigoshop'),
-		);
-		$this->stockStatuses = array(
+        ];
+		$this->stockStatuses = [
 			StockStatus::IN_STOCK => __('In stock', 'jigoshop'),
 			StockStatus::OUT_STOCK => __('Out of stock', 'jigoshop'),
-		);
+        ];
 	}
 
 	/**
@@ -67,28 +67,28 @@ class ProductsTab implements TabInterface
 	 */
 	public function getSections()
 	{
-		return array(
-			array(
+		return [
+			[
 				'title' => __('Products options', 'jigoshop'),
 				'id' => 'products_options',
-				'fields' => array(
-					array(
+				'fields' => [
+					[
 						'name' => '[related]',
 						'title' => __('Related products', 'jigoshop'),
 						'type' => 'checkbox',
 						'description' => __("Show or hide the related products section on a single product page based on the same category.", 'jigoshop'),
 						'checked' => $this->options['related'],
-						'classes' => array('switch-medium'),
-					),
-                    array(
+						'classes' => ['switch-medium'],
+                    ],
+                    [
                         'name' => '[reviews]',
                         'title' => __('Reviews', 'jigoshop'),
                         'type' => 'checkbox',
                         'description' => __("Show or hide the product reviews tab on a product page.", 'jigoshop'),
                         'checked' => $this->options['reviews'],
-                        'classes' => array('switch-medium'),
-                    ),
-                    array(
+                        'classes' => ['switch-medium'],
+                    ],
+                    [
                         'name' => '[up_sells_product_limit]',
                         'title' => __('Number of up sell products to display', 'jigoshop'),
                         'tip' => __('Enter the number of products to limit the items displayed in Product page',
@@ -96,63 +96,63 @@ class ProductsTab implements TabInterface
                         'description' => '',
                         'type' => 'number',
                         'value' => $this->options['up_sells_product_limit'],
-                    ),
-				),
-			),
-			array(
+                    ],
+                ],
+            ],
+			[
 				'title' => __('Units', 'jigoshop'),
 				'id' => 'units',
-				'fields' => array(
-					array(
+				'fields' => [
+					[
 						'name' => '[weight_unit]',
 						'title' => __('Weight units', 'jigoshop'),
 						'type' => 'select',
 						'value' => $this->options['weight_unit'],
 						'options' => $this->weightUnit,
-					),
-					array(
+                    ],
+					[
 						'name' => '[dimensions_unit]',
 						'title' => __('Dimensions unit', 'jigoshop'),
 						'type' => 'select',
 						'value' => $this->options['dimensions_unit'],
 						'options' => $this->dimensionUnit,
-					),
-				),
-			),
-			array(
+                    ],
+                ],
+            ],
+			[
 				'title' => __('Stock management', 'jigoshop'),
 				'id' => 'stock_management',
-				'fields' => array(
-					array(
+				'fields' => [
+					[
 						'name' => '[manage_stock]',
 						'title' => __('Enable for all items', 'jigoshop'),
 						'description' => __("You can always disable management per item, it's just default value.", 'jigoshop'),
 						'type' => 'checkbox',
 						'checked' => $this->options['manage_stock'],
-						'classes' => array('switch-medium'),
-					),
-					array(
+						'classes' => ['switch-medium'],
+                    ],
+					[
 						'name' => '[stock_status]',
 						'title' => __('Stock status', 'jigoshop'),
 						'description' => __('This option allows you to change default stock status for new products.', 'jigoshop'),
 						'type' => 'select',
 						'value' => $this->options['stock_status'],
 						'options' => $this->stockStatuses,
-					),
-					array(
+                    ],
+					[
 						'name' => '[show_stock]',
 						'title' => __('Show stock amounts', 'jigoshop'),
 						'description' => __('This option allows you to show available amounts on product page.', 'jigoshop'),
 						'type' => 'checkbox',
 						'checked' => $this->options['show_stock'],
-						'classes' => array('switch-medium'),
-					),
-					array(
+						'classes' => ['switch-medium'],
+                    ],
+					[
 						'name' => '[low_stock_threshold]',
 						'title' => __('Low stock threshold', 'jigoshop'),
 						'type' => 'number',
 						'value' => $this->options['low_stock_threshold'],
-					),
+                    ],
 					// TODO: Add support for hiding out of stock items
 //					array(
 //						'name' => '[hide_out_of_stock]',
@@ -161,28 +161,28 @@ class ProductsTab implements TabInterface
 //						'type' => 'checkbox',
 //						'checked' => $this->options['hide_out_of_stock'],
 //					),
-				),
-			),
-			array(
+                ],
+            ],
+			[
 				'title' => __('Stock notifications', 'jigoshop'),
 				'id' => 'stock_notifications',
-				'fields' => array(
-					array(
+				'fields' => [
+					[
 						'name' => '[notify_low_stock]',
 						'title' => __('Low stock', 'jigoshop'),
 						'description' => __('Notify when product reaches low stock', 'jigoshop'),
 						'type' => 'checkbox',
 						'checked' => $this->options['notify_low_stock'],
-						'classes' => array('switch-medium'),
-					),
-					array(
+						'classes' => ['switch-medium'],
+                    ],
+					[
 						'name' => '[notify_out_of_stock]',
 						'title' => __('Out of stock', 'jigoshop'),
 						'description' => __('Notify when product becomes out of stock', 'jigoshop'),
 						'type' => 'checkbox',
 						'checked' => $this->options['notify_out_of_stock'],
-						'classes' => array('switch-medium'),
-					),
+						'classes' => ['switch-medium'],
+                    ],
 					// TODO: Backorders notifications
 //					array(
 //						'name' => '[notify_on_backorders]',
@@ -191,104 +191,104 @@ class ProductsTab implements TabInterface
 //						'type' => 'checkbox',
 //						'checked' => $this->options['notify_on_backorders'],
 //					),
-				),
-			),
-			array(
+                ],
+            ],
+			[
 				'title' => __('Images', 'jigoshop'),
 				'description' => __('Changing any of those settings will affect image sizes on your page. If you have cropping enabled you will need to regenerate thumbnails.', 'jigoshop'),
 				'id' => 'images',
-				'fields' => array(
-					array(
+				'fields' => [
+					[
 						'name' => '[images][tiny][width]',
 						'title' => __('Tiny image width', 'jigoshop'),
 						'tip' => __('Used in cart for product image.', 'jigoshop'),
 						'type' => 'number',
 						'value' => $this->options['images']['tiny']['width'],
-					),
-					array(
+                    ],
+					[
 						'name' => '[images][tiny][height]',
 						'title' => __('Tiny image height', 'jigoshop'),
 						'tip' => __('Used in cart for product image.', 'jigoshop'),
 						'type' => 'number',
 						'value' => $this->options['images']['tiny']['height'],
-					),
-					array(
+                    ],
+					[
 						'name' => '[images][tiny][crop]',
 						'title' => __('Crop tiny image', 'jigoshop'),
 						'tip' => __('Leave disabled to scale images proportionally, enable to do real cropping.', 'jigoshop'),
 						'type' => 'checkbox',
 						'checked' => $this->options['images']['tiny']['crop'],
-						'classes' => array('switch-medium'),
-					),
-					array(
+						'classes' => ['switch-medium'],
+                    ],
+					[
 						'name' => '[images][thumbnail][width]',
 						'title' => __('Thumbnail image width', 'jigoshop'),
 						'tip' => __('Used in single product view for other images thumbnails.', 'jigoshop'),
 						'type' => 'number',
 						'value' => $this->options['images']['thumbnail']['width'],
-					),
-					array(
+                    ],
+					[
 						'name' => '[images][thumbnail][height]',
 						'title' => __('Thumbnail image height', 'jigoshop'),
 						'tip' => __('Used in single product view for other images thumbnails.', 'jigoshop'),
 						'type' => 'number',
 						'value' => $this->options['images']['thumbnail']['height'],
-					),
-					array(
+                    ],
+					[
 						'name' => '[images][thumbnail][crop]',
 						'title' => __('Crop thumbnail image', 'jigoshop'),
 						'tip' => __('Leave disabled to scale images proportionally, enable to do real cropping.', 'jigoshop'),
 						'type' => 'checkbox',
 						'checked' => $this->options['images']['thumbnail']['crop'],
-						'classes' => array('switch-medium'),
-					),
-					array(
+						'classes' => ['switch-medium'],
+                    ],
+					[
 						'name' => '[images][small][width]',
 						'title' => __('Small image width', 'jigoshop'),
 						'tip' => __('Used in catalog for product thumbnails.', 'jigoshop'),
 						'type' => 'number',
 						'value' => $this->options['images']['small']['width'],
-					),
-					array(
+                    ],
+					[
 						'name' => '[images][small][height]',
 						'title' => __('Small image height', 'jigoshop'),
 						'tip' => __('Used in catalog for product thumbnails.', 'jigoshop'),
 						'type' => 'number',
 						'value' => $this->options['images']['small']['height'],
-					),
-					array(
+                    ],
+					[
 						'name' => '[images][small][crop]',
 						'title' => __('Crop small image', 'jigoshop'),
 						'tip' => __('Leave disabled to scale images proportionally, enable to do real cropping.', 'jigoshop'),
 						'type' => 'checkbox',
 						'checked' => $this->options['images']['small']['crop'],
-						'classes' => array('switch-medium'),
-					),
-					array(
+						'classes' => ['switch-medium'],
+                    ],
+					[
 						'name' => '[images][large][width]',
 						'title' => __('Large image width', 'jigoshop'),
 						'tip' => __('Used in single product view for featured image.', 'jigoshop'),
 						'type' => 'number',
 						'value' => $this->options['images']['large']['width'],
-					),
-					array(
+                    ],
+					[
 						'name' => '[images][large][height]',
 						'title' => __('Large image height', 'jigoshop'),
 						'tip' => __('Used in single product view for featured image.', 'jigoshop'),
 						'type' => 'number',
 						'value' => $this->options['images']['large']['height'],
-					),
-					array(
+                    ],
+					[
 						'name' => '[images][large][crop]',
 						'title' => __('Crop large image', 'jigoshop'),
 						'tip' => __('Leave disabled to scale images proportionally, enable to do real cropping.', 'jigoshop'),
 						'type' => 'checkbox',
 						'checked' => $this->options['images']['large']['crop'],
-						'classes' => array('switch-medium'),
-					),
-				),
-			),
-		);
+						'classes' => ['switch-medium'],
+                    ],
+                ],
+            ],
+        ];
 	}
 
 	/**
@@ -330,26 +330,26 @@ class ProductsTab implements TabInterface
 		$settings['notify_out_of_stock'] = $settings['notify_out_of_stock'] == 'on';
 		$settings['notify_on_backorders'] = $settings['notify_on_backorders'] == 'on';
 
-		$settings['images']['tiny'] = array(
+		$settings['images']['tiny'] = [
 			'width' => (int)$settings['images']['tiny']['width'],
 			'height' => (int)$settings['images']['tiny']['height'],
 			'crop' => $settings['images']['tiny']['crop'] == 'on',
-		);
-		$settings['images']['thumbnail'] = array(
+        ];
+		$settings['images']['thumbnail'] = [
 			'width' => (int)$settings['images']['thumbnail']['width'],
 			'height' => (int)$settings['images']['thumbnail']['height'],
 			'crop' => $settings['images']['thumbnail']['crop'] == 'on',
-		);
-		$settings['images']['small'] = array(
+        ];
+		$settings['images']['small'] = [
 			'width' => (int)$settings['images']['small']['width'],
 			'height' => (int)$settings['images']['small']['height'],
 			'crop' => $settings['images']['small']['crop'] == 'on',
-		);
-		$settings['images']['large'] = array(
+        ];
+		$settings['images']['large'] = [
 			'width' => (int)$settings['images']['large']['width'],
 			'height' => (int)$settings['images']['large']['height'],
 			'crop' => $settings['images']['large']['crop'] == 'on',
-		);
+        ];
 
 		return $settings;
 	}

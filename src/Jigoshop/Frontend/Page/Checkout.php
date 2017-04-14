@@ -63,37 +63,37 @@ class Checkout implements PageInterface
 		$this->orderService = $orderService;
 
 		Styles::add('jigoshop.vendors.select2', \JigoshopInit::getUrl().'/assets/css/vendors/select2.css');
-		Styles::add('jigoshop.checkout', \JigoshopInit::getUrl().'/assets/css/shop/checkout.css', array(
+		Styles::add('jigoshop.checkout', \JigoshopInit::getUrl().'/assets/css/shop/checkout.css', [
 			'jigoshop.shop',
 			'jigoshop.vendors.select2'
-		));
+        ]);
 
-		Scripts::add('jigoshop.vendors.select2', \JigoshopInit::getUrl().'/assets/js/vendors/select2.js', array('jquery'));
-		Scripts::add('jigoshop.vendors.bs_tab_trans_tooltip_collapse', \JigoshopInit::getUrl().'/assets/js/vendors/bs_tab_trans_tooltip_collapse.js', array('jquery'));
-		Scripts::add('jigoshop.checkout', \JigoshopInit::getUrl().'/assets/js/shop/checkout.js', array(
+		Scripts::add('jigoshop.vendors.select2', \JigoshopInit::getUrl().'/assets/js/vendors/select2.js', ['jquery']);
+		Scripts::add('jigoshop.vendors.bs_tab_trans_tooltip_collapse', \JigoshopInit::getUrl().'/assets/js/vendors/bs_tab_trans_tooltip_collapse.js', ['jquery']);
+		Scripts::add('jigoshop.checkout', \JigoshopInit::getUrl().'/assets/js/shop/checkout.js', [
 			'jquery',
 			'jquery-blockui',
 			'jigoshop.helpers',
 			'jigoshop.vendors.select2',
 			'jigoshop.vendors.bs_tab_trans_tooltip_collapse',
-		));
-		Scripts::localize('jigoshop.checkout', 'jigoshop_checkout', array(
+        ]);
+		Scripts::localize('jigoshop.checkout', 'jigoshop_checkout', [
 			'assets' => \JigoshopInit::getUrl().'/assets',
-			'i18n' => array(
+			'i18n' => [
 				'loading' => __('Loading...', 'jigoshop'),
-			),
-		));
+            ],
+        ]);
 
 		if (!$wp->isSsl() && $options->get('shopping.force_ssl')) {
-			$wp->addAction('template_redirect', array($this, 'redirectToSsl'), 100, 0);
+			$wp->addAction('template_redirect', [$this, 'redirectToSsl'], 100, 0);
 		}
 
-		$wp->addAction('wp_ajax_jigoshop_checkout_change_country', array($this, 'ajaxChangeCountry'));
-		$wp->addAction('wp_ajax_nopriv_jigoshop_checkout_change_country', array($this, 'ajaxChangeCountry'));
-		$wp->addAction('wp_ajax_jigoshop_checkout_change_state', array($this, 'ajaxChangeState'));
-		$wp->addAction('wp_ajax_nopriv_jigoshop_checkout_change_state', array($this, 'ajaxChangeState'));
-		$wp->addAction('wp_ajax_jigoshop_checkout_change_postcode', array($this, 'ajaxChangePostcode'));
-		$wp->addAction('wp_ajax_nopriv_jigoshop_checkout_change_postcode', array($this, 'ajaxChangePostcode'));
+		$wp->addAction('wp_ajax_jigoshop_checkout_change_country', [$this, 'ajaxChangeCountry']);
+		$wp->addAction('wp_ajax_nopriv_jigoshop_checkout_change_country', [$this, 'ajaxChangeCountry']);
+		$wp->addAction('wp_ajax_jigoshop_checkout_change_state', [$this, 'ajaxChangeState']);
+		$wp->addAction('wp_ajax_nopriv_jigoshop_checkout_change_state', [$this, 'ajaxChangeState']);
+		$wp->addAction('wp_ajax_jigoshop_checkout_change_postcode', [$this, 'ajaxChangePostcode']);
+		$wp->addAction('wp_ajax_nopriv_jigoshop_checkout_change_postcode', [$this, 'ajaxChangePostcode']);
 	}
 
 	/**
@@ -118,10 +118,10 @@ class Checkout implements PageInterface
 			$locations = array_map(function ($location){
 				return Country::getName($location);
 			}, $this->options->get('shopping.selling_locations'));
-			echo json_encode(array(
+			echo json_encode([
 				'success' => false,
 				'error' => sprintf(__('This location is not supported, we sell only to %s.'), join(', ', $locations)),
-			));
+            ]);
 			exit;
 		}
 
@@ -183,16 +183,16 @@ class Checkout implements PageInterface
 	 */
 	private function getAjaxCartResponse(CartEntity $cart)
 	{
-		$tax = array();
+		$tax = [];
 		foreach ($cart->getCombinedTax() as $class => $value) {
-			$tax[$class] = array(
+			$tax[$class] = [
 				'label' => Tax::getLabel($class, $cart),
 				'value' => ProductHelper::formatPrice($value),
-			);
+            ];
 		}
 
-		$shipping = array();
-		$shippingHtml = array();
+		$shipping = [];
+		$shippingHtml = [];
 		foreach ($this->shippingService->getAvailable() as $method) {
 			/** @var $method Method */
 			if ($method instanceof MultipleMethod) {
@@ -202,39 +202,39 @@ class Checkout implements PageInterface
 					$shipping[$method->getId().'-'.$rate->getId()] = $method->isEnabled() ? $rate->calculate($cart) : -1;
 
 					if ($method->isEnabled()) {
-						$shippingHtml[$method->getId().'-'.$rate->getId()] = array(
+						$shippingHtml[$method->getId().'-'.$rate->getId()] = [
 							'price' => ProductHelper::formatPrice($rate->calculate($cart)),
-							'html' => Render::get('shop/cart/shipping/rate', array('method' => $method, 'rate' => $rate, 'cart' => $cart)),
-						);
+							'html' => Render::get('shop/cart/shipping/rate', ['method' => $method, 'rate' => $rate, 'cart' => $cart]),
+                        ];
 					}
 				}
 			} else {
 				$shipping[$method->getId()] = $method->isEnabled() ? $method->calculate($cart) : -1;
 
 				if ($method->isEnabled()) {
-					$shippingHtml[$method->getId()] = array(
+					$shippingHtml[$method->getId()] = [
 						'price' => ProductHelper::formatPrice($method->calculate($cart)),
-						'html' => Render::get('shop/cart/shipping/method', array('method' => $method, 'cart' => $cart)),
-					);
+						'html' => Render::get('shop/cart/shipping/method', ['method' => $method, 'cart' => $cart]),
+                    ];
 				}
 			}
 		}
 
-		$response = array(
+		$response = [
 			'success' => true,
 			'shipping' => $shipping,
 			'subtotal' => $cart->getSubtotal(),
 			'product_subtotal' => $cart->getProductSubtotal(),
 			'tax' => $cart->getCombinedTax(),
 			'total' => $cart->getTotal(),
-			'html' => array(
+			'html' => [
 				'shipping' => $shippingHtml,
 				'subtotal' => ProductHelper::formatPrice($cart->getSubtotal()),
 				'product_subtotal' => ProductHelper::formatPrice($cart->getProductSubtotal()),
 				'tax' => $tax,
 				'total' => ProductHelper::formatPrice($cart->getTotal()),
-			),
-		);
+            ],
+        ];
 
 		return $response;
 	}
@@ -281,10 +281,10 @@ class Checkout implements PageInterface
 		switch ($_POST['field']) {
 			case 'shipping_address':
 				if ($this->options->get('shopping.validate_zip') && !Validation::isPostcode($_POST['value'], $customer->getShippingAddress()->getCountry())) {
-					echo json_encode(array(
+					echo json_encode([
 						'success' => false,
 						'error' => __('Shipping postcode is not valid!', 'jigoshop'),
-					));
+                    ]);
 					exit;
 				}
 
@@ -295,10 +295,10 @@ class Checkout implements PageInterface
 				break;
 			case 'billing_address':
 				if ($this->options->get('shopping.validate_zip') && !Validation::isPostcode($_POST['value'], $customer->getBillingAddress()->getCountry())) {
-					echo json_encode(array(
+					echo json_encode([
 						'success' => false,
 						'error' => __('Billing postcode is not valid!', 'jigoshop'),
-					));
+                    ]);
 					exit;
 				}
 
@@ -394,7 +394,7 @@ class Checkout implements PageInterface
 				// Redirect to thank you page
 				if (empty($url)) {
 					$url = $this->wp->getPermalink($this->wp->applyFilters('jigoshop\checkout\redirect_page_id', $this->options->getPageId(Pages::THANK_YOU)));
-					$url = $this->wp->getHelpers()->addQueryArg(array('order' => $order->getId(), 'key' => $order->getKey()), $url);
+					$url = $this->wp->getHelpers()->addQueryArg(['order' => $order->getId(), 'key' => $order->getKey()], $url);
 				}
 
 				$this->wp->wpRedirect($url);
@@ -458,12 +458,12 @@ class Checkout implements PageInterface
 			));
 		}
 
-		$this->wp->wpUpdateUser(array(
+		$this->wp->wpUpdateUser([
 			'ID' => $id,
 			'role' => 'customer',
 			'first_name' => $_POST['jigoshop_order']['billing_address']['first_name'],
 			'last_name' => $_POST['jigoshop_order']['billing_address']['last_name'],
-		));
+        ]);
 		$this->wp->doAction('jigoshop\checkout\created_account', $id);
 
 		// send the user a confirmation and their login details
@@ -552,7 +552,7 @@ class Checkout implements PageInterface
         $showWithTax = $this->options->get('tax.item_prices', 'excluding_tax') == 'including_tax';
         $suffix = $showWithTax ? $this->options->get('tax.suffix_for_included', '') : $this->options->get('tax.suffix_for_excluded', '');
 
-		return Render::get('shop/checkout', array(
+		return Render::get('shop/checkout', [
 			'cartUrl' => $this->wp->getPermalink($this->options->getPageId(Pages::CART)),
 			'content' => $content,
 			'cart' => $cart,
@@ -572,7 +572,7 @@ class Checkout implements PageInterface
 			// TODO: Fetch whether user want different shipping by default
 			'termsUrl' => $termsUrl,
 			'defaultGateway' => $this->options->get('payment.default_gateway'),
-		));
+        ]);
 	}
 
 	private function getBillingFields(Address $address)
@@ -595,55 +595,55 @@ class Checkout implements PageInterface
 	 */
 	public function getDefaultBillingFields(Address $address)
 	{
-		return ProductHelper::getBasicBillingFields(array(
-			'first_name' => array(
+		return ProductHelper::getBasicBillingFields([
+			'first_name' => [
 				'value' => $address->getFirstName(),
 				'columnSize' => 6,
-			),
-			'last_name' => array(
+            ],
+			'last_name' => [
 				'value' => $address->getLastName(),
 				'columnSize' => 6,
-			),
-			'company' => array(
+            ],
+			'company' => [
 				'value' => $address instanceof CompanyAddress ? $address->getCompany() : '',
 				'columnSize' => 6,
-			),
-			'euvatno' => array(
+            ],
+			'euvatno' => [
 				'value' => $address instanceof CompanyAddress ? $address->getVatNumber() : '',
 				'columnSize' => 6,
-			),
-			'address' => array(
+            ],
+			'address' => [
 				'value' => $address->getAddress(),
 				'columnSize' => 12,
-			),
-			'country' => array(
+            ],
+			'country' => [
 				'options' => Country::getAllowed(),
 				'value' => $address->getCountry(),
 				'columnSize' => 6,
-			),
-			'state' => array(
+            ],
+			'state' => [
 				'type' => Country::hasStates($address->getCountry()) ? 'select' : 'text',
 				'options' => Country::getStates($address->getCountry()),
 				'value' => $address->getState(),
 				'columnSize' => 6,
-			),
-			'city' => array(
+            ],
+			'city' => [
 				'value' => $address->getCity(),
 				'columnSize' => 6,
-			),
-			'postcode' => array(
+            ],
+			'postcode' => [
 				'value' => $address->getPostcode(),
 				'columnSize' => 6,
-			),
-			'phone' => array(
+            ],
+			'phone' => [
 				'value' => $address->getPhone(),
 				'columnSize' => 6,
-			),
-			'email' => array(
+            ],
+			'email' => [
 				'value' => $address->getEmail(),
 				'columnSize' => 6,
-			),
-		));
+            ],
+        ]);
 	}
 
 	private function getShippingFields(Address $address)
@@ -660,42 +660,42 @@ class Checkout implements PageInterface
 	 */
 	public function getDefaultShippingFields(Address $address)
 	{
-		return ProductHelper::getBasicShippingFields(array(
-			'first_name' => array(
+		return ProductHelper::getBasicShippingFields([
+			'first_name' => [
 				'value' => $address->getFirstName(),
 				'columnSize' => 6,
-			),
-			'last_name' => array(
+            ],
+			'last_name' => [
 				'value' => $address->getLastName(),
 				'columnSize' => 6,
-			),
-			'company' => array(
+            ],
+			'company' => [
 				'value' => $address instanceof CompanyAddress ? $address->getCompany() : '',
 				'columnSize' => 12,
-			),
-			'address' => array(
+            ],
+			'address' => [
 				'value' => $address->getAddress(),
 				'columnSize' => 12,
-			),
-			'country' => array(
+            ],
+			'country' => [
 				'options' => Country::getAllowed(),
 				'value' => $address->getCountry(),
 				'columnSize' => 6,
-			),
-			'state' => array(
+            ],
+			'state' => [
 				'type' => Country::hasStates($address->getCountry()) ? 'select' : 'text',
 				'options' => Country::getStates($address->getCountry()),
 				'value' => $address->getState(),
 				'columnSize' => 6,
-			),
-			'city' => array(
+            ],
+			'city' => [
 				'value' => $address->getCity(),
 				'columnSize' => 6,
-			),
-			'postcode' => array(
+            ],
+			'postcode' => [
 				'value' => $address->getPostcode(),
 				'columnSize' => 6,
-			),
-		));
+            ],
+        ]);
 	}
 }

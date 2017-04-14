@@ -4,7 +4,7 @@ JigoshopHelpers.prototype.ajaxSearch = ($field, params) ->
   if typeof params.multiple is 'undefined'
     params.multiple = true
   if typeof params.only_parent is 'undefined'
-    params.only_parent = false
+    params.only_parent = 0
 
   $field.select2
     multiple: params.multiple

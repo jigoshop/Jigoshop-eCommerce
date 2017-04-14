@@ -38,8 +38,8 @@ class Orders implements PageInterface
 		$this->messages = $messages;
 
 		Styles::add('jigoshop.user.account', \JigoshopInit::getUrl().'/assets/css/user/account.css');
-		Styles::add('jigoshop.user.account.orders', \JigoshopInit::getUrl().'/assets/css/user/account/orders.css', array('jigoshop.user.account'));
-		Styles::add('jigoshop.user.account.orders.single', \JigoshopInit::getUrl().'/assets/css/user/account/orders/single.css', array('jigoshop.user.account.orders'));
+		Styles::add('jigoshop.user.account.orders', \JigoshopInit::getUrl().'/assets/css/user/account/orders.css', ['jigoshop.user.account']);
+		Styles::add('jigoshop.user.account.orders.single', \JigoshopInit::getUrl().'/assets/css/user/account/orders/single.css', ['jigoshop.user.account.orders']);
 		$this->wp->doAction('jigoshop\account\orders\assets', $wp);
 	}
 
@@ -50,7 +50,7 @@ class Orders implements PageInterface
 	public function render()
 	{
 		if (!$this->wp->isUserLoggedIn()) {
-			return Render::get('user/login', array());
+			return Render::get('user/login', []);
 		}
 
 		$order = $this->wp->getQueryParameter('orders');
@@ -63,7 +63,7 @@ class Orders implements PageInterface
             $showWithTax = $this->options->get('tax.item_prices', 'excluding_tax') == 'including_tax';
             $suffix = $showWithTax ? $this->options->get('tax.suffix_for_included', '') : $this->options->get('tax.suffix_for_excluded', '');
 
-			return Render::get('user/account/orders/single', array(
+			return Render::get('user/account/orders/single', [
 				'messages' => $this->messages,
 				'order' => $order,
 				'myAccountUrl' => $accountUrl,
@@ -73,17 +73,17 @@ class Orders implements PageInterface
 				'getTaxLabel' => function ($taxClass) use ($order){
 					return Tax::getLabel($taxClass, $order);
 				},
-			));
+            ]);
 		}
 
 		$customer = $this->customerService->getCurrent();
 		$orders = $this->orderService->findForUser($customer->getId());
 
-		return Render::get('user/account/orders', array(
+		return Render::get('user/account/orders', [
 			'messages' => $this->messages,
 			'customer' => $customer,
 			'orders' => $orders,
 			'myAccountUrl' => $accountUrl,
-		));
+        ]);
 	}
 }

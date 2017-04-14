@@ -23,25 +23,25 @@ class SystemInfo implements PageInterface
 	/** @var \WPAL\Wordpress */
 	private $wp;
 
-	private $tabs = array();
+	private $tabs = [];
 	private $currentTab;
 
 	public function __construct(Wordpress $wp)
 	{
 		$this->wp = $wp;
-		$wp->addAction('current_screen', array($this, 'register'));
+		$wp->addAction('current_screen', [$this, 'register']);
 		$wp->addAction('admin_enqueue_scripts', function () use ($wp){
 			// Weed out all admin pages except the Jigoshop Settings page hits
-			if (!in_array($wp->getPageNow(), array('admin.php',))) {
+			if (!in_array($wp->getPageNow(), ['admin.php',])) {
 				return;
 			}
 
 			$screen = $wp->getCurrentScreen();
-			if (!in_array($screen->base, array('jigoshop_page_'.self::NAME))) {
+			if (!in_array($screen->base, ['jigoshop_page_'.self::NAME])) {
 				return;
 			}
 
-			Styles::add('jigoshop.admin.system_info', \JigoshopInit::getUrl().'/assets/css/admin/system_info.css', array('jigoshop.admin'));
+			Styles::add('jigoshop.admin.system_info', \JigoshopInit::getUrl().'/assets/css/admin/system_info.css', ['jigoshop.admin']);
 		});
 	}
 
@@ -91,12 +91,12 @@ class SystemInfo implements PageInterface
 	public function register()
 	{
 		// Weed out all admin pages except the Jigoshop Settings page hits
-		if (!in_array($this->wp->getPageNow(), array('admin.php'))) {
+		if (!in_array($this->wp->getPageNow(), ['admin.php'])) {
 			return;
 		}
 
 		$screen = $this->wp->getCurrentScreen();
-		if (!in_array($screen->base, array('jigoshop_page_'.self::NAME))) {
+		if (!in_array($screen->base, ['jigoshop_page_'.self::NAME])) {
 			return;
 		}
 
@@ -112,7 +112,7 @@ class SystemInfo implements PageInterface
 			}, self::NAME);
 
 			foreach ($section['fields'] as $field) {
-				$this->wp->addSettingsField($field['id'], $field['title'], array($this, 'displayField'), self::NAME, $section['id'], $field);
+				$this->wp->addSettingsField($field['id'], $field['title'], [$this, 'displayField'], self::NAME, $section['id'], $field);
 			}
 		}
 	}
@@ -122,10 +122,10 @@ class SystemInfo implements PageInterface
 	 */
 	public function display()
 	{
-		Render::output('admin/system_info', array(
+		Render::output('admin/system_info', [
 			'tabs' => $this->tabs,
 			'current_tab' => $this->getCurrentTab(),
-		));
+        ]);
 	}
 
 	/**
@@ -136,10 +136,10 @@ class SystemInfo implements PageInterface
 	 */
 	public function displaySection(TabInterface $tab, array $section)
 	{
-		Render::output('admin/system_info/section', array(
+		Render::output('admin/system_info/section', [
 				'tab' => $tab,
 				'section' => $section,
-		));
+        ]);
 	}
 
 

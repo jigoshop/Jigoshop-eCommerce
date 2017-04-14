@@ -2,6 +2,9 @@
 
 namespace Jigoshop\Api\Routes\V1;
 
+
+use Jigoshop\Service\ServiceInterface;
+use Slim\App;
 use Slim\Http\Request;
 use Slim\Http\Response;
 
@@ -14,6 +17,48 @@ use Slim\Http\Response;
  */
 abstract class PostController extends BaseController
 {
+    /**
+     * prefix to services
+     */
+    const JIGOSHOP_SERVICE_PREFIX = 'jigoshop.service.';
+    /**
+     * path to type class
+     */
+    const JIGOSHOP_TYPES_PREFIX = 'Jigoshop\\Core\\Types::';
+    /**
+     * path to entities
+     */
+    const JIGOSHOP_ENTITY_PREFIX = 'Jigoshop\\Entity\\';
+    /**
+     * @var string
+     */
+    protected $entityName;
+    /**
+     * @var string
+     */
+    protected $serviceName;
+    /**
+     * @var ServiceInterface
+     */
+    protected $service;
+    /**
+     * @var App
+     */
+    protected $app;
+
+    /**
+     * initialize all needed values
+     * PostController constructor.
+     * @param App $app
+     */
+    public function __construct(App $app)
+    {
+        $this->app = $app;
+        $this->entityName = $this->entityName ?: $this->singularize(strtolower((new \ReflectionClass($this))->getShortName()));
+        $this->serviceName = $this->serviceName ?: self::JIGOSHOP_SERVICE_PREFIX . strtolower((new \ReflectionClass($this))->getShortName());
+        $this->service = $this->app->getContainer()->di->get($this->singularize($this->serviceName));
+    }
+
     /**
      * Basic wp_post creation method
      * @param Request $request
@@ -96,7 +141,7 @@ abstract class PostController extends BaseController
      */
     protected function getObjectsCount()
     {
-        return call_user_func(array($this->service, 'get' . $this->entityName . 'sCount'));
+        return call_user_func([$this->service, 'get' . $this->entityName . 'sCount']);
     }
 
     /**

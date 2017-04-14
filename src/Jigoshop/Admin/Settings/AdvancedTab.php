@@ -44,22 +44,22 @@ class AdvancedTab implements TabInterface
         $this->settings = $options->get(self::SLUG);
         $this->messages = $messages;
 
-        $this->caches = array(
+        $this->caches = [
             'simple' => _x('Simple', 'cache', 'jigoshop'),
             'php_fast_cache' => _x('Php Fast Cache - Use this option only if your database is responding slowly. ',
                 'cache', 'jigoshop'),
-        );
-        $this->sessionTypes = array(
+        ];
+        $this->sessionTypes = [
             'php' => __('Php session', 'jigoshop'),
             'transient' => __('Wordpress transient', 'jigoshop'),
-        );
+        ];
 
         $wp->addAction('admin_enqueue_scripts', function () use ($options){
             if (!isset($_GET['tab']) || $_GET['tab'] != AdvancedTab::SLUG) {
                 return;
             }
             Scripts::add('jigoshop.admin.settings.taxes', \JigoshopInit::getUrl().'/assets/js/admin/settings/advanced.js',
-                array('jquery', 'wp-util'), array('page' => 'jigoshop_page_jigoshop_settings'));
+                ['jquery', 'wp-util'], ['page' => 'jigoshop_page_jigoshop_settings']);
         });
     }
 
@@ -88,12 +88,12 @@ class AdvancedTab implements TabInterface
         $termsPages = $pages;
         $termsPages[0] = __('None', 'jigoshop');
 
-        return array(
-            array(
+        return [
+            [
                 'title' => __('Cron jobs', 'jigoshop'),
                 'id' => 'cron',
-                'fields' => array(
-                    array(
+                'fields' => [
+                    [
                         'name' => '[automatic_complete]',
                         'title' => __('Complete processing orders', 'jigoshop'),
                         'description' => __("Change all 'Processing' orders older than one month to 'Completed'",
@@ -102,9 +102,9 @@ class AdvancedTab implements TabInterface
                             'jigoshop'),
                         'type' => 'checkbox',
                         'checked' => $this->settings['automatic_complete'],
-                        'classes' => array('switch-medium'),
-                    ),
-                    array(
+                        'classes' => ['switch-medium'],
+                    ],
+                    [
                         'name' => '[automatic_reset]',
                         'title' => __('Reset pending orders', 'jigoshop'),
                         'description' => __("Change all 'Pending' orders older than one month to 'On Hold'",
@@ -113,14 +113,14 @@ class AdvancedTab implements TabInterface
                             'jigoshop'),
                         'type' => 'checkbox',
                         'checked' => $this->settings['automatic_reset'],
-                        'classes' => array('switch-medium'),
-                    ),
-                ),
-            ),
-            array(
+                        'classes' => ['switch-medium'],
+                    ],
+                ],
+            ],
+            [
                 'title' => __('Integration', 'jigoshop'),
                 'id' => 'integration',
-                'fields' => array(
+                'fields' => [
                     // TODO: Share This integration
 //					array(
 //						'name' => '[integration][share_this]',
@@ -130,52 +130,52 @@ class AdvancedTab implements TabInterface
 //						'type' => 'text',
 //						'value' => $this->settings['integration']['share_this'],
 //					),
-                    array(
+                    [
                         'name' => '[integration][google_analytics]',
                         'title' => __('Google Analytics ID', 'jigoshop'),
                         'description' => __('Log into your Google Analytics account to find your ID. e.g. <code>UA-XXXXXXX-X</code>',
                             'jigoshop'),
                         'type' => 'text',
                         'value' => $this->settings['integration']['google_analytics'],
-                    ),
-                ),
-            ),
-            array(
+                    ],
+                ],
+            ],
+            [
                 'title' => __('Products list', 'jigoshop'),
                 'id' => 'products_list',
-                'fields' => array(
-                    array(
+                'fields' => [
+                    [
                         'name' => '[products_list][variations_sku_stock]',
                         'title' => __('Show variation\'s SKU and stock', 'jigoshop'),
                         'description' => __("Show all variation's SKU and stock on admin products list page.",
                             'jigoshop'),
                         'type' => 'checkbox',
                         'checked' => $this->settings['products_list']['variations_sku_stock'],
-                        'classes' => array('switch-medium'),
-                    ),
-                ),
-            ),
-            array(
+                        'classes' => ['switch-medium'],
+                    ],
+                ],
+            ],
+            [
                 'title' => __('Others', 'jigoshop'),
                 'id' => 'others',
-                'fields' => array(
-                    array(
+                'fields' => [
+                    [
                         'name' => '[cache]',
                         'title' => __('Caching mechanism', 'jigoshop'),
                         'description' => __('Decides which mechanism for caching is used on the page.', 'jigoshop'),
                         'type' => 'select',
                         'value' => $this->settings['cache'],
                         'options' => $this->caches,
-                    ),
-                    array(
+                    ],
+                    [
                         'name' => '[session]',
                         'title' => __('Session mechanism', 'jigoshop'),
                         'description' => __('Decides which mechanism for session is used on the page.', 'jigoshop'),
                         'type' => 'select',
                         'value' => $this->settings['session'],
                         'options' => $this->sessionTypes,
-                    ),
-                    array(
+                    ],
+                    [
                         'name' => '[ignore_meta_queries]',
                         'title' => __('Ignore meta queries on product list', 'jigoshop'),
                         'description' => __('Ignores products\' visibility to enhance the loading time.
@@ -183,118 +183,118 @@ Warning : This will result in showing "out of stock" products on the catalog pag
                             'jigoshop'),
                         'type' => 'checkbox',
                         'checked' => $this->settings['ignore_meta_queries'],
-                        'classes' => array('switch-medium'),
-                    ),
-                    array(
+                        'classes' => ['switch-medium'],
+                    ],
+                    [
                         'name' => '[install_emails]',
                         'title' => __('Create default emails', 'jigoshop'),
                         'description' => __('Creates default emails for Jigoshop email system.', 'jigoshop'),
                         'type' => 'user_defined',
                         'display' => function () {
-                            Render::output('admin/settings/create_emails', array());
+                            Render::output('admin/settings/create_emails', []);
                         },
-                    ),
-                ),
-            ),
-            array(
+                    ],
+                ],
+            ],
+            [
                 'title' => __('API', 'jigoshop'),
                 'id' => 'api',
                 'description' => __('', 'jigoshop'),
-                'fields' => array(
-                    array(
+                'fields' => [
+                    [
                         'name' => '[api][enable]',
                         'title' => __('Enable', 'jigoshop'),
                         'type' => 'checkbox',
                         'checked' => $this->settings['api']['enable'],
-                        'classes' => array('switch-medium'),
-                    ),
-                    array(
+                        'classes' => ['switch-medium'],
+                    ],
+                    [
                         'name' => '[api][secret]',
                         'title' => __('Secret key', 'jigoshop'),
                         'type' => 'user_defined',
                         'value' => $this->settings['api']['secret'],
-                        'desctiption' => __('', 'jigoshop'),
+                        'description' => __('', 'jigoshop'),
                         'display' => function($field) {
-                            Render::output('admin/settings/api_key', array(
+                            Render::output('admin/settings/api_key', [
                                 'name' => $field['name'],
                                 'value' => $field['value'],
                                 'description' => $field['description'],
-                            ));
+                            ]);
                         }
-                    ),
-                    array(
+                    ],
+                    [
                         'name' => '[api][users]',
                         'title' => __('Users', 'jigoshop'),
                         'type' => 'user_defined',
                         'value' => $this->settings['api']['users'],
                         'description' => '',
                         'display' => function ($field) {
-                            Render::output('admin/settings/api_users', array(
+                            Render::output('admin/settings/api_users', [
                                 'name' => $field['name'],
                                 'values' => $field['value'],
                                 'description' => $field['description'],
                                 'availablePermissions' => Permission::getPermisions(),
-                            ));
+                            ]);
                         }
-                    ),
-                )
-            ),
-            array(
+                    ],
+                ]
+            ],
+            [
                 'title' => __('Pages', 'jigoshop'),
                 'id' => 'pages',
                 'description' => __('This section allows you to change content source page for each part of Jigoshop. It will not change the main behaviour though.',
                     'jigoshop'),
-                'fields' => array(
-                    array(
+                'fields' => [
+                    [
                         'name' => '[pages][shop]',
                         'title' => __('Shop page', 'jigoshop'),
                         'type' => 'select',
                         'value' => $this->settings['pages']['shop'],
                         'options' => $pages,
-                    ),
-                    array(
+                    ],
+                    [
                         'name' => '[pages][cart]',
                         'title' => __('Cart page', 'jigoshop'),
                         'type' => 'select',
                         'value' => $this->settings['pages']['cart'],
                         'options' => $pages,
-                    ),
-                    array(
+                    ],
+                    [
                         'name' => '[pages][checkout]',
                         'title' => __('Checkout page', 'jigoshop'),
                         'type' => 'select',
                         'value' => $this->settings['pages']['checkout'],
                         'options' => $pages,
-                    ),
-                    array(
+                    ],
+                    [
                         'name' => '[pages][checkout_thank_you]',
                         'title' => __('Thanks page', 'jigoshop'),
                         'type' => 'select',
                         'value' => $this->settings['pages']['checkout_thank_you'],
                         'options' => $pages,
-                    ),
-                    array(
+                    ],
+                    [
                         'name' => '[pages][account]',
                         'title' => __('My account page', 'jigoshop'),
                         'type' => 'select',
                         'value' => $this->settings['pages']['account'],
                         'options' => $pages,
-                    ),
-                    array(
+                    ],
+                    [
                         'name' => '[pages][terms]',
                         'title' => __('Terms page', 'jigoshop'),
                         'type' => 'select',
                         'value' => $this->settings['pages']['terms'],
                         'options' => $termsPages
-                    ),
-                ),
-            ),
-        );
+                    ],
+                ],
+            ],
+        ];
     }
 
     private function _getPages()
     {
-        $pages = array();
+        $pages = [];
         foreach ($this->wp->getPages() as $page) {
             $pages[$page->ID] = $page->post_title;
         }

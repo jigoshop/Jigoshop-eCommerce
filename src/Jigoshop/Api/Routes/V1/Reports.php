@@ -60,7 +60,7 @@ class Reports
          * @apiError NotFound Invalid report type.
          * @apiPermission read_reports
          */
-        $app->get('', array($this, 'getReports'));
+        $app->get('', [$this, 'getReports']);
     }
 
     public function getReports(Request $request, Response $response, $args)

@@ -17,8 +17,8 @@ class Order implements Post
 	{
 		$this->wp = $wp;
 
-		$wp->addAction('init', array($this, 'registerOrderStatuses'));
-		$wp->addFilter('post_updated_messages', array($this, 'updateMessages'));
+		$wp->addAction('init', [$this, 'registerOrderStatuses']);
+		$wp->addFilter('post_updated_messages', [$this, 'updateMessages']);
 		// Enable comments for all orders, disable pings
 		$wp->addFilter('wp_insert_post_data', function ($data){
 			if ($data['post_type'] == Order::NAME) {
@@ -37,8 +37,8 @@ class Order implements Post
 
 	public function getDefinition()
 	{
-		return array(
-			'labels' => array(
+		return [
+			'labels' => [
 				'name' => __('Orders', 'jigoshop'),
 				'singular_name' => __('Order', 'jigoshop'),
 				'all_items' => __('All orders', 'jigoshop'),
@@ -53,7 +53,7 @@ class Order implements Post
 				'not_found' => __('No orders found', 'jigoshop'),
 				'not_found_in_trash' => __('No orders found in trash', 'jigoshop'),
 				'parent' => __('Parent orders', 'jigoshop')
-			),
+            ],
 			'description' => __('This is where store orders are stored.', 'jigoshop'),
 			'public' => false,
 			'show_ui' => true,
@@ -65,25 +65,25 @@ class Order implements Post
 			'hierarchical' => false,
 			'rewrite' => false,
 			'query_var' => false,
-			'supports' => array('title', 'comments'),
+			'supports' => ['title', 'comments'],
 			'has_archive' => false,
 			'menu_position' => 58,
 			'menu_icon' => 'dashicons-clipboard',
-		);
+        ];
 	}
 
 	public function registerOrderStatuses()
 	{
 		$statuses = Status::getStatuses();
 		foreach ($statuses as $status => $label) {
-			$this->wp->registerPostStatus($status, array(
+			$this->wp->registerPostStatus($status, [
 				'label' => $label,
 				'public' => false,
 				'exclude_from_search' => false,
 				'show_in_admin_all_list' => true,
 				'show_in_admin_status_list' => true,
 				'label_count' => _n_noop($label.' <span class="count">(%s)</span>', $label.' <span class="count">(%s)</span>', 'jigoshop'),
-			));
+            ]);
 		}
 	}
 

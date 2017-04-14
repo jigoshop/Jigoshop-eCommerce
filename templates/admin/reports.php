@@ -11,7 +11,7 @@ use Jigoshop\Helper\Render;
 <div class="wrap jigoshop">
 	<h1><?php _e('Jigoshop &raquo; Reports', 'jigoshop'); ?></h1>
 	<?php settings_errors(); ?>
-	<?php Render::output('shop/messages', array('messages' => $messages)); ?>
+	<?php Render::output('shop/messages', ['messages' => $messages]); ?>
 	<?php
 	$menuContent = '';
 	$activeTitle = '';
@@ -32,19 +32,19 @@ use Jigoshop\Helper\Render;
 				<button type="button" class="navbar-toggle margin-9" data-toggle="collapse" data-target="#settingsBar">
 					<span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="#"><?php echo $activeTitle; ?></a>
+				<a class="navbar-brand" href="#"><?= $activeTitle; ?></a>
 				<div class="clear"></div>
 			</div>
 			<div class="collapse navbar-collapse" id="settingsBar">
 				<ul class="nav navbar-nav">
-					<?php echo $menuContent; ?>
+					<?= $menuContent; ?>
 				</ul>
 			</div>
 		</div>
 	</nav>
 	<nav class="hidden-xs">
 		<ul class="nav nav-tabs nav-justified">
-			<?php echo $menuContent; ?>
+			<?= $menuContent; ?>
 		</ul>
 	</nav>
 	<noscript>

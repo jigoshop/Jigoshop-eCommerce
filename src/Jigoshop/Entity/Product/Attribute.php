@@ -32,7 +32,7 @@ abstract class Attribute implements \JsonSerializable
 	/** @var bool */
 	private $exists;
 	/** @var Option[] */
-	protected $options = array();
+	protected $options = [];
 	/** @var mixed */
 	protected $value;
 
@@ -42,11 +42,11 @@ abstract class Attribute implements \JsonSerializable
 	public static function getTypes()
 	{
 		if (self::$types === null) {
-			self::$types = array(
+			self::$types = [
 				Multiselect::TYPE => __('Multiselect', 'jigoshop'),
 				Select::TYPE => __('Select', 'jigoshop'),
 				Text::TYPE => __('Text', 'jigoshop'),
-			);
+            ];
 		}
 
 		return self::$types;
@@ -245,9 +245,9 @@ abstract class Attribute implements \JsonSerializable
 	 */
 	public function getFieldsToSave()
 	{
-		return array(
+		return [
 			$this->visible,
-		);
+        ];
 	}
 
 	/**

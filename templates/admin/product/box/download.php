@@ -8,24 +8,24 @@ use Jigoshop\Entity\Product;
 ?>
 <fieldset>
 	<?php
-	Forms::text(array(
+	Forms::text([
 		'name' => 'product[url]',
 		'label' => __('File path', 'jigoshop'),
-		'classes' => array('product-downloadable'),
+		'classes' => ['product-downloadable'],
 		'placeholder' => __('Enter file URL...', 'jigoshop'),
 		'value' => $product instanceof Product\Downloadable ? $product->getUrl() : '',
-	));
+    ]);
 	?>
 	<?php
-	Forms::text(array(
+	Forms::text([
 		'name' => 'product[limit]',
 		'type' => 'number',
 		'label' => __('Downloads limit', 'jigoshop'),
 		'description' => __('Leave empty for unlimited downloads.', 'jigoshop'),
-		'classes' => array('product-downloadable'),
+		'classes' => ['product-downloadable'],
 		'placeholder' => 0,
 		'value' => $product instanceof Product\Downloadable ? $product->getLimit() : '',
-	));
+    ]);
 	?>
 </fieldset>
 <?php do_action('jigoshop\product\tabs\downloads', $product); ?>

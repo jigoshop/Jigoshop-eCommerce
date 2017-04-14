@@ -47,7 +47,7 @@ class Dummy implements Method
 	 */
 	public function getOptions()
 	{
-		return array();
+		return [];
 	}
 
 	/**

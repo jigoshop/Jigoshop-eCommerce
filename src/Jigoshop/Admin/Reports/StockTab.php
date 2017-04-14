@@ -44,20 +44,20 @@ class StockTab implements TabInterface
 	 */
 	public function display()
 	{
-		Render::output('admin/reports/stock', array(
+		Render::output('admin/reports/stock', [
 				'types' => $this->getTypes(),
 				'current_type' => $this->getCurrentType(),
 				'content' => $this->content
-		));
+        ]);
 	}
 
 	private function getTypes()
 	{
-		return $this->wp->applyFilters('jigoshop\admin\reports\stock\types', array(
+		return $this->wp->applyFilters('jigoshop\admin\reports\stock\types', [
 				'low_in_stock' => __('Low in Stock', 'jigoshop'),
 				'out_of_stock' => __('Out of Stock', 'jigoshop'),
 				'most_stocked' => __('Most Stocked', 'jigoshop'),
-		));
+        ]);
 	}
 
 	private function getCurrentType()
@@ -72,7 +72,7 @@ class StockTab implements TabInterface
 
 	private function getContent()
 	{
-		if (!in_array($this->wp->getPageNow(), array('admin.php', 'options.php'))) {
+		if (!in_array($this->wp->getPageNow(), ['admin.php', 'options.php'])) {
 			return null;
 		}
 

@@ -9,8 +9,8 @@ use Jigoshop\Admin\Reports\Chart\WidgetInterface;
 class SelectCategories implements WidgetInterface
 {
     const SLUG = 'select_categories';
-    private $selectedCategories = array();
-    private $allCategories = array();
+    private $selectedCategories = [];
+    private $allCategories = [];
 
     public function __construct($selectedCategories, $allCategories)
     {
@@ -30,15 +30,15 @@ class SelectCategories implements WidgetInterface
 
     public function getArgs()
     {
-        return array(
+        return [
             'id' => 'select_categories',
             'name' => 'show_categories',
             'value' => $this->selectedCategories,
             'multiple' => true,
-            'classes' => array(),
+            'classes' => [],
             'options' => $this->allCategories,
             'size' => 14,
-        );
+        ];
     }
 
     public function isVisible()

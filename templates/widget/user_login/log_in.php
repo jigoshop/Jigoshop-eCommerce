@@ -19,7 +19,7 @@ if ($title) {
 }
 do_action('jigoshop_widget_login_before_form');
 ?>
-<form action="<?php echo $loginUrl; ?>" method="post" class="jigoshop_login_widget">
+<form action="<?= $loginUrl; ?>" method="post" class="jigoshop_login_widget">
 	<p>
 		<input type="text" name="log" class="input-text username" placeholder="<?php _e('Username', 'jigoshop'); ?>" />
 	</p>
@@ -30,7 +30,7 @@ do_action('jigoshop_widget_login_before_form');
 		<input type="submit" name="submit" value="<?php _e('Login', 'jigoshop'); ?>" class="input-submit" />
 	</p>
 	<p>
-		<a class="forgot" href="<?php echo $passwordUrl; ?>"><?php _e('Remind password', 'jigoshop'); ?></a>
+		<a class="forgot" href="<?= $passwordUrl; ?>"><?php _e('Remind password', 'jigoshop'); ?></a>
 	</p>
 	<?php if (\Jigoshop\Helper\Options::getOptions('shopping')['allow_registration']): ?>
 		<p class="register">
@@ -42,7 +42,7 @@ do_action('jigoshop_widget_login_before_form');
 	<nav role="navigation">
 		<ul class="pagenav">
 			<?php foreach ($links as $title => $href): ?>
-				<li><a title="<?php printf(__('Go to %s', 'jigoshop'), $title); ?>" href="<?php echo $href; ?>"><?php echo $title; ?></a></li>
+				<li><a title="<?php printf(__('Go to %s', 'jigoshop'), $title); ?>" href="<?= $href; ?>"><?= $title; ?></a></li>
 			<?php endforeach; ?>
 		</ul>
 	</nav>

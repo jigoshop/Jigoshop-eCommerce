@@ -78,7 +78,7 @@ class Coupon implements EntityFactoryInterface
             return null;
         }
 
-        $state = array();
+        $state = [];
         $coupon = null;
         if ($post) {
             $coupon = new Entity();

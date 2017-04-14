@@ -20,7 +20,7 @@ class Permalinks
 		$this->wp = $wp;
 		$this->options = $options;
 
-		$wp->addAction('current_screen', array($this, 'init'));
+		$wp->addAction('current_screen', [$this, 'init']);
 		$this->save();
 	}
 
@@ -30,20 +30,20 @@ class Permalinks
 	public function init()
 	{
 		// Add a section to the permalinks page
-		$this->wp->addSettingsSection('jigoshop-permalink', __('Product permalink base', 'jigoshop'), array($this, 'settings'), 'permalink');
+		$this->wp->addSettingsSection('jigoshop-permalink', __('Product permalink base', 'jigoshop'), [$this, 'settings'], 'permalink');
 
 		// Add our settings
 		$this->wp->addSettingsField(
 			'jigoshop_product_category_slug',
 			__('Product category base', 'jigoshop'),
-			array($this, 'product_category_slug_input'),
+			[$this, 'product_category_slug_input'],
 			'permalink',
 			'optional'
 		);
 		$this->wp->addSettingsField(
 			'jigoshop_product_tag_slug',
 			__('Product tag base', 'jigoshop'),
-			array($this, 'product_tag_slug_input'),
+			[$this, 'product_tag_slug_input'],
 			'permalink',
 			'optional'
 		);
@@ -88,20 +88,20 @@ class Permalinks
 		$base = urldecode(($shopPageId > 0 && $this->wp->getPost($shopPageId)) ? $this->wp->getPageUri($shopPageId) : _x('shop', 'default-slug', 'jigoshop'));
 		$productBase = _x('product', 'default-slug', 'jigoshop');
 
-		$structures = array(
+		$structures = [
 			0 => '',
 			1 => '/'.$helpers->trailingslashit($productBase),
 			2 => '/'.$helpers->trailingslashit($base),
 			3 => '/'.$helpers->trailingslashit($base).'%'.Types::PRODUCT_CATEGORY.'%'
-		);
-		Render::output('admin/permalinks', array(
+        ];
+		Render::output('admin/permalinks', [
 			'permalink' => $permalink,
 			'structures' => $structures,
 			'shopPageId' => $shopPageId,
 			'base' => $base,
 			'productBase' => $productBase,
 			'homeUrl' => $this->wp->getHomeUrl(),
-		));
+        ]);
 	}
 
 	/**

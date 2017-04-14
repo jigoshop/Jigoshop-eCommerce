@@ -21,27 +21,29 @@ class ShippingConfiguration implements ConfigurationInterface
 	 */
 	public function addServices(Services $services)
 	{
-		$services->setDetails('jigoshop.shipping.flat_rate', 'Jigoshop\Shipping\FlatRate', array(
+		$services->setDetails('jigoshop.shipping.flat_rate', 'Jigoshop\Shipping\FlatRate', [
 			'wpal',
 			'jigoshop.options',
 			'jigoshop.service.cart',
 			'jigoshop.messages'
-		));
-		$services->setDetails('jigoshop.shipping.free_shipping', 'Jigoshop\Shipping\FreeShipping', array(
+        ]);
+		$services->setDetails('jigoshop.shipping.free_shipping', 'Jigoshop\Shipping\FreeShipping', [
 			'wpal',
 			'jigoshop.options',
 			'jigoshop.service.cart',
 			'jigoshop.messages'
-		));
-		$services->setDetails('jigoshop.shipping.local_pickup', 'Jigoshop\Shipping\LocalPickup', array(
+        ]);
+		$services->setDetails('jigoshop.shipping.local_pickup', 'Jigoshop\Shipping\LocalPickup', [
 			'wpal',
 			'jigoshop.options',
 			'jigoshop.service.cart'
-		));
-        $services->setDetails('jigoshop.shipping.advanced_flat_rate', 'Jigoshop\Shipping\AdvancedFlatRate', array(
+        ]);
+        $services->setDetails('jigoshop.shipping.advanced_flat_rate', 'Jigoshop\Shipping\AdvancedFlatRate', [
             'wpal',
-            'jigoshop.service.cart'
-        ));
+            'jigoshop.options',
+            'jigoshop.service.cart',
+            'jigoshop.messages'
+        ]);
 	}
 
 	/**

@@ -14,8 +14,8 @@ use WPAL\Wordpress;
 
 class ByProduct extends Chart
 {
-	private $chartColours = array();
-	private $productIds = array();
+	private $chartColours = [];
+	private $productIds = [];
 	private $reportData;
 
 	public function __construct(Wordpress $wp, Options $options, $currentRange)
@@ -35,7 +35,7 @@ class ByProduct extends Chart
 
 		$wp->addAction('admin_enqueue_scripts', function () use ($wp){
 			// Weed out all admin pages except the Jigoshop Settings page hits
-			if (!in_array($wp->getPageNow(), array('admin.php', 'options.php'))) {
+			if (!in_array($wp->getPageNow(), ['admin.php', 'options.php'])) {
 				return;
 			}
 
@@ -43,13 +43,13 @@ class ByProduct extends Chart
 			if ($screen->base != 'jigoshop_page_'.Reports::NAME) {
 				return;
 			}
-			Styles::add('jigoshop.vendors.select2', \JigoshopInit::getUrl().'/assets/css/vendors/select2.css', array('jigoshop.admin'));
-			Scripts::add('jigoshop.vendors.select2', \JigoshopInit::getUrl().'/assets/js/vendors/select2.js', array('jigoshop.admin'), array('in_footer' => true));
-			Scripts::add('jigoshop.admin.reports.widget.product_search', \JigoshopInit::getUrl().'/assets/js/admin/reports/widget/product_search.js', array(
+			Styles::add('jigoshop.vendors.select2', \JigoshopInit::getUrl().'/assets/css/vendors/select2.css', ['jigoshop.admin']);
+			Scripts::add('jigoshop.vendors.select2', \JigoshopInit::getUrl().'/assets/js/vendors/select2.js', ['jigoshop.admin'], ['in_footer' => true]);
+			Scripts::add('jigoshop.admin.reports.widget.product_search', \JigoshopInit::getUrl().'/assets/js/admin/reports/widget/product_search.js', [
 				'jquery',
 				'jigoshop.vendors.select2',
                 'jigoshop.helpers.ajax_search'
-			), array('in_footer' => true));
+            ], ['in_footer' => true]);
 			Scripts::localize('jigoshop.reports.chart', 'chart_data', $this->getMainChart());
 		});
 	}
@@ -62,10 +62,10 @@ class ByProduct extends Chart
 	public function getChartLegend()
 	{
 		if (!$this->productIds) {
-			return array();
+			return [];
 		}
 
-		$legend = array();
+		$legend = [];
 
 		$totalSales = array_sum(array_map(function ($item){
 			return $item->order_item_amount;
@@ -77,23 +77,23 @@ class ByProduct extends Chart
 			return $item->order_item_quantity;
 		}, $this->reportData->orderItems));
 
-		$legend[] = array(
+		$legend[] = [
 			'title' => sprintf(__('%s sales for the selected items', 'jigoshop'), '<strong>'.Product::formatPrice($totalSales).'</strong>'),
 			'color' => $this->chartColours['sales_amount'],
 			'highlight_series' => 2
-		);
+        ];
 
-		$legend[] = array(
+		$legend[] = [
 			'title' => sprintf(__('%s purchases for the selected items', 'jigoshop'), '<strong>'.$totalItems.'</strong>'),
 			'color' => $this->chartColours['item_count'],
 			'highlight_series' => 1
-		);
+        ];
 
-		$legend[] = array(
+		$legend[] = [
 			'title' => sprintf(__('%s purchased quantity', 'jigoshop'), '<strong>'.$totalQuantity.'</strong>'),
 			'color' => $this->chartColours['item_quantity'],
 			'highlight_series' => 0
-		);
+        ];
 
 		return $legend;
 	}
@@ -112,59 +112,82 @@ class ByProduct extends Chart
 		$this->reportData = new \stdClass();
 		$wpdb = $this->wp->getWPDB();
 
-		$query = $this->prepareQuery(array(
-			'select' => array(
-				'order_item' => array(
-					array(
+		$query = $this->prepareQuery([
+			'select' => [
+				'order_item' => [
+					[
 						'field' => 'quantity',
 						'function' => 'SUM',
 						'name' => 'order_item_quantity',
-					),
-					array(
+                    ],
+					[
 						'field' => 'id',
 						'function' => 'COUNT',
 						'name' => 'order_item_count',
-					),
-					array(
+                    ],
+					[
 						'field' => 'cost',
 						'function' => 'SUM',
 						'name' => 'order_item_amount',
-					),
-				),
-				'posts' => array(
-					array(
+                    ],
+                ],
+				'posts' => [
+					[
 						'field' => 'post_date',
 						'function' => '',
 						'name' => 'post_date',
-					),
-				),
-			),
-			'from' => array(
+                    ],
+                ],
+            ],
+			'from' => [
 				'order_item' => $wpdb->prefix.'jigoshop_order_item',
-			),
-			'join' => array(
-				'posts' => array(
+            ],
+			'join' => [
+				'posts' => [
 					'table' => $wpdb->posts,
-					'on' => array(
-						array(
+					'on' => [
+						[
 							'key' => 'ID',
 							'value' => 'order_item.order_id',
 							'compare' => '=',
-						)
-					),
-				),
-			),
-			'where' => array(
-				array(
-					'key' => 'order_item.product_id',
-					'value' => sprintf('("%s")', implode('","', $this->productIds)),
-					'compare' => 'IN'
-				),
-			),
+                        ]
+                    ],
+                ],
+                'order_item_meta' => [
+                    'table' => $wpdb->prefix.'jigoshop_order_item_meta',
+                    'on' => [
+                        [
+                            'key' => 'item_id',
+                            'value' => 'order_item.id',
+                            'compare' => '='
+                        ],
+                        [
+                            'key' => 'meta_key',
+                            'value' => '"variation_id"',
+                            'compare' => '='
+                        ]
+                    ]
+                ]
+            ],
+			'where' => [
+                [
+                    'operator' => 'OR',
+                    [
+                        'key' => 'order_item.product_id',
+                        'value' => sprintf('("%s")', implode('","', $this->productIds)),
+                        'compare' => 'IN'
+                    ],
+                    [
+                        'key' => 'order_item_meta.meta_value',
+                        'value' => sprintf('("%s")', implode('","', $this->productIds)),
+                        'compare' => 'IN'
+                    ]
+                ]
+            ],
 			'group_by' => 'order_item.order_id',
 			'order_by' => 'posts.post_date ASC',
 			'filter_range' => true
-		));
+        ]);
 
 		$this->reportData->orderItems = $this->getOrderReportData($query);
 	}
@@ -175,7 +198,7 @@ class ByProduct extends Chart
 	public function display()
 	{
 		/** @noinspection PhpUnusedLocalVariableInspection */
-		$ranges = array(
+		$ranges = [
 			'all' => __('All Time', 'jigoshop'),
 			'year' => __('Year', 'jigoshop'),
 			'last_month' => __('Last Month', 'jigoshop'),
@@ -183,20 +206,20 @@ class ByProduct extends Chart
 			'30day' => __('Last 30 Days', 'jigoshop'),
 			'7day' => __('Last 7 Days', 'jigoshop'),
 			'today' => __('Today', 'jigoshop'),
-		);
+        ];
 
-		Render::output('admin/reports/chart', array(
+		Render::output('admin/reports/chart', [
 			/** TODO This is ugly... */
 			'current_tab' => Reports\SalesTab::SLUG,
 			'current_type' => 'by_product',
 			'ranges' => $ranges,
-			'url' => remove_query_arg(array('start_date', 'end_date')),
+			'url' => remove_query_arg(['start_date', 'end_date']),
 			'current_range' => $this->currentRange,
 			'legends' => $this->getChartLegend(),
 			'widgets' => $this->getChartWidgets(),
 			'export' => $this->getExportButton(),
 			'group_by' => $this->chartGroupBy
-		));
+        ]);
 	}
 
 	/**
@@ -206,144 +229,144 @@ class ByProduct extends Chart
 	 */
 	public function getChartWidgets()
 	{
-		$widgets = array();
+		$widgets = [];
 		$wpdb = $this->wp->getWPDB();
 
-		$query = $this->prepareQuery(array(
-			'select' => array(
-				'order_item' => array(
-					array(
+		$query = $this->prepareQuery([
+			'select' => [
+				'order_item' => [
+					[
 						'field' => 'id',
 						'function' => 'COUNT',
 						'name' => 'count',
-					),
-					array(
+                    ],
+					[
 						'field' => 'product_id',
 						'function' => '',
 						'name' => 'id',
-					),
-					array(
+                    ],
+					[
 						'field' => 'title',
 						'function' => '',
 						'name' => 'title',
-					),
-				),
-			),
-			'from' => array(
+                    ],
+                ],
+            ],
+			'from' => [
 				'order_item' => $wpdb->prefix.'jigoshop_order_item',
-			),
-			'join' => array(
-				'posts' => array(
+            ],
+			'join' => [
+				'posts' => [
 					'table' => $wpdb->posts,
-					'on' => array(
-						array(
+					'on' => [
+						[
 							'key' => 'ID',
 							'value' => 'order_item.order_id',
 							'compare' => '=',
-						)
-					),
-				),
-			),
-			'where' => array(
-				array(
+                        ]
+                    ],
+                ],
+            ],
+			'where' => [
+				[
 					'key' => 'order_item.cost',
 					'value' => '0',
 					'compare' => '>'
-				),
-			),
+                ],
+            ],
 			'group_by' => 'order_item.product_id',
 			'order_by' => 'count DESC LIMIT 12',
 			'filter_range' => true,
-		));
+        ]);
 		$topSellers = $this->getOrderReportData($query);
 
-		$query = $this->prepareQuery(array(
-			'select' => array(
-				'order_item' => array(
-					array(
+		$query = $this->prepareQuery([
+			'select' => [
+				'order_item' => [
+					[
 						'field' => 'id',
 						'function' => 'COUNT',
 						'name' => 'count',
-					),
-					array(
+                    ],
+					[
 						'field' => 'product_id',
 						'function' => '',
 						'name' => 'id',
-					),
-					array(
+                    ],
+					[
 						'field' => 'title',
 						'function' => '',
 						'name' => 'title',
-					),
-				),
-			),
-			'from' => array(
+                    ],
+                ],
+            ],
+			'from' => [
 				'order_item' => $wpdb->prefix.'jigoshop_order_item',
-			),
-			'join' => array(
-				'posts' => array(
+            ],
+			'join' => [
+				'posts' => [
 					'table' => $wpdb->posts,
-					'on' => array(
-						array(
+					'on' => [
+						[
 							'key' => 'ID',
 							'value' => 'order_item.order_id',
 							'compare' => '=',
-						)
-					),
-				),
-			),
-			'where' => array(
-				array(
+                        ]
+                    ],
+                ],
+            ],
+			'where' => [
+				[
 					'key' => 'order_item.cost',
 					'value' => '0',
 					'compare' => '='
-				),
-			),
+                ],
+            ],
 			'group_by' => 'order_item.product_id',
 			'order_by' => 'count DESC LIMIT 12',
 			'filter_range' => true,
-		));
+        ]);
 		$topFreebies = $this->getOrderReportData($query);
 
-		$query = $this->prepareQuery(array(
-			'select' => array(
-				'order_item' => array(
-					array(
+		$query = $this->prepareQuery([
+			'select' => [
+				'order_item' => [
+					[
 						'field' => 'cost',
 						'function' => 'SUM',
 						'name' => 'price',
-					),
-					array(
+                    ],
+					[
 						'field' => 'product_id',
 						'function' => '',
 						'name' => 'id',
-					),
-					array(
+                    ],
+					[
 						'field' => 'title',
 						'function' => '',
 						'name' => 'title',
-					),
-				),
-			),
-			'from' => array(
+                    ],
+                ],
+            ],
+			'from' => [
 				'order_item' => $wpdb->prefix.'jigoshop_order_item',
-			),
-			'join' => array(
-				'posts' => array(
+            ],
+			'join' => [
+				'posts' => [
 					'table' => $wpdb->posts,
-					'on' => array(
-						array(
+					'on' => [
+						[
 							'key' => 'ID',
 							'value' => 'order_item.order_id',
 							'compare' => '=',
-						)
-					),
-				),
-			),
+                        ]
+                    ],
+                ],
+            ],
 			'group_by' => 'order_item.product_id',
 			'order_by' => 'price DESC LIMIT 12',
 			'filter_range' => true,
-		));
+        ]);
 		$topEarners = $this->getOrderReportData($query);
 
 		$widgets[] = new Chart\Widget\CustomRange();
@@ -363,11 +386,11 @@ class ByProduct extends Chart
 
 	public function getExportButton()
 	{
-		return array(
+		return [
 			'download' => 'report-'.esc_attr($this->currentRange).'-'.date_i18n('Y-m-d', current_time('timestamp')).'.csv',
 			'xaxes' => __('Date', 'jigoshop'),
 			'groupby' => $this->chartGroupBy,
-		);
+        ];
 	}
 
 	public function getMainChart()
@@ -378,68 +401,68 @@ class ByProduct extends Chart
 		$orderItemAmounts = $this->prepareChartData($this->reportData->orderItems, 'post_date', 'order_item_amount', $this->chartInterval, $this->range['start'], $this->chartGroupBy);
 		$orderItemQuantity = $this->prepareChartData($this->reportData->orderItems, 'post_date', 'order_item_quantity', $this->chartInterval, $this->range['start'], $this->chartGroupBy);
 
-		$data = array();
-		$data['series'] = array();
-		$data['series'][] = $this->arrayToObject(array(
+		$data = [];
+		$data['series'] = [];
+		$data['series'][] = $this->arrayToObject([
 			'label' => __('Sold quantity', 'jigoshop'),
 			'data' => array_values($orderItemQuantity),
 			'color' => $this->chartColours['item_quantity'],
-			'bars' => $this->arrayToObject(array(
+			'bars' => $this->arrayToObject([
 				'fillColor' => $this->chartColours['item_quantity'],
 				'fill' => true,
 				'show' => true,
 				'lineWidth' => 0,
 				'align' => 'left',
 				'barWidth' => $this->barwidth * 0.4,
-			)),
+            ]),
 			'shadowSize' => 0,
 			'hoverable' => false
-		));
-		$data['series'][] = $this->arrayToObject(array(
+        ]);
+		$data['series'][] = $this->arrayToObject([
 			'label' => __('Number of items sold', 'jigoshop'),
 			'data' => array_values($orderItemCounts),
 			'color' => $this->chartColours['item_count'],
-			'bars' => $this->arrayToObject(array(
+			'bars' => $this->arrayToObject([
 				'fillColor' => $this->chartColours['item_count'],
 				'fill' => true,
 				'show' => true,
 				'lineWidth' => 0,
 				'align' => 'right',
 				'barWidth' => $this->barwidth * 0.4,
-			)),
+            ]),
 			'shadowSize' => 0,
 			'hoverable' => false
-		));
-		$data['series'][] = $this->arrayToObject(array(
+        ]);
+		$data['series'][] = $this->arrayToObject([
 			'label' => __('Sales amount', 'jigoshop'),
 			'data' => array_values($orderItemAmounts),
 			'yaxis' => 2,
 			'color' => $this->chartColours['sales_amount'],
-			'points' => $this->arrayToObject(array(
+			'points' => $this->arrayToObject([
 				'show' => true,
 				'radius' => 5,
 				'lineWidth' => 3,
 				'fillColor' => '#fff',
 				'fill' => true
-			)),
-			'lines' => $this->arrayToObject(array(
+            ]),
+			'lines' => $this->arrayToObject([
 				'show' => true,
 				'lineWidth' => 4,
 				'fill' => false
-			)),
+            ]),
 			'shadowSize' => 0,
 			'append_tooltip' => Currency::symbol(),
-		));
-		$data['options'] = $this->arrayToObject(array(
-			'legend' => $this->arrayToObject(array('show' => false)),
-			'grid' => $this->arrayToObject(array(
+        ]);
+		$data['options'] = $this->arrayToObject([
+			'legend' => $this->arrayToObject(['show' => false]),
+			'grid' => $this->arrayToObject([
 				'color' => '#aaa',
 				'borderColor' => 'transparent',
 				'borderWidth' => 0,
 				'hoverable' => true
-			)),
-			'xaxes' => array(
-				$this->arrayToObject(array(
+            ]),
+			'xaxes' => [
+				$this->arrayToObject([
 					'color' => '#aaa',
 					'position' => 'bottom',
 					'tickColor' => 'transparent',
@@ -447,28 +470,28 @@ class ByProduct extends Chart
 					'timeformat' => $this->chartGroupBy == 'hour' ? '%H' : $this->chartGroupBy == 'day' ? '%d %b' : '%b',
 					'monthNames' => array_values($wp_locale->month_abbrev),
 					'tickLength' => 1,
-					'minTickSize' => array(1, $this->chartGroupBy),
-					'font' => $this->arrayToObject(array('color' => '#aaa')),
-				))
-			),
-			'yaxes' => array(
-				$this->arrayToObject(array(
+					'minTickSize' => [1, $this->chartGroupBy],
+					'font' => $this->arrayToObject(['color' => '#aaa']),
+                ])
+            ],
+			'yaxes' => [
+				$this->arrayToObject([
 					'min' => 0,
 					'minTickSize' => 1,
 					'tickDecimals' => 0,
 					'color' => '#ecf0f1',
-					'font' => $this->arrayToObject(array('color' => '#aaa')),
-				)),
-				$this->arrayToObject(array(
+					'font' => $this->arrayToObject(['color' => '#aaa']),
+                ]),
+				$this->arrayToObject([
 					'position' => 'right',
 					'min' => 0,
 					'tickDecimals' => 2,
 					'alignTicksWithAxis' => 1,
 					'color' => 'transparent',
-					'font' => $this->arrayToObject(array('color' => '#aaa'))
-				)),
-			),
-		));
+					'font' => $this->arrayToObject(['color' => '#aaa'])
+                ]),
+            ],
+        ]);
 		if ($this->chartGroupBy == 'hour') {
 			$data['options']->xaxes[0]->min = 0;
 			$data['options']->xaxes[0]->max = 24 * 60 * 60 * 1000;
@@ -479,10 +502,10 @@ class ByProduct extends Chart
 
 	private function getChartColours()
 	{
-		$this->chartColours = $this->wp->applyFilters('jigoshop\admin\reports\by_product\chart_colours', array(
+		$this->chartColours = $this->wp->applyFilters('jigoshop\admin\reports\by_product\chart_colours', [
 			'sales_amount' => '#3498db',
 			'item_count' => '#d4d9dc',
 			'item_quantity' => '#ecf0f1'
-		));
+        ]);
 	}
 }

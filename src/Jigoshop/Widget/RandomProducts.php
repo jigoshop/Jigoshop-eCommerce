@@ -18,10 +18,10 @@ class RandomProducts extends \WP_Widget
 
 	public function __construct()
 	{
-		$options = array(
+		$options = [
 			'classname' => self::ID,
 			'description' => __('Lists a random selection of products on your site.', 'jigoshop')
-		);
+        ];
 
 		// Create the widget
 		parent::__construct(self::ID, __('Jigoshop: Random Products', 'jigoshop'), $options);
@@ -58,29 +58,29 @@ class RandomProducts extends \WP_Widget
 		}
 
 		// Set up query
-		$query_args = array(
+		$query_args = [
 			'posts_per_page' => $number,
 			'post_type' => Types::PRODUCT,
 			'post_status' => 'publish',
 			'orderby' => 'rand',
-			'meta_query' => array(
-				array(
+			'meta_query' => [
+				[
 					'key' => 'visibility',
-					'value' => array(Product::VISIBILITY_CATALOG, Product::VISIBILITY_PUBLIC),
+					'value' => [Product::VISIBILITY_CATALOG, Product::VISIBILITY_PUBLIC],
 					'compare' => 'IN',
-				),
-			)
-		);
+                ],
+            ]
+        ];
 
 		// Run the query
 		$q = new \WP_Query($query_args);
 		$products = self::$productService->findByQuery($q);
 
 		if (!empty($products)) {
-			Render::output('widget/random_products/widget', array_merge($args, array(
+			Render::output('widget/random_products/widget', array_merge($args, [
 				'title' => $title,
 				'products' => $products,
-			)));
+            ]));
 		}
 	}
 
@@ -116,13 +116,13 @@ class RandomProducts extends \WP_Widget
 		$title = isset($instance['title']) ? esc_attr($instance['title']) : null;
 		$number = isset($instance['number']) ? absint($instance['number']) : 5;
 
-		Render::output('widget/random_products/form', array(
+		Render::output('widget/random_products/form', [
 			'title_id' => $this->get_field_id('title'),
 			'title_name' => $this->get_field_name('title'),
 			'title' => $title,
 			'number_id' => $this->get_field_id('number'),
 			'number_name' => $this->get_field_name('number'),
 			'number' => $number,
-		));
+        ]);
 	}
 }
