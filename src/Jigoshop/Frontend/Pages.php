@@ -29,6 +29,8 @@ class Pages
 	/** @var \Jigoshop\Core\Options */
 	private static $options;
 	private static $cache = array();
+	/** @var  bool */
+	private static $customPage = false;
 
 	public static function setOptions($options)
 	{
@@ -342,7 +344,7 @@ class Pages
 	 */
 	public static function isJigoshop()
 	{
-		return self::isShop() || self::isAccount() || self::isCart() || self::isCheckout() || self::isCheckoutThankYou() || self::isOrderTracker();
+		return self::isShop() || self::isAccount() || self::isCart() || self::isCheckout() || self::isCheckoutThankYou() || self::isOrderTracker() || self::isCustomPage();
 	}
 
 	/**
@@ -387,5 +389,23 @@ class Pages
 		}
 
 		return self::$cache[self::ORDER_TRACKING];
+	}
+
+    /**
+     * @return bool
+     * @since 2.1
+     */
+    public static function isCustomPage()
+    {
+        return self::$customPage;
+	}
+
+    /**
+     * @param $customPage
+     * @since 2.1
+     */
+    public static function setCustomPage($customPage)
+    {
+        self::$customPage = (bool)$customPage;
 	}
 }

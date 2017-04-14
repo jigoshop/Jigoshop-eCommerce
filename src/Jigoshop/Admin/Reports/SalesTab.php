@@ -26,14 +26,6 @@ class SalesTab implements TabInterface
         if (in_array($this->wp->getPageNow(), array('admin.php', 'options.php')) &&
             isset($_GET['page']) && $_GET['page'] == Reports::NAME
         ) {
-            add_action( 'admin_notices', function(){
-                ?>
-                <div class="notice notice-warning is-dismissible">
-                    <p><?php _e('We have decided to disable the Discount Summary Report Tab until the next update due to an issue with coupon retrieval. We\'re terribly sorry for the inconvenience - our development team is doing their best to resolve this issue ASAP.', 'jigoshop'); ?></p>
-                </div>
-                <?php
-            });
-
             $this->chart = $this->getChart();
         }
 	}
