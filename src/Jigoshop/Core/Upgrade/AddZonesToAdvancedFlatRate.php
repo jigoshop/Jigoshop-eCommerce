@@ -34,6 +34,15 @@ class AddZonesToAdvancedFlatRate implements Upgrader
                 }
             };
             $rates[$i]['rest_of_the_world'] = isset($rates[$i]['rest_of_the_world']) ? $rates[$i]['rest_of_the_world'] : false;
+            $rates[$i] = array_merge([
+                'label' => __('New rate', 'jigoshop'),
+                'cost' => '0',
+                'continents' => [],
+                'countries' => [],
+                'states' => [],
+                'postcode' => '',
+                'rest-of-the-world' => false
+            ], $rates[$i]);
         }
 
         $options->update('shipping.advanced_flat_rate.rates', $rates);

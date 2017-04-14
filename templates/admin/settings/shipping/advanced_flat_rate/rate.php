@@ -78,7 +78,7 @@ foreach (\Jigoshop\Helper\Country::getAll() as $countryCode => $countryName) {
                 'name' => sprintf('%s[%s][rest_of_the_world]', $name, $id),
                 'label' => __('Rest of the world', 'jigoshop'),
                 'checked' => $value['rest_of_the_world'],
-                'description' => __('asasdsa', 'jigoshop'),
+                'description' => __('', 'jigoshop'),
                 'classes' => ['rest-of-the-world']
             ]); ?>
         </div>

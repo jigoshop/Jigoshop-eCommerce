@@ -29,7 +29,8 @@
             'continents' => [],
             'countries' => [],
             'states' => [],
-            'postcode' => ''
+            'postcode' => '',
+            'rest-of-the-world' => false,
         ]
     ]); ?>
     <?= preg_replace('/<script\b[^>]*>(.*?)<\/script>/is', "", ob_get_clean()); ?>
