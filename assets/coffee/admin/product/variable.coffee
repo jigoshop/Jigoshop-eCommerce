@@ -30,7 +30,16 @@ class AdminProductVariable
           jQuery('div.manual-stock-status', $parent).slideDown()
           jQuery('.stock-status', $parent).slideUp()
     jQuery('.set_variation_image').each @connectImage
-    jQuery('#product-variations')
+    jQuery('#sales-range-from').on 'changeDate', (selected) ->
+      jQuery('#product-variations .input-daterange').each () ->
+        id = jQuery(this).attr('id')
+        jQuery('#' + id + '-from').datepicker 'setStartDate', new Date(selected.date.valueOf())
+        jQuery('#' + id + '-to').datepicker 'setStartDate', new Date(selected.date.valueOf())
+    jQuery('#sales-range-to').on 'changeDate', (selected) ->
+      jQuery('#product-variations .input-daterange').each () ->
+        id = jQuery(this).attr('id')
+        jQuery('#' + id + '-from').datepicker 'setEndDate', new Date(selected.date.valueOf())
+        jQuery('#' + id + '-to').datepicker 'setEndDate', new Date(selected.date.valueOf())
 
   removeParameters: (event) ->
     $item = jQuery(event.target)
