@@ -150,7 +150,7 @@ $stock = $product instanceof Product\Purchasable ? $product->getStock() : new St
                     ?>
                 </div>
             </fieldset>
-			<fieldset>
+			<fieldset id="variation-<?= $variation->getId(); ?>-sales">
 			<?php
 			Forms::text([
 				'name' => 'product[variation]['.$variation->getId().'][product][sales_price]',
@@ -178,5 +178,15 @@ $stock = $product instanceof Product\Purchasable ? $product->getStock() : new St
 			</fieldset>
 			<?php do_action('jigoshop\admin\variation', $variation, $product); ?>
 		</div>
+        <script>
+            <?php // TODO: Get rid of this. ?>
+            jQuery('#sales-enabled').on('change', function() {
+                if(jQuery(this).is(':checked')) {
+                    jQuery('#variation-<?= $variation->getId(); ?>-sales').show()
+                } else {
+                    jQuery('#variation-<?= $variation->getId(); ?>-sales').hide()
+                }
+            }).trigger('change');
+        </script>
 	</div>
 </li>
