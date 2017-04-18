@@ -82,7 +82,7 @@ class AdvancedFlatRate implements MultipleMethod
         }
 
         return $this->settings['enabled'] && ($this->settings['available_for'] === 'all' || in_array($customer->getShippingAddress()->getCountry(),
-                    $this->settins['countries']));
+                    $this->settings['countries']));
     }
 
     /**
