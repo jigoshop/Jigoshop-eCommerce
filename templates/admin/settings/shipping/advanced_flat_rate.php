@@ -30,7 +30,7 @@
             'countries' => [],
             'states' => [],
             'postcode' => '',
-            'rest-of-the-world' => false,
+            'rest_of_the_world' => false,
         ]
     ]); ?>
     <?= preg_replace('/<script\b[^>]*>(.*?)<\/script>/is', "", ob_get_clean()); ?>
