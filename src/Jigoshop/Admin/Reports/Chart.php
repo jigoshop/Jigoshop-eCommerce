@@ -168,7 +168,7 @@ abstract class Chart
 				break;
 			case 'today' :
 				$this->range['start'] = strtotime('midnight', current_time('timestamp'));
-				$this->range['end'] = strtotime('+1 hour', current_time('timestamp'));
+				$this->range['end'] = current_time('timestamp');
 				$this->chartGroupBy = 'hour';
 				break;
 		}
