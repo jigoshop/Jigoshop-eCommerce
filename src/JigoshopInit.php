@@ -2,13 +2,13 @@
 
 if (!defined('JIGOSHOP_LOGGER')) {
     /**
-     * @deprecated 2.0:2.1 use Jigoshop::getLogger() instead
+     * @deprecated 2.0:2.2 use Jigoshop::getLogger() instead
      */
     define('JIGOSHOP_LOGGER', 'jigoshop');
 }
 if (!defined('JIGOSHOP_LOG_DIR')) {
     /**
-     * @deprecated 2.0:2.1 use Jigoshop::getLogDir() instead
+     * @deprecated 2.0:2.2 use Jigoshop::getLogDir() instead
      */
     define('JIGOSHOP_LOG_DIR', JIGOSHOP_DIR . '/log');
 }
