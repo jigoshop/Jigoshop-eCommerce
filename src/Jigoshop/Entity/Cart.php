@@ -141,7 +141,7 @@ class Cart extends Order
 	}
 
 	/**
-	 * @return array Coupons list.
+	 * @return Coupon[] Coupons list.
 	 */
 	public function getCoupons()
 	{
@@ -192,6 +192,10 @@ class Cart extends Order
 		if (isset($this->coupons[$coupon->getId()])) {
 			return;
 		}
+
+		if ($coupon->getUsageLimit() <= $coupon->getUsage()) {
+		    throw new Exception(sprintf(__('Cannot apply coupon "%s". The usage limit was reached.', $coupon->getCode())));
+        }
 
 		if (is_numeric($coupon->getOrderTotalMinimum()) && $this->getTotal() < $coupon->getOrderTotalMinimum()) {
 			throw new Exception(sprintf(__('Cannot apply coupon "%s". Order total less than %s.'), $coupon->getCode(), ProductHelper::formatPrice($coupon->getOrderTotalMinimum())));

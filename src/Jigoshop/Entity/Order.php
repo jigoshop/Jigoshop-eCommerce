@@ -718,6 +718,8 @@ class Order implements OrderInterface, \JsonSerializable
 			'payment' => $payment,
 			'customer_note' => $this->customerNote,
 			'subtotal' => $this->subtotal,
+			'total' => $this->getTotal(),
+			'discount' => $this->getDiscount(),
 			'discounts' => $this->discounts,
 			'shipping_tax' => $this->shippingTax,
 			'status' => $this->status,
@@ -868,6 +870,7 @@ class Order implements OrderInterface, \JsonSerializable
            'shipping_tax' => $this->shippingTax,
            'subtotal' => $this->subtotal,
            'discounts' => $this->discounts,
+           'discount' => $this->getDiscount(),
            'status' => $this->status,
            'update_messages' => $this->updateMessages,
        ];

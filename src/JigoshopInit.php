@@ -157,7 +157,6 @@ class JigoshopInit
     private function initExtensionsTools()
     {
         do_action('jigoshop\plugins\configure', $this->container);
-        $this->container->get('jigoshop.integration');
     }
 
     /**

@@ -22,6 +22,7 @@ use Jigoshop\Helper\Styles;
 use Jigoshop\Helper\Tax;
 use Jigoshop\Helper\Validation;
 use Jigoshop\Service\CartServiceInterface;
+use Jigoshop\Service\CouponServiceInterface;
 use Jigoshop\Service\CustomerServiceInterface;
 use Jigoshop\Service\OrderServiceInterface;
 use Jigoshop\Service\PaymentServiceInterface;
@@ -43,6 +44,8 @@ class Checkout implements PageInterface
 	private $cartService;
 	/** @var CustomerServiceInterface */
 	private $customerService;
+	/** @var  CouponServiceInterface */
+	private $couponService;
 	/** @var ShippingServiceInterface */
 	private $shippingService;
 	/** @var PaymentServiceInterface */
@@ -50,13 +53,14 @@ class Checkout implements PageInterface
 	/** @var OrderServiceInterface */
 	private $orderService;
 
-	public function __construct(Wordpress $wp, Options $options, Messages $messages, CartServiceInterface $cartService, CustomerServiceInterface $customerService,
+	public function __construct(Wordpress $wp, Options $options, Messages $messages, CartServiceInterface $cartService, CouponServiceInterface $couponService, CustomerServiceInterface $customerService,
 		ShippingServiceInterface $shippingService, PaymentServiceInterface $paymentService, OrderServiceInterface $orderService)
 	{
 		$this->wp = $wp;
 		$this->options = $options;
 		$this->messages = $messages;
 		$this->cartService = $cartService;
+		$this->couponService = $couponService;
 		$this->customerService = $customerService;
 		$this->shippingService = $shippingService;
 		$this->paymentService = $paymentService;
@@ -381,6 +385,10 @@ class Checkout implements PageInterface
 				/** @var Order $order */
 				$order = $this->wp->applyFilters('jigoshop\checkout\order', $order);
 				$this->orderService->save($order);
+				foreach($cart->getCoupons() as $coupon) {
+                    $coupon->setUsage($coupon->getUsage() + 1);
+                    $this->couponService->save($coupon);
+                }
 				$this->cartService->remove($cart);
 
 				$url = '';

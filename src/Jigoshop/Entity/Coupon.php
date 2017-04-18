@@ -426,6 +426,7 @@ class Coupon implements EntityInterface, \JsonSerializable
 			'from' => $this->from ? $this->from->getTimestamp() : 0,
 			'to' => $this->to ? $this->to->getTimestamp() : 0,
 			'usage_limit' => $this->usageLimit,
+			'usage' => $this->usage,
 			'individual_use' => $this->individualUse,
 			'free_shipping' => $this->freeShipping,
 			'order_total_minimum' => $this->orderTotalMinimum,
@@ -457,6 +458,9 @@ class Coupon implements EntityInterface, \JsonSerializable
 		if (isset($state['usage_limit'])) {
 			$this->usageLimit = $state['usage_limit'];
 		}
+        if (isset($state['usage'])) {
+            $this->usage = $state['usage'];
+        }
 		if (isset($state['individual_use'])) {
 			$this->individualUse = $state['individual_use'];
 		}
@@ -576,6 +580,7 @@ class Coupon implements EntityInterface, \JsonSerializable
                 'format' => $this->to->format('Y-m-d')
             ] : 0,
             'usage_limit' => $this->usageLimit,
+            'usage' => $this->usage,
             'individual_use' => $this->individualUse,
             'free_shipping' => $this->freeShipping,
             'order_total_minimum' => $this->orderTotalMinimum,

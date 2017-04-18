@@ -73,7 +73,8 @@ class PagesConfiguration implements ConfigurationInterface
 			'jigoshop.options',
 			'jigoshop.messages',
 			'jigoshop.service.cart',
-			'jigoshop.service.customer',
+            'jigoshop.service.coupon',
+            'jigoshop.service.customer',
 			'jigoshop.service.shipping',
 			'jigoshop.service.payment',
 			'jigoshop.service.order'

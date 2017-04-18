@@ -28,7 +28,7 @@ class Integration
      */
     public static function getContainer()
     {
-        return self::$di->get('di');
+        return self::$di;
     }
 
     /**
