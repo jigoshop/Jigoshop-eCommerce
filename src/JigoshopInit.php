@@ -403,8 +403,8 @@ class JigoshopInit
             str_replace(
                 ['[stars]', '[link]', '[/link]'],
                 [
-                    '<a target="_blank" href="http://wordpress.org/support/view/plugin-reviews/jigoshop#postform" >&#9733;&#9733;&#9733;&#9733;&#9733;</a>',
-                    '<a target="_blank" href="http://wordpress.org/support/view/plugin-reviews/jigoshop#postform" >',
+                    '<a target="_blank" href="http://wordpress.org/support/view/plugin-reviews/jigoshop-ecommerce#postform" >&#9733;&#9733;&#9733;&#9733;&#9733;</a>',
+                    '<a target="_blank" href="http://wordpress.org/support/view/plugin-reviews/jigoshop-ecommercep#postform" >',
                     '</a>'
                 ],
                 __('Add your [stars] on [link]wordpress.org[/link] and keep this plugin essentially free.', 'jigoshop')
