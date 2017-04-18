@@ -343,21 +343,13 @@ class DiscountSummary extends Chart
 	{
 		global $wp_locale;
 
-		$startTime = $this->range['start'];
-		$endTime = $this->range['end'];
-		$filterTimes = function ($item) use ($startTime, $endTime){
-			$time = strtotime($item->post_date);
-
-			return $time >= $startTime && $time < $endTime;
-		};
-
 		$data = [];
 		$data['series'] = [];
         $index = 0;
 		foreach($this->reportData->discounts as $type => $reportData) {
             $width = $this->barwidth / count($this->reportData->discounts);
-		    $dataAmounts = $this->prepareChartData(array_filter($reportData, $filterTimes), 'post_date', 'amount', $this->chartInterval, $this->range['start'], $this->chartGroupBy);
-		    $dataCounts = $this->prepareChartData(array_filter($reportData, $filterTimes), 'post_date', 'count', $this->chartInterval, $this->range['start'], $this->chartGroupBy);
+		    $dataAmounts = $this->prepareChartData($reportData, 'post_date', 'amount', $this->chartInterval, $this->range['start'], $this->chartGroupBy);
+		    $dataCounts = $this->prepareChartData($reportData, 'post_date', 'count', $this->chartInterval, $this->range['start'], $this->chartGroupBy);
 
             $data['series'][$index + sizeof($this->reportData->discounts)] = $this->arrayToObject([
                 'label' => sprintf(__('%s discounts in total', 'jigoshop'), Type::getName($type)),
