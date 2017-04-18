@@ -6,7 +6,7 @@ use Jigoshop\Entity\Product;
  * @var $product Product The product.
  */
 ?>
-<fieldset class="<?= $product instanceof Product\External ? '' : 'not-active'; ?>">
+<fieldset class="product-external <?= $product instanceof Product\External ? '' : 'not-active'; ?>">
 	<?php
 	Forms::text([
 		'name' => 'product[external_url]',
