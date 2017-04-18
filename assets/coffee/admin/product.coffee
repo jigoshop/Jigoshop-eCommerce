@@ -75,12 +75,27 @@ class AdminProduct
     }
 
   changeProductType: (event) =>
-    type = jQuery(event.target).val()
+    $item = jQuery(event.target)
+    type = $item.val()
     jQuery('.jigoshop_product_data li').hide()
     for own tab, visibility of @params.menu
       if visibility == true or type in visibility
         jQuery('.jigoshop_product_data li.' + tab).show()
     jQuery('.jigoshop_product_data li:first a').tab('show')
+
+    jQuery.ajax
+      url: jigoshop.getAjaxUrl()
+      type: 'post'
+      dataType: 'json'
+      data:
+        action: 'jigoshop.admin.product.update_type'
+        product_id: $item.closest('.jigoshop').data('id')
+        type: type
+    .done (data) =>
+      if data.success? and data.success
+        jigoshop.addMessage('success', @params.i18n.saved, 2000)
+      else
+        jigoshop.addMessage('danger', data.error, 6000)
 
   addAttribute: (event) =>
     event.preventDefault()

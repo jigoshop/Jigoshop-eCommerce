@@ -36,6 +36,7 @@ class Product
         $this->type = $type;
 
         $wp->addAction('wp_ajax_jigoshop.admin.product.find', [$this, 'ajaxFindProduct'], 10, 0);
+        $wp->addAction('wp_ajax_jigoshop.admin.product.update_type', [$this, 'ajaxUpdateType'], 10, 0);
         $wp->addAction('wp_ajax_jigoshop.admin.product.save_attribute', [$this, 'ajaxSaveAttribute'], 10, 0);
         $wp->addAction('wp_ajax_jigoshop.admin.product.remove_attribute', [$this, 'ajaxRemoveAttribute'], 10, 0);
 
@@ -167,6 +168,34 @@ class Product
         /** @var \Jigoshop\Entity\Product $product */
         $product = $this->productService->findForPost($post);
         return $this->productService->getAttachments($product);
+    }
+
+    public function ajaxUpdateType()
+    {
+        try {
+            if (!isset($_POST['product_id']) || empty($_POST['product_id'])) {
+                throw new Exception(__('Product was not specified.', 'jigoshop'));
+            }
+            if (!is_numeric($_POST['product_id'])) {
+                throw new Exception(__('Invalid product ID.', 'jigoshop'));
+            }
+            if (!isset($_POST['type']) || empty($_POST['type'])) {
+                throw new Exception(__('Product type was not specified.', 'jigoshop'));
+            }
+
+            update_post_meta((int)$_POST['product_id'], 'type', trim($_POST['type']));
+
+            echo json_encode([
+                'success' => true,
+            ]);
+        } catch (Exception $e) {
+            echo json_encode([
+                'success' => false,
+                'error' => $e->getMessage(),
+            ]);
+        }
+
+        exit;
     }
 
     public function ajaxSaveAttribute()
