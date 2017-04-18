@@ -121,7 +121,7 @@ class AdvancedFlatRate implements MultipleMethod
             ],
             [
                 'name' => sprintf('[%s][fee]', self::ID),
-                'type' => 'number',
+                'type' => 'text',
                 'title' => __('Fee', 'jigoshop'),
                 'value' => $this->settings['fee'],
             ],
@@ -197,10 +197,6 @@ class AdvancedFlatRate implements MultipleMethod
             }
         }
 
-        if (!is_numeric($settings['fee'])) {
-            $settings['fee'] = $this->options['fee'];
-            $this->messages->addWarning(__('Fee was invalid - value is left unchanged.', 'jigoshop'));
-        }
         if ($settings['fee'] >= 0) {
             $settings['fee'] = (float)$settings['fee'];
         } else {
