@@ -2,6 +2,7 @@
 
 namespace Jigoshop\Admin\Settings;
 
+use Jigoshop\Admin\Pages;
 use Jigoshop\Core\Messages;
 use Jigoshop\Core\Options;
 use Jigoshop\Helper\Country;
@@ -28,7 +29,7 @@ class GeneralTab implements TabInterface
 		$this->options = $options->get(self::SLUG);
 		$this->messages = $messages;
 		$wp->addAction('admin_enqueue_scripts', function (){
-			if (!isset($_GET['tab']) || $_GET['tab'] != GeneralTab::SLUG) {
+			if (isset($_GET['tab']) && $_GET['tab'] != GeneralTab::SLUG) {
 				return;
 			}
 
