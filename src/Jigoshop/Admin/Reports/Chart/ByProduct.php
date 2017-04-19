@@ -461,19 +461,17 @@ class ByProduct extends Chart
 				'borderWidth' => 0,
 				'hoverable' => true
             ]),
-			'xaxes' => [
-				$this->arrayToObject([
-					'color' => '#aaa',
-					'position' => 'bottom',
-					'tickColor' => 'transparent',
-					'mode' => 'time',
-					'timeformat' => $this->chartGroupBy == 'hour' ? '%H' : $this->chartGroupBy == 'day' ? '%d %b' : '%b',
-					'monthNames' => array_values($wp_locale->month_abbrev),
-					'tickLength' => 1,
-					'minTickSize' => [1, $this->chartGroupBy],
-					'font' => $this->arrayToObject(['color' => '#aaa']),
-                ])
-            ],
+            'xaxis' => $this->arrayToObject([
+                'color' => '#aaa',
+                'position' => 'bottom',
+                'tickColor' => 'transparent',
+                'mode' => 'time',
+                'timeformat' => $this->chartGroupBy == 'hour' ? '%H' : ($this->chartGroupBy == 'day' ? '%d %b' : '%b'),
+                'monthNames' => array_values($wp_locale->month_abbrev),
+                'tickLength' => 1,
+                'minTickSize' => [1, $this->chartGroupBy],
+                'font' => $this->arrayToObject(['color' => '#aaa']),
+            ]),
 			'yaxes' => [
 				$this->arrayToObject([
 					'min' => 0,
@@ -493,8 +491,8 @@ class ByProduct extends Chart
             ],
         ]);
 		if ($this->chartGroupBy == 'hour') {
-			$data['options']->xaxes[0]->min = 0;
-			$data['options']->xaxes[0]->max = 24 * 60 * 60 * 1000;
+			$data['options']->xaxis->min = 0;
+			$data['options']->xaxis->max = 24 * 60 * 60 * 1000;
 		}
 
 		return $data;
