@@ -47,12 +47,12 @@ class CustomersVsGuests extends Chart
 
 		$legend[] = [
 			'title' => sprintf(__('%s customer orders in this period', 'jigoshop'), '<strong>'.$customerOrderCount.'</strong>'),
-			'color' => $this->chartColours['signups'],
+			'color' => $this->chartColours['customers'],
 			'highlight_series' => 0
         ];
 		$legend[] = [
 			'title' => sprintf(__('%s guest orders in this period', 'jigoshop'), '<strong>'.$guestOrderCount.'</strong>'),
-			'color' => $this->chartColours['signups'],
+			'color' => $this->chartColours['guests'],
 			'highlight_series' => 1
         ];
 		$legend[] = [
