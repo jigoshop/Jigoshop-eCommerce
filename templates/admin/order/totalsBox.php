@@ -13,7 +13,7 @@ $orderTax = $order->getTax();
 ?>
 <div class="jigoshop jigoshop-totals" data-order="<?= $order->getId(); ?>">
 	<div class="form-horizontal">
-		<div class="form-group<?php $order->isShippingRequired() ? '' : ' not-active'; ?>">
+		<div class="form-group<?= $order->isShippingRequired() ? '' : ' not-active'; ?>">
 			<label for="order_shipping" class="col-sm-2 control-label">
 				<?= __('Shipping', 'jigoshop'); ?>
 			</label>
@@ -37,11 +37,12 @@ $orderTax = $order->getTax();
 			'size' => 12,
 			'value' => Product::formatPrice($order->getSubtotal()),
         ]); ?>
-		<?php Forms::text([
+		<?php Forms::constant([
 			'name' => 'order[discount]',
-			'label' => sprintf(__('Discount (%s)', 'jigoshop'), Currency::symbol()),
+			'label' => __('Discount', 'jigoshop'),
 			'placeholder' => 0.0,
-			'value' => $order->getDiscount()
+            'size' => 12,
+			'value' => Product::formatPrice($order->getDiscount()),
         ]); ?>
 		<?php foreach($tax as $class => $option): ?>
 			<?php Forms::constant([
