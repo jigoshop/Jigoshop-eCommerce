@@ -394,6 +394,29 @@ class DiscountSummary extends Chart
             ]);
             $index++;
 		}
+		if(empty($data['series'])) {
+            $dummy = $this->prepareChartData([], '', '', $this->chartInterval, $this->range['start'], $this->chartGroupBy);
+            $data['series'][] = $this->arrayToObject([
+                'label' => sprintf(__('%s discounts in total', 'jigoshop'), Type::getName($type)),
+                'data' => array_values($dummy),
+                'yaxis' => 2,
+                'color' => $this->chartColours[0],
+                'points' => $this->arrayToObject([
+                    'show' => true,
+                    'radius' => 5,
+                    'lineWidth' => 4,
+                    'fillColor' => '#fff',
+                    'fill' => true,
+                ]),
+                'lines' => $this->arrayToObject([
+                    'show' => true,
+                    'lineWidth' => 4,
+                    'fill' => false,
+                ]),
+                'shadowSize' => 0,
+                'append_tooltip' => Currency::symbol(),
+            ]);
+        }
 
 		$data['options'] = $this->arrayToObject([
 			'legend' => $this->arrayToObject(['show' => false,]),
