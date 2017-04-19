@@ -165,6 +165,27 @@
   &.notice .disable-notice {
     float: left; font-size: 9px; color: #c7c7c7; padding: 2px 0 0 10px;
   }
+
+  span.ui-sortable-handle {
+    cursor: move;
+    font-size: 15px;
+    text-align: center;
+
+    &:before {
+      content: '\f333';
+      font-family: Dashicons;
+      text-align: center;
+      color: #999;
+      display: block;
+      width: 40px;
+      float: left;
+      height: 100%;
+      line-height: 20px;
+    }
+    &:hover:before {
+      color: #000;
+    }
+  }
 }
 
 .sr-only {

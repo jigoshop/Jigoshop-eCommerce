@@ -14,6 +14,7 @@ foreach (\Jigoshop\Helper\Country::getAll() as $countryCode => $countryName) {
 ?>
 <li class="list-group-item">
     <h4 class="list-group-item-heading clearfix">
+        <span class="handle ui-sortable-handle"></span>
         <span class="title"><?php printf('%s - %s', $value['label'], $value['cost']); ?></span>
         <button type="button" class="remove-rate btn btn-default pull-right"
                 title="<?php _e('Remove', 'jigoshop'); ?>">
@@ -80,6 +81,10 @@ foreach (\Jigoshop\Helper\Country::getAll() as $countryCode => $countryName) {
                 'checked' => $value['rest_of_the_world'],
                 'description' => __('', 'jigoshop'),
                 'classes' => ['rest-of-the-world']
+            ]); ?>
+            <?php \Jigoshop\Helper\Forms::hidden([
+                'name' => sprintf('%s[rates_order][]', \Jigoshop\Shipping\AdvancedFlatRate::ID),
+                'value' => $id
             ]); ?>
         </div>
     </div>

@@ -157,7 +157,9 @@ class Options
                 'fee' => 0,
                 'available_for' => 'all',
                 'countries' => [],
-                'rates' => []
+                'multiple_rates' => false,
+                'rates' => [],
+                'rates_order' => [],
             ],
         ],
 		'payment' => [

@@ -12,6 +12,9 @@ class Shipping
     .on('keyup', '.input-label, .input-cost', @updateTitle)
     .on('change', 'input.rest-of-the-world', @toggleLocationFields)
     jQuery('input.rest-of-the-world').trigger 'change'
+    jQuery('#advanced-flat-rate ul').sortable
+      handle: ".handle"
+      axis: "y"
 
   toggleLocationFields: (event) ->
     $container = jQuery(event.target).closest('.list-group-item-text')

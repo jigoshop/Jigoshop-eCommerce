@@ -4,9 +4,9 @@
  * @var array $values
  */
 ?>
-<div id="advanced-flat-rate" class="tooltip-inline-input">
+<div id="advanced-flat-rate" class="tooltip-inline-input ">
     <div class="col-xs-12">
-        <ul class="list-group clearfix">
+        <ul class="list-group clearfix ui-sortable">
             <?php for ($i = 0; $i < count($values); $i++) : ?>
                 <?php \Jigoshop\Helper\Render::output('admin/settings/shipping/advanced_flat_rate/rate', [
                     'id' => $i,

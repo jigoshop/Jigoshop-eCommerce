@@ -98,6 +98,10 @@ class AdvancedFlatRate implements MultipleMethod
      */
     public function getOptions()
     {
+        if(count($this->settings['rates_order'])) {
+            $this->settings['rates'] = array_merge(array_flip($this->settings['rates_order'], $this->settings['rates']));
+        }
+
         return [
             [
                 'name' => sprintf('[%s][enabled]', self::ID),
@@ -147,6 +151,14 @@ class AdvancedFlatRate implements MultipleMethod
                 'hidden' => $this->settings['available_for'] == 'all',
             ],
             [
+                'name' => sprintf('[%s][multiple_rates]', self::ID),
+                'title' => __('Show multiple rates', 'jigoshop'),
+                'description' => __('If enabled then all matched rates will be visible in cart/checkout. Othervise it will show the first rate.', 'jigoshop'),
+                'type' => 'checkbox',
+                'value' => $this->settings['multiple_rates'],
+                'classes' => ['switch-medium'],
+            ],
+            [
                 'name' => sprintf('[%s][rates]', self::ID),
                 'title' => __('Rates', 'jigoshop'),
                 'type' => 'user_defined',
@@ -180,6 +192,7 @@ class AdvancedFlatRate implements MultipleMethod
     {
         $settings['enabled'] = $settings['enabled'] == 'on';
         $settings['taxable'] = $settings['taxable'] == 'on';
+        $settings['multiple_rates'] = $settings['multiple_rates'] == 'on';
         if (isset($settings['rates'])) {
             $settings['rates'] = array_values($settings['rates']);
             for ($i = 0; $i < count($settings['rates']); $i++) {
@@ -280,6 +293,9 @@ class AdvancedFlatRate implements MultipleMethod
     {
         if ($this->rates == null) {
             $this->rates = [];
+            if(count($this->settings['rates_order'])) {
+                $this->settings['rates'] = array_merge(array_flip($this->settings['rates_order'], $this->settings['rates']));
+            }
             foreach ($this->settings['rates'] as $key => $rawRate) {
                 $address = $order->getCustomer()->getShippingAddress();
                 $code = str_replace('*', '(.*)', str_replace(['-', ' '], '', strtoupper($rawRate['postcode'])));
@@ -296,6 +312,9 @@ class AdvancedFlatRate implements MultipleMethod
                     $rate->setPrice($rawRate['cost'] + (1 * $this->settings['fee']));
                     $rate->setMethod($this);
                     $this->rates[$key] = $rate;
+                    if(!$this->settings['multiple_rates']) {
+                        break;
+                    }
                 }
             }
             if(empty($this->rates)) {
@@ -307,6 +326,9 @@ class AdvancedFlatRate implements MultipleMethod
                         $rate->setPrice($rawRate['cost'] + (1 * $this->settings['fee']));
                         $rate->setMethod($this);
                         $this->rates[$key] = $rate;
+                        if(!$this->settings['multiple_rates']) {
+                            break;
+                        }
                     }
                 }
             }

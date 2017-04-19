@@ -4,6 +4,7 @@ namespace Jigoshop\Admin\Settings;
 
 use Jigoshop\Core\Options;
 use Jigoshop\Helper\Scripts;
+use Jigoshop\Helper\Styles;
 use Jigoshop\Service\ShippingServiceInterface;
 use Jigoshop\Shipping\Method;
 use WPAL\Wordpress;
@@ -30,8 +31,9 @@ class ShippingTab implements TabInterface
         $wp->addAction('admin_enqueue_scripts', function (){
             if (isset($_GET['tab']) && $_GET['tab'] == ShippingTab::SLUG) {
                 Scripts::add('jigoshop.admin.settings.shopping', \JigoshopInit::getUrl().'/assets/js/admin/settings/shipping.js',
-                    ['jquery', 'wp-util'],
+                    ['jquery', 'wp-util', 'jquery-ui-sortable'],
                     ['page' => 'jigoshop_page_jigoshop_settings']);
+                Styles::add('jquery-ui-sortable');
             }
         });
 	}
