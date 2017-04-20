@@ -58,7 +58,7 @@ class Account implements PageInterface
 		$query = new \WP_Query([
 			'post_type' => Types::ORDER,
 			'post_status' => array_keys(Status::getStatuses()),
-			'posts_per_page' => $this->options->get('shopping.unpaid_orders_number'),
+			'posts_per_page' => -1,
 			'meta_query' => [
 				[
 					'key'     => 'customer_id',
@@ -73,6 +73,7 @@ class Account implements PageInterface
 		    /** @var Order $order */
 		    return in_array($order->getStatus(), [Status::PENDING, Status::ON_HOLD]);
         });
+        $unpaidOrders = array_slice($unpaidOrders, 0, $this->options->get('shopping.unpaid_orders_number', 5));
 		$downloadableItems = [];
 		foreach($orders as $order) {
 		    if(in_array($order->getStatus(), [Status::PROCESSING, Status::COMPLETED])) {
