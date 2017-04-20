@@ -63,7 +63,7 @@ $stock = $product instanceof Product\Purchasable ? $product->getStock() : new St
 				'name' => 'product[variation]['.$variation->getId().'][product][regular_price]',
 				'label' => __('Price', 'jigoshop'),
 				'placeholder' => __('Price not announced', 'jigoshop'),
-				'value' => $product->getPrice(),
+				'value' => $product->getRegularPrice(),
 				'size' => 11,
             ]);
 			Forms::select([
