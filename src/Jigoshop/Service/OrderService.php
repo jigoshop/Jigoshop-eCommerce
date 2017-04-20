@@ -246,7 +246,7 @@ class OrderService implements OrderServiceInterface
                 return $discount->getId();
             }, $fields['discounts']);
 
-            $this->removeAllDiscountsExcept($object, $existing);
+            $this->removeAllDiscountsExcept($object->getId(), $existing);
 
             foreach ($fields['discounts'] as $discount) {
                 /** @var Order\Discount $discount */
