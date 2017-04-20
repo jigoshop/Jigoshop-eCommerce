@@ -35,7 +35,9 @@ $stock = $product instanceof Product\Purchasable ? $product->getStock() : new St
 				'classes' => ['variation-attribute'],
 				'placeholder' => $attribute->getLabel(),
 				'value' => $value !== null ? $value->getValue() : '',
-				'options' => ProductHelper::getSelectOption($attribute->getOptions(), sprintf(__('Any of %s', 'jigoshop'), $attribute->getLabel())),
+				'options' => ProductHelper::getSelectOption(array_filter($attribute->getOptions(), function($option) use ($attribute) {
+				    return in_array($option->getId(), is_array($attribute->getValue()) ? $attribute->getValue() : [$attribute->getValue()]);
+                }), sprintf(__('Any of %s', 'jigoshop'), $attribute->getLabel())),
 				'size' => 12,
             ]); ?>
 		<?php endforeach; ?>
