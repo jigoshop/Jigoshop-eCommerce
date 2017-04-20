@@ -26,6 +26,7 @@ class Address implements \Serializable, \JsonSerializable
     public function __construct()
     {
         $this->country = HelperAddress::getDefaultCountry();
+        $this->state = HelperAddress::getDefaultState();
     }
 
     /**
