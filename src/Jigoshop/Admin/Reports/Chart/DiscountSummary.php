@@ -397,7 +397,7 @@ class DiscountSummary extends Chart
 		if(empty($data['series'])) {
             $dummy = $this->prepareChartData([], '', '', $this->chartInterval, $this->range['start'], $this->chartGroupBy);
             $data['series'][] = $this->arrayToObject([
-                'label' => sprintf(__('%s discounts in total', 'jigoshop'), Type::getName($type)),
+                'label' => __('No discounts for selected period.', 'jigoshop'),
                 'data' => array_values($dummy),
                 'yaxis' => 2,
                 'color' => $this->chartColours[0],
