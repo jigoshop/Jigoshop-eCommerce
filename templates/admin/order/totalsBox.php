@@ -37,13 +37,15 @@ $orderTax = $order->getTax();
 			'size' => 12,
 			'value' => Product::formatPrice($order->getSubtotal()),
         ]); ?>
-		<?php Forms::constant([
-			'name' => 'order[discount]',
-			'label' => __('Discount', 'jigoshop'),
-			'placeholder' => 0.0,
-            'size' => 12,
-			'value' => Product::formatPrice($order->getDiscount()),
-        ]); ?>
+        <?php if($order->getDiscount() > 0) : ?>
+            <?php Forms::constant([
+                'name' => 'order[discount]',
+                'label' => __('Discount', 'jigoshop'),
+                'placeholder' => 0.0,
+                'size' => 12,
+                'value' => Product::formatPrice($order->getDiscount()),
+            ]); ?>
+        <?php endif; ?>
 		<?php foreach($tax as $class => $option): ?>
 			<?php Forms::constant([
 				'name' => 'order[tax]['.$class.']',
