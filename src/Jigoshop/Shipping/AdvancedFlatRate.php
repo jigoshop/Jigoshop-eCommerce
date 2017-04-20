@@ -153,9 +153,11 @@ class AdvancedFlatRate implements MultipleMethod
             [
                 'name' => sprintf('[%s][multiple_rates]', self::ID),
                 'title' => __('Show multiple rates', 'jigoshop'),
-                'description' => __('If enabled then all matched rates will be visible in cart/checkout. Othervise it will show the first rate.', 'jigoshop'),
+                'description' => __('If enabled then all matched rates will be visible in cart/checkout. '.
+                    'Otherwise, the first available rate, from the rates list, which includes the destination, will be used in cart. '.
+                    '<br/>You can change the order/priority of created rates by movinge them up and down on the list.', 'jigoshop'),
                 'type' => 'checkbox',
-                'value' => $this->settings['multiple_rates'],
+                'checked' => $this->settings['multiple_rates'],
                 'classes' => ['switch-medium'],
             ],
             [
@@ -193,6 +195,7 @@ class AdvancedFlatRate implements MultipleMethod
         $settings['enabled'] = $settings['enabled'] == 'on';
         $settings['taxable'] = $settings['taxable'] == 'on';
         $settings['multiple_rates'] = $settings['multiple_rates'] == 'on';
+
         if (isset($settings['rates'])) {
             $settings['rates'] = array_values($settings['rates']);
             for ($i = 0; $i < count($settings['rates']); $i++) {
