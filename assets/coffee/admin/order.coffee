@@ -21,6 +21,7 @@ class AdminOrder
 
     jQuery('.jigoshop-totals')
       .on 'click', 'input[type=radio]', @selectShipping
+    jQuery('input#title').remove()
 
   selectShipping: (e) =>
     $parent = jQuery(e.target).closest('div.jigoshop')

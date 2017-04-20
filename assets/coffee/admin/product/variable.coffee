@@ -29,6 +29,8 @@ class AdminProductVariable
         else
           jQuery('div.manual-stock-status', $parent).slideDown()
           jQuery('.stock-status', $parent).slideUp()
+      .on 'jigoshop.variation.add', () =>
+        @connectImage 0, jQuery('.set_variation_image').last()
     jQuery('.set_variation_image').each @connectImage
     jQuery('#sales-range-from').on 'changeDate', (selected) ->
       jQuery('#product-variations .input-daterange').each () ->

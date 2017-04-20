@@ -1,7 +1,7 @@
 class AdminProductSimple
   constructor: ->
     jQuery('#product-type').on 'change', @removeParameters
-    jQuery('#product-variations > li').on 'change', '.variation-type', @removeVariationParameters
+    jQuery('#product-variations').on 'change', 'select.variation-type', @removeVariationParameters
 
   removeParameters: (event) ->
     $item = jQuery(event.target)
