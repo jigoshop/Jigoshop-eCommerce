@@ -8,6 +8,7 @@ use Jigoshop\Entity\Product;
 use Jigoshop\Helper\ProductCategory;
 use Jigoshop\Helper\Render;
 use Jigoshop\Helper\Scripts;
+use Jigoshop\Helper\Styles;
 use WPAL\Wordpress;
 
 class ProductCategories
@@ -33,16 +34,17 @@ class ProductCategories
 
 		$wp->addAction('admin_enqueue_scripts', function () use ($wp){
 			$wp->wpEnqueueMedia();
-			Scripts::add('jigoshop.admin.product_categories', \JigoshopInit::getUrl().'/assets/js/admin/product_categories.js', [
+            Styles::add('jigoshop.admin.product_categories', \JigoshopInit::getUrl().'/assets/css/admin/product_categories.css');
+            Scripts::add('jigoshop.admin.product_categories', \JigoshopInit::getUrl().'/assets/js/admin/product_categories.js', [
 				'jquery',
 				'jigoshop.media'
             ]);
-			Scripts::localize('jigoshop.admin.product_categories', 'jigoshop_admin_product_categories', [
+            Scripts::localize('jigoshop.admin.product_categories', 'jigoshop_admin_product_categories', [
 				'category_name' => Types::PRODUCT_CATEGORY,
 				'placeholder' => \JigoshopInit::getUrl().'/assets/images/placeholder.png',
             ]);
 
-			$wp->doAction('jigoshop\admin\product_categories\assets', $wp);
+            $wp->doAction('jigoshop\admin\product_categories\assets', $wp);
 		});
 	}
 
