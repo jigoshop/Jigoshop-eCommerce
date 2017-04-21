@@ -14,7 +14,8 @@ class AdminProductVariable
         jQuery('.list-group-item-text', $item.closest('li')).slideToggle ->
           jQuery('span', $item).toggleClass('glyphicon-collapse-down').toggleClass('glyphicon-collapse-up')
       .on 'change', 'select.variation-attribute', @updateVariation
-      .on 'change', '.list-group-item-text input.form-control' , @updateVariation
+      .on 'change', '.list-group-item-text input.form-control:not(.datepicker)' , @updateVariation
+      .on 'changeDate', '.list-group-item-text input.datepicker' , @updateVariation
       .on 'change', '.list-group-item-text input[type="checkbox"]', @updateVariation
       .on 'change', '.list-group-item-text select.form-control', @updateVariation
       .on 'click', '.set_variation_image', @setImage
@@ -35,18 +36,27 @@ class AdminProductVariable
     jQuery('#sales-range-from').on 'changeDate', (selected) ->
       jQuery('#product-variations .input-daterange').each () ->
         id = jQuery(this).attr('id')
-        jQuery('#' + id + '-from').datepicker 'setStartDate', new Date(selected.date.valueOf())
+        jQuery('#' + id + '-from')
+          .datepicker 'setStartDate', new Date(selected.date.valueOf())
+          .datepicker 'setDate', new Date(selected.date.valueOf())
         jQuery('#' + id + '-to').datepicker 'setStartDate', new Date(selected.date.valueOf())
     jQuery('#sales-range-to').on 'changeDate', (selected) ->
       jQuery('#product-variations .input-daterange').each () ->
         id = jQuery(this).attr('id')
         jQuery('#' + id + '-from').datepicker 'setEndDate', new Date(selected.date.valueOf())
-        jQuery('#' + id + '-to').datepicker 'setEndDate', new Date(selected.date.valueOf())
+        jQuery('#' + id + '-to')
+          .datepicker 'setEndDate', new Date(selected.date.valueOf())
+          .datepicker 'setDate', new Date(selected.date.valueOf())
+    if jQuery('#product-type').val() != 'variable'
+      jQuery('.sales-range_field .help-block').slideUp()
 
   removeParameters: (event) ->
     $item = jQuery(event.target)
     if $item.val() == 'variable'
       jQuery('.product_regular_price_field').slideUp()
+      jQuery('.sales-range_field .help-block').slideDown()
+    else
+      jQuery('.sales-range_field .help-block').slideUp()
   addVariation: (event) ->
     event.preventDefault()
     $parent = jQuery('#product-variations')

@@ -2,6 +2,7 @@
 /**
  * @var $id string Field ID.
  * @var $label string Field label.
+ * @var $description string Field description.
  * @var $name string Field name.
  * @var $classes array List of classes to add to the field.
  * @var $placeholder string Field's placeholder.
@@ -40,6 +41,9 @@ $hasLabel = !empty($label);
                                class="form-control <?= join(' ', $classes); ?>" placeholder="<?= $placeholder; ?>"
                                value="<?= $value['to']; ?>"/>
                     </div>
+                    <?php if (!empty($description)): ?>
+                        <span class="text-left help-block"><?= $description; ?></span>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>

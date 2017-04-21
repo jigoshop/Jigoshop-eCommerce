@@ -175,6 +175,7 @@ $stock = $product instanceof Product\Purchasable ? $product->getStock() : new St
 				'size' => 11,
 				'startDate' => $variation->getParent()->getSales()->getFrom()->format('m/d/Y'),
 				'endDate' => $variation->getParent()->getSales()->getTo()->format('m/d/Y'),
+                'classes' => ['datepicker']
             ]);
 			?>
 			</fieldset>

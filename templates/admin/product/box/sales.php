@@ -29,7 +29,8 @@ if ($product instanceof Product\Saleable) {
 		'name' => 'product[sales_enabled]',
 		'id' => 'sales-enabled',
 		'label' => __('Put product on sale?', 'jigoshop'),
-		'checked' => $enabled,
+		'description' => __('To enable sale please set up actual sale dates', 'jigoshop'),
+        'checked' => $enabled,
     ]);
 	?>
 </fieldset>
@@ -54,6 +55,7 @@ if ($product instanceof Product\Saleable) {
 			'from' => $from,
 			'to' => $to,
         ],
+        'description' => __('The above sale period will be set for all the product variations. If you need to set different sale time frame for individual variation, please use the sale setting on the variation edit pane.', 'jigoshop'),
     ]);
 	?>
 </fieldset>
