@@ -16,6 +16,7 @@ cssFiles =
   select2: ['assets/bower/select2/select2.css', 'assets/bower/select2/select2-bootstrap.css']
   tokenfield: ['assets/bower/bootstrap-tokenfield/dist/css/bootstrap-tokenfield.css']
   blueimp: ['node_modules/blueimp-gallery/css/blueimp-gallery.css']
+  magnific_popup: ['assets/bower/magnific-popup/dist/magnific-popup.css']
 
 # JS
 jsFiles =
@@ -26,6 +27,7 @@ jsFiles =
   flot: ['node_modules/jquery-flot/{jquery.flot,jquery.flot.stack,jquery.flot.pie,jquery.flot.resize,jquery.flot.time}.js']
   blueimp: ['node_modules/blueimp-gallery/js/{blueimp-gallery.js,jquery.blueimp-gallery.js}']
   bs_switch: ['assets/bower/bootstrap-switch/dist/js/bootstrap-switch.js']
+  magnific_popup: ['assets/bower/magnific-popup/dist/jquery.magnific-popup.min.js']
 
 # Coffee
 coffeeFiles = []

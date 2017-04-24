@@ -37,10 +37,10 @@ class ShippingTab implements TabInterface
                 Scripts::add('jigoshop.admin.settings.shopping', \JigoshopInit::getUrl().'/assets/js/admin/settings/shipping.js',
                     ['jquery', 'wp-util', 'jquery-ui-sortable'], 
                     ['page' => 'jigoshop_page_jigoshop_settings']);
-                Scripts::add('jigoshop.magnific-popup', \JigoshopInit::getUrl() . '/assets/js/jquery.magnific-popup.min.js', ['jquery']);
+                Scripts::add('jigoshop.magnific-popup', \JigoshopInit::getUrl() . '/assets/js/vendors/magnific_popup.js', ['jquery']);
                 
                 Styles::add('jquery-ui-sortable');
-                Styles::add('jigoshop.magnific-popup', \JigoshopInit::getUrl() . '/assets/css/magnific-popup.css');
+                Styles::add('jigoshop.magnific-popup', \JigoshopInit::getUrl() . '/assets/css/vendors/magnific_popup.css');
             }
         });
 
