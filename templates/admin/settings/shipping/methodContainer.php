@@ -7,7 +7,6 @@ use Jigoshop\Helper\Render;
 		<tr>
 			<th scope="col">Name</th>
 			<th scope="col">Configure</th>
-			<th scope="col">Status</th>
 		</tr>
 	</thead>
 	<tbody>

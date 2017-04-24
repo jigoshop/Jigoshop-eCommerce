@@ -125,26 +125,10 @@ class ShippingTab implements TabInterface
 	public function generateShippingMethods() {
 		$methods = [];
 		foreach($this->shippingService->getAvailable() as $method) {
-			$options = $this->options->get('shipping.' . $method->getId());			
-
-			if($method->isEnabled()) {
-				// FIXME: sprawdzanie do dupy
-				if(!$options || !is_array($options) || !count($options)) {
-					$status = __('Disabled; Not configured', 'jigoshop');
-				}
-				else {
-					$status = __('Active', 'jigoshop');
-				}
-			}
-			else {
-				$status = __('Disabled', 'jigoshop');
-			}
-			
 			$methods[] = [
 				'id' => $method->getId(),
 				'name' => $method->getName(),
 				'enabled' => $method->isEnabled(),
-				'status' => $status,
 				'options' => $method->getOptions()
 			];
 		}

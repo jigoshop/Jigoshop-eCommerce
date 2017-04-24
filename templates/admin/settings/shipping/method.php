@@ -5,7 +5,4 @@
 	<td>
 		<button type="button" class="btn btn-default text-left shipping-method-configure" value="<?php echo $method['id']; ?>"><span class="glyphicon glyphicon-plus"></span> <?php echo __('Configure', 'jigoshop'); ?></button>
 	</td>
-	<td>
-		<?php echo $method['status']; ?>
-	</td>
 </tr>
