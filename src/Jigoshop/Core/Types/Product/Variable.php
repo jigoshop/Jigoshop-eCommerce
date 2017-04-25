@@ -743,7 +743,7 @@ class Variable implements Type
 			if (isset($_POST['product']) && is_array($_POST['product'])) {
 				// For now - always manage variation product stock
 				//$_POST['product']['stock']['manage'] = 'on';
-				$_POST['product']['sales_enabled'] = $product->getSales()->isEnabled();
+				$_POST['product']['sales_enabled'] = $_POST['product']['sales_price'] !== '';
 				$variation->getProduct()->restoreState($_POST['product']);
 				$variation->getProduct()->markAsDirty($_POST['product']);
 			}
