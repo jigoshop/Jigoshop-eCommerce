@@ -209,9 +209,10 @@ class AdminProductVariable
     .done (data) ->
       if data.success? and data.success
         $thumbnail
-          .attr('src', data.url)
-          .attr('width', 150)
-          .attr('height', 150)
+          .prop('src', data.url)
+          .prop('width', 150)
+          .prop('height', 150)
+          .prop('srcset', '')
         $element.hide()
       else
         jigoshop.addMessage('danger', data.error, 6000)
