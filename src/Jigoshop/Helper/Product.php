@@ -143,16 +143,33 @@ class Product
     public static function isOnSale(Entity\Product $product)
     {
         $status = false;
+
         switch ($product->getType()) {
             case Entity\Product\Simple::TYPE:
             case Entity\Product\Virtual::TYPE:
             case Entity\Product\External::TYPE:
             case Entity\Product\Downloadable::TYPE:
                 /** @var $product Entity\Product\Simple */
-                $status = $product->getSales()->isEnabled();
+                $status = self::isSale($product->getSales());
+                break;
+            case Entity\Product\Variable::TYPE:
+                /** @var $product Entity\Product\Variable */
+                $status = array_reduce($product->getVariations(), function($value, $variation) {
+                    /** @var $variation Entity\Product\Variable\Variation */
+                    return $value || self::isSale($variation->getProduct()->getSales());
+                });
+                break;
         }
 
         return apply_filters('jigoshop\helper\product\is_on_sales', $status, $product);
+    }
+
+    private static function isSale(Entity\Product\Attributes\Sales $sale)
+    {
+        $time = time();
+        return $sale->isEnabled() &&
+            ($sale->getFrom()->getTimestamp() == 0 || $sale->getFrom()->getTimestamp() <= $time) &&
+            ($sale->getTo()->getTimestamp() == 0 || $sale->getTo()->getTimestamp() >= $time);
     }
 
     /**

@@ -54,7 +54,7 @@ class VariableService implements VariableServiceInterface
 			foreach ($object->getVariations() as $variation) {
 				/** @var Product\Variable\Variation $variation */
 				if ($variation->getProduct() === null) {
-                    $variation->setProduct($this->_createVariableProduct($variation, $object));
+                    $variation->setProduct($this->createVariableProduct($variation, $object));
 					$variation->setId($variation->getProduct()->getId());
 				} else {
 				    $variation->getProduct()->setName($variation->getTitle());
@@ -108,7 +108,7 @@ class VariableService implements VariableServiceInterface
 	 *
 	 * @return Product
 	 */
-	private function _createVariableProduct($variation, $product)
+	public function createVariableProduct($variation, $product)
 	{
 		$variableId = $this->createVariablePost($variation);
 		/** @var Product|Product\Purchasable|Product\Saleable $variableProduct */

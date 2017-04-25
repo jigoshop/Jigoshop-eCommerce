@@ -117,7 +117,9 @@ class Variable implements Type
 		$wp->addAction('wp_ajax_jigoshop.admin.product.add_variation', [$this, 'ajaxAddVariation'], 10, 0);
 		$wp->addAction('wp_ajax_jigoshop.admin.product.save_variation', [$this, 'ajaxSaveVariation'], 10, 0);
 		$wp->addAction('wp_ajax_jigoshop.admin.product.remove_variation', [$this, 'ajaxRemoveVariation'], 10, 0);
+		$wp->addAction('wp_ajax_jigoshop.admin.product.remove_all_variations', [$this, 'ajaxRemoveAllVariations'], 10, 0);
 		$wp->addAction('wp_ajax_jigoshop.admin.product.set_variation_image', [$this, 'ajaxSetImageVariation'], 10, 0);
+		$wp->addAction('wp_ajax_jigoshop.admin.product.create_variations_from_all_attributes', [$this, 'ajaxCreateVariationsFromAllAttributes'], 10, 0);
 
 		$that = $this;
 		$wp->addAction('jigoshop\run', function () use ($that, $wp, $enabledTypes){
@@ -307,7 +309,6 @@ class Variable implements Type
 	{
 		$menu['variations'] = ['label' => __('Variations', 'jigoshop'), 'visible' => [Product\Variable::TYPE]];
 		$menu['advanced']['visible'][] = Product\Variable::TYPE;
-		$menu['sales']['visible'][] = Product\Variable::TYPE;
 
 		return $menu;
 	}
@@ -333,10 +334,62 @@ class Variable implements Type
 			$taxClasses[$class['class']] = $class['label'];
 		}
 
+		$bulkActions = $this->wp->applyFilters('jigoshop\core\types\variable\bulk_actions', [
+            1 => __('Add Variation', 'jigoshop'),
+            2 => __('Create variations from all attributes', 'jigoshop'),
+            3 => __('Remove all variations', 'jigoshop'),
+            'type' => [
+                'label' => __('Type', 'jigoshop'),
+                'items' => [],
+            ],
+            'pricing' => [
+                'label' => __('Pricing', 'jigoshop'),
+                'items' => [
+                    5 => __('Set regular price', 'jigoshop'),
+                    6 => __('Increase regular price', 'jigoshop'),
+                    7 => __('Decrease regular price', 'jigoshop'),
+                    8 => __('Set sale prices', 'jigoshop'),
+                    9 => __('Increase sale prices', 'jigoshop'),
+                    10 => __('Decrease sale prices', 'jigoshop'),
+                    11 => __('Set scheduled sale dates', 'jigoshop'),
+                ],
+            ],
+            'inventory' => [
+                'label' => __('Inventory', 'jigoshop'),
+                'items' => [
+                    12 => __('Toggle manage stock', 'jigoshop'),
+                    13 => __('Set stock', 'jigoshop'),
+                    14 => __('Increase stock', 'jigoshop'),
+                    15 => __('Decrease stock', 'jigoshop'),
+                ],
+            ],
+            'dimensions' => [
+                'label' => __('Dimensions', 'jigoshop'),
+                'items' => [
+                    16 => __('Set length', 'jigoshop'),
+                    17 => __('Set width', 'jigoshop'),
+                    18 => __('Set height', 'jigoshop'),
+                    19 => __('Set weight', 'jigoshop'),
+                ],
+            ],
+            'downloads' => [
+                'label' => __('Downloads', 'jigoshop'),
+                'items' => [
+                    20 => __('Set download limit', 'jigoshop'),
+                ]
+            ],
+        ]);
+
+		foreach ($this->allowedSubtypes as $type) {
+            /** @var $type Type */
+            $bulkActions['type']['items']['4-'.$type->getId()] = sprintf(__('Set "%s"', 'jigoshop'), $type->getName());
+        }
+
 		$tabs['variations'] = [
 			'product' => $product,
 			'allowedSubtypes' => $types,
 			'taxClasses' => $taxClasses,
+            'bulkActions' => $bulkActions
         ];
 
 		return $tabs;
@@ -351,13 +404,20 @@ class Variable implements Type
 		Styles::add('jigoshop.admin.product.variable', \JigoshopInit::getUrl().'/assets/css/admin/product/variable.css');
 		Scripts::add('jigoshop.admin.product.variable', \JigoshopInit::getUrl().'/assets/js/admin/product/variable.js', [
 			'jquery',
-			'jigoshop.media'
+			'jigoshop.media',
+            'jquery-blockui'
         ]);
 		Scripts::localize('jigoshop.admin.product.variable', 'jigoshop_admin_product_variable', [
 			'i18n' => [
 				'confirm_remove' => __('Are you sure?', 'jigoshop'),
 				'variation_removed' => __('Variation successfully removed.', 'jigoshop'),
 				'saved' => __('Variation saved.', 'jigoshop'),
+                'create_all_variations_confirmation' => __('Are you sure you want to create all variations? It will take some time.', 'jigoshop'),
+                'remove_all_variations' => __('Are you sure you want to remove all variations? This cannot be undone.', 'jigoshop'),
+                'set_field' => __('Enter a value', 'jigoshop'),
+                'modify_field' => __('Enter a value (fixed or %)', 'jigoshop'),
+                'sale_start_date' => __('Sale start date (MM/DD/YYYY format or leave blank)', 'jigoshop'),
+                'sale_end_date' => __('Sale end date (MM/DD/YYYY format or leave blank)', 'jigoshop'),
             ],
         ]);
 	}
@@ -516,6 +576,124 @@ class Variable implements Type
 		exit;
 	}
 
+    public function ajaxCreateVariationsFromAllAttributes()
+    {
+        try {
+            if (!isset($_POST['product_id']) || empty($_POST['product_id'])) {
+                throw new Exception(__('Product was not specified.', 'jigoshop'));
+            }
+            if (!is_numeric($_POST['product_id'])) {
+                throw new Exception(__('Invalid product ID.', 'jigoshop'));
+            }
+
+            $product = $this->productService->find($_POST['product_id']);
+            if(!$product instanceof Product\Variable) {
+                throw new Exception(__('Invalid product type.', 'jigoshop'));
+            }
+
+            $attributes = $product->getVariableAttributes();
+            $variations = $product->getVariations();
+            $legend = [];
+            $attributeValues = [];
+            foreach($attributes as $attribute) {
+                $legend[] = $attribute->getId();
+                $values = $attribute->getValue();
+                sort($values);
+                $attributeValues[] = $values;
+            }
+            if(count($attributeValues) > 1) {
+                $possibleCombinations = $this->createCombinations($attributeValues);
+            } else {
+                foreach($attributeValues as $value) {
+                    foreach($value as $subvalue)
+                    $possibleCombinations[] = [$subvalue];
+                }
+            }
+
+            foreach($possibleCombinations as $key => $combination) {
+                foreach ($variations as $variation) {
+                    $exist = true;
+                    foreach ($combination as $key2 => $value) {
+                        if($variation->getAttribute($legend[$key2])->getValue() != $value) {
+                            $exist = false;
+                        }
+                    }
+                    if($exist) {
+                        unset($possibleCombinations[$key]);
+                        break;
+                    }
+
+                }
+            }
+
+            $createdVariations = [];
+            foreach($possibleCombinations as $combination) {
+                $variation = $this->factory->createVariation($product);
+                $this->wp->doAction('jigoshop\admin\product_variation\add', $variation, $product);
+                foreach($combination as $key => $value) {
+                    $variation->getAttribute($legend[$key])->setValue($value);
+                }
+                $createdVariations[] = $variation;
+                $variationProduct = $this->service->createVariableProduct($variation, $product);
+                $variation->setId($variationProduct->getId());
+                $variation->setProduct($variationProduct);
+                $product->addVariation($variation);
+            }
+            $this->productService->save($product);
+
+            $types = [];
+            foreach ($this->allowedSubtypes as $type) {
+                /** @var $type Type */
+                $types[$type->getId()] = $type->getName();
+            }
+
+            echo json_encode([
+                'success' => true,
+                'html' => array_reduce($createdVariations, function($value, $variation) use ($product, $types) {
+                    $value .= Render::get('admin/product/box/variations/variation', [
+                        'variation' => $variation,
+                        'attributes' => $product->getVariableAttributes(),
+                        'allowedSubtypes' => $types,
+                    ]);
+
+                    return $value;
+                }),
+            ]);
+        } catch (Exception $e) {
+            echo json_encode([
+                'success' => false,
+                'error' => $e->getMessage(),
+            ]);
+        }
+
+        exit;
+	}
+
+    private function createCombinations($arrays, $i = 0) {
+        if (!isset($arrays[$i])) {
+            return array();
+        }
+        if ($i == count($arrays) - 1) {
+            return $arrays[$i];
+        }
+
+        // get combinations from subsequent arrays
+        $tmp = $this->createCombinations($arrays, $i + 1);
+
+        $result = array();
+
+        // concat each array from tmp with each element from $arrays[$i]
+        foreach ($arrays[$i] as $v) {
+            foreach ($tmp as $t) {
+                $result[] = is_array($t) ?
+                    array_merge(array($v), $t) :
+                    array($v, $t);
+            }
+        }
+
+        return $result;
+    }
+
 	public function ajaxSaveVariation()
 	{
 		try {
@@ -641,4 +819,39 @@ class Variable implements Type
 
 		exit;
 	}
+
+    public function ajaxRemoveAllVariations()
+    {
+        try {
+            if (!isset($_POST['product_id']) || empty($_POST['product_id'])) {
+                throw new Exception(__('Product was not specified.', 'jigoshop'));
+            }
+            if (!is_numeric($_POST['product_id'])) {
+                throw new Exception(__('Invalid product ID.', 'jigoshop'));
+            }
+            $product = $this->productService->find((int)$_POST['product_id']);
+            if (!$product->getId()) {
+                throw new Exception(__('Product does not exists.', 'jigoshop'));
+            }
+            if (!($product instanceof Product\Variable)) {
+                throw new Exception(__('Product is not variable - unable to add variation.', 'jigoshop'));
+            }
+
+            foreach ($product->getVariations() as $variation) {
+                $product->removeVariation($variation->getId());
+                $this->service->removeVariation($variation);
+            }
+            $this->productService->save($product);
+            echo json_encode([
+                'success' => true,
+            ]);
+        } catch (Exception $e) {
+            echo json_encode([
+                'success' => false,
+                'error' => $e->getMessage(),
+            ]);
+        }
+
+        exit;
+    }
 }

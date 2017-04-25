@@ -88,11 +88,7 @@ class Sales implements \Serializable, \JsonSerializable
 	 */
 	public function isEnabled()
 	{
-		$time = time();
-
-		return $this->enabled &&
-		($this->getFrom()->getTimestamp() == 0 || $this->getFrom()->getTimestamp() <= $time) &&
-		($this->getTo()->getTimestamp() == 0 || $this->getTo()->getTimestamp() >= $time);
+		return $this->enabled;
 	}
 
 	/**

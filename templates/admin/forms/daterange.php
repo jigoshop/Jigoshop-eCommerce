@@ -34,11 +34,11 @@ $hasLabel = !empty($label);
                     <div class="<?= $id; ?>-form input-daterange input-group"
                          id="<?= $id; ?>">
                         <input type="<?= $type; ?>" id="<?= $id; ?>-from" name="<?= $name['from']; ?>"
-                               class="form-control <?= join(' ', $classes); ?>" placeholder="<?= $placeholder; ?>"
+                               class="form-control daterange-from <?= join(' ', $classes); ?>" placeholder="<?= $placeholder; ?>"
                                value="<?= $value['from']; ?>"/>
                         <span class="input-group-addon"><?php _e('to', 'jigoshop'); ?></span>
                         <input type="<?= $type; ?>" id="<?= $id; ?>-to" name="<?= $name['to']; ?>"
-                               class="form-control <?= join(' ', $classes); ?>" placeholder="<?= $placeholder; ?>"
+                               class="form-control daterange-to <?= join(' ', $classes); ?>" placeholder="<?= $placeholder; ?>"
                                value="<?= $value['to']; ?>"/>
                     </div>
                     <?php if (!empty($description)): ?>
@@ -54,6 +54,7 @@ $hasLabel = !empty($label);
     jQuery('.<?= $id; ?>-form').datepicker({
         autoclose: true,
         todayHighlight: true,
+        clearBtn: true,
         container: '#<?= $id; ?>',
         orientation: 'top left',
         todayBtn: 'linked',

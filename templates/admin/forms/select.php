@@ -35,7 +35,7 @@ $hasLabel = !empty($label);
                         $classes); ?>" <?php $multiple and print ' multiple="multiple"'; ?>>
                         <?php foreach ($options as $option => $item): ?>
                             <?php if (isset($item['items'])): ?>
-                                <optgroup label="<?= $option; ?>">
+                                <optgroup label="<?= isset($item['label']) ? $item['label'] : $option; ?>">
                                     <?php foreach ($item['items'] as $subvalue => $subitem): $subitem['disabled'] = isset($subitem['disabled']) && $subitem['disabled'] ? true : false; ?>
                                         <?php Render::output('admin/forms/select/option', [
                                             'label' => $subitem['label'],
