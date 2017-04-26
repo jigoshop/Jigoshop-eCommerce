@@ -35,38 +35,38 @@ class TaxesTab implements TabInterface
 				return;
 			}
 
-			$classes = array();
+			$classes = [];
 			foreach ($options['classes'] as $class) {
 				$classes[$class['class']] = $class['label'];
 			}
 
-			$states = array();
+			$states = [];
 			foreach (Country::getAllStates() as $country => $stateList) {
-				$states[$country] = array(
-					array('id' => '', 'text' => _x('All states', 'admin_taxing', 'jigoshop')),
-				);
+				$states[$country] = [
+					['id' => '', 'text' => _x('All states', 'admin_taxing', 'jigoshop')],
+                ];
 				foreach ($stateList as $code => $state) {
-					$states[$country][] = array('id' => $code, 'text' => $state);
+					$states[$country][] = ['id' => $code, 'text' => $state];
 				}
 			}
 
 			$countries = array_merge(
-				array('' => __('All countries', 'jigoshop')),
+				['' => __('All countries', 'jigoshop')],
 				Country::getAll()
 			);
 
-			Scripts::add('jigoshop.admin.settings.taxes', \JigoshopInit::getUrl().'/assets/js/admin/settings/taxes.js', array(
+			Scripts::add('jigoshop.admin.settings.taxes', \JigoshopInit::getUrl().'/assets/js/admin/settings/taxes.js', [
 				'jquery',
-			), array('page' => 'jigoshop_page_jigoshop_settings'));
-			Scripts::localize('jigoshop.admin.settings.taxes', 'jigoshop_admin_taxes', array(
-				'new_class' => Render::get('admin/settings/tax/class', array('class' => array('label' => '', 'class' => ''))),
-				'new_rule' => Render::get('admin/settings/tax/rule', array(
-					'rule' => array('id' => '', 'label' => '', 'class' => '', 'is_compound' => false, 'rate' => '', 'country' => '', 'states' => array(), 'postcodes' => array()),
+            ], ['page' => 'jigoshop_page_jigoshop_settings']);
+			Scripts::localize('jigoshop.admin.settings.taxes', 'jigoshop_admin_taxes', [
+				'new_class' => Render::get('admin/settings/tax/class', ['class' => ['label' => '', 'class' => '']]),
+				'new_rule' => Render::get('admin/settings/tax/rule', [
+					'rule' => ['id' => '', 'label' => '', 'class' => '', 'is_compound' => false, 'rate' => '', 'country' => '', 'states' => [], 'postcodes' => []],
 					'classes' => $classes,
 					'countries' => $countries,
-				)),
+                ]),
 				'states' => $states,
-			));
+            ]);
 		});
 	}
 
@@ -91,12 +91,12 @@ class TaxesTab implements TabInterface
 	 */
 	public function getSections()
 	{
-		$classes = array();
+		$classes = [];
 		foreach ($this->options['classes'] as $class) {
 			$classes[$class['class']] = $class['label'];
 		}
 
-		return array(
+		return [
 			[
 				'title' => __('Main', 'jigoshop'),
 				'id' => 'main',
@@ -191,77 +191,77 @@ class TaxesTab implements TabInterface
                     ],
                 ]
             ],
-			array(
+			[
 				'title' => __('Classes', 'jigoshop'),
 				'id' => 'classes',
-				'fields' => array(
-					array(
+				'fields' => [
+					[
 						'title' => '',
 						'name' => '[classes]',
 						'type' => 'user_defined',
-						'display' => array($this, 'displayClasses'),
-					),
-				),
-			),
-			array(
+						'display' => [$this, 'displayClasses'],
+                    ],
+                ],
+            ],
+			[
 				'title' => __('Rules', 'jigoshop'),
 				'id' => 'rules',
-				'fields' => array(
-					array(
+				'fields' => [
+					[
 						'title' => '',
 						'name' => '[rules]',
 						'type' => 'user_defined',
-						'display' => array($this, 'displayRules'),
-					),
-				),
-			),
-			array(
+						'display' => [$this, 'displayRules'],
+                    ],
+                ],
+            ],
+			[
 				'title' => __('New products', 'jigoshop'),
 				'description' => __('This section defines default tax settings for new products.', 'jigoshop'),
 				'id' => 'defaults',
-				'fields' => array(
-					array(
+				'fields' => [
+					[
 						'title' => __('Is taxable?', 'jigoshop'),
 						'name' => '[defaults][taxable]',
 						'type' => 'checkbox',
 						'checked' => $this->options['defaults']['taxable'],
-						'classes' => array('switch-medium'),
-					),
-					array(
+						'classes' => ['switch-medium'],
+                    ],
+					[
 						'title' => __('Tax classes', 'jigoshop'),
 						'name' => '[defaults][classes]',
 						'type' => 'select',
 						'multiple' => true,
 						'options' => $classes,
 						'value' => $this->options['defaults']['classes'],
-					),
-				),
-			),
-		);
+                    ],
+                ],
+            ],
+        ];
 	}
 
 	public function displayClasses()
 	{
-		Render::output('admin/settings/tax/classes', array(
+		Render::output('admin/settings/tax/classes', [
 			'classes' => $this->options['classes'],
-		));
+        ]);
 	}
 
 	public function displayRules()
 	{
-		$classes = array();
+		$classes = [];
 		foreach ($this->options['classes'] as $class) {
 			$classes[$class['class']] = $class['label'];
 		}
 		$countries = array_merge(
-			array('' => __('All countries', 'jigoshop')),
+			['' => __('All countries', 'jigoshop')],
 			Country::getAll()
 		);
-		Render::output('admin/settings/tax/rules', array(
+		Render::output('admin/settings/tax/rules', [
 			'rules' => $this->taxService->getRules(),
 			'classes' => $classes,
 			'countries' => $countries,
-		));
+        ]);
 	}
 
 	/**
@@ -276,12 +276,12 @@ class TaxesTab implements TabInterface
 	{
 		$settings['shipping'] = $settings['shipping'] == 'on';
 		$classes = isset($settings['classes']) ? $settings['classes'] : [];
-		$settings['classes'] = array();
+		$settings['classes'] = [];
 		foreach ($classes['class'] as $key => $class) {
-			$settings['classes'][] = array(
+			$settings['classes'][] = [
 				'class' => $class,
 				'label' => $classes['label'][$key],
-			);
+            ];
 		}
 
 		$settings['defaults']['taxable'] = $settings['defaults']['taxable'] == 'on';
@@ -295,7 +295,7 @@ class TaxesTab implements TabInterface
         }
 
 		if (!isset($settings['rules'])) {
-			$settings['rules'] = array('id' => array());
+			$settings['rules'] = ['id' => []];
 		}
 
 		$this->taxService->removeAllExcept($settings['rules']['id']);
@@ -306,7 +306,7 @@ class TaxesTab implements TabInterface
 				$currentKey++;
 			}
 
-			$this->taxService->save(array(
+			$this->taxService->save([
 				'id' => $id,
 				'rate' => $settings['rules']['rate'][$key],
 				'is_compound' => $settings['rules']['compound'][$key + $currentKey] == 'on',
@@ -315,7 +315,7 @@ class TaxesTab implements TabInterface
 				'country' => $settings['rules']['country'][$key],
 				'states' => $settings['rules']['states'][$key],
 				'postcodes' => $settings['rules']['postcodes'][$key],
-			));
+            ]);
 		}
 		unset($settings['rules']);
 

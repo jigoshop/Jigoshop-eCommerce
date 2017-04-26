@@ -11,12 +11,14 @@
  * @author Georges.L (Geolim4)  <contact@geolim4.com>
  *
  */
-
 namespace phpFastCache\Core\Item;
 
-use phpFastCache\Core\Pool\ExtendedCacheItemPoolInterface;
 use phpFastCache\Exceptions\phpFastCacheInvalidArgumentException;
 
+/**
+ * Trait ItemBaseTrait
+ * @package phpFastCache\Core\Item
+ */
 trait ItemBaseTrait
 {
     use ItemExtendedTrait;
@@ -25,11 +27,6 @@ trait ItemBaseTrait
      * @var bool
      */
     protected $fetched = false;
-
-    /**
-     * @var ExtendedCacheItemPoolInterface
-     */
-    protected $driver;
 
     /**
      * @var string

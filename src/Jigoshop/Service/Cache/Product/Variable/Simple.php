@@ -14,7 +14,7 @@ use Jigoshop\Service\Product\VariableServiceInterface;
  */
 class Simple implements VariableServiceInterface
 {
-	private $objects = array();
+	private $objects = [];
 
 	/** @var VariableServiceInterface */
 	private $service;
@@ -62,5 +62,10 @@ class Simple implements VariableServiceInterface
 			unset($this->objects[$variation->getId()]);
 			$this->service->removeVariation($variation);
 		}
+	}
+
+    public function createVariableProduct($variation, $product)
+    {
+        return $this->service->createVariableProduct($variation, $product);
 	}
 }

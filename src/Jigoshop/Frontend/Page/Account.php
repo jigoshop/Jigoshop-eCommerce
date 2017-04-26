@@ -5,10 +5,10 @@ namespace Jigoshop\Frontend\Page;
 use Jigoshop\Core\Messages;
 use Jigoshop\Core\Options;
 use Jigoshop\Core\Types;
-use Jigoshop\Entity\Order\Item;
+use Jigoshop\Entity\Order;
 use Jigoshop\Entity\Order\Status;
 use Jigoshop\Frontend\Pages;
-use Jigoshop\Helper\Api;
+use Jigoshop\Helper\Endpoint;
 use Jigoshop\Helper\Render;
 use Jigoshop\Helper\Scripts;
 use Jigoshop\Helper\Styles;
@@ -49,36 +49,56 @@ class Account implements PageInterface
 	public function render()
 	{
 		if (!$this->wp->isUserLoggedIn()) {
-			return Render::get('user/login', array());
+			return Render::get('user/login', []);
 		}
 
 		$content = $this->wp->getPostField('post_content', $this->options->getPageId(Pages::ACCOUNT));
 		$content = do_shortcode($content);
 		$customer = $this->customerService->getCurrent();
-		$query = new \WP_Query(array(
+		$query = new \WP_Query([
 			'post_type' => Types::ORDER,
-			'post_status' => array(Status::PENDING, Status::ON_HOLD),
-			'posts_per_page' => $this->options->get('shopping.unpaid_orders_number'),
-			'meta_query' => array(
-				array(
+			'post_status' => array_keys(Status::getStatuses()),
+			'posts_per_page' => -1,
+			'meta_query' => [
+				[
 					'key'     => 'customer_id',
 					'value'   => $this->wp->getCurrentUserId(),
 					'compare' => '=',
-				),
-			),
-		));
+                ],
+            ],
+        ]);
+		/** @var Order[] $orders */
 		$orders = $this->orderService->findByQuery($query);
+		$unpaidOrders = array_filter($orders, function ($order) {
+		    /** @var Order $order */
+		    return in_array($order->getStatus(), [Status::PENDING, Status::ON_HOLD]);
+        });
+        $unpaidOrders = array_slice($unpaidOrders, 0, $this->options->get('shopping.unpaid_orders_number', 5));
+		$downloadableItems = [];
+		foreach($orders as $order) {
+		    if(in_array($order->getStatus(), [Status::PROCESSING, Status::COMPLETED])) {
+		        foreach($order->getItems() as $item) {
+		            if($item->getMeta('file') && $item->getMeta('downloads') && $item->getMeta('downloads')->getValue() !== 0) {
+		                $downloadableItems[] = [
+		                    'order' => $order,
+                            'item' => $item,
+                        ];
+                    }
+                }
+            }
+        }
         $permalink = get_permalink();
 
-		return Render::get('user/account', array(
+		return Render::get('user/account', [
 			'content' => $content,
 			'messages' => $this->messages,
 			'customer' => $customer,
-			'unpaidOrders' => $orders,
-			'editBillingAddressUrl' => Api::getEndpointUrl('edit-address', 'billing', $permalink),
-			'editShippingAddressUrl' => Api::getEndpointUrl('edit-address', 'shipping', $permalink),
-			'changePasswordUrl' => Api::getEndpointUrl('change-password', '', $permalink),
-			'myOrdersUrl' => Api::getEndpointUrl('orders', '', $permalink),
-		));
+			'unpaidOrders' => $unpaidOrders,
+			'downloadableItems' => $downloadableItems,
+			'editBillingAddressUrl' => Endpoint::getEndpointUrl('edit-address', 'billing', $permalink),
+			'editShippingAddressUrl' => Endpoint::getEndpointUrl('edit-address', 'shipping', $permalink),
+			'changePasswordUrl' => Endpoint::getEndpointUrl('change-password', '', $permalink),
+			'myOrdersUrl' => Endpoint::getEndpointUrl('orders', '', $permalink),
+        ]);
 	}
 }

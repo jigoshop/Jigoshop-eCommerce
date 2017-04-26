@@ -2,11 +2,13 @@
 
 namespace Jigoshop\Service;
 
+use Jigoshop\Api\Routes\V1\Emails;
 use Jigoshop\Core\Options;
 use Jigoshop\Core\Types;
 use Jigoshop\Entity\Email;
 use Jigoshop\Entity\EntityInterface;
 use Jigoshop\Factory\Email as Factory;
+use Jigoshop\Traits\WpPostManageTrait;
 use WPAL\Wordpress;
 
 /**
@@ -18,6 +20,8 @@ use WPAL\Wordpress;
  */
 class EmailService implements EmailServiceInterface
 {
+    use WpPostManageTrait;
+
 	/** @var Wordpress */
 	private $wp;
 	/** @var Options */
@@ -29,14 +33,14 @@ class EmailService implements EmailServiceInterface
     /** @var bool */
     private $suppressForWholeRequest = false;
     /** @var array  */
-    private $templates = array();
+    private $templates = [];
 
 	public function __construct(Wordpress $wp, Options $options, Factory $factory)
 	{
         $this->wp = $wp;
         $this->options = $options;
         $this->factory = $factory;
-        $wp->addAction('save_post_'.Types\Email::NAME, array($this, 'savePost'), 10);
+        $wp->addAction('save_post_'.Types\Email::NAME, [$this, 'savePost'], 10);
 	}
 
 	/**
@@ -95,7 +99,7 @@ class EmailService implements EmailServiceInterface
 	public function findByQuery($query)
 	{
 		$results = $query->get_posts();
-		$emails = array();
+		$emails = [];
 
 		// TODO: Maybe it is good to optimize this to fetch all found emails at once?
 		foreach ($results as $email) {
@@ -116,7 +120,16 @@ class EmailService implements EmailServiceInterface
 			throw new Exception('Trying to save not an email!');
 		}
 
-		// TODO: Support for transactions!
+        if (!$object->getId()) {
+            //if object does not exist insert new one
+            $id = $this->insertPost($this->wp, $object, Types::EMAIL);
+            if (!is_int($id) || $id === 0) {
+                throw new Exception(__('Unable to save email. Please try again.', 'jigoshop'));
+            }
+            $object->setId($id);
+        }
+
+        // TODO: Support for transactions!
 
 		$fields = $object->getStateToSave();
 
@@ -140,9 +153,19 @@ class EmailService implements EmailServiceInterface
 	 */
 	public function savePost($id)
 	{
-		$email = $this->factory->create($id);
+        $email = $this->factory->create($id);
 		$this->save($email);
 	}
+
+    /**
+     * email method updating post
+     * @param Email $email
+     */
+    public function updateAndSavePost(Email $email)
+    {
+        $this->updatePost($this->wp, $email, Types::EMAIL);
+        $this->save($email);
+    }
 
 	/**
 	 * @return array List of registered mails with accepted arguments.
@@ -203,7 +226,7 @@ class EmailService implements EmailServiceInterface
 	 * @param array $args Arguments to the email.
 	 * @param       $to   string Receiver address.
 	 */
-	public function send($hook, array $args = array(), $to)
+	public function send($hook, array $args = [], $to)
 	{
 		if ($this->suppress) {
 			$this->suppress = false;
@@ -219,51 +242,53 @@ class EmailService implements EmailServiceInterface
 		if (!isset($templates[$hook]) || empty($templates[$hook])) {
 			return;
 		}
-		foreach ($templates[$hook] as $postId) {
-			$post = $this->wp->getPost($postId);
 
-			if (!empty($post) && $post->post_status == 'publish') {
-				$subject = $this->wp->getPostMeta($postId, 'subject', true);
-				$post->post_title = empty($subject) ? $post->post_title : $subject;
-				$post = $this->filterPost($post, $args);
-				$headers = array(
+        foreach ($templates[$hook] as $postId) {
+            $post = $this->wp->getPost($postId);
+
+            if (!empty($post) && $post->post_status == 'publish') {
+                $email = $this->findForPost($post);
+                $email->setSubject(empty($email->getSubject()) ? $email->getTitle() : $email->getSubject());
+                $this->filterEmail($email, $args);
+
+                $headers = [
 					'MIME-Version: 1.0',
 					'Content-Type: text/html; charset=UTF-8',
 					'From: "'.$this->options->get('general.emails.from').'" <'.$this->options->get('general.email').'>',
-				);
-				$footer = $this->options->get('general.emails.footer');
-				$post->post_content = $footer ? $post->post_content.'<br/><br/>'.$footer : $post->post_content;
+                ];
+                $footer = $this->options->get('general.emails.footer');
+                $post->post_content = $footer ? $post->post_content.'<br/><br/>'.$footer : $post->post_content;
 
-				$this->wp->wpMail(
+                $this->wp->wpMail(
 					$to,
-					$post->post_title,
-					nl2br($post->post_content),
-					$headers
+					$email->getSubject(),
+					nl2br($email->getText()),
+					$headers,
+                    $this->getAttachments($email)
 				);
 			}
 		}
 	}
 
-	private function filterPost(\WP_Post $post, array $args)
+	private function filterEmail(Email $email, array $args)
 	{
 		if (empty($args)) {
-			return $post;
+			return $email;
 		}
 		foreach ($args as $key => $value) {
-			$post->post_title = str_replace('['.$key.']', $value, $post->post_title);
+			$email->setSubject(str_replace('['.$key.']', $value, $email->getSubject()));
 			if (empty($value)) {
-				$post->post_content = preg_replace('#\['.$key.'\](.*?)\[else\](.*?)\[\/'.$key.'\]#si', '$2', $post->post_content);
-				$post->post_content = preg_replace('#\['.$key.'\](.*?)\[\/'.$key.'\]#si', '', $post->post_content);
-				$post->post_content = str_replace('['.$key.']', '', $post->post_content);
+				$email->setText(preg_replace('#\['.$key.'\](.*?)\[else\](.*?)\[\/'.$key.'\]#si', '$2', $email->getText()));
+                $email->setText(preg_replace('#\['.$key.'\](.*?)\[\/'.$key.'\]#si', '', $email->getText()));
+                $email->setText(str_replace('['.$key.']', '', $email->getText()));
 			} else {
-				$post->post_content = preg_replace('#\['.$key.'\](.*?)\[value\](.*?)\[else\](.*?)\[\/'.$key.'\]#si', '$1'.'['.$key.']'.'$2', $post->post_content);
-				$post->post_content = preg_replace('#\['.$key.'\](.*?)\[else\](.*?)\[\/'.$key.'\]#si', '$1', $post->post_content);
-				$post->post_content = preg_replace('#\['.$key.'\](.*?)\[value\](.*?)\[\/'.$key.'\]#si', '$1'.'['.$key.']'.'$2', $post->post_content);
-				$post->post_content = str_replace('['.$key.']', $value, $post->post_content);
+                $email->setText(preg_replace('#\['.$key.'\](.*?)\[value\](.*?)\[else\](.*?)\[\/'.$key.'\]#si', '$1'.'['.$key.']'.'$2', $email->getText()));
+                $email->setText(preg_replace('#\['.$key.'\](.*?)\[else\](.*?)\[\/'.$key.'\]#si', '$1', $email->getText()));
+                $email->setText(preg_replace('#\['.$key.'\](.*?)\[value\](.*?)\[\/'.$key.'\]#si', '$1'.'['.$key.']'.'$2', $email->getText()));
+                $email->setText(str_replace('['.$key.']', $value, $email->getText()));
 			}
 		}
 
-		return $post;
 	}
 
     /**
@@ -294,4 +319,36 @@ WHERE posts.post_type = %s", 'actions', Types\Email::NAME), ARRAY_A);
 
         return $this->templates;
     }
+
+    /**
+     * @param Email $email
+     *
+     * @return array
+     */
+    public function getAttachments(Email $email)
+    {
+        $attacments = [];
+        $ids = $email->getAttachments();
+        if(is_array($ids)) {
+            foreach ($ids as $id) {
+                $attacments[$id] = get_attached_file($id);
+            }
+        }
+
+        return  array_filter($attacments);
+    }
+
+    /**
+     * Gets number of Emails
+     *
+     * @return int
+     */
+    public function getEmailsCount()
+    {
+        $wpdb = $this->wp->getWPDB();
+        return (int)$wpdb->get_var($wpdb->prepare("
+            SELECT COUNT(*) FROM {$wpdb->posts} 
+            WHERE post_status = 'publish' AND post_type = %s", Types::EMAIL));
+    }
+
 }

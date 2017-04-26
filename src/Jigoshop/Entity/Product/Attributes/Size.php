@@ -91,12 +91,12 @@ class Size implements \Serializable, \JsonSerializable
 	 */
 	public function serialize()
 	{
-		return serialize(array(
+		return serialize([
 			'weight' => $this->weight,
 			'width' => $this->width,
 			'height' => $this->height,
 			'length' => $this->length,
-		));
+        ]);
 	}
 
 	/**

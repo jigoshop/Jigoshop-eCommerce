@@ -16,28 +16,33 @@ namespace phpFastCache;
 use phpFastCache\Core\Pool\ExtendedCacheItemPoolInterface;
 use phpFastCache\Exceptions\phpFastCacheDriverCheckException;
 use phpFastCache\Exceptions\phpFastCacheInvalidArgumentException;
+use phpFastCache\Exceptions\phpFastCacheInvalidConfigurationException;
 
 /**
  * Class CacheManager
  * @package phpFastCache
  *
- * @method static ExtendedCacheItemPoolInterface Apc() Apc($config = []) Return a driver "apc" instance
- * @method static ExtendedCacheItemPoolInterface Apcu() Apcu($config = []) Return a driver "apcu" instance
- * @method static ExtendedCacheItemPoolInterface Cookie() Cookie($config = []) Return a driver "cookie" instance
- * @method static ExtendedCacheItemPoolInterface Couchbase() Couchbase($config = []) Return a driver "couchbase" instance
+ * @method static ExtendedCacheItemPoolInterface Apc() Apc($config = []) Return a driver "Apc" instance
+ * @method static ExtendedCacheItemPoolInterface Apcu() Apcu($config = []) Return a driver "Apcu" instance
+ * @method static ExtendedCacheItemPoolInterface Cassandra() Cassandra($config = []) Return a driver "Cassandra" instance
+ * @method static ExtendedCacheItemPoolInterface Cookie() Cookie($config = []) Return a driver "Cookie" instance
+ * @method static ExtendedCacheItemPoolInterface Couchbase() Couchbase($config = []) Return a driver "Couchbase" instance
+ * @method static ExtendedCacheItemPoolInterface Couchdb() Couchdb($config = []) Return a driver "Couchdb" instance
+ * @method static ExtendedCacheItemPoolInterface Devnull() Devnull($config = []) Return a driver "Devnull" instance
  * @method static ExtendedCacheItemPoolInterface Files() Files($config = []) Return a driver "files" instance
- * @method static ExtendedCacheItemPoolInterface Leveldb() Leveldb($config = []) Return a driver "leveldb" instance
- * @method static ExtendedCacheItemPoolInterface Memcache() Memcache($config = []) Return a driver "memcache" instance
- * @method static ExtendedCacheItemPoolInterface Memcached() Memcached($config = []) Return a driver "memcached" instance
- * @method static ExtendedCacheItemPoolInterface Mongodb() Mongodb($config = []) Return a driver "mongodb" instance
- * @method static ExtendedCacheItemPoolInterface Predis() Predis($config = []) Return a driver "predis" instance
- * @method static ExtendedCacheItemPoolInterface Redis() Redis($config = []) Return a driver "redis" instance
- * @method static ExtendedCacheItemPoolInterface Sqlite() Sqlite($config = []) Return a driver "sqlite" instance
- * @method static ExtendedCacheItemPoolInterface Ssdb() Ssdb($config = []) Return a driver "ssdb" instance
- * @method static ExtendedCacheItemPoolInterface Wincache() Wincache($config = []) Return a driver "wincache" instance
- * @method static ExtendedCacheItemPoolInterface Xcache() Xcache($config = []) Return a driver "xcache" instance
- * @method static ExtendedCacheItemPoolInterface Zenddisk() Zenddisk($config = []) Return a driver "zend disk cache" instance
- * @method static ExtendedCacheItemPoolInterface Zendshm() Zendshm($config = []) Return a driver "zend memory cache" instance
+ * @method static ExtendedCacheItemPoolInterface Leveldb() Leveldb($config = []) Return a driver "Leveldb" instance
+ * @method static ExtendedCacheItemPoolInterface Memcache() Memcache($config = []) Return a driver "Memcache" instance
+ * @method static ExtendedCacheItemPoolInterface Memcached() Memcached($config = []) Return a driver "Memcached" instance
+ * @method static ExtendedCacheItemPoolInterface Memstatic() Memstatic($config = []) Return a driver "Memstatic" instance
+ * @method static ExtendedCacheItemPoolInterface Mongodb() Mongodb($config = []) Return a driver "Mongodb" instance
+ * @method static ExtendedCacheItemPoolInterface Predis() Predis($config = []) Return a driver "Predis" instance
+ * @method static ExtendedCacheItemPoolInterface Redis() Redis($config = []) Return a driver "Pedis" instance
+ * @method static ExtendedCacheItemPoolInterface Sqlite() Sqlite($config = []) Return a driver "Sqlite" instance
+ * @method static ExtendedCacheItemPoolInterface Ssdb() Ssdb($config = []) Return a driver "Ssdb" instance
+ * @method static ExtendedCacheItemPoolInterface Wincache() Wincache($config = []) Return a driver "Wincache" instance
+ * @method static ExtendedCacheItemPoolInterface Xcache() Xcache($config = []) Return a driver "Xcache" instance
+ * @method static ExtendedCacheItemPoolInterface Zenddisk() Zenddisk($config = []) Return a driver "Zend disk cache" instance
+ * @method static ExtendedCacheItemPoolInterface Zendshm() Zendshm($config = []) Return a driver "Zend memory cache" instance
  *
  */
 class CacheManager
@@ -56,18 +61,99 @@ class CacheManager
      * @var ExtendedCacheItemPoolInterface[]
      */
     protected static $config = [
-      'itemDetailedDate' => false,// Specify if the item must provide detailed creation/modification dates
-      'autoTmpFallback' => false,// Automatically attempt to fallback to temporary directory if the cache fails to write on the specified directory
-      'secureFileManipulation' => false,// Provide a secure file manipulation mechanism, on intensive usage the performance can be affected.
-      'ignoreSymfonyNotice' => false,// Ignore Symfony notice for Symfony project which do not makes use of PhpFastCache's Symfony Bundle
-      'defaultTtl' => 900,// Default time-to-live in second
-      'securityKey' => 'auto',// The securityKey that will be used to create sub-directory
-      'htaccess' => true,// Auto-generate .htaccess if tit is missing
-      'default_chmod' => 0777, // 0777 recommended
-      'path' => '',// if not set will be the value of sys_get_temp_dir()
-      'fallback' => false, //Fall back when old driver is not support
-      'limited_memory_each_object' => 4096, // maximum size (bytes) of object store in memory
-      'compress_data' => false, // compress stored data, if the backend supports it
+        /**
+         * Specify if the item must provide detailed creation/modification dates
+         */
+      'itemDetailedDate' => false,
+
+        /**
+         * Automatically attempt to fallback to temporary directory
+         * if the cache fails to write on the specified directory
+         */
+      'autoTmpFallback' => false,
+
+        /**
+         * Provide a secure file manipulation mechanism,
+         * on intensive usage the performance can be affected.
+         */
+      'secureFileManipulation' => false,
+
+        /**
+         * Ignore Symfony notice for Symfony project which
+         * do not makes use of PhpFastCache's Symfony Bundle
+         */
+      'ignoreSymfonyNotice' => false,
+
+        /**
+         * Default time-to-live in second
+         */
+      'defaultTtl' => 900,
+
+        /**
+         * Default key hash function
+         * (md5 by default)
+         */
+      'defaultKeyHashFunction' => '',
+
+        /**
+         * The securityKey that will be used
+         * to create sub-directory
+         * (Files-based drivers only)
+         */
+      'securityKey' => 'auto',
+
+        /**
+         * Auto-generate .htaccess if it's missing
+         * (Files-based drivers only)
+         */
+      'htaccess' => true,
+
+        /**
+         * Default files chmod
+         * 0777 recommended
+         * (Files-based drivers only)
+         */
+      'default_chmod' => 0777,
+
+        /**
+         * The path where we will writecache files
+         * default value if empty: sys_get_temp_dir()
+         * (Files-based drivers only)
+         */
+      'path' => '',
+
+        /**
+         * Driver fallback in case of failure.
+         * Caution, in case of failure an E_WARNING
+         * error will always be raised
+         */
+      'fallback' => false,
+
+        /**
+         * Maximum size (bytes) of object store in memory
+         * (Memcache(d) drivers only)
+         */
+      'limited_memory_each_object' => 4096,
+
+        /**
+         * Compress stored data, if the backend supports it
+         * (Memcache(d) drivers only)
+         */
+      'compress_data' => false,
+
+        /**
+         * Prevent cache slams when
+         * making use of heavy cache
+         * items
+         */
+      'preventCacheSlams' => false,
+
+        /**
+         * Cache slams timeout
+         * in seconds
+         */
+      'cacheSlamsTimeout' => 15,
+
     ];
 
     /**
@@ -86,7 +172,7 @@ class CacheManager
      * @return ExtendedCacheItemPoolInterface
      * @throws phpFastCacheDriverCheckException
      */
-    public static function getInstance($driver = 'auto', $config = [])
+    public static function getInstance($driver = 'auto', array $config = [])
     {
         static $badPracticeOmeter = [];
 
@@ -95,6 +181,7 @@ class CacheManager
          */
         $driver = self::standardizeDriverName($driver);
         $config = array_merge(self::$config, $config);
+        self::validateConfig($config);
         if (!$driver || $driver === 'Auto') {
             $driver = self::getAutoClass($config);
         }
@@ -121,7 +208,7 @@ class CacheManager
                 }
             }
         } else if(++$badPracticeOmeter[$driver] >= 5){
-           trigger_error('[' . $driver . '] Calling many times CacheManager::getInstance() for already instanced drivers is a bad practice and have a significant impact on performances.
+            trigger_error('[' . $driver . '] Calling many times CacheManager::getInstance() for already instanced drivers is a bad practice and have a significant impact on performances.
            See https://github.com/PHPSocialNetwork/phpfastcache/wiki/[V5]-Why-calling-getInstance%28%29-each-time-is-a-bad-practice-%3F');
         }
 
@@ -161,7 +248,7 @@ class CacheManager
      * @return string
      * @throws phpFastCacheDriverCheckException
      */
-    public static function getAutoClass($config = [])
+    public static function getAutoClass(array $config = [])
     {
         static $autoDriver;
 
@@ -252,6 +339,7 @@ class CacheManager
           'Apcu',
           'Cassandra',
           'Couchbase',
+          'Couchdb',
           'Devnull',
           'Files',
           'Leveldb',
@@ -274,18 +362,104 @@ class CacheManager
     public static function getStaticAllDrivers()
     {
         return array_merge(self::getStaticSystemDrivers(), [
-            'Devtrue',
-            'Devfalse',
-            'Cookie',
+          'Devtrue',
+          'Devfalse',
+          'Cookie',
         ]);
     }
 
     /**
-     * @param string $driverName
+     * @param $driverName
      * @return string
+     * @throws \phpFastCache\Exceptions\phpFastCacheInvalidArgumentException
      */
     public static function standardizeDriverName($driverName)
     {
+        if(!is_string($driverName)){
+            throw new phpFastCacheInvalidArgumentException(sprintf('Expected $driverName to be a string got "%s" instead', gettype($driverName)));
+        }
         return ucfirst(strtolower(trim($driverName)));
+    }
+
+    /**
+     * @param array $config
+     * @todo Move this to a config file
+     * @throws phpFastCacheInvalidConfigurationException
+     * @return bool
+     */
+    protected static function validateConfig(array $config)
+    {
+        foreach ($config as $configName => $configValue) {
+            switch($configName)
+            {
+                case 'itemDetailedDate':
+                    if(!is_bool($configValue)){
+                        throw new phpFastCacheInvalidConfigurationException("{$configName} must be a boolean");
+                    }
+                    break;
+                case 'autoTmpFallback':
+                    if(!is_bool($configValue)){
+                        throw new phpFastCacheInvalidConfigurationException("{$configName} must be a boolean");
+                    }
+                    break;
+                case 'secureFileManipulation':
+                    if(!is_bool($configValue)){
+                        throw new phpFastCacheInvalidConfigurationException("{$configName} must be a boolean");
+                    }
+                    break;
+                case 'ignoreSymfonyNotice':
+                    if(!is_bool($configValue)){
+                        throw new phpFastCacheInvalidConfigurationException("{$configName} must be a boolean");
+                    }
+                    break;
+                case 'defaultTtl':
+                    if(!is_numeric($configValue)){
+                        throw new phpFastCacheInvalidConfigurationException("{$configName} must be numeric");
+                    }
+                    break;
+                case 'defaultKeyHashFunction':
+                    if(!is_string($configValue) && !function_exists($configValue)){
+                        throw new phpFastCacheInvalidConfigurationException("{$configName} must be a valid function name string");
+                    }
+                    break;
+                case 'securityKey':
+                    if(!is_string($configValue)){
+                        throw new phpFastCacheInvalidConfigurationException("{$configName} must be a string");
+                    }
+                    break;
+                case 'htaccess':
+                    if(!is_bool($configValue)){
+                        throw new phpFastCacheInvalidConfigurationException("{$configName} must be a boolean");
+                    }
+                    break;
+                case 'default_chmod':
+                    if(!is_int($configValue)){
+                        throw new phpFastCacheInvalidConfigurationException("{$configName} must be an integer");
+                    }
+                    break;
+                case 'path':
+                    if(!is_string($configValue)){
+                        throw new phpFastCacheInvalidConfigurationException("{$configName} must be a string");
+                    }
+                    break;
+                case 'fallback':
+                    if(!is_bool($configValue)){
+                        throw new phpFastCacheInvalidConfigurationException("{$configName} must be a boolean");
+                    }
+                    break;
+                case 'limited_memory_each_object':
+                    if(!is_int($configValue)){
+                        throw new phpFastCacheInvalidConfigurationException("{$configName} must be an integer");
+                    }
+                    break;
+                case 'compress_data':
+                    if(!is_bool($configValue)){
+                        throw new phpFastCacheInvalidConfigurationException("{$configName} must be a boolean");
+                    }
+                    break;
+            }
+        }
+
+        return true;
     }
 }

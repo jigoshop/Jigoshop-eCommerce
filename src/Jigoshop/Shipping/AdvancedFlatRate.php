@@ -2,12 +2,12 @@
 
 namespace Jigoshop\Shipping;
 
+use Jigoshop\Core\Messages;
 use Jigoshop\Core\Types;
+use Jigoshop\Core\Options;
 use Jigoshop\Entity\OrderInterface;
 use Jigoshop\Helper\Country;
-use Jigoshop\Helper\Options;
 use Jigoshop\Helper\Render;
-use Jigoshop\Integration;
 use Jigoshop\Exception;
 use Jigoshop\Service\CartServiceInterface;
 use WPAL\Wordpress;
@@ -28,23 +28,20 @@ class AdvancedFlatRate implements MultipleMethod
     private $rate;
     /** @var  CartServiceInterface */
     private $cartService;
+    /** @var  Messages */
+    private $messages;
 
     /**
-     * Method constructor.
+     * AdvancedFlatRate constructor.
+     * @param Wordpress $wp
+     * @param Options $options
+     * @param CartServiceInterface $cartService
      */
-    public function __construct(Wordpress $wp, CartServiceInterface $cartService)
+    public function __construct(Wordpress $wp, Options $options, CartServiceInterface $cartService, Messages $messages)
     {
-        Options::setDefaults('shipping.' . self::ID, array(
-            'enabled' => false,
-            'title' => '',
-            'taxable' => false,
-            'fee' => 0,
-            'available_for' => 'all',
-            'countries' => array(),
-            'rates' => array()
-        ));
-        $this->settings = Options::getOptions('shipping.' . self::ID);
+        $this->settings = $options->get('shipping.' . self::ID);
         $this->cartService = $cartService;
+        $this->messages = $messages;
     }
 
     /**
@@ -76,17 +73,16 @@ class AdvancedFlatRate implements MultipleMethod
      */
     public function isEnabled()
     {
-        $cart = $this->cartService->getCurrent();
         $post = get_post();
-
         if ($post === null || $post->post_type != Types::ORDER) {
+            $cart = $this->cartService->getCurrent();
             $customer = $cart->getCustomer();
         } else {
             $customer = unserialize(get_post_meta($post->ID, 'customer', true));
         }
 
         return $this->settings['enabled'] && ($this->settings['available_for'] === 'all' || in_array($customer->getShippingAddress()->getCountry(),
-                    $this->settins['countries']));
+                    $this->settings['countries']));
     }
 
     /**
@@ -102,45 +98,49 @@ class AdvancedFlatRate implements MultipleMethod
      */
     public function getOptions()
     {
-        return array(
-            array(
+        if(count($this->settings['rates_order'])) {
+            $this->settings['rates'] = array_merge(array_flip($this->settings['rates_order'], $this->settings['rates']));
+        }
+
+        return [
+            [
                 'name' => sprintf('[%s][enabled]', self::ID),
                 'type' => 'checkbox',
                 'title' => __('Enable', 'jigoshop'),
                 'checked' => $this->settings['enabled'],
-                'classes' => array('switch-medium'),
-            ),
-            array(
+                'classes' => ['switch-medium'],
+            ],
+            [
                 'name' => sprintf('[%s][title]', self::ID),
                 'type' => 'text',
                 'title' => __('Title', 'jigoshop'),
                 'value' => $this->settings['title'],
-            ),
-            array(
+            ],
+            [
                 'name' => sprintf('[%s][taxable]', self::ID),
                 'type' => 'checkbox',
                 'title' => __('Is taxable?', 'jigoshop'),
                 'checked' => $this->settings['taxable'],
-                'classes' => array('switch-medium'),
-            ),
-            array(
+                'classes' => ['switch-medium'],
+            ],
+            [
                 'name' => sprintf('[%s][fee]', self::ID),
-                'type' => 'number',
+                'type' => 'text',
                 'title' => __('Fee', 'jigoshop'),
                 'value' => $this->settings['fee'],
-            ),
-            array(
+            ],
+            [
                 'name' => sprintf('[%s][available_for]', self::ID),
                 'id' => 'advanced_flat_rate_available_for',
                 'title' => __('Available for', 'jigoshop'),
                 'type' => 'select',
                 'value' => $this->settings['available_for'],
-                'options' => array(
+                'options' => [
                     'all' => __('All allowed countries', 'jigoshop'),
                     'specific' => __('Selected countries', 'jigoshop'),
-                ),
-            ),
-            array(
+                ],
+            ],
+            [
                 'name' => sprintf('[%s][countries]', self::ID),
                 'id' => 'advanced_flat_rate_countries',
                 'title' => __('Select countries', 'jigoshop'),
@@ -149,8 +149,18 @@ class AdvancedFlatRate implements MultipleMethod
                 'options' => Country::getAllowed(),
                 'multiple' => true,
                 'hidden' => $this->settings['available_for'] == 'all',
-            ),
-            array(
+            ],
+            [
+                'name' => sprintf('[%s][multiple_rates]', self::ID),
+                'title' => __('Show multiple rates', 'jigoshop'),
+                'description' => __('If enabled then all matched rates will be visible in cart/checkout. '.
+                    'Otherwise, the first available rate, from the rates list, which includes the destination, will be used in cart. '.
+                    '<br/>You can change the order/priority of created rates by movinge them up and down on the list.', 'jigoshop'),
+                'type' => 'checkbox',
+                'checked' => $this->settings['multiple_rates'],
+                'classes' => ['switch-medium'],
+            ],
+            [
                 'name' => sprintf('[%s][rates]', self::ID),
                 'title' => __('Rates', 'jigoshop'),
                 'type' => 'user_defined',
@@ -161,8 +171,8 @@ class AdvancedFlatRate implements MultipleMethod
                         'values' => $field['value'],
                     ]);
                 }
-            ),
-        );
+            ],
+        ];
     }
 
     /**
@@ -170,7 +180,7 @@ class AdvancedFlatRate implements MultipleMethod
      */
     public function getTaxClasses()
     {
-        return array('standard');
+        return ['standard'];
     }
 
     /**
@@ -184,18 +194,30 @@ class AdvancedFlatRate implements MultipleMethod
     {
         $settings['enabled'] = $settings['enabled'] == 'on';
         $settings['taxable'] = $settings['taxable'] == 'on';
+        $settings['multiple_rates'] = $settings['multiple_rates'] == 'on';
+
         if (isset($settings['rates'])) {
             $settings['rates'] = array_values($settings['rates']);
             for ($i = 0; $i < count($settings['rates']); $i++) {
-                $settings['rates'][$i] = array_merge(array(
+                $settings['rates'][$i] = array_merge([
                     'label' => '',
                     'cost' => 0,
-                    'country' => '',
-                    'states' => array(),
-                    'postcode' => ''
-                ), $settings['rates'][$i]);
+                    'continents' => [],
+                    'countries' => [],
+                    'states' => [],
+                    'postcode' => '',
+                    'rest_of_the_world' => false,
+                ], $settings['rates'][$i]);
                 $settings['rates'][$i]['cost'] = (float)$settings['rates'][$i]['cost'];
+                $settings['rates'][$i]['rest_of_the_world'] = $settings['rates'][$i]['rest_of_the_world'] == 'on';
             }
+        }
+
+        if ($settings['fee'] >= 0) {
+            $settings['fee'] = (float)$settings['fee'];
+        } else {
+            $settings['fee'] = $this->options['fee'];
+            $this->messages->addWarning(__('Fee was below 0 - value is left unchanged.', 'jigoshop'));
         }
 
         return $settings;
@@ -245,10 +267,10 @@ class AdvancedFlatRate implements MultipleMethod
      */
     public function getState()
     {
-        return array(
+        return [
             'id' => $this->getId(),
             'rate' => $this->getShippingRate()
-        );
+        ];
     }
 
     /**
@@ -273,26 +295,45 @@ class AdvancedFlatRate implements MultipleMethod
     public function getRates($order)
     {
         if ($this->rates == null) {
-            $this->rates = array();
+            $this->rates = [];
+            if(count($this->settings['rates_order'])) {
+                $this->settings['rates'] = array_merge(array_flip($this->settings['rates_order'], $this->settings['rates']));
+            }
             foreach ($this->settings['rates'] as $key => $rawRate) {
                 $address = $order->getCustomer()->getShippingAddress();
-                if ($rawRate['country'] != '' && $rawRate['country'] != $address->getCountry()) {
-                    continue;
-                }
-                if (count($rawRate['states']) != 0 && !in_array($address->getState(), $rawRate['states'])) {
-                    continue;
-                }
                 $code = str_replace('*', '(.*)', str_replace(['-', ' '], '', strtoupper($rawRate['postcode'])));
-                if ($code != '' && preg_match('/^'.$code.'$/', str_replace(['-', ' '], '', strtoupper($address->getPostcode()))) == false) {
-                    continue;
-                }
 
-                $rate = new Rate();
-                $rate->setId($key);
-                $rate->setName($rawRate['label']);
-                $rate->setPrice($rawRate['cost'] + (1 * $this->settings['fee']));
-                $rate->setMethod($this);
-                $this->rates[$key] = $rate;
+                if ((count($rawRate['continents']) && in_array(Country::getContinentByCountry($address->getCountry()), $rawRate['continents'])) ||
+                    (count($rawRate['countries']) && in_array($address->getCountry(), $rawRate['countries'])) ||
+                    (count($rawRate['states']) && in_array($address->getCountry().':'.$address->getState(), $rawRate['states'])) ||
+                    ($code != '' && preg_match('/^'.$code.'$/', str_replace(['-', ' '], '', strtoupper($address->getPostcode())))) ||
+                    (empty($rawRate['continents']) && empty($rawRate['countries']) && empty($rawRate['states']) && empty($code) && !$rawRate['rest_of_the_world'])
+                ) {
+                    $rate = new Rate();
+                    $rate->setId($key);
+                    $rate->setName($rawRate['label']);
+                    $rate->setPrice($rawRate['cost'] + (1 * $this->settings['fee']));
+                    $rate->setMethod($this);
+                    $this->rates[$key] = $rate;
+                    if(!$this->settings['multiple_rates']) {
+                        break;
+                    }
+                }
+            }
+            if(empty($this->rates)) {
+                foreach ($this->settings['rates'] as $key => $rawRate) {
+                    if(isset($rawRate['rest_of_the_world']) && $rawRate['rest_of_the_world']) {
+                        $rate = new Rate();
+                        $rate->setId($key);
+                        $rate->setName($rawRate['label']);
+                        $rate->setPrice($rawRate['cost'] + (1 * $this->settings['fee']));
+                        $rate->setMethod($this);
+                        $this->rates[$key] = $rate;
+                        if(!$this->settings['multiple_rates']) {
+                            break;
+                        }
+                    }
+                }
             }
         }
 

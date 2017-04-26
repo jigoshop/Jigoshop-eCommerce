@@ -71,9 +71,9 @@ class CustomerService implements CustomerServiceInterface
 	public function findAll()
 	{
 		$guest = new Entity\Guest();
-		$customers = array(
+		$customers = [
 			$guest->getId() => $guest,
-		);
+        ];
 
 		$users = $this->wp->getUsers();
 		foreach ($users as $user) {
@@ -166,12 +166,17 @@ class CustomerService implements CustomerServiceInterface
 	 */
 	public function findByQuery($query)
 	{
-		if (WP_DEBUG) {
-			throw new Exception('Customer service do not support fetching by query - users are not stored like posts.');
-		}
+	    //todo check if guest is needed in this array
+//        $guest = new Entity\Guest();
+//        $customers = array(
+//            $guest->getId() => $guest,
+//        );
+        $customers = [];
+        $users = $this->wp->getUsers($query);
+        foreach ($users as $user) {
+            $customers[$user->ID] = $this->factory->fetch($user);
+        }
 
-		Registry::getInstance(JIGOSHOP_LOGGER)->addWarning('Invalid call to Jigoshop\Service\Customer::findByQuery() method.');
-
-		return null;
+        return $customers;
 	}
 }

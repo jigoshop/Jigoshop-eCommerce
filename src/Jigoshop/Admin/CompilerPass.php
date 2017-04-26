@@ -32,7 +32,7 @@ class CompilerPass implements CompilerPassInterface
 				continue;
 			}
 
-			$container->triggers->add('jigoshop.admin', 'jigoshop.admin', 'addPage', array($page));
+			$container->triggers->add('jigoshop.admin', 'jigoshop.admin', 'addPage', [$page]);
 		}
 	}
 }

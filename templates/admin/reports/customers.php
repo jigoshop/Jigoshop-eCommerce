@@ -11,8 +11,8 @@ use Jigoshop\Admin\Reports;
 	<nav>
 		<ul class="nav nav-tabs nav-justified second-level">
 		<?php foreach ($types as $slug => $title) : ?>
-			<li <?php echo $slug == $current_type ? 'class="active"' : '' ?>>
-				<a	href="?page=<?php echo Reports::NAME; ?>&tab=<?php echo Reports\CustomersTab::SLUG; ?>&type=<?php echo $slug; ?>"><?php echo $title; ?></a>
+			<li <?= $slug == $current_type ? 'class="active"' : '' ?>>
+				<a	href="?page=<?= Reports::NAME; ?>&tab=<?= Reports\CustomersTab::SLUG; ?>&type=<?= $slug; ?>"><?= $title; ?></a>
 			</li>
 		<?php endforeach; ?>
 		</ul>

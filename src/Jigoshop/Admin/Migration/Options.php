@@ -24,7 +24,7 @@ class Options implements Tool
         $this->options = $options;
         $this->taxService = $taxService;
 
-        $wp->addAction('wp_ajax_jigoshop.admin.migration.options', array($this, 'ajaxMigrationOptions'), 10, 0);
+        $wp->addAction('wp_ajax_jigoshop.admin.migration.options', [$this, 'ajaxMigrationOptions'], 10, 0);
     }
 
     /**
@@ -50,7 +50,7 @@ class Options implements Tool
         }
 
         Render::output('admin/migration/options',
-            array('countAll' => $countAll, 'countDone' => ($countAll - $countRemain)));
+            ['countAll' => $countAll, 'countDone' => ($countAll - $countRemain)]);
     }
 
     /**
@@ -109,13 +109,13 @@ class Options implements Tool
 
             // Migrate tax rates
             if (!is_array($options['jigoshop_tax_rates'])) {
-                $options['jigoshop_tax_rates'] = array();
+                $options['jigoshop_tax_rates'] = [];
             }
 
             $options['jigoshop_tax_rates'] = array_values($options['jigoshop_tax_rates']);
             for ($i = 0, $endI = count($options['jigoshop_tax_rates']); $i < $endI;) {
                 $tax = $options['jigoshop_tax_rates'][$i];
-                $rateDate = array(
+                $rateDate = [
                     'id' => '',
                     'rate' => $tax['rate'],
                     'label' => empty($tax['label']) ? __('Tax', 'jigoshop') : $tax['label'],
@@ -125,7 +125,7 @@ class Options implements Tool
                     'states' => isset($tax['is_all_states']) && $tax['is_all_states'] ? '' : $tax['state'],
                     'is_compound' => ($tax['compound'] == 'yes' ? 1 : 0),
                     'postcodes' => '',
-                );
+                ];
                 $i++;
 
                 $tax = isset($options['jigoshop_tax_rates'][$i]) ?  $options['jigoshop_tax_rates'][$i] : '';
@@ -174,11 +174,11 @@ class Options implements Tool
             case 'jigoshop_tax_classes':
                 $value = explode("\n", $value);
 
-                return array_merge($this->options->get('tax.classes', array()), array_map(function ($label) {
-                    return array(
+                return array_merge($this->options->get('tax.classes', []), array_map(function ($label) {
+                    return [
                         'class' => sanitize_title($label),
                         'label' => $label,
-                    );
+                    ];
                 }, $value));
             case 'jigoshop_tax_rates':
                 return null;
@@ -258,7 +258,7 @@ class Options implements Tool
 
     private function _addShippingTransformations($transformations)
     {
-        return array_merge($transformations, array(
+        return array_merge($transformations, [
             'jigoshop_free_shipping_enabled' => 'shipping.free_shipping.enabled',
             'jigoshop_free_shipping_title' => 'shipping.free_shipping.title',
             'jigoshop_free_shipping_minimum_amount' => 'shipping.free_shipping.minimum',
@@ -273,12 +273,12 @@ class Options implements Tool
             'jigoshop_flat_rate_tax_status' => 'shipping.flat_rate.is_taxable',
             'jigoshop_flat_rate_cost' => 'shipping.flat_rate.cost',
             'jigoshop_flat_rate_handling_fee' => 'shipping.flat_rate.fee',
-        ));
+        ]);
     }
 
     private function _addPaymentTransformations($transformations)
     {
-        return array_merge($transformations, array(
+        return array_merge($transformations, [
             'jigoshop_cheque_enabled' => 'payment.cheque.enabled',
             'jigoshop_cheque_title' => 'payment.cheque.title',
             'jigoshop_cheque_description' => 'payment.cheque.description',
@@ -293,12 +293,12 @@ class Options implements Tool
             'jigoshop_paypal_testmode' => 'payment.paypal.test_mode',
             'jigoshop_sandbox_email' => 'payment.paypal.test_email',
             'jigoshop_paypal_send_shipping' => 'payment.paypal.send_shipping',
-        ));
+        ]);
     }
 
     private function _getTransformations()
     {
-        return array(
+        return [
             'jigoshop_default_country' => 'general.country',
             'jigoshop_currency' => 'general.currency',
             'jigoshop_allowed_countries' => 'shopping.restrict_selling_locations',
@@ -377,7 +377,7 @@ class Options implements Tool
             'jigoshop_myaccount_page_id' => 'advanced.pages.account',
             'jigoshop_thanks_page_id' => 'advanced.pages.checkout_thank_you',
             'jigoshop_terms_page_id' => 'advanced.pages.terms',
-        );
+        ];
     }
 
     public function ajaxMigrationOptions()
@@ -397,13 +397,13 @@ class Options implements Tool
                 }
             }
 
-            $ajax_response = array(
+            $ajax_response = [
                 'success' => true,
                 'percent' => floor(($countAll - $countRemain) / $countAll * 100),
                 'processed' => $countAll - $countRemain,
                 'remain' => $countRemain,
                 'total' => $countAll,
-            );
+            ];
 
             if ($countRemain > 0) {
                 if ($this->migrate()) {
@@ -422,9 +422,9 @@ class Options implements Tool
             if (WP_DEBUG) {
                 \Monolog\Registry::getInstance(JIGOSHOP_LOGGER)->addDebug($e);
             }
-            echo json_encode(array(
+            echo json_encode([
                 'success' => false,
-            ));
+            ]);
 
             Migration::saveLog(__('Migration options end with error: ', 'jigoshop') . $e);
         }

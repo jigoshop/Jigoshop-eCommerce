@@ -36,23 +36,23 @@ class FlatRate implements Method
 		$this->options = $options->get('shipping.'.self::NAME);
 		$this->cartService = $cartService;
 		$this->messages = $messages;
-		$this->types = array(
+		$this->types = [
 			'per_order' => __('Per order', 'jigoshop'),
 			'per_item' => __('Per item', 'jigoshop'),
-		);
-		$this->availability = array(
+        ];
+		$this->availability = [
 			'all' => __('All allowed countries', 'jigoshop'),
 			'specific' => __('Selected countries', 'jigoshop'),
-		);
+        ];
 
 		$wp->addAction('admin_enqueue_scripts', function () use ($wp){
 			// Weed out all admin pages except the Jigoshop Settings page hits
-			if (!in_array($wp->getPageNow(), array('admin.php', 'options.php'))) {
+			if (!in_array($wp->getPageNow(), ['admin.php', 'options.php'])) {
 				return;
 			}
 
 			$screen = $wp->getCurrentScreen();
-			if (!in_array($screen->base, array('jigoshop_page_'.Settings::NAME, 'options'))) {
+			if (!in_array($screen->base, ['jigoshop_page_'.Settings::NAME, 'options'])) {
 				return;
 			}
 
@@ -60,10 +60,10 @@ class FlatRate implements Method
 				return;
 			}
 
-			Scripts::add('jigoshop.admin.shipping.flat_rate', \JigoshopInit::getUrl().'/assets/js/admin/shipping/flat_rate.js', array(
+			Scripts::add('jigoshop.admin.shipping.flat_rate', \JigoshopInit::getUrl().'/assets/js/admin/shipping/flat_rate.js', [
 				'jquery',
 				'jigoshop.admin'
-			));
+            ]);
 		});
 	}
 
@@ -88,11 +88,10 @@ class FlatRate implements Method
 	 */
 	public function isEnabled()
 	{
-		$cart = $this->cartService->getCurrent();
 		$post = $this->wp->getGlobalPost();
-
 		if ($post === null || $post->post_type != Types::ORDER) {
-			$customer = $cart->getCustomer();
+            $cart = $this->cartService->getCurrent();
+            $customer = $cart->getCustomer();
 		} else {
 			// TODO: Get rid of this hack for customer fetching
 			$customer = unserialize($this->wp->getPostMeta($post->ID, 'customer', true));
@@ -114,55 +113,55 @@ class FlatRate implements Method
 	 */
 	public function getOptions()
 	{
-		return array(
-			array(
+		return [
+			[
 				'name' => sprintf('[%s][enabled]', self::NAME),
 				'title' => __('Is enabled?', 'jigoshop'),
 				'type' => 'checkbox',
 				'checked' => $this->options['enabled'],
-				'classes' => array('switch-medium'),
-			),
-			array(
+				'classes' => ['switch-medium'],
+            ],
+			[
 				'name' => sprintf('[%s][title]', self::NAME),
 				'title' => __('Method title', 'jigoshop'),
 				'type' => 'text',
 				'value' => $this->getTitle(),
-			),
-			array(
+            ],
+			[
 				'name' => sprintf('[%s][type]', self::NAME),
 				'title' => __('Type', 'jigoshop'),
 				'type' => 'select',
 				'value' => $this->options['type'],
 				'options' => $this->types,
-			),
-			array(
+            ],
+			[
 				'name' => sprintf('[%s][is_taxable]', self::NAME),
 				'title' => __('Is taxable?', 'jigoshop'),
 				'type' => 'checkbox',
 				'checked' => $this->options['is_taxable'],
-				'classes' => array('switch-medium'),
-			),
-			array(
+				'classes' => ['switch-medium'],
+            ],
+			[
 				'name' => sprintf('[%s][cost]', self::NAME),
 				'title' => __('Cost', 'jigoshop'),
 				'type' => 'text',
 				'value' => $this->options['cost'],
-			),
-			array(
+            ],
+			[
 				'name' => sprintf('[%s][fee]', self::NAME),
 				'title' => __('Handling fee', 'jigoshop'),
 				'type' => 'text',
 				'value' => $this->options['fee'],
-			),
-			array(
+            ],
+			[
 				'name' => sprintf('[%s][available_for]', self::NAME),
 				'id' => 'flat_rate_available_for',
 				'title' => __('Available for', 'jigoshop'),
 				'type' => 'select',
 				'value' => $this->options['available_for'],
 				'options' => $this->availability,
-			),
-			array(
+            ],
+			[
 				'name' => sprintf('[%s][countries]', self::NAME),
 				'id' => 'flat_rate_countries',
 				'title' => __('Select countries', 'jigoshop'),
@@ -171,8 +170,8 @@ class FlatRate implements Method
 				'options' => Country::getAllowed(),
 				'multiple' => true,
 				'hidden' => $this->options['available_for'] == 'all',
-			),
-		);
+            ],
+        ];
 	}
 
 	/**
@@ -224,7 +223,7 @@ class FlatRate implements Method
 				return Country::exists($item);
 			});
 		} else {
-			$settings['countries'] = array();
+			$settings['countries'] = [];
 		}
 
 		return $settings;
@@ -252,7 +251,7 @@ class FlatRate implements Method
 	 */
 	public function getTaxClasses()
 	{
-		return array('standard');
+		return ['standard'];
 	}
 
 	/**
@@ -260,9 +259,9 @@ class FlatRate implements Method
 	 */
 	public function getState()
 	{
-		return array(
+		return [
 			'id' => $this->getId(),
-		);
+        ];
 	}
 
 	/**

@@ -43,7 +43,7 @@ class CartService implements CartServiceInterface
 	/** @var string */
 	private $currentUserCartId;
 
-	private $carts = array();
+	private $carts = [];
 
 	public function __construct(Wordpress $wp, Options $options, CustomerServiceInterface $customerService,
 		ProductServiceInterface $productService, ShippingServiceInterface $shippingService,
@@ -59,7 +59,7 @@ class CartService implements CartServiceInterface
 		$this->orderFactory = $orderFactory;
 
 		if ($this->session->getField(self::CART) == '') {
-			$this->session->setField(self::CART, array());
+			$this->session->setField(self::CART, []);
 		}
 
 		$this->currentUserCartId = $this->generateCartId();
@@ -140,7 +140,7 @@ class CartService implements CartServiceInterface
 
 	private function getStateFromSession($id)
 	{
-		$state = array();
+		$state = [];
 
         $session = $this->session->getField(self::CART);
 
@@ -160,11 +160,11 @@ class CartService implements CartServiceInterface
 			if (isset($state['shipping'])) {
 				$shipping = $state['shipping'];
 				if (!empty($shipping['method'])) {
-					$state['shipping'] = array(
+					$state['shipping'] = [
 						'method' => $this->shippingService->findForState($shipping['method']),
 						'price' => $shipping['price'],
 						'rate' => isset($shipping['rate']) ? $shipping['rate'] : null,
-					);
+                    ];
 				}
 			}
 
@@ -196,11 +196,11 @@ class CartService implements CartServiceInterface
 		if (isset($_POST['jigoshop_order']['shipping_method'])) {
 			$shipping = $this->shippingService->get($_POST['jigoshop_order']['shipping_method']);
 			$this->wp->doAction('jigoshop\service\cart\shipping', $shipping);
-			$state['shipping'] = array(
+			$state['shipping'] = [
 				'method' => $shipping,
 				'rate' => isset($_POST['jigoshop_order']['shipping_method_rate']) ? $_POST['jigoshop_order']['shipping_method_rate'] : null,
 				'price' => -1,
-			);
+            ];
 		}
 
 		return $state;
@@ -272,7 +272,7 @@ class CartService implements CartServiceInterface
 	 */
 	private function validateAddress($address)
 	{
-		$errors = array();
+		$errors = [];
 
 		if ($address->isValid()) {
 			if ($address->getFirstName() == null) {

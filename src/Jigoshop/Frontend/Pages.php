@@ -28,7 +28,9 @@ class Pages
 
 	/** @var \Jigoshop\Core\Options */
 	private static $options;
-	private static $cache = array();
+	private static $cache = [];
+	/** @var  bool */
+	private static $customPage = false;
 
 	public static function setOptions($options)
 	{
@@ -42,7 +44,7 @@ class Pages
 	 */
 	public static function getAvailable()
 	{
-		return array(
+		return [
 			self::CART,
 			self::CHECKOUT,
 			self::PRODUCT,
@@ -52,7 +54,7 @@ class Pages
 			self::ACCOUNT,
 			self::ORDER_TRACKING,
 			self::ALL,
-		);
+        ];
 	}
 
 	/**
@@ -66,7 +68,7 @@ class Pages
 	public static function isOneOf($pages)
 	{
 		$result = false;
-		$pages = is_array($pages) ? $pages : array($pages);
+		$pages = is_array($pages) ? $pages : [$pages];
 
 		foreach ($pages as $page) {
 			$result = $result || self::is($page);
@@ -159,7 +161,7 @@ class Pages
 	public static function isProduct()
 	{
 		if (!isset(self::$cache[self::PRODUCT])) {
-			self::$cache[self::PRODUCT] = is_singular(array(Types::PRODUCT));
+			self::$cache[self::PRODUCT] = is_singular([Types::PRODUCT]);
 		}
 
 		return self::$cache[self::PRODUCT];
@@ -257,7 +259,7 @@ class Pages
 		}
 
 		//		if (in_array($currentScreen->post_type, array(Types::PRODUCT, Types::ORDER, Types::COUPON), true)) {
-		if (in_array($current_screen->post_type, array(Types::PRODUCT, Types::ORDER), true)) {
+		if (in_array($current_screen->post_type, [Types::PRODUCT, Types::ORDER], true)) {
 			return $current_screen->post_type;
 		}
 		if (strpos($current_screen->id, 'jigoshop') !== false) {
@@ -342,7 +344,7 @@ class Pages
 	 */
 	public static function isJigoshop()
 	{
-		return self::isShop() || self::isAccount() || self::isCart() || self::isCheckout() || self::isCheckoutThankYou() || self::isOrderTracker();
+		return self::isShop() || self::isAccount() || self::isCart() || self::isCheckout() || self::isCheckoutThankYou() || self::isOrderTracker() || self::isCustomPage();
 	}
 
 	/**
@@ -387,5 +389,23 @@ class Pages
 		}
 
 		return self::$cache[self::ORDER_TRACKING];
+	}
+
+    /**
+     * @return bool
+     * @since 2.1
+     */
+    public static function isCustomPage()
+    {
+        return self::$customPage;
+	}
+
+    /**
+     * @param $customPage
+     * @since 2.1
+     */
+    public static function setCustomPage($customPage)
+    {
+        self::$customPage = (bool)$customPage;
 	}
 }

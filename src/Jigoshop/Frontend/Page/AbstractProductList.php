@@ -45,12 +45,12 @@ abstract class AbstractProductList implements PageInterface
 			return $item;
 		});
 
-		Styles::add('jigoshop.shop.list', \JigoshopInit::getUrl().'/assets/css/shop/list.css', array(
+		Styles::add('jigoshop.shop.list', \JigoshopInit::getUrl().'/assets/css/shop/list.css', [
 			'jigoshop.shop',
-		));
-		Styles::add('jigoshop.vendors.select2', \JigoshopInit::getUrl().'/assets/css/vendors/select2.css', array(
+        ]);
+		Styles::add('jigoshop.vendors.select2', \JigoshopInit::getUrl().'/assets/css/vendors/select2.css', [
 			'jigoshop.shop',
-		));
+        ]);
 
 		Scripts::add('jigoshop.shop');
 	}
@@ -117,13 +117,13 @@ abstract class AbstractProductList implements PageInterface
 		$products = $this->productService->findByQuery($query);
 		$content = do_shortcode($this->getContent());
 
-		return Render::get('shop', array(
+		return Render::get('shop', [
 			'content' => $content,
 			'products' => $products,
 			'product_count' => $query->max_num_pages,
 			'messages' => $this->messages,
 			'title' => $this->getTitle(),
-		));
+        ]);
 	}
 
 	public abstract function getContent();

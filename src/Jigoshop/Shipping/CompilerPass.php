@@ -28,7 +28,7 @@ class CompilerPass implements CompilerPassInterface
 
 		$methods = $container->tags->get('jigoshop.shipping.method');
 		foreach ($methods as $method) {
-			$container->triggers->add('jigoshop.service.shipping', 'jigoshop.service.shipping', 'addMethod', array($method));
+			$container->triggers->add('jigoshop.service.shipping', 'jigoshop.service.shipping', 'addMethod', [$method]);
 		}
 	}
 }

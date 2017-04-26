@@ -25,11 +25,11 @@ class Admin
 	/** @var \WPAL\Wordpress */
 	private $wp;
 	/** @var array */
-	private $pages = array(
-		'jigoshop' => array(),
-		'products' => array(),
-		'orders' => array(),
-	);
+	private $pages = [
+		'jigoshop' => [],
+		'products' => [],
+		'orders' => [],
+    ];
 	private $dashboard;
 
 	public function __construct(Wordpress $wp, Dashboard $dashboard, Permalinks $permalinks)
@@ -37,25 +37,25 @@ class Admin
 		$this->wp = $wp;
 		$this->dashboard = $dashboard;
 
-		$wp->addAction('admin_menu', array($this, 'beforeMenu'), 9);
-		$wp->addAction('admin_menu', array($this, 'afterMenu'), 50);
+		$wp->addAction('admin_menu', [$this, 'beforeMenu'], 9);
+		$wp->addAction('admin_menu', [$this, 'afterMenu'], 50);
 
 		//TODO do wyrzucenia, przeniesienia do osobnych widokow
-		Scripts::add('jigoshop.vendors.bs_tab_trans_tooltip_collapse', \JigoshopInit::getUrl().'/assets/js/vendors/bs_tab_trans_tooltip_collapse.js', array('jquery'));
+		Scripts::add('jigoshop.vendors.bs_tab_trans_tooltip_collapse', \JigoshopInit::getUrl().'/assets/js/vendors/bs_tab_trans_tooltip_collapse.js', ['jquery']);
 		Styles::add('jigoshop.vendors.select2', \JigoshopInit::getUrl().'/assets/css/vendors/select2.css');
-		Scripts::add('jigoshop.vendors.select2', \JigoshopInit::getUrl().'/assets/js/vendors/select2.js', array('jquery'));
+		Scripts::add('jigoshop.vendors.select2', \JigoshopInit::getUrl().'/assets/js/vendors/select2.js', ['jquery']);
 
 
 		Styles::add('jigoshop.admin', \JigoshopInit::getUrl() . '/assets/css/admin.css');
 
-		Scripts::add('jigoshop.admin', \JigoshopInit::getUrl().'/assets/js/admin.js', array(
+		Scripts::add('jigoshop.admin', \JigoshopInit::getUrl().'/assets/js/admin.js', [
 			'jquery',
 			'jigoshop.helpers',
 			'jigoshop.vendors.bs_tab_trans_tooltip_collapse'
-		));
-		Scripts::add('jigoshop.vendors.bs_tab_trans_tooltip_collapse', \JigoshopInit::getUrl() . '/assets/js/vendors/bs_tab_trans_tooltip_collapse.js', array(
+        ]);
+		Scripts::add('jigoshop.vendors.bs_tab_trans_tooltip_collapse', \JigoshopInit::getUrl() . '/assets/js/vendors/bs_tab_trans_tooltip_collapse.js', [
 			'jquery',
-		), array('in_footer' => true));
+        ], ['in_footer' => true]);
 	}
 
 	/**
@@ -77,7 +77,7 @@ class Admin
 				throw new Exception(sprintf('Trying to add page to invalid parent (%s). Available ones are: %s', $parent, join(', ', array_keys($this->pages))));
 			}
 
-			Registry::getInstance(JIGOSHOP_LOGGER)->addDebug(sprintf('Trying to add page to invalid parent (%s).', $parent), array('parents' => $this->pages));
+			Registry::getInstance(JIGOSHOP_LOGGER)->addDebug(sprintf('Trying to add page to invalid parent (%s).', $parent), ['parents' => $this->pages]);
 
 			return;
 		}
@@ -93,31 +93,31 @@ class Admin
 		$menu = $this->wp->getMenu();
 
 		if ($this->wp->currentUserCan('manage_jigoshop')) {
-			$menu[54] = array('', 'read', 'separator-jigoshop', '', 'wp-menu-separator jigoshop');
+			$menu[54] = ['', 'read', 'separator-jigoshop', '', 'wp-menu-separator jigoshop'];
 		}
 
         $this->wp->doAction('jigoshop\admin\before_menu');
 
-		$this->wp->addMenuPage(__('Jigoshop'), __('Jigoshop'), 'manage_jigoshop', 'jigoshop', array($this->dashboard, 'display'), null, 55);
+		$this->wp->addMenuPage(__('Jigoshop'), __('Jigoshop'), 'manage_jigoshop', 'jigoshop', [$this->dashboard, 'display'], null, 55);
 		foreach ($this->pages['jigoshop'] as $page) {
 			/** @var $page PageInterface */
-			$this->wp->addSubmenuPage(self::MENU, $page->getTitle(), $page->getTitle(), $page->getCapability(), $page->getMenuSlug(), array($page, 'display'));
+			$this->wp->addSubmenuPage(self::MENU, $page->getTitle(), $page->getTitle(), $page->getCapability(), $page->getMenuSlug(), [$page, 'display']);
 		}
 
 		foreach ($this->pages['products'] as $page) {
 			/** @var $page PageInterface */
-			$this->wp->addSubmenuPage('edit.php?post_type='.Types::PRODUCT, $page->getTitle(), $page->getTitle(), $page->getCapability(), $page->getMenuSlug(), array(
+			$this->wp->addSubmenuPage('edit.php?post_type='.Types::PRODUCT, $page->getTitle(), $page->getTitle(), $page->getCapability(), $page->getMenuSlug(), [
 				$page,
 				'display'
-			));
+            ]);
 		}
 
 		foreach ($this->pages['orders'] as $page) {
 			/** @var $page PageInterface */
-			$this->wp->addSubmenuPage('edit.php?post_type='.Types::ORDER, $page->getTitle(), $page->getTitle(), $page->getCapability(), $page->getMenuSlug(), array(
+			$this->wp->addSubmenuPage('edit.php?post_type='.Types::ORDER, $page->getTitle(), $page->getTitle(), $page->getCapability(), $page->getMenuSlug(), [
 				$page,
 				'display'
-			));
+            ]);
 		}
 	}
 

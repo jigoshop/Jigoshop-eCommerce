@@ -24,20 +24,20 @@ class PriceFilter extends \WP_Widget
 	 */
 	public function __construct()
 	{
-		$options = array(
+		$options = [
 			'classname' => self::ID,
 			'description' => __('Outputs a price filter slider', 'jigoshop')
-		);
+        ];
 
 		// Create the widget
 		parent::__construct(self::ID, __('Jigoshop: Price Filter', 'jigoshop'), $options);
 
 		// Add price filter init to init hook
-		add_action('wp_enqueue_scripts', array($this, 'assets'));
-		add_filter('jigoshop\service\product\find_by_query', array($this, 'query'));
+		add_action('wp_enqueue_scripts', [$this, 'assets']);
+		add_filter('jigoshop\service\product\find_by_query', [$this, 'query']);
 
 		// Add own hidden fields to filter
-		add_filter('jigoshop\get_fields', array($this, 'hiddenFields'));
+		add_filter('jigoshop\get_fields', [$this, 'hiddenFields']);
 	}
 
 	public function assets()
@@ -102,13 +102,13 @@ class PriceFilter extends \WP_Widget
 			$this->id_base
 		);
 
-		$fields = apply_filters('jigoshop\get_fields', array());
+		$fields = apply_filters('jigoshop\get_fields', []);
 
-		Render::output('widget/price_filter/widget', array_merge($args, array(
+		Render::output('widget/price_filter/widget', array_merge($args, [
 			'title' => $title,
 			'max' => $this->max,
 			'fields' => $fields,
-		)));
+        ]));
 	}
 
 	/**
@@ -142,11 +142,11 @@ class PriceFilter extends \WP_Widget
 		// Get instance data
 		$title = isset($instance['title']) ? esc_attr($instance['title']) : null;
 
-		Render::output('widget/price_filter/form', array(
+		Render::output('widget/price_filter/form', [
 			'title_id' => $this->get_field_id('title'),
 			'title_name' => $this->get_field_name('title'),
 			'title' => $title,
-		));
+        ]);
 	}
 }
 
@@ -154,17 +154,17 @@ function filter($query)
 {
 	if (isset($_GET['max_price']) && isset($_GET['min_price'])) {
 		if (!isset($query['meta_query'])) {
-			$query['meta_query'] = array();
+			$query['meta_query'] = [];
 		}
 
 		// TODO: How to support filtering using jigoshop_price() DB function?
 		// TODO: Support for variable products
-		$query['meta_query'][] = array(
+		$query['meta_query'][] = [
 			'key' => 'regular_price',
-			'value' => array($_GET['min_price'], $_GET['max_price']),
+			'value' => [$_GET['min_price'], $_GET['max_price']],
 			'type' => 'NUMERIC',
 			'compare' => 'BETWEEN'
-		);
+        ];
 	}
 
 	return $query;

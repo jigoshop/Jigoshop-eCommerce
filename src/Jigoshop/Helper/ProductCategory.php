@@ -16,18 +16,18 @@ class ProductCategory
 	public static function getImage($id)
 	{
 		if (empty($id)) {
-			return array(
+			return [
 				'image' => \JigoshopInit::getUrl().'/assets/images/placeholder.png',
 				'thumbnail_id' => false,
-			);
+            ];
 		}
 
 		$thumbnail = get_metadata(Core::TERMS, $id, 'thumbnail_id', true);
 		$image = $thumbnail ? wp_get_attachment_url($thumbnail) : \JigoshopInit::getUrl().'/assets/images/placeholder.png';
 
-		return array(
+		return [
 			'image' => $image,
 			'thumbnail_id' => $thumbnail,
-		);
+        ];
 	}
 }

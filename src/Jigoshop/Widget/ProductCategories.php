@@ -22,18 +22,18 @@ class ProductCategories extends \WP_Widget
 
 	public function __construct()
 	{
-		$options = array(
+		$options = [
 			'classname' => self::ID,
 			'description' => __('A list or dropdown of product categories', 'jigoshop'),
-		);
+        ];
 
 		// Create the widget
 		parent::__construct(self::ID, __('Jigoshop: Product Categories', 'jigoshop'), $options);
 
 		// Flush cache after every save
-		add_action('save_post', array($this, 'deleteTransient'));
-		add_action('deleted_post', array($this, 'deleteTransient'));
-		add_action('switch_theme', array($this, 'deleteTransient'));
+		add_action('save_post', [$this, 'deleteTransient']);
+		add_action('deleted_post', [$this, 'deleteTransient']);
+		add_action('switch_theme', [$this, 'deleteTransient']);
 	}
 
 	public static function setProductService($productService)
@@ -87,13 +87,13 @@ class ProductCategories extends \WP_Widget
 		$is_hierarchical = isset($instance['hierarchical']) ? $instance['hierarchical'] : false;
 		$is_dropdown = isset($instance['dropdown']) ? $instance['dropdown'] : false;
 
-		$query = array(
+		$query = [
 			'orderby' => 'name',
 			'show_count' => $count,
 			'hierarchical' => $is_hierarchical,
 			'taxonomy' => Core\Types::PRODUCT_CATEGORY,
 			'title_li' => null,
-		);
+        ];
 
 		if (Pages::isProduct()) {
 			global $post;
@@ -107,13 +107,13 @@ class ProductCategories extends \WP_Widget
 		if ($is_dropdown) {
 			global $wp_query;
 
-			$query = array(
+			$query = [
 				'pad_counts' => 1,
 				'hierarchical' => $is_hierarchical,
 				'hide_empty' => true,
 				'show_count' => $count,
 				'selected' => isset($wp_query->query[Core\Types::PRODUCT_CATEGORY]) ? $wp_query->query[Core\Types::PRODUCT_CATEGORY] : '',
-			);
+            ];
 
 			$terms = get_terms(Core\Types::PRODUCT_CATEGORY, $query);
 			if (!$terms) {
@@ -122,19 +122,19 @@ class ProductCategories extends \WP_Widget
 
 			$walker = new CategoryWalker(self::$wp, 'widget/product_categories/item');
 
-			Render::output('widget/product_categories/dropdown', array_merge($args, array(
+			Render::output('widget/product_categories/dropdown', array_merge($args, [
 				'title' => $title,
 				'query' => $query,
 				'walker' => $walker,
 				'terms' => $terms,
 				'value' => $query['selected'],
 				'shopUrl' => get_permalink(self::$options->getPageId(Pages::SHOP)),
-			)));
+            ]));
 		} else {
-			Render::output('widget/product_categories/list', array_merge($args, array(
+			Render::output('widget/product_categories/list', array_merge($args, [
 				'title' => $title,
 				'args' => $query,
-			)));
+            ]));
 		}
 
 		// Flush output buffer and save to transient cache
@@ -187,7 +187,7 @@ class ProductCategories extends \WP_Widget
 		$count = isset($instance['count']) ? $instance['count'] : false;
 		$hierarchical = isset($instance['hierarchical']) ? $instance['hierarchical'] : false;
 
-		Render::output('widget/product_categories/form', array(
+		Render::output('widget/product_categories/form', [
 			'title_id' => $this->get_field_id('title'),
 			'title_name' => $this->get_field_name('title'),
 			'title' => $title,
@@ -200,6 +200,6 @@ class ProductCategories extends \WP_Widget
 			'hierarchical_id' => $this->get_field_id('hierarchical'),
 			'hierarchical_name' => $this->get_field_name('hierarchical'),
 			'hierarchical' => $hierarchical,
-		));
+        ]);
 	}
 }

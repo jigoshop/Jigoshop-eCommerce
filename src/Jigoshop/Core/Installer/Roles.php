@@ -31,14 +31,14 @@ class Roles implements Initializer
 		$roles = $wp->getRoles();
 
 		// Customer role
-		$wp->addRole('customer', __('Customer', 'jigoshop'), $wp->applyFilters('jigoshop\role\customer', array(
+		$wp->addRole('customer', __('Customer', 'jigoshop'), $wp->applyFilters('jigoshop\role\customer', [
 			'read' => true,
 			'edit_posts' => false,
 			'delete_posts' => false
-		)));
+        ]));
 
 		// Shop manager role
-		$wp->addRole('shop_manager', __('Shop Manager', 'jigoshop'), $wp->applyFilters('jigoshop\role\shop_manager', array(
+		$wp->addRole('shop_manager', __('Shop Manager', 'jigoshop'), $wp->applyFilters('jigoshop\role\shop_manager', [
 			'read' => true,
 			'read_private_pages' => true,
 			'read_private_posts' => true,
@@ -68,7 +68,7 @@ class Roles implements Initializer
 			'upload_files' => true,
 			'export' => true,
 			'import' => true,
-		)));
+        ]));
 
 		foreach ($this->getCapabilities() as $group) {
 			foreach ($group as $cap) {
@@ -80,19 +80,19 @@ class Roles implements Initializer
 
 	private function getCapabilities()
 	{
-		$capabilities = array(
-			'core' => array(
+		$capabilities = [
+			'core' => [
 				'manage_jigoshop',
 				'view_jigoshop_reports',
 				'manage_jigoshop_orders',
 				'manage_jigoshop_coupons',
 				'manage_jigoshop_products'
-			)
-		);
+            ]
+        ];
 
-		$types = $this->wp->applyFilters('jigoshop\capability\types', array(Types::PRODUCT, Types::ORDER, Types::EMAIL, Types::COUPON));
+		$types = $this->wp->applyFilters('jigoshop\capability\types', [Types::PRODUCT, Types::ORDER, Types::EMAIL, Types::COUPON]);
 		foreach ($types as $type) {
-			$capabilities[$type] = array(
+			$capabilities[$type] = [
 				// Post type
 				"edit_{$type}",
 				"read_{$type}",
@@ -112,7 +112,7 @@ class Roles implements Initializer
 				"edit_{$type}_terms",
 				"delete_{$type}_terms",
 				"assign_{$type}_terms"
-			);
+            ];
 		}
 
 		return $capabilities;

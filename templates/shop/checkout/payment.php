@@ -11,7 +11,7 @@ use Jigoshop\Helper\Render;
 ?>
 
 <h1><?php printf(__('Checkout &raquo; Payment &raquo; %s', 'jigoshop'), $order->getTitle()); ?></h1>
-<?php Render::output('shop/messages', array('messages' => $messages)); ?>
+<?php Render::output('shop/messages', ['messages' => $messages]); ?>
 <div class="payment">
-	<?php echo $content; ?>
+	<?= $content; ?>
 </div>

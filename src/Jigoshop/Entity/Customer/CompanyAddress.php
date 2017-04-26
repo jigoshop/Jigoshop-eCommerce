@@ -67,8 +67,8 @@ class CompanyAddress extends Address
 	public function __toString()
 	{
 		$result = trim(str_replace(
-			array(', ,', ', <'),
-			array('', '<'),
+			[', ,', ', <'],
+			['', '<'],
 			sprintf(
 				_x('<strong>%1$s</strong>, %2$s<br/>%3$s, %4$s, %5$s<br/>%6$s, %7$s', 'order-address', 'jigoshop'),
 				$this->getName(), $this->company, $this->getAddress(), $this->getCity(), $this->getPostcode(), Country::getName($this->getCountry()),
@@ -97,11 +97,11 @@ class CompanyAddress extends Address
 	 */
 	public function serialize()
 	{
-		return serialize(array(
+		return serialize([
 			'company' => $this->company,
 			'euvatno' => $this->vatNumber,
 			'parent' => parent::serialize(),
-		));
+        ]);
 	}
 
 	/**

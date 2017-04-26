@@ -22,19 +22,19 @@ class ReportsConfiguration implements ConfigurationInterface
 	 */
 	public function addServices(Services $services)
 	{
-		$services->setDetails('jigoshop.admin.reports.sales', 'Jigoshop\Admin\Reports\SalesTab', array(
+		$services->setDetails('jigoshop.admin.reports.sales', 'Jigoshop\Admin\Reports\SalesTab', [
 			'wpal',
 			'jigoshop.options'
-		));
-		$services->setDetails('jigoshop.admin.reports.customers', 'Jigoshop\Admin\Reports\CustomersTab', array(
+        ]);
+		$services->setDetails('jigoshop.admin.reports.customers', 'Jigoshop\Admin\Reports\CustomersTab', [
 			'wpal',
 			'jigoshop.options',
 			'jigoshop.service.order',
-		));
-		$services->setDetails('jigoshop.admin.reports.stock', 'Jigoshop\Admin\Reports\StockTab', array(
+        ]);
+		$services->setDetails('jigoshop.admin.reports.stock', 'Jigoshop\Admin\Reports\StockTab', [
 			'wpal',
 			'jigoshop.options'
-		));
+        ]);
 	}
 
 	/**

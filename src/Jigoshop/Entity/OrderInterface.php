@@ -1,6 +1,7 @@
 <?php
 namespace Jigoshop\Entity;
 
+use Jigoshop\Entity\Order\Discount;
 use Jigoshop\Entity\Order\Item;
 use Jigoshop\Exception;
 use Jigoshop\Shipping\Method;
@@ -130,13 +131,8 @@ interface OrderInterface extends EntityInterface
 	 */
 	public function hasShippingMethod($method, $rate = null);
 
-	/**
-	 * @param Coupon|string $coupon New coupon object or code.
-	 */
-	public function addCoupon($coupon);
+    public function addDiscount(Discount $discount);
 
-	/**
-	 * @param string $coupon Code to remove.
-	 */
-	public function removeCoupon($coupon);
+    public function removeDiscount($key);
+    public function removeDiscounts();
 }

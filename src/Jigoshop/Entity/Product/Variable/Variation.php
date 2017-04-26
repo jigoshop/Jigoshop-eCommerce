@@ -19,7 +19,7 @@ class Variation implements \JsonSerializable
 	/** @var Product|Product\Purchasable */
 	private $product;
 	/** @var Attribute[] */
-	private $attributes = array();
+	private $attributes = [];
 	/** @var string Cache for title */
 	private $title;
 

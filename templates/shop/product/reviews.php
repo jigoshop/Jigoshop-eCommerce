@@ -12,7 +12,7 @@ $aria_req = ( $req ? " aria-required='true'" : '' );
 <div role="tabpanel" id="tab-reviews" class="tab-pane<?php $currentTab == 'reviews' and print ' active'; ?>">
     <?php foreach($reviews as $review) : ?>
         <div class="review">
-            <div class="author pull-left"><?php echo $review->getComment()->comment_author; ?></div>
+            <div class="author pull-left"><?= $review->getComment()->comment_author; ?></div>
             <div class="ratting pull-right">
                 <?php for($i = 1; $i <= 5; $i++): ?>
                     <span class="glyphicon glyphicon-star<?php print $review->getRating() < $i ? '-empty' : ''; ?>"></span>
@@ -20,7 +20,7 @@ $aria_req = ( $req ? " aria-required='true'" : '' );
             </div>
             <div class="clear"></div>
             <div class="review well well-sm">
-                <?php echo nl2br($review->getComment()->comment_content); ?>
+                <?= nl2br($review->getComment()->comment_content); ?>
             </div>
         </div>
     <?php endforeach; ?>

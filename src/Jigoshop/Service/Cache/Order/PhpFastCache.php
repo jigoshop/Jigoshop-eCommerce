@@ -15,7 +15,7 @@ use phpFastCache\CacheManager;
  */
 class PhpFastCache implements OrderServiceInterface
 {
-    private $objects = array();
+    private $objects = [];
 
     /** @var \Jigoshop\Service\OrderServiceInterface */
     private $service;
@@ -79,7 +79,7 @@ class PhpFastCache implements OrderServiceInterface
      */
     public function findByQuery($query)
     {
-        $orders = array();
+        $orders = [];
         if(isset($query->posts) && count($query->posts)) {
             $results = $query->posts;
         } else {

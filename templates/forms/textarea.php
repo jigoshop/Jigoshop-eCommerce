@@ -13,17 +13,17 @@
  * @var $size int Size of form widget.
  */
 ?>
-<div class="form-group <?php echo $id; ?>_field clearfix<?php $hidden and print ' not-active'; ?>">
-	<label for="<?php echo $id; ?>" class="col-sm-<?php echo $size == 12 ? 12 : 12 - $size; ?> control-label">
-		<?php echo $label; ?>
+<div class="form-group <?= $id; ?>_field <?= join(' ', $classes); ?> clearfix<?php $hidden and print ' not-active'; ?>">
+	<label for="<?= $id; ?>" class="col-sm-<?= $size == 12 ? 12 : 12 - $size; ?> control-label">
+		<?= $label; ?>
 		<?php if(!empty($tip)): ?>
-			<a href="#" data-toggle="tooltip" class="badge" data-placement="top" title="<?php echo $tip; ?>">?</a>
+			<a href="#" data-toggle="tooltip" class="badge" data-placement="top" title="<?= $tip; ?>">?</a>
 		<?php endif; ?>
 	</label>
-	<div class="col-sm-<?php echo $size; ?>">
-		<textarea rows="<?php echo $rows; ?>" id="<?php echo $id; ?>" name="<?php echo $name; ?>" class="form-control <?php echo join(' ', $classes); ?>"<?php $disabled and print ' disabled'; ?>><?php echo $value; ?></textarea>
+	<div class="col-sm-<?= $size; ?>">
+		<textarea rows="<?= $rows; ?>" id="<?= $id; ?>" name="<?= $name; ?>" class="form-control <?= join(' ', $classes); ?>"<?php $disabled and print ' disabled'; ?>><?= $value; ?></textarea>
 		<?php if(!empty($description)): ?>
-			<span class="help-block"><?php echo $description; ?></span>
+			<span class="help-block"><?= $description; ?></span>
 		<?php endif; ?>
 	</div>
 </div>

@@ -15,7 +15,7 @@ use Jigoshop\Extensions\License;
 class Extensions
 {
     /** @var  Extension[] */
-    private static $extensions = array();
+    private static $extensions = [];
     /** @var  Extension */
     private static $install;
     /** @var  License */

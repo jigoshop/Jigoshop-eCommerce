@@ -16,10 +16,11 @@ namespace phpFastCache\Drivers\Cassandra;
 
 use phpFastCache\Core\Pool\DriverBaseTrait;
 use phpFastCache\Core\Pool\ExtendedCacheItemPoolInterface;
-use phpFastCache\Entities\driverStatistic;
+use phpFastCache\Entities\DriverStatistic;
 use phpFastCache\Exceptions\phpFastCacheDriverCheckException;
 use phpFastCache\Exceptions\phpFastCacheDriverException;
 use phpFastCache\Exceptions\phpFastCacheInvalidArgumentException;
+use phpFastCache\Exceptions\phpFastCacheLogicException;
 use Psr\Cache\CacheItemInterface;
 use Cassandra;
 use Cassandra\Session as CassandraSession;
@@ -57,7 +58,7 @@ class Driver implements ExtendedCacheItemPoolInterface
      */
     public function driverCheck()
     {
-        return extension_loaded('Cassandra') && class_exists('Cassandra');
+        return extension_loaded('Cassandra') && class_exists(\Cassandra::class);
     }
 
     /**
@@ -71,21 +72,22 @@ class Driver implements ExtendedCacheItemPoolInterface
          * Check for Cross-Driver type confusion
          */
         if ($item instanceof Item) {
-            $cacheData = $this->encode($this->driverPreWrap($item));
-            $options = new Cassandra\ExecutionOptions([
-              'arguments' => [
-                  'cache_uuid' => new Cassandra\Uuid(),
-                  'cache_id' => $item->getKey(),
-                  'cache_data' => $cacheData,
-                  'cache_creation_date' => new Cassandra\Timestamp((new \DateTime())->getTimestamp()),
-                  'cache_expiration_date' => new Cassandra\Timestamp($item->getExpirationDate()->getTimestamp()),
-                  'cache_length' => strlen($cacheData)
-                ],
-              'consistency' => Cassandra::CONSISTENCY_ALL,
-              'serial_consistency' => Cassandra::CONSISTENCY_SERIAL
-            ]);
+            try{
+                $cacheData = $this->encode($this->driverPreWrap($item));
+                $options = new Cassandra\ExecutionOptions([
+                  'arguments' => [
+                    'cache_uuid' => new Cassandra\Uuid(),
+                    'cache_id' => $item->getKey(),
+                    'cache_data' => $cacheData,
+                    'cache_creation_date' => new Cassandra\Timestamp((new \DateTime())->getTimestamp()),
+                    'cache_expiration_date' => new Cassandra\Timestamp($item->getExpirationDate()->getTimestamp()),
+                    'cache_length' => strlen($cacheData)
+                  ],
+                  'consistency' => Cassandra::CONSISTENCY_ALL,
+                  'serial_consistency' => Cassandra::CONSISTENCY_SERIAL
+                ]);
 
-            $query = sprintf('INSERT INTO %s.%s
+                $query = sprintf('INSERT INTO %s.%s
                     (
                       cache_uuid, 
                       cache_id, 
@@ -97,13 +99,16 @@ class Driver implements ExtendedCacheItemPoolInterface
                   VALUES (:cache_uuid, :cache_id, :cache_data, :cache_creation_date, :cache_expiration_date, :cache_length);
             ', self::CASSANDRA_KEY_SPACE, self::CASSANDRA_TABLE);
 
-            $result = $this->instance->execute(new Cassandra\SimpleStatement($query), $options);
-            /**
-             * There's no real way atm
-             * to know if the item has
-             * been really upserted
-             */
-            return $result instanceof Cassandra\Rows;
+                $result = $this->instance->execute(new Cassandra\SimpleStatement($query), $options);
+                /**
+                 * There's no real way atm
+                 * to know if the item has
+                 * been really upserted
+                 */
+                return $result instanceof Cassandra\Rows;
+            }catch(\Cassandra\Exception\InvalidArgumentException $e){
+                throw new phpFastCacheInvalidArgumentException($e, 0, $e);
+            }
         } else {
             throw new phpFastCacheInvalidArgumentException('Cross-Driver type confusion detected');
         }
@@ -180,16 +185,12 @@ class Driver implements ExtendedCacheItemPoolInterface
     protected function driverClear()
     {
         try {
-            $result = $this->instance->execute(new Cassandra\SimpleStatement(sprintf(
+            $this->instance->execute(new Cassandra\SimpleStatement(sprintf(
               'TRUNCATE %s.%s;',
               self::CASSANDRA_KEY_SPACE, self::CASSANDRA_TABLE
             )));
-            /**
-             * There's no real way atm
-             * to know if the item has
-             * been really deleted
-             */
-            return $result instanceof Cassandra\Rows;
+
+            return true;
         } catch (Cassandra\Exception $e) {
             return false;
         }
@@ -197,11 +198,13 @@ class Driver implements ExtendedCacheItemPoolInterface
 
     /**
      * @return bool
+     * @throws phpFastCacheLogicException
+     * @throws \Cassandra\Exception
      */
     protected function driverConnect()
     {
         if ($this->instance instanceof CassandraSession) {
-            throw new \LogicException('Already connected to Couchbase server');
+            throw new phpFastCacheLogicException('Already connected to Couchbase server');
         } else {
             $host = isset($this->config[ 'host' ]) ? $this->config[ 'host' ] : '127.0.0.1';
             $port = isset($this->config[ 'port' ]) ? $this->config[ 'port' ] : 9042;
@@ -281,7 +284,8 @@ HELP;
     }
 
     /**
-     * @return driverStatistic
+     * @return DriverStatistic
+     * @throws \Cassandra\Exception
      */
     public function getStats()
     {
@@ -291,7 +295,7 @@ HELP;
           self::CASSANDRA_TABLE
         )));
 
-        return (new driverStatistic())
+        return (new DriverStatistic())
           ->setSize($result->first()[ 'cache_size' ])
           ->setRawData([])
           ->setData(implode(', ', array_keys($this->itemInstances)))

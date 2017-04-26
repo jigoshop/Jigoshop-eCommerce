@@ -9,9 +9,9 @@ use Jigoshop\Admin\Helper\Forms;
  * @var $count int Count of items in category.
  */
 ?>
-<option class="level-<?php echo $depth; ?>" value="<?php echo $value; ?>" <?php echo Forms::selected($value, $selected); ?>>
-	<?php echo str_repeat('&nbsp;', $depth*3).$name; ?>
+<option class="level-<?= $depth; ?>" value="<?= $value; ?>" <?= Forms::selected($value, $selected); ?>>
+	<?= str_repeat('&nbsp;', $depth*3).$name; ?>
 	<?php if ($show_count): ?>
-		(<?php echo $count; ?>)
+		(<?= $count; ?>)
 	<?php endif; ?>
 </option>

@@ -23,17 +23,9 @@ class SalesTab implements TabInterface
 		$this->wp = $wp;
 		$this->options = $options;
 
-        if (in_array($this->wp->getPageNow(), array('admin.php', 'options.php')) &&
+        if (in_array($this->wp->getPageNow(), ['admin.php', 'options.php']) &&
             isset($_GET['page']) && $_GET['page'] == Reports::NAME
         ) {
-            add_action( 'admin_notices', function(){
-                ?>
-                <div class="notice notice-warning is-dismissible">
-                    <p><?php _e('We have decided to disable the Discount Summary Report Tab until the next update due to an issue with coupon retrieval. We\'re terribly sorry for the inconvenience - our development team is doing their best to resolve this issue ASAP.', 'jigoshop'); ?></p>
-                </div>
-                <?php
-            });
-
             $this->chart = $this->getChart();
         }
 	}
@@ -59,21 +51,21 @@ class SalesTab implements TabInterface
 	 */
 	public function display()
 	{
-		Render::output('admin/reports/sales', array(
+		Render::output('admin/reports/sales', [
 			'types' => $this->getTypes(),
 			'current_type' => $this->getCurrentType(),
 			'chart' => $this->chart
-		));
+        ]);
 	}
 
 	private function getTypes()
 	{
-		return $this->wp->applyFilters('jigoshop\admin\reports\sales\types', array(
+		return $this->wp->applyFilters('jigoshop\admin\reports\sales\types', [
 			'by_date' => __('By Date', 'jigoshop'),
 			'by_product' => __('By Product', 'jigoshop'),
 			'by_category' => __('By Category', 'jigoshop'),
-			//'discount_summary' => __('Discount Summary', 'jigoshop')
-		));
+			'discount_summary' => __('Discount Summary', 'jigoshop')
+        ]);
 	}
 
 	private function getCurrentType()

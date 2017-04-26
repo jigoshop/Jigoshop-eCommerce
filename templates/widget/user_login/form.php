@@ -9,10 +9,10 @@
  */
 ?>
 <p>
-	<label for="<?php echo $title_guest_id; ?>"><?php _e('Title (Logged Out):', 'jigoshop'); ?></label>
-	<input class="widefat" id="<?php echo $title_guest_id; ?>"  name="<?php echo $title_guest_name; ?>" type="text" value="<?php echo $title_guest; ?>" />
+	<label for="<?= $title_guest_id; ?>"><?php _e('Title (Logged Out):', 'jigoshop'); ?></label>
+	<input class="widefat" id="<?= $title_guest_id; ?>"  name="<?= $title_guest_name; ?>" type="text" value="<?= $title_guest; ?>" />
 </p>
 <p>
-	<label for="<?php echo $title_user_id; ?>"><?php _e('Title (Logged In):', 'jigoshop'); ?></label>
-	<input class="widefat" id="<?php echo $title_user_id; ?>"  name="<?php echo $title_user_name; ?>" type="text" value="<?php echo $title_user; ?>" />
+	<label for="<?= $title_user_id; ?>"><?php _e('Title (Logged In):', 'jigoshop'); ?></label>
+	<input class="widefat" id="<?= $title_user_id; ?>"  name="<?= $title_user_name; ?>" type="text" value="<?= $title_user; ?>" />
 </p>

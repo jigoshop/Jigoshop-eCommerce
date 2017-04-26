@@ -15,7 +15,7 @@ class Compiler
 	/**
 	 * @var array
 	 */
-	private $compilerPasses = array();
+	private $compilerPasses = [];
 
 	/**
 	 * @param CompilerPassInterface $compilerPass

@@ -33,9 +33,9 @@ abstract class SessionService implements SessionServiceInterface
         $this->wp = $wp;
         $this->options = $options;
         $this->factory = $factory;
-        $this->sessionsToSave = array();
+        $this->sessionsToSave = [];
 
-        $this->wp->addAction('shutdown', array($this, 'saveAllSessions'));
+        $this->wp->addAction('shutdown', [$this, 'saveAllSessions']);
     }
 
     /**

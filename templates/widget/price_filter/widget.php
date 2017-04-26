@@ -22,9 +22,9 @@ if ($title) {
 		<div class="price_slider_amount">
 			<button type="submit" class="button"><?php _e('Filter', 'jigoshop'); ?></button>
 			<?php _e('Price: ', 'jigoshop'); ?><span></span>
-			<input type="hidden" id="max_price" name="max_price" value="<?php echo esc_attr($max); ?>" />
+			<input type="hidden" id="max_price" name="max_price" value="<?= esc_attr($max); ?>" />
 			<input type="hidden" id="min_price" name="min_price" value="0" />
-			<?php \Jigoshop\Helper\Forms::printHiddenFields($fields, array('max_price', 'min_price')); ?>
+			<?php \Jigoshop\Helper\Forms::printHiddenFields($fields, ['max_price', 'min_price']); ?>
 		</div>
 		<div class="clear"></div>
 	</div>
@@ -35,7 +35,7 @@ if ($title) {
 		// Price slider
 		var min_price = parseInt($('.price_slider_amount #min_price').val());
 		var max_price = parseInt($('.price_slider_amount #max_price').val());
-		var html = '<?php echo sprintf(Currency::format(), Currency::symbol(), Currency::code(), '%s%'); ?>';
+		var html = '<?= sprintf(Currency::format(), Currency::symbol(), Currency::code(), '%s%'); ?>';
 		var current_min_price, current_max_price;
 		current_min_price = min_price;
 		current_max_price = max_price;
@@ -58,4 +58,4 @@ if ($title) {
 	});
 	/*]]>*/
 </script>
-<?php echo $after_widget;
+<?= $after_widget;

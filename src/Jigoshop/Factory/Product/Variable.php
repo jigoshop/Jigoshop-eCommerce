@@ -18,8 +18,8 @@ class Variable
 	{
 		$this->wp = $wp;
 		$this->productService = $productService;
-		$wp->addFilter('jigoshop\find\product', array($this, 'fetch'));
-		$wp->addAction('jigoshop\admin\product_attribute\add', array($this, 'addAttributes'), 10, 2);
+		$wp->addFilter('jigoshop\find\product', [$this, 'fetch']);
+		$wp->addAction('jigoshop\admin\product_attribute\add', [$this, 'addAttributes'], 10, 2);
 	}
 
 	/**
@@ -77,7 +77,7 @@ class Variable
 		$query = $wpdb->prepare("
 			SELECT * FROM {$wpdb->prefix}jigoshop_product_variation_attribute pva
 				WHERE pva.variation_id = %d
-		", array($variationId));
+		", [$variationId]);
 		$results = $wpdb->get_results($query, ARRAY_A);
 
 		$variation = new VariableProduct\Variation();
@@ -116,9 +116,9 @@ class Variable
 			SELECT pv.ID, pva.* FROM {$wpdb->posts} pv
 				LEFT JOIN {$wpdb->prefix}jigoshop_product_variation_attribute pva ON pv.ID = pva.variation_id
 				WHERE pv.post_parent = %d AND pv.post_type = %s
-		", array($product->getId(), \Jigoshop\Core\Types\Product\Variable::TYPE));
+		", [$product->getId(), \Jigoshop\Core\Types\Product\Variable::TYPE]);
 		$results = $wpdb->get_results($query, ARRAY_A);
-		$variations = array();
+		$variations = [];
 
 		$results = array_filter($results, function ($item){
 			return $item['attribute_id'] !== null;

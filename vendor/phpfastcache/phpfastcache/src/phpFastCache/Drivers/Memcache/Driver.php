@@ -17,7 +17,7 @@ namespace phpFastCache\Drivers\Memcache;
 use Memcache as MemcacheSoftware;
 use phpFastCache\Core\Pool\DriverBaseTrait;
 use phpFastCache\Core\Pool\ExtendedCacheItemPoolInterface;
-use phpFastCache\Entities\driverStatistic;
+use phpFastCache\Entities\DriverStatistic;
 use phpFastCache\Exceptions\phpFastCacheDriverCheckException;
 use phpFastCache\Exceptions\phpFastCacheDriverException;
 use phpFastCache\Exceptions\phpFastCacheInvalidArgumentException;
@@ -27,6 +27,7 @@ use Psr\Cache\CacheItemInterface;
 /**
  * Class Driver
  * @package phpFastCache\Drivers
+ * @property MemcacheSoftware $instance
  */
 class Driver implements ExtendedCacheItemPoolInterface
 {
@@ -50,7 +51,6 @@ class Driver implements ExtendedCacheItemPoolInterface
         if (!$this->driverCheck()) {
             throw new phpFastCacheDriverCheckException(sprintf(self::DRIVER_CHECK_FAILURE, $this->getDriverName()));
         } else {
-            $this->instance = new MemcacheSoftware();
             $this->driverConnect();
 
             if (array_key_exists('compress_data', $config) && $config[ 'compress_data' ] === true) {
@@ -129,16 +129,21 @@ class Driver implements ExtendedCacheItemPoolInterface
      */
     protected function driverConnect()
     {
-        $servers = (!empty($this->config[ 'memcache' ]) && is_array($this->config[ 'memcache' ]) ? $this->config[ 'memcache' ] : []);
+        $servers = (!empty($this->config[ 'servers' ]) && is_array($this->config[ 'servers' ]) ? $this->config[ 'servers' ] : []);
         if (count($servers) < 1) {
             $servers = [
-              ['127.0.0.1', 11211],
+              [
+                'host' =>'127.0.0.1',
+                'port' => 11211,
+                'sasl_user' => false,
+                'sasl_password' => false
+              ],
             ];
         }
 
         foreach ($servers as $server) {
             try {
-                if (!$this->instance->addserver($server[ 0 ], $server[ 1 ])) {
+                if (!$this->instance->addServer($server['host'], $server['port'])) {
                     $this->fallback = true;
                 }
                 if(!empty($server[ 'sasl_user' ]) && !empty($server[ 'sasl_password'])){
@@ -157,7 +162,7 @@ class Driver implements ExtendedCacheItemPoolInterface
      *******************/
 
     /**
-     * @return driverStatistic
+     * @return DriverStatistic
      */
     public function getStats()
     {
@@ -168,7 +173,7 @@ class Driver implements ExtendedCacheItemPoolInterface
         
         $date = (new \DateTime())->setTimestamp(time() - $stats[ 'uptime' ]);
 
-        return (new driverStatistic())
+        return (new DriverStatistic())
           ->setData(implode(', ', array_keys($this->itemInstances)))
           ->setInfo(sprintf("The memcache daemon v%s is up since %s.\n For more information see RawData.", $stats[ 'version' ], $date->format(DATE_RFC2822)))
           ->setRawData($stats)

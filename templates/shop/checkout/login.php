@@ -1,5 +1,5 @@
 <div class="alert alert-warning"><?php _e('Already registered?', 'jigoshop'); ?> <a href="#" id="jigoshop-login"><?php _e('Click here to login.', 'jigoshop'); ?></a></div>
-<form role="form" action="<?php echo wp_login_url(); ?>" method="post" id="jigoshop-login-form" class="not-active">
+<form role="form" action="<?= wp_login_url(); ?>" method="post" id="jigoshop-login-form" class="not-active">
 	<div class="form-group">
 		<label for="user_login"><?php _e('Username', 'jigoshop'); ?></label>
 		<input type="text" name="log" class="form-control" id="user_login" placeholder="<?php _e('Enter username', 'jigoshop'); ?>">
@@ -14,5 +14,5 @@
 		</label>
 	</div>
 	<button type="submit" name="wp-submit" value="Log in" class="btn btn-default"><?php _e('Log in', 'jigoshop'); ?></button>
-	<input type="hidden" value="<?php echo get_permalink(); ?>" name="redirect_to">
+	<input type="hidden" value="<?= get_permalink(); ?>" name="redirect_to">
 </form>

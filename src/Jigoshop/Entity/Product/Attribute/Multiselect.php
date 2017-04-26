@@ -15,7 +15,7 @@ class Multiselect extends Attribute implements Variable
 	{
 		parent::__construct($exists);
 		$this->variable = new Field('is_variable', false);
-		$this->value = array();
+		$this->value = [];
 	}
 
 	/**

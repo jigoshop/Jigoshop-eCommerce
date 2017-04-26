@@ -40,27 +40,27 @@ class Product implements PageInterface
 		$this->cartService = $cartService;
 		$this->messages = $messages;
 
-		Styles::add('jigoshop.vendors.colorbox', \JigoshopInit::getUrl().'/assets/css/vendors/colorbox.css');
-		Styles::add('jigoshop.vendors.select2', \JigoshopInit::getUrl().'/assets/css/vendors/select2.css');
-		Styles::add('jigoshop.shop.product', \JigoshopInit::getUrl().'/assets/css/shop/product.css', array(
+        Styles::add('jigoshop.shop.list', \JigoshopInit::getUrl().'/assets/css/shop/list.css', [
+            'jigoshop.shop',
+        ]);
+        Styles::add('jigoshop.vendors.blueimp', \JigoshopInit::getUrl().'/assets/css/vendors/blueimp.css');
+        Styles::add('jigoshop.vendors.select2', \JigoshopInit::getUrl().'/assets/css/vendors/select2.css');
+		Styles::add('jigoshop.shop.product', \JigoshopInit::getUrl().'/assets/css/shop/product.css', [
 			'jigoshop.shop',
 			'jigoshop.vendors.select2',
-			'jigoshop.vendors.colorbox',
-		));
+			'jigoshop.vendors.blueimp',
+        ]);
 
-		Scripts::add('jigoshop.vendors.select2', \JigoshopInit::getUrl().'/assets/js/vendors/select2.js', array('jquery'));
-		Scripts::add('jigoshop.vendors.colorbox', \JigoshopInit::getUrl().'/assets/js/vendors/colorbox.js', array('jquery'));
-		Scripts::add('jigoshop.vendors.bs_tab_trans_tooltip_collapse', \JigoshopInit::getUrl().'/assets/js/vendors/bs_tab_trans_tooltip_collapse.js', array('jquery'));
-		Scripts::add('jigoshop.shop.product', \JigoshopInit::getUrl().'/assets/js/shop/product.js', array(
+        Scripts::add('jigoshop.vendors.blueimp', \JigoshopInit::getUrl().'/assets/js/vendors/blueimp.js', ['jquery']);
+        Scripts::add('jigoshop.vendors.select2', \JigoshopInit::getUrl().'/assets/js/vendors/select2.js', ['jquery']);
+		Scripts::add('jigoshop.vendors.bs_tab_trans_tooltip_collapse', \JigoshopInit::getUrl().'/assets/js/vendors/bs_tab_trans_tooltip_collapse.js', ['jquery']);
+		Scripts::add('jigoshop.shop.product', \JigoshopInit::getUrl().'/assets/js/shop/product.js', [
 			'jquery',
 			'jigoshop.shop',
 			'jigoshop.vendors.select2',
-			'jigoshop.vendors.colorbox',
+			'jigoshop.vendors.blueimp',
 			'jigoshop.vendors.bs_tab_trans_tooltip_collapse',
-		));
-        Styles::add('jigoshop.shop.list', \JigoshopInit::getUrl().'/assets/css/shop/list.css', array(
-            'jigoshop.shop',
-        ));
+        ]);
 
 		$wp->addFilter('jigoshop\cart\add', function ($item) use ($productService){
 			/** @var $item Item */
@@ -71,33 +71,35 @@ class Product implements PageInterface
 			return $item;
 		});
 		
-		$wp->addAction('jigoshop\template\product\before_summary', array(
+		$wp->addAction('jigoshop\template\product\before_summary', [
 			$this,
 			'productImages'
-		), 10, 1);
-		$wp->addAction('jigoshop\template\product\after_summary', array($this, 'productTabs'), 10, 1);
+        ], 10, 1);
+		$wp->addAction('jigoshop\template\product\after_summary', [$this, 'productTabs'], 10, 1);
 		if($this->options->get('products.related')) {
-			$wp->addAction('jigoshop\template\product\after_summary', array($this, 'relatedProducts'), 20, 1);
+			$wp->addAction('jigoshop\template\product\after_summary', [$this, 'relatedProducts'], 20, 1);
 		}
 		$wp->addAction('jigoshop\template\product\after', [$this, 'upSells']);
-		$wp->addAction('jigoshop\template\product\tab_panels', array(
+		$wp->addAction('jigoshop\template\product\tab_panels', [
 			$this,
 			'productDescription'
-		), 10, 2);
-		$wp->addAction('jigoshop\template\product\tab_panels', array(
+        ], 10, 2);
+		$wp->addAction('jigoshop\template\product\tab_panels', [
 			$this,
 			'productAttributes'
-		), 15, 2);
-		$wp->addAction('jigoshop\template\product\tab_panels', array(
+        ], 15, 2);
+		$wp->addAction('jigoshop\template\product\tab_panels', [
 			$this,
 			'productDownloads'
-		), 20, 2);
-        $wp->addAction('jigoshop\template\product\tab_panels', array(
+        ], 20, 2);
+        $wp->addAction('jigoshop\template\product\tab_panels', [
             $this,
             'productReviews'
-        ), 25, 2);
+        ], 25, 2);
+        $wp->addAction('wp_footer', function() {
+            Render::output('shop/product/gallery_container', []);
+        });
 		$wp->doAction('jigoshop\product\assets', $wp);
-
 	}
 
 	public function action()
@@ -167,10 +169,10 @@ class Product implements PageInterface
 		$post = $this->wp->getGlobalPost();
 		$product = $this->productService->findForPost($post);
 
-		return Render::get('shop/product', array(
+		return Render::get('shop/product', [
 			'product' => $product,
 			'messages' => $this->messages,
-		));
+        ]);
 	}
 
 	/**
@@ -182,7 +184,7 @@ class Product implements PageInterface
 	protected function getRelated($product)
 	{
 		if (!$this->options->get('products.related')) {
-			return array();
+			return [];
 		}
 		
 		
@@ -198,18 +200,20 @@ class Product implements PageInterface
 	 */
 	public function productImages($product)
 	{
-		$imageClasses = apply_filters('jigoshop\product\image_classes', array('featured-image'), $product);
+		$imageClasses = apply_filters('jigoshop\product\image_classes', ['featured-image'], $product);
 		$featured = ProductHelper::getFeaturedImage($product, Options::IMAGE_LARGE);
 		$featuredUrl = ProductHelper::hasFeaturedImage($product) ? $this->wp->wpGetAttachmentUrl($this->wp->getPostThumbnailId($product->getId())) : '';
+		$featuredTitle = ProductHelper::hasFeaturedImage($product) ? get_the_title($this->wp->getPostThumbnailId($product->getId())) : '';
 		$thumbnails = ProductHelper::filterAttachments($this->productService->getAttachments($product, Options::IMAGE_THUMBNAIL), Image::TYPE);
 
-		Render::output('shop/product/images', array(
+		Render::output('shop/product/images', [
 			'product' => $product,
 			'featured' => $featured,
 			'featuredUrl' => $featuredUrl,
+            'featuredTitle' => $featuredTitle,
 			'thumbnails' => $thumbnails,
 			'imageClasses' => $imageClasses,
-		));
+        ]);
 	}
 
 	/**
@@ -217,7 +221,7 @@ class Product implements PageInterface
 	 */
 	public function productTabs($product)
 	{
-		$tabs = array();
+		$tabs = [];
 		if ($product->getDescription()) {
 			$tabs['description'] = __('Description', 'jigoshop');
 		}
@@ -236,11 +240,11 @@ class Product implements PageInterface
 		$tabs = $this->wp->applyFilters('jigoshop\product\tabs', $tabs, $product);
 		$availableTabs = array_keys($tabs);
 
-		Render::output('shop/product/tabs', array(
+		Render::output('shop/product/tabs', [
 			'product' => $product,
 			'tabs' => $tabs,
 			'currentTab' => reset($availableTabs),
-		));
+        ]);
 	}
 
 	/**
@@ -248,9 +252,9 @@ class Product implements PageInterface
 	 */
 	public function relatedProducts($product)
 	{
-		Render::output('shop/product/related', array(
+		Render::output('shop/product/related', [
 			'products' => $this->getRelated($product),
-		));
+        ]);
 	}
 
     /**
@@ -281,10 +285,10 @@ class Product implements PageInterface
 	 */
 	public function productAttributes($currentTab, $product)
 	{
-		Render::output('shop/product/attributes', array(
+		Render::output('shop/product/attributes', [
 			'product' => $product,
 			'currentTab' => $currentTab,
-		));
+        ]);
 	}
 
 	/**
@@ -293,10 +297,10 @@ class Product implements PageInterface
 	 */
 	public function productDescription($currentTab, $product)
 	{
-		Render::output('shop/product/description', array(
+		Render::output('shop/product/description', [
 			'product' => $product,
 			'currentTab' => $currentTab,
-		));
+        ]);
 	}
 
 	/**
@@ -311,11 +315,11 @@ class Product implements PageInterface
             return;
         }
 
-		Render::output('shop/product/downloads', array(
+		Render::output('shop/product/downloads', [
 			'product' => $product,
 			'currentTab' => $currentTab,
 			'attachments' => ProductHelper::filterAttachments($this->productService->getAttachments($product), Datafile::TYPE),
-		));
+        ]);
 	}
 
     /**
@@ -327,10 +331,10 @@ class Product implements PageInterface
         if($this->options->get('products.reviews', false) == false) {
             return;
         }
-        Render::output('shop/product/reviews', array(
+        Render::output('shop/product/reviews', [
             'product' => $product,
             'currentTab' => $currentTab,
             'reviews' => $this->productService->getReviews($product),
-        ));
+        ]);
 	}
 }

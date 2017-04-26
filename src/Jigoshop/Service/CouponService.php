@@ -9,6 +9,7 @@ use Jigoshop\Entity\Coupon;
 use Jigoshop\Entity\EntityInterface;
 use Jigoshop\Entity\Product;
 use Jigoshop\Factory\Coupon as Factory;
+use Jigoshop\Traits\WpPostManageTrait;
 use WPAL\Wordpress;
 
 /**
@@ -20,6 +21,8 @@ use WPAL\Wordpress;
  */
 class CouponService implements CouponServiceInterface
 {
+    use WpPostManageTrait;
+
     /** @var Wordpress */
     private $wp;
     /** @var Options */
@@ -34,7 +37,7 @@ class CouponService implements CouponServiceInterface
         $this->wp = $wp;
         $this->options = $options;
         $this->factory = $factory;
-        $wp->addAction('save_post_' . Types\Coupon::NAME, array($this, 'savePost'), 10);
+        $wp->addAction('save_post_' . Types\Coupon::NAME, [$this, 'savePost'], 10);
     }
 
     /**
@@ -79,24 +82,7 @@ class CouponService implements CouponServiceInterface
 
         if (!$object->getId()) {
             //if object does not exist insert new one
-            $wpdb = $this->wp->getWPDB();
-            $date = $this->wp->getHelpers()->currentTime('mysql');
-            $dateGmt = $this->wp->getHelpers()->currentTime('mysql', true);
-
-            $wpdb->insert($wpdb->posts, array(
-                'post_author' => 0, //TODO #316 ticket update posts
-                'post_date' => $date,
-                'post_date_gmt' => $dateGmt,
-                'post_modified' => $date,
-                'post_modified_gmt' => $dateGmt,
-                'post_type' => Types::COUPON,
-                'post_title' => $object->getTitle(),
-                'post_name' => sanitize_title($object->getTitle()),
-                'ping_status' => 'closed',
-                'comment_status' => 'closed',
-            ));
-
-            $id = $wpdb->insert_id;
+            $id = $this->insertPost($this->wp, $object, Types::COUPON);
             if (!is_int($id) || $id === 0) {
                 throw new Exception(__('Unable to save coupon. Please try again.', 'jigoshop'));
             }
@@ -122,6 +108,16 @@ class CouponService implements CouponServiceInterface
     }
 
     /**
+     * coupon method updating post
+     * @param Coupon $coupon
+     */
+    public function updateAndSavePost(Entity $coupon)
+    {
+        $this->updatePost($this->wp, $coupon, Types::COUPON);
+        $this->save($coupon);
+    }
+
+    /**
      * @param $coupon Entity
      *
      * @return string Type name.
@@ -142,12 +138,12 @@ class CouponService implements CouponServiceInterface
     public function getTypes()
     {
         if ($this->types === null) {
-            $this->types = $this->wp->applyFilters('jigoshop\service\coupon\types', array(
+            $this->types = $this->wp->applyFilters('jigoshop\service\coupon\types', [
                 Entity::FIXED_CART => __('Cart Discount', 'jigoshop'),
                 Entity::PERCENT_CART => __('Cart % Discount', 'jigoshop'),
                 Entity::FIXED_PRODUCT => __('Product Discount', 'jigoshop'),
                 Entity::PERCENT_PRODUCT => __('Product % Discount', 'jigoshop')
-            ));
+            ]);
         }
 
         return $this->types;
@@ -160,7 +156,7 @@ class CouponService implements CouponServiceInterface
      */
     public function getByCodes(array $codes)
     {
-        $coupons = array();
+        $coupons = [];
         foreach ($codes as $code) {
             $coupons[] = $this->findByCode($code);
         }
@@ -193,10 +189,10 @@ class CouponService implements CouponServiceInterface
      */
     public function findByCode($code)
     {
-        $query = new \WP_Query(array(
+        $query = new \WP_Query([
             'post_type' => Types::COUPON,
             'name' => $code,
-        ));
+        ]);
 
         $results = $this->findByQuery($query);
 
@@ -228,7 +224,7 @@ class CouponService implements CouponServiceInterface
     public function findByQuery($query)
     {
         $results = $query->get_posts();
-        $coupons = array();
+        $coupons = [];
 
         // TODO: Maybe it is good to optimize this to fetch all found coupons at once?
         foreach ($results as $coupon) {

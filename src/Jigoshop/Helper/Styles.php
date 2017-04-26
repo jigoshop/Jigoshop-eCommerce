@@ -29,9 +29,9 @@ class Styles
 	 *
 	 * @since 2.0
 	 */
-	public static function register($handle, $src, array $dependencies = array(), array $options = array())
+	public static function register($handle, $src, array $dependencies = [], array $options = [])
 	{
-		$page = isset($options['page']) ? (array)$options['page'] : array('all');
+		$page = isset($options['page']) ? (array)$options['page'] : ['all'];
 
 		if (Pages::isOneOf($page)) {
 			$handle = apply_filters('jigoshop\style\register', $handle, $src, $dependencies, $options);
@@ -60,9 +60,9 @@ class Styles
 	 *
 	 * @since 2.0
 	 */
-	public static function add($handle, $src = false, array $dependencies = array(), array $options = array())
+	public static function add($handle, $src = false, array $dependencies = [], array $options = [])
 	{
-		$page = isset($options['page']) ? (array)$options['page'] : array('all');
+		$page = isset($options['page']) ? (array)$options['page'] : ['all'];
 
 		if (Pages::isOneOf($page)) {
 			$handle = apply_filters('jigoshop\style\add', $handle, $src, $dependencies, $options);
@@ -87,7 +87,7 @@ class Styles
 	 */
 	public static function remove($handle, $options)
 	{
-		$page = isset($options['page']) ? (array)$options['page'] : array('all');
+		$page = isset($options['page']) ? (array)$options['page'] : ['all'];
 
 		if (Pages::isOneOf($page)) {
 			$handle = apply_filters('jigoshop\style\remove', $handle, $options);

@@ -62,7 +62,7 @@ class Plugin
     {
         $file = $this->dir.'/plugin.json';
         if(file_exists($file)) {
-            $defaults = array(
+            $defaults = [
                 'id' => '',
                 'name' => '',
                 'description' => '',
@@ -71,7 +71,7 @@ class Plugin
                 'author' => 'Jigoshop ltd',
                 'authorUrl' => 'https://www.jigoshop.com/',
                 'templateDir' => ''
-            );
+            ];
             $data = json_decode(file_get_contents($file), true);
 
             return array_merge($defaults, $data);

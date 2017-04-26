@@ -28,12 +28,12 @@ class CompilerPass implements CompilerPassInterface
 
 		$postTypes = $container->tags->get('jigoshop.type.post');
 		foreach ($postTypes as $postType) {
-			$container->triggers->add('jigoshop.types', 'jigoshop.types', 'addPostType', array($postType));
+			$container->triggers->add('jigoshop.types', 'jigoshop.types', 'addPostType', [$postType]);
 		}
 
 		$taxonomyTypes = $container->tags->get('jigoshop.type.taxonomy');
 		foreach ($taxonomyTypes as $taxonomyType) {
-			$container->triggers->add('jigoshop.types', 'jigoshop.types', 'addTaxonomy', array($taxonomyType));
+			$container->triggers->add('jigoshop.types', 'jigoshop.types', 'addTaxonomy', [$taxonomyType]);
 		}
 	}
 }

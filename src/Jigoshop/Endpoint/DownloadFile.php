@@ -61,18 +61,18 @@ class DownloadFile implements Processable
                 if ($order->getKey() !== $key) {
                     throw new Exception(__('Invalid security key. Unable to download file.', 'jigoshop'));
                 }
-                if (!in_array($order->getStatus(), array(Order\Status::COMPLETED, Order\Status::PROCESSING))) {
+                if (!in_array($order->getStatus(), [Order\Status::COMPLETED, Order\Status::PROCESSING])) {
                     throw new Exception(__('Invalid order.', 'jigoshop'));
                 }
                 $item = $order->getItem($itemKey);
                 if ($item === null) {
                     throw new Exception(__('Product not found.', 'jigoshop'));
                 }
-                if ($item->getType() !== Downloadable::TYPE) {
+                if ($item->getMeta('file') === null && $item->getMeta('downloads') === null) {
                     throw new Exception(__('Invalid file to download.', 'jigoshop'));
                 }
                 $downloads = $item->getMeta('downloads')->getValue();
-                if (!empty($downloads) && $downloads == 0) {
+                if ($downloads === 0) {
                     throw new Exception(__('Sorry, you have reached your download limit for this file.', 'jigoshop'));
                 }
                 if ($this->options->get('shopping.login_for_downloads')) {
@@ -86,7 +86,7 @@ class DownloadFile implements Processable
                 if (!$file) {
                     throw new Exception(__('File not found.', 'jigoshop'));
                 }
-                if (!empty($downloads)) {
+                if ($downloads !== '') {
                     $item->getMeta('downloads')->setValue($downloads - 1);
                     $this->orderService->saveItemMeta($item, $item->getMeta('downloads'));
                 }
@@ -147,7 +147,7 @@ class DownloadFile implements Processable
                         $type = 'application/force-download';
                 }
                 $this->wp->doAction('jigoshop\endpoint\downloadable\before_download', $file, $order);
-                @session_write_close();
+                //@session_write_close();
                 @set_time_limit(0);
                 @ob_end_clean();
                 // required for IE, otherwise Content-Disposition may be ignored

@@ -30,7 +30,7 @@ class Permission
     public static function getPermisions()
     {
         if(self::$permissions == null) {
-            self::$permissions = apply_filters('jigoshop\api\permission\get_permissions', array(
+            self::$permissions = apply_filters('jigoshop\api\permission\get_permissions', [
                 self::READ_PRODUCTS => __('Read products', 'jigoshop'),
                 self::READ_CART => __('Read cart', 'jigoshop'),
                 self::READ_ORDERS => __('Read orders', 'jigoshop'),
@@ -44,7 +44,7 @@ class Permission
                 self::MANAGE_COUPONS => __('Manage coupons', 'jigoshop'),
                 self::MANAGE_CUSTOMERS => __('Manage customers', 'jigoshop'),
                 self::MANAGE_EMAILS => __('Manage emails', 'jigoshop'),
-            ));
+            ]);
         }
 
         return self::$permissions;

@@ -16,7 +16,7 @@ use Jigoshop\Helper\Forms;
 //	'options'
 //));
 ?>
-<select name="<?php echo Types::PRODUCT_CATEGORY; ?>" id="dropdown_<?php echo Types::PRODUCT_CATEGORY; ?>">
-	<option value="" <?php echo Forms::selected($current, ''); ?>><?php _e('View all categories', 'jigoshop'); ?></option>
-	<?php echo $walker->walk($terms, 0, $query); ?>
+<select name="<?= Types::PRODUCT_CATEGORY; ?>" id="dropdown_<?= Types::PRODUCT_CATEGORY; ?>">
+	<option value="" <?= Forms::selected($current, ''); ?>><?php _e('View all categories', 'jigoshop'); ?></option>
+	<?= $walker->walk($terms, 0, $query); ?>
 </select>

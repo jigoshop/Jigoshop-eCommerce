@@ -26,10 +26,10 @@ class CustomRange implements WidgetInterface
 
 	public function getArgs()
 	{
-		$args = array(
+		$args = [
 			'start_date' => isset($_GET['start_date']) ? $_GET['start_date'] : '',
 			'end_date' => isset($_GET['end_date']) ? $_GET['end_date'] : '',
-		);
+        ];
 
 		return $args;
 	}
@@ -43,8 +43,8 @@ class CustomRange implements WidgetInterface
 
 	public function display()
 	{
-		Render::output('admin/reports/widget/custom_range', array(
+		Render::output('admin/reports/widget/custom_range', [
 			'args' => $this->getArgs()
-		));
+        ]);
 	}
 }

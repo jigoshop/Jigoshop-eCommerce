@@ -20,14 +20,14 @@ class GetStates implements Processable
         if (!isset($_POST['country'])) {
             throw new Exception('Wrong Form');
         }
-        $states = array();
+        $states = [];
         if(Country::hasStates($_POST['country'])) {
             $states = Country::getStates($_POST['country']);
         }
-        $response = array(
+        $response = [
             'success' => true,
             'states' => $states,
-        );
+        ];
 
         return $response;
     }

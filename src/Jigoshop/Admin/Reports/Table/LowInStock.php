@@ -15,8 +15,8 @@ class LowInStock implements TableInterface
 	private $totalItems;
 	private $activePageNumber;
 	private $totalPages;
-	private $items = array();
-	private $columns = array();
+	private $items = [];
+	private $columns = [];
 
 	public function __construct(Wordpress $wp, Options $options)
 	{
@@ -39,24 +39,24 @@ class LowInStock implements TableInterface
 		if (!empty($this->columns)) {
 			return $this->columns;
 		}
-		$this->columns = array(
-			'product' => array(
+		$this->columns = [
+			'product' => [
 				'name' => __('Product', 'jigoshop'),
 				'size' => 4
-			),
-			'parent' => array(
+            ],
+			'parent' => [
 				'name' => __('Parent', 'jigoshop'),
 				'size' => 4
-			),
-			'units_in_stock' => array(
+            ],
+			'units_in_stock' => [
 				'name' => __('Units in stock', 'jigoshop'),
 				'size' => 2
-			),
-			'user_actions' => array(
+            ],
+			'user_actions' => [
 				'name' => __('Actions', 'jigoshop'),
 				'size' => 2
-			)
-		);
+            ]
+        ];
 
 		return $this->wp->applyFilters('jigoshop\admin\reports\table\low_in_stock\columns', $this->columns);
 	}
@@ -70,7 +70,7 @@ class LowInStock implements TableInterface
 	{
 		$products = $this->getProducts();
 		foreach ($products as $product) {
-			$item = array();
+			$item = [];
 			foreach ($columns as $columnKey => $columnName) {
 				$item[$columnKey] = $this->getRow($product, $columnKey);
 			}
@@ -87,7 +87,7 @@ class LowInStock implements TableInterface
 
 	public function display()
 	{
-		Render::output('admin/reports/table', array(
+		Render::output('admin/reports/table', [
 			'columns' => $this->getColumns(),
 			'items' => $this->getItems($this->getColumns()),
 			'no_items' => $this->noItems(),
@@ -96,7 +96,7 @@ class LowInStock implements TableInterface
 			'active_page' => $this->activePageNumber,
 			'search_title' => __('Search Products'),
 			'search' => $this->getSearch(),
-		));
+        ]);
 	}
 
 	private function getProducts()
@@ -138,21 +138,21 @@ class LowInStock implements TableInterface
 			case 'units_in_stock' :
 				return $item->stock;
 			case 'user_actions' :
-				$actions = array();
+				$actions = [];
 				$action_id = $item->parent != 0 ? $item->parent : $item->id;
 
-				$actions['edit'] = array(
+				$actions['edit'] = [
 					'url' => admin_url('post.php?post='.$action_id.'&action=edit'),
 					'name' => __('Edit', 'jigoshop'),
 					'action' => "edit"
-				);
+                ];
 
 				if (!$this->isProductHidden($action_id)) {
-					$actions['view'] = array(
+					$actions['view'] = [
 						'url' => get_permalink($action_id),
 						'name' => __('View', 'jigoshop'),
 						'action' => "view"
-					);
+                    ];
 				}
 				$actions = $this->wp->applyFilters('jigoshop\admin\reports\table\low_in_stock\user_actions', $actions, $item);
 

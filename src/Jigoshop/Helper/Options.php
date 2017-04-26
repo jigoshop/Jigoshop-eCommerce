@@ -40,13 +40,13 @@ class Options
     public static function getOptions($id)
     {
         if(!isset(self::$loadedOptions[$id])) {
-            $defaults = array();
+            $defaults = [];
             if (isset(self::$defaults[$id])) {
                 $defaults = self::$defaults[$id];
             }
 
             if(self::$options) {
-                self::$loadedOptions[$id] = array_merge($defaults, self::$options->get($id, array()));
+                self::$loadedOptions[$id] = array_merge($defaults, self::$options->get($id, []));
             } else {
                 self::$loadedOptions[$id] = $defaults;
             }
@@ -61,7 +61,7 @@ class Options
     public static function clear($id)
     {
         if(isset(self::$loadedOptions[$id])) {
-            self::$loadedOptions[$id] = array();
+            self::$loadedOptions[$id] = [];
         }
     }
 }

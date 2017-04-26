@@ -19,7 +19,7 @@ class ValidationException extends Exception
 	 * @param array  $fields  List of invalid fields with their messages.
 	 * @param int    $code    Code to return.
 	 */
-	public function __construct($message = '', array $fields = array(), $code = 0)
+	public function __construct($message = '', array $fields = [], $code = 0)
 	{
 		parent::__construct($message, $code);
 		$this->fields = $fields;
@@ -34,7 +34,7 @@ class ValidationException extends Exception
 	public function addFieldError($field, $error)
 	{
 		if (!isset($this->fields[$field])) {
-			$this->fields[$field] = array();
+			$this->fields[$field] = [];
 		}
 
 		$this->fields[$field][] = $error;

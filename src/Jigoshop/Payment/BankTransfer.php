@@ -55,75 +55,75 @@ class BankTransfer implements Method
 	 */
 	public function getOptions()
 	{
-		return array(
-			array(
+		return [
+			[
 				'name'    => sprintf('[%s][enabled]', self::ID),
 				'title'   => __('Is enabled?', 'jigoshop'),
 				'type'    => 'checkbox',
 				'checked' => $this->options['enabled'],
-				'classes' => array('switch-medium'),
-			),
-			array(
+				'classes' => ['switch-medium'],
+            ],
+			[
 				'name'  => sprintf('[%s][title]', self::ID),
 				'title' => __('Title', 'jigoshop'),
 				'type'  => 'text',
 				'value' => $this->options['title'],
-			),
-			array(
+            ],
+			[
 				'name'  => sprintf('[%s][description]', self::ID),
 				'title' => __('Description', 'jigoshop'),
 				'tip'   => sprintf(__('Allowed HTML tags are: %s', 'jigoshop'), '<p>, <a>, <strong>, <em>, <b>, <i>'),
 				'type'  => 'text',
 				'value' => $this->options['description'],
-			),
-			array(
+            ],
+			[
 				'name'  => sprintf('[%s][bank_name]', self::ID),
 				'title' => __('Bank Name', 'jigoshop'),
 				'type'  => 'text',
 				'value' => $this->options['bank_name'],
-			),
-			array(
+            ],
+			[
 				'name'  => sprintf('[%s][account_number]', self::ID),
 				'title' => __('Account Number', 'jigoshop'),
 				'type'  => 'text',
 				'value' => $this->options['account_number'],
-			),
-			array(
+            ],
+			[
 				'name'  => sprintf('[%s][account_holder]', self::ID),
 				'title' => __('Account Holder', 'jigoshop'),
 				'tip'   => __('The account name your account is registered to.', 'jigoshop'),
 				'type'  => 'text',
 				'value' => $this->options['account_holder'],
-			),
-            array(
+            ],
+            [
                 'name'  => sprintf('[%s][sort_code]', self::ID),
                 'title' => __('Sort Code', 'jigoshop'),
                 'tip'   => __('Your branch Sort Code.','jigoshop'),
                 'type'  => 'text',
                 'value' => $this->options['sort_code'],
-            ),
-            array(
+            ],
+            [
                 'name'  => sprintf('[%s][iban]', self::ID),
                 'title' => __('IBAN', 'jigoshop'),
                 'tip'   => __('Your IBAN number. (for International transfers)','jigoshop'),
                 'type'  => 'text',
                 'value' => $this->options['iban'],
-            ),
-            array(
+            ],
+            [
                 'name'  => sprintf('[%s][bic]', self::ID),
                 'title' => __('BIC Code', 'jigoshop'),
                 'tip'   => __('Your Branch Identification Code. (BIC Number)','jigoshop'),
                 'type'  => 'text',
                 'value' => $this->options['bic'],
-            ),
-			array(
+            ],
+			[
 				'name'  => sprintf('[%s][additional_info]', self::ID),
 				'title' => __('Additional Info', 'jigoshop'),
 				'tip'   => sprintf(__('Additional information you want to display to your customer. Allowed HTML tags are: %s', 'jigoshop'), '<p>, <a>, <strong>, <em>, <b>, <i>'),
 				'type'  => 'textarea',
 				'value' => $this->options['additional_info'],
-			),
-		);
+            ],
+        ];
 	}
 
 	/**

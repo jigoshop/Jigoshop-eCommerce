@@ -29,7 +29,7 @@ class Settings implements PageInterface
 	private $options;
 	/** @var Messages */
 	private $messages;
-	private $tabs = array();
+	private $tabs = [];
 	private $currentTab;
 
 	public function __construct(Wordpress $wp, Options $options, Messages $messages)
@@ -39,33 +39,33 @@ class Settings implements PageInterface
 		$this->messages = $messages;
 
 
-		$wp->addAction('current_screen', array($this, 'register'));
+		$wp->addAction('current_screen', [$this, 'register']);
 		$wp->addAction('admin_enqueue_scripts', function () use ($wp){
 			// Weed out all admin pages except the Jigoshop Settings page hits
-			if (!in_array($wp->getPageNow(), array('admin.php', 'options.php'))) {
+			if (!in_array($wp->getPageNow(), ['admin.php', 'options.php'])) {
 				return;
 			}
 
 			$screen = $wp->getCurrentScreen();
-			if (!in_array($screen->base, array('jigoshop_page_'.Settings::NAME, 'options'))) {
+			if (!in_array($screen->base, ['jigoshop_page_'.Settings::NAME, 'options'])) {
 				return;
 			}
 
-			Styles::add('jigoshop.admin.settings', \JigoshopInit::getUrl().'/assets/css/admin/settings.css', array('jigoshop.admin'));
-			Styles::add('jigoshop.vendors.select2', \JigoshopInit::getUrl().'/assets/css/vendors/select2.css', array('jigoshop.admin'));
-			Styles::add('jigoshop.vendors.datepicker', \JigoshopInit::getUrl().'/assets/css/vendors/datepicker.css', array('jigoshop.admin'));
-			Styles::add('jigoshop.vendors.bs_switch', \JigoshopInit::getUrl().'/assets/css/vendors/bs_switch.css', array('jigoshop.admin'));
+			Styles::add('jigoshop.admin.settings', \JigoshopInit::getUrl().'/assets/css/admin/settings.css', ['jigoshop.admin']);
+			Styles::add('jigoshop.vendors.select2', \JigoshopInit::getUrl().'/assets/css/vendors/select2.css', ['jigoshop.admin']);
+			Styles::add('jigoshop.vendors.datepicker', \JigoshopInit::getUrl().'/assets/css/vendors/datepicker.css', ['jigoshop.admin']);
+			Styles::add('jigoshop.vendors.bs_switch', \JigoshopInit::getUrl().'/assets/css/vendors/bs_switch.css', ['jigoshop.admin']);
 
-			Scripts::add('jigoshop.admin.settings', \JigoshopInit::getUrl() . '/assets/js/admin/settings.js', array('jigoshop.admin'), array('page' => 'jigoshop_page_jigoshop_settings', 'in_footer' => true));
-			Scripts::add('jigoshop.vendors.select2', \JigoshopInit::getUrl() . '/assets/js/vendors/select2.js', array(
+			Scripts::add('jigoshop.admin.settings', \JigoshopInit::getUrl() . '/assets/js/admin/settings.js', ['jigoshop.admin'], ['page' => 'jigoshop_page_jigoshop_settings', 'in_footer' => true]);
+			Scripts::add('jigoshop.vendors.select2', \JigoshopInit::getUrl() . '/assets/js/vendors/select2.js', [
 				'jigoshop.admin.settings',
-			), array('page' => 'jigoshop_page_jigoshop_settings', 'in_footer' => true));
-			Scripts::add('jigoshop.vendors.bs_tab_trans_tooltip_collapse', \JigoshopInit::getUrl() . '/assets/js/vendors/bs_tab_trans_tooltip_collapse.js', array(
+            ], ['page' => 'jigoshop_page_jigoshop_settings', 'in_footer' => true]);
+			Scripts::add('jigoshop.vendors.bs_tab_trans_tooltip_collapse', \JigoshopInit::getUrl() . '/assets/js/vendors/bs_tab_trans_tooltip_collapse.js', [
 				'jigoshop.admin.settings',
-			), array('page' => 'jigoshop_page_jigoshop_settings', 'in_footer' => true));
-			Scripts::add('jigoshop.vendors.bs_switch', \JigoshopInit::getUrl() . '/assets/js/vendors/bs_switch.js', array(
+            ], ['page' => 'jigoshop_page_jigoshop_settings', 'in_footer' => true]);
+			Scripts::add('jigoshop.vendors.bs_switch', \JigoshopInit::getUrl() . '/assets/js/vendors/bs_switch.js', [
 				'jigoshop.admin.settings',
-			), array('page' => 'jigoshop_page_jigoshop_settings', 'in_footer' => true));
+            ], ['page' => 'jigoshop_page_jigoshop_settings', 'in_footer' => true]);
 		});
 	}
 
@@ -115,16 +115,16 @@ class Settings implements PageInterface
 	public function register()
 	{
 		// Weed out all admin pages except the Jigoshop Settings page hits
-		if (!in_array($this->wp->getPageNow(), array('admin.php', 'options.php'))) {
+		if (!in_array($this->wp->getPageNow(), ['admin.php', 'options.php'])) {
 			return;
 		}
 
 		$screen = $this->wp->getCurrentScreen();
-		if (!in_array($screen->base, array('jigoshop_page_'.self::NAME, 'options'))) {
+		if (!in_array($screen->base, ['jigoshop_page_'.self::NAME, 'options'])) {
 			return;
 		}
 
-		$this->wp->registerSetting(self::NAME, Options::NAME, array($this, 'validate'));
+		$this->wp->registerSetting(self::NAME, Options::NAME, [$this, 'validate']);
 
 		$tab = $this->getCurrentTab();
 		$tab = $this->tabs[$tab];
@@ -140,7 +140,7 @@ class Settings implements PageInterface
 
 			foreach ($section['fields'] as $field) {
 				$field = $this->validateField($field);
-				$this->wp->addSettingsField($field['id'], $field['title'], array($this, 'displayField'), self::NAME, $section['id'], $field);
+				$this->wp->addSettingsField($field['id'], $field['title'], [$this, 'displayField'], self::NAME, $section['id'], $field);
 			}
 		}
 	}
@@ -169,10 +169,10 @@ class Settings implements PageInterface
 	 */
 	public function displaySection(TabInterface $tab, array $section)
 	{
-		Render::output('admin/settings/section', array(
+		Render::output('admin/settings/section', [
 			'tab' => $tab,
 			'section' => $section,
-		));
+        ]);
 	}
 
 	protected function validateField(array $field)
@@ -193,11 +193,11 @@ class Settings implements PageInterface
 	 */
 	public function display()
 	{
-		Render::output('admin/settings', array(
+		Render::output('admin/settings', [
 			'tabs' => $this->tabs,
 			'current_tab' => $this->getCurrentTab(),
 			'messages' => $this->messages,
-		));
+        ]);
 	}
 
 	/**

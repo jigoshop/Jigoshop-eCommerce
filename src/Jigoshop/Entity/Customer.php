@@ -123,7 +123,7 @@ class Customer implements EntityInterface, \JsonSerializable
 	 */
 	public function selectTaxAddress($address)
 	{
-		if (!in_array($address, array('billing', 'shipping'))) {
+		if (!in_array($address, ['billing', 'shipping'])) {
 			if (WP_DEBUG) {
 				throw new Exception(sprintf(__('Unknown address type: "%s".', 'jigoshop'), $address));
 			}
@@ -179,14 +179,14 @@ class Customer implements EntityInterface, \JsonSerializable
 	 */
 	public function getStateToSave()
 	{
-		return array(
+		return [
 			'id' => $this->id,
 			'login' => $this->login,
 			'email' => $this->email,
 			'name' => $this->name,
 			'billing' => $this->billingAddress,
 			'shipping' => $this->shippingAddress,
-		);
+        ];
 	}
 
 	/**
@@ -222,7 +222,7 @@ class Customer implements EntityInterface, \JsonSerializable
      */
     public function jsonSerialize()
     {
-        return array(
+        return [
             'id' => $this->id,
             'login' => $this->login,
             'email' => $this->email,
@@ -230,6 +230,6 @@ class Customer implements EntityInterface, \JsonSerializable
             'billing' => $this->billingAddress,
             'shipping' => $this->shippingAddress,
             'taxAddres' => $this->taxAddress
-        );
+        ];
     }
 }

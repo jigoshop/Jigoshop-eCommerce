@@ -27,14 +27,14 @@ class TopSellers implements WidgetInterface
 
 	public function getArgs()
 	{
-		$args = array();
+		$args = [];
 		foreach($this->topSelers as $product){
-			$args[] = array(
+			$args[] = [
 				'count' => $product->count,
 				'id' => $product->id,
 				'url' => esc_url(add_query_arg('product_ids', $product->id, add_query_arg('last_used', self::SLUG))),
 				'title' => $product->title
-			);
+            ];
 		}
 
 		return $args;
@@ -47,6 +47,6 @@ class TopSellers implements WidgetInterface
 	
 	public function display()
 	{
-		Render::output('admin/reports/widget/top_sellers', array('args' => $this->getArgs()));
+		Render::output('admin/reports/widget/top_sellers', ['args' => $this->getArgs()]);
 	}
 }

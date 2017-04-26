@@ -30,7 +30,7 @@ class ToolsTab implements TabInterface
 
 		$wp->addAction('current_screen', function () use ($wp){
 			// Weed out all admin pages except the Jigoshop Settings page hits
-			if (!in_array($wp->getPageNow(), array('admin.php'))) {
+			if (!in_array($wp->getPageNow(), ['admin.php'])) {
 				return;
 			}
 
@@ -39,7 +39,7 @@ class ToolsTab implements TabInterface
 			}
 
 			$screen = $wp->getCurrentScreen();
-			if (!in_array($screen->base, array('jigoshop_page_'.SystemInfo::NAME))) {
+			if (!in_array($screen->base, ['jigoshop_page_'.SystemInfo::NAME])) {
 				return;
 			}
 
@@ -70,26 +70,26 @@ class ToolsTab implements TabInterface
 	 */
 	public function getSections()
 	{
-		return array(
-			array(
+		return [
+			[
 				'title' => __('Available Tools', 'jigoshop'),
 				'id' => 'available-tools',
-				'fields' => array(
-					array(
+				'fields' => [
+					[
 						'id' => 'clear-logs',
 						'name' => 'clear-logs',
 						'title' => __('Clear Logs', 'jigoshop'),
 						'description' => __('Clears jigoshop.log and jigoshop.debug.log', 'jigoshop'),
 						'tip' => '',
-						'classes' => array(),
+						'classes' => [],
 						'type' => 'user_defined',
 						'display' => function($field){
 							return Render::output('admin/system_info/tool', $field);
 						}
-					),
-				)
-			)
-		);
+                    ],
+                ]
+            ]
+        ];
 	}
 
 	/**
@@ -122,7 +122,7 @@ class ToolsTab implements TabInterface
 	 */
 	private  function clearLogs()
 	{
-		$logFiles = $this->wp->applyFilters('jigoshop/admin/system_info/tools/log_files', array('jigoshop', 'jigoshop.debug'));
+		$logFiles = $this->wp->applyFilters('jigoshop/admin/system_info/tools/log_files', ['jigoshop', 'jigoshop.debug']);
 		foreach($logFiles as $logFile){
 			if (@fopen(JIGOSHOP_LOG_DIR.'/'.$logFile.'.log', 'a')) {
 				file_put_contents(JIGOSHOP_LOG_DIR.'/'.$logFile.'.log', '');

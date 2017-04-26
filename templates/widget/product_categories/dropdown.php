@@ -22,9 +22,9 @@ if ($title) {
 	echo $before_title.$title.$after_title;
 }
 ?>
-<select name="<?php echo Types::PRODUCT_CATEGORY; ?>" id="dropdown_product_category">
+<select name="<?= Types::PRODUCT_CATEGORY; ?>" id="dropdown_product_category">
 	<option value="" <?php Forms::selected($value, ''); ?>><?php _e('View all categories', 'jigoshop'); ?></option>
-	<?php echo $walker->walk($terms, 0, $query); ?>
+	<?= $walker->walk($terms, 0, $query); ?>
 </select>
 <script type='text/javascript'>
 	jQuery(function($){
@@ -33,9 +33,9 @@ if ($title) {
 			if (url !== undefined){
 				window.location.href = url;
 			} else {
-				window.location.href = "<?php echo $shopUrl; ?>";
+				window.location.href = "<?= $shopUrl; ?>";
 			}
 		});
 	});
 </script>
-<?php echo $after_widget;
+<?= $after_widget;

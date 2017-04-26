@@ -15,6 +15,7 @@ namespace phpFastCache\Core\Pool;
 
 use phpFastCache\Core\Item\ExtendedCacheItemInterface;
 use phpFastCache\Exceptions\phpFastCacheInvalidArgumentException;
+use phpFastCache\Exceptions\phpFastCacheLogicException;
 
 
 /**
@@ -62,6 +63,19 @@ trait DriverBaseTrait
     public function getConfig()
     {
         return $this->config;
+    }
+
+
+    /**
+     * @return mixed
+     */
+    public function getConfigOption($optionName)
+    {
+        if(isset($this->config[$optionName])){
+            return $this->config[$optionName];
+        }else{
+            return null;
+        }
     }
 
     /**
@@ -204,7 +218,7 @@ trait DriverBaseTrait
     /**
      * @param \phpFastCache\Core\Item\ExtendedCacheItemInterface $item
      * @return bool
-     * @throws \LogicException
+     * @throws phpFastCacheLogicException
      */
     public function driverWriteTags(ExtendedCacheItemInterface $item)
     {
@@ -214,7 +228,7 @@ trait DriverBaseTrait
          * to an infinite recursive calls
          */
         if(strpos($item->getKey(), self::DRIVER_TAGS_KEY_PREFIX ) === 0){
-            throw new \LogicException('Trying to set tag(s) to an Tag item index: ' . $item->getKey());
+            throw new phpFastCacheLogicException('Trying to set tag(s) to an Tag item index: ' . $item->getKey());
         }
 
         /**

@@ -13,7 +13,7 @@ use Jigoshop\Container\Configuration\ConfigurationInterface;
 class Configurations
 {
     /** @var  Configuration[] */
-    private $configurations = array();
+    private $configurations = [];
 
     /**
      * @param Container\Configurations\ConfigurationInterface $configuration

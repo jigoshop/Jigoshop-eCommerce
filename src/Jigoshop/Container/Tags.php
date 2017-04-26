@@ -10,7 +10,7 @@ namespace Jigoshop\Container;
 class Tags
 {
 	/** @var array */
-	private $tags = array();
+	private $tags = [];
 
 	public function __construct()
 	{

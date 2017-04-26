@@ -8,7 +8,7 @@ use Jigoshop\Entity\Order\Status;
 class OrderStatusFilter implements WidgetInterface
 {
 	const SLUG = 'order_statuses';
-	private $orderStatus = array();
+	private $orderStatus = [];
 
 	public function __construct($orderStatus)
 	{
@@ -27,15 +27,15 @@ class OrderStatusFilter implements WidgetInterface
 
 	public function getArgs()
 	{
-		return array(
+		return [
 			'id' => 'order_status',
 			'name' => 'order_status',
 			'value' => $this->orderStatus,
 			'multiple' => true,
-			'classes' => array(),
+			'classes' => [],
 			'options' => Status::getStatuses(),
 			'size' => 14,
-		);
+        ];
 	}
 
 	public function isVisible()

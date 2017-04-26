@@ -3,6 +3,7 @@
 namespace Jigoshop\Entity;
 
 use Jigoshop\Entity\Customer\Guest;
+use Jigoshop\Entity\Order\Discount;
 use Jigoshop\Entity\Order\Item;
 use Jigoshop\Entity\Order\Status;
 use Jigoshop\Exception;
@@ -33,7 +34,7 @@ class Order implements OrderInterface, \JsonSerializable
 	/** @var Customer */
 	private $customer;
 	/** @var Item[] */
-	private $items = array();
+	private $items = [];
 	/** @var Shipping\Method */
 	private $shippingMethod;
 	/** @var int */
@@ -44,18 +45,14 @@ class Order implements OrderInterface, \JsonSerializable
 	private $productSubtotal;
 	/** @var float */
 	private $subtotal = 0.0;
-	/** @var float */
-	private $total = 0.0;
-	/** @var float */
-	private $discount = 0.0;
+	/** @var Discount[] */
+	private $discounts = [];
 	/** @var array */
-	private $coupons = array();
+	private $tax = [];
 	/** @var array */
-	private $tax = array();
+	private $taxDefinitions = [];
 	/** @var array */
-	private $taxDefinitions = array();
-	/** @var array */
-	private $shippingTax = array();
+	private $shippingTax = [];
 	/** @var float */
 	private $totalTax;
 	/** @var float */
@@ -67,7 +64,7 @@ class Order implements OrderInterface, \JsonSerializable
 	/** @var string */
 	private $customerNote;
 	/** @var array */
-	private $updateMessages = array();
+	private $updateMessages = [];
     /** @var bool  */
     private $taxIncluded = false;
 
@@ -197,79 +194,74 @@ class Order implements OrderInterface, \JsonSerializable
 		$this->customer = $customer;
 	}
 
-	/**
-	 * @return float Value of discounts added to the order.
-	 */
-	public function getDiscount()
-	{
-		return $this->discount;
+
+    /**
+     * @param Discount $discount
+     */
+    public function addDiscount(Discount $discount)
+    {
+        $this->discounts[$discount->getCode()] = $discount;
 	}
 
-	/**
-	 * @param float $discount Total value of discounts for the order.
-	 */
-	public function setDiscount($discount)
-	{
-		$this->discount = $discount;
-	}
+//    /**
+//     * @param $key
+//     *
+//     * @return Discount|null
+//     */
+//	public function getDiscount($key)
+//    {
+//        if(isset($this->discounts[$key])) {
+//            return $this->discounts[$key];
+//        }
+//
+//        return null;
+//    }
 
-	/**
-	 * @param float $discount New discount for the order.
-	 */
-	public function addDiscount($discount)
-	{
-		$this->discount += $discount;
-		$this->total -= $discount;
-	}
+    /**
+     * @return Discount[]
+     */
+    public function getDiscounts()
+    {
+        return $this->discounts;
+    }
 
-	/**
-	 * @param float $discount Discount to remove from the order.
-	 */
-	public function removeDiscount($discount)
-	{
-		$this->discount -= $discount;
-		$this->total += $discount;
-	}
+    /**
+     * @param $key
+     *
+     * @return Discount|null
+     */
+    public function removeDiscount($key)
+    {
+        $discount = null;
+        if(isset($this->discounts[$key])) {
+            $discount = $this->discounts[$key];
+            unset($this->discounts[$key]);
+        }
 
-	/**
-	 * @return array List of used coupons codes.
-	 */
-	public function getCoupons()
-	{
-		return $this->coupons;
-	}
+        return $discount;
+    }
 
-	/**
-	 * @param array $coupons New list of used coupons codes.
-	 */
-	public function setCoupons($coupons)
-	{
-		$this->coupons = $coupons;
-	}
+    public function removeDiscounts()
+    {
+        $this->discounts = [];
+    }
 
-	/**
-	 * @param Coupon|string $coupon New coupon object or code.
-	 */
-	public function addCoupon($coupon)
-	{
-		if (is_object($coupon)) {
-			$coupon = $coupon->getCode();
-		}
-		if (array_search($coupon, $this->coupons) === false) {
-			$this->coupons[] = $coupon;
-		}
-	}
 
-	/**
-	 * @param string $coupon Code to remove.
-	 */
-	public function removeCoupon($coupon)
-	{
-		$key = array_search($coupon, $this->coupons);
-		if ($key !== false) {
-			unset($this->coupons[$key]);
-		}
-	}
+    /**
+     * @return float
+     */
+    public function getDiscount()
+    {
+        if(empty($this->discounts)) {
+            return 0.0;
+        }
+        //TODO: calculate it only once
+        return array_sum(array_map(function ($discount) {
+            /** @var Discount $discount */
+            return $discount->getAmount();
+        }, $this->discounts));
+    }
+
 
 	/**
 	 * @return array Tax definitions.
@@ -329,12 +321,9 @@ class Order implements OrderInterface, \JsonSerializable
 	public function removeItems()
 	{
 		$this->removeShippingMethod();
-		$this->items = array();
-		$this->coupons = array();
+		$this->items = [];
 		$this->productSubtotal = 0.0;
 		$this->subtotal = 0.0;
-		$this->total = 0.0;
-		$this->discount = 0.0;
 		$this->tax = array_map(function (){
 			return 0.0;
 		}, $this->tax);
@@ -348,10 +337,6 @@ class Order implements OrderInterface, \JsonSerializable
 	public function removeShippingMethod()
 	{
 		$this->subtotal -= $this->shippingPrice;
-		$this->total -= $this->shippingPrice + array_reduce($this->shippingTax, function ($value, $item){
-				return $value + $item;
-			}, 0.0);
-
 		$this->shippingMethod = null;
 		$this->shippingMethodRate = null;
 		$this->shippingPrice = 0.0;
@@ -413,7 +398,6 @@ class Order implements OrderInterface, \JsonSerializable
             $this->shippingPrice = $method->calculate($this);
             $this->subtotal += $this->shippingPrice;
             $this->shippingTax = apply_filters('jigoshop\order\shipping_tax', $this->shippingTax, $method, $this);
-            $this->total += apply_filters('jigoshop\order\shipping_price', $this->shippingPrice, $method, $this);
             $this->totalCombinedTax = null;
         }
 	}
@@ -480,11 +464,11 @@ class Order implements OrderInterface, \JsonSerializable
 		$this->status = $status;
 
 		if ($currentStatus != $status) {
-			$this->updateMessages[] = array(
+			$this->updateMessages[] = [
 				'message' => (!$message ? '' : $message . '<br />'),
 				'old_status' => $currentStatus,
 				'new_status' => $status,
-			);
+            ];
 		}
 	}
 
@@ -541,15 +525,8 @@ class Order implements OrderInterface, \JsonSerializable
 	 */
 	public function getTotal()
 	{
-		return $this->total;
-	}
-
-	/**
-	 * @param float $total New total value.
-	 */
-	public function setTotal($total)
-	{
-		$this->total = $total;
+        //TODO: calculate it only once
+		return $this->subtotal + $this->getTotalCombinedTax() - $this->getDiscount();
 	}
 
 	/**
@@ -685,7 +662,6 @@ class Order implements OrderInterface, \JsonSerializable
 			/** @var Item $item */
 			$item = $this->items[$key];
 			do_action('jigoshop\order\remove_item', $item, $this);
-			$this->total -= $item->getCost() + $item->getTax();
 			$this->subtotal -= $item->getCost();
 			$this->productSubtotal -= $item->getCost();
 			$this->totalTax = null;
@@ -707,7 +683,6 @@ class Order implements OrderInterface, \JsonSerializable
 		$this->items[$item->getKey()] = $item;
 		$this->productSubtotal += $item->getCost();
 		$this->subtotal += $item->getCost();
-		$this->total += $item->getCost() + $item->getTax();
 		$this->totalTax = null;
 		$this->totalCombinedTax = null;
 	}
@@ -727,7 +702,7 @@ class Order implements OrderInterface, \JsonSerializable
 			$payment = $this->paymentMethod->getId();
 		}
 
-		return array(
+		return [
 			'id' => $this->id,
 			'number' => $this->number,
 			'updated_at' => $this->updatedAt->getTimestamp(),
@@ -735,22 +710,22 @@ class Order implements OrderInterface, \JsonSerializable
 			'items' => $this->items,
 			'customer' => serialize($this->customer),
 			'customer_id' => $this->customer->getId(),
-			'shipping' => array(
+			'shipping' => [
 				'method' => $shipping,
 				'price' => $this->shippingPrice,
 				'rate' => $this->shippingMethodRate,
-			),
+            ],
 			'payment' => $payment,
 			'customer_note' => $this->customerNote,
-			'total' => $this->total,
 			'subtotal' => $this->subtotal,
-			'discount' => $this->discount,
-			'coupons' => $this->coupons,
+			'total' => $this->getTotal(),
+			'discount' => $this->getDiscount(),
+			'discounts' => $this->discounts,
 			'shipping_tax' => $this->shippingTax,
 			'status' => $this->status,
 			'update_messages' => $this->updateMessages,
             'tax_included' => $this->taxIncluded
-		);
+        ];
 	}
 
     /**
@@ -832,22 +807,14 @@ class Order implements OrderInterface, \JsonSerializable
 		if (isset($state['product_subtotal'])) {
 			$this->productSubtotal = (float)$state['product_subtotal'];
 		}
-		if (isset($state['discount'])) {
-			$this->discount = (float)$state['discount'];
-		}
-		if (isset($state['coupons'])) {
-			$this->coupons = maybe_unserialize($state['coupons']);
+		if (isset($state['discounts'])) {
+			foreach ($state['discounts'] as $discount) {
+			    $this->addDiscount($discount);
+            }
 		}
 		if (isset($state['tax_definitions'])) {
 			$this->taxDefinitions = $state['tax_definitions'];
 		}
-
-		$this->total = $this->subtotal + array_reduce($this->tax, function ($value, $item){
-				return $value + $item;
-			}, 0.0)
-			+ array_reduce($this->shippingTax, function ($value, $item){
-				return $value + $item;
-			}, 0.0) - $this->discount;
         if (isset($state['price_includes_tax'])) {
             $this->taxIncluded = (bool)$state['price_includes_tax'];
         }
@@ -898,12 +865,12 @@ class Order implements OrderInterface, \JsonSerializable
            ],
            'payment' => $payment,
            'customer_note' => $this->customerNote,
-           'total' => $this->total,
+           'total' => $this->getTotal(),
            'tax' => $this->tax,
            'shipping_tax' => $this->shippingTax,
            'subtotal' => $this->subtotal,
-           'discount' => $this->discount,
-           'coupons' => $this->coupons,
+           'discounts' => $this->discounts,
+           'discount' => $this->getDiscount(),
            'status' => $this->status,
            'update_messages' => $this->updateMessages,
        ];

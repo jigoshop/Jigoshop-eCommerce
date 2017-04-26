@@ -31,4 +31,14 @@ class Address
 	{
 		return static::$options->get('general.country');
 	}
+
+    /**
+     * Returns basic state, which is set in the store.
+     *
+     * @return string
+     */
+    public static function getDefaultState()
+    {
+        return static::$options->get('general.state');
+	}
 }

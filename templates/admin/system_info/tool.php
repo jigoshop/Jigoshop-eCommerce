@@ -11,18 +11,18 @@ use Jigoshop\Admin\SystemInfo;
 use Jigoshop\Admin\SystemInfo\ToolsTab;
 
 ?>
-<div class="form-group <?php echo $id; ?>_field <?php echo join(' ', $classes); ?>">
+<div class="form-group <?= $id; ?>_field <?= join(' ', $classes); ?>">
 	<div class="row">
-		<div class="col-sm-<?php echo $size; ?>">
+		<div class="col-sm-<?= $size; ?>">
 			<div class="col-xs-2 col-sm-1 text-right">
 				<?php if (!empty($tip)): ?>
-					<span data-toggle="tooltip" class="badge margin-top-bottom-9" data-placement="top" title="<?php echo $tip; ?>">?</span>
+					<span data-toggle="tooltip" class="badge margin-top-bottom-9" data-placement="top" title="<?= $tip; ?>">?</span>
 				<?php endif; ?>
 			</div>
-			<div class="col-xs-<?php echo $size - 2 ?> col-sm-<?php echo $size - 1 ?>">
-				<a href="?page=<?php echo SystemInfo::NAME; ?>&tab=<?php echo ToolsTab::SLUG; ?>&request=<?php echo $id; ?>" class="btn btn-primary"><?php echo $title ?></a>
+			<div class="col-xs-<?= $size - 2 ?> col-sm-<?= $size - 1 ?>">
+				<a href="?page=<?= SystemInfo::NAME; ?>&tab=<?= ToolsTab::SLUG; ?>&request=<?= $id; ?>" class="btn btn-primary"><?= $title ?></a>
 				<?php if(!empty($description)): ?>
-					<span class="help"><?php echo $description; ?></span>
+					<span class="help"><?= $description; ?></span>
 				<?php endif; ?>
 			</div>
 		</div>

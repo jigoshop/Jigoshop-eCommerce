@@ -4,8 +4,8 @@ Tags: ecommerce, wordpress ecommerce, store, shop, shopping, cart, checkout, wid
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=XTG9C24KAA7VA
 
 Requires at least: 4.0
-Tested up to: 4.7.3
-Stable tag: 2.0.10.1
+Tested up to: 4.7.4
+Stable tag: 2.1
 
 A feature-packed eCommerce plugin built upon WordPress core functionality ensuring excellent performance, customizability and control - robust Tax Settings, Stock Level Management, Free and Premium Extensions - you name it.
 
@@ -151,6 +151,40 @@ However, if you want priority, dedicated support from Jigoshop staff, we dp offe
 
 == Changelog ==
 
+= 2.1 - 2017.04.26 =
+* New: Admin notices.
+* New: My Downloads panel in my account.
+* New: Continents in Advanced flat rate shipping.
+* New: Dimensions and weight fields for product variations.
+* New: Replace product featured image with image from selected variation.
+* New: Discount entity.
+* New: Blueimp gallery for products.
+* New: Ability to add attachments to email.
+* New: RenderPay Interface
+* New: Allow to prioritize rates in advanced flat rate.
+* New: Variation bulk actions.
+* Fix: Product and order search.
+* Fix: Product filtering in admin panel.
+* Fix: Do not show migration if there is no reason to migrate.
+* Fix: Properly save and downloa all downloadable items.
+* Fix: Download link for variation.
+* Fix: Product category and tag queries.
+* Fix: Discount summary report.
+* Fix: Coupon usage count.
+* Fix: Fee in Advanced flat rate now can be set as float.
+* Fix: Wordpress links in dashboard.
+* Fix: Fix today report graphs, now it do not show graph to next hour.
+* Fix: Do not display shipping rates in admin panel when order does not require shipping.
+* Fix: Disable post title in order edit page.
+* Fix: Properly show downloadable fields after changing variation type.
+* Fix: Fix category thumbnail styles.
+* Fix: Properly show unpaid order list in my account.
+* Fix: Save product dynamically after product type change.
+* Fix: Do not allow to set variable product sale.
+* Fix: Only billing option.
+* Fix: Properly remove product fields from cart.
+* Fix: Shipping rate title in cart after ajax refresh.
+* Fix: Properly remove variation featured image.
 = 2.0.10.2 - 2017.03.22 =
 * Fix: Sanitized product title on product save in Wordpress panel.
 * Fix: Post excerpt was saved as product description.

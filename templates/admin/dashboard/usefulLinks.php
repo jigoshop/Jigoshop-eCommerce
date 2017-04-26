@@ -15,7 +15,7 @@
 	<div class="social">
 		<div>
 			<h4 class="first"><?php _e('Jigoshop Project', 'jigoshop') ?></h4>
-			<p><?php echo __('Our team is available to help you with implementation of additional requirements or to provide you with custom development. Please contact our sales team to obtain a quote', 'jigoshop'); ?>
+			<p><?= __('Our team is available to help you with implementation of additional requirements or to provide you with custom development. Please contact our sales team to obtain a quote', 'jigoshop'); ?>
 				: <span class="jigo-email"><a href="mailto:sales@jigoshop.com">sales@jigoshop.com</a></span></p>
 			<p><?php _e('Join our growing developer community today, contribute to the jigoshop project via GitHub.', 'jigoshop') ?>: <a href="https://github.com/jigoshop/jigoshop">Fork</a>
 			</p>

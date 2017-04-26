@@ -33,32 +33,32 @@ class LogsTab implements TabInterface
 	 */
 	public function getSections()
 	{
-		return array(
-			array(
+		return [
+			[
 				'title' => __('Available Logs', 'jigoshop'),
 				'id' => 'available-logs',
-				'fields' => array(
-					array(
+				'fields' => [
+					[
 						'id' => 'logs',
 						'name' => 'logs',
 						'title' => __('Logs', 'jigoshop'),
-						'classes' => array('plain-text'),
+						'classes' => ['plain-text'],
 						'description' => __('If logs are empty, please make shure that log directory is writable.', 'jigoshop'),
 						'type' => 'textarea',
 						'value' => $this->getLogs('jigoshop')
-					),
-					array(
+                    ],
+					[
 						'id' => 'debug-logs',
 						'name' => 'debug-logs',
 						'title' => __('Debug Logs', 'jigoshop'),
-						'classes' => array('plain-text'),
+						'classes' => ['plain-text'],
 						'description' => __('Debug logs requires WP_DEBUG set to true in wp-config.php.'),
 						'type' => 'textarea',
 						'value' => $this->getLogs('jigoshop.debug')
-					),
-				)
-			)
-		);
+                    ],
+                ]
+            ]
+        ];
 	}
 
 	/**

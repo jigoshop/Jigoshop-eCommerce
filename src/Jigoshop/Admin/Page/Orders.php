@@ -29,14 +29,14 @@ class Orders
 		$this->options = $options;
 		$this->orderService = $orderService;
 
-		$wp->addFilter('request', array($this, 'request'));
-		$wp->addFilter('the_title',array($this, 'replaceTitle'));
-		$wp->addFilter('post_row_actions', array($this, 'displayTitle'));
-		$wp->addFilter(sprintf('bulk_actions-edit-%s', Types::ORDER), array($this, 'bulkActions'));
-		$wp->addFilter(sprintf('views_edit-%s', Types::ORDER), array($this, 'statusFilters'));
-		$wp->addFilter(sprintf('manage_edit-%s_columns', Types::ORDER), array($this, 'columns'));
-		$wp->addAction(sprintf('manage_%s_posts_custom_column', Types::ORDER), array($this, 'displayColumn'), 2);
-		$wp->addAction(sprintf('manage_edit-%s_sortable_columns', Types::ORDER), array($this, 'disableSorting'));
+		$wp->addFilter('request', [$this, 'request']);
+		$wp->addFilter('the_title', [$this, 'replaceTitle']);
+		$wp->addFilter('post_row_actions', [$this, 'displayTitle']);
+		$wp->addFilter(sprintf('bulk_actions-edit-%s', Types::ORDER), [$this, 'bulkActions']);
+		$wp->addFilter(sprintf('views_edit-%s', Types::ORDER), [$this, 'statusFilters']);
+		$wp->addFilter(sprintf('manage_edit-%s_columns', Types::ORDER), [$this, 'columns']);
+		$wp->addAction(sprintf('manage_%s_posts_custom_column', Types::ORDER), [$this, 'displayColumn'], 2);
+		$wp->addAction(sprintf('manage_edit-%s_sortable_columns', Types::ORDER), [$this, 'disableSorting']);
 
 		$wp->addAction('admin_enqueue_scripts', function () use ($wp){
 			if ($wp->getPostType() == Types::ORDER) {
@@ -44,8 +44,8 @@ class Orders
 			}
 		});
 
-		Scripts::add('jigoshop.admin.page.orders_list', \JigoshopInit::getUrl().'/assets/js/admin/orders.js', array('jquery-blockui'));
-		$wp->addAction('wp_ajax_jigoshop.admin.orders.change_status', array($this, 'ajaxChangeStatus'), 10, 0);
+		Scripts::add('jigoshop.admin.page.orders_list', \JigoshopInit::getUrl().'/assets/js/admin/orders.js', ['jquery-blockui']);
+		$wp->addAction('wp_ajax_jigoshop.admin.orders.change_status', [$this, 'ajaxChangeStatus'], 10, 0);
 	}
 
 	public function request($vars)
@@ -61,7 +61,7 @@ class Orders
 
 	public function columns()
 	{
-		$columns = array(
+		$columns = [
 			'cb' => '<input type="checkbox" />',
 			'status' => _x('Status', 'order', 'jigoshop'),
 			'title' => _x('Order', 'order', 'jigoshop'),
@@ -71,7 +71,7 @@ class Orders
 			'shipping_payment' => _x('Shipping &amp; Payment', 'order', 'jigoshop'),
 			'total' => _x('Total', 'order', 'jigoshop'),
 			'products' => _x('Products', 'order', 'jigoshop'),
-		);
+        ];
 
 		return $columns;
 	}
@@ -93,35 +93,35 @@ class Orders
 				echo OrderHelper::getUserLink($order->getCustomer());
 				break;
 			case 'billing_address':
-				Render::output('admin/orders/billingAddress', array(
+				Render::output('admin/orders/billingAddress', [
 					'order' => $order,
-				));
+                ]);
 				break;
 			case 'shipping_address':
-				Render::output('admin/orders/shippingAddress', array(
+				Render::output('admin/orders/shippingAddress', [
 					'order' => $order,
-				));
+                ]);
 				break;
 			case 'shipping_payment':
-				Render::output('admin/orders/shippingPayment', array(
+				Render::output('admin/orders/shippingPayment', [
 					'order' => $order,
-				));
+                ]);
 				break;
 			case 'total':
-				Render::output('admin/orders/totals', array(
+				Render::output('admin/orders/totals', [
 					'order' => $order,
 					'getTaxLabel' => function ($taxClass) use ($order){
 						return Tax::getLabel($taxClass, $order);
 					},
-				));
+                ]);
 				break;
 			case 'products':
 				$wpdb = $this->wp->getWPDB();
 				$products = $wpdb->get_results("SELECT product_id, title FROM " . $wpdb->prefix . "jigoshop_order_item WHERE order_id = " . $order->getId());
 
-				Render::output('admin/orders/products', array(
+				Render::output('admin/orders/products', [
 					'products' => $products,
-				));
+                ]);
 			break;
 		}
 	}
@@ -134,7 +134,7 @@ class Orders
 	 */
 	public function disableSorting($sortableColumns)
 	{
-		return array();
+		return [];
 	}
 
 	/**
@@ -235,12 +235,12 @@ class Orders
 				ob_start();
 				OrderHelper::renderStatus($order);
 				$html = ob_get_clean();
-				echo json_encode(array('success' => true, 'html' => $html));
+				echo json_encode(['success' => true, 'html' => $html]);
 			} else {
 				throw new \Exception('Not possible');
 			}
 		} catch (\Exception $e) {
-			echo json_encode(array('status' => false, 'error' => $e->getMessage()));
+			echo json_encode(['status' => false, 'error' => $e->getMessage()]);
 		}
 		exit;
 	}
@@ -255,16 +255,16 @@ class Orders
 	 */
 	public function isAvailbleChange($from, $to)
 	{
-		$possibilities = array(
-			Status::PENDING    => array(
+		$possibilities = [
+			Status::PENDING    => [
 				Status::PROCESSING => '',
 				Status::CANCELLED  => '',
-			),
-			Status::PROCESSING => array(
+            ],
+			Status::PROCESSING => [
 				Status::COMPLETED => '',
 				Status::CANCELLED => '',
-			)
-		);
+            ]
+        ];
 
 		if (isset($possibilities[$from][$to]))
 		{

@@ -78,7 +78,7 @@ class Container
 	 */
 	public function getTaggedServices($key)
 	{
-		$services = array();
+		$services = [];
 		if ($this->tags->exists($key)) {
 			foreach ($this->tags->get($key) as $serviceKey) {
 				$services[] = $this->get($serviceKey);
@@ -95,7 +95,7 @@ class Container
 	 */
 	private function initServiceParams($key)
 	{
-		$initedParams = array();
+		$initedParams = [];
 		$params = $this->services->getParams($key);
 
 		if(!empty($params)){
@@ -120,7 +120,7 @@ class Container
 		foreach ($triggers as $trigger) {
 			$object = $trigger['instance'] ? $this->get($trigger['instance']) : '';
 			$method = $trigger['method'];
-			$params = array();
+			$params = [];
 			foreach ($trigger['params'] as $param) {
 				$params[] = $this->get($param);
 			}

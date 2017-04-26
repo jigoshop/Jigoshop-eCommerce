@@ -24,7 +24,7 @@ class Reports implements PageInterface
 	/** @var Messages */
 	private $messages;
 	/** @var OrderServiceInterface */
-	private $tabs = array();
+	private $tabs = [];
 	/** @var  string */
 	private $currentTab;
 
@@ -35,7 +35,7 @@ class Reports implements PageInterface
 
 		$wp->addAction('admin_enqueue_scripts', function () use ($wp){
 			// Weed out all admin pages except the Jigoshop Settings page hits
-			if (!in_array($wp->getPageNow(), array('admin.php', 'options.php'))) {
+			if (!in_array($wp->getPageNow(), ['admin.php', 'options.php'])) {
 				return;
 			}
 
@@ -44,11 +44,11 @@ class Reports implements PageInterface
 				return;
 			}
 
-			Styles::add('jigoshop.admin.reports', \JigoshopInit::getUrl().'/assets/css/admin/reports.css', array('jigoshop.admin'));
-			Styles::add('jigoshop.vendors.datepicker', \JigoshopInit::getUrl().'/assets/css/vendors/datepicker.css', array('jigoshop.admin.reports'));
-			Scripts::add('jigoshop.admin.reports', \JigoshopInit::getUrl().'/assets/js/admin/reports.js', array('jigoshop.admin', 'jigoshop.vendors.datepicker'));
-			Scripts::add('jigoshop.vendors.datepicker', \JigoshopInit::getUrl().'/assets/js/vendors/datepicker.js', array('jquery'));
-			Scripts::add('jigoshop.vendors.bs_tab_trans_tooltip_collapse', \JigoshopInit::getUrl() . '/assets/js/vendors/bs_tab_trans_tooltip_collapse.js', array('jigoshop.admin.reports'), array('in_footer' => true));
+			Styles::add('jigoshop.admin.reports', \JigoshopInit::getUrl().'/assets/css/admin/reports.css', ['jigoshop.admin']);
+			Styles::add('jigoshop.vendors.datepicker', \JigoshopInit::getUrl().'/assets/css/vendors/datepicker.css', ['jigoshop.admin.reports']);
+			Scripts::add('jigoshop.admin.reports', \JigoshopInit::getUrl().'/assets/js/admin/reports.js', ['jigoshop.admin', 'jigoshop.vendors.datepicker']);
+			Scripts::add('jigoshop.vendors.datepicker', \JigoshopInit::getUrl().'/assets/js/vendors/datepicker.js', ['jquery']);
+			Scripts::add('jigoshop.vendors.bs_tab_trans_tooltip_collapse', \JigoshopInit::getUrl() . '/assets/js/vendors/bs_tab_trans_tooltip_collapse.js', ['jigoshop.admin.reports'], ['in_footer' => true]);
 		});
 	}
 
@@ -98,11 +98,11 @@ class Reports implements PageInterface
 	 */
 	public function display()
 	{
-		Render::output('admin/reports', array(
+		Render::output('admin/reports', [
 			'tabs' => $this->tabs,
 			'current_tab' => $this->getCurrentTab(),
 			'messages' => $this->messages
-		));
+        ]);
 	}
 
 	/**

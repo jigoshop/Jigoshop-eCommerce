@@ -36,10 +36,10 @@ class ThankYou implements PageInterface
 
 		Styles::add('jigoshop.shop');
 		Styles::add('jigoshop.user.account', \JigoshopInit::getUrl().'/assets/css/user/account.css');
-		Styles::add('jigoshop.user.account.orders', \JigoshopInit::getUrl().'/assets/css/user/account/orders.css', array('jigoshop.user.account'));
-		Styles::add('jigoshop.user.account.orders.single', \JigoshopInit::getUrl().'/assets/css/user/account/orders/single.css', array('jigoshop.user.account.orders'));
+		Styles::add('jigoshop.user.account.orders', \JigoshopInit::getUrl().'/assets/css/user/account/orders.css', ['jigoshop.user.account']);
+		Styles::add('jigoshop.user.account.orders.single', \JigoshopInit::getUrl().'/assets/css/user/account/orders/single.css', ['jigoshop.user.account.orders']);
 		$wp->doAction('jigoshop\checkout\thank_you\assets', $wp);
-		$wp->addAction('wp_head', array($this, 'googleAnalyticsTracking'), 9999);
+		$wp->addAction('wp_head', [$this, 'googleAnalyticsTracking'], 9999);
 	}
 
 	/**
@@ -120,7 +120,7 @@ class ThankYou implements PageInterface
         $showWithTax = $this->options->get('tax.item_prices', 'excluding_tax') == 'including_tax';
         $suffix = $showWithTax ? $this->options->get('tax.suffix_for_included', '') : $this->options->get('tax.suffix_for_excluded', '');
 
-		return Render::get('shop/checkout/thanks', array(
+		return Render::get('shop/checkout/thanks', [
 			'content' => $content,
 			'messages' => $this->messages,
 			'order' => $order,
@@ -131,6 +131,6 @@ class ThankYou implements PageInterface
 			'getTaxLabel' => function ($taxClass) use ($order){
 				return Tax::getLabel($taxClass, $order);
 			},
-		));
+        ]);
 	}
 }

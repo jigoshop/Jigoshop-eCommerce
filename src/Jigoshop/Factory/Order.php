@@ -10,6 +10,7 @@ use Jigoshop\Entity\Customer as CustomerEntity;
 use Jigoshop\Entity\Order as Entity;
 use Jigoshop\Entity\OrderInterface;
 use Jigoshop\Entity\Product as ProductEntity;
+use Jigoshop\Entity\Product;
 use Jigoshop\Exception;
 use Jigoshop\Helper\Product as ProductHelper;
 use Jigoshop\Shipping\Method as ShippingMethod;
@@ -79,9 +80,9 @@ class Order implements EntityFactoryInterface
         }
 
         $order = $this->fetch($post);
-        $data = array(
+        $data = [
             'updated_at' => time(),
-        );
+        ];
 
         if (isset($_POST['jigoshop_order']['status'])) {
             $order->setStatus($_POST['jigoshop_order']['status']);
@@ -95,13 +96,14 @@ class Order implements EntityFactoryInterface
         }
 
         $data['items'] = $this->getItems($id);
+        $data['discounts'] = $this->getDiscounts($id);
 
         if (isset($_POST['order']['shipping'])) {
-            $data['shipping'] = array(
+            $data['shipping'] = [
                 'method' => null,
                 'rate' => null,
                 'price' => -1,
-            );
+            ];
 
             $method = $this->shippingService->get($_POST['order']['shipping']);
             if ($method instanceof MultipleMethod && isset($_POST['order']['shipping_rate'], $_POST['order']['shipping_rate'][$method->getId()])) {
@@ -124,14 +126,14 @@ class Order implements EntityFactoryInterface
      */
     public function fetch($post)
     {
-        if($post->post_type != Types::ORDER) {
+        if ($post->post_type != Types::ORDER) {
             return null;
         }
 
         $order = new Entity($this->options->get('tax.classes'));
         /** @var Entity $order */
         $order = $this->wp->applyFilters('jigoshop\factory\order\fetch\before', $order);
-        $state = array();
+        $state = [];
 
         if ($post) {
             $state = array_map(function ($item) {
@@ -143,9 +145,10 @@ class Order implements EntityFactoryInterface
                 // Customer must be unserialized twice "thanks" to WordPress second serialization.
                 /** @var CustomerEntity */
                 $state['customer'] = unserialize(unserialize($state['customer']));
-                if($state['customer'] instanceof CustomerEntity &&
+                if ($state['customer'] instanceof CustomerEntity &&
                     !($state['customer'] instanceof CustomerEntity\Guest) &&
-                    $state['customer_id'] > 0) {
+                    $state['customer_id'] > 0
+                ) {
                     $customer = $this->customerService->find($state['customer_id']);
                     $customer->setBillingAddress($state['customer']->getBillingAddress());
                     $customer->setShippingAddress($state['customer']->getShippingAddress());
@@ -156,14 +159,15 @@ class Order implements EntityFactoryInterface
             $state['status'] = $post->post_status;
             $state['created_at'] = strtotime($post->post_date);
             $state['items'] = $this->getItems($post->ID);
+            $state['discounts'] = $this->getDiscounts($post->ID);
             if (isset($state['shipping'])) {
                 $shipping = unserialize($state['shipping']);
                 if (!empty($shipping['method'])) {
-                    $state['shipping'] = array(
+                    $state['shipping'] = [
                         'method' => $this->shippingService->findForState($shipping['method']),
                         'price' => $shipping['price'],
                         'rate' => isset($shipping['rate']) ? $shipping['rate'] : null,
-                    );
+                    ];
                 }
             }
             if (isset($state['payment'])) {
@@ -189,9 +193,9 @@ class Order implements EntityFactoryInterface
 			LEFT JOIN {$wpdb->prefix}jigoshop_order_item_meta joim ON joim.item_id = joi.id
 			WHERE joi.order_id = %d
 			ORDER BY joi.id",
-            array($id));
+            [$id]);
         $results = $wpdb->get_results($query, ARRAY_A);
-        $items = array();
+        $items = [];
 
         for ($i = 0, $endI = count($results); $i < $endI;) {
             $id = $results[$i]['id'];
@@ -206,7 +210,7 @@ class Order implements EntityFactoryInterface
 
             $product = $this->productService->find($results[$i]['product_id']);
             $product = $this->wp->applyFilters('jigoshop\factory\order\find_product', $product, $item);
-            if($product == null || !$product instanceof ProductEntity) {
+            if ($product == null || !$product instanceof ProductEntity) {
                 $product = new ProductEntity\Simple();
                 $product->setId($results[$i]['product_id']);
             }
@@ -227,6 +231,67 @@ class Order implements EntityFactoryInterface
         }
 
         return $items;
+    }
+
+    /**
+     * Updates order properties based on array data.
+     *
+     * @param $order \Jigoshop\Entity\Order for update.
+     * @param $data array of data for update.
+     *
+     * @return \Jigoshop\Entity\Order
+     */
+    public function update(Entity $order, $data)
+    {
+        if (!empty($data)) {
+            $helpers = $this->wp->getHelpers();
+
+            $order = $this->fill($order, $data);
+            $order->restoreState($data['jigoshop_order']);
+        }
+
+        return $order;
+    }
+
+    /**
+     * @param $id int Order ID.
+     *
+     * @return array List of items assigned to the order.
+     */
+    private function getDiscounts($id)
+    {
+        $wpdb = $this->wp->getWPDB();
+        $query = $wpdb->prepare("
+			SELECT * FROM {$wpdb->prefix}jigoshop_order_discount jod
+			LEFT JOIN {$wpdb->prefix}jigoshop_order_discount_meta jodm ON jodm.discount_id = jod.id
+			WHERE jod.order_id = %d
+			ORDER BY jod.id",
+            [$id]);
+        $results = $wpdb->get_results($query, ARRAY_A);
+        $discounts = [];
+
+        for ($i = 0, $endI = count($results); $i < $endI;) {
+            $id = $results[$i]['id'];
+            $discount = new Entity\Discount();
+            $discount->setId($results[$i]['id']);
+            $discount->setType($results[$i]['type']);
+            $discount->setCode($results[$i]['code']);
+            $discount->setAmount($results[$i]['amount']);
+
+            while ($i < $endI && $results[$i]['id'] == $id) {
+//				Securing against empty meta's, but still no piece of code does not add the meta.
+                if ($results[$i]['meta_key']) {
+                    $meta = new Entity\Discount\Meta();
+                    $meta->setKey($results[$i]['meta_key']);
+                    $meta->setValue($results[$i]['meta_value']);
+                    $discount->addMeta($meta);
+                }
+                $i++;
+            }
+            $discounts[] = $discount;
+        }
+
+        return $discounts;
     }
 
     public function fill(OrderInterface $order, array $data)
@@ -273,9 +338,43 @@ class Order implements EntityFactoryInterface
             $order->removeItems();
         }
 
+        if (isset($data['discounts'])) {
+            $order->removeDiscounts();
+        }
+
         $order->restoreState($data);
 
         return $this->wp->applyFilters('jigoshop\factory\order\fill', $order);
+    }
+
+    /**
+     * @param OrderInterface $order
+     * @param $productId
+     * @param array $data
+     * @return OrderInterface
+     */
+    public function updateOrderItemByProductId(OrderInterface $order, $productId, array $data){
+        /** @var Product $product */
+        $product = $this->productService->find($productId);
+        $item = new Entity\Item();
+        $item->setProduct($product);
+        $key = $this->productService->generateItemKey($item);
+        $orderItem = $order->getItem($key);
+        if($orderItem){
+            $order->removeItem($key);
+        }
+        $item->setKey($key);
+        $item->setName($product->getName());
+        $item->setQuantity((int)$data['quantity']);
+        if (isset($data['price']) && is_numeric($data['price'])) {
+            $item->setPrice((float)$data['price']);
+        }
+        if ($item->getQuantity() > 0) {
+            $item = $this->wp->applyFilters('jigoshop\admin\order\update_product', $item, $order);
+        }
+        $order->addItem($item);
+        return $order;
+
     }
 
     private function createAddress($data)

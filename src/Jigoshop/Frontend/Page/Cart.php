@@ -64,44 +64,44 @@ class Cart implements PageInterface
 		$this->orderService = $orderService;
 		$this->couponService = $couponService;
 
-		Styles::add('jigoshop.shop.cart', \JigoshopInit::getUrl().'/assets/css/shop/cart.css', array(
+		Styles::add('jigoshop.shop.cart', \JigoshopInit::getUrl().'/assets/css/shop/cart.css', [
 			'jigoshop.shop',
-		));
-		Styles::add('jigoshop.vendors.select2', \JigoshopInit::getUrl().'/assets/css/vendors/select2.css', array(
+        ]);
+		Styles::add('jigoshop.vendors.select2', \JigoshopInit::getUrl().'/assets/css/vendors/select2.css', [
 			'jigoshop.shop',
-		));
+        ]);
 
-		Scripts::add('jigoshop.vendors.select2', \JigoshopInit::getUrl().'/assets/js/vendors/select2.js', array('jquery'));
-		Scripts::add('jigoshop.vendors.bs_tab_trans_tooltip_collapse', \JigoshopInit::getUrl().'/assets/js/vendors/bs_tab_trans_tooltip_collapse.js', array('jquery'));
-		Scripts::add('jigoshop.shop.cart', \JigoshopInit::getUrl().'/assets/js/shop/cart.js', array(
+		Scripts::add('jigoshop.vendors.select2', \JigoshopInit::getUrl().'/assets/js/vendors/select2.js', ['jquery']);
+		Scripts::add('jigoshop.vendors.bs_tab_trans_tooltip_collapse', \JigoshopInit::getUrl().'/assets/js/vendors/bs_tab_trans_tooltip_collapse.js', ['jquery']);
+		Scripts::add('jigoshop.shop.cart', \JigoshopInit::getUrl().'/assets/js/shop/cart.js', [
 			'jquery',
 			'jquery-blockui',
 			'jigoshop.shop',
 			'jigoshop.helpers',
 			'jigoshop.vendors.select2',
 			'jigoshop.vendors.bs_tab_trans_tooltip_collapse',
-		));
+        ]);
 
 
-		Scripts::localize('jigoshop.shop.cart', 'jigoshop_cart', array(
+		Scripts::localize('jigoshop.shop.cart', 'jigoshop_cart', [
 			'assets' => \JigoshopInit::getUrl().'/assets',
-			'i18n' => array(
+			'i18n' => [
 				'loading' => __('Loading...', 'jigoshop'),
-			),
-		));
+            ],
+        ]);
 
-		$wp->addAction('wp_ajax_jigoshop_cart_update_item', array($this, 'ajaxUpdateItem'));
-		$wp->addAction('wp_ajax_nopriv_jigoshop_cart_update_item', array($this, 'ajaxUpdateItem'));
-		$wp->addAction('wp_ajax_jigoshop_cart_select_shipping', array($this, 'ajaxSelectShipping'));
-		$wp->addAction('wp_ajax_nopriv_jigoshop_cart_select_shipping', array($this, 'ajaxSelectShipping'));
-		$wp->addAction('wp_ajax_jigoshop_cart_update_discounts', array($this, 'ajaxUpdateDiscounts'));
-		$wp->addAction('wp_ajax_nopriv_jigoshop_cart_update_discounts', array($this, 'ajaxUpdateDiscounts'));
-		$wp->addAction('wp_ajax_jigoshop_cart_change_country', array($this, 'ajaxChangeCountry'));
-		$wp->addAction('wp_ajax_nopriv_jigoshop_cart_change_country', array($this, 'ajaxChangeCountry'));
-		$wp->addAction('wp_ajax_jigoshop_cart_change_state', array($this, 'ajaxChangeState'));
-		$wp->addAction('wp_ajax_nopriv_jigoshop_cart_change_state', array($this, 'ajaxChangeState'));
-		$wp->addAction('wp_ajax_jigoshop_cart_change_postcode', array($this, 'ajaxChangePostcode'));
-		$wp->addAction('wp_ajax_nopriv_jigoshop_cart_change_postcode', array($this, 'ajaxChangePostcode'));
+		$wp->addAction('wp_ajax_jigoshop_cart_update_item', [$this, 'ajaxUpdateItem']);
+		$wp->addAction('wp_ajax_nopriv_jigoshop_cart_update_item', [$this, 'ajaxUpdateItem']);
+		$wp->addAction('wp_ajax_jigoshop_cart_select_shipping', [$this, 'ajaxSelectShipping']);
+		$wp->addAction('wp_ajax_nopriv_jigoshop_cart_select_shipping', [$this, 'ajaxSelectShipping']);
+		$wp->addAction('wp_ajax_jigoshop_cart_update_discounts', [$this, 'ajaxUpdateDiscounts']);
+		$wp->addAction('wp_ajax_nopriv_jigoshop_cart_update_discounts', [$this, 'ajaxUpdateDiscounts']);
+		$wp->addAction('wp_ajax_jigoshop_cart_change_country', [$this, 'ajaxChangeCountry']);
+		$wp->addAction('wp_ajax_nopriv_jigoshop_cart_change_country', [$this, 'ajaxChangeCountry']);
+		$wp->addAction('wp_ajax_jigoshop_cart_change_state', [$this, 'ajaxChangeState']);
+		$wp->addAction('wp_ajax_nopriv_jigoshop_cart_change_state', [$this, 'ajaxChangeState']);
+		$wp->addAction('wp_ajax_jigoshop_cart_change_postcode', [$this, 'ajaxChangePostcode']);
+		$wp->addAction('wp_ajax_nopriv_jigoshop_cart_change_postcode', [$this, 'ajaxChangePostcode']);
 
         $wp->addAction('jigoshop\template\cart\form\before', [$this, 'crossSells']);
 	}
@@ -117,10 +117,10 @@ class Cart implements PageInterface
 			$locations = array_map(function ($location){
 				return Country::getName($location);
 			}, $this->options->get('shopping.selling_locations'));
-			echo json_encode(array(
+			echo json_encode([
 				'success' => false,
 				'error' => sprintf(__('This location is not supported, we sell only to %s.'), join(', ', $locations)),
-			));
+            ]);
 			exit;
 		}
 
@@ -171,16 +171,16 @@ class Cart implements PageInterface
 	 */
 	private function getAjaxCartResponse(\Jigoshop\Entity\Cart $cart)
 	{
-		$tax = array();
+		$tax = [];
 		foreach ($cart->getCombinedTax() as $class => $value) {
-			$tax[$class] = array(
+			$tax[$class] = [
 				'label' => Tax::getLabel($class, $cart),
 				'value' => Product::formatPrice($value),
-			);
+            ];
 		}
 
-		$shipping = array();
-		$shippingHtml = array();
+		$shipping = [];
+		$shippingHtml = [];
 		foreach ($this->shippingService->getAvailable() as $method) {
 			/** @var $method Method */
 			if ($method instanceof MultipleMethod) {
@@ -189,19 +189,19 @@ class Cart implements PageInterface
 					/** @var $rate Rate */
 					$shipping[$method->getId().'-'.$rate->getId()] = $method->isEnabled() ? $rate->calculate($cart) : -1;
 					if ($method->isEnabled()) {
-						$shippingHtml[$method->getId().'-'.$rate->getId()] = array(
+						$shippingHtml[$method->getId().'-'.$rate->getId()] = [
 							'price' => Product::formatPrice($rate->calculate($cart)),
-							'html' => Render::get('shop/cart/shipping/rate', array('method' => $method, 'rate' => $rate, 'cart' => $cart)),
-						);
+							'html' => Render::get('shop/cart/shipping/rate', ['method' => $method, 'rate' => $rate, 'cart' => $cart]),
+                        ];
 					}
 				}
 			} else {
 				$shipping[$method->getId()] = $method->isEnabled() ? $method->calculate($cart) : -1;
 				if ($method->isEnabled()) {
-					$shippingHtml[$method->getId()] = array(
+					$shippingHtml[$method->getId()] = [
 						'price' => Product::formatPrice($cart->getShippingPrice()),
-						'html' => Render::get('shop/cart/shipping/method', array('method' => $method, 'cart' => $cart)),
-					);
+						'html' => Render::get('shop/cart/shipping/method', ['method' => $method, 'cart' => $cart]),
+                    ];
 				}
 			}
 		}
@@ -222,7 +222,7 @@ class Cart implements PageInterface
 			/** @var $coupon Coupon */
 			return $coupon->getCode();
 		}, $cart->getCoupons()));
-		$response = array(
+		$response = [
 			'success' => true,
 			'shipping' => $shipping,
 			'subtotal' => $cart->getSubtotal(),
@@ -231,15 +231,15 @@ class Cart implements PageInterface
 			'coupons' => $coupons,
 			'tax' => $cart->getCombinedTax(),
 			'total' => $cart->getTotal(),
-			'html' => array(
+			'html' => [
 				'shipping' => $shippingHtml,
 				'discount' => Product::formatPrice($cart->getDiscount()),
 				'subtotal' => Product::formatPrice($cart->getSubtotal()),
 				'product_subtotal' => Product::formatPrice($productSubtotal, $suffix),
 				'tax' => $tax,
 				'total' => Product::formatPrice($cart->getTotal()),
-			),
-		);
+            ],
+        ];
 
 		return $response;
 	}
@@ -273,10 +273,10 @@ class Cart implements PageInterface
 		$customer = $this->customerService->getCurrent();
 
 		if ($this->options->get('shopping.validate_zip') && !Validation::isPostcode($_POST['value'], $customer->getShippingAddress()->getCountry())) {
-			echo json_encode(array(
+			echo json_encode([
 				'success' => false,
 				'error' => __('Postcode is not valid!', 'jigoshop'),
-			));
+            ]);
 			exit;
 		}
 
@@ -318,10 +318,10 @@ class Cart implements PageInterface
 
 			$response = $this->getAjaxCartResponse($cart);
 		} catch (Exception $e) {
-			$response = array(
+			$response = [
 				'success' => false,
 				'error' => $e->getMessage(),
-			);
+            ];
 		}
 
 		echo json_encode($response);
@@ -337,7 +337,7 @@ class Cart implements PageInterface
 			$cart = $this->cartService->getCurrent();
 
 			if (isset($_POST['coupons'])) {
-				$errors = array();
+				$errors = [];
 				$codes = array_filter(explode(',', $_POST['coupons']));
 				$cart->removeAllCouponsExcept($codes);
 				$coupons = $this->couponService->getByCodes($codes);
@@ -361,10 +361,10 @@ class Cart implements PageInterface
 
 			$response = $this->getAjaxCartResponse($cart);
 		} catch (Exception $e) {
-			$response = array(
+			$response = [
 				'success' => false,
 				'error' => $e->getMessage(),
-			);
+            ];
 		}
 
 		echo json_encode($response);
@@ -398,17 +398,17 @@ class Cart implements PageInterface
 			$response['html']['item_price'] = Product::formatPrice($price);
 			$response['html']['item_subtotal'] = Product::formatPrice($price * $item->getQuantity(), $suffix);
 		} catch (NotEnoughStockException $e) {
-			$response = array(
+			$response = [
 				'success' => false,
 				'error' => sprintf(__('Sorry, we do not have enough units in stock. We have got only %s in stock', 'jigoshop'), $e->getStock())
-			);
+            ];
 		} catch (Exception $e) {
 			if ($cart->isEmpty()) {
-				$response = array(
+				$response = [
 					'success' => true,
 					'empty_cart' => true,
-					'html' => Render::get('shop/cart/empty', array('shopUrl' => $this->wp->getPermalink($this->options->getPageId(Pages::SHOP)))),
-				);
+					'html' => Render::get('shop/cart/empty', ['shopUrl' => $this->wp->getPermalink($this->options->getPageId(Pages::SHOP))]),
+                ];
 			} else {
 				$response = $this->getAjaxCartResponse($cart);
 				$response['remove_item'] = true;
@@ -552,7 +552,7 @@ class Cart implements PageInterface
         $showWithTax = $this->options->get('tax.item_prices', 'excluding_tax') == 'including_tax';
         $suffix = $showWithTax ? $this->options->get('tax.suffix_for_included', '') : $this->options->get('tax.suffix_for_excluded', '');
 
-		return Render::get('shop/cart', array(
+		return Render::get('shop/cart', [
 			'content' => $content,
 			'cart' => $cart,
 			'messages' => $this->messages,
@@ -564,7 +564,7 @@ class Cart implements PageInterface
             'suffix' => $suffix,
 			'showShippingCalculator' => $this->options->get('shipping.calculator'),
 			'termsUrl' => $termsUrl,
-		));
+        ]);
 	}
 
     public function crossSells()
@@ -581,7 +581,7 @@ class Cart implements PageInterface
         $ids = array_diff($ids, $inCart);
         shuffle($ids);
         if (!empty($ids)) {
-            $products = array();
+            $products = [];
             $limit = $this->options->get('shopping.cross_sells_product_limit', 3);
             foreach ($ids as $id) {
                 if (sizeof($products) >= $limit) {

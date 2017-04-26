@@ -12,7 +12,7 @@ use Jigoshop\Helper\Render;
 	<h1><?php _e('Jigoshop &raquo; Product &raquo; Attributes', 'jigoshop'); ?></h1>
 	<div class="alert alert-info"><?php _e('Every change to attributes is automatically saved.', 'jigoshop'); ?></div>
 	<div id="messages">
-		<?php Render::output('shop/messages', array('messages' => $messages)); ?>
+		<?php Render::output('shop/messages', ['messages' => $messages]); ?>
 	</div>
 	<noscript>
 		<div class="alert alert-danger" role="alert"><?php _e('<strong>Warning</strong> Attributes panel will not work properly without JavaScript.', 'jigoshop'); ?></div>
@@ -30,31 +30,31 @@ use Jigoshop\Helper\Render;
 				</thead>
 				<tbody>
 					<?php foreach($attributes as $attribute): ?>
-						<?php Render::output('admin/product_attributes/attribute', array('attribute' => $attribute, 'id' => $attribute->getId(), 'types' => $types)); ?>
+						<?php Render::output('admin/product_attributes/attribute', ['attribute' => $attribute, 'id' => $attribute->getId(), 'types' => $types]); ?>
 					<?php endforeach; ?>
 				</tbody>
 				<tfoot>
 					<tr>
 						<td>
-							<?php Forms::text(array(
+							<?php Forms::text([
 								'name' => 'label',
 								'id' => 'attribute-label',
 								'placeholder' => __('New attribute label', 'jigoshop'),
-							)); ?>
+                            ]); ?>
 						</td>
 						<td>
-							<?php Forms::text(array(
+							<?php Forms::text([
 								'name' => 'slug',
 								'id' => 'attribute-slug',
 								'placeholder' => __('New attribute slug', 'jigoshop'),
-							)); ?>
+                            ]); ?>
 						</td>
 						<td>
-							<?php Forms::select(array(
+							<?php Forms::select([
 								'name' => 'type',
 								'id' => 'attribute-type',
 								'options' => $types,
-							)); ?>
+                            ]); ?>
 						</td>
 						<td>
 							<button type="button" class="btn btn-default" id="add-attribute"><span class="glyphicon glyphicon-plus"></span> <?php _e('Add', 'jigoshop'); ?></button>

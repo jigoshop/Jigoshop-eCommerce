@@ -17,12 +17,12 @@ use Jigoshop\Helper\Render;
  */
 ?>
 <h1><?php printf(__('My account &raquo; Orders &raquo; %s', 'jigoshop'), $order->getTitle()); ?></h1>
-<?php Render::output('shop/messages', array('messages' => $messages)); ?>
+<?php Render::output('shop/messages', ['messages' => $messages]); ?>
 <dl class="dl-horizontal">
 	<dt><?php _e('Made on', 'jigoshop'); ?></dt>
-	<dd><?php echo $order->getCreatedAt()->format(_x('d.m.Y, H:i', 'account', 'jigoshop')); ?></dd>
+	<dd><?= $order->getCreatedAt()->format(_x('d.m.Y, H:i', 'account', 'jigoshop')); ?></dd>
 	<dt><?php _e('Status', 'jigoshop'); ?></dt>
-	<dd><?php echo Status::getName($order->getStatus()); ?></dd>
+	<dd><?= Status::getName($order->getStatus()); ?></dd>
 </dl>
 <?php do_action('jigoshop\template\account\orders\single\before_customer', $order); ?>
 <div class="col-md-6">
@@ -31,7 +31,7 @@ use Jigoshop\Helper\Render;
 			<h3 class="panel-title"><?php _e('Billing address', 'jigoshop'); ?></h3>
 		</div>
 		<div class="panel-body clearfix">
-			<?php Render::output('user/account/address', array('address' => $order->getCustomer()->getBillingAddress())); ?>
+			<?php Render::output('user/account/address', ['address' => $order->getCustomer()->getBillingAddress()]); ?>
 		</div>
 	</div>
 </div>
@@ -41,7 +41,7 @@ use Jigoshop\Helper\Render;
 			<h3 class="panel-title"><?php _e('Shipping address', 'jigoshop'); ?></h3>
 		</div>
 		<div class="panel-body">
-			<?php Render::output('user/account/address', array('address' => $order->getCustomer()->getShippingAddress())); ?>
+			<?php Render::output('user/account/address', ['address' => $order->getCustomer()->getShippingAddress()]); ?>
 		</div>
 	</div>
 </div>
@@ -61,7 +61,7 @@ use Jigoshop\Helper\Render;
 	</thead>
 	<tbody>
 		<?php foreach($order->getItems() as $key => $item): /** @var $item \Jigoshop\Entity\Order\Item */ ?>
-			<?php Render::output('shop/checkout/item/'.$item->getType(), array('cart' => $order, 'key' => $key, 'item' => $item, 'showWithTax' => $showWithTax, 'suffix' => $suffix)); ?>
+			<?php Render::output('shop/checkout/item/'.$item->getType(), ['cart' => $order, 'key' => $key, 'item' => $item, 'showWithTax' => $showWithTax, 'suffix' => $suffix]); ?>
 		<?php endforeach; ?>
 		<?php /** @deprecated */ do_action('jigoshop\checkout\table_body', $order); ?>
 		<?php do_action('jigoshop\template\checkout\table_body', $order); ?>
@@ -70,7 +70,7 @@ use Jigoshop\Helper\Render;
 		<tr id="product-subtotal">
 			<?php $productSubtotal = $showWithTax ? $order->getProductSubtotal() + $order->getTotalTax() : $order->getProductSubtotal(); ?>
 			<th scope="row" colspan="4" class="text-right"><?php _e('Products subtotal', 'jigoshop'); ?></th>
-			<td><?php echo Product::formatPrice($productSubtotal); ?></td>
+			<td><?= Product::formatPrice($productSubtotal); ?></td>
 		</tr>
         <?php /** @deprecated */ do_action('jigoshop\checkout\table_foot', $order); ?>
         <?php do_action('jigoshop\template\checkout\table_foot', $order); ?>
@@ -88,39 +88,39 @@ use Jigoshop\Helper\Render;
 						<?php _e('Shipping', 'jigoshop'); ?>
 					</th>
 					<td>
-						<?php echo Product::formatPrice($order->getShippingPrice()); ?>
+						<?= Product::formatPrice($order->getShippingPrice()); ?>
 						<p class="method">
-							<small><?php echo $order->getShippingMethod()->getName(); ?></small>
+							<small><?= $order->getShippingMethod()->getName(); ?></small>
 						</p>
 					</td>
 				</tr>
 			<?php endif; ?>
 			<tr id="cart-subtotal">
 				<th scope="row"><?php _e('Subtotal', 'jigoshop'); ?></th>
-				<td><?php echo Product::formatPrice($order->getSubtotal()); ?></td>
+				<td><?= Product::formatPrice($order->getSubtotal()); ?></td>
 			</tr>
 			<?php foreach ($order->getCombinedTax() as $taxClass => $tax): ?>
 				<?php if ($tax > 0): ?>
-					<tr id="tax-<?php echo $taxClass; ?>">
-						<th scope="row"><?php echo $getTaxLabel($taxClass); ?></th>
-						<td><?php echo Product::formatPrice($tax); ?></td>
+					<tr id="tax-<?= $taxClass; ?>">
+						<th scope="row"><?= $getTaxLabel($taxClass); ?></th>
+						<td><?= Product::formatPrice($tax); ?></td>
 					</tr>
 				<?php endif; ?>
 			<?php endforeach; ?>
 			<tr id="cart-discount"<?php $order->getDiscount() == 0 and print ' class="not-active"'; ?>>
 				<th scope="row"><?php _e('Discount', 'jigoshop'); ?></th>
-				<td><?php echo Product::formatPrice($order->getDiscount()); ?></td>
+				<td><?= Product::formatPrice($order->getDiscount()); ?></td>
 			</tr>
 			<tr id="cart-total">
 				<th scope="row"><?php _e('Total', 'jigoshop'); ?></th>
-				<td><?php echo Product::formatPrice($order->getTotal()); ?></td>
+				<td><?= Product::formatPrice($order->getTotal()); ?></td>
 			</tr>
 			</tbody>
 		</table>
 	</div>
 </div>
-<a href="<?php echo $myAccountUrl; ?>" class="btn btn-default"><?php _e('Go back to My account', 'jigoshop'); ?></a>
-<a href="<?php echo $listUrl; ?>" class="btn btn-default"><?php _e('Go back to orders list', 'jigoshop'); ?></a>
-<?php if (in_array($order->getStatus(), array(Status::PENDING))): ?>
-	<a href="<?php echo Order::getPayLink($order); ?>" class="btn btn-success pull-right"><?php _e('Pay', 'jigoshop'); ?></a>
+<a href="<?= $myAccountUrl; ?>" class="btn btn-default"><?php _e('Go back to My account', 'jigoshop'); ?></a>
+<a href="<?= $listUrl; ?>" class="btn btn-default"><?php _e('Go back to orders list', 'jigoshop'); ?></a>
+<?php if (in_array($order->getStatus(), [Status::PENDING])): ?>
+	<a href="<?= Order::getPayLink($order); ?>" class="btn btn-success pull-right"><?php _e('Pay', 'jigoshop'); ?></a>
 <?php endif; ?>

@@ -49,19 +49,19 @@ class CustomersTab implements TabInterface
 	 */
 	public function display()
 	{
-		Render::output('admin/reports/customers', array(
+		Render::output('admin/reports/customers', [
 			'types' => $this->getTypes(),
 			'current_type' => $this->getCurrentType(),
 			'content' => $this->content
-		));
+        ]);
 	}
 
 	private function getTypes()
 	{
-		return $this->wp->applyFilters('jigoshop\admin\reports\customers\types', array(
+		return $this->wp->applyFilters('jigoshop\admin\reports\customers\types', [
 			'customers_vs_guests' => __('Customers vs Guests', 'jigoshop'),
 			'customer_list' => __('Customer List', 'jigoshop')
-		));
+        ]);
 	}
 
 	private function getCurrentType()
@@ -88,7 +88,7 @@ class CustomersTab implements TabInterface
 
 	private function getContent()
 	{
-		if (!in_array($this->wp->getPageNow(), array('admin.php', 'options.php'))) {
+		if (!in_array($this->wp->getPageNow(), ['admin.php', 'options.php'])) {
 			return null;
 		}
 

@@ -9,7 +9,7 @@ use Jigoshop\Service\CartServiceInterface;
 
 class Simple implements CartServiceInterface
 {
-	private $objects = array();
+	private $objects = [];
 
 	/** @var \Jigoshop\Service\CartServiceInterface */
 	private $service;

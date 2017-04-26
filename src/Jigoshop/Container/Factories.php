@@ -11,7 +11,7 @@ namespace Jigoshop\Container;
 class Factories
 {
 	/** @var array $factories */
-	private $factories = array();
+	private $factories = [];
 
 	/**
 	 * @param string $key
@@ -20,10 +20,10 @@ class Factories
 	 */
 	public function set($key, $instance, $methodName)
 	{
-		$this->factories[$key] = array(
+		$this->factories[$key] = [
 			'instance' => $instance,
 			'method' => $methodName,
-		);
+        ];
 	}
 
 	/**
@@ -55,6 +55,6 @@ class Factories
 	 */
 	public function getService($instance, $method, $params)
 	{
-		return call_user_func_array(array($instance, $method), $params);
+		return call_user_func_array([$instance, $method], $params);
 	}
 }

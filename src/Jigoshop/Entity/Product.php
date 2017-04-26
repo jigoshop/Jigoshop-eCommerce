@@ -27,7 +27,7 @@ abstract class Product implements EntityInterface, Product\Taxable, \JsonSeriali
     private $gtin;
     private $mpn;
     private $taxable;
-    private $taxClasses = array();
+    private $taxClasses = [];
     /** @var Product\Attributes\Size */
     private $size;
 
@@ -40,7 +40,7 @@ abstract class Product implements EntityInterface, Product\Taxable, \JsonSeriali
     private $crossSells = [];
     private $upSells = [];
 
-    protected $dirtyFields = array();
+    protected $dirtyFields = [];
 
     public function __construct()
     {
@@ -215,7 +215,7 @@ abstract class Product implements EntityInterface, Product\Taxable, \JsonSeriali
         $visibility = intval($visibility);
 
         if (in_array($visibility,
-            array(self::VISIBILITY_PUBLIC, self::VISIBILITY_SEARCH, self::VISIBILITY_CATALOG, self::VISIBILITY_NONE))) {
+            [self::VISIBILITY_PUBLIC, self::VISIBILITY_SEARCH, self::VISIBILITY_CATALOG, self::VISIBILITY_NONE])) {
             $this->visibility = $visibility;
             $this->dirtyFields[] = 'visibility';
         }
@@ -498,7 +498,7 @@ abstract class Product implements EntityInterface, Product\Taxable, \JsonSeriali
      */
     public function getStateToSave()
     {
-        $toSave = array();
+        $toSave = [];
 
         foreach ($this->dirtyFields as $field) {
             switch ($field) {
