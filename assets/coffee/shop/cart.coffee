@@ -137,6 +137,7 @@ class Cart
 
   updateQuantity: (e) =>
     $item = jQuery(e.target).closest('tr, li')
+    $items = jQuery('input[name="cart[' + $item.data('id') + ']"]').closest('tr, li')
     jQuery('span.product-quantity', $item).html(jQuery(e.target).val())
     jQuery('input.product-quantity', $item).html(jQuery(e.target).val())
     @block()
@@ -161,7 +162,7 @@ class Cart
           return
 
         if result.remove_item? == true
-          $item.remove()
+          $items.remove()
         else
           jQuery('.product-subtotal', $item).html(result.html.item_subtotal)
           jQuery('.product-price', $item).html(result.html.item_price)
