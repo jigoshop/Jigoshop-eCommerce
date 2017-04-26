@@ -110,6 +110,7 @@ class VariableService implements VariableServiceInterface
 	 */
 	public function createVariableProduct($variation, $product)
 	{
+	    var_dump($product->getTaxClasses());
 		$variableId = $this->createVariablePost($variation);
 		/** @var Product|Product\Purchasable|Product\Saleable $variableProduct */
 		$variableProduct = $this->productService->find($variableId);
@@ -117,9 +118,9 @@ class VariableService implements VariableServiceInterface
 		$variableProduct->setTaxable($product->isTaxable());
 		$variableProduct->setTaxClasses($product->getTaxClasses());
 		$variableProduct->getStock()->setManage(true);
-		if($variableProduct instanceof Product\Saleable) {
-			$variableProduct->getSales()->unserialize($product->getSales()->serialize());
-		}
+//		if($variableProduct instanceof Product\Saleable) {
+//			$variableProduct->getSales()->unserialize($product->getSales()->serialize());
+//		}
 
 		return $variableProduct;
 	}
