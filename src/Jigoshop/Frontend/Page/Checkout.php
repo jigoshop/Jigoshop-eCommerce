@@ -549,6 +549,7 @@ class Checkout implements PageInterface
 
 		$billingFields = $this->getBillingFields($cart->getCustomer()->getBillingAddress());
 		$shippingFields = $this->getShippingFields($cart->getCustomer()->getShippingAddress());
+        $billingOnly = $this->options->get('shipping.only_to_billing');
 
 		$termsUrl = '';
 		$termsPage = $this->options->get('advanced.pages.terms');
@@ -569,6 +570,7 @@ class Checkout implements PageInterface
 			'paymentMethods' => $this->paymentService->getEnabled(),
 			'billingFields' => $billingFields,
 			'shippingFields' => $shippingFields,
+            'billingOnly' => $billingOnly,
 			'showWithTax' => $showWithTax,
             'suffix' => $suffix,
 			'showLoginForm' => $this->options->get('shopping.show_login_form') && !$this->wp->isUserLoggedIn(),
