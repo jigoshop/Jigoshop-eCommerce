@@ -205,7 +205,7 @@ class Emails
             'total' => ProductHelper::formatPrice($order->getTotal()),
             'is_local_pickup' => $order->getShippingMethod() && $order->getShippingMethod()->getId() == LocalPickup::NAME ? true : null,
             'checkout_url' => $order->getStatus() == Order\Status::PENDING ? OrderHelper::getPayLink($order) : null,
-            'payment_method' => $order->getPaymentMethod() ? $order->getPaymentMethod()->getTitle() : '',
+            'payment_method' => $order->getPaymentMethod() ? $order->getPaymentMethod()->getName() : '',
             'billing_first_name' => $billingAddress->getFirstName(),
             'billing_last_name' => $billingAddress->getLastName(),
             'billing_company' => $billingAddress instanceof CompanyAddress ? $billingAddress->getCompany() : '',
