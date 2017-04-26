@@ -42,7 +42,7 @@ class Rate
 	public function getName()
 	{
 	    if($this->method->getName()) {
-            return sprintf(_x('%s - %s', 'shipping', 'jigoshop'), $this->method->getName(), $this->name);
+            return sprintf(_x('%s - %s', 'shipping', 'jigoshop'), $this->method->getTitle(), $this->name);
         } else {
             return sprintf(_x('%s', 'shipping', 'jigoshop'), $this->name);
         }
