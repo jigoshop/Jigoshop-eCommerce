@@ -1,8 +1,6 @@
-Payment = undefined
-Payment = do ->
-  `var Payment`
+class Payment
 
-  Payment = ->
+  constructor: ->
     jQuery('.payment-method-configure').click (e) ->
       targetMethod = undefined
       targetMethod = undefined
@@ -71,6 +69,5 @@ Payment = do ->
       return
     return
 
-  Payment
-jQuery ->
-  new Payment
+jQuery () ->
+  new Payment()
