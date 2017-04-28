@@ -110,7 +110,6 @@ class VariableService implements VariableServiceInterface
 	 */
 	public function createVariableProduct($variation, $product)
 	{
-	    var_dump($product->getTaxClasses());
 		$variableId = $this->createVariablePost($variation);
 		/** @var Product|Product\Purchasable|Product\Saleable $variableProduct */
 		$variableProduct = $this->productService->find($variableId);
