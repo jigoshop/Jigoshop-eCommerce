@@ -5,10 +5,21 @@ use Jigoshop\Helper\Render;
 /**
  * @var $product Product The product.
  * @var $allowedSubtypes array List of types allowed as variations.
+ * @var $taxClasses
+ * @var $bulkActions
  */
 ?>
-<div class="clearfix">
-    <button type="button" class="btn btn-default pull-right" id="add-variation"><span class="glyphicon glyphicon-plus"></span> <?php _e('Add', 'jigoshop'); ?></button>
+<div class="clearfix padding-bottom-5">
+    <div style="width: 70%; float: left">
+        <?php \Jigoshop\Admin\Helper\Forms::select([
+            'placeholder' => __('Select action...', 'jigoshop'),
+            'name' => 'variation_bulk_actions',
+            'id' => 'variation-bulk-actions',
+            'options' => $bulkActions,
+            'value' => false,
+        ]); ?>
+    </div>
+    <button type="button" class="btn btn-default pull-right" id="do-bulk-action"><?= __('Go', 'jigoshop'); ?></button>
 </div>
 <ul id="product-variations" class="list-group">
 	<?php if ($product instanceof Product\Variable): ?>

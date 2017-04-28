@@ -65,6 +65,7 @@ $stock = $product instanceof Product\Purchasable ? $product->getStock() : new St
 				'placeholder' => __('Price not announced', 'jigoshop'),
 				'value' => $product->getRegularPrice(),
 				'size' => 11,
+                'classes' => ['regular-price']
             ]);
 			Forms::select([
 				'name' => 'product[variation]['.$variation->getId().'][product][tax_classes]',
@@ -137,6 +138,7 @@ $stock = $product instanceof Product\Purchasable ? $product->getStock() : new St
                         'value' => $stock->getStock(),
                         'min' => 0,
                         'size' => 11,
+                        'classes' => ['stock-stock']
                     ]);
                     Forms::select([
                         'name' => 'product[variation]['.$variation->getId().'][product][stock_allow_backorders]',
@@ -160,6 +162,10 @@ $stock = $product instanceof Product\Purchasable ? $product->getStock() : new St
 				'value' => $product->getSales()->getPrice(),
 				'placeholder' => ProductHelper::formatNumericPrice(0),
 				'size' => 11,
+                'classes' => ['sale-price'],
+                'description' =>
+                    '<a href="#" class="schedule'.($product->getSales()->getTo()->getTimestamp() ? ' not-active' : '').'">'.__('Schedule', 'jigoshop').'</a>'.
+                    '<a href="#" class="cancel-schedule'.($product->getSales()->getTo()->getTimestamp() == 0 ? ' not-active' : '').'">'.__('Cancel schedule', 'jigoshop').'</a>',
             ]);
 			Forms::daterange([
 				'id' => 'product_variation_'.$variation->getId().'_product_sales_date',
@@ -169,27 +175,15 @@ $stock = $product instanceof Product\Purchasable ? $product->getStock() : new St
                 ],
 				'label' => __('Sale date', 'jigoshop'),
 				'value' => [
-					'from' => $product->getSales()->getFrom()->format('m/d/Y'),
-					'to' => $product->getSales()->getTo()->format('m/d/Y'),
+					'from' => $product->getSales()->getFrom()->getTimestamp() ? $product->getSales()->getFrom()->format('m/d/Y') : '',
+					'to' => $product->getSales()->getTo()->getTimestamp() ? $product->getSales()->getTo()->format('m/d/Y') : '',
                 ],
 				'size' => 11,
-				'startDate' => $variation->getParent()->getSales()->getFrom()->format('m/d/Y'),
-				'endDate' => $variation->getParent()->getSales()->getTo()->format('m/d/Y'),
-                'classes' => ['datepicker']
+                'classes' => ['datepicker', $product->getSales()->getTo()->getTimestamp() ? '' : 'not-active']
             ]);
 			?>
 			</fieldset>
 			<?php do_action('jigoshop\admin\variation', $variation, $product); ?>
 		</div>
-        <script>
-            <?php // TODO: Get rid of this. ?>
-            jQuery('#sales-enabled').on('change', function() {
-                if(jQuery(this).is(':checked')) {
-                    jQuery('#variation-<?= $variation->getId(); ?>-sales').show()
-                } else {
-                    jQuery('#variation-<?= $variation->getId(); ?>-sales').hide()
-                }
-            }).trigger('change');
-        </script>
 	</div>
 </li>

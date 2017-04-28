@@ -63,4 +63,9 @@ class Simple implements VariableServiceInterface
 			$this->service->removeVariation($variation);
 		}
 	}
+
+    public function createVariableProduct($variation, $product)
+    {
+        return $this->service->createVariableProduct($variation, $product);
+	}
 }

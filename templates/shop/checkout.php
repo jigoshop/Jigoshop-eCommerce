@@ -48,33 +48,35 @@ use Jigoshop\Helper\Tax;
 			</div>
 		</div>
 	</div>
-	<?php if (!$alwaysShowShipping): ?>
-		<div class="col-md-6 col-xs-12 pull-right toggle-panels">
-			<?php Forms::checkbox([
-				'description' => __('Different shipping address', 'jigoshop'),
-				'name' => 'jigoshop_order[different_shipping_address]',
-				'id' => 'different_shipping_address',
-				'checked' => $differentShipping,
-            ]); ?>
+    <?php if($billingOnly == false): ?>
+        <?php if (!$alwaysShowShipping): ?>
+            <div class="col-md-6 col-xs-12 pull-right toggle-panels">
+                <?php Forms::checkbox([
+                    'description' => __('Different shipping address', 'jigoshop'),
+                    'name' => 'jigoshop_order[different_shipping_address]',
+                    'id' => 'different_shipping_address',
+                    'checked' => $differentShipping,
+                ]); ?>
 
-		</div>
-	<div class="clear"></div>
-	<?php endif; ?>
-	<div id="shipping-address" class="panel panel-default <?php !$differentShipping && !$alwaysShowShipping and print ' not-active'; ?>">
-		<div class="panel-heading">
-			<h3 class="panel-title"><?php _e('Shipping address', 'jigoshop'); ?></h3>
-			<?php do_action('jigoshop\template\checkout\shipping_address\head', $cart); ?>
-		</div>
-		<div class="panel-body">
-			<div class="row clearfix" >
-				<?php foreach($shippingFields as $field): ?>
-					<div class="col-md-<?= $field['columnSize']; ?>">
-						<?php Forms::field($field['type'], $field); ?>
-					</div>
-				<?php endforeach; ?>
-			</div>
-		</div>
-	</div>
+            </div>
+        <div class="clear"></div>
+        <?php endif; ?>
+        <div id="shipping-address" class="panel panel-default <?php !$differentShipping && !$alwaysShowShipping and print ' not-active'; ?>">
+            <div class="panel-heading">
+                <h3 class="panel-title"><?php _e('Shipping address', 'jigoshop'); ?></h3>
+                <?php do_action('jigoshop\template\checkout\shipping_address\head', $cart); ?>
+            </div>
+            <div class="panel-body">
+                <div class="row clearfix" >
+                    <?php foreach($shippingFields as $field): ?>
+                        <div class="col-md-<?= $field['columnSize']; ?>">
+                            <?php Forms::field($field['type'], $field); ?>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+        </div>
+    <?php endif; ?>
 	<?php if ($allowRegistration): ?>
 		<?php Render::output('shop/checkout/registration_form', [
 			'showRegistrationForm' => $showRegistrationForm,

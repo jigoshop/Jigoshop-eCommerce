@@ -117,7 +117,7 @@ class Simple extends Product implements Purchasable, Shippable, Saleable
 
 		$price = $this->regularPrice;
 
-		if ($this->sales !== null && $this->sales->isEnabled()) {
+		if ($this->sales !== null && \Jigoshop\Helper\Product::isOnSale($this)) {
 			if (strpos($this->sales->getPrice(), '%') !== false) {
 				$discount = trim($this->sales->getPrice(), '%');
 				$sale = $this->regularPrice * (1 - $discount / 100);

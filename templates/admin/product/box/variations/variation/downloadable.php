@@ -25,7 +25,7 @@ use Jigoshop\Entity\Product;
         'type' => 'number',
         'label' => __('Downloads limit', 'jigoshop'),
         'description' => __('Leave empty for unlimited downloads.', 'jigoshop'),
-        'classes' => ['product-downloadable', $product instanceof Product\Downloadable ? '' : 'not-active'],
+        'classes' => ['download-limit', 'product-downloadable', $product instanceof Product\Downloadable ? '' : 'not-active'],
         'placeholder' => 0,
         'size' => 11,
         'value' => $product instanceof Product\Downloadable ? $product->getLimit() : '',
