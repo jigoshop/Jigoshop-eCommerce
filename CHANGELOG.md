@@ -2,6 +2,7 @@
 * 2.1.1:
     * Fix: Remove debug method from, create variations from all attributes.
     * Fix: Hide out of stock products option.
+    * Fix: Adding related products to cart.
 * 2.1 - 2017.04.26:
     * New: Admin notices.
     * New: My Downloads panel in my account.

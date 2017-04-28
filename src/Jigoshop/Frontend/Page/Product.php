@@ -105,9 +105,14 @@ class Product implements PageInterface
 	public function action()
 	{
 		if (isset($_POST['action']) && $_POST['action'] == 'add-to-cart') {
-			$post = $this->wp->getGlobalPost();
-			/** @var \Jigoshop\Entity\Product $product */
-			$product = $this->productService->findForPost($post);
+		    if(isset($_POST['item'])) {
+                /** @var \Jigoshop\Entity\Product $product */
+		        $product = $this->productService->find((int)$_POST['item']);
+            } else {
+		        $post = $this->wp->getGlobalPost();
+                /** @var \Jigoshop\Entity\Product $product */
+                $product = $this->productService->findForPost($post);
+            }
 
 			try {
 				/** @var Item $item */
