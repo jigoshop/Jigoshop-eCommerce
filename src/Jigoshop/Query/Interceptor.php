@@ -163,7 +163,7 @@ class Interceptor
                     'compare' => 'IN'
                 ]
             ];
-            if ($options['hide_out_of_stock'] == 'on') {
+            if ($options['hide_out_of_stock']) {
                 $result['meta_query'][] = [
                     [
                         'key' => 'stock_status',
