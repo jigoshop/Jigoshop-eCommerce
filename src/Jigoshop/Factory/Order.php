@@ -5,13 +5,10 @@ namespace Jigoshop\Factory;
 use Jigoshop\Core\Messages;
 use Jigoshop\Core\Options;
 use Jigoshop\Core\Types;
-use Jigoshop\Entity\Coupon;
 use Jigoshop\Entity\Customer as CustomerEntity;
 use Jigoshop\Entity\Order as Entity;
 use Jigoshop\Entity\OrderInterface;
 use Jigoshop\Entity\Product as ProductEntity;
-use Jigoshop\Entity\Product;
-use Jigoshop\Exception;
 use Jigoshop\Helper\Product as ProductHelper;
 use Jigoshop\Shipping\Method as ShippingMethod;
 use Jigoshop\Payment\Method as PaymentMethod;
@@ -354,7 +351,7 @@ class Order implements EntityFactoryInterface
      * @return OrderInterface
      */
     public function updateOrderItemByProductId(OrderInterface $order, $productId, array $data){
-        /** @var Product $product */
+        /** @var ProductEntity $product */
         $product = $this->productService->find($productId);
         $item = new Entity\Item();
         $item->setProduct($product);
