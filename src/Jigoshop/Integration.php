@@ -14,6 +14,62 @@ class Integration
     private static $classLoader;
 
     /**
+     * Integration constructor.
+     * @param \Jigoshop\Container $di
+     */
+    public function __construct(Container $di)
+    {
+        add_action('jigoshop\page_resolver\before', function (){
+            Integration::initializeGateways();
+            Integration::initializeShipping();
+        });
+        add_action('jigoshop\admin\page_resolver\before', function (){
+            Integration::initializeGateways();
+            Integration::initializeSettings();
+        });
+    }
+
+    /**
+     * Get settings tabs from plugins.
+     */
+    public static function initializeSettings()
+    {
+        $service = self::getAdminSettings();
+        $tabs = apply_filters('jigoshop\admin\settings', []);
+
+        foreach ($tabs as $tab) {
+            $service->addTab($tab);
+        }
+    }
+
+    /**
+     * Get gateways from plugins
+     */
+    public static function initializeGateways()
+    {
+        $service = self::getPaymentService();
+        $gateways = apply_filters('jigoshop\payment\gateways', []);
+
+        foreach ($gateways as $gateway) {
+             $service->addMethod($gateway);
+        }
+    }
+
+    /**
+     * Get shippings methods from plugins.
+     */
+    public static function initializeShipping()
+    {
+        $service = self::getShippingService();
+        $methods = apply_filters('Jigoshop\shipping\methods', []);
+
+        foreach ($methods as $method) {
+            $service->addMethod($method);
+        }
+
+    }
+
+    /**
      * @param $service
      *
      * @return object
