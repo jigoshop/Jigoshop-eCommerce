@@ -269,24 +269,43 @@ class AdminProductVariable
       .trigger 'change'
 
   modifyFields: (field, text, operator) ->
-    value = prompt(text)
-    if value.search('%') > 0
-      value = Number value.replace(/%|,| /, '')
-      if isNaN value
-        return alert('Invalid number')
-      value = 1 + operator * (value / 100)
-      jQuery('input.' + field, '#product-variations').each () ->
-        jQuery(this)
-          .val Math.round(jQuery(this).val() * value * 100) / 100
-          .trigger 'change'
-    else
-      value = Number value.replace(/,| /, '')
-      if isNaN value
-        return alert('Invalid number')
-      jQuery('input.' + field, '#product-variations').each () ->
-        jQuery(this)
-          .val Number(jQuery(this).val()) + operator * value
-          .trigger 'change'
+    #value = prompt(text)
+    jQuery.prompt text + '<input type="text" name="value"></input>',
+      title: "Are you Ready?"
+      buttons:
+        "Cancel": false
+        "Done!": true
+      classes:
+        box: ''
+        fade: ''
+        prompt: 'jigoshop'
+        close: ''
+        title: 'lead'
+        message: ''
+        buttons: ''
+        button: 'btn'
+        defaultButton: 'btn-primary'
+      submit: (event, submitted, message, form) ->
+        if submitted
+          if form.value.search('%') > 0
+            form.value = Number form.value.replace(/%|,| /, '')
+            if isNaN form.value
+              return alert('Invalid number')
+            form.value = 1 + operator * (form.value / 100)
+            jQuery('input.' + field, '#product-variations').each () ->
+              console.log(form)
+              jQuery(this)
+                .val Math.round(jQuery(this).val() * form.value * 100) / 100
+                .trigger 'change'
+          else
+            form.value = form.value.replace(/,| /, '')
+            if isNaN form.value
+              return alert('Invalid number')
+            jQuery('input.' + field, '#product-variations').each () ->
+              jQuery(this)
+                .val Number(jQuery(this).val()) + operator * form.value
+                .trigger 'change'
+      zIndex: 99999
 
   toggleCheckboxes: (field) ->
     jQuery('input[type="checkbox"].' + field, '#product-variations').each () ->

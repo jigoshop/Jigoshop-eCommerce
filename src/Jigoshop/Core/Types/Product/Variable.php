@@ -401,11 +401,14 @@ class Variable implements Type
 	public function addAdminAssets(Wordpress $wp)
 	{
 		$wp->wpEnqueueMedia();
-		Styles::add('jigoshop.admin.product.variable', \JigoshopInit::getUrl().'/assets/css/admin/product/variable.css');
+		Styles::add('jigoshop.admin.product.variable', \JigoshopInit::getUrl().'/assets/css/admin/product/variable.css', [
+		    'impromptu'
+        ]);
 		Scripts::add('jigoshop.admin.product.variable', \JigoshopInit::getUrl().'/assets/js/admin/product/variable.js', [
 			'jquery',
 			'jigoshop.media',
-            'jquery-blockui'
+            'jquery-blockui',
+            'impromptu'
         ]);
 		Scripts::localize('jigoshop.admin.product.variable', 'jigoshop_admin_product_variable', [
 			'i18n' => [
