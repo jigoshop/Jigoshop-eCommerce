@@ -6,6 +6,7 @@
     * Fix: Fatal error related to wrong namespace use.
     * Fix: Allow to query product tags and categories at the same time.
     * Fix: Adding custom settings tab by using Integration.
+    * Fix: Monthly report on dashboard should not predict future.
 * 2.1 - 2017.04.26:
     * New: Admin notices.
     * New: My Downloads panel in my account.
