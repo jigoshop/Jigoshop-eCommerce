@@ -199,7 +199,7 @@ class Dashboard implements PageInterface
 
 		if ($currentTime >= strtotime($currentYear.'-'.$currentMonth.'-1') &&
             (strtotime($currentYear.'-'.$currentMonth.'-'.($currentDay + 1)) - $currentTime) > 24 * 3600) {
-			$days = range($currentTime, strtotime($currentYear.'-'.$currentMonth.'-'.($currentDay + 1)), 24 * 3600);
+			$days = range($currentTime, strtotime($currentYear.'-'.$currentMonth.'-'.$currentDay), 24 * 3600);
 		} else {
 			$days = range($currentTime, strtotime($nextYear.'-'.$nextMonth.'-1'), 24 * 3600);
 		}
