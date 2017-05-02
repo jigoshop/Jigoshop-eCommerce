@@ -600,7 +600,8 @@ class Forms
 	 * Outputs already rendered field.
 	 *
 	 * Available parameters (with defaults):
-	 *   * label (null) - label for the tagg
+	 *   * name (null) - name for the tag
+	 *   * label (null) - label for the tag
 	 *   * tip (false) - tip for the tag
 	 *   * display (null) - callback for display content
 	 * 
@@ -610,6 +611,7 @@ class Forms
 	 */
 	public static function userDefined($field) {
 		$defaults = [
+			'name' => '',
 			'title' => '',
 			'tip' => '',
 			'display' => ''
