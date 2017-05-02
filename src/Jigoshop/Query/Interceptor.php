@@ -83,16 +83,16 @@ class Interceptor
 	private function parseRequest($request)
 	{
         if(is_admin() == false) {
-            if ($this->isCart($request)) {
-                return $this->wp->applyFilters('jigoshop\query\cart', $request, $request);
-            }
+            if ($this->isProductCategory($request) || $this->isProductTag($request)) {
+                $result = $this->_getProductListBaseQuery($request);
+                if ($this->isProductCategory($request)) {
+                    $result = $this->getProductCategoryListQuery($result, $request);
+                }
+                if ($this->isProductTag($request)) {
+                    $result = $this->getProductTagListQuery($result, $request);
+                }
 
-            if ($this->isProductCategory($request)) {
-                return $this->getProductCategoryListQuery($request);
-            }
-
-            if ($this->isProductTag($request)) {
-                return $this->getProductTagListQuery($request);
+                return $result;
             }
 
             if ($this->isProductList($request)) {
@@ -101,6 +101,10 @@ class Interceptor
 
             if ($this->isProduct($request)) {
                 return $this->getProductQuery($request);
+            }
+
+            if ($this->isCart($request)) {
+                return $this->wp->applyFilters('jigoshop\query\cart', $request, $request);
             }
 
             if ($this->isAccount($request)) {
@@ -129,9 +133,8 @@ class Interceptor
 		return isset($request[Types\ProductCategory::NAME]) || (isset($request['taxonomy']) && $request['taxonomy'] == Types\ProductCategory::NAME);
 	}
 
-	private function getProductCategoryListQuery($request)
+	private function getProductCategoryListQuery($result, $request)
 	{
-		$result = $this->_getProductListBaseQuery($request);
 		if(isset($request[Types\ProductCategory::NAME])) {
 		    $result[Types\ProductCategory::NAME] = $request[Types\ProductCategory::NAME];
         } elseif(isset($request['taxonomy']) && $request['taxonomy'] == Types\ProductCategory::NAME) {
@@ -188,9 +191,8 @@ class Interceptor
         return isset($request[Types\ProductTag::NAME]) || (isset($request['taxonomy']) && $request['taxonomy'] == Types\ProductTag::NAME);
 	}
 
-	private function getProductTagListQuery($request)
+	private function getProductTagListQuery($result, $request)
 	{
-        $result = $this->_getProductListBaseQuery($request);
         if(isset($request[Types\ProductTag::NAME])) {
             $result[Types\ProductTag::NAME] = $request[Types\ProductTag::NAME];
         } elseif(isset($request['taxonomy']) && $request['taxonomy'] == Types\ProductTag::NAME) {
