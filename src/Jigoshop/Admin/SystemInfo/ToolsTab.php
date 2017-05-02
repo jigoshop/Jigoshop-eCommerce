@@ -87,6 +87,30 @@ class ToolsTab implements TabInterface
 							return Render::output('admin/system_info/tool', $field);
 						}
                     ],
+                    [
+                        'id' => 'remove-zombie-variations',
+                        'name' => 'remove-zombie-variations',
+                        'title' => __('Remove zombie variations', 'jigoshop'),
+                        'description' => __('Removes variations ', 'jigoshop'),
+                        'tip' => '',
+                        'classes' => [],
+                        'type' => 'user_defined',
+                        'display' => function($field){
+                            return Render::output('admin/system_info/tool', $field);
+                        }
+                    ],
+                    [
+                        'id' => 'remove-zombie-meta',
+                        'name' => 'remove-zombie-meta',
+                        'title' => __('Remove zombie meta', 'jigoshop'),
+                        'description' => __('Removes meta', 'jigoshop'),
+                        'tip' => '',
+                        'classes' => [],
+                        'type' => 'user_defined',
+                        'display' => function($field){
+                            return Render::output('admin/system_info/tool', $field);
+                        }
+                    ],
                 ]
             ]
         ];
@@ -114,6 +138,12 @@ class ToolsTab implements TabInterface
 			case 'clear-logs':
 				$this->clearLogs();
 				break;
+            case 'remove-zombie-variations':
+                $this->removeZombieVariations();
+                break;
+            case 'remove-zombie-meta':
+                $this->removeZombieMeta();
+                break;
 		}
 	}
 
@@ -129,4 +159,28 @@ class ToolsTab implements TabInterface
 			}
 		}
 	}
+
+	/**
+     * Removes zombie variations from database.
+     */
+	private function removeZombieVariations()
+    {
+        $wpdb = $this->wp->getWPDB();
+        $query = $wpdb->prepare("DELETE FROM {$wpdb->posts} as posts WHERE post_type = %s AND post_parent > 0 AND NOT EXISTS (
+          SELECT * FROM {$wpdb->posts} as posts2 WHERE posts2.ID = posts.post_parent
+        )", Core\Types\Product\Variable::TYPE);
+
+        $wpdb->query($query);
+    }
+
+    /**
+     * Removes zombie variations from database.
+     */
+    private function removeZombieMeta()
+    {
+        $wpdb = $this->wp->getWPDB();
+        $wpdb->query("DELETE FROM {$wpdb->postmeta} as meta WHERE NOT EXISTS (
+              SELECT * FROM {$wpdb->posts} as posts WHERE posts.ID = meta.post_id
+        )");
+    }
 }
