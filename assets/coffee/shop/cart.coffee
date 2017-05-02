@@ -224,6 +224,12 @@ class Cart
         jigoshop.addMessage('warning', data.html.coupons)
 
   _updateShipping: (shipping, html) ->
+
+    if typeof shipping == "object" && !Array.isArray(shipping) && shipping != null
+      jQuery('#shipping-calculator').slideDown()
+    else
+      jQuery('#shipping-calculator').slideUp()
+
     for own shippingClass, value of shipping
       $method = jQuery(".shipping-#{shippingClass}")
       $method.addClass('existing')
