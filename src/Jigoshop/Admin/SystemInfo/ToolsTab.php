@@ -166,11 +166,18 @@ class ToolsTab implements TabInterface
 	private function removeZombieVariations()
     {
         $wpdb = $this->wp->getWPDB();
-        $query = $wpdb->prepare("DELETE FROM {$wpdb->posts} as posts WHERE post_type = %s AND post_parent > 0 AND NOT EXISTS (
-          SELECT * FROM {$wpdb->posts} as posts2 WHERE posts2.ID = posts.post_parent
-        )", Core\Types\Product\Variable::TYPE);
+        $query = $wpdb->prepare("SELECT ID FROM {$wpdb->posts} AS posts WHERE post_type = %s AND post_parent > 0 AND NOT EXISTS 
+          (SELECT * FROM {$wpdb->posts} AS posts2 WHERE posts2.ID = posts.post_parent)"
+            , Core\Types\Product\Variable::TYPE);
+        $result = $wpdb->get_results($query, ARRAY_A);
 
-        $wpdb->query($query);
+        if(count($result)) {
+            $result = array_map(function($item) {
+                return $item['ID'];
+            }, $result);
+
+            $wpdb->query("DELETE FROM {$wpdb->posts} WHERE ID IN (".join(',', $result).")");
+        }
     }
 
     /**
@@ -179,8 +186,8 @@ class ToolsTab implements TabInterface
     private function removeZombieMeta()
     {
         $wpdb = $this->wp->getWPDB();
-        $wpdb->query("DELETE FROM {$wpdb->postmeta} as meta WHERE NOT EXISTS (
-              SELECT * FROM {$wpdb->posts} as posts WHERE posts.ID = meta.post_id
-        )");
+        $wpdb->query("DELETE FROM `{$wpdb->postmeta}` WHERE NOT EXISTS 
+          (SELECT * FROM {$wpdb->posts} WHERE {$wpdb->posts}.ID = {$wpdb->postmeta}.post_id)
+          ");
     }
 }
