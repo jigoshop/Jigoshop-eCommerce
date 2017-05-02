@@ -15,6 +15,7 @@ class Forms
 	protected static $hiddenTemplate = 'forms/hidden';
 	protected static $textareaTemplate = 'forms/textarea';
 	protected static $daterangeTemplate = 'forms/daterange';
+	protected static $userDefinedTemplate = 'forms/userDefined';
 
 	/**
 	 * Returns string for checkboxes if value is checked (value and current are the same).
@@ -95,6 +96,9 @@ class Forms
 				break;
 			case 'daterange':
 				self::daterange($field);
+				break;
+			case 'user_defined':
+				self::userDefined($field);
 				break;
 			default :
 				do_action('jigoshop\helper\forms\custom', $type, $field);
@@ -590,6 +594,38 @@ class Forms
 		}
 
 		Render::output(static::$constantTemplate, $field);
+	}
+
+	/**
+	 * Outputs already rendered field.
+	 *
+	 * Available parameters (with defaults):
+	 *   * label (null) - label for the tagg
+	 *   * tip (false) - tip for the tag
+	 *   * display (null) - callback for display content
+	 * 
+	 * @param $field array Field parameters.
+	 *
+	 * @throws \Jigoshop\Exception
+	 */
+	public static function userDefined($field) {
+		$defaults = [
+			'title' => '',
+			'tip' => '',
+			'display' => ''
+		];
+
+		$field = wp_parse_args($field, $defaults);
+
+		if(isset($field['display']) && is_callable($field['display'])) {
+			$result = call_user_func($field['display']);
+
+			Render::output(static::$userDefinedTemplate, [
+					'title' => isset($field['title'])?$field['title']:'',
+					'tip' => isset($field['tip'])?$field['tip']:'',
+					'display' => $result
+				]);
+		}
 	}
 
 	public static function printHiddenFields($fields, $exceptions = [])
