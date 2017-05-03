@@ -193,7 +193,7 @@ class Cart extends Order
 			return;
 		}
 
-		if ($coupon->getUsageLimit() <= $coupon->getUsage()) {
+		if ($coupon->getUsageLimit() > 0 && $coupon->getUsageLimit() <= $coupon->getUsage()) {
 		    throw new Exception(sprintf(__('Cannot apply coupon "%s". The usage limit was reached.', 'jigoshop'), $coupon->getCode()));
         }
 
