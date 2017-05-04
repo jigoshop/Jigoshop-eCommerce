@@ -25,7 +25,7 @@ use Jigoshop\Admin\Helper\Forms;
 		?>
 		</table>
 
-		<button type="submit" class="btn btn-primary pull-right payment-method-close"><?php echo __('Close', 'jigoshop'); ?></button>
+		<button type="submit" class="btn btn-primary pull-right payment-method-close"><?php echo __('Close & save changes', 'jigoshop'); ?></button>
 
 		<div class="clearfix"></div>
 	</div>

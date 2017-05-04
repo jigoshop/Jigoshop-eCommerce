@@ -3,9 +3,8 @@ class Payment
   constructor: ->
     jQuery('.payment-method-configure').click (e) ->
       targetMethod = undefined
-      targetMethod = undefined
       e.preventDefault()
-      targetMethod = jQuery(e.target).val()
+      targetMethod = jQuery(e.delegateTarget).val()
       if targetMethod != undefined
         jQuery.magnificPopup.open
           mainClass: 'jigoshop'
@@ -37,6 +36,7 @@ class Payment
               return
             close: ->
               jQuery('#payment-method-options-' + targetMethod).appendTo '#payment-methods-container'
+              jQuery('.button-save-options').click();              
               return
       return
     jQuery('.payment-method-enable').on 'switchChange.bootstrapSwitch', (e, state) ->
