@@ -36,7 +36,7 @@ class Payment
               return
             close: ->
               jQuery('#payment-method-options-' + targetMethod).appendTo '#payment-methods-container'
-              jQuery('.button-save-options').click();              
+              jQuery('.button-save-options').click()
               return
       return
     jQuery('.payment-method-enable').on 'switchChange.bootstrapSwitch', (e, state) ->
