@@ -31,6 +31,13 @@ class AdminProductVariable
       modify_field: ''
       sale_start_date: ''
       sale_end_date: ''
+      buttons:
+        done: ''
+        cancel: ''
+        next: ''
+        back: ''
+        yes: ''
+        no: ''
   disableUpdate: false
 
   constructor: (@params) ->
@@ -245,36 +252,73 @@ class AdminProductVariable
         .trigger 'change'
 
   removeAllVariations: () ->
-    if confirm(@params.i18n.remove_all_variations) == false
-      return
-    jigoshop.block(jQuery('#product-variations').closest('.jigoshop'))
-    jQuery.ajax
-      url: jigoshop.getAjaxUrl()
-      type: 'post'
-      dataType: 'json'
-      data:
-        action: 'jigoshop.admin.product.remove_all_variations'
-        product_id: jQuery('#product-variations').closest('.jigoshop').data('id')
-    .done (data) ->
-      if data.success? and data.success
-        jQuery('#product-variations').slideUp ->
-          jigoshop.unblock(jQuery('#product-variations').closest('.jigoshop'))
-          jQuery('#product-variations li').remove()
-          jQuery('#product-variations').show()
+    buttons = {}
+    buttons[@params.i18n.buttons.yes] = true
+    buttons[@params.i18n.buttons.no] = false
+    jQuery.prompt @params.i18n.remove_all_variations,
+      title: jQuery('#variation-bulk-actions option:selected').html()
+      buttons: buttons
+      classes:
+        box: ''
+        fade: ''
+        prompt: 'jigoshop'
+        close: ''
+        title: 'lead'
+        message: ''
+        buttons: ''
+        button: 'btn'
+        defaultButton: 'btn-primary'
+      submit: (event, submitted, message, form) ->
+        if submitted
+          jigoshop.block(jQuery('#product-variations').closest('.jigoshop'))
+          jQuery.ajax
+            url: jigoshop.getAjaxUrl()
+            type: 'post'
+            dataType: 'json'
+            data:
+              action: 'jigoshop.admin.product.remove_all_variations'
+              product_id: jQuery('#product-variations').closest('.jigoshop').data('id')
+          .done (data) ->
+            if data.success? and data.success
+              jQuery('#product-variations').slideUp ->
+                jigoshop.unblock(jQuery('#product-variations').closest('.jigoshop'))
+                jQuery('#product-variations li').remove()
+                jQuery('#product-variations').show()
+      zIndex: 99999
 
   setFields: (field, text) ->
-    value = prompt(text)
-    jQuery('input.' + field, '#product-variations')
-      .val value
-      .trigger 'change'
+    buttons = {}
+    buttons[@params.i18n.buttons.done] = true
+    buttons[@params.i18n.buttons.cancel] = false
+    jQuery.prompt text + '<input type="text" class="form-control" name="value"></input>',
+      title: jQuery('#variation-bulk-actions option:selected').html()
+      buttons: buttons
+      focus: 'input[type="text"]'
+      classes:
+        box: ''
+        fade: ''
+        prompt: 'jigoshop'
+        close: ''
+        title: 'lead'
+        message: ''
+        buttons: ''
+        button: 'btn'
+        defaultButton: 'btn-primary'
+      submit: (event, submitted, message, form) ->
+        if submitted
+          jQuery('input.' + field, '#product-variations')
+            .val form.value
+            .trigger 'change'
+      zIndex: 99999
 
   modifyFields: (field, text, operator) ->
-    #value = prompt(text)
-    jQuery.prompt text + '<input type="text" name="value"></input>',
-      title: "Are you Ready?"
-      buttons:
-        "Cancel": false
-        "Done!": true
+    buttons = {}
+    buttons[@params.i18n.buttons.done] = true
+    buttons[@params.i18n.buttons.cancel] = false
+    jQuery.prompt text + '<input type="text" class="form-control" name="value"></input>',
+      title: jQuery('#variation-bulk-actions option:selected').html()
+      buttons: buttons
+      focus: 'input[type="text"]'
       classes:
         box: ''
         fade: ''
@@ -293,7 +337,6 @@ class AdminProductVariable
               return alert('Invalid number')
             form.value = 1 + operator * (form.value / 100)
             jQuery('input.' + field, '#product-variations').each () ->
-              console.log(form)
               jQuery(this)
                 .val Math.round(jQuery(this).val() * form.value * 100) / 100
                 .trigger 'change'
@@ -314,33 +357,98 @@ class AdminProductVariable
         .trigger 'change'
 
   setDates: () ->
-    from = prompt(@params.i18n.sale_start_date)
-    to = prompt(@params.i18n.sale_end_date)
-    jQuery('input.daterange-from', '#product-variations').val from
-    jQuery('input.daterange-to', '#product-variations')
-      .val to
-      .trigger 'change'
+    setStartDateButtons = {}
+    setEndDateButtons = {}
+    setStartDateButtons[@params.i18n.buttons.next] = true
+    setStartDateButtons[@params.i18n.buttons.cancel] = false
+    setEndDateButtons[@params.i18n.buttons.done] = 1
+    setEndDateButtons[@params.i18n.buttons.back] = -1
+    setEndDateButtons[@params.i18n.buttons.cancel] = 0
+    temp =
+      set_start_date:
+        title: jQuery('#variation-bulk-actions option:selected').html()
+        html: @params.i18n.sale_start_date + '<input type="text" class="form-control" name="from"></input>'
+        buttons: setStartDateButtons
+        submit: (event, submitted, message, form) ->
+          if !submitted
+            jQuery.prompt.close()
+          else
+            jQuery.prompt.goToState 'set_end_date'
+          return false
+      set_end_date:
+        title: jQuery('#variation-bulk-actions option:selected').html()
+        html: @params.i18n.sale_end_date + '<input type="text" class="form-control" name="to"></input>'
+        buttons: setEndDateButtons
+        submit: (event, submitted, message, form) ->
+          if submitted == 0
+            jQuery.prompt.close()
+          else if submitted == 1
+            return true
+          else if submitted == -1
+            jQuery.prompt.goToState 'set_start_date'
+          return false
+    jQuery.prompt temp,
+      classes:
+        box: ''
+        fade: ''
+        prompt: 'jigoshop'
+        close: ''
+        title: 'lead'
+        message: ''
+        buttons: ''
+        button: 'btn'
+        defaultButton: 'btn-primary'
+      close: (event, submitted, message, form) ->
+        if submitted
+          jQuery('input.daterange-from', '#product-variations').val form.from
+          jQuery('input.daterange-to', '#product-variations')
+            .val form.to
+            .trigger 'change'
+          jQuery('a.schedule', '#product-variations').trigger 'click'
+      loaded: (event) ->
+        jQuery('input[type="text"]', event.target).datepicker
+          autoclose: true,
+          todayHighlight: true,
+          clearBtn: true,
+          todayBtn: 'linked',
+      zIndex: 99999
 
   createVariationsFromAllAttributes: () ->
-    if confirm(@params.i18n.create_all_variations_confirmation) == false
-      return
-    jigoshop.block(jQuery('#product-variations').closest('.jigoshop'))
-    $parent = jQuery('#product-variations')
-    jQuery.ajax
-      url: jigoshop.getAjaxUrl()
-      type: 'post'
-      dataType: 'json'
-      data:
-        action: 'jigoshop.admin.product.create_variations_from_all_attributes'
-        product_id: $parent.closest('.jigoshop').data('id')
-    .done (data) =>
-      if data.success? and data.success
-        @disableUpdate = true
-        jigoshop.unblock(jQuery('#product-variations').closest('.jigoshop'))
-        jQuery(data.html).hide().appendTo($parent).slideDown =>
-          @disableUpdate = false
-        jQuery('.set_variation_image', data.html).each @connectImage
-
+    buttons = {}
+    buttons[@params.i18n.buttons.yes] = true
+    buttons[@params.i18n.buttons.no] = false
+    jQuery.prompt @params.i18n.create_all_variations_confirmation,
+      title: jQuery('#variation-bulk-actions option:selected').html()
+      buttons: buttons
+      classes:
+        box: ''
+        fade: ''
+        prompt: 'jigoshop'
+        close: ''
+        title: 'lead'
+        message: ''
+        buttons: ''
+        button: 'btn'
+        defaultButton: 'btn-primary'
+      submit: (event, submitted, message, form) ->
+        if submitted
+          jigoshop.block(jQuery('#product-variations').closest('.jigoshop'))
+          $parent = jQuery('#product-variations')
+          jQuery.ajax
+            url: jigoshop.getAjaxUrl()
+            type: 'post'
+            dataType: 'json'
+            data:
+              action: 'jigoshop.admin.product.create_variations_from_all_attributes'
+              product_id: $parent.closest('.jigoshop').data('id')
+          .done (data) =>
+            if data.success? and data.success
+              @disableUpdate = true
+              jigoshop.unblock(jQuery('#product-variations').closest('.jigoshop'))
+              jQuery(data.html).hide().appendTo($parent).slideDown =>
+                @disableUpdate = false
+              jQuery('.set_variation_image', data.html).each @connectImage
+      zIndex: 99999
 
 jQuery ->
   new AdminProductVariable(jigoshop_admin_product_variable)

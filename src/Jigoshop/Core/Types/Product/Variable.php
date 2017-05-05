@@ -421,6 +421,14 @@ class Variable implements Type
                 'modify_field' => __('Enter a value (fixed or %)', 'jigoshop'),
                 'sale_start_date' => __('Sale start date (MM/DD/YYYY format or leave blank)', 'jigoshop'),
                 'sale_end_date' => __('Sale end date (MM/DD/YYYY format or leave blank)', 'jigoshop'),
+                'buttons' => [
+                    'done' => __('Done!', 'jigoshop'),
+                    'cancel' => __('Cancel', 'jigoshop'),
+                    'next' => __('Next', 'jigoshop'),
+                    'back' => __('Back', 'jigoshop'),
+                    'yes' => __('Yes', 'jigoshop'),
+                    'no' => __('No', 'jigoshop'),
+                ],
             ],
         ]);
 	}
@@ -650,13 +658,19 @@ class Variable implements Type
                 $types[$type->getId()] = $type->getName();
             }
 
+            $taxClasses = [];
+            foreach ($this->options->get('tax.classes') as $class) {
+                $taxClasses[$class['class']] = $class['label'];
+            }
+
             echo json_encode([
                 'success' => true,
-                'html' => array_reduce($createdVariations, function($value, $variation) use ($product, $types) {
+                'html' => array_reduce($createdVariations, function($value, $variation) use ($product, $types, $taxClasses) {
                     $value .= Render::get('admin/product/box/variations/variation', [
                         'variation' => $variation,
                         'attributes' => $product->getVariableAttributes(),
                         'allowedSubtypes' => $types,
+                        'taxClasses' => $taxClasses,
                     ]);
 
                     return $value;
@@ -763,12 +777,18 @@ class Variable implements Type
 				$types[$type->getId()] = $type->getName();
 			}
 
+            $taxClasses = [];
+            foreach ($this->options->get('tax.classes') as $class) {
+                $taxClasses[$class['class']] = $class['label'];
+            }
+
 			echo json_encode([
 				'success' => true,
 				'html' => Render::get('admin/product/box/variations/variation', [
 					'variation' => $variation,
 					'attributes' => $product->getVariableAttributes(),
 					'allowedSubtypes' => $types,
+                    'taxClasses' => $taxClasses,
                 ]),
             ]);
 		} catch (Exception $e) {
