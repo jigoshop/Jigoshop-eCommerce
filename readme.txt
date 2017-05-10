@@ -151,6 +151,21 @@ However, if you want priority, dedicated support from Jigoshop staff, we dp offe
 
 == Changelog ==
 
+= 2.1.1 - 2017.05.10 =
+* New: Tools to remove zombie variations and meta.
+* Fix: Remove debug method from, create variations from all attributes.
+* Fix: Hide out of stock products option.
+* Fix: Adding related products to cart.
+* Fix: Fatal error related to wrong namespace use.
+* Fix: Allow to query product tags and categories at the same time.
+* Fix: Adding custom settings tab by using Integration.
+* Fix: Monthly report on dashboard should not predict future.
+* Fix: Dynamically remove shipping from cart if shipping is not required.
+* Fix: Coupon usage limit.
+* Fix: Missing tax classes options in variation form.
+* Fix: Improved prompt box for variation bulk actions.
+* Fix: Properly migrate product attachments.
+* Fix: Add products subtotal to order api response.
 = 2.1 - 2017.04.26 =
 * New: Admin notices.
 * New: My Downloads panel in my account.
