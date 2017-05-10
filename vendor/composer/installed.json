@@ -192,12 +192,12 @@
         "source": {
             "type": "git",
             "url": "https://github.com/Seldaek/monolog.git",
-            "reference": "4cdd014b809867f4c040523011d2c3607d55e6b4"
+            "reference": "35c07a81de6200e5aa0629eacecd11fd925d19dc"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/Seldaek/monolog/zipball/4cdd014b809867f4c040523011d2c3607d55e6b4",
-            "reference": "4cdd014b809867f4c040523011d2c3607d55e6b4",
+            "url": "https://api.github.com/repos/Seldaek/monolog/zipball/35c07a81de6200e5aa0629eacecd11fd925d19dc",
+            "reference": "35c07a81de6200e5aa0629eacecd11fd925d19dc",
             "shasum": ""
         },
         "require": {
@@ -233,7 +233,7 @@
             "ruflin/elastica": "Allow sending log messages to an Elastic Search server",
             "sentry/sentry": "Allow sending log messages to a Sentry server"
         },
-        "time": "2017-04-10 07:58:43",
+        "time": "2017-05-03 13:17:21",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -272,18 +272,18 @@
         "source": {
             "type": "git",
             "url": "https://github.com/erusev/parsedown.git",
-            "reference": "4367f89a74ecd7414d01f0411a8be6dba7071b08"
+            "reference": "593ffd45a31e59184707935387f44b4ae76b5ffe"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/erusev/parsedown/zipball/4367f89a74ecd7414d01f0411a8be6dba7071b08",
-            "reference": "4367f89a74ecd7414d01f0411a8be6dba7071b08",
+            "url": "https://api.github.com/repos/erusev/parsedown/zipball/593ffd45a31e59184707935387f44b4ae76b5ffe",
+            "reference": "593ffd45a31e59184707935387f44b4ae76b5ffe",
             "shasum": ""
         },
         "require": {
             "php": ">=5.3.0"
         },
-        "time": "2017-03-29 16:30:24",
+        "time": "2017-05-10 09:28:53",
         "type": "library",
         "installation-source": "source",
         "autoload": {
@@ -414,12 +414,12 @@
         "source": {
             "type": "git",
             "url": "https://github.com/PHPSocialNetwork/phpfastcache.git",
-            "reference": "05dc0cc895e1316ff6d383815cb7efa5f27e6d8c"
+            "reference": "f3820787386cfd44dd14627246820fbb837b39e0"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/PHPSocialNetwork/phpfastcache/zipball/05dc0cc895e1316ff6d383815cb7efa5f27e6d8c",
-            "reference": "05dc0cc895e1316ff6d383815cb7efa5f27e6d8c",
+            "url": "https://api.github.com/repos/PHPSocialNetwork/phpfastcache/zipball/f3820787386cfd44dd14627246820fbb837b39e0",
+            "reference": "f3820787386cfd44dd14627246820fbb837b39e0",
             "shasum": ""
         },
         "require": {
@@ -447,7 +447,7 @@
             "phpfastcache/phpssdb": "~1.0.0",
             "predis/predis": "~1.1.0"
         },
-        "time": "2017-04-25 17:43:29",
+        "time": "2017-04-30 14:57:55",
         "type": "library",
         "installation-source": "source",
         "autoload": {
@@ -794,12 +794,12 @@
         "source": {
             "type": "git",
             "url": "https://github.com/slimphp/Slim.git",
-            "reference": "7d62584968691ba2f897e9dafc7f357e80e0c4ca"
+            "reference": "d28272231017ae737abeee4b99673cbf29ee4e69"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/slimphp/Slim/zipball/7d62584968691ba2f897e9dafc7f357e80e0c4ca",
-            "reference": "7d62584968691ba2f897e9dafc7f357e80e0c4ca",
+            "url": "https://api.github.com/repos/slimphp/Slim/zipball/d28272231017ae737abeee4b99673cbf29ee4e69",
+            "reference": "d28272231017ae737abeee4b99673cbf29ee4e69",
             "shasum": ""
         },
         "require": {
@@ -817,7 +817,7 @@
             "phpunit/phpunit": "^4.0",
             "squizlabs/php_codesniffer": "^2.5"
         },
-        "time": "2017-04-17 07:57:11",
+        "time": "2017-05-03 13:59:20",
         "type": "library",
         "installation-source": "source",
         "autoload": {

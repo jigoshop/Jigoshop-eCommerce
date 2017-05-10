@@ -181,30 +181,32 @@ class Cart implements PageInterface
 
 		$shipping = [];
 		$shippingHtml = [];
-		foreach ($this->shippingService->getAvailable() as $method) {
-			/** @var $method Method */
-			if ($method instanceof MultipleMethod) {
-				/** @var $method MultipleMethod */
-				foreach ($method->getRates($cart) as $rate) {
-					/** @var $rate Rate */
-					$shipping[$method->getId().'-'.$rate->getId()] = $method->isEnabled() ? $rate->calculate($cart) : -1;
-					if ($method->isEnabled()) {
-						$shippingHtml[$method->getId().'-'.$rate->getId()] = [
-							'price' => Product::formatPrice($rate->calculate($cart)),
-							'html' => Render::get('shop/cart/shipping/rate', ['method' => $method, 'rate' => $rate, 'cart' => $cart]),
+		if($cart->isShippingRequired()) {
+            foreach ($this->shippingService->getAvailable() as $method) {
+                /** @var $method Method */
+                if ($method instanceof MultipleMethod) {
+                    /** @var $method MultipleMethod */
+                    foreach ($method->getRates($cart) as $rate) {
+                        /** @var $rate Rate */
+                        $shipping[ $method->getId() . '-' . $rate->getId() ] = $method->isEnabled() ? $rate->calculate($cart) : -1;
+                        if ($method->isEnabled()) {
+                            $shippingHtml[ $method->getId() . '-' . $rate->getId() ] = [
+                                'price' => Product::formatPrice($rate->calculate($cart)),
+                                'html' => Render::get('shop/cart/shipping/rate', ['method' => $method, 'rate' => $rate, 'cart' => $cart]),
+                            ];
+                        }
+                    }
+                } else {
+                    $shipping[ $method->getId() ] = $method->isEnabled() ? $method->calculate($cart) : -1;
+                    if ($method->isEnabled()) {
+                        $shippingHtml[ $method->getId() ] = [
+                            'price' => Product::formatPrice($cart->getShippingPrice()),
+                            'html' => Render::get('shop/cart/shipping/method', ['method' => $method, 'cart' => $cart]),
                         ];
-					}
-				}
-			} else {
-				$shipping[$method->getId()] = $method->isEnabled() ? $method->calculate($cart) : -1;
-				if ($method->isEnabled()) {
-					$shippingHtml[$method->getId()] = [
-						'price' => Product::formatPrice($cart->getShippingPrice()),
-						'html' => Render::get('shop/cart/shipping/method', ['method' => $method, 'cart' => $cart]),
-                    ];
-				}
-			}
-		}
+                    }
+                }
+            }
+        }
 
 		$shippingMethod = $cart->getShippingMethod();
         if($shippingMethod) {

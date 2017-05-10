@@ -13,7 +13,7 @@ use WPAL\Wordpress;
 
 class Core
 {
-	const VERSION = '2.1';
+	const VERSION = '2.1.1';
 	const WIDGET_CACHE = 'jigoshop_widget_cache';
 	const TERMS = 'jigoshop_term';
 
@@ -41,6 +41,7 @@ class Core
 		Styles::register('jigoshop.shop', \JigoshopInit::getUrl().'/assets/css/shop.css');
 		Styles::register('prettyphoto', \JigoshopInit::getUrl().'/assets/css/prettyPhoto.css');
 		Styles::register('tokenfield', \JigoshopInit::getUrl().'/assets/css/vendors/tokenfield.css');
+		Styles::register('impromptu', \JigoshopInit::getUrl().'/assets/css/vendors/impromptu.css');
 		Scripts::register('jigoshop.helpers', \JigoshopInit::getUrl().'/assets/js/helpers.js', ['jquery']);
 		Scripts::register('jigoshop.helpers.ajax_search', \JigoshopInit::getUrl().'/assets/js/helpers/ajax_search.js', ['jigoshop.helpers']);
 		Scripts::register('jigoshop.helpers.payment', \JigoshopInit::getUrl().'/assets/js/helpers/payment.js', ['jigoshop.helpers', 'jquery-blockui']);
@@ -53,6 +54,7 @@ class Core
 		Scripts::register('jquery-blockui', '//cdnjs.cloudflare.com/ajax/libs/jquery.blockUI/2.66.0-2013.10.09/jquery.blockUI.min.js', ['jquery']);
 		Scripts::register('prettyphoto', \JigoshopInit::getUrl().'/assets/js/jquery.prettyPhoto.js');
 		Scripts::register('tokenfield', \JigoshopInit::getUrl().'/assets/js/vendors/tokenfield.js', ['jquery']);
+		Scripts::register('impromptu', \JigoshopInit::getUrl().'/assets/js/vendors/impromptu.js', ['jquery']);
 		Scripts::localize('jigoshop.helpers', 'jigoshop_helpers', [
 			'assets' => \JigoshopInit::getUrl().'/assets',
 			'ajaxUrl' => admin_url('admin-ajax.php'),

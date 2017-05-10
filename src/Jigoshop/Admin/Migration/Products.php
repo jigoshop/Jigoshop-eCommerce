@@ -173,6 +173,19 @@ class Products implements Tool
 					$this->checkSql();
 				}
 
+				$attachments = $wpdb->get_results($wpdb->prepare("SELECT ID FROM {$wpdb->posts} WHERE post_parent = %s AND post_type = 'attachment'", $products[$i]->ID), ARRAY_A);
+				$thumbnail = get_post_meta($product->ID, '_thumbnail_id', true);
+				foreach ($attachments as $attachment) {
+				    if($thumbnail == false || $thumbnail != $attachment['ID']) {
+                        $wpdb->insert($wpdb->prefix . 'jigoshop_product_attachment', [
+                            'product_id' => $product->ID,
+                            'attachment_id' => $attachment['ID'],
+                            'type' => Product\Attachment\Image::TYPE
+                        ]);
+                        $this->checkSql();
+                    }
+                }
+
 				$regularPrice = 0.0;
 				$taxClasses = [];
 

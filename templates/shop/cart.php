@@ -82,8 +82,8 @@ use Jigoshop\Helper\Tax;
 				<div class="panel-heading"><h2 class="panel-title"><?php _e('Cart Totals', 'jigoshop'); ?></h2></div>
 				<table class="table">
 					<tbody>
-					<?php if ($showShippingCalculator && $cart->isShippingRequired()): ?>
-						<tr id="shipping-calculator">
+					<?php if ($showShippingCalculator): ?>
+						<tr id="shipping-calculator"<?php !$cart->isShippingRequired() and print ' style="display: none;"'?>>
 							<th scope="row">
 								<?php _e('Shipping', 'jigoshop'); ?>
 								<p class="small text-muted"><?= sprintf(__('Estimated for:<br/><span>%s</span>', 'jigoshop'), $customer->getShippingAddress()->getLocation()); ?></p>
