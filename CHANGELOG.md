@@ -13,6 +13,7 @@
     * Fix: Missing tax classes options in variation form.
     * Fix: Improved prompt box for variation bulk actions.
     * Fix: Properly migrate product attachments.
+    * Fix: Add products subtotal to order api response.
 * 2.1 - 2017.04.26:
     * New: Admin notices.
     * New: My Downloads panel in my account.

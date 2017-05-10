@@ -868,6 +868,7 @@ class Order implements OrderInterface, \JsonSerializable
            'total' => $this->getTotal(),
            'tax' => $this->tax,
            'shipping_tax' => $this->shippingTax,
+           'products_subtotal' => $this->productSubtotal,
            'subtotal' => $this->subtotal,
            'discounts' => $this->discounts,
            'discount' => $this->getDiscount(),
