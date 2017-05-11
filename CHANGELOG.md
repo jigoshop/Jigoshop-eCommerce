@@ -1,4 +1,6 @@
 ## Changelog
+* 2.1.2 - 2017.05.11:
+    * Fix: Did not display settings tab.
 * 2.1.1 - 2017.05.10:
     * New: Tools to remove zombie variations and meta.
     * Fix: Remove debug method from, create variations from all attributes.
