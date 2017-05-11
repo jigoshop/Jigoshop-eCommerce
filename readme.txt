@@ -151,6 +151,10 @@ However, if you want priority, dedicated support from Jigoshop staff, we dp offe
 
 == Changelog ==
 
+= 2.1.2 - 2017.05.11 =
+* New: Possibility to get country code in ISO 3166-1 alfa-3 standard.
+* Fix: Properly display custom settings tabs.
+* Fix: Properly migrate stock status.
 = 2.1.1 - 2017.05.10 =
 * New: Tools to remove zombie variations and meta.
 * Fix: Remove debug method from, create variations from all attributes.
