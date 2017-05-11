@@ -24,6 +24,7 @@ class MainConfiguration implements ConfigurationInterface
 	{
 		$services->setDetails('wpal', 'WPAL\Wordpress', []);
 		$services->setDetails('parsedown', 'Parsedown', []);
+		$services->setDetails('jigoshop.integration', 'Jigoshop\Integration', []);
 		$services->setDetails('jigoshop.product_type.simple', 'Jigoshop\Core\Types\Product\Simple', []);
 		$services->setDetails('jigoshop.product_type.virtual', 'Jigoshop\Core\Types\Product\Virtual', []);
 		$services->setDetails('jigoshop.product_type.variable.initializer', 'Jigoshop\Core\Installer\Product\Variable', []);

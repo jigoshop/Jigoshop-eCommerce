@@ -1,5 +1,6 @@
 ## Changelog
 * 2.1.2 - 2017.05.11:
+    * New: Possibility to get country code in ISO 3166-1 alfa-3 standard.
     * Fix: Did not display settings tab.
 * 2.1.1 - 2017.05.10:
     * New: Tools to remove zombie variations and meta.
