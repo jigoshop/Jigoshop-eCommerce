@@ -126,6 +126,7 @@ class Products implements Tool
 			$attributes = [];
 			$productAttributes = [];
 			$globalAttributes = [];
+			$stock = [];
 			foreach ($wpdb->get_results("SELECT * FROM {$wpdb->prefix}jigoshop_attribute_taxonomies") as $attribute) {
 				$this->checkSql();
 				$globalAttributes[$this->wp->getHelpers()
@@ -269,8 +270,12 @@ class Products implements Tool
 
 					$key = $this->_transformKey($products[$i]->meta_key);
 
+
 					if ($key !== null) {
 						$value = $this->_transform($products[$i]->meta_key, $products[$i]->meta_value);
+                        if(in_array($key, ['stock_manage', 'stock_stock'])) {
+                            $stock[$key] = $value;
+                        }
 						if ($key == 'regular_price') {
 							$regularPrice = $value;
 						}
@@ -289,7 +294,20 @@ class Products implements Tool
 
 					$i++;
 				} while ($i < $endI && $products[$i]->ID == $product->ID);
+
+                if(isset($stock['stock_manage'], $stock['stock_stock'])) {
+                    if($stock['stock_manage'] && $stock['stock_stock'] == 0) {
+                        $wpdb->update($wpdb->postmeta, [
+                            'meta_value' => StockStatus::OUT_STOCK,
+                        ], [
+                            'post_id' => $product->ID,
+                            'meta_key' => 'stock_status',
+                        ]);
+                    }
+                }
 			}
+
+
 
 			foreach ($globalAttributes as $slug => $attributeData) {
 
