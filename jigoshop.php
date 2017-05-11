@@ -20,7 +20,7 @@
  * Description:         Jigoshop, a WordPress eCommerce plugin that works.
  * Author:              Jigoshop
  * Author URI:          http://www.jigoshop.com
- * Version:             2.1.1
+ * Version:             2.1.2
  * Requires at least:   4.0
  * Tested up to:        4.7.4
  * Text Domain:         jigoshop
@@ -95,48 +95,54 @@ if(version_compare($wp_version, JIGOSHOP_WORDPRESS_VERSION, '<')){
 
 $ini_memory_limit = ini_get('memory_limit');
 preg_match('/^(\d+)(\w*)?$/', $ini_memory_limit, $memory);
-$memory_limit = $memory[1];
-if (isset($memory[2])) {
-	switch (strtoupper($memory[2])) {
-		/** @noinspection PhpMissingBreakStatementInspection */
-		case 'M':
-			$memory_limit *= 1024 * 1024;
-		case 'K':
-			$memory_limit *= 1024;
-	}
-}
-if($memory_limit < JIGOSHOP_REQUIRED_MEMORY*1024*1024){
-	function jigoshop_required_memory_warning()
-	{
-		$ini_memory_limit = ini_get('memory_limit');
-		echo '<div class="error"><p>'.
-			sprintf(__('<strong>Warning!</strong> Jigoshop requires at least %sM of memory! Your system currently has: %s.', 'jigoshop'), JIGOSHOP_REQUIRED_MEMORY, $ini_memory_limit).
-			'</p></div>';
-	}
-	add_action('admin_notices', 'jigoshop_required_memory_warning');
+if(isset($memory[1])) {
+    $memory_limit = $memory[1];
+    if (isset($memory[2])) {
+        switch (strtoupper($memory[2])) {
+            /** @noinspection PhpMissingBreakStatementInspection */
+            case 'M':
+                $memory_limit *= 1024 * 1024;
+            case 'K':
+                $memory_limit *= 1024;
+        }
+    }
+    if ($memory_limit < JIGOSHOP_REQUIRED_MEMORY * 1024 * 1024) {
+        function jigoshop_required_memory_warning()
+        {
+            $ini_memory_limit = ini_get('memory_limit');
+            echo '<div class="error"><p>' .
+                sprintf(__('<strong>Warning!</strong> Jigoshop requires at least %sM of memory! Your system currently has: %s.', 'jigoshop'), JIGOSHOP_REQUIRED_MEMORY, $ini_memory_limit) .
+                '</p></div>';
+        }
+
+        add_action('admin_notices', 'jigoshop_required_memory_warning');
+    }
 }
 
 preg_match('/^(\d+)(\w*)?$/', WP_MEMORY_LIMIT, $memory);
-$memory_limit = $memory[1];
-if (isset($memory[2])) {
-	switch (strtoupper($memory[2])) {
-		/** @noinspection PhpMissingBreakStatementInspection */
-		case 'M':
-			$memory_limit *= 1024 * 1024;
-		case 'K':
-			$memory_limit *= 1024;
-	}
-}
+if(isset($memory[1])) {
+    $memory_limit = $memory[1];
+    if (isset($memory[2])) {
+        switch (strtoupper($memory[2])) {
+            /** @noinspection PhpMissingBreakStatementInspection */
+            case 'M':
+                $memory_limit *= 1024 * 1024;
+            case 'K':
+                $memory_limit *= 1024;
+        }
+    }
 
-if($memory_limit < JIGOSHOP_REQUIRED_WP_MEMORY*1024*1024){
-	function jigoshop_required_wp_memory_warning()
-	{
-		echo '<div class="error"><p>'.
-			sprintf(__('<strong>Warning!</strong> Jigoshop requires at least %sM of memory for WordPress! Your system currently has: %s. <a href="%s" target="_blank">How to change?</a>', 'jigoshop'),
-                JIGOSHOP_REQUIRED_WP_MEMORY, WP_MEMORY_LIMIT, 'http://codex.wordpress.org/Editing_wp-config.php#Increasing_memory_allocated_to_PHP').
-			'</p></div>';
-	}
-	add_action('admin_notices', 'jigoshop_required_wp_memory_warning');
+    if ($memory_limit < JIGOSHOP_REQUIRED_WP_MEMORY * 1024 * 1024) {
+        function jigoshop_required_wp_memory_warning()
+        {
+            echo '<div class="error"><p>' .
+                sprintf(__('<strong>Warning!</strong> Jigoshop requires at least %sM of memory for WordPress! Your system currently has: %s. <a href="%s" target="_blank">How to change?</a>', 'jigoshop'),
+                    JIGOSHOP_REQUIRED_WP_MEMORY, WP_MEMORY_LIMIT, 'http://codex.wordpress.org/Editing_wp-config.php#Increasing_memory_allocated_to_PHP') .
+                '</p></div>';
+        }
+
+        add_action('admin_notices', 'jigoshop_required_wp_memory_warning');
+    }
 }
 require_once(__DIR__.'/src/JigoshopInit.php');
 $jigoshop = new JigoshopInit(__FILE__);
