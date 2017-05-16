@@ -379,10 +379,10 @@ class Orders implements Tool
                                     'product_type' => $productGetType,
                                     'title' => $itemData['name'],
                                     'tax_classes' => '',
-                                    'price' => $price,
+                                    'price' => $itemData['cost'],
                                     'tax' => $tax,
                                     'quantity' => $itemData['qty'],
-                                    'cost' => ,
+                                    'cost' => $cost,
                                 ];
 
                                 if ($productGetId != null) {
