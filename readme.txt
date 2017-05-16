@@ -5,7 +5,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 
 Requires at least: 4.0
 Tested up to: 4.7.4
-Stable tag: 2.1.1
+Stable tag: 2.1.3
 
 A feature-packed eCommerce plugin built upon WordPress core functionality ensuring excellent performance, customizability and control - robust Tax Settings, Stock Level Management, Free and Premium Extensions - you name it.
 
