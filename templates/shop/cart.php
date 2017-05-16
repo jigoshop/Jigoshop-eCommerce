@@ -12,8 +12,6 @@ use Jigoshop\Helper\Tax;
  * @var $customer \Jigoshop\Entity\Customer Current customer.
  * @var $shippingMethods array List of available shipping methods.
  * @var $shopUrl string Url to shop (product list).
- * @var $showWithTax bool Whether to show product price with or without tax.
- * @var $suffix string
  * @var $showShippingCalculator bool Whether to show shipping calculator.
  * @var $termsUrl string Url to terms and conditions page.
  */
@@ -27,9 +25,7 @@ use Jigoshop\Helper\Tax;
     <?php do_action('jigoshop\template\cart\form\before'); ?>
 	<form id="cart" role="form" action="" method="post">
 		<?php Render::output('shop/cart/mobile', [
-			'cart' => $cart,
-			'showWithTax' => $showWithTax,
-            'suffix' => $suffix,
+			'cart' => $cart
 		]); ?>
 		<table class="table table-hover">
 			<thead>
@@ -46,7 +42,12 @@ use Jigoshop\Helper\Tax;
 			</thead>
 			<tbody>
 				<?php foreach($cart->getItems() as $key => $item): /** @var $item \Jigoshop\Entity\Order\Item */ ?>
-					<?php Render::output('shop/cart/item/'.$item->getType(), ['cart' => $cart, 'key' => $key, 'item' => $item, 'showWithTax' => $showWithTax, 'suffix' => $suffix]); ?>
+					<?php Render::output('shop/cart/item/'.$item->getType(), [
+						'cart' => $cart, 
+						'key' => $key, 
+						'item' => $item
+						]); 
+					?>
 				<?php endforeach; ?>
 				<?php /** @deprectated */ do_action('jigoshop\cart\table_body', $cart); ?>
                 <?php do_action('jigoshop\template\cart\table_body', $cart); ?>
@@ -61,9 +62,20 @@ use Jigoshop\Helper\Tax;
 							'value' => join(',', array_map(function($coupon){ return $coupon->getCode(); }, $cart->getCoupons())),
                         ]); ?>
 					</td>
-					<?php $productSubtotal = $showWithTax ? $cart->getProductSubtotal() + $cart->getTotalTax() : $cart->getProductSubtotal(); ?>
+
+					<?php 
+					$productSubtotalPrices = Product::generatePrices($cart->getProductSubtotal(), $cart->getProductSubtotal() + $cart->getTotalTax(), 1);
+
+					if(count($productSubtotalPrices) == 2) {
+						$productSubtotalPricesStr = sprintf('%s (%s)', $productSubtotalPrices[0], $productSubtotalPrices[1]);
+					}
+					else {
+						$productSubtotalPricesStr = $productSubtotalPrices[0];
+					}
+					?>
+					
 					<th scope="row" class="text-right"><?php _e('Products subtotal', 'jigoshop'); ?></th>
-					<td id="product-subtotal"><?php printf('%s %s', Product::formatPrice($productSubtotal), $suffix); ?></td>
+					<td id="product-subtotal"><?php echo $productSubtotalPricesStr; ?></td>
 				</tr>
 				<noscript>
 				<tr>

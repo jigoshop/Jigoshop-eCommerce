@@ -13,7 +13,7 @@ use Jigoshop\Helper\Render;
 	<?php do_action('jigoshop\template\product\before_summary', $product); ?>
 	<div class="summary">
 		<h1><?= $product->getName(); ?></h1>
-		<p class="price"><?= Product::getPriceHtml($product); ?></p>
+		<div class="price"><?= Product::getPriceHtml($product); ?></div>
 		<p class="stock"><?= Product::getStock($product); ?></p>
 		<?php Product::printAddToCartForm($product, 'product'); ?>
 		<dl class="dl-horizontal">

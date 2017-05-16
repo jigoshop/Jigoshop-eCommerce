@@ -5,8 +5,6 @@ use Jigoshop\Helper\Product;
  * @var $cart \Jigoshop\Entity\Cart Cart object.
  * @var $key string Cart item key.
  * @var $item \Jigoshop\Entity\Order\Item Cart item to display.
- * @var $showWithTax bool Whether to show product price with or without tax.
- * @var $suffix string
  */
 ?>
 <?php
@@ -14,9 +12,31 @@ use Jigoshop\Helper\Product;
 $product = $item->getProduct();
 $variation = $product->getVariation($item->getMeta('variation_id')->getValue());
 $url = apply_filters('jigoshop\cart\product_url', get_permalink($product->getId()), $key);
-$price = $showWithTax ? $item->getPrice() + $item->getTax() / $item->getQuantity() : $item->getPrice();
-?>
 
+$price = $item->getPrice();
+$priceWithTax = $item->getPrice() + ($item->getTax() / $item->getQuantity());
+
+$prices = Product::generatePrices($price, $priceWithTax, 1);
+if(count($prices) == 2) {
+    $pricesStr = sprintf('%s
+        (%s)', $prices[0], $prices[1]);
+}
+else {
+    $pricesStr = $prices[0];
+}
+
+$priceTotal = $item->getQuantity() * $price;
+$priceTotalWithTax = $item->getQuantity() * $priceWithTax;
+
+$pricesTotal = Product::generatePrices($priceTotal, $priceTotalWithTax, 1);
+if(count($pricesTotal) == 2) {
+    $pricesTotalStr = sprintf('%s
+        (%s)', $pricesTotal[0], $pricesTotal[1]);
+}
+else {
+    $pricesTotalStr = $pricesTotal[0];
+}
+?>
 <li class="list-group-item" data-id="<?= $key; ?>" data-product="<?= $product->getId(); ?>">
     <div class="list-group-item-heading clearfix">
         <div class="buttons pull-right">
@@ -35,7 +55,7 @@ $price = $showWithTax ? $item->getPrice() + $item->getTax() / $item->getQuantity
                 <span class="product-quantity"><?= $item->getQuantity(); ?></span>
                 &times;
                 <span class="product-price">
-                            <?= Product::formatPrice($price); ?>
+                            <?= $pricesStr; ?>
                         </span>
             </div>
         </div>
@@ -51,7 +71,7 @@ $price = $showWithTax ? $item->getPrice() + $item->getTax() / $item->getQuantity
                         <?php _e('Unit Price', 'jigoshop'); ?>
                     </label>
                     <div class="clearfix product-price">
-                        <?= apply_filters('jigoshop\template\shop\checkout\product_price', \Jigoshop\Helper\Product::formatPrice($price), $price, $product, $item); ?>
+                        <?= apply_filters('jigoshop\template\shop\checkout\product_price', $pricesStr, $price, $product, $item); ?>
                     </div>
                 </div>
                 <div class="form-group product_quantity_field padding-bottom-5">
@@ -71,7 +91,7 @@ $price = $showWithTax ? $item->getPrice() + $item->getTax() / $item->getQuantity
                             <?php _e('Price', 'jigoshop'); ?>
                         </label>
                         <div class="clearfix product-subtotal">
-                            <?= apply_filters('jigoshop\template\shop\checkout\product_subtotal', \Jigoshop\Helper\Product::formatPrice($item->getQuantity() * $price, $suffix), $item->getQuantity() * $price, $product, $item); ?>
+                            <?= apply_filters('jigoshop\template\shop\checkout\product_subtotal', $pricesTotalStr, $item->getQuantity() * $price, $product, $item); ?>
                         </div>
                 </div>
             </fieldset>
