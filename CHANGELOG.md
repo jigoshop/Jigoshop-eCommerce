@@ -1,4 +1,6 @@
 ## Changelog
+* 2.1.3:
+    * Fix: Fatal error on order edit page caused by Free shipping.
 * 2.1.2 - 2017.05.11:
     * New: Possibility to get country code in ISO 3166-1 alfa-3 standard.
     * Fix: Properly display custom settings tabs.
