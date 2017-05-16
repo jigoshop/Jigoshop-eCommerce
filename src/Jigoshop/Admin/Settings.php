@@ -211,8 +211,7 @@ class Settings implements PageInterface
 	{
 		switch ($field['type']) {
 			case 'user_defined':
-				// Workaround for PHP pre-5.4
-				echo call_user_func($field['display'], $field);
+				Forms::userDefined($field);
 				break;
 			case 'text':
 				Forms::text($field);

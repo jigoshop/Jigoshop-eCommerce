@@ -12,4 +12,5 @@ class Forms extends \Jigoshop\Helper\Forms
 	protected static $hiddenTemplate = 'admin/forms/hidden';
 	protected static $textareaTemplate = 'admin/forms/textarea';
 	protected static $daterangeTemplate = 'admin/forms/daterange';
+	protected static $userDefinedTemplate = 'admin/forms/userDefined';
 }
