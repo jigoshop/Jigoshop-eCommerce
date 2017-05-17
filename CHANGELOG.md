@@ -1,5 +1,6 @@
 ## Changelog
 * 2.1.3:
+    * New: Allow to prepend product permalink with Wordpress permalink.
     * Fix: Fatal error on order edit page caused by Free shipping.
     * Fix: Properly migrate order items.
 * 2.1.2 - 2017.05.11:

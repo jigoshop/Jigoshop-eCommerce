@@ -82,6 +82,7 @@ class Permalinks
 
 		$helpers = $this->wp->getHelpers();
 		$permalink = $helpers->trailingslashit($this->options->get('permalinks.product'));
+		$with_front = $this->options->get('permalinks.with_front');
 
 		// Get shop page
 		$shopPageId = $this->options->getPageId(FrontendPages::SHOP);
@@ -101,6 +102,7 @@ class Permalinks
 			'base' => $base,
 			'productBase' => $productBase,
 			'homeUrl' => $this->wp->getHomeUrl(),
+            'with_front' => $with_front,
         ]);
 	}
 
@@ -120,6 +122,7 @@ class Permalinks
 			$helpers = $this->wp->getHelpers();
 			$permalinks['category'] = $helpers->untrailingslashit($categorySlug);
 			$permalinks['tag'] = $helpers->untrailingslashit($tagSlug);
+			$permalinks['with_front'] = isset($_POST['product_permalink_with_front']) && $_POST['product_permalink_with_front'] == 'on';
 
 			// Product base
 			$product_permalink = trim(strip_tags($_POST['product_permalink']));
@@ -144,7 +147,7 @@ class Permalinks
 			if ($shopPageId && trim($permalinks['product'], '/') === $shop_permalink) {
 				$permalinks['verbose'] = true;
 			}
-			
+
 			$this->options->update('permalinks', $permalinks);
 			$this->options->saveOptions();
 			$this->wp->getRewrite()->flush_rules();

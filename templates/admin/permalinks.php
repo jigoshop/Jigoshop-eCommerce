@@ -8,6 +8,7 @@ use Jigoshop\Helper\Forms;
  * @var $base string
  * @var $productBase string
  * @var $homeUrl string
+ * @var $front string
  */
 ?>
 <table class="form-table">
@@ -37,6 +38,12 @@ use Jigoshop\Helper\Forms;
 			<span class="description"><?php _e('Enter a custom base to use. A base <strong>must</strong> be set or WordPress will use default instead.', 'jigoshop'); ?></span>
 		</td>
 	</tr>
+    <tr>
+        <th><label><input name="product_permalink_with_front" type="checkbox" value="on" <?= Forms::checked($with_front, true); ?> /> <?php _e('With Front', 'jigoshop'); ?></label></th>
+        <td>
+            <span class=""><?= sprintf(__('Prepend product permalink with <code>%s</code>.', 'jigoshop'), preg_replace('$/%(.*)%/$', '', get_option('permalink_structure'))); ?></span>
+        </td>
+    </tr>
 	</tbody>
 </table>
 <script type="text/javascript">
