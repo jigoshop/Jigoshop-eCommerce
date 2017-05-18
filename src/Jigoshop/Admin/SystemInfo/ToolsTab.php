@@ -216,7 +216,7 @@ class ToolsTab implements TabInterface
         $js1Orders = $wpdb->get_results("SELECT post_id as id FROM {$wpdb->postmeta} WHERE meta_key = 'order_items'", ARRAY_A);
 
         foreach($js1Orders as $order) {
-            $items = $wpdb->get_results($wpdb->prefix("SELECT * FROM {$wpdb->prefix}jigoshop_order_item WHERE order_id = %d", $order['id']), ARRAY_A4);
+            $items = $wpdb->get_results($wpdb->prepare("SELECT * FROM {$wpdb->prefix}jigoshop_order_item WHERE order_id = %d", $order['id']), ARRAY_A);
             foreach ($items as $item) {
                 $taxRate = $item['tax']/ $item['price'];
                 $item['price'] = $item['cost'];
