@@ -216,7 +216,7 @@ class Orders implements Tool
                                             $value = is_array($value) ? serialize($value) : $value;
                                             $wpdb->insert($wpdb->prefix . 'jigoshop_order_discount_meta', [
                                                 'discount_id' => $discountId,
-                                                'meta_mey' => $key,
+                                                'meta_key' => $key,
                                                 'meta_value' => $value,
                                             ]);
                                         }
