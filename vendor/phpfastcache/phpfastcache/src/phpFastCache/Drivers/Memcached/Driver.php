@@ -27,6 +27,7 @@ use Psr\Cache\CacheItemInterface;
 /**
  * Class Driver
  * @package phpFastCache\Drivers
+ * @property MemcachedSoftware $instance
  */
 class Driver implements ExtendedCacheItemPoolInterface
 {

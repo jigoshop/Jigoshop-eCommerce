@@ -7,8 +7,7 @@
  *
  * For full copyright and license information, please see the docs/CREDITS.txt file.
  *
- * @author Khoa Bui (khoaofgod)  <khoaofgod@gmail.com> http://www.phpfastcache.com
- * @author Georges.L (Geolim4)  <contact@geolim4.com>
+ * @author Lucas Brucksch <support@hammermaps.de>
  *
  */
 // Include composer autoloader
@@ -20,13 +19,8 @@ date_default_timezone_set("Europe/Paris");
 use phpFastCache\CacheManager;
 use phpFastCache\Core\phpFastCache;
 
-// Setup File Path on your config files
-CacheManager::setDefaultConfig([
-  "path" => sys_get_temp_dir(),
-]);
-
 // In your class, function, you can call the Cache
-$InstanceCache = CacheManager::getInstance('leveldb');
+$InstanceCache = CacheManager::getInstance('zenddisk');
 // OR $InstanceCache = CacheManager::getInstance() <-- open examples/global.setup.php to see more
 
 /**
@@ -37,9 +31,9 @@ $key = "product_page";
 $CachedString = $InstanceCache->getItem($key);
 
 if (is_null($CachedString->get())) {
-    //$CachedString = "Files Cache --> Cache Enabled --> Well done !";
+    //$CachedString = "Zend Disk Cache --> Cache Enabled --> Well done !";
     // Write products to Cache in 10 minutes with same keyword
-    $CachedString->set("Files Cache --> Cache Enabled --> Well done !");
+    $CachedString->set("Zend Disk Cache --> Cache Enabled --> Well done !");
     $InstanceCache->save($CachedString);
 
     echo "FIRST LOAD // WROTE OBJECT TO CACHE // RELOAD THE PAGE AND SEE // ";

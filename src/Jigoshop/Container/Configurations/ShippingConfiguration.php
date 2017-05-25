@@ -31,6 +31,7 @@ class ShippingConfiguration implements ConfigurationInterface
 			'wpal',
 			'jigoshop.options',
 			'jigoshop.service.cart',
+			'jigoshop.service.order',
 			'jigoshop.messages'
         ]);
 		$services->setDetails('jigoshop.shipping.local_pickup', 'Jigoshop\Shipping\LocalPickup', [

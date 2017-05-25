@@ -332,6 +332,7 @@ class Options
 			'category' => 'product-category',
 			'tag' => 'product-tag',
 			'verbose' => false,
+            'with_front' => true,
         ],
     ];
 	private $options = [];

@@ -92,7 +92,7 @@ class Product implements Post
 			'hierarchical' => false, // Hierarchical causes a memory leak http://core.trac.wordpress.org/ticket/15459
 			'rewrite' => [
 				'slug' => $this->options->get('permalinks.product'),
-				'with_front' => true,
+				'with_front' => $this->options->get('permalinks.with_front'),
 				'feeds' => true,
 				'pages' => true,
             ],

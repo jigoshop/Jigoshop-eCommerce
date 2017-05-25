@@ -272,18 +272,18 @@
         "source": {
             "type": "git",
             "url": "https://github.com/erusev/parsedown.git",
-            "reference": "593ffd45a31e59184707935387f44b4ae76b5ffe"
+            "reference": "728952b90a333b5c6f77f06ea9422b94b585878d"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/erusev/parsedown/zipball/593ffd45a31e59184707935387f44b4ae76b5ffe",
-            "reference": "593ffd45a31e59184707935387f44b4ae76b5ffe",
+            "url": "https://api.github.com/repos/erusev/parsedown/zipball/728952b90a333b5c6f77f06ea9422b94b585878d",
+            "reference": "728952b90a333b5c6f77f06ea9422b94b585878d",
             "shasum": ""
         },
         "require": {
             "php": ">=5.3.0"
         },
-        "time": "2017-05-10 09:28:53",
+        "time": "2017-05-14 14:47:48",
         "type": "library",
         "installation-source": "source",
         "autoload": {
@@ -409,17 +409,17 @@
     },
     {
         "name": "phpfastcache/phpfastcache",
-        "version": "6.x-dev",
-        "version_normalized": "6.9999999.9999999.9999999-dev",
+        "version": "v7.x-dev",
+        "version_normalized": "7.9999999.9999999.9999999-dev",
         "source": {
             "type": "git",
             "url": "https://github.com/PHPSocialNetwork/phpfastcache.git",
-            "reference": "f3820787386cfd44dd14627246820fbb837b39e0"
+            "reference": "23c54c1251c8983e3163cf0b11cbbc2c71422669"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/PHPSocialNetwork/phpfastcache/zipball/f3820787386cfd44dd14627246820fbb837b39e0",
-            "reference": "f3820787386cfd44dd14627246820fbb837b39e0",
+            "url": "https://api.github.com/repos/PHPSocialNetwork/phpfastcache/zipball/23c54c1251c8983e3163cf0b11cbbc2c71422669",
+            "reference": "23c54c1251c8983e3163cf0b11cbbc2c71422669",
             "shasum": ""
         },
         "require": {
@@ -447,7 +447,7 @@
             "phpfastcache/phpssdb": "~1.0.0",
             "predis/predis": "~1.1.0"
         },
-        "time": "2017-04-30 14:57:55",
+        "time": "2017-05-11 21:38:24",
         "type": "library",
         "installation-source": "source",
         "autoload": {
@@ -503,56 +503,6 @@
             "zend disk cache",
             "zend memory cache",
             "zend server"
-        ]
-    },
-    {
-        "name": "spatie/array-to-xml",
-        "version": "dev-master",
-        "version_normalized": "9999999-dev",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/spatie/array-to-xml.git",
-            "reference": "48a71d57980a40a1f84d741df563a594272feae9"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/spatie/array-to-xml/zipball/48a71d57980a40a1f84d741df563a594272feae9",
-            "reference": "48a71d57980a40a1f84d741df563a594272feae9",
-            "shasum": ""
-        },
-        "require": {
-            "php": "^5.4|^7.0"
-        },
-        "require-dev": {
-            "mockery/mockery": "0.9.*",
-            "phpunit/phpunit": "4.*"
-        },
-        "time": "2017-02-18 10:05:46",
-        "type": "library",
-        "installation-source": "source",
-        "autoload": {
-            "psr-4": {
-                "Spatie\\ArrayToXml\\": "src"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Freek Van der Herten",
-                "email": "freek@spatie.be",
-                "homepage": "https://murze.be",
-                "role": "Developer"
-            }
-        ],
-        "description": "Convert an array to xml",
-        "homepage": "https://github.com/spatie/array-to-xml",
-        "keywords": [
-            "array",
-            "convert",
-            "xml"
         ]
     },
     {
@@ -794,12 +744,12 @@
         "source": {
             "type": "git",
             "url": "https://github.com/slimphp/Slim.git",
-            "reference": "d28272231017ae737abeee4b99673cbf29ee4e69"
+            "reference": "2f189b2b2965c924bf9410d193b4023a1c5fce9c"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/slimphp/Slim/zipball/d28272231017ae737abeee4b99673cbf29ee4e69",
-            "reference": "d28272231017ae737abeee4b99673cbf29ee4e69",
+            "url": "https://api.github.com/repos/slimphp/Slim/zipball/2f189b2b2965c924bf9410d193b4023a1c5fce9c",
+            "reference": "2f189b2b2965c924bf9410d193b4023a1c5fce9c",
             "shasum": ""
         },
         "require": {
@@ -817,7 +767,7 @@
             "phpunit/phpunit": "^4.0",
             "squizlabs/php_codesniffer": "^2.5"
         },
-        "time": "2017-05-03 13:59:20",
+        "time": "2017-05-13 14:31:48",
         "type": "library",
         "installation-source": "source",
         "autoload": {
@@ -1010,6 +960,57 @@
             "auth",
             "middleware",
             "psr-7"
+        ]
+    },
+    {
+        "name": "spatie/array-to-xml",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/spatie/array-to-xml.git",
+            "reference": "687d2c6019ce0a86b8aea39fb09017d804ef744d"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/spatie/array-to-xml/zipball/687d2c6019ce0a86b8aea39fb09017d804ef744d",
+            "reference": "687d2c6019ce0a86b8aea39fb09017d804ef744d",
+            "shasum": ""
+        },
+        "require": {
+            "php": "^5.6|^7.0"
+        },
+        "require-dev": {
+            "mockery/mockery": "0.9.*",
+            "phpunit/phpunit": "^5.7",
+            "spatie/phpunit-snapshot-assertions": "^0.4.1"
+        },
+        "time": "2017-05-23 12:26:36",
+        "type": "library",
+        "installation-source": "source",
+        "autoload": {
+            "psr-4": {
+                "Spatie\\ArrayToXml\\": "src"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Freek Van der Herten",
+                "email": "freek@spatie.be",
+                "homepage": "https://murze.be",
+                "role": "Developer"
+            }
+        ],
+        "description": "Convert an array to xml",
+        "homepage": "https://github.com/spatie/array-to-xml",
+        "keywords": [
+            "array",
+            "convert",
+            "xml"
         ]
     }
 ]

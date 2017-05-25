@@ -111,6 +111,18 @@ class ToolsTab implements TabInterface
                             return Render::output('admin/system_info/tool', $field);
                         }
                     ],
+                    [
+                        'id' => 'fix-order-items-migration',
+                        'name' => 'fix-order-items-migration',
+                        'title' => __('Fix order items migration', 'jigoshop'),
+                        'description' => __('To version 2.1.3 was some issue with order items migration. Use only if you migrated your store from Jigoshop 1.x before version 2.1.3.', 'jigoshop'),
+                        'tip' => '',
+                        'classes' => [],
+                        'type' => 'user_defined',
+                        'display' => function($field){
+                            return Render::output('admin/system_info/tool', $field);
+                        }
+                    ],
                 ]
             ]
         ];
@@ -144,6 +156,9 @@ class ToolsTab implements TabInterface
             case 'remove-zombie-meta':
                 $this->removeZombieMeta();
                 break;
+            case 'fix-order-items-migration':
+                $this->fixMigratedOrderItems();
+                break;
 		}
 	}
 
@@ -154,8 +169,8 @@ class ToolsTab implements TabInterface
 	{
 		$logFiles = $this->wp->applyFilters('jigoshop/admin/system_info/tools/log_files', ['jigoshop', 'jigoshop.debug']);
 		foreach($logFiles as $logFile){
-			if (@fopen(JIGOSHOP_LOG_DIR.'/'.$logFile.'.log', 'a')) {
-				file_put_contents(JIGOSHOP_LOG_DIR.'/'.$logFile.'.log', '');
+			if (@fopen(\JigoshopInit::getLogDir().'/'.$logFile.'.log', 'a')) {
+				file_put_contents(\JigoshopInit::getLogDir().'/'.$logFile.'.log', '');
 			}
 		}
 	}
@@ -189,5 +204,28 @@ class ToolsTab implements TabInterface
         $wpdb->query("DELETE FROM `{$wpdb->postmeta}` WHERE NOT EXISTS 
           (SELECT * FROM {$wpdb->posts} WHERE {$wpdb->posts}.ID = {$wpdb->postmeta}.post_id)
           ");
+    }
+
+    /**
+     * Fix migration issue.
+     */
+    private function fixMigratedOrderItems()
+    {
+        set_time_limit(0);
+        $wpdb = $this->wp->getWPDB();
+        $js1Orders = $wpdb->get_results("SELECT post_id as id FROM {$wpdb->postmeta} WHERE meta_key = 'order_items'", ARRAY_A);
+
+        foreach($js1Orders as $order) {
+            $items = $wpdb->get_results($wpdb->prepare("SELECT * FROM {$wpdb->prefix}jigoshop_order_item WHERE order_id = %d", $order['id']), ARRAY_A);
+            foreach ($items as $item) {
+                $taxRate = $item['tax']/ $item['price'];
+                $item['price'] = $item['cost'];
+                $item['cost'] = $item['price'] * $item['quantity'];
+                $item['tax'] = $item['cost'] * $taxRate;
+                $wpdb->update("{$wpdb->prefix}jigoshop_order_item", $item, [
+                    'id' => $item['id'],
+                ]);
+            }
+        }
     }
 }

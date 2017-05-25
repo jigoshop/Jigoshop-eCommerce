@@ -216,7 +216,7 @@ class Orders implements Tool
                                             $value = is_array($value) ? serialize($value) : $value;
                                             $wpdb->insert($wpdb->prefix . 'jigoshop_order_discount_meta', [
                                                 'discount_id' => $discountId,
-                                                'meta_mey' => $key,
+                                                'meta_key' => $key,
                                                 'meta_value' => $value,
                                             ]);
                                         }
@@ -350,13 +350,13 @@ class Orders implements Tool
                                     $itemData['qty'] = 1;
                                 }
 
-                                $price = $itemData['cost'] / $itemData['qty'];
+                                $cost = $itemData['cost'] * $itemData['qty'];
                                 if (!empty($itemData['taxrate']) && $itemData['taxrate'] > 0) {
-                                    $tax = $price * $itemData['taxrate'] / 100;
+                                    $tax = $cost * $itemData['taxrate'] / 100;
                                     $taxRate = $itemData['taxrate'];
                                 } else {
                                     if (isset($itemData['cost_inc_tax']) && $itemData['cost'] < $itemData['cost_inc_tax']) {
-                                        $tax = ($itemData['cost_inc_tax'] - $itemData['cost']) / $itemData['qty'];
+                                        $tax = ($itemData['cost_inc_tax'] - $itemData['cost']) * $itemData['qty'];
                                         $taxRate = $tax / $itemData['cost'];
                                     }
                                 }
@@ -379,10 +379,10 @@ class Orders implements Tool
                                     'product_type' => $productGetType,
                                     'title' => $itemData['name'],
                                     'tax_classes' => '',
-                                    'price' => $price,
+                                    'price' => $itemData['cost'],
                                     'tax' => $tax,
                                     'quantity' => $itemData['qty'],
-                                    'cost' => $itemData['cost'],
+                                    'cost' => $cost,
                                 ];
 
                                 if ($productGetId != null) {

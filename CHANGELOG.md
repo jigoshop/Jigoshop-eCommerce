@@ -1,4 +1,10 @@
 ## Changelog
+* 2.1.3 - 2017.05.25:
+    * New: Allow to prepend product permalink with Wordpress permalink.
+    * New: Tool to fix order items migration.
+    * Fix: Fatal error on order edit page caused by Free shipping.
+    * Fix: Properly migrate order items.
+    * Fix: Discount migration.
 * 2.1.2 - 2017.05.11:
     * New: Possibility to get country code in ISO 3166-1 alfa-3 standard.
     * Fix: Properly display custom settings tabs.

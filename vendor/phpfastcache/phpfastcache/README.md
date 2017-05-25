@@ -270,7 +270,7 @@ if (is_null($CachedString->get())) {
 
 } else {
     echo "READ FROM CACHE // ";
-    echo $CachedString->get()[0];// Will prints 'First product'
+    echo $CachedString->get()[0];// Will print 'First product'
 }
 
 /**
