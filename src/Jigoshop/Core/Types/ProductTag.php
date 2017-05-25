@@ -68,7 +68,7 @@ class ProductTag implements Taxonomy
 			'query_var' => true,
 			'rewrite' => [
 				'slug' => $this->options->get('permalinks.tag'),
-				'with_front' => true,
+				'with_front' => $this->options->get('permalinks.with_front'),
 				'feeds' => false,
 				'pages' => true,
 				'ep_mask' => EP_ALL,
