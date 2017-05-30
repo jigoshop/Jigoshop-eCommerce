@@ -12,6 +12,7 @@
  * @var $description string Field description.
  * @var $hidden boolean Whether the field is hidden.
  * @var $size int Size of form widget.
+ * @var $data array Key-value pairs for data attributes.
  */
 ?>
 <div class="form-group <?= $id; ?>_field <?= join(' ', $classes); ?> clearfix<?php $hidden and print ' not-active'; ?>">
@@ -24,7 +25,15 @@
 	</label>
 	<?php endif; ?>
 	<div class="col-sm-<?= $size; ?>">
-		<input type="<?= $type; ?>" id="<?= $id; ?>" name="<?= $name; ?>" class="form-control <?= join(' ', $classes); ?>" placeholder="<?= $placeholder; ?>" value="<?= $value; ?>"<?php $disabled and print ' disabled'; ?> />
+		<input type="<?= $type; ?>" id="<?= $id; ?>" name="<?= $name; ?>" class="form-control <?= join(' ', $classes); ?>" placeholder="<?= $placeholder; ?>" value="<?= $value; ?>"<?php $disabled and print ' disabled'; ?> 
+		<?php 
+		if(isset($data) && is_array($data)) {
+			foreach($data as $dataKey => $dataValue) {
+				echo sprintf(' data-%s="%s"', $dataKey, $dataValue);
+			}
+		}
+		?>
+		/>
 		<?php if(!empty($description)): ?>
 			<span class="help-block"><?= $description; ?></span>
 		<?php endif; ?>

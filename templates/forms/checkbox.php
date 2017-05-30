@@ -14,6 +14,7 @@ use Jigoshop\Helper\Forms;
  * @var $description string Field description.
  * @var $hidden boolean Whether the field is hidden.
  * @var $size int Size of form widget.
+ * @var $data array Key-value pairs for data attributes.
  */
 ?>
 <div class="form-group <?= $id; ?>_field <?= join(' ', $classes); ?> clearfix<?php $hidden and print ' not-active'; ?>">
@@ -27,7 +28,15 @@ use Jigoshop\Helper\Forms;
 		<?php if(!$multiple): ?>
 			<input type="hidden" name="<?= $name; ?>" value="off" />
 		<?php endif; ?>
-		<input type="checkbox" id="<?= $id; ?>" name="<?= $name; ?>" class="<?= join(' ', $classes); ?>" <?= Forms::checked($checked, true); ?> value="<?= $value; ?>"<?php $disabled and print ' disabled'; ?> />
+		<input type="checkbox" id="<?= $id; ?>" name="<?= $name; ?>" class="<?= join(' ', $classes); ?>" <?= Forms::checked($checked, true); ?> value="<?= $value; ?>"<?php $disabled and print ' disabled'; ?> 
+			<?php 
+			if(isset($data) && is_array($data)) {
+				foreach($data as $dataKey => $dataValue) {
+					echo sprintf(' data-%s="%s"', $dataKey, $dataValue);
+				}
+			}
+			?>
+			/>
 		<?php if(!empty($description)): ?>
 			<label for="<?= $id; ?>"><span class="help"><?= $description; ?></span></label>
 		<?php endif; ?>
