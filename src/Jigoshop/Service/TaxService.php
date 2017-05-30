@@ -458,6 +458,10 @@ class TaxService implements TaxServiceInterface
 			$definitions[$taxClass] = $this->getDefinition($taxClass, $order->getCustomer()->getTaxAddress());
 		}
 
+		if(!isset($definitions[$taxClass]['rate'])) {
+			return 0;
+		}		
+
 		return $definitions[$taxClass]['rate'];
 	}
 
