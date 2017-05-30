@@ -155,6 +155,7 @@ class TaxesTab implements TabInterface
                         'options' => [
                             'including_tax' => __('Including tax', 'jigoshop'),
                             'excluding_tax' => __('Excluding tax', 'jigoshop'),
+                            'both' => __('Both', 'jigoshop')
                         ]
                     ],
                     [
@@ -165,6 +166,7 @@ class TaxesTab implements TabInterface
                         'options' => [
                             'including_tax' => __('Including tax', 'jigoshop'),
                             'excluding_tax' => __('Excluding tax', 'jigoshop'),
+                            'both' => __('Both', 'jigoshop')
                         ]
                     ],
                     [

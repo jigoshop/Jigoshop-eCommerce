@@ -20,7 +20,7 @@ $defaultAttributesValues = Product::getVariationAttributes($product, $product->g
         ]); ?>
 	<?php endforeach; ?>
 	<div id="add-to-cart-buttons">
-		<p class="price"><?php _e('Current price:', 'jigoshop'); ?> <span></span></p>
+		<div class="price"><?php _e('Current price:', 'jigoshop'); ?> <span></span></div>
 		<?php \Jigoshop\Helper\Forms::number([
 			'id' => 'product-quantity',
 			'name' => 'quantity',

@@ -15,8 +15,6 @@ use Jigoshop\Helper\Tax;
  * @var $allowRegistration bool Whether to allow registering.
  * @var $showRegistrationForm bool Whether to show registration form.
  * @var $showLoginForm bool Whether to show login form.
- * @var $showWithTax bool Whether to show product price with or without tax.
- * @var $suffix string
  * @var $alwaysShowShipping bool Whether to always show shipping fields.
  * @var $cartUrl string URL to cart.
  * @var $billingFields array Fields to display as billing fields.
@@ -88,7 +86,11 @@ use Jigoshop\Helper\Tax;
 		</div>
 		<ul id="checkout-mobile">
 			<?php foreach($cart->getItems() as $key => $item): /** @var \Jigoshop\Entity\Order\Item $item */ ?>
-				<?php Render::output('shop/checkout/mobile/'.$item->getType(), ['cart' => $cart, 'key' => $key, 'item' => $item, 'showWithTax' => $showWithTax, 'suffix' => $suffix]); ?>
+				<?php Render::output('shop/checkout/mobile/'.$item->getType(), [
+					'cart' => $cart, 
+					'key' => $key, 
+					'item' => $item
+				]); ?>
 			<?php endforeach; ?>
 		</ul>
 		<div class="mobile-coupons-product-subtotal">
@@ -104,9 +106,17 @@ use Jigoshop\Helper\Tax;
             ]); ?>
 		</div>
 		<div class="pull-right">
-			<?php $productSubtotal = $showWithTax ? $cart->getProductSubtotal() + $cart->getTotalTax() : $cart->getProductSubtotal(); ?>
+			<?php 
+			$productSubtotalPrices = Product::generatePrices($cart->getProductSubtotal(), $cart->getProductSubtotal() + $cart->getTotalTax(), 1);
+			if(count($productSubtotalPrices) == 2) {
+				$productSubtotalPricesStr = sprintf('%s (%s)', $productSubtotalPrices[0], $productSubtotalPrices[1]);
+			}
+			else {
+				$productSubtotalPricesStr = $productSubtotalPrices[0];
+			}
+			?>
 			<div class="pull-left mobile-products-subtotal"><?php _e('Products subtotal', 'jigoshop'); ?></div>
-			<div class="pull-left product-subtotal" class="pull-right"><?= Product::formatPrice($productSubtotal, $suffix); ?></div>
+			<div class="pull-left product-subtotal" class="pull-right"><?= $productSubtotalPricesStr; ?></div>
 		</div>
 		</div>
 		<table class="table table-hover">
@@ -123,7 +133,11 @@ use Jigoshop\Helper\Tax;
 			</thead>
 			<tbody>
 			<?php foreach($cart->getItems() as $key => $item): /** @var \Jigoshop\Entity\Order\Item $item */ ?>
-				<?php Render::output('shop/checkout/item/'.$item->getType(), ['cart' => $cart, 'key' => $key, 'item' => $item, 'showWithTax' => $showWithTax, 'suffix' => $suffix]); ?>
+				<?php Render::output('shop/checkout/item/'.$item->getType(), [
+						'cart' => $cart,
+						'key' => $key,
+						'item' => $item
+					]); ?>
 			<?php endforeach; ?>
 			<?php /** @deprecated  */ do_action('jigoshop\checkout\table_body', $cart); ?>
 			<?php do_action('jigoshop\template\checkout\table_body', $cart); ?>
@@ -141,9 +155,17 @@ use Jigoshop\Helper\Tax;
 						}, $cart->getCoupons())),
                     ]); ?>
 				</td>
-				<?php $productSubtotal = $showWithTax ? $cart->getProductSubtotal() + $cart->getTotalTax() : $cart->getProductSubtotal(); ?>
+				<?php 
+				$productSubtotalPrices = Product::generatePrices($cart->getProductSubtotal(), $cart->getProductSubtotal() + $cart->getTotalTax(), 1);
+				if(count($productSubtotalPrices) == 2) {
+					$productSubtotalPricesStr = sprintf('%s (%s)', $productSubtotalPrices[0], $productSubtotalPrices[1]);
+				}
+				else {
+					$productSubtotalPricesStr = $productSubtotalPrices[0];
+				}
+				?>
 				<th colspan="2" scope="row" class="text-right"><?php _e('Products subtotal', 'jigoshop'); ?></th>
-				<td id="product-subtotal"><?= Product::formatPrice($productSubtotal, $suffix); ?></td>
+				<td id="product-subtotal"><?= $productSubtotalPricesStr; ?></td>
 			</tr>
             <?php do_action('jigoshop\template\checkout\table_foot', $cart); ?>
 			</tfoot>
