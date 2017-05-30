@@ -11,6 +11,7 @@ use Jigoshop\Helper\Render;
  * @var $value mixed Currently selected value(s).
  * @var $tip string Tip to show to the user.
  * @var $description string Field description.
+ * @var $data array Key-value pairs for data attributes.
  */
 $hasLabel = !empty($label);
 ?>
@@ -32,7 +33,15 @@ $hasLabel = !empty($label);
                 </div>
                 <div class="tooltip-inline-input">
                     <select id="<?= $id; ?>" name="<?= $name; ?>" class="form-control <?= join(' ',
-                        $classes); ?>" <?php $multiple and print ' multiple="multiple"'; ?>>
+                        $classes); ?>" <?php $multiple and print ' multiple="multiple"'; ?>
+                    <?php 
+                    if(isset($data) && is_array($data)) {
+                        foreach($data as $dataKey => $dataValue) {
+                            echo sprintf(' data-%s="%s"', $dataKey, $dataValue);
+                        }
+                    }
+                    ?>
+                    >
                         <?php foreach ($options as $option => $item): ?>
                             <?php if (isset($item['items'])): ?>
                                 <optgroup label="<?= isset($item['label']) ? $item['label'] : $option; ?>">

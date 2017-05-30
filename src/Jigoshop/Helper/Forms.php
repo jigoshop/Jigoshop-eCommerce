@@ -122,6 +122,7 @@ class Forms
 	 *   * tip (false) - tip for the tag
 	 *   * hidden (false) - whether to hide element by default
 	 *   * size (12) - default size of the element (Bootstrap column size 12)
+	 * 	 * data (array()) - key-value pairs for data attributes
 	 *
 	 * Field's name is required.
 	 *
@@ -144,6 +145,7 @@ class Forms
 			'tip' => false,
 			'hidden' => false,
 			'size' => 12,
+			'data' => []
         ];
 		$field = wp_parse_args($field, $defaults);
 
@@ -183,6 +185,7 @@ class Forms
 	 *   * min (false) - minimal value of number input
 	 *   * max (false) - maximal value of number input
 	 *   * step (1) - Step of number
+	 *   * data (array()) - key-value pairs for data attributes
 	 *
 	 * Field's name is required.
 	 *
@@ -208,6 +211,7 @@ class Forms
 			'min' => false,
 			'max' => false,
 			'step' => 1,
+			'data' => []
         ];
 
 		$field = wp_parse_args($field, $defaults);
@@ -258,6 +262,7 @@ class Forms
 	 *   * options (array) - available options to select
 	 *   * hidden (false) - whether to hide element by default
 	 *   * size (12) - default size of the element (Bootstrap column size 12)
+	 *   * data (array()) - key-value pairs for data attributes
 	 *
 	 * Field's name is required.
 	 *
@@ -282,6 +287,7 @@ class Forms
 			'hidden' => false,
 			'size' => 12,
             'args' => [],
+            'data' => []
         ];
 		$field = wp_parse_args($field, $defaults);
 
@@ -343,6 +349,7 @@ class Forms
 	 *   * tip (false) - tip for the tag
 	 *   * hidden (false) - whether to hide element by default
 	 *   * size (12) - default size of the element (Bootstrap column size 12)
+	 *   * data (array()) - key-value pairs for data attributes
 	 *
 	 * Field's name is required.
 	 *
@@ -366,6 +373,7 @@ class Forms
 			'tip' => false,
 			'hidden' => false,
 			'size' => 12,
+			'data' => []
         ];
 		$field = wp_parse_args($field, $defaults);
 
@@ -405,6 +413,7 @@ class Forms
 	 *   * tip (false) - tip for the tag
 	 *   * hidden (false) - whether to hide element by default
 	 *   * size (12) - default size of the element (Bootstrap column size 12)
+	 *   * data (array()) - key-value pairs for data attributes
 	 *
 	 * Field's name is required.
 	 *
@@ -426,6 +435,7 @@ class Forms
 			'tip' => false,
 			'hidden' => false,
 			'size' => 12,
+			'data' => []
         ];
 		$field = wp_parse_args($field, $defaults);
 
@@ -461,6 +471,7 @@ class Forms
 	 *   * description (false) - description of the tag
 	 *   * tip (false) - tip for the tag
 	 *   * size (12) - default size of the element (Bootstrap column size 12)
+	 *   * data (array()) - key-value pairs for data attributes
 	 *
 	 * Field's name is required.
 	 *
@@ -483,6 +494,10 @@ class Forms
 			'size' => 12,
 			'startDate' => false,
 			'endDate' => false,
+			'data' => [
+				'from' => [],
+				'to' => []
+			]
         ];
 		$field = wp_parse_args($field, $defaults);
 
@@ -508,6 +523,7 @@ class Forms
 	 *   * name (null) - HTML name for the tag
 	 *   * value (false) - HTML value of the tag
 	 *   * classes (array()) - list of HTML classes for the tag
+	 *   * data (array()) - key-value pairs for data attributes
 	 *
 	 * Field's name is required.
 	 *
@@ -522,6 +538,7 @@ class Forms
 			'name' => null,
 			'value' => false,
 			'classes' => [],
+			'data' => []
         ];
 		$field = wp_parse_args($field, $defaults);
 
@@ -556,6 +573,7 @@ class Forms
 	 *   * tip (false) - tip for the tag
 	 *   * hidden (false) - whether to hide element by default
 	 *   * size (12) - default size of the element (Bootstrap column size 12)
+	 *   * data (array()) - key-value pairs for data attributes
 	 *
 	 * Field's name is required.
 	 *
@@ -578,6 +596,7 @@ class Forms
 			'size' => 11,
 			'startDate' => false,
 			'endDate' => false,
+			'data' => []
         ];
 		$field = wp_parse_args($field, $defaults);
 

@@ -8,6 +8,7 @@
  * @var $value mixed Current value.
  * @var $tip string Tip to show to the user.
  * @var $description string Field description.
+ * @var $data array Key-value pairs for data attributes.
  */
 $hasLabel = !empty($label);
 ?>
@@ -26,7 +27,15 @@ $hasLabel = !empty($label);
 					<?php endif; ?>
 				</div>
 				<div class="tooltip-inline-input">
-					<p class="form-control-static <?= join(' ', $classes); ?>" id="<?= $id; ?>"><?= $value; ?></p>
+					<p class="form-control-static <?= join(' ', $classes); ?>" id="<?= $id; ?>"
+					<?php 
+					if(isset($data) && is_array($data)) {
+						foreach($data as $dataKey => $dataValue) {
+							echo sprintf(' data-%s="%s"', $dataKey, $dataValue);
+						}
+					}
+					?>						
+					><?= $value; ?></p>
 					<?php if(!empty($description)): ?>
 						<span class="help-block"><?= $description; ?></span>
 					<?php endif; ?>

@@ -11,6 +11,7 @@
  * @var $size int Size of form widget.
  * @var string $startDate Date of sale (start).
  * @var string $endDate Date of sale (end).
+ * @var $data array Key-value pairs for data attributes.
  */
 $hasLabel = !empty($label);
 ?>
@@ -35,11 +36,27 @@ $hasLabel = !empty($label);
                          id="<?= $id; ?>">
                         <input type="<?= $type; ?>" id="<?= $id; ?>-from" name="<?= $name['from']; ?>"
                                class="form-control daterange-from <?= join(' ', $classes); ?>" placeholder="<?= $placeholder; ?>"
-                               value="<?= $value['from']; ?>"/>
+                               value="<?= $value['from']; ?>"
+                        <?php 
+                        if(isset($data['from']) && is_array($data['from'])) {
+                            foreach($data['from'] as $dataKey => $dataValue) {
+                                echo sprintf(' data-%s="%s"', $dataKey, $dataValue);
+                            }
+                        }
+                        ?>
+                        />
                         <span class="input-group-addon"><?php _e('to', 'jigoshop'); ?></span>
                         <input type="<?= $type; ?>" id="<?= $id; ?>-to" name="<?= $name['to']; ?>"
                                class="form-control daterange-to <?= join(' ', $classes); ?>" placeholder="<?= $placeholder; ?>"
-                               value="<?= $value['to']; ?>"/>
+                               value="<?= $value['to']; ?>"
+                        <?php 
+                        if(isset($data['to']) && is_array($data['to'])) {
+                            foreach($data['to'] as $dataKey => $dataValue) {
+                                echo sprintf(' data-%s="%s"', $dataKey, $dataValue);
+                            }
+                        }
+                        ?>
+                        />
                     </div>
                     <?php if (!empty($description)): ?>
                         <span class="text-left help-block"><?= $description; ?></span>
