@@ -42,6 +42,10 @@ class Emails
         $wp->addAction('jigoshop_no_stock_notification', [$this, 'productOutOfStock']);
         $wp->addAction('jigoshop_product_on_backorders_notification', [$this, 'productBackorders']);
 
+        foreach(Order\Status::getStatuses() as $status => $name) {
+            $wp->addAction('jigoshop\order\\'. $status, [$this, 'orderStatusChanged']);
+        }
+
         $this->addOrderActions();
         $this->addProductActions();
     }
@@ -51,6 +55,7 @@ class Emails
         $orderArguments = $this->getOrderEmailArgumentsDescription();
         $stockArguments = $this->getStockEmailArgumentsDescription();
 
+        $this->emailService->register('admin_order_status_changed', __('Order Status Changed for admin'), $orderArguments);
         $this->emailService->register('admin_order_status_pending_to_processing', __('Order Pending to Processing for admin'), $orderArguments);
         $this->emailService->register('admin_order_status_pending_to_completed', __('Order Pending to Completed for admin'), $orderArguments);
         $this->emailService->register('admin_order_status_pending_to_on_hold', __('Order Pending to On-Hold for admin'), $orderArguments);
@@ -65,6 +70,12 @@ class Emails
             $stockArguments, $orderArguments, ['amount' => __('Amount', 'jigoshop')]
         ));
         $this->emailService->register('send_customer_invoice', __('Send Customer Invoice'), $orderArguments);
+    }
+
+    public function orderStatusChanged($order)
+    {
+        $arguments = $this->getOrderEmailArguments($order);
+        $this->send('admin_order_status_changed', $arguments, $this->options->get('general.email'), ['order' => $order]);
     }
 
     /**
