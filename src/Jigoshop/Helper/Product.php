@@ -117,7 +117,7 @@ class Product
                         }                       
                     }
                     else {
-                        $result = $prices[0];
+                        $result = $pricesRegular[0];
                     }
 
                     break;
@@ -181,7 +181,7 @@ class Product
         }
         if($price === '') {
             return [
-                apply_filters('jigoshop\helper\product\get_price_html', __('Price not announced', 'jigoshop'), '', $product)
+                ''
             ];
         }
         if($showWithTax == 'both') {
