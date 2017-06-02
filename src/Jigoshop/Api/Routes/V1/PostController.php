@@ -68,10 +68,10 @@ abstract class PostController extends BaseController
      */
     public function create(Request $request, Response $response, $args)
     {
-        $this->service->savePost(null);
+        $object = $this->service->savePost(null);
         return $response->withJson([
             'success' => true,
-            'data' => "$this->entityName successfully created",
+            'data' => $object,
         ]);
     }
 
@@ -94,7 +94,7 @@ abstract class PostController extends BaseController
 
         return $response->withJson([
             'success' => true,
-            'data' => "$this->entityName successfully updated",
+            'data' => $object,
         ]);
     }
 

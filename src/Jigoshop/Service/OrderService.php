@@ -65,6 +65,8 @@ class OrderService implements OrderServiceInterface
      * Save the order data upon post saving.
      *
      * @param $id int Post ID.
+     *
+     * @return Order|null
      */
     public function savePost($id)
     {
@@ -82,7 +84,11 @@ class OrderService implements OrderServiceInterface
             } elseif (isset($_POST['invoice'])) {
                 $this->sendInvoice($order);
             }
+
+            return $order;
         }
+
+        return '';
     }
 
     /**

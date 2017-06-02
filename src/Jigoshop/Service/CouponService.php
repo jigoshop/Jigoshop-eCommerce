@@ -62,11 +62,15 @@ class CouponService implements CouponServiceInterface
      * Save the email data upon post saving.
      *
      * @param $id int Post ID.
+     *
+     * @return Coupon
      */
     public function savePost($id)
     {
         $coupon = $this->factory->create($id);
         $this->save($coupon);
+
+        return $coupon;
     }
 
     /**

@@ -406,11 +406,15 @@ class ProductService implements ProductServiceInterface
      * Save the product data upon post saving.
      *
      * @param $id int Post ID.
+     *
+     * @return Product
      */
     public function savePost($id)
     {
         $product = $this->factory->create($id);
         $this->save($product);
+
+        return $product;
     }
 
     public function saveReview($id, $approvew)

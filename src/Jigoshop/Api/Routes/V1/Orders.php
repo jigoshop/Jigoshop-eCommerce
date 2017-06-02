@@ -317,7 +317,7 @@ class Orders extends PostController implements ApiControllerContract
 
         return $response->withJson([
             'success' => true,
-            'data' => "$this->entityName successfully created",
+            'data' => $object,
         ]);
     }
 
@@ -355,7 +355,7 @@ class Orders extends PostController implements ApiControllerContract
 
         return $response->withJson([
             'success' => true,
-            'data' => "Order successfully updated",
+            'data' => $object,
         ]);
     }
 
@@ -383,7 +383,7 @@ class Orders extends PostController implements ApiControllerContract
 
         return $response->withJson([
             'success' => true,
-            'data' => "Order successfully updated",
+            'data' => $object,
         ]);
     }
 

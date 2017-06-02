@@ -206,7 +206,7 @@ class Products extends PostController implements ApiControllerContract
 
         return $response->withJson([
             'success' => true,
-            'data' => "$this->entityName successfully created",
+            'data' => $product,
         ]);
     }
 
@@ -229,7 +229,7 @@ class Products extends PostController implements ApiControllerContract
 
         return $response->withJson([
             'success' => true,
-            'data' => "Product successfully updated",
+            'data' => $product,
         ]);
     }
 

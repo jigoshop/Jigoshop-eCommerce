@@ -213,11 +213,11 @@ class Items extends BaseController implements ApiControllerContract
      */
     public function create(Request $request, Response $response, $args)
     {
-        $this->createOrUpdateOrderItems($args, $_POST);
+        $item = $this->createOrUpdateOrderItems($args, $_POST);
 
         return $response->withJson([
             'success' => true,
-            'data' => "Item successfully added",
+            'data' => $item,
         ]);
     }
 
@@ -231,11 +231,11 @@ class Items extends BaseController implements ApiControllerContract
      */
     public function update(Request $request, Response $response, $args)
     {
-        $this->createOrUpdateOrderItems($args, $request->getParsedBody());
+        $item = $this->createOrUpdateOrderItems($args, $request->getParsedBody());
 
         return $response->withJson([
             'success' => true,
-            'data' => "Items successfully updated",
+            'data' => $item,
         ]);
     }
 
@@ -264,7 +264,7 @@ class Items extends BaseController implements ApiControllerContract
         $this->service->save($this->order);
         return $response->withJson([
             'success' => true,
-            'data' => "Item successfully deleted",
+            'data' => $this->order,
         ]);
     }
 
@@ -337,6 +337,8 @@ class Items extends BaseController implements ApiControllerContract
      * creating or updating order single item so that items could be filled in order
      * @param $args
      * @param $data
+     *
+     * @return OrderEntity\Item
      */
     private function createOrUpdateOrderItems($args, $data)
     {
@@ -349,9 +351,11 @@ class Items extends BaseController implements ApiControllerContract
         $product = $this->validateObjectFinding($args);
         /** @var \Jigoshop\Factory\Order $factory */
         $factory = $this->app->getContainer()->di->get('jigoshop.factory.order');
-        $this->order = $factory->updateOrderItemByProductId($this->order, $product->getId(), $data['item']);
+        $item = $factory->updateOrderItemByProductId($this->order, $product->getId(), $data['item']);
 
         $this->saveOrder();
+
+        return $item;
     }
 
 }

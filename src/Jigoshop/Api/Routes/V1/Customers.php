@@ -193,10 +193,11 @@ class Customers extends BaseController implements ApiControllerContract
         }
         $user = new \WP_User($userId);
         $user->set_role('customer');
+        $this->service->find($userId);
 
         return $response->withJson([
             'success' => true,
-            'data' => "Customer successfully created",
+            'data' => $this->service->find($userId),
         ]);
     }
 
@@ -217,7 +218,7 @@ class Customers extends BaseController implements ApiControllerContract
         $this->service->save($user);
         return $response->withJson([
             'success' => true,
-            'data' => "Customer successfully updated",
+            'data' => $user,
         ]);
 
     }

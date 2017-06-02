@@ -348,7 +348,7 @@ class Order implements EntityFactoryInterface
      * @param OrderInterface $order
      * @param $productId
      * @param array $data
-     * @return OrderInterface
+     * @return Entity\Item
      */
     public function updateOrderItemByProductId(OrderInterface $order, $productId, array $data){
         /** @var ProductEntity $product */
@@ -370,7 +370,8 @@ class Order implements EntityFactoryInterface
             $item = $this->wp->applyFilters('jigoshop\admin\order\update_product', $item, $order);
         }
         $order->addItem($item);
-        return $order;
+
+        return $item;
 
     }
 

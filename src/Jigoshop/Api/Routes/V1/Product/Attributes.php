@@ -227,7 +227,7 @@ class Attributes extends BaseController implements ApiControllerContract
 
         return $response->withJson([
             'success' => true,
-            'data' => "Attribute successfully created",
+            'data' => $attribute,
         ]);
     }
 
@@ -264,7 +264,7 @@ class Attributes extends BaseController implements ApiControllerContract
 
         return $response->withJson([
             'success' => true,
-            'data' => "Attribute successfully updated",
+            'data' => $attribute,
         ]);
     }
 
@@ -288,7 +288,7 @@ class Attributes extends BaseController implements ApiControllerContract
         $this->service->save($this->product);
         return $response->withJson([
             'success' => true,
-            'data' => "Attribute successfully deleted",
+            'data' => $this->product,
         ]);
     }
 
