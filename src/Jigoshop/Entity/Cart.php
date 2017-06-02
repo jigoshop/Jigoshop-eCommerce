@@ -45,6 +45,9 @@ class Cart extends Order
 
 		$item = $this->getItem($key);
 		$product = $item->getProduct();
+        if($product instanceof Product\Variable) {
+            $product = $product->getVariation($item->getMeta('variation_id')->getValue())->getProduct();
+        }
 
 		if ($product === null || $product->getId() === 0) {
 			throw new Exception(__('Product not found', 'jigoshop'));
@@ -69,6 +72,10 @@ class Cart extends Order
 	public function addItem(Item $item)
 	{
 		$product = $item->getProduct();
+
+        if($product instanceof Product\Variable) {
+		    $product = $product->getVariation($item->getMeta('variation_id')->getValue())->getProduct();
+        }
 		$quantity = $item->getQuantity();
 
 		if ($product === null || $product->getId() === 0) {
