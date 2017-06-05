@@ -1,6 +1,7 @@
 ## Changelog
 * 2.1.4:
     * Fix: Do not allow to add to cart variations with not enough stock.
+    * Fix: Show only selected attribute options for specified variable product.
 * 2.1.3 - 2017.05.25:
     * New: Allow to prepend product permalink with Wordpress permalink.
     * New: Tool to fix order items migration.
