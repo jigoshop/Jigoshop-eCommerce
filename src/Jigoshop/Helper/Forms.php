@@ -640,7 +640,7 @@ class Forms
 
 		$field = wp_parse_args($field, $defaults);
 		if(isset($field['display']) && is_callable($field['display'])) {
-			$result = call_user_func($field['display']);
+			$result = call_user_func($field['display'], $field);
 
 			Render::output(static::$userDefinedTemplate, [
 					'title' => isset($field['title'])?$field['title']:'',
