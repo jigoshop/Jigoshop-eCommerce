@@ -117,22 +117,28 @@ class CartService implements CartServiceInterface
 	public function get($id)
 	{
 		if (!isset($this->carts[$id])) {
-			$cart = new Cart($this->options->get('tax.classes'));
-            $cart->setTaxIncluded($this->options->get('tax.prices_entered', 'without_tax') == 'with_tax');
-			$cart->setCustomer($this->customerService->getCurrent());
-			$cart->getCustomer()->selectTaxAddress($this->options->get('taxes.shipping') ? 'shipping' : 'billing');
+		    try {
+                $cart = new Cart($this->options->get('tax.classes'));
+                $cart->setTaxIncluded($this->options->get('tax.prices_entered', 'without_tax') == 'with_tax');
+                $cart->setCustomer($this->customerService->getCurrent());
+                $cart->getCustomer()->selectTaxAddress($this->options->get('taxes.shipping') ? 'shipping' : 'billing');
 
-			// Fetch data from session if available
-			$cart->setId($id);
+                // Fetch data from session if available
+                $cart->setId($id);
 
-			$state = $this->getStateFromSession($id);
-			if (isset($_POST['jigoshop_order']) && Pages::isCheckout()) {
-				$state = $this->getStateFromCheckout($state);
-			}
+                $state = $this->getStateFromSession($id);
+                if (isset($_POST['jigoshop_order']) && Pages::isCheckout()) {
+                    $state = $this->getStateFromCheckout($state);
+                }
 
-			// TODO: Support for transients?
-			$cart = $this->orderFactory->fill($cart, $state);
-			$this->carts[$id] = $this->wp->applyFilters('jigoshop\service\cart\get', $cart, $state);
+                // TODO: Support for transients?
+                $cart = $this->orderFactory->fill($cart, $state);
+                $this->carts[ $id ] = $this->wp->applyFilters('jigoshop\service\cart\get', $cart, $state);
+            } catch(\Exception $e) {
+		        //in case of error for eg. 'not enough stock' clear cart items.
+		        $cart->removeItems();
+                $this->carts[ $id ] = $this->wp->applyFilters('jigoshop\service\cart\get', $cart, $state);
+            }
 		}
 
 		return $this->carts[$id];

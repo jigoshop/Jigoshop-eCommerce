@@ -171,6 +171,13 @@ class Order implements OrderInterface, \JsonSerializable
 	}
 
 	/**
+	 * @return \DateTime Time the order was completed.
+	 */
+	public function getCompletedAt() {
+		return $this->completedAt;
+	}
+
+	/**
 	 * Updates completion time to current date.
 	 */
 	public function setCompletedAt()

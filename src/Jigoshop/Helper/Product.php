@@ -153,7 +153,7 @@ class Product
                     }
                 }
                 else {
-                    $result = self::formatPrice($prices[0]);
+                    $result = $prices[0];
                 }
 
             break;
@@ -263,7 +263,9 @@ class Product
         }
 
         if ($price !== '') {
-            $formatted = sprintf(Currency::format(), Currency::symbol(), Currency::code(), self::formatNumericPrice($price));
+            $price = self::formatNumericPrice($price);
+
+            $formatted = sprintf(Currency::format(), Currency::symbol(), Currency::code(), $price);
 
             return $suffix ? sprintf('%s %s', $formatted, $suffix) : $formatted;
         }

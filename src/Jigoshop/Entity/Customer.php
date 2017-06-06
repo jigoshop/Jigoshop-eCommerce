@@ -149,6 +149,13 @@ class Customer implements EntityInterface, \JsonSerializable
 	}
 
 	/**
+	 * @return string Returns which address is being used as tax address.
+	 */
+	public function getTaxAddressType() {
+		return $this->taxAddress;
+	}
+
+	/**
 	 * @param Customer\Address $shippingAddress
 	 */
 	public function setShippingAddress($shippingAddress)
