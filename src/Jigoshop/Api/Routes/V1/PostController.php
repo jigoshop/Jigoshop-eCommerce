@@ -45,6 +45,10 @@ abstract class PostController extends BaseController
      * @var App
      */
     protected $app;
+    /**
+     * @var \WP_Query
+     */
+    protected $query;
 
     /**
      * initialize all needed values
@@ -128,11 +132,13 @@ abstract class PostController extends BaseController
      */
     protected function getObjects(array $queryParams)
     {
-        return $this->service->findByQuery(new \WP_Query([
+        $this->query = new \WP_Query([
             'post_type' => constant(self::JIGOSHOP_TYPES_PREFIX . strtoupper($this->entityName)),
             'posts_per_page' => $queryParams['pagelen'],
             'paged' => $queryParams['page'],
-        ]));
+        ]);
+
+        return $this->service->findByQuery($this->query);
     }
 
     /**
@@ -141,7 +147,7 @@ abstract class PostController extends BaseController
      */
     protected function getObjectsCount()
     {
-        return call_user_func([$this->service, 'get' . $this->entityName . 'sCount']);
+        return $this->query->found_posts;
     }
 
     /**
