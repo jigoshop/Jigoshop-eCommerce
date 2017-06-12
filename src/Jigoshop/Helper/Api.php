@@ -34,4 +34,36 @@ class Api
 	{
 		return Endpoint::getEndpointUrl($endpoint, $value, $permalink);
 	}
+
+    public static function getNextPagePath($route, $currentPage, $pageLen, $allResults)
+    {
+        if($currentPage >= ceil($allResults / $pageLen)) {
+            return '';
+        }
+
+        if($currentPage < 0) {
+            $currentPage = 0;
+        }
+
+        return add_query_arg([
+            'pagelen' => $pageLen,
+            'page' => $currentPage + 1
+        ], $route);
+	}
+
+    public static function getPreviousPagePath($route, $currentPage, $pageLen, $allResults)
+    {
+        if($currentPage <= 1) {
+            return '';
+        }
+
+        if($currentPage > ceil($allResults / $pageLen)) {
+            $currentPage = ceil($allResults / $pageLen);
+        }
+
+        return add_query_arg([
+            'pagelen' => $pageLen,
+            'page' => $currentPage - 1
+        ], $route);
+	}
 }

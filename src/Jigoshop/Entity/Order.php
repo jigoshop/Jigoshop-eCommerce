@@ -458,7 +458,7 @@ class Order implements OrderInterface, \JsonSerializable
 	 */
 	public function getStatus()
 	{
-		return $this->status;
+		return in_array($this->status, array_keys(Status::getStatuses())) ? $this->status : Status::PENDING;
 	}
 
 	/**
@@ -729,7 +729,7 @@ class Order implements OrderInterface, \JsonSerializable
 			'discount' => $this->getDiscount(),
 			'discounts' => $this->discounts,
 			'shipping_tax' => $this->shippingTax,
-			'status' => $this->status,
+			'status' => $this->getStatus(),
 			'update_messages' => $this->updateMessages,
             'tax_included' => $this->taxIncluded
         ];
@@ -879,7 +879,7 @@ class Order implements OrderInterface, \JsonSerializable
            'subtotal' => $this->subtotal,
            'discounts' => $this->discounts,
            'discount' => $this->getDiscount(),
-           'status' => $this->status,
+           'status' => $this->getStatus(),
            'update_messages' => $this->updateMessages,
        ];
     }

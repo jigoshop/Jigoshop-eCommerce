@@ -2,8 +2,10 @@
 
 namespace Jigoshop\Api\Routes\V1;
 
+use Jigoshop\Helper\Api;
 use Jigoshop\Service\ServiceInterface;
 use Slim\App;
+use Slim\Http\Environment;
 use Slim\Http\Request;
 use Slim\Http\Response;
 use Jigoshop\Exception;
@@ -50,6 +52,11 @@ abstract class BaseController
      * @var int
      */
     protected $pageLen = 10;
+    /**
+     * Current
+     * @var string
+     */
+    protected $route = '';
 
     /**
      * initialize all needed values
@@ -90,8 +97,8 @@ abstract class BaseController
             'all_results' => $itemsCount,
             'pagelen' => $queryParams['pagelen'],
             'page' => $queryParams['page'],
-            'next' => '',
-            'previous' => '',
+            'next' => Api::getNextPagePath($this->app->getContainer()->environment->get('REQUEST_URI'), $queryParams['page'], $queryParams['pagelen'], $itemsCount),
+            'previous' => Api::getPreviousPagePath($this->app->getContainer()->environment->get('REQUEST_URI'), $queryParams['page'], $queryParams['pagelen'], $itemsCount),
             'data' => array_values($items),
         ]);
     }

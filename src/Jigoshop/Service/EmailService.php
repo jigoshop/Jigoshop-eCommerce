@@ -150,11 +150,15 @@ class EmailService implements EmailServiceInterface
 	 * Save the email data upon post saving.
 	 *
 	 * @param $id int Post ID.
+     *
+     * @return Email
 	 */
 	public function savePost($id)
 	{
         $email = $this->factory->create($id);
 		$this->save($email);
+
+		return $email;
 	}
 
     /**
