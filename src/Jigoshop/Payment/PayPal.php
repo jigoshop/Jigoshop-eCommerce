@@ -243,7 +243,7 @@ class PayPal implements Method, Processable
 				'email' => $billingAddress->getEmail(),
 				// Payment Info
 				'invoice' => $order->getNumber(),
-				'amount' => number_format($order->getTotal(), $this->options->get('general.currency_decimals')),
+				'amount' => number_format($order->getTotal(), $this->options->get('general.currency_decimals'), '.', ''),
 				//BN code
 				'bn' => 'Jigoshop_SP'
             ],
