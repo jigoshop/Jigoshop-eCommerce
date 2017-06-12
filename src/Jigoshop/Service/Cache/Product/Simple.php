@@ -44,6 +44,17 @@ class Simple implements ProductServiceInterface
 		$this->service->addType($type, $class);
 	}
 
+    /**
+     * Creates empty product.
+     * 
+     * @param $type string The product type to create.
+     * 
+     * @return \Jigoshop\Entity\Product Created product.
+     */
+    public function create($type) {
+        return $this->service->create($type);
+    }
+
 	/**
 	 * Finds item specified by ID.
 	 *

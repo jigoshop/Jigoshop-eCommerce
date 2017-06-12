@@ -73,6 +73,17 @@ class ProductService implements ProductServiceInterface
     }
 
     /**
+     * Creates empty product.
+     * 
+     * @param $type string The product type to create.
+     * 
+     * @return \Jigoshop\Entity\Product Created product.
+     */
+    public function create($type) {
+        return $this->factory->get($type);
+    }
+
+    /**
      * Finds product specified by ID.
      *
      * @param $id int Product ID.
