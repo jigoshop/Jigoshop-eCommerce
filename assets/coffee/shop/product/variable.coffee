@@ -34,7 +34,7 @@ class ProductVariable
         if definition.price == ''
           proper = @VARIATION_NOT_EXISTS
           continue
-        jQuery('p.price > span', $buttons).html(definition.html.price)
+        jQuery('div.price > span', $buttons).html(definition.html.price)
         if definition.html.image != ''
           jQuery('.featured-image').replaceWith(definition.html.image)
           @refreshVariationGallery(id)
