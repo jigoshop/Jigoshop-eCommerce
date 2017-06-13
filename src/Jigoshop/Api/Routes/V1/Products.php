@@ -5,6 +5,7 @@ namespace Jigoshop\Api\Routes\V1;
 
 use Jigoshop\Api\Contracts\ApiControllerContract;
 use Jigoshop\Entity\Product as ProductEntity;
+use Jigoshop\Exception;
 use Jigoshop\Factory\Product;
 use Slim\App;
 use Slim\Http\Request;
@@ -197,6 +198,9 @@ class Products extends PostController implements ApiControllerContract
      */
     public function create(Request $request, Response $response, $args)
     {
+        if(!isset($_POST['jigoshop_product']) || !is_array($_POST['jigoshop_product'])) {
+            throw new Exception('Invalid parameters', 422);
+        }
         /** @var Product $factory */
         $factory = $this->app->getContainer()->di->get('jigoshop.factory.product');
         self::overridePostProductData();
@@ -206,7 +210,7 @@ class Products extends PostController implements ApiControllerContract
 
         return $response->withJson([
             'success' => true,
-            'data' => "$this->entityName successfully created",
+            'data' => $product,
         ]);
     }
 
@@ -229,7 +233,7 @@ class Products extends PostController implements ApiControllerContract
 
         return $response->withJson([
             'success' => true,
-            'data' => "Product successfully updated",
+            'data' => $product,
         ]);
     }
 

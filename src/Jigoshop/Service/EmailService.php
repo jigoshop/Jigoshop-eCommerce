@@ -150,11 +150,15 @@ class EmailService implements EmailServiceInterface
 	 * Save the email data upon post saving.
 	 *
 	 * @param $id int Post ID.
+     *
+     * @return Email
 	 */
 	public function savePost($id)
 	{
         $email = $this->factory->create($id);
 		$this->save($email);
+
+		return $email;
 	}
 
     /**
@@ -257,7 +261,9 @@ class EmailService implements EmailServiceInterface
 					'From: "'.$this->options->get('general.emails.from').'" <'.$this->options->get('general.email').'>',
                 ];
                 $footer = $this->options->get('general.emails.footer');
-                $post->post_content = $footer ? $post->post_content.'<br/><br/>'.$footer : $post->post_content;
+                if($footer) {
+                	$email->setText(sprintf('%s<br /><br />%s', $email->getText(), $footer));
+                }
 
                 $this->wp->wpMail(
 					$to,

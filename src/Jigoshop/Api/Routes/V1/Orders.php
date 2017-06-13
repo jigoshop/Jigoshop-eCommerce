@@ -9,6 +9,7 @@ use Jigoshop\Entity\Order as OrderEntity;
 use Jigoshop\Entity\OrderInterface;
 use Jigoshop\Exception;
 use Jigoshop\Factory\Order;
+use Jigoshop\Helper\Api;
 use Jigoshop\Service\CustomerService;
 use Jigoshop\Service\OrderService;
 use Slim\App;
@@ -231,9 +232,8 @@ class Orders extends PostController implements ApiControllerContract
         $queryParams = $request->getParams();
         $queryParams['pagelen'] = isset($queryParams['pagelen']) && is_numeric($queryParams['pagelen']) ? (int)$queryParams['pagelen'] : 10;
         $queryParams['page'] = isset($queryParams['page']) && is_numeric($queryParams['page']) ? (int)$queryParams['page'] : 1;
-        $allOrders = 12;// $service->getOrdersCount();
 
-        $orders = $service->findByQuery(new \WP_Query([
+        $query = new \WP_Query([
             'post_type' => Types::ORDER,
             'posts_per_page' => $queryParams['pagelen'],
             'paged' => $queryParams['page'],
@@ -245,15 +245,16 @@ class Orders extends PostController implements ApiControllerContract
                 OrderEntity\Status::REFUNDED,
                 OrderEntity\Status::ON_HOLD
             ]
-        ]));
+        ]);
+        $orders = $service->findByQuery($query);
 
         return $response->withJson([
             'success' => true,
-            'all_results' => $allOrders,
+            'all_results' => $query->found_posts,
             'pagelen' => $queryParams['pagelen'],
             'page' => $queryParams['page'],
-            'next' => '',
-            'previous' => '',
+            'next' => Api::getNextPagePath('/orders', $queryParams['page'], $queryParams['pagelen'], $query->found_posts),
+            'previous' => Api::getPreviousPagePath('/orders', $queryParams['page'], $queryParams['pagelen'], $query->found_posts),
             'data' => array_values($orders),
         ]);
     }
@@ -297,27 +298,31 @@ class Orders extends PostController implements ApiControllerContract
      */
     public function create(Request $request, Response $response, $args)
     {
+        $postData = $request->getParsedBody();
+        if(!isset($postData['jigoshop_order']) || !is_array($postData['jigoshop_order'])) {
+            throw new Exception('Invalid parameters', 422);
+        }
+
         $postId = $this->createNewPostOrder();
         /** @var Order $factory */
         $factory = $this->app->getContainer()->di->get("jigoshop.factory.order");
         $object = $factory->create($postId);
 
-        if (isset($_POST['jigoshop_order']['customer'])) {
+        if (isset($postData['jigoshop_order']['customer'])) {
             /** @var CustomerService $customerService */
             $customerService = $this->app->getContainer()->di->get("jigoshop.service.customer");
-            $_POST['jigoshop_order']['customer'] = $customerService->find($_POST['jigoshop_order']['customer']);
+            $postData['jigoshop_order']['customer'] = $customerService->find($postData['jigoshop_order']['customer']);
         }
-        if (isset($_POST['jigoshop_order']['items'])) {
-            $object = $this->_updateOrderItems($object, $_POST['jigoshop_order']['items']);
+        if (isset($postData['jigoshop_order']['items'])) {
+            $object = $this->_updateOrderItems($object, $postData['jigoshop_order']['items']);
         }
-        $object = $factory->fill($object, $_POST['jigoshop_order']);
+        $object = $factory->fill($object, $postData['jigoshop_order']);
         /** @var OrderService $service */
-        $service = $this->app->getContainer()->di->get("jigoshop.service.order");
         $this->service->save($object);
 
         return $response->withJson([
             'success' => true,
-            'data' => "$this->entityName successfully created",
+            'data' => $object,
         ]);
     }
 
@@ -331,7 +336,7 @@ class Orders extends PostController implements ApiControllerContract
     public function update(Request $request, Response $response, $args)
     {
         if (!isset($args['id']) || empty($args['id'])) {
-            throw new Exception("$this->entityName ID was not provided");
+            throw new Exception("$this->entityName ID was not provided", 422);
         }
 
         $object = $this->service->find($args['id']);
@@ -355,7 +360,7 @@ class Orders extends PostController implements ApiControllerContract
 
         return $response->withJson([
             'success' => true,
-            'data' => "Order successfully updated",
+            'data' => $object,
         ]);
     }
 
@@ -370,7 +375,7 @@ class Orders extends PostController implements ApiControllerContract
     public function updateOrderItems(Request $request, Response $response, $args)
     {
         if (!isset($args['id']) || empty($args['id'])) {
-            throw new Exception("$this->entityName ID was not provided");
+            throw new Exception("$this->entityName ID was not provided", 422);
         }
 
         $object = $this->service->find($args['id']);
@@ -383,7 +388,7 @@ class Orders extends PostController implements ApiControllerContract
 
         return $response->withJson([
             'success' => true,
-            'data' => "Order successfully updated",
+            'data' => $object,
         ]);
     }
 

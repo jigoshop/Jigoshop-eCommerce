@@ -107,11 +107,25 @@ abstract class Product implements EntityInterface, Product\Taxable, \JsonSeriali
     }
 
     /**
+     * @param array Categories IDs assigned to the product.
+     */
+    public function setCategories($categories) {
+        $this->categories = $categories;
+    }
+
+    /**
      * @return array Tags assigned to the product.
      */
     public function getTags()
     {
         return $this->tags;
+    }
+
+    /**
+     * @param array Tags IDs assigned to the product.
+     */
+    public function setTags($tags) {
+        $this->tags = $tags;
     }
 
     /**
@@ -356,6 +370,13 @@ abstract class Product implements EntityInterface, Product\Taxable, \JsonSeriali
     public function getAttributes()
     {
         return $this->attributes;
+    }
+
+    /**
+     * @param Attribute[] List of product attributes.
+     */
+    public function setAttributes($attributes) {
+        $this->attributes = $attributes;
     }
 
     /**

@@ -68,69 +68,147 @@ class Product
      *
      * @return string
      */
-    public static function getPriceHtml(Entity\Product $product)
-    {
-        $price = 0;
-        $showWithTax = self::$options->get('tax.product_prices', 'excluding_tax') == 'including_tax';
-        $taxIncluded = self::$options->get('tax.prices_entered', 'without_tax') == 'with_tax';
-        $suffix = '';
-        if(self::$options->get('tax.show_suffix', 'in_cart_totals') == 'everywhere') {
-            $suffix = $showWithTax ? self::$options->get('tax.suffix_for_included', '') : self::$options->get('tax.suffix_for_excluded', '');
-        }
-        switch ($product->getType()) {
+    public static function getPriceHtml(Entity\Product $product) {
+        $price = null;
+        $priceWithTax = null;
+        $regularPrice = null;
+        $regularPriceWithTax = null;
+        $result = '';
+        $taxAlreadyIncluded = self::$options->get('tax.prices_entered', 'without_tax');
+
+        switch($product->getType()) {
             case Entity\Product\Simple::TYPE:
             case Entity\Product\Virtual::TYPE:
             case Entity\Product\External::TYPE:
             case Entity\Product\Downloadable::TYPE:
-                /** @var $product Entity\Product\Simple */
                 $price = $product->getPrice();
-                if ($price === '') {
-                    return apply_filters('jigoshop\helper\product\get_price_html', __('Price not announced', 'jigoshop'), '',
-                        $product);
-                }
 
-                $price = $taxIncluded ? Tax::getPriceWithoutTax($price, $product->getTaxClasses()) : $price;
-                $price += $showWithTax ? Tax::getForProduct($price, $product) : 0;
-
-                if (self::isOnSale($product)) {
+                if(self::isOnSale($product)) {
                     $regularPrice = $product->getRegularPrice();
-                    $regularPrice = $taxIncluded ? Tax::getPriceWithoutTax($regularPrice, $product->getTaxClasses()) : $regularPrice;
-                    $regularPrice += $showWithTax ? Tax::getForProduct($regularPrice, $product) : 0;
-                    if ($regularPrice === '') {
-                        return apply_filters('jigoshop\helper\product\get_price_html', __('Price not announced', 'jigoshop'), '',
-                            $product);
+                    $regularPrice = ($taxAlreadyIncluded == 'with_tax'?Tax::getPriceWithoutTax($regularPrice, $product->getTaxClasses()):$regularPrice);
+                    $regularPriceWithTax = $regularPrice + Tax::getForProduct($regularPrice, $product);
+
+                    $salePrice = $product->getPrice();
+                    $salePrice = ($taxAlreadyIncluded == 'with_tax'?Tax::getPriceWithoutTax($salePrice, $product->getTaxClasses()):$salePrice);
+                    $salePriceWithTax = $salePrice + Tax::getForProduct($salePrice, $product);
+
+                    $pricesRegular = self::generatePrices($regularPrice, $regularPriceWithTax);
+                    $salePrices = self::generatePrices($salePrice, $salePriceWithTax);
+
+                    if(count($pricesRegular) == 2) {
+                        if(strpos($product->getSales()->getPrice(), '%') !== false) {
+                            $result = sprintf('
+                                <del>%s 
+                                %s</del>
+                                %s 
+                                %s
+                                <ins>%s</ins>
+                                ', $pricesRegular[0], $pricesRegular[1],
+                                $salePrices[0], $salePrices[1], sprintf(__('%s off!', 'jigoshop'), $product->getSales()->getPrice()));
+                        } 
+                        else {
+                            $result = sprintf('
+                                <del>%s 
+                                %s</del>
+                                %s 
+                                %s
+                                ', $pricesRegular[0], $pricesRegular[1],
+                                $salePrices[0], $salePrices[1]);
+                        }                       
                     }
-                    if (strpos($product->getSales()->getPrice(), '%') !== false) {
-                        $result = '<del>' . self::formatPrice(round($regularPrice, 2), $suffix) . '</del>' . self::formatPrice(round($price, 2), $suffix) . '
-						<ins>' . sprintf(__('%s off!', 'jigoshop'), $product->getSales()->getPrice()) . '</ins>';
-                        break;
-                    } else {
-                        $result = '<del>' . self::formatPrice(round($regularPrice, 2), $suffix) . '</del>
-						<ins>' . self::formatPrice(round($price, 2), $suffix) . '</ins>';
-                        break;
+                    else {
+                        $result = $pricesRegular[0];
                     }
+
+                    break;
+                }    
+
+                $price = ($taxAlreadyIncluded == 'with_tax'?Tax::getPriceWithoutTax($price, $product->getTaxClasses()):$price);
+                $priceWithTax = $price + Tax::getForProduct($price, $product);
+                $prices = self::generatePrices($price, $priceWithTax);
+
+                if(count($prices) == 2) {
+                    $result = sprintf('%s 
+                        (%s)', $prices[0], $prices[1]);
+                }
+                else {
+                    $result = $prices[0];
                 }
 
-                $result = self::formatPrice(round($price, 2), $suffix);
-                break;
+            break;
             case Entity\Product\Variable::TYPE:
-                /** @var $product Entity\Product\Variable */
                 $price = $product->getLowestPrice();
-                $price = $taxIncluded ? Tax::getPriceWithoutTax($price, $product->getTaxClasses()) : $price;
-                $price += $showWithTax ? Tax::getForProduct($price, $product) : 0;
-                $formatted = self::formatPrice(round($price, 2), $suffix);
+                $price = ($taxAlreadyIncluded == 'with_tax'?Tax::getPriceWithoutTax($price, $product->getTaxClasses()):$price);
+                $priceWithTax = $price + Tax::getForProduct($price, $product); 
 
-                if ($price !== '' && $product->getLowestPrice() < $product->getHighestPrice()) {
-                    $result = sprintf(__('From: %s', 'jigoshop'), $formatted);
-                } else {
-                    $result = $formatted;
+                $prices = self::generatePrices($price, $priceWithTax);
+
+                if($price !== '' && $product->getLowestPrice() < $product->getHighestPrice()) {
+                    if(count($prices) == 2) {
+                        $result = sprintf(__('From: %s 
+                            (%s)', 'jigoshop'), $prices[0], $prices[1]);
+                    }
+                    else {
+                        $result = sprintf(__('From: %s', 'jigoshop'), $prices[0]);
+                    }
                 }
-                break;
+                else {
+                    $result = $prices[0];
+                }
+
+            break;
             default:
                 $result = apply_filters('jigoshop\helper\product\get_price', '', $product);
         }
 
         return apply_filters('jigoshop\helper\product\get_price_html', $result, $price, $product);
+    }
+
+    public static function generatePrices($price, $priceWithTax, $cart = 0) {
+        if($cart) {
+            $showWithTax = self::$options->get('tax.item_prices', 'excluding_tax');
+        }
+        else {
+            $showWithTax = self::$options->get('tax.product_prices', 'excluding_tax');
+        }
+
+        $suffixExcludingTax = '';
+        $suffixIncludingTax = '';
+
+        if(self::$options->get('tax.show_suffix', false) === 'everywhere') {
+            $suffixExcludingTax = self::$options->get('tax.suffix_for_excluded', '');
+            $suffixIncludingTax = self::$options->get('tax.suffix_for_included', '');
+        }
+        if($price === '') {
+            return [
+                ''
+            ];
+        }
+        if($showWithTax == 'both') {
+            if($price == 0.00) {
+                return [
+                    self::formatPrice(0.00)
+                ];
+            }
+            else {
+                return [
+                    self::formatPrice(round($price, 2), $suffixExcludingTax),
+                    self::formatPrice(round($priceWithTax, 2), $suffixIncludingTax)
+                ];
+            }
+        }
+        else {
+            if($showWithTax == 'excluding_tax') {
+                return [
+                    self::formatPrice(round($price, 2), $suffixExcludingTax)
+                ];
+            }
+            elseif($showWithTax == 'including_tax') {
+                return [
+                    self::formatPrice(round($priceWithTax, 2), $suffixIncludingTax)
+                ];
+            }
+        }
     }
 
     /**
@@ -185,7 +263,9 @@ class Product
         }
 
         if ($price !== '') {
-            $formatted = sprintf(Currency::format(), Currency::symbol(), Currency::code(), self::formatNumericPrice($price));
+            $price = self::formatNumericPrice($price);
+
+            $formatted = sprintf(Currency::format(), Currency::symbol(), Currency::code(), $price);
 
             return $suffix ? sprintf('%s %s', $formatted, $suffix) : $formatted;
         }

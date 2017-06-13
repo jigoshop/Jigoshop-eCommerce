@@ -506,6 +506,57 @@
         ]
     },
     {
+        "name": "spatie/array-to-xml",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/spatie/array-to-xml.git",
+            "reference": "658681c5020aa4367a6a07e99a122da91ab4679a"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/spatie/array-to-xml/zipball/658681c5020aa4367a6a07e99a122da91ab4679a",
+            "reference": "658681c5020aa4367a6a07e99a122da91ab4679a",
+            "shasum": ""
+        },
+        "require": {
+            "php": "^7.0"
+        },
+        "require-dev": {
+            "mockery/mockery": "0.9.*",
+            "phpunit/phpunit": "^5.7",
+            "spatie/phpunit-snapshot-assertions": "^0.4.1"
+        },
+        "time": "2017-05-30 18:52:30",
+        "type": "library",
+        "installation-source": "source",
+        "autoload": {
+            "psr-4": {
+                "Spatie\\ArrayToXml\\": "src"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Freek Van der Herten",
+                "email": "freek@spatie.be",
+                "homepage": "https://murze.be",
+                "role": "Developer"
+            }
+        ],
+        "description": "Convert an array to xml",
+        "homepage": "https://github.com/spatie/array-to-xml",
+        "keywords": [
+            "array",
+            "convert",
+            "xml"
+        ]
+    },
+    {
         "name": "psr/container",
         "version": "dev-master",
         "version_normalized": "9999999-dev",
@@ -693,12 +744,12 @@
         "source": {
             "type": "git",
             "url": "https://github.com/silexphp/Pimple.git",
-            "reference": "93ec38f1df4d4ad3f0c71bc9273139fa8af29f3e"
+            "reference": "2af86acb99d69fda50fe441cc45574d70c6267b8"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/silexphp/Pimple/zipball/93ec38f1df4d4ad3f0c71bc9273139fa8af29f3e",
-            "reference": "93ec38f1df4d4ad3f0c71bc9273139fa8af29f3e",
+            "url": "https://api.github.com/repos/silexphp/Pimple/zipball/2af86acb99d69fda50fe441cc45574d70c6267b8",
+            "reference": "2af86acb99d69fda50fe441cc45574d70c6267b8",
             "shasum": ""
         },
         "require": {
@@ -707,7 +758,7 @@
         "require-dev": {
             "symfony/phpunit-bridge": "^3.2"
         },
-        "time": "2017-03-24 14:13:45",
+        "time": "2017-06-04 15:04:52",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -960,57 +1011,6 @@
             "auth",
             "middleware",
             "psr-7"
-        ]
-    },
-    {
-        "name": "spatie/array-to-xml",
-        "version": "dev-master",
-        "version_normalized": "9999999-dev",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/spatie/array-to-xml.git",
-            "reference": "687d2c6019ce0a86b8aea39fb09017d804ef744d"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/spatie/array-to-xml/zipball/687d2c6019ce0a86b8aea39fb09017d804ef744d",
-            "reference": "687d2c6019ce0a86b8aea39fb09017d804ef744d",
-            "shasum": ""
-        },
-        "require": {
-            "php": "^5.6|^7.0"
-        },
-        "require-dev": {
-            "mockery/mockery": "0.9.*",
-            "phpunit/phpunit": "^5.7",
-            "spatie/phpunit-snapshot-assertions": "^0.4.1"
-        },
-        "time": "2017-05-23 12:26:36",
-        "type": "library",
-        "installation-source": "source",
-        "autoload": {
-            "psr-4": {
-                "Spatie\\ArrayToXml\\": "src"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Freek Van der Herten",
-                "email": "freek@spatie.be",
-                "homepage": "https://murze.be",
-                "role": "Developer"
-            }
-        ],
-        "description": "Convert an array to xml",
-        "homepage": "https://github.com/spatie/array-to-xml",
-        "keywords": [
-            "array",
-            "convert",
-            "xml"
         ]
     }
 ]

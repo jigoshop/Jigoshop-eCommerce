@@ -136,11 +136,17 @@ class Settings implements PageInterface
 		foreach ($sections as $section) {
 			$this->wp->addSettingsSection($section['id'], $section['title'], function () use ($tab, $section, $that){
 				$that->displaySection($tab, $section);
+				
+				if(isset($section['display']) && is_callable($section['display'])) {
+					echo call_user_func($section['display']);
+				}				
 			}, self::NAME);
 
-			foreach ($section['fields'] as $field) {
-				$field = $this->validateField($field);
-				$this->wp->addSettingsField($field['id'], $field['title'], [$this, 'displayField'], self::NAME, $section['id'], $field);
+			if(isset($section['fields']) && is_array($section['fields'])) {
+				foreach ($section['fields'] as $field) {
+					$field = $this->validateField($field);
+					$this->wp->addSettingsField($field['id'], $field['title'], [$this, 'displayField'], self::NAME, $section['id'], $field);
+				}
 			}
 		}
 	}
@@ -211,8 +217,7 @@ class Settings implements PageInterface
 	{
 		switch ($field['type']) {
 			case 'user_defined':
-				// Workaround for PHP pre-5.4
-				echo call_user_func($field['display'], $field);
+				Forms::userDefined($field);
 				break;
 			case 'text':
 				Forms::text($field);

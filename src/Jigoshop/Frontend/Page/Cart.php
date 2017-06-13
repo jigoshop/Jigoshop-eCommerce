@@ -217,9 +217,17 @@ class Cart implements PageInterface
             }
         }
 
-        $showWithTax = $this->options->get('tax.item_prices', 'excluding_tax') == 'including_tax';
-        $suffix = $showWithTax ? $this->options->get('tax.suffix_for_included', '') : $this->options->get('tax.suffix_for_excluded', '');
-        $productSubtotal = $showWithTax ? $cart->getProductSubtotal() + $cart->getTotalTax() : $cart->getProductSubtotal();
+        $productSubtotal = $cart->getProductSubtotal();
+        $productSubtotalWithTax = $cart->getProductSubtotal() + $cart->getTotalTax();
+
+        $productSubtotalPrices = Product::generatePrices($productSubtotal, $productSubtotalWithTax, 1);
+        if(count($productSubtotalPrices) == 2) {
+        	$productSubtotalPricesStr = sprintf('%s (%s)', $productSubtotalPrices[0], $productSubtotalPrices[1]);
+        }
+        else {
+        	$productSubtotalPricesStr = $productSubtotalPrices[0];
+        }
+
 		$coupons = join(',', array_map(function ($coupon){
 			/** @var $coupon Coupon */
 			return $coupon->getCode();
@@ -237,7 +245,7 @@ class Cart implements PageInterface
 				'shipping' => $shippingHtml,
 				'discount' => Product::formatPrice($cart->getDiscount()),
 				'subtotal' => Product::formatPrice($cart->getSubtotal()),
-				'product_subtotal' => Product::formatPrice($productSubtotal, $suffix),
+				'product_subtotal' => $productSubtotalPricesStr,
 				'tax' => $tax,
 				'total' => Product::formatPrice($cart->getTotal()),
             ],
@@ -389,16 +397,37 @@ class Cart implements PageInterface
 				throw new Exception(__('Item not found.', 'jigoshop'));
 			}
 
-            $showWithTax = $this->options->get('tax.item_prices', 'excluding_tax') == 'including_tax';
-            $suffix = $showWithTax ? $this->options->get('tax.suffix_for_included', '') : $this->options->get('tax.suffix_for_excluded', '');
-			$price = $showWithTax ? $item->getPrice() + $item->getTax() / $item->getQuantity() : $item->getPrice();
             $response = $this->getAjaxCartResponse($cart);
+
+			$price = $item->getPrice();
+			$priceWithTax = $item->getPrice() + ($item->getTax() / $item->getQuantity());
+
+			$prices = Product::generatePrices($price, $priceWithTax, 1);
+			if(count($prices) == 2) {
+				$pricesStr = sprintf('%s 
+					(%s)', $prices[0], $prices[1]);
+			}
+			else {
+				$pricesStr = $prices[0];
+			}
+
+			$priceTotal = $item->getQuantity() * $price;
+			$priceTotalWithTax = $item->getQuantity() * $priceWithTax;
+
+			$pricesTotal = Product::generatePrices($priceTotal, $priceTotalWithTax, 1);
+			if(count($pricesTotal) == 2) {
+				$pricesTotalStr = sprintf('%s 
+					(%s)', $pricesTotal[0], $pricesTotal[1]);
+			}
+			else {
+				$pricesTotalStr = $pricesTotal[0];
+			}
 
 			// Add some additional fields
 			$response['item_price'] = $price;
 			$response['item_subtotal'] = $price * $item->getQuantity();
-			$response['html']['item_price'] = Product::formatPrice($price);
-			$response['html']['item_subtotal'] = Product::formatPrice($price * $item->getQuantity(), $suffix);
+			$response['html']['item_price'] = $pricesStr;
+			$response['html']['item_subtotal'] = $pricesTotalStr;
 		} catch (NotEnoughStockException $e) {
 			$response = [
 				'success' => false,
@@ -551,8 +580,9 @@ class Cart implements PageInterface
 			$termsUrl = $this->wp->getPermalink($termsPage);
 		}
 
-        $showWithTax = $this->options->get('tax.item_prices', 'excluding_tax') == 'including_tax';
-        $suffix = $showWithTax ? $this->options->get('tax.suffix_for_included', '') : $this->options->get('tax.suffix_for_excluded', '');
+        $showWithTax = $this->options->get('tax.item_prices', 'excluding_tax');
+        $suffixExcludingTax = $this->options->get('tax.suffix_for_excluded', '');
+        $suffixIncludingTax = $this->options->get('tax.suffix_for_included', '');
 
 		return Render::get('shop/cart', [
 			'content' => $content,
@@ -562,8 +592,6 @@ class Cart implements PageInterface
 			'customer' => $this->customerService->getCurrent(),
 			'shippingMethods' => $this->shippingService->getEnabled(),
 			'shopUrl' => $this->wp->getPermalink($this->options->getPageId(Pages::SHOP)),
-			'showWithTax' => $showWithTax,
-            'suffix' => $suffix,
 			'showShippingCalculator' => $this->options->get('shipping.calculator'),
 			'termsUrl' => $termsUrl,
         ]);
