@@ -44,12 +44,19 @@ if ($title) {
 			min: min_price,
 			max: max_price,
 			values: [min_price, max_price],
+			step: 1,
 			create: function(){
 				$(".price_slider_amount span").html(html.replace(/%s%/g, min_price) + " - " + html.replace(/%s%/g, max_price));
 				$(".price_slider_amount #min_price").val(current_min_price);
 				$(".price_slider_amount #max_price").val(current_max_price);
 			},
 			slide: function(event, ui){
+				if(ui.values[0] >= ui.values[1] || ui.values[1] < ui.values[0]) {
+					event.preventDefault();
+
+					return;
+				}
+
 				$(".price_slider_amount span").html(html.replace(/%s%/g, ui.values[0]) + " - " + html.replace(/%s%/g, ui.values[1]));
 				$("input#min_price").val(ui.values[0]);
 				$("input#max_price").val(ui.values[1]);
