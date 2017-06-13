@@ -5,6 +5,7 @@ use Jigoshop\Admin\Settings\TabInterface;
 use Jigoshop\Admin\SystemInfo;
 use Jigoshop\Core;
 use Jigoshop\Core\Options;
+use Jigoshop\Entity\Product\Attributes\StockStatus;
 use Jigoshop\Helper\Render;
 use WPAL\Wordpress;
 
@@ -123,6 +124,17 @@ class ToolsTab implements TabInterface
                             return Render::output('admin/system_info/tool', $field);
                         }
                     ],
+                    [
+                        'id' => 'disable-manage-stock-and-set-in-stock-status-for-all-products',
+                        'name' => 'disable-manage-stock-and-set-in-stock-status-for-all-products',
+                        'title' => __('Disable manage stock and set in stock status for all products', 'jigoshop'),
+                        'tip' => '',
+                        'classes' => [],
+                        'type' => 'user_defined',
+                        'display' => function($field){
+                            return Render::output('admin/system_info/tool', $field);
+                        }
+                    ],
                 ]
             ]
         ];
@@ -158,6 +170,9 @@ class ToolsTab implements TabInterface
                 break;
             case 'fix-order-items-migration':
                 $this->fixMigratedOrderItems();
+                break;
+            case 'disable-manage-stock-and-set-in-stock-status-for-all-products':
+                $this->disableManageStockAndSetInStockStatusForAllProducts();
                 break;
 		}
 	}
@@ -227,5 +242,16 @@ class ToolsTab implements TabInterface
                 ]);
             }
         }
+    }
+
+    /**
+     * Fix migration issue.
+     */
+    private function disableManageStockAndSetInStockStatusForAllProducts()
+    {
+        set_time_limit(0);
+        $wpdb = $this->wp->getWPDB();
+        $wpdb->update($wpdb->postmeta, ['meta_value' => 0], ['meta_key' => 'stock_manage']);
+        $wpdb->update($wpdb->postmeta, ['meta_value' => StockStatus::IN_STOCK], ['meta_key' => 'stock_status']);
     }
 }
