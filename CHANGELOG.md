@@ -1,5 +1,5 @@
 ## Changelog
-* 2.1.4:
+* 2.1.4 - 2017.06.13:
     * New: Email action for order status change for admin.
     * New: Possibility to show prices with and without tax.
     * New: All Forms now has data parameter.
@@ -9,7 +9,7 @@
     * Fix: Api responses now properly includes result counts, next and prev paths, created/updated objects.
     * Fix: PayPal error when order amount was more than 999.
     * Fix: E-mail footer not included in Jigoshop emails.
-    * Fix: Non-existend tax classes supplied to TaxService.
+    * Fix: Non-existent tax classes supplied to TaxService.
 * 2.1.3 - 2017.05.25:
     * New: Allow to prepend product permalink with Wordpress permalink.
     * New: Tool to fix order items migration.
