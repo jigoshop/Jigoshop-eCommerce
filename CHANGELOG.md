@@ -12,6 +12,8 @@
     * Fix: Non-existent tax classes supplied to TaxService.
     * Fix: Not possible to disable stock manage in product variation.
     * Fix: Price filter widget, do not allow to set the same price as min and max.
+    * Fix: Fatal error when up-sell or cross-sell product was deleted.
+    * Fix: Do not return null in ajax product find when id doesn't math any product.
 * 2.1.3 - 2017.05.25:
     * New: Allow to prepend product permalink with Wordpress permalink.
     * New: Tool to fix order items migration.

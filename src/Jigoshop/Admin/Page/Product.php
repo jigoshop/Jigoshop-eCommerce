@@ -334,6 +334,10 @@ class Product
                 throw new Exception(__('Neither query nor value is provided to find products.', 'jigoshop'));
             }
 
+            $products = array_filter($products, function($product) {
+                return $product instanceof \Jigoshop\Entity\Product;
+            });
+
             $result = [
                 'success' => true,
                 'results' => $this->prepareResults($products, isset($_POST['only_parent']) && (bool)$_POST['only_parent']),
