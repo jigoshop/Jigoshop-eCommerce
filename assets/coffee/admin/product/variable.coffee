@@ -113,7 +113,7 @@ class AdminProductVariable
 
     getOptionValue = (current) ->
       if current.type == 'checkbox' or current.type == 'radio'
-        return current.checked
+        return if current.checked then 1 else 0
       if current.type == 'select-multiple'
         return jQuery(current).val()
       return current.value

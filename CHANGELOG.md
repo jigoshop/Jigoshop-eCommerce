@@ -10,6 +10,7 @@
     * Fix: PayPal error when order amount was more than 999.
     * Fix: E-mail footer not included in Jigoshop emails.
     * Fix: Non-existent tax classes supplied to TaxService.
+    * Fix: Not possible to disable stock manage in product variation.
 * 2.1.3 - 2017.05.25:
     * New: Allow to prepend product permalink with Wordpress permalink.
     * New: Tool to fix order items migration.
