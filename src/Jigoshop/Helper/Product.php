@@ -100,7 +100,7 @@ class Product
                             $result = sprintf('
                                 <del>%s 
                                 %s</del>
-                                %s 
+                                <strong>%s</strong>
                                 %s
                                 <ins>%s</ins>
                                 ', $pricesRegular[0], $pricesRegular[1],
@@ -110,7 +110,7 @@ class Product
                             $result = sprintf('
                                 <del>%s 
                                 %s</del>
-                                %s 
+                                <strong>%s</strong>
                                 %s
                                 ', $pricesRegular[0], $pricesRegular[1],
                                 $salePrices[0], $salePrices[1]);
@@ -128,7 +128,7 @@ class Product
                 $prices = self::generatePrices($price, $priceWithTax);
 
                 if(count($prices) == 2) {
-                    $result = sprintf('%s 
+                    $result = sprintf('<strong>%s</strong>
                         (%s)', $prices[0], $prices[1]);
                 }
                 else {
@@ -159,7 +159,7 @@ class Product
 
                 if($price !== '') {
                     if(count($prices) == 2) {
-                        $result = sprintf(__('From: %s 
+                        $result = sprintf(__('From: <strong>%s</strong> 
                             (%s)', 'jigoshop'), $prices[0], $prices[1]);
                     }
                     else {
@@ -168,7 +168,7 @@ class Product
                 }
                 else {
                     if(count($prices) == 2) {
-                        $result = sprintf(__('%s
+                        $result = sprintf(__('<strong>%s</strong>
                             (%s)', 'jigoshop'), $prices[0], $prices[1]);
                     }
                     else {
@@ -203,17 +203,25 @@ class Product
                 ''
             ];
         }
-        if($showWithTax == 'both') {
+        if($showWithTax == 'both_including_first' || $showWithTax == 'both_excluding_first') {
             if($price == 0.00) {
                 return [
                     self::formatPrice(0.00)
                 ];
             }
             else {
-                return [
-                    self::formatPrice(round($price, 2), $suffixExcludingTax),
-                    self::formatPrice(round($priceWithTax, 2), $suffixIncludingTax)
-                ];
+                if($showWithTax == 'both_excluding_first') {                
+                    return [
+                        self::formatPrice(round($price, 2), $suffixExcludingTax),
+                        self::formatPrice(round($priceWithTax, 2), $suffixIncludingTax)
+                    ];
+                }
+                else {
+                    return [
+                        self::formatPrice(round($priceWithTax, 2), $suffixIncludingTax),
+                        self::formatPrice(round($price, 2), $suffixExcludingTax)
+                    ];                    
+                }
             }
         }
         else {
