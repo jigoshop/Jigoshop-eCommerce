@@ -617,8 +617,12 @@ class Cart implements PageInterface
                 if (sizeof($products) >= $limit) {
                     break;
                 }
-                $products[] = $this->productService->find($id);
+                $product = $this->productService->find($id);
+                if($product instanceof \Jigoshop\Entity\Product) {
+                    $products[] = $this->productService->find($id);
+                }
             }
+
             if(count($products)) {
                 Render::output('shop/cart/cross_sells', [
                     'products' => $products,

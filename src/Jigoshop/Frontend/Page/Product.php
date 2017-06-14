@@ -276,7 +276,10 @@ class Product implements PageInterface
             if(sizeof($products) >= $productCount){
                 break;
             }
-            $products[] = $this->productService->find($id);
+            $product = $this->productService->find($id);
+            if($product instanceof \Jigoshop\Entity\Product) {
+                $products[] = $this->productService->find($id);
+            }
         }
 
         Render::output('shop/product/up_sells', [
