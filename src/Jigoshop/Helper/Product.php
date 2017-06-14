@@ -137,13 +137,27 @@ class Product
 
             break;
             case Entity\Product\Variable::TYPE:
-                $price = $product->getLowestPrice();
+                $price = false;
+                $lowestVariation = false;
+                foreach($product->getVariations() as $variation) {
+                    $variationPrice = $variation->getProduct()->getPrice();
+
+                    if($variationPrice < $price || $price === false) {
+                        $price = $variationPrice;
+                        $lowestVariation = $variation;
+                    }
+                }
+
+                if($lowestVariation !== false) {
+                    $product = $lowestVariation->getProduct();
+                }
+
                 $price = ($taxAlreadyIncluded == 'with_tax'?Tax::getPriceWithoutTax($price, $product->getTaxClasses()):$price);
                 $priceWithTax = $price + Tax::getForProduct($price, $product); 
 
                 $prices = self::generatePrices($price, $priceWithTax);
 
-                if($price !== '' && $product->getLowestPrice() < $product->getHighestPrice()) {
+                if($price !== '') {
                     if(count($prices) == 2) {
                         $result = sprintf(__('From: %s 
                             (%s)', 'jigoshop'), $prices[0], $prices[1]);
@@ -153,9 +167,14 @@ class Product
                     }
                 }
                 else {
-                    $result = $prices[0];
+                    if(count($prices) == 2) {
+                        $result = sprintf(__('%s
+                            (%s)', 'jigoshop'), $prices[0], $prices[1]);
+                    }
+                    else {
+                        $result = $prices[0];
+                    }
                 }
-
             break;
             default:
                 $result = apply_filters('jigoshop\helper\product\get_price', '', $product);
