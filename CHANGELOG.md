@@ -1,4 +1,6 @@
 ## Changelog
+* 2.1.5:
+    * New: Product quick edit fields.
 * 2.1.4 - 2017.06.14:
     * New: Email action for order status change for admin.
     * New: Possibility to show prices with and without tax.

@@ -39,6 +39,21 @@ class Products
 		$wp->addAction('pre_get_posts', [$this, 'setTypeFilter']);
 		$wp->addAction('wp_ajax_jigoshop.admin.products.feature_product', [$this, 'ajaxFeatureProduct']);
 
+		$wp->addAction('quick_edit_custom_box', function($col, $type) {
+            if($type == Types::PRODUCT && $col == 'type') {
+                $post = $this->wp->getGlobalPost();
+                if ($post === null) {
+                    return;
+                }
+
+                /** @var Product | Product\Variable $product */
+                $product = $this->productService->find($post->ID);
+                Render::output('admin/products/quick_edit', [
+                    'product' => $product,
+                ]);
+            }
+        }, 10, 2);
+
 		$wp->addAction('admin_enqueue_scripts', function () use ($wp){
 			if ($wp->getPostType() == Types::PRODUCT) {
 				Scripts::add('jigoshop.admin.products', \JigoshopInit::getUrl().'/assets/js/admin/products.js', [
@@ -105,6 +120,9 @@ class Products
 		switch ($column) {
 			case 'thumbnail':
 				echo ProductHelper::getFeaturedImage($product, Options::IMAGE_THUMBNAIL);
+				Render::output('admin/products/inline_product_data', [
+				    'product' => $product,
+                ]);
 				break;
 			case 'price':
 				echo ProductHelper::getPriceHtml($product);
