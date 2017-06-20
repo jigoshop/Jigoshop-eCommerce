@@ -117,7 +117,7 @@ class Product
                         }                       
                     }
                     else {
-                        $result = $pricesRegular[0];
+                        $result = sprintf('<del>%s</del> %s', $salePrices[0], $pricesRegular[0]);
                     }
 
                     break;
