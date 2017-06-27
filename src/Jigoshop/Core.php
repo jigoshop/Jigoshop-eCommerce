@@ -116,6 +116,7 @@ class Core
 
 		$container->get('jigoshop.emails');
 
+        (new Kirki())->run();
 		$widget = $container->get('jigoshop.widget');
 		$widget->init($container, $wp);
 
