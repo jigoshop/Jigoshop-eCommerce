@@ -178,7 +178,9 @@ class Order implements OrderInterface, \JsonSerializable
 	}
 
 	/**
-	 * Updates completion time to current date.
+	 * Updates completion time to current or specified date.
+	 * 
+	 * @param \DateTime $time Order completed time.
 	 */
 	public function setCompletedAt($time = null)
 	{
