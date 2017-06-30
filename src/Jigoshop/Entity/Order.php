@@ -180,9 +180,14 @@ class Order implements OrderInterface, \JsonSerializable
 	/**
 	 * Updates completion time to current date.
 	 */
-	public function setCompletedAt()
+	public function setCompletedAt($time = null)
 	{
-		$this->completedAt = new \DateTime();
+		if($time instanceof \DateTime) {
+			$this->completedAt = $time;
+		}
+		else {
+			$this->completedAt = new \DateTime();
+		}
 	}
 
 	/**
