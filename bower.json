@@ -8,7 +8,8 @@
     "select2": "3.5.*",
     "bootstrap-tokenfield": "0.12.*",
     "bootstrap-datepicker": "1.*",
-    "jquery-impromptu": "*"
+    "jquery-impromptu": "*",
+    "magnific-popup": "1.*"
   },
   "resolutions": {
     "jquery": "2.*"

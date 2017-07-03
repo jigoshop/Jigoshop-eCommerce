@@ -99,7 +99,7 @@ class Forms
 				break;
 			case 'user_defined':
 				self::userDefined($field);
-				break;				
+				break;
 			default :
 				do_action('jigoshop\helper\forms\custom', $type, $field);
 				break;
