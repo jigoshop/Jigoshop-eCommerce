@@ -65,9 +65,7 @@ class Cheque implements Method2
 	}
 
 	public function isConfigured() {
-		if(isset($this->options['enabled'])) {
-			return $this->options['enabled'];
-		}
+		return true;
 	}
 
 	public function hasTestMode() {

@@ -89,18 +89,15 @@ class PayPal implements Method2, Processable
 	}
 
 	public function isConfigured() {
-		if(isset($this->settings['enabled']) && $this->settings['enabled']) {
-			if(isset($this->settings['test_mode']) && $this->settings['test_mode']) {
-				if(isset($this->settings['test_email']) && $this->settings['test_email']) {
-					return true;
-				}
-
-				return false;
-			}
-
-			if(isset($this->settings['email']) && $this->settings['email']) {
+		if(isset($this->settings['test_mode']) && $this->settings['test_mode']) {
+			if(isset($this->settings['test_email']) && $this->settings['test_email']) {
 				return true;
 			}
+			return false;
+		}
+
+		if(isset($this->settings['email']) && $this->settings['email']) {
+			return true;
 		}
 
 		return false;

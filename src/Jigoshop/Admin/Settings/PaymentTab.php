@@ -207,14 +207,20 @@ class PaymentTab implements TabInterface
 
 		if($method instanceof Method2) {
 			if($_POST['state'] == 'true') {
+				if(!$method->isConfigured()) {
+					$this->messages->addWarning(sprintf(__('%s was not enabled, as it isn\'t configured properly.', 'jigoshop'), $method->getName()));
+
+					exit;
+				}
+
 				$state = true;
 
-				$this->messages->addNotice(__(sprintf('%s enabled.', $method->getName()), 'jigoshop'));
+				$this->messages->addNotice(sprintf(__('%s enabled.', 'jigoshop'), $method->getName()));
 			}
 			else {
 				$state = false;
 
-				$this->messages->addNotice(__(sprintf('%s disabled.', $method->getName()), 'jigoshop'));
+				$this->messages->addNotice(sprintf(__('%s disabled.', 'jigoshop'), $method->getName()));
 			}
 
 			$settings = $method->setActive($state);
@@ -233,12 +239,12 @@ class PaymentTab implements TabInterface
 			if($_POST['state'] == 'true') {
 				$state = true;
 
-				$this->messages->addNotice(__(sprintf('%s test mode enabled.', $method->getName()), 'jigoshop'));
+				$this->messages->addNotice(sprintf(__('%s test mode enabled.', 'jigoshop'), $method->getName()));
 			}
 			else {
 				$state = false;
 
-				$this->messages->addNotice(__(sprintf('%s test mode disabled.', $method->getName()), 'jigoshop'));
+				$this->messages->addNotice(sprintf(__('%s test mode disabled.', 'jigoshop'), $method->getName()));
 			}
 
 			$settings = $method->setTestMode($state);
