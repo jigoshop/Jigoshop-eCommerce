@@ -14,6 +14,9 @@ use Jigoshop\Admin\Helper\Forms;
  * @var $hierarchical_id string Hierarchical field ID.
  * @var $hierarchical_name string Hierarchical field name.
  * @var $hierarchical bool Display hierarchical data?
+ * @var $one_level_only_id string One level only field ID.
+ * @var $one_level_only_name string One level only field name.
+ * @var $one_level_only bool Display One level only data?
  */
 ?>
 <p>
@@ -34,5 +37,10 @@ use Jigoshop\Admin\Helper\Forms;
 	<label for="<?= $hierarchical_id; ?>">
 		<input class="checkbox" id="<?= $hierarchical_id; ?>"  name="<?= $hierarchical_name; ?>" type="checkbox" value="on" <?= Forms::checked($hierarchical, true); ?> />
 		<?php _e('Show hierarchy', 'jigoshop'); ?>
+	</label>
+    <br/>
+    <label for="<?= $one_level_only_id; ?>">
+		<input class="checkbox" id="<?= $one_level_only_id; ?>"  name="<?= $one_level_only_name; ?>" type="checkbox" value="on" <?= Forms::checked($one_level_only, true); ?> />
+		<?php _e('One level only', 'jigoshop'); ?>
 	</label>
 </p>

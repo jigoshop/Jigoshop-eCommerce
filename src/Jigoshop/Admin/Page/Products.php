@@ -36,7 +36,9 @@ class Products
 		$wp->addAction(sprintf('manage_%s_posts_custom_column', Types::PRODUCT), [$this, 'displayColumn'], 2);
 		$wp->addAction('restrict_manage_posts', [$this, 'categoryFilter']);
 		$wp->addAction('restrict_manage_posts', [$this, 'typeFilter']);
+		$wp->addAction('restrict_manage_posts', [$this, 'featuredFilter']);
 		$wp->addAction('pre_get_posts', [$this, 'setTypeFilter']);
+		$wp->addAction('pre_get_posts', [$this, 'setFeaturedFilter']);
 		$wp->addAction('wp_ajax_jigoshop.admin.products.feature_product', [$this, 'ajaxFeatureProduct']);
 
 		$wp->addAction('quick_edit_custom_box', function($col, $type) {
@@ -223,6 +225,23 @@ class Products
         ]);
 	}
 
+    /**
+     * Filter products by type
+     */
+    public function featuredFilter()
+    {
+        $type = $this->wp->getTypeNow();
+        if ($type != Types::PRODUCT) {
+            return;
+        }
+
+        $current = isset($_GET['featured']) ? $_GET['featured'] : '';
+
+        Render::output('admin/products/featuredFilter', [
+            'current' => $current
+        ]);
+    }
+
 	/**
 	 * Finds and returns number of products of specified type.
 	 *
@@ -254,6 +273,21 @@ class Products
             ];
 			$query->set('meta_query', $meta);
 		}
+	}
+
+    /**
+     * @param $query \WP_Query
+     */
+    public function setFeaturedFilter($query)
+    {
+        if (isset($_GET['featured']) && $_GET['featured']) {
+            $meta = $query->meta_query;
+            $meta[] = [
+                'key' => 'featured',
+                'value' => '1',
+            ];
+            $query->set('meta_query', $meta);
+        }
 	}
 
 	/**
