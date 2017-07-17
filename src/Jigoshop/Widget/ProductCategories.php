@@ -94,6 +94,7 @@ class ProductCategories extends \WP_Widget
 			'hierarchical' => $is_hierarchical,
 			'taxonomy' => Core\Types::PRODUCT_CATEGORY,
 			'title_li' => null,
+            'hide_title_if_empty' => true
         ];
 
 		if($oneLevelOnly) {
@@ -146,6 +147,10 @@ class ProductCategories extends \WP_Widget
 				'shopUrl' => get_permalink(self::$options->getPageId(Pages::SHOP)),
             ]));
 		} else {
+            $terms = get_terms(Core\Types::PRODUCT_CATEGORY, $query);
+            if (!$terms) {
+                return;
+            }
 			Render::output('widget/product_categories/list', array_merge($args, [
 				'title' => $title,
 				'args' => $query,
