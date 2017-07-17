@@ -8,7 +8,7 @@ use Jigoshop\Exception;
 use Jigoshop\Service\OrderServiceInterface;
 use WPAL\Wordpress;
 
-class OnDelivery implements Method
+class OnDelivery implements Method2
 {
 	const ID = 'on_delivery';
 
@@ -49,6 +49,38 @@ class OnDelivery implements Method
 	{
 		return $this->options['enabled'];
 	}
+
+	public function isActive() {
+		if(isset($this->options['enabled'])) {
+			return $this->options['enabled'];
+		}
+	}
+
+	public function setActive($state) {
+		if(is_array($this->options)) {
+			$this->options['enabled'] = $state;
+		}
+
+		return $this->options;
+	}
+
+	public function isConfigured() {
+		if(isset($this->options['enabled'])) {
+			return $this->options['enabled'];
+		}
+	}
+
+	public function hasTestMode() {
+		return false;
+	}
+
+	public function isTestModeEnabled() {
+		return false;
+	}
+
+	public function setTestMode($state) {
+		return $this->options;
+	}	
 
 	/**
 	 * @return array List of options to display on Payment settings page.

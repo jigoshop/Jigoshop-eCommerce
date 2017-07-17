@@ -17,7 +17,7 @@ use Jigoshop\Helper\Validation;
 use Monolog\Registry;
 use WPAL\Wordpress;
 
-class PayPal implements Method, Processable
+class PayPal implements Method2, Processable
 {
 	const ID = 'paypal';
 	const LIVE_URL = 'https://www.paypal.com/webscr';
@@ -75,6 +75,52 @@ class PayPal implements Method, Processable
 	{
 		return $this->settings['enabled'];
 	}
+
+	public function isActive() {
+		if(isset($this->settings['enabled'])) {
+			return $this->settings['enabled'];
+		}
+	}
+
+	public function setActive($state) {
+		$this->settings['enabled'] = $state;
+
+		return $this->settings;
+	}
+
+	public function isConfigured() {
+		if(isset($this->settings['enabled']) && $this->settings['enabled']) {
+			if(isset($this->settings['test_mode']) && $this->settings['test_mode']) {
+				if(isset($this->settings['test_email']) && $this->settings['test_email']) {
+					return true;
+				}
+
+				return false;
+			}
+
+			if(isset($this->settings['email']) && $this->settings['email']) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	public function hasTestMode() {
+		return true;
+	}
+
+	public function isTestModeEnabled() {
+		if(isset($this->settings['test_mode'])) {
+			return $this->settings['test_mode'];
+		}
+	}
+
+	public function setTestMode($state) {
+		$this->settings['test_mode'] = $state;
+	
+		return $this->settings;
+	}	
 
 	/**
 	 * @return array List of options to display on Payment settings page.

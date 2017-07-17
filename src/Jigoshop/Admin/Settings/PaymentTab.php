@@ -2,9 +2,15 @@
 
 namespace Jigoshop\Admin\Settings;
 
+use Jigoshop\Core\Messages;
 use Jigoshop\Core\Options;
+use Jigoshop\Helper\Render;
+use Jigoshop\Helper\Scripts;
+use Jigoshop\Helper\Styles;
 use Jigoshop\Payment\Method;
+use Jigoshop\Payment\Method2;
 use Jigoshop\Service\PaymentServiceInterface;
+use WPAL\Wordpress;
 
 /**
  * Payment tab definition.
@@ -15,15 +21,35 @@ class PaymentTab implements TabInterface
 {
 	const SLUG = 'payment';
 
-	/** @var array */
+	private $settings;
 	private $options;
-	/** @var PaymentServiceInterface */
 	private $paymentService;
+	private $messages;
 
-	public function __construct(Options $options, PaymentServiceInterface $paymentService)
+	public function __construct(Wordpress $wp, Options $options, PaymentServiceInterface $paymentService, Messages $messages)
 	{
-		$this->options = $options->get(self::SLUG);
+		$this->settings = $options->get(self::SLUG);
+		$this->options = $options;
 		$this->paymentService = $paymentService;
+		$this->messages = $messages;
+
+		$wp->addAction('admin_enqueue_scripts', function() {
+			if(isset($_GET['tab']) && $_GET['tab'] == PaymentTab::SLUG) {
+				Scripts::add('jigoshop.admin.settings.payment', \JigoshopInit::getUrl() . '/assets/js/admin/settings/payment.js', [
+						'jquery',
+						'wp-util'
+					], [
+						'page' => 'jigoshop_page_jigoshop_settings'
+					]);
+
+				Scripts::add('jigoshop.magnific-popup', \JigoshopInit::getUrl() . '/assets/js/vendors/magnific_popup.js', ['jquery']);
+
+				Styles::add('jigoshop.magnific-popup', \JigoshopInit::getUrl() . '/assets/css/vendors/magnific_popup.css');
+			}
+		});
+
+        $wp->addAction('wp_ajax_paymentMethodSaveEnable', [$this, 'ajaxPaymentMethodSaveEnable']);
+        $wp->addAction('wp_ajax_paymentMethodSaveTestMode', [$this, 'ajaxPaymentMethodSaveTestMode']);		
 	}
 
 	/**
@@ -43,36 +69,9 @@ class PaymentTab implements TabInterface
 	}
 
 	/**
-	 * Extract title and id from all availble gateway
-	 *
-	 * @return array
+	 * @return array List of items to display.
 	 */
-	protected function getTitles()
-	{
-	    $gateways = $this->paymentService->getEnabled();
-	    if(count($gateways)) {
-            $options = [
-                '' => __('Please select a gateway', 'jigoshop'),
-            ];
-            foreach ($gateways as $gateway) {
-                /** @var $gateway Method */
-                $options[$gateway->getId()] = trim(strip_tags($gateway->getName()));
-            }
-        } else {
-	        $options['no_default_gateway'] = __('All gateways are disabled. Please turn on a gateway.', 'jigoshop');
-        }
-
-        return $options;
-	}
-
-	/**
-	 * Add section with defaults gateway
-	 *
-	 * @param array $options all gateway
-	 *
-	 * @return array
-	 */
-	protected function getSectionGateway($options)
+	public function getSections()
 	{
 		return [
 			[
@@ -83,46 +82,84 @@ class PaymentTab implements TabInterface
 						'name'    => "[default_gateway]",
 						'title'   => __('Set default gataway', 'jigoshop'),
 						'type'    => "select",
-						'value'   => $this->options['default_gateway'],
-						'options' => $this->getTitles($options),
-						'classes' => [],
+						'value'   => $this->settings['default_gateway'],
+						'options' => $this->getDefaultGatewayOptions()
                     ]
                 ],
+            ],
+            [
+            	'title' => __('Payment methods', 'jigoshop'),
+            	'id' => 'paymentMethodsSection',
+            	'display' => [$this, 'generatePaymentMethods']
             ]
-        ];
+        ];		
 	}
 
-	/**
-	 * Get avaible gateway from the system
-	 *
-	 * @return array
-	 */
-	protected function getAvailableGateway()
-	{
+	private function getDefaultGatewayOptions() {
 		$options = [];
+		$methods = $this->paymentService->getAvailable();
 
-		foreach ($this->paymentService->getAvailable() as $method)
-		{
-			/** @var $method Method */
-			$options[] = [
-				'title' => $method->getName(),
-                'description' => apply_filters('jigoshop\admin\settings\payment\method\description', '', $method),
-				'id' => $method->getId(),
-				'fields' => $method->getOptions(),
-				'enabled' => $method->isEnabled(),
-            ];
+		if(count($methods) > 0) {
+			$options[] = __('Please select a gateway', 'jigoshop');
+
+			foreach($methods as $method) {
+				$options[] = trim(strip_tags($method->getName()));
+			}
+		}
+		else {
+			$options['no_default_gateway'] = __('All gateways are disabled. Please turn on a gateway.', 'jigoshop');		
 		}
 
 		return $options;
 	}
 
-	/**
-	 * @return array List of items to display.
-	 */
-	public function getSections()
-	{
-		$options = $this->getAvailableGateway();
-		return array_merge($this->getSectionGateway($options), $options);
+	public function generatePaymentMethods() {
+		$methods = [];
+		foreach($this->paymentService->getAvailable() as $method) {
+			if($method instanceof Method2) {
+				$status = '';
+
+				if(!$method->isActive()) {
+					$status = __('Disabled', 'jigoshop');
+				}
+				else {
+					if(!$method->isConfigured()) {
+						$status = __('Disabled; Not configured', 'jigoshop');
+					}
+					else {
+						if($method->hasTestMode() && $method->isTestModeEnabled()) {
+							$status = __('Enabled in test mode', 'jigoshop');
+						}
+						else {
+							$status = __('Enabled', 'jigoshop');
+						}
+					}
+				}
+
+				$methods[] = [
+					'basicSummary' => 0,
+					'id' => $method->getId(),
+					'name' => $method->getName(),
+					'options' => $method->getOptions(),
+					'status' => $status,
+					'active' => $method->isActive(),
+					'hasTestMode' => $method->hasTestMode(),
+					'testModeActive' => $method->isTestModeEnabled()						
+				];
+			}
+			elseif($method instanceof Method) {
+				$methods[] = [
+					'basicSummary' => 1,
+					'id' => $method->getId(),
+					'name' => trim(strip_tags($method->getName())),
+					'options' => $method->getOptions()
+				];
+			}
+		}
+
+		return Render::get('admin/settings/payment/methodContainer', [
+				'methods' => $methods
+			]);
 	}
 
 	/**
@@ -143,8 +180,7 @@ class PaymentTab implements TabInterface
 			$methodId = $method->getId();
 			$settings[$methodId] = $method->validateOptions($settings[$methodId]);
 
-//			$_POST 'enabled' need be used by all as payment gateways
-			if ($_POST['jigoshop'][$methodId]['enabled'] == 'on')
+			if(($method instanceof Method2 && $method->isActive()) || ($method instanceof Method && $_POST['jigoshop'][$methodId]['enabled'] == 'on'))
 			{
 				$activeGatewayFromPost[] = $methodId;
 			}
@@ -157,7 +193,7 @@ class PaymentTab implements TabInterface
 			return $settings;
 		}
 
-		if ($_POST['jigoshop'][$this->options['default_gateway']]['enabled'] == 'off')
+		if ($_POST['jigoshop'][$this->settings['default_gateway']]['enabled'] == 'off')
 		{
 			$settings['default_gateway'] = $activeGatewayFromPost[0];
 
@@ -165,4 +201,52 @@ class PaymentTab implements TabInterface
 
 		return $settings;
 	}
+
+	public function ajaxPaymentMethodSaveEnable() {
+		$method = $this->paymentService->get($_POST['method']);
+
+		if($method instanceof Method2) {
+			if($_POST['state'] == 'true') {
+				$state = true;
+
+				$this->messages->addNotice(__(sprintf('%s enabled.', $method->getName()), 'jigoshop'));
+			}
+			else {
+				$state = false;
+
+				$this->messages->addNotice(__(sprintf('%s disabled.', $method->getName()), 'jigoshop'));
+			}
+
+			$settings = $method->setActive($state);
+
+			$this->options->update('payment.' . $method->getId(), $settings);
+			$this->options->saveOptions();
+		}
+
+		exit;
+	}
+
+	public function ajaxPaymentMethodSaveTestMode() {
+		$method = $this->paymentService->get($_POST['method']);
+
+		if($method instanceof Method2) {
+			if($_POST['state'] == 'true') {
+				$state = true;
+
+				$this->messages->addNotice(__(sprintf('%s test mode enabled.', $method->getName()), 'jigoshop'));
+			}
+			else {
+				$state = false;
+
+				$this->messages->addNotice(__(sprintf('%s test mode disabled.', $method->getName()), 'jigoshop'));
+			}
+
+			$settings = $method->setTestMode($state);
+
+			$this->options->update('payment.' . $method->getId(), $settings);
+			$this->options->saveOptions();
+		}
+
+		exit;
+	}	
 }

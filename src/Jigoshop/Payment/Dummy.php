@@ -7,7 +7,7 @@ use Jigoshop\Entity\Order;
 use Jigoshop\Exception;
 use WPAL\Wordpress;
 
-class Dummy implements Method
+class Dummy implements Method2
 {
 	private $id;
 	private $label;
@@ -41,6 +41,30 @@ class Dummy implements Method
 	{
 		return false;
 	}
+
+	public function isActive() {
+		return false;
+	}
+
+	public function setActive($state) {
+		return [];
+	}
+
+	public function isConfigured() {
+		return false;
+	}
+
+	public function hasTestMode() {
+		return false;
+	}
+
+	public function isTestModeEnabled() {
+		return false;
+	}
+
+	public function setTestMode($state) {
+		return [];
+	}	
 
 	/**
 	 * @return array List of options to display on Payment settings page.

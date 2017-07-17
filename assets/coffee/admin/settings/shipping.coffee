@@ -2,6 +2,43 @@ class Shipping
   ruleCount: 0
 
   constructor: ->
+    jQuery('.shipping-method-configure').click (e) ->
+      targetMethod = jQuery(e.target).val()
+      if targetMethod != undefined
+        jQuery.magnificPopup.open
+          mainClass: 'jigoshop'
+          items: src: ''
+          type: 'inline'
+          callbacks:
+            elementParse: (item) ->
+              item.src = jQuery('#shipping-method-options-' + targetMethod).html()
+              return
+            open: ->
+              jQuery('.mfp-content input[type="checkbox"]').bootstrapSwitch
+                size: 'small'
+                onText: 'Yes'
+                offText: 'No'
+              jQuery('.mfp-content select').each (index, element) ->
+                jQuery(element).siblings().remove()
+                jQuery(element).select2 'destroy'
+                jQuery(element).select2()
+                return
+              that = this
+              jQuery('.shipping-method-options-save').click ->
+                that.close()
+                return
+              return
+            close: ->
+              jQuery(@content).find('input[type="checkbox"]').each (index, element) ->
+                jQuery(element).bootstrapSwitch 'destroy'
+                return
+              jQuery(@content).find('select').each (index, element) ->
+                jQuery(element).select2 'destroy'
+                return
+              jQuery('#shipping-method-options-' + targetMethod).html jQuery(@content).get()
+              jQuery('.shipping-method-options-save').click()
+              return
+      return
     @ruleCount = jQuery('#advanced-flat-rate li.list-group-item').length
     jQuery('div.advanced_flat_rate_countries_field').show()
     jQuery('#advanced_flat_rate_available_for').on 'change', @toggleSpecificCountires
