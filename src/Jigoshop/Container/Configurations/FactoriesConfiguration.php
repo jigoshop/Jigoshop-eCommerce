@@ -95,7 +95,7 @@ class FactoriesConfiguration implements ConfigurationInterface
         ]);
         $services->setDetails('jigoshop.factory.product.category_service', 'Jigoshop\Factory\Product\CategoryService', [
         	'wpal',
-        	'jigoshop.options'
+        	'jigoshop.factory.product.category'
         ]);
 
 		$services->setLazyStaus('jigoshop.factory.product', true);
