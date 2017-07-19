@@ -1,6 +1,7 @@
 <?php
 namespace Jigoshop\Service\Product;
 
+use Jigoshop\Entity\Product\Category as Entity;
 use Jigoshop\Factory\Product\Category as Factory;
 use WPAL\Wordpress;
 
@@ -13,8 +14,12 @@ class CategoryService implements CategoryServiceInterface {
 		$this->factory = $factory;
 	}
 
-	public function find($id) {
-		return $this->factory->fetch($id);
+	public function find($id, $level = 0) {
+		$category = $this->factory->fetch($id);
+		$category->setLevel($level);
+		$category->setChildCategories($this->findFromParent($id, $level + 1));
+
+		return $category;		
 	}
 
 	public function findAll() {
@@ -26,7 +31,7 @@ class CategoryService implements CategoryServiceInterface {
 		return $categories;
 	}
 
-	public function findFromParent($parentId) {
+	public function findFromParent($parentId, $level = 0) {
 		$terms = $this->wp->getTerms([
 			'taxonomy' => 'product_category',
 			'hide_empty' => 0,
@@ -35,9 +40,49 @@ class CategoryService implements CategoryServiceInterface {
 
 		$categories = [];
 		foreach($terms as $term) {
-			$categories[] = $this->find($term->term_id);
+			$categories[] = $this->find($term->term_id, $level);
 		}
 
 		return $categories;
+	}
+
+	public function save($category) {
+		if(!$category instanceof Entity) {
+			throw new Exception('Tried to save not a product category.');
+		}
+
+		$args = [
+			'name' => $category->getName(),
+			'slug' => $category->getSlug(),
+			'taxonomy' => 'product_category',
+			'description' => $category->getDescription(),
+			'parent' => $category->getParentId()
+		];
+
+		if(!term_exists($category->getId(), 'product_category')) {
+			$result = wp_insert_term($category->getName(), 'product_category', $args); 
+		}
+		else {
+			$args['term_id'] = $category->getId();
+
+			$result = wp_update_term($category->getId(), 'product_category', $args);
+		}
+
+		if($result instanceof \WP_Error) {
+			$errors = [];
+			foreach($result->errors as $errorField => $errorValues) {
+				$errors = array_merge($errors, $errorValues);
+			}
+
+			throw new \Exception(implode('<br />', $errors));
+		}
+	}
+
+	public function remove($category) {
+		if($category instanceof Entity) {
+			$category = $category->getId();
+		}
+
+		wp_delete_term($category, 'product_category');
 	}
 }

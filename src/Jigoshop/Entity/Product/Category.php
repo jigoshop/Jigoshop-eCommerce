@@ -2,11 +2,14 @@
 namespace Jigoshop\Entity\Product;
 
 class Category {
-	private $id;
-	private $label;
-	private $slug;
-	private $description;
-	private $parentId;
+	private $id = 0;
+	private $name = '';
+	private $slug = '';
+	private $description = '';
+	private $parentId = 0;
+	private $childCategories = [];
+	private $level = 0;
+	private $count = 0;
 
 	public function getId() {
 		return $this->id;
@@ -16,12 +19,12 @@ class Category {
 		$this->id = $id;
 	}
 
-	public function getLabel() {
-		return $this->label;
+	public function getName() {
+		return $this->name;
 	}
 
-	public function setLabel($label) {
-		$this->label = $label;
+	public function setName($name) {
+		$this->name = $name;
 	}
 
 	public function getSlug() {
@@ -46,5 +49,33 @@ class Category {
 
 	public function setParentId($parentId) {
 		$this->parentId = $parentId;
+	}
+
+	public function getChildCategories() {
+		if(!is_array($this->childCategories)) {
+			return [];
+		}
+
+		return $this->childCategories;
+	}
+
+	public function setChildCategories($childCategories) {
+		$this->childCategories = $childCategories;
+	}
+
+	public function getLevel() {
+		return $this->level;
+	}
+
+	public function setLevel($level) {
+		$this->level = $level;
+	}
+
+	public function getCount() {
+		return $this->count;
+	}
+
+	public function setCount($count) {
+		$this->count = $count;
 	}
 }
