@@ -21,7 +21,7 @@ class ProductCategoryList extends AbstractProductList
 		$term = $this->wp->getTermBy('slug', $this->wp->getQueryParameter(Types\ProductCategory::NAME), Types\ProductCategory::NAME);
 
 		if ($term) {
-			return sprintf(__('Products in category "%s"', 'jigoshop'), $term->name);
+			return $this->wp->applyFilters('jigoshop\frontend\page\category_list\title', sprintf(__('Products in category "%s"', 'jigoshop'), $term->name), $term);
 		}
 
 		return $this->wp->getQueryParameter(Types\ProductCategory::NAME);
