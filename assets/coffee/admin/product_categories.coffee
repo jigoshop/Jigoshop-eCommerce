@@ -134,6 +134,7 @@ AdminProductCategories = do ->
       parentId: jQuery('#parentId').val()
       inheritMode: jQuery('#attributesInheritMode').val()
     }, ((data) ->
+      data.status = 1
     ), 'json'
     return
 
