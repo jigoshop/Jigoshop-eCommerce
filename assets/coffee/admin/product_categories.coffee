@@ -1,7 +1,20 @@
 AdminProductCategories = undefined
 AdminProductCategories = do ->
+
   AdminProductCategories = (params) ->
     self = this
+    jQuery('.jigoshop-product-categories-expand-subcategories').click (e) ->
+      categoryId = undefined
+      e.preventDefault()
+      categoryId = jQuery(e.delegateTarget).parents('tr').data('category-id')
+      jQuery('#jigoshop-product-categories').find('tr').each (index, element) ->
+        if jQuery(element).data('parent-category-id') == categoryId
+          if jQuery(element).css('display') == 'none'
+            jQuery(element).show()
+          else
+            jQuery(element).hide()
+        return
+      return
     jQuery('#jigoshop-product-categories-add-button').click (e) ->
       e.preventDefault()
       self.resetForm()
@@ -57,6 +70,14 @@ AdminProductCategories = do ->
         return
       ), 'json'
       return
+    jQuery('#parentId').on 'switchChange.bootstrapSwitch', self.attributesGetAttributes
+    jQuery('#attributesInheritEnabled').on 'switchChange.bootstrapSwitch', (event, state) ->
+      self.attributesInheritEnabledChange 1
+      self.attributesGetAttributes()
+      return
+    jQuery('#attributesInheritMode').on 'switchChange.bootstrapSwitch', self.attributesGetAttributes
+    self.attributesInheritEnabledChange()
+    self.attributesGetAttributes()
     return
 
   AdminProductCategories::params =
@@ -93,6 +114,27 @@ AdminProductCategories = do ->
       return
     if jQuery('#thumbnailId').val() != ''
       jQuery('#jigoshop-product-categories-thumbnail-remove-button').css 'display', 'inline-block'
+    return
+
+  AdminProductCategories::attributesInheritEnabledChange = (animate) ->
+    state = jQuery('#attributesInheritEnabled').is(':checked')
+    if state
+      if animate
+        jQuery('#jigoshop-product-categories-attributes-inherit-mode').slideToggle()
+      else
+        jQuery('#jigoshop-product-categories-attributes-inherit-mode').show()
+    else
+      jQuery('#jigoshop-product-categories-attributes-inherit-mode').hide()
+    return
+
+  AdminProductCategories::attributesGetAttributes = ->
+    jQuery.post ajaxurl, {
+      action: 'jigoshop_product_categories_getAttributes'
+      id: jQuery('#id').val()
+      parentId: jQuery('#parentId').val()
+      inheritMode: jQuery('#attributesInheritMode').val()
+    }, ((data) ->
+    ), 'json'
     return
 
   AdminProductCategories
