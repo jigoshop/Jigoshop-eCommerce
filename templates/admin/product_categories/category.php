@@ -1,8 +1,22 @@
 <tr data-category-id="<?php echo $category->getId(); ?>" data-parent-category-id="<?php echo $category->getParentId(); ?>" <?php echo ($category->getParentId() > 0?'style="display: none"':''); ?>>
 	<td>
 		<a href="#" class="jigoshop-product-categories-expand-subcategories">
-			<?php echo ($category->getLevel() > 0?str_repeat('- ', $category->getLevel()):'') . $category->getName(); ?>
-		</a>
+			<?php
+			if($category->getLevel() > 0) {
+				echo str_repeat('- ', $category->getLevel());
+			}
+
+			echo $category->getName();
+
+			$subcategoriesCount = count($category->getChildCategories());
+			if($subcategoriesCount == 1) {
+				echo __(' (1 subcategory)', 'jigoshop');
+			}
+			elseif($subcategoriesCount > 1) {
+				echo sprintf(__(' (%s subcategories)', 'jigoshop'), $subcategoriesCount);
+			}
+			?>
+		</a>	
 	</td>
 	<td><?php echo $category->getSlug(); ?></td>
 	<td><?php echo $category->getCount(); ?></td>
