@@ -1,6 +1,5 @@
 <tr data-category-id="<?php echo $category->getId(); ?>">
 	<td><?php echo ($category->getLevel() > 0?str_repeat('- ', $category->getLevel()):'') . $category->getName(); ?></td>
-	<td><?php echo $category->getDescription(); ?></td>
 	<td><?php echo $category->getSlug(); ?></td>
 	<td><?php echo $category->getCount(); ?></td>
 	<td>

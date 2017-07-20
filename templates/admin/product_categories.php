@@ -21,9 +21,6 @@ use Jigoshop\Helper\Render;
 							<?php echo __('Name', 'jigoshop'); ?>
 						</th>
 						<th>
-							<?php echo __('Description', 'jigoshop'); ?>
-						</th>
-						<th>
 							<?php echo __('Slug', 'jigoshop'); ?>
 						</th>
 						<th>
