@@ -64,7 +64,7 @@ class ProductCategory implements Taxonomy
 				'assign_terms' => 'assign_product_terms',
             ],
 			'hierarchical' => true,
-			'show_ui' => true,
+			'show_ui' => false,
 			'query_var' => true,
 			'rewrite' => [
 				'slug' => $this->options->get('permalinks.category'),
