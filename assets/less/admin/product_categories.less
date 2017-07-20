@@ -1,4 +1,53 @@
-#product_category_thumbnail img {
+@import '../../bower/bootstrap/less/variables.less';
+@import '../../bower/bootstrap/less/mixins.less';
+
+.jigoshop {
+  @import '../../bower/bootstrap/less/grid.less';
+  @import '../../bower/bootstrap/less/forms.less';
+  @import '../../bower/bootstrap/less/tables.less';
+  @import '../../bower/bootstrap/less/buttons.less';
+  @import '../../bower/bootstrap/less/tooltip.less';
+  @import '../../bower/bootstrap/less/utilities.less';
+  @import '../../bower/bootstrap/less/alerts.less';
+  @import '../../bower/bootstrap/less/type.less';
+  @import '../../bower/bootstrap/less/panels.less';
+
+  .panel-heading button {
+    margin-top: -@padding-large-horizontal/2;
+  }
+  .tab-content {
+    background: @body-bg;
+    border: 1px solid @nav-tabs-border-color;
+    border-top: 0;
+    padding: @padding-base-vertical @padding-base-horizontal;
+  }
+
+  table.table > tbody > tr {
+    vertical-align: middle;
+
+    > td {
+      vertical-align: middle;
+
+      .form-group {
+        margin: 0;
+      }
+    }
+  }
+}
+
+.jigoshop-product-categories-edit-form {
+  display: none;
+}
+
+#jigoshop-product-categories-thumbnail img {
   max-width: 125px;
   height: auto;
+}
+
+#jigoshop-product-categories-thumbnail-controls {
+  margin-top: 10px;
+}
+
+#jigoshop-product-categories-thumbnail-remove-button {
+  display: none;
 }
