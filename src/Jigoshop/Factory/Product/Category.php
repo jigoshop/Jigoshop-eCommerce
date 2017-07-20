@@ -40,6 +40,7 @@ class Category implements EntityFactoryInterface {
 		$category->setSlug($term->slug);
 		$category->setDescription($term->description);
 		$category->setParentId($term->parent);
+		$category->setCount($term->count);
 
 		return $category;
 	}

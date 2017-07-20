@@ -10,6 +10,7 @@ class Category {
 	private $childCategories = [];
 	private $level = 0;
 	private $count = 0;
+	private $thumbnailId = 0;
 
 	public function getId() {
 		return $this->id;
@@ -77,5 +78,13 @@ class Category {
 
 	public function setCount($count) {
 		$this->count = $count;
+	}
+
+	public function getThumbnailId() {
+		return $this->thumbnailId;
+	}
+
+	public function setThumbnailId($thumbnailId) {
+		$this->thumbnailId = $thumbnailId;
 	}
 }

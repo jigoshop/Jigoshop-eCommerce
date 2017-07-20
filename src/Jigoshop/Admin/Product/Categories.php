@@ -3,6 +3,7 @@ namespace Jigoshop\Admin\Product;
 
 use Jigoshop\Admin\PageInterface;
 use Jigoshop\Core\Messages;
+use Jigoshop\Helper\ProductCategory;
 use Jigoshop\Helper\Render;
 use Jigoshop\Helper\Scripts;
 use Jigoshop\Helper\Styles;
@@ -41,10 +42,15 @@ class Categories implements PageInterface {
 			Styles::add('jigoshop.admin.product_categories', \JigoshopInit::getUrl().'/assets/css/admin/product_categories.css');
 
             Scripts::add('jigoshop.vendors.select2', \JigoshopInit::getUrl() . '/assets/js/vendors/select2.js', ['jquery', 'jigoshop.admin.product']);
+            Scripts::add('jigoshop.media', \JigoshopInit::getUrl() . '/assets/js/media.js', ['jquery']);
+
             Scripts::add('jigoshop.admin.product_categories', \JigoshopInit::getUrl() . '/assets/js/admin/product_categories.js', ['jquery']);
 
-            Scripts::localize('jigoshop.admin.product_categories', 'jigoshop_admin_product_categories_lang', [
-            	'categoryRemovalConfirmation' => __('Do you really want to remove this category?', 'jigoshop')
+            Scripts::localize('jigoshop.admin.product_categories', 'jigoshop_admin_product_categories_data', [
+            	'thumbnailPlaceholder' => ProductCategory::getImage(0)['image'],
+            	'lang' => [
+            		'categoryRemovalConfirmation' => __('Do you really want to remove this category?', 'jigoshop')
+            	]
             ]);
 		});	
 
@@ -75,7 +81,8 @@ class Categories implements PageInterface {
 		Render::output('admin/product_categories', [
 			'messages' => $this->messages,
 			'categories' => $this->renderCategories($categories),
-			'parentOptions' => $this->getParentOptions($categories)
+			'parentOptions' => $this->getParentOptions($categories),
+			'categoryImage' => ProductCategory::getImage(0)
 		]);
 	}
 
@@ -127,6 +134,7 @@ class Categories implements PageInterface {
 		$category->setDescription($_POST['description']);
 		$category->setSlug($_POST['slug']);
 		$category->setParentId($_POST['parentId']);
+		$category->setThumbnailId($_POST['thumbnailId']);
 
 		try {
 			$this->categoryService->save($category);
@@ -164,7 +172,8 @@ class Categories implements PageInterface {
 			'status' => 1,
 			'form' => Render::get('admin/product_categories/form', [
 				'parentOptions' => $this->getParentOptions($categories),
-				'category' => $category
+				'category' => $category,
+				'categoryImage' => ProductCategory::getImage($category->getId())
 			])
 		]);
 

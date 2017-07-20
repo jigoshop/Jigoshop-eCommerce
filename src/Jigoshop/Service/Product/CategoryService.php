@@ -1,6 +1,7 @@
 <?php
 namespace Jigoshop\Service\Product;
 
+use Jigoshop\Core;
 use Jigoshop\Entity\Product\Category as Entity;
 use Jigoshop\Factory\Product\Category as Factory;
 use WPAL\Wordpress;
@@ -76,6 +77,8 @@ class CategoryService implements CategoryServiceInterface {
 
 			throw new \Exception(implode('<br />', $errors));
 		}
+
+		update_metadata(Core::TERMS, $result['term_id'], 'thumbnail_id', (int)$category->getThumbnailId());
 	}
 
 	public function remove($category) {
