@@ -5,9 +5,12 @@ use Jigoshop\Helper\Render;
 	<h1 class="wp-heading-inline"><?php echo __('Jigoshop &raquo; Product &raquo; Categories', 'jigoshop'); ?></h1>
 	<a href="" class="page-title-action" id="jigoshop-product-categories-add-button">Add New</a>
 
-	<div id="messagesInternal">
-		<?php Render::output('shop/messages', ['messages' => $messages]); ?>
-	</div>	
+	<?php 
+	Render::output('shop/messages', [
+		'containerId' => 'internalMessages',
+		'messages' => $messages
+	]); 
+	?>
 
 	<div class="tab-content">
 		<form role="form" method="POST">

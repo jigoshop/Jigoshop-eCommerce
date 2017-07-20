@@ -3,7 +3,7 @@
  * @var $messages \Jigoshop\Core\Messages Messages container.
  */
 ?>
-<div id="messages">
+<div id="<?php echo (isset($containerId) && $containerId?$containerId:'messages'); ?>">
 	<?php foreach ($messages->getErrors() as $error): ?>
 		<div class="alert alert-danger" role="alert"><?= $error; ?></div>
 	<?php endforeach; ?>
