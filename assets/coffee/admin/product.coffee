@@ -9,6 +9,7 @@ class AdminProduct
     menu: {}
     attachments: {}
   wpMedia: false
+  removedAttributes: []
 
   constructor: (@params) ->
     jQuery('#add-attribute').on 'click', @addAttribute
@@ -73,6 +74,8 @@ class AdminProduct
       action: 'jigoshop.admin.product.find'
       only_parent: true
     }
+    jQuery('#product_categorychecklist').find('input[type="checkbox"]')
+      .on 'change', @getInherittedAttributes
 
   changeProductType: (event) =>
     $item = jQuery(event.target)
@@ -175,6 +178,8 @@ class AdminProduct
     event.preventDefault()
     if confirm(@params.i18n.confirm_remove)
       $parent = jQuery(event.target).closest('li')
+      @removedAttributes.push($parent.data('id'))
+
       jQuery('option[value=' + $parent.data('id') + ']', jQuery('#new-attribute')).removeAttr('disabled')
       jQuery.ajax
         url: jigoshop.getAjaxUrl()
@@ -262,6 +267,47 @@ class AdminProduct
       }
       jQuery(options.insert_before).before html
       @addHooks '', jQuery(options.attachment_class).last()
+
+  getInherittedAttributes: (event) =>
+    categories = []
+
+    jQuery('#product_categorychecklist').find('input[type="checkbox"]').each (index, element) ->
+      if not jQuery(element).is ':checked'
+        return
+
+      categories.push jQuery(element).val()
+      return
+
+    jQuery.post ajaxurl, {
+      action: 'jigoshop.admin.product.get_inherited_attributes'
+      categories: categories
+    }, @processInheritedAttributes, 'json'
+
+  processInheritedAttributes: (data) =>
+    if data.success
+      for ca in [0...data.attributes.length]
+        attributeRemoved = 0
+        attributeExists = 0
+
+        for cra in [0...this.removedAttributes.length]
+          if this.removedAttributes[cra] == data.attributes[ca].id
+            attributeRemoved = 1
+
+            break
+
+        if attributeRemoved
+          continue
+
+        jQuery('#product-attributes').find('li').each (index, element) ->
+          if jQuery(element).data('id') == data.attributes[ca].id
+            attributeExists = 1
+
+            return
+
+        if attributeExists
+          continue
+
+        jQuery('#product-attributes').append data.attributes[ca].render
 
 jQuery ->
   new AdminProduct(jigoshop_admin_product)
