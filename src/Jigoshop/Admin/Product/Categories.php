@@ -3,6 +3,7 @@ namespace Jigoshop\Admin\Product;
 
 use Jigoshop\Admin\PageInterface;
 use Jigoshop\Core\Messages;
+use Jigoshop\Entity\Product\Attribute;
 use Jigoshop\Helper\ProductCategory;
 use Jigoshop\Helper\Render;
 use Jigoshop\Helper\Scripts;
@@ -57,6 +58,7 @@ class Categories implements PageInterface {
 		$wp->addAction('wp_ajax_jigoshop_product_categories_updateCategory', [$this, 'ajaxUpdateCategory']);
 		$wp->addAction('wp_ajax_jigoshop_product_categories_getEditForm', [$this, 'ajaxGetEditForm']);	
 		$wp->addAction('wp_ajax_jigoshop_product_categories_removeCategory', [$this, 'ajaxRemoveCategory']);
+		$wp->addAction('wp_ajax_jigoshop_product_categories_getAttributes', [$this, 'ajaxGetAttributes']);
 	}
 
 	public function getTitle() {
@@ -82,7 +84,8 @@ class Categories implements PageInterface {
 			'messages' => $this->messages,
 			'categories' => $this->renderCategories($categories),
 			'parentOptions' => $this->getParentOptions($categories),
-			'categoryImage' => ProductCategory::getImage(0)
+			'categoryImage' => ProductCategory::getImage(0),
+			'attributes' => $this->renderAttributes()
 		]);
 	}
 
@@ -118,6 +121,10 @@ class Categories implements PageInterface {
 		return $options;
 	}
 
+	private function renderAttributes() {
+
+	}
+
 	public function ajaxUpdateCategory() {
 		if(isset($_POST['id']) && $_POST['id'] > 0) {
 			$category = $this->categoryService->find($_POST['id']);
@@ -135,6 +142,27 @@ class Categories implements PageInterface {
 		$category->setSlug($_POST['slug']);
 		$category->setParentId($_POST['parentId']);
 		$category->setThumbnailId($_POST['thumbnailId']);
+
+		$category->setAttributesInheritEnabled(($_POST['attributesInheritEnabled'] === 'true' || $_POST['attributesInheritEnabled'] === true?true:false));
+		$category->setAttributesInheritMode($_POST['attributesInheritMode']);
+
+		$attributes = [];
+		if(isset($_POST['attributes']) && is_array($_POST['attributes'])) {
+			foreach($_POST['attributes'] as $attributeId => $value) {
+				$attribute = $this->productService->getAttribute($attributeId);
+
+				if(!$attribute instanceof Attribute) {
+					continue;
+				}
+
+				if(isset($_POST['attributesEnabled'][$attribute->getId()]) && ($_POST['attributesEnabled'][$attribute->getId()] === 'true') || $_POST['attributesEnabled'][$attribute->getId()] === true) {
+					$attribute->setCategoryEnabled(true);
+				}
+
+				$attributes[] = $attribute;
+			}
+		}
+		$category->setAttributes($attributes);
 
 		try {
 			$this->categoryService->save($category);
@@ -194,5 +222,130 @@ class Categories implements PageInterface {
 		]);
 
 		exit;
+	}
+
+	public function ajaxGetAttributes() {
+		$categories = $this->categoryService->findAll();
+		$category = ProductCategory::findInTree($_POST['id'], $categories);
+		if($category === false) {
+			exit;
+		}	
+
+		$allAttributes = $this->productService->findAllAttributes();
+
+		$removedAttributes = $category->getRemovedAttributesIds();
+		if(isset($_POST['removedAttributeId']) && $_POST['removedAttributeId']) {
+			$removedAttributes[] = $_POST['removedAttributeId'];
+		}
+
+		$inheritedAttributes = [];
+		if($_POST['inheritEnabled'] === 'true' && $_POST['parentId'] > 0) {
+			$parentCategory = ProductCategory::findInTree($_POST['parentId'], $categories);
+
+			if($parentCategory !== false) {
+				if($_POST['inheritMode'] == 'direct') {
+					$inheritedAttributes = $parentCategory->getAttributes();
+				}
+				else {
+					$inheritedAttributes = $this->getAttributesFromAll($parentCategory, $categories);
+				}
+			}
+		}
+
+		$existingAttributes = [];
+		if(isset($_POST['existingAttributes']) && is_array($_POST['existingAttributes'])) {
+			$existingAttributes = $_POST['existingAttributes'];
+		}
+
+		if(isset($_POST['addedAttributes']) && is_array($_POST['addedAttributes'])) {
+			foreach($_POST['addedAttributes'] as $addedAttributeId) {
+				if(in_array($addedAttributeId, $removedAttributes)) {
+					$removedAttributes = array_diff($removedAttributes, [$addedAttributeId]);
+				}
+
+				$existingAttributes[$addedAttributeId] = [
+					'enabled' => false,
+					'inherited' => false
+				];
+			}
+		}
+
+		foreach($inheritedAttributes as $inheritedAttribute) {
+			if(in_array($inheritedAttribute->getId(), $removedAttributes) || isset($existingAttributes[$inheritedAttribute->getId()])) {
+				continue;
+			} 
+		
+			$existingAttributes[$inheritedAttribute->getId()] = [
+				'enabled' => false,
+				'inherited' => true,
+				'inheritedFrom' => $inheritedAttribute->getCategoryId()
+			];
+		}
+
+		foreach($category->getAttributes() as $attribute) {
+			if(in_array($attribute->getId(), $removedAttributes)) {
+				continue;
+			}
+
+			$existingAttributes[$attribute->getId()] = [
+				'enabled' => $attribute->getCategoryEnabled(),
+				'inherited' => false
+			];
+		}
+
+		$category->setRemovedAttributesIds($removedAttributes);
+		$this->categoryService->save($category);
+
+		$attributesPossibleToAdd = [];
+		foreach($allAttributes as $attribute) {
+			if(isset($existingAttributes[$attribute->getId()])) {
+				continue;
+			}
+
+			$attributesPossibleToAdd[$attribute->getId()] = $attribute->getLabel();
+		}		
+
+		$attributesRender = '';
+		foreach($allAttributes as $attribute) {
+			if(!isset($existingAttributes[$attribute->getId()])) {
+				continue;
+			}
+
+			if($existingAttributes[$attribute->getId()]['enabled'] === 'true' || $existingAttributes[$attribute->getId()]['enabled'] === true) {
+				$attribute->setCategoryEnabled(true);
+			}
+
+			if(isset($existingAttributes[$attribute->getId()]['inheritedFrom'])) {
+				$inheritedFrom = ProductCategory::findInTree($existingAttributes[$attribute->getId()]['inheritedFrom'], $categories)->getName();
+			}
+			else {
+				$inheritedFrom = '-';
+			}
+
+			$attributesRender .= Render::get('admin/product_categories/attribute', [
+				'attribute' => $attribute,
+				'inherited' => $existingAttributes[$attribute->getId()]['inherited'],
+				'inheritedFrom' => $inheritedFrom
+			]);
+		}
+
+		echo json_encode([
+			'status' => 1,
+			'attributes' => $attributesRender,
+			'attributesPossibleToAdd' => $attributesPossibleToAdd
+		]);
+
+		exit;
+	}
+
+	private function getAttributesFromAll($category, $categories) {
+		$attributes = [];
+		$attributes = $category->getAttributes();
+
+		if($category->getParentId() > 0) {
+			$attributes = array_merge($attributes, $this->getAttributesFromAll(ProductCategory::findInTree($category->getParentId(), $categories), $categories));
+		}
+
+		return $attributes;
 	}
 }

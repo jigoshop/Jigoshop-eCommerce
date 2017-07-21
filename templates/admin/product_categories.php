@@ -44,7 +44,8 @@ use Jigoshop\Helper\Render;
 			<?php 
 			Render::output('admin/product_categories/form', [
 				'parentOptions' => $parentOptions,
-				'categoryImage' => $categoryImage
+				'categoryImage' => $categoryImage,
+				'attributes' => $attributes
 			]);
 			?>
 

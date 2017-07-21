@@ -3,6 +3,7 @@
 namespace Jigoshop\Helper;
 
 use Jigoshop\Core;
+use Jigoshop\Entity\Product\Category as Entity;
 
 class ProductCategory
 {
@@ -29,5 +30,22 @@ class ProductCategory
 			'image' => $image,
 			'thumbnail_id' => $thumbnail,
         ];
+	}
+
+	public static function findInTree($id, array $categories) {
+		foreach($categories as $category) {
+			if($id == $category->getId()) {
+				return $category;
+			}
+
+			if(!empty($category->getChildCategories())) {
+				$result = self::findInTree($id, $category->getChildCategories());
+				if($result instanceof Entity) {
+					return $result;
+				}
+			}
+		}
+
+		return false;
 	}
 }

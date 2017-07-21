@@ -20,6 +20,11 @@ class CategoryService implements CategoryServiceInterface {
 		$category->setLevel($level);
 		$category->setChildCategories($this->findFromParent($id, $level + 1));
 
+		$meta = get_metadata(Core::TERMS, $id, 'category_meta', true);
+		if(is_array($meta)) {
+			$category->fromMeta($meta);
+		}
+
 		return $category;		
 	}
 
@@ -79,6 +84,7 @@ class CategoryService implements CategoryServiceInterface {
 		}
 
 		update_metadata(Core::TERMS, $result['term_id'], 'thumbnail_id', (int)$category->getThumbnailId());
+		update_metadata(Core::TERMS, $result['term_id'], 'category_meta', $category->toMeta());
 	}
 
 	public function remove($category) {

@@ -1,5 +1,6 @@
 <?php
 use Jigoshop\Admin\Helper\Forms;
+use Jigoshop\Helper\Render;
 ?>
 <div id="jigoshop-product-categories-edit-form-content">
 	<?php
@@ -63,5 +64,70 @@ use Jigoshop\Admin\Helper\Forms;
 				</div>
 			</div>
 		</div>
+	</div>
+
+	<h3>Attributes</h3>
+
+	<?php 
+	Forms::checkbox([
+		'id' => 'attributesInheritEnabled',
+		'name' => 'attributesInheritEnabled',
+		'label' => __('Enable inherited attributes', 'jigoshop'),
+		'classes' => ['switch-medium'],
+		'checked' => isset($category)?$category->getAttributesInheritEnabled():false
+	]);
+	?>
+
+	<div id="jigoshop-product-categories-attributes-inherit-mode">
+		<?php
+		Forms::select([
+			'id' => 'attributesInheritMode',
+			'name' => 'attributesInheritMode',
+			'label' => __('Inherit attributes from', 'jigoshop'),
+			'options' => [
+				'all' => __('All parent categories', 'jigoshop'),
+				'direct' => __('Direct parent category', 'jigoshop')
+			],
+			'value' => isset($category)?$category->getAttributesInheritMode():'all'
+		]);
+		?>
+	</div>
+
+	<table class="table table-striped table-valign" id="jigoshop-product-categories-attributes">
+		<thead>
+			<tr>
+				<th><?php echo __('Label', 'jigoshop'); ?></th>
+				<th><?php echo __('Slug', 'jigoshop'); ?></th>
+				<th><?php echo __('Type', 'jigoshop'); ?></th>
+				<th><?php echo __('Inherited from', 'jigoshop'); ?></th>
+				<th><?php echo __('Enabled', 'jigoshop'); ?></th>
+				<th><?php echo __('Remove', 'jigoshop'); ?></th>
+			</tr>
+		</thead>
+		<tbody>
+			<?php echo $attributes; ?>
+		</tbody>
+	</table>
+
+	<div class="jigoshop-product-categories-attributes-new-controls">
+		<div class="col-sm-6">
+			<?php
+			Forms::select([
+				'id' => 'attributesNewSelector',
+				'name' => 'attributesNewSelector',
+				'label' => __('New attribute', 'jigoshop'),
+				'options' => [],
+				'multiple' => true
+			]);
+			?>
+		</div>
+		<div class="col-sm-6">
+			<button type="submit" class="btn btn-default pull-right" id="jigoshop-product-categories-attributes-add-button">
+				<span class="glyphicon glyphicon-plus"></span>
+				<?php echo __('Add', 'jigoshop'); ?>
+			</button>
+		</div>
+
+		<div class="clearfix"></div>
 	</div>
 </div>

@@ -64,7 +64,8 @@ class ProductCategory implements Taxonomy
 				'assign_terms' => 'assign_product_terms',
             ],
 			'hierarchical' => true,
-			'show_ui' => false,
+			'show_ui' => true,
+			'show_in_menu' => false,
 			'query_var' => true,
             'show_in_nav_menus' => true,
 			'rewrite' => [

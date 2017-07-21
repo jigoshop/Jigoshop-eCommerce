@@ -2,6 +2,7 @@ AdminProductCategories = undefined
 AdminProductCategories = do ->
 
   AdminProductCategories = (params) ->
+    self = undefined
     self = this
     jQuery('.jigoshop-product-categories-expand-subcategories').click (e) ->
       categoryId = undefined
@@ -58,6 +59,9 @@ AdminProductCategories = do ->
       jQuery('.jigoshop-product-categories-edit-form').find('input,select,textarea').each (index, element) ->
         if !jQuery(element).attr('name')
           return
+        if jQuery(element).attr('type') == 'checkbox'
+          fields[jQuery(element).attr('name')] = jQuery(element).is(':checked')
+          return
         fields[jQuery(element).attr('name')] = jQuery(element).val()
         return
       fields['action'] = 'jigoshop_product_categories_updateCategory'
@@ -70,14 +74,6 @@ AdminProductCategories = do ->
         return
       ), 'json'
       return
-    jQuery('#parentId').on 'switchChange.bootstrapSwitch', self.attributesGetAttributes
-    jQuery('#attributesInheritEnabled').on 'switchChange.bootstrapSwitch', (event, state) ->
-      self.attributesInheritEnabledChange 1
-      self.attributesGetAttributes()
-      return
-    jQuery('#attributesInheritMode').on 'switchChange.bootstrapSwitch', self.attributesGetAttributes
-    self.attributesInheritEnabledChange()
-    self.attributesGetAttributes()
     return
 
   AdminProductCategories::params =
@@ -91,13 +87,24 @@ AdminProductCategories = do ->
     return
 
   AdminProductCategories::showForm = ->
-    @bindThumbnailControls()
+    @bindGeneralControls()
+    @attributesInheritEnabledChange()
+    @attributesGetAttributes()
     if jQuery('.jigoshop-product-categories-edit-form').css('display') != 'block'
       jQuery('.jigoshop-product-categories-edit-form').slideToggle()
     jQuery('html,body').animate scrollTop: jQuery('.jigoshop-product-categories-edit-form').offset().top
+    jQuery('.jigoshop-product-categories-edit-form').find('button').removeAttr 'disabled'
     return
 
-  AdminProductCategories::bindThumbnailControls = ->
+  AdminProductCategories::bindGeneralControls = ->
+    self = this
+    jQuery('.jigoshop-product-categories-edit-form').find('input[type="checkbox"]').each (index, element) ->
+      jQuery(element).bootstrapSwitch
+        size: 'small'
+        onText: 'Yes'
+        offText: 'No'
+      return
+    jQuery('#parentId').on 'change', self.attributesGetAttributes
     jQuery('#jigoshop-product-categories-thumbnail-add-button').jigoshop_media
       field: jQuery('#thumbnailId')
       thumbnail: jQuery('#jigoshop-product-categories-thumbnail').find('img')
@@ -114,9 +121,25 @@ AdminProductCategories = do ->
       return
     if jQuery('#thumbnailId').val() != ''
       jQuery('#jigoshop-product-categories-thumbnail-remove-button').css 'display', 'inline-block'
+    jQuery('#attributesInheritEnabled').on 'switchChange.bootstrapSwitch', (event, state) ->
+      self.attributesInheritEnabledChange 1
+      self.attributesGetAttributes()
+      return
+    jQuery('#attributesInheritMode').on 'change', (e) ->
+      self.attributesGetAttributes()
+      return
+    jQuery('#jigoshop-product-categories-attributes-add-button').click (e) ->
+      e.preventDefault()
+      addedAttributes = jQuery('#attributesNewSelector').val()
+      if addedAttributes == null or addedAttributes.length == 0
+        return
+      self.attributesGetAttributes addedAttributes
+      jQuery('#attributesNewSelector').select2 'val', ''
+      return
     return
 
   AdminProductCategories::attributesInheritEnabledChange = (animate) ->
+    state = undefined
     state = jQuery('#attributesInheritEnabled').is(':checked')
     if state
       if animate
@@ -127,14 +150,44 @@ AdminProductCategories = do ->
       jQuery('#jigoshop-product-categories-attributes-inherit-mode').hide()
     return
 
-  AdminProductCategories::attributesGetAttributes = ->
+  AdminProductCategories::attributesGetAttributes = (addedAttributes, removedAttributeId) ->
+    self = this
+    existingAttributes = {}
+    jQuery('#jigoshop-product-categories-attributes').find('tbody').find('tr').each (index, element) ->
+      if jQuery(element).data('attribute-inherited')
+        return
+      existingAttribute = enabled: jQuery(element).find('input[type="checkbox"]').is(':checked')
+      existingAttributes[jQuery(element).data('attribute-id')] = existingAttribute
+      return
     jQuery.post ajaxurl, {
       action: 'jigoshop_product_categories_getAttributes'
       id: jQuery('#id').val()
       parentId: jQuery('#parentId').val()
+      inheritEnabled: jQuery('#attributesInheritEnabled').is(':checked')
       inheritMode: jQuery('#attributesInheritMode').val()
+      existingAttributes: existingAttributes
+      addedAttributes: addedAttributes
+      removedAttributeId: removedAttributeId
     }, ((data) ->
-      data.status = 1
+      if data.status == 1
+        jQuery('#jigoshop-product-categories-attributes').find('tbody').html data.attributes
+        jQuery('#jigoshop-product-categories-attributes').find('input[type="checkbox"]').each (index, element) ->
+          jQuery(element).bootstrapSwitch
+            size: 'small'
+            onText: 'Yes'
+            offText: 'No'
+          return
+        jQuery('.attributeRemoveButton').click (e) ->
+          e.preventDefault()
+          removedAttributeId = jQuery(e.delegateTarget).parents('tr').data('attribute-id')
+          jQuery(e.delegateTarget).parents('tr').remove()
+          self.attributesGetAttributes [], removedAttributeId
+          return
+        jQuery('#attributesNewSelector').html ''
+        jQuery.each data.attributesPossibleToAdd, (key, value) ->
+          jQuery('#attributesNewSelector').append new Option(value, key)
+          return
+      return
     ), 'json'
     return
 
