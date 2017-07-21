@@ -39,7 +39,7 @@ class Categories implements PageInterface {
 
 			$wp->wpEnqueueMedia();
             Styles::add('jigoshop.vendors.select2', \JigoshopInit::getUrl().'/assets/css/vendors/select2.css', ['jigoshop.admin.product']);
-            Styles::add('jigoshop.vendors.datepicker', \JigoshopInit::getUrl().'/assets/css/vendors/datepicker.css', ['jigoshop.admin.product']);
+            Styles::add('jigoshop.vendors.bs-switch', \JigoshopInit::getUrl() . '/assets/css/vendors/bs_switch.css');
 			Styles::add('jigoshop.admin.product_categories', \JigoshopInit::getUrl().'/assets/css/admin/product_categories.css');
 
             Scripts::add('jigoshop.vendors.select2', \JigoshopInit::getUrl() . '/assets/js/vendors/select2.js', ['jquery', 'jigoshop.admin.product']);
