@@ -165,7 +165,7 @@ class Categories implements PageInterface {
 		$category->setAttributes($attributes);
 
 		try {
-			$this->categoryService->save($category);
+			$this->categoryService->save($category, true);
 
 			if($updatingCategory) {
 				$this->messages->addNotice(__('Category updated.', 'jigoshop'));

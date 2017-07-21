@@ -4,15 +4,20 @@ namespace Jigoshop\Service\Product;
 use Jigoshop\Core;
 use Jigoshop\Entity\Product\Category as Entity;
 use Jigoshop\Factory\Product\Category as Factory;
+use Jigoshop\Integration;
+use Jigoshop\Service\ProductService;
+use Jigoshop\Service\ProductServiceInterface;
 use WPAL\Wordpress;
 
 class CategoryService implements CategoryServiceInterface {
 	private $wp;
 	private $factory;
+	private $productService;
 
 	public function __construct(Wordpress $wp, Factory $factory) {
 		$this->wp = $wp;
 		$this->factory = $factory;
+		$this->productService = Integration::getProductService();
 	}
 
 	public function find($id, $level = 0) {
@@ -52,7 +57,7 @@ class CategoryService implements CategoryServiceInterface {
 		return $categories;
 	}
 
-	public function save($category) {
+	public function save($category, $updateProducts = 0) {
 		if(!$category instanceof Entity) {
 			throw new Exception('Tried to save not a product category.');
 		}
@@ -85,6 +90,51 @@ class CategoryService implements CategoryServiceInterface {
 
 		update_metadata(Core::TERMS, $result['term_id'], 'thumbnail_id', (int)$category->getThumbnailId());
 		update_metadata(Core::TERMS, $result['term_id'], 'category_meta', $category->toMeta());
+
+		if(!$updateProducts) {
+			return true;
+		}
+
+		$args = [
+			'post_type' => 'product',
+			'post_status' => 'publish',
+			'nopaging' => true,
+			'tax_query' => [
+				[
+					'taxonomy' => 'product_category',
+					'field' => 'id',
+					'terms' => $category->getId()
+				]
+			]
+		];
+		$query = new \WP_Query($args);
+		foreach($query->posts as $post) {
+			$product = $this->productService->find($post->ID);
+
+			foreach($category->getAttributes() as $attribute) {
+				if(!$attribute->getCategoryEnabled() || $product->hasAttribute($attribute->getId())) {
+					continue;
+				}
+
+				if($attribute->getType() == 1) {
+					$options = $attribute->getOptions();
+					if(empty($options)) {
+						continue;
+					}			
+
+					$attribute->setValue(array_keys($options)[0]);		
+				}
+				elseif($attribute->getType() == 2) {
+					$attribute->setValue('-');
+				}
+
+				$product->addAttribute($attribute);
+			}
+
+			$this->productService->save($product);
+		}
+
+		return true;
 	}
 
 	public function remove($category) {
