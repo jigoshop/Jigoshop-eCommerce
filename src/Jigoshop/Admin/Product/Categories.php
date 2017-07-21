@@ -43,6 +43,7 @@ class Categories implements PageInterface {
 			Styles::add('jigoshop.admin.product_categories', \JigoshopInit::getUrl().'/assets/css/admin/product_categories.css');
 
             Scripts::add('jigoshop.vendors.select2', \JigoshopInit::getUrl() . '/assets/js/vendors/select2.js', ['jquery', 'jigoshop.admin.product']);
+            Scripts::add('jigoshop.vendors.bs-switch', \JigoshopInit::getUrl() . '/assets/js/vendors/bs_switch.js', ['jquery']);
             Scripts::add('jigoshop.media', \JigoshopInit::getUrl() . '/assets/js/media.js', ['jquery']);
 
             Scripts::add('jigoshop.admin.product_categories', \JigoshopInit::getUrl() . '/assets/js/admin/product_categories.js', ['jquery']);
@@ -227,13 +228,12 @@ class Categories implements PageInterface {
 	public function ajaxGetAttributes() {
 		$categories = $this->categoryService->findAll();
 		$category = ProductCategory::findInTree($_POST['id'], $categories);
-		if($category === false) {
-			exit;
-		}	
 
 		$allAttributes = $this->productService->findAllAttributes();
 
-		$removedAttributes = $category->getRemovedAttributesIds();
+		if(is_object($category)) {
+			$removedAttributes = $category->getRemovedAttributesIds();
+		}
 		if(isset($_POST['removedAttributeId']) && $_POST['removedAttributeId']) {
 			$removedAttributes[] = $_POST['removedAttributeId'];
 		}
@@ -282,19 +282,21 @@ class Categories implements PageInterface {
 			];
 		}
 
-		foreach($category->getAttributes() as $attribute) {
-			if(in_array($attribute->getId(), $removedAttributes)) {
-				continue;
+		if(is_object($category)) {
+			foreach($category->getAttributes() as $attribute) {
+				if(in_array($attribute->getId(), $removedAttributes)) {
+					continue;
+				}
+
+				$existingAttributes[$attribute->getId()] = [
+					'enabled' => $attribute->getCategoryEnabled(),
+					'inherited' => false
+				];
 			}
 
-			$existingAttributes[$attribute->getId()] = [
-				'enabled' => $attribute->getCategoryEnabled(),
-				'inherited' => false
-			];
+			$category->setRemovedAttributesIds($removedAttributes);
+			$this->categoryService->save($category);
 		}
-
-		$category->setRemovedAttributesIds($removedAttributes);
-		$this->categoryService->save($category);
 
 		$attributesPossibleToAdd = [];
 		foreach($allAttributes as $attribute) {
