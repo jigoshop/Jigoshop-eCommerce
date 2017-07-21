@@ -13,6 +13,7 @@ use Jigoshop\Helper\Render;
 use Jigoshop\Helper\Scripts;
 use Jigoshop\Helper\Styles;
 use Jigoshop\Service\ProductServiceInterface;
+use Jigoshop\Service\Product\CategoryServiceInterface;
 use WPAL\Wordpress;
 
 class Product
@@ -23,22 +24,26 @@ class Product
     private $options;
     /** @var \Jigoshop\Service\ProductServiceInterface */
     private $productService;
+    /** @var \Jigoshop\Service\Product\CategoryServiceInterface */
+    private $categoryService;
     /** @var Types\Product */
     private $type;
     /** @var array */
     private $menu;
 
-    public function __construct(Wordpress $wp, Options $options, Types\Product $type, ProductServiceInterface $productService)
+    public function __construct(Wordpress $wp, Options $options, Types\Product $type, ProductServiceInterface $productService, CategoryServiceInterface $categoryService)
     {
         $this->wp = $wp;
         $this->options = $options;
         $this->productService = $productService;
+        $this->categoryService = $categoryService;
         $this->type = $type;
 
         $wp->addAction('wp_ajax_jigoshop.admin.product.find', [$this, 'ajaxFindProduct'], 10, 0);
         $wp->addAction('wp_ajax_jigoshop.admin.product.update_type', [$this, 'ajaxUpdateType'], 10, 0);
         $wp->addAction('wp_ajax_jigoshop.admin.product.save_attribute', [$this, 'ajaxSaveAttribute'], 10, 0);
         $wp->addAction('wp_ajax_jigoshop.admin.product.remove_attribute', [$this, 'ajaxRemoveAttribute'], 10, 0);
+        $wp->addAction('wp_ajax_jigoshop.admin.product.get_inherited_attributes', [$this, 'ajaxGetInheritedAttributes'], 10, 0);
 
         $that = $this;
         $wp->addAction('add_meta_boxes_'.Types::PRODUCT, function () use ($wp, $that){
@@ -346,6 +351,41 @@ class Product
             $result = [
                 'success' => false,
                 'error' => $e->getMessage(),
+            ];
+        }
+
+        echo json_encode($result);
+        exit;
+    }
+
+    public function ajaxGetInheritedAttributes() {
+        try {
+            if(!isset($_POST['categories']) || !is_array($_POST['categories'])) {
+                throw new Exception(__('No categories specified.', 'jigoshop'));
+            }
+
+            $attributes = [];
+            foreach($_POST['categories'] as $categoryId) {
+                $category = $this->categoryService->find($categoryId);
+                foreach($category->getAttributes() as $attribute) {
+                    $attributes[] = [
+                        'id' => $attribute->getId(),
+                        'render' => Render::get('admin/product/box/attributes/attribute', [
+                                'attribute' => $attribute
+                            ])
+                    ];
+                }
+            }
+
+            $result = [
+                'success' => true,
+                'attributes' => $attributes
+            ];
+        }
+        catch(Exception $e) {
+            $result = [
+                'success' => false,
+                'error' => $e->getMessage()
             ];
         }
 
