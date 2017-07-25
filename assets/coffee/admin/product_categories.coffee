@@ -27,6 +27,9 @@ AdminProductCategories = do ->
       categoryId = jQuery(e.delegateTarget).parents('tr').data('category-id')
       if !categoryId
         return
+      self.select2 = jQuery.fn.select2
+      self.jigoshop_media = jQuery.fn.jigoshop_media
+      self.bootstrapSwitch = jQuery.fn.bootstrapSwitch
       jQuery.post ajaxurl, {
         action: 'jigoshop_product_categories_getEditForm'
         categoryId: categoryId
@@ -81,8 +84,10 @@ AdminProductCategories = do ->
     placeholder: ''
 
   AdminProductCategories::resetForm = ->
+    tinyMCE.activeEditor.setContent ''
     jQuery('.jigoshop-product-categories-edit-form').find('input,select,textarea').each (index, element) ->
-      jQuery(element).val ''
+      if jQuery(element).closest('.description_field').length == 0
+        jQuery(element).val ''
       return
     return
 
@@ -99,12 +104,16 @@ AdminProductCategories = do ->
   AdminProductCategories::bindGeneralControls = ->
     self = this
     jQuery('.jigoshop-product-categories-edit-form').find('input[type="checkbox"]').each (index, element) ->
+      if typeof jQuery.fn.bootstrapSwitch == "undefined"
+        jQuery.fn.bootstrapSwitch = self.bootstrapSwitch
       jQuery(element).bootstrapSwitch
         size: 'small'
         onText: 'Yes'
         offText: 'No'
       return
     jQuery('#parentId').on 'change', self.attributesGetAttributes
+    if typeof jQuery.fn.jigoshop_media == "undefined"
+      jQuery.fn.jigoshop_media = self.jigoshop_media
     jQuery('#jigoshop-product-categories-thumbnail-add-button').jigoshop_media
       field: jQuery('#thumbnailId')
       thumbnail: jQuery('#jigoshop-product-categories-thumbnail').find('img')
@@ -128,6 +137,9 @@ AdminProductCategories = do ->
     jQuery('#attributesInheritMode').on 'change', (e) ->
       self.attributesGetAttributes()
       return
+    if typeof jQuery.fn.select2 == "undefined"
+      jQuery.fn.select2 = self.select2
+    jQuery('#parentId, #attributesInheritMode, #attributesNewSelector').select2()
     jQuery('#jigoshop-product-categories-attributes-add-button').click (e) ->
       e.preventDefault()
       addedAttributes = jQuery('#attributesNewSelector').val()
