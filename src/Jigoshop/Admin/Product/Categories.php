@@ -4,6 +4,7 @@ namespace Jigoshop\Admin\Product;
 use Jigoshop\Admin\PageInterface;
 use Jigoshop\Core\Messages;
 use Jigoshop\Entity\Product\Attribute;
+use Jigoshop\Entity\Product\Attribute\Option;
 use Jigoshop\Helper\ProductCategory;
 use Jigoshop\Helper\Render;
 use Jigoshop\Helper\Scripts;
@@ -42,10 +43,12 @@ class Categories implements PageInterface {
             Styles::add('jigoshop.vendors.bs-switch', \JigoshopInit::getUrl() . '/assets/css/vendors/bs_switch.css');
 			Styles::add('jigoshop.admin.product_categories', \JigoshopInit::getUrl().'/assets/css/admin/product_categories.css');
 
+			Styles::add('jigoshop.vendors.magnific_popup', \JigoshopInit::getUrl() . '/assets/css/vendors/magnific_popup.css');
+
             Scripts::add('jigoshop.vendors.select2', \JigoshopInit::getUrl() . '/assets/js/vendors/select2.js', ['jquery', 'jigoshop.admin.product']);
             Scripts::add('jigoshop.vendors.bs-switch', \JigoshopInit::getUrl() . '/assets/js/vendors/bs_switch.js', ['jquery']);
             Scripts::add('jigoshop.media', \JigoshopInit::getUrl() . '/assets/js/media.js', ['jquery']);
-
+			Scripts::add('jigoshop.vendors.magnific_popup', \JigoshopInit::getUrl() . '/assets/js/vendors/magnific_popup.js', ['jquery']);            
             Scripts::add('jigoshop.admin.product_categories', \JigoshopInit::getUrl() . '/assets/js/admin/product_categories.js', ['jquery']);
 
             Scripts::localize('jigoshop.admin.product_categories', 'jigoshop_admin_product_categories_data', [
@@ -60,6 +63,7 @@ class Categories implements PageInterface {
 		$wp->addAction('wp_ajax_jigoshop_product_categories_getEditForm', [$this, 'ajaxGetEditForm']);	
 		$wp->addAction('wp_ajax_jigoshop_product_categories_removeCategory', [$this, 'ajaxRemoveCategory']);
 		$wp->addAction('wp_ajax_jigoshop_product_categories_getAttributes', [$this, 'ajaxGetAttributes']);
+		$wp->addAction('wp_ajax_jigoshop_product_categories_saveAttribute', [$this, 'ajaxSaveAttribute']);
 	}
 
 	public function getTitle() {
@@ -86,7 +90,8 @@ class Categories implements PageInterface {
 			'categories' => $this->renderCategories($categories),
 			'parentOptions' => $this->getParentOptions($categories),
 			'categoryImage' => ProductCategory::getImage(0),
-			'attributes' => $this->renderAttributes()
+			'attributes' => $this->renderAttributes(),
+			'attributesTypes' => Attribute::getTypes()
 		]);
 	}
 
@@ -349,5 +354,44 @@ class Categories implements PageInterface {
 		}
 
 		return $attributes;
+	}
+
+	public function ajaxSaveAttribute() {
+		$attribute = null;		
+		if(isset($_POST['attributeId']) && $_POST['attributeId']) {
+			$attribute = $this->productService->getAttribute($_POST['attributeId']);
+		}
+
+		if($attribute === null) {
+			$attribute = $this->productService->createAttribute($_POST['type']);
+		}
+
+		$attribute->setLabel(trim(htmlspecialchars(strip_tags($_POST['label']))));
+		if(isset($_POST['slug']) && $_POST['slug']) {
+			$attribute->setSlug(trim(htmlspecialchars(strip_tags($_POST['slug']))));
+		}
+		else {
+			$attribute->setSlug($this->wp->getHelpers()->sanitizeTitle($attribute->getLabel()));
+		}
+
+		if(isset($_POST['options']) && is_array($_POST['options'])) { 
+			foreach($_POST['options'] as $optionInput) {
+				$option = new Option();
+				$option->setLabel(trim(htmlspecialchars(strip_tags($optionInput['label']))));
+				$option->setValue(trim(htmlspecialchars(strip_tags($optionInput['value']))));
+
+				$attribute->addOption($option);
+			}
+		}
+
+		$attribute->setVisible(true);
+		$attribute = $this->productService->saveAttribute($attribute);
+
+		echo json_encode([
+			'status' => 1,
+			'attributeId' => $attribute->getId()
+		]);
+
+		exit;
 	}
 }

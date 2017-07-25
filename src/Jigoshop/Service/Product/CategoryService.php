@@ -116,7 +116,10 @@ class CategoryService implements CategoryServiceInterface {
 					continue;
 				}
 
-				if($attribute->getType() == 1) {
+				if($attribute->getType() == 0) {
+					$attribute->setValue([]);
+				}
+				elseif($attribute->getType() == 1) {
 					$options = $attribute->getOptions();
 					if(empty($options)) {
 						continue;

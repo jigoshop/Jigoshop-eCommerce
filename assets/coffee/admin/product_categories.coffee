@@ -27,6 +27,9 @@ AdminProductCategories = do ->
       categoryId = jQuery(e.delegateTarget).parents('tr').data('category-id')
       if !categoryId
         return
+
+      self.select2 = jQuery.fn.select2
+
       jQuery.post ajaxurl, {
         action: 'jigoshop_product_categories_getEditForm'
         categoryId: categoryId
@@ -134,8 +137,19 @@ AdminProductCategories = do ->
       if addedAttributes == null or addedAttributes.length == 0
         return
       self.attributesGetAttributes addedAttributes
+
+      if typeof jQuery.fn.select2 == 'undefined'
+        jQuery.fn.select2 = self.select2
+
       jQuery('#attributesNewSelector').select2 'val', ''
       return
+
+    jQuery('#jigoshop-product-categories-attributes-add-new-button').click(self.attributesAddNewForm.bind(this))
+
+    if typeof jQuery.fn.select2 == 'undefined'
+      jQuery.fn.select2 = self.select2
+
+    jQuery('#parentId, #attributesInheritMode, #attributesNewSelector').select2()
     return
 
   AdminProductCategories::attributesInheritEnabledChange = (animate) ->
@@ -187,6 +201,116 @@ AdminProductCategories = do ->
         jQuery.each data.attributesPossibleToAdd, (key, value) ->
           jQuery('#attributesNewSelector').append new Option(value, key)
           return
+      return
+    ), 'json'
+    return
+
+  AdminProductCategories::attributesAddNewForm = (e) ->
+    self = this
+    e.preventDefault()
+    jQuery.magnificPopup.open
+      mainClass: 'jigoshop'
+      closeOnContentClick: false
+      closeOnBgClick: false
+      closeBtnInside: true
+      showCloseBtn: true
+      enableEscapeKey: true
+      modal: true
+      items: src: jQuery('#jigoshop-product-categories-attributes-add-new-container')
+      type: 'inline'
+      callbacks:
+        open: ->
+          jQuery('#jigoshop-product-categories-attributes-add-new-type').on('change', self.attributesAddNewTypeChanged).trigger 'change'
+          jQuery('#jigoshop-product-categories-attributes-add-new-configure-button').click self.attributesAddNewConfigure
+          jQuery('#jigoshop-product-categories-attributes-add-new-configure-container').find('.attribute-option-add-button')
+            .click self.attributesAddOption.bind(self)
+          jQuery('#jigoshop-product-categories-attributes-add-new-configure-container').find('.attribute-option-remove-button').hide()
+          jQuery('#jigoshop-product-categories-attributes-add-new-form').submit self.attributesAddNewSave.bind(self)
+          jQuery('#jigoshop-product-categories-attributes-add-new-container').css 'display', 'block'
+          return
+    return
+
+  AdminProductCategories::attributesAddNewTypeChanged = ->
+    attributeType = undefined
+    display = undefined
+    attributeType = jQuery('#jigoshop-product-categories-attributes-add-new-type').val()
+    if attributeType == 2
+      display = 'none'
+    else
+      display = 'block'
+    jQuery('#jigoshop-product-categories-attributes-add-new-configure-button').css 'display', display
+    if jQuery('#jigoshop-product-categories-attributes-add-new-configure-container').css('display') == 'block' and display == 'none'
+      jQuery('#jigoshop-product-categories-attributes-add-new-configure-container').css 'display', 'block'
+    return
+
+  AdminProductCategories::attributesAddNewConfigure = (e) ->
+    e.preventDefault()
+    jQuery('#jigoshop-product-categories-attributes-add-new-configure-container').show()
+    return
+
+  AdminProductCategories::attributesAddOption = (e) ->
+    self = undefined
+    prototype = undefined
+    self = this
+    e.preventDefault()
+    prototype = jQuery('#jigoshop-product-categories-attributes-add-new-configure-container').find('#attribute-option-prototype')
+    if prototype.find('#option-label').val() == '' or prototype.find('#option-value').val() == ''
+      return
+    option = prototype.clone()
+    option.removeAttr 'id'
+    option.find('.attribute-option-add-button').remove()
+    option.find('.attribute-option-remove-button').show()
+    option.find('.attribute-option-remove-button').click self.attributesRemoveOption.bind(self)
+    jQuery('#jigoshop-product-categories-attributes-add-new-configure-container').prepend option
+    prototype.find('#option-label').val ''
+    prototype.find('#option-value').val ''
+    return
+
+  AdminProductCategories::attributesRemoveOption = (e) ->
+    self = this
+    e.preventDefault()
+    jQuery(e.delegateTarget).parents('tr').remove()
+    return
+
+  AdminProductCategories::attributesAddNewSave = (e) ->
+    self = undefined
+    form = undefined
+    label = undefined
+    slug = undefined
+    type = undefined
+    options = undefined
+    self = this
+    e.preventDefault()
+    form = jQuery('#jigoshop-product-categories-attributes-add-new-form')
+    label = jQuery('#jigoshop-product-categories-attributes-add-new-label').val()
+    slug = jQuery('#jigoshop-product-categories-attributes-add-new-slug').val()
+    type = jQuery('#jigoshop-product-categories-attributes-add-new-type').val()
+    options = []
+    jQuery('#jigoshop-product-categories-attributes-add-new-configure-container').find('tr').each (index, element) ->
+      option = undefined
+      if jQuery(element).attr('id') == 'attribute-option-prototype'
+        return
+      option =
+        label: jQuery(element).find('#option-label').val()
+        value: jQuery(element).find('#option-value').val()
+      options.push option
+      return
+    if !label or options.length == 0
+      return
+    jQuery('#jigoshop-product-categories-attributes-add-new-button').attr 'disabled', 'disabled'
+    jQuery.post ajaxurl, {
+      action: 'jigoshop_product_categories_saveAttribute'
+      categoryId: jQuery('#id').val()
+      label: label
+      slug: slug
+      type: type
+      options: options
+    }, ((data) ->
+      if data.status == 1
+        self.attributesGetAttributes [ data.attributeId ]
+        jQuery.magnificPopup.close()
+      else
+        jQuery('#jigoshop-product-categories-attributes-add-new-button').removeAttr 'disabled'
       return
     ), 'json'
     return

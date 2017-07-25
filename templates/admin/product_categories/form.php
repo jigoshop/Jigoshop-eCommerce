@@ -1,6 +1,7 @@
 <?php
 use Jigoshop\Admin\Helper\Forms;
 use Jigoshop\Helper\Render;
+use Jigoshop\Helper\Scripts;
 ?>
 <div id="jigoshop-product-categories-edit-form-content">
 	<?php
@@ -17,15 +18,40 @@ use Jigoshop\Helper\Render;
 		'description' => __('The name is how it appears on your site.', 'jigoshop'),
 		'value' => isset($category)?$category->getName():''
 	]);
+	?>
 
-	Forms::textarea([
-		'id' => 'description',
-		'name' => 'description',
-		'label' => __('Description', 'jigoshop'),
-		'description' => __('The description is not prominent by default; however, some themes may show it.', 'jigoshop'),
-		'value' => isset($category)?$category->getDescription():''
-	]);
+	<div class="form-group description_field">
+    	<div class="row">
+        	<div class="col-sm-12">
+            	<label for="description" class="col-xs-12 col-sm-2 margin-top-bottom-9">
+                	<?= __('Description', 'jigoshop') ?>
+            	</label>
+            	<div class="col-xs-12 col-sm-10 clearfix">
+                	<div class="tooltip-inline-badge"></div>
+                	<div class="tooltip-inline-input">
+                    	<?php 
+                    	/*
+                    	wp_editor(isset($category)?$category->getName():'', 'description', array(
+                        	    'editor_height'    => 300,
+                            	'media_buttons'    => true,
+                            	'textarea_name'    => 'description',
+                        )); 
+                    	if(defined('DOING_AJAX') && DOING_AJAX){
+                        	Scripts::add('jigoshop.media', \JigoshopInit::getUrl() . '/assets/js/media.js', ['jquery']);
+                        	Scripts::add('jigoshop.vendors.bs-switch', \JigoshopInit::getUrl() . '/assets/js/vendors/bs_switch.js', ['jquery']);
+                        	\_WP_Editors::enqueue_scripts();
+                        	print_footer_scripts();
+                        	\_WP_Editors::editor_js();
+                    	};
+                    	*/
+                    	?>
+                	</div>
+            	</div>
+        	</div>
+    	</div>
+	</div>
 
+	<?php
 	Forms::text([
 		'id' => 'slug',
 		'name' => 'slug',
@@ -34,6 +60,7 @@ use Jigoshop\Helper\Render;
 		'value' => isset($category)?$category->getSlug():''
 	]);
 
+	//ob_start();
 	Forms::select([
 		'id' => 'parentId',
 		'name' => 'parentId',
@@ -41,6 +68,15 @@ use Jigoshop\Helper\Render;
 		'options' => $parentOptions,
 		'value' => isset($category)?$category->getParentId():0
 	]);
+
+	/*
+	if(defined('DOING_AJAX') && DOING_AJAX) {
+		echo preg_replace('/<script\b[^>]*>(.*?)<\/script>/is', "", ob_get_clean());
+	}	
+	else {
+		echo ob_get_clean();
+	}
+	*/
 	?>
 
 	<div class="form-group thumbnail_field">
@@ -105,7 +141,7 @@ use Jigoshop\Helper\Render;
 			</tr>
 		</thead>
 		<tbody>
-			<?php echo $attributes; ?>
+			<?php echo (isset($attributes)?$attributes:''); ?>
 		</tbody>
 	</table>
 
@@ -115,7 +151,7 @@ use Jigoshop\Helper\Render;
 			Forms::select([
 				'id' => 'attributesNewSelector',
 				'name' => 'attributesNewSelector',
-				'label' => __('New attribute', 'jigoshop'),
+				'label' => __('Existing attr.', 'jigoshop'),
 				'options' => [],
 				'multiple' => true
 			]);
@@ -125,6 +161,13 @@ use Jigoshop\Helper\Render;
 			<button type="submit" class="btn btn-default pull-right" id="jigoshop-product-categories-attributes-add-button">
 				<span class="glyphicon glyphicon-plus"></span>
 				<?php echo __('Add', 'jigoshop'); ?>
+			</button>
+		</div>
+
+		<div class="col-sm-12">
+			<button type="submit" class="btn btn-default pull-right" id="jigoshop-product-categories-attributes-add-new-button">
+				<span class="glyphicon glyphicon-plus"></span>
+				<?php echo __('Add new attribute', 'jigoshop'); ?>
 			</button>
 		</div>
 
