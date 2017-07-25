@@ -31,10 +31,10 @@ abstract class Attribute implements \JsonSerializable
 	private $visible;
 	/** @var bool */
 	private $exists;
-	/** @var bool */
-	private $categoryEnabled = false;	
 	/** @var int */
 	private $categoryId = 0;
+	/** @var int */
+	private $inheritedFromCategoryId = 0;
 	/** @var Option[] */
 	protected $options = [];
 	/** @var mixed */
@@ -78,20 +78,20 @@ abstract class Attribute implements \JsonSerializable
 		$this->exists = $exists;
 	}
 
-	public function getCategoryEnabled() {
-		return $this->categoryEnabled;
-	}
-
-	public function setCategoryEnabled($categoryEnabled) {
-		$this->categoryEnabled = $categoryEnabled;
-	}
-
 	public function getCategoryId() {
 		return $this->categoryId;
 	}
 
 	public function setCategoryId($categoryId) {
 		$this->categoryId = $categoryId;
+	}
+
+	public function getInheritedCategoryId() {
+		return $this->inheritedFromCategoryId;
+	}
+
+	public function setInheritedCategoryId($inheritedFromCategoryId) {
+		$this->inheritedFromCategoryId = $inheritedFromCategoryId;
 	}
 
 	/**

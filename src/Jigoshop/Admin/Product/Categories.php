@@ -87,6 +87,7 @@ class Categories implements PageInterface {
 
 		Render::output('admin/product_categories', [
 			'messages' => $this->messages,
+			'category' => $this->categoryService->find(0),
 			'categories' => $this->renderCategories($categories),
 			'parentOptions' => $this->getParentOptions($categories),
 			'categoryImage' => ProductCategory::getImage(0),
@@ -153,22 +154,29 @@ class Categories implements PageInterface {
 		$category->setAttributesInheritMode($_POST['attributesInheritMode']);
 
 		$attributes = [];
+		$attributesEnabled = [];
 		if(isset($_POST['attributes']) && is_array($_POST['attributes'])) {
-			foreach($_POST['attributes'] as $attributeId => $value) {
+			foreach($_POST['attributes'] as $attributeId => $isAttributedInherited) {
+				if(isset($_POST['attributesEnabled'][$attributeId]) && $_POST['attributesEnabled'][$attributeId] === 'true') {
+					$attributesEnabled[] = $attributeId;
+				}
+
+				if($isAttributedInherited) {
+					continue;
+				}
+
 				$attribute = $this->productService->getAttribute($attributeId);
 
 				if(!$attribute instanceof Attribute) {
 					continue;
 				}
 
-				if(isset($_POST['attributesEnabled'][$attribute->getId()]) && ($_POST['attributesEnabled'][$attribute->getId()] === 'true') || $_POST['attributesEnabled'][$attribute->getId()] === true) {
-					$attribute->setCategoryEnabled(true);
-				}
-
 				$attributes[] = $attribute;
 			}
 		}
+
 		$category->setAttributes($attributes);
+		$category->setEnabledAttributesIds($attributesEnabled);
 
 		try {
 			$this->categoryService->save($category, true);
@@ -236,6 +244,7 @@ class Categories implements PageInterface {
 
 		$allAttributes = $this->productService->findAllAttributes();
 
+		$removedAttributes = [];
 		if(is_object($category)) {
 			$removedAttributes = $category->getRemovedAttributesIds();
 		}
@@ -246,7 +255,6 @@ class Categories implements PageInterface {
 		$inheritedAttributes = [];
 		if($_POST['inheritEnabled'] === 'true' && $_POST['parentId'] > 0) {
 			$parentCategory = ProductCategory::findInTree($_POST['parentId'], $categories);
-
 			if($parentCategory !== false) {
 				if($_POST['inheritMode'] == 'direct') {
 					$inheritedAttributes = $parentCategory->getAttributes();
@@ -262,6 +270,14 @@ class Categories implements PageInterface {
 			$existingAttributes = $_POST['existingAttributes'];
 		}
 
+		$enabledAttributes = [];
+		if(isset($_POST['enabledAttributes']) && is_array($_POST['enabledAttributes'])) {
+			$enabledAttributes = $_POST['enabledAttributes'];
+		}
+		if(is_object($category)) {
+			$enabledAttributes = array_merge($enabledAttributes, $category->getEnabledAttributesIds());
+		}
+
 		if(isset($_POST['addedAttributes']) && is_array($_POST['addedAttributes'])) {
 			foreach($_POST['addedAttributes'] as $addedAttributeId) {
 				if(in_array($addedAttributeId, $removedAttributes)) {
@@ -269,7 +285,7 @@ class Categories implements PageInterface {
 				}
 
 				$existingAttributes[$addedAttributeId] = [
-					'enabled' => false,
+					'enabled' => in_array($addedAttributeId, $enabledAttributes),
 					'inherited' => false
 				];
 			}
@@ -281,7 +297,7 @@ class Categories implements PageInterface {
 			} 
 		
 			$existingAttributes[$inheritedAttribute->getId()] = [
-				'enabled' => false,
+				'enabled' => in_array($inheritedAttribute->getId(), $enabledAttributes),
 				'inherited' => true,
 				'inheritedFrom' => $inheritedAttribute->getCategoryId()
 			];
@@ -294,7 +310,7 @@ class Categories implements PageInterface {
 				}
 
 				$existingAttributes[$attribute->getId()] = [
-					'enabled' => $attribute->getCategoryEnabled(),
+					'enabled' => in_array($attribute->getId(), $enabledAttributes),
 					'inherited' => false
 				];
 			}
@@ -318,19 +334,23 @@ class Categories implements PageInterface {
 				continue;
 			}
 
-			if($existingAttributes[$attribute->getId()]['enabled'] === 'true' || $existingAttributes[$attribute->getId()]['enabled'] === true) {
-				$attribute->setCategoryEnabled(true);
+			if($existingAttributes[$attribute->getId()]['enabled']) {
+				$attributeEnabled = true;
+			}
+			else {
+				$attributeEnabled = false;
 			}
 
 			if(isset($existingAttributes[$attribute->getId()]['inheritedFrom'])) {
-				$inheritedFrom = ProductCategory::findInTree($existingAttributes[$attribute->getId()]['inheritedFrom'], $categories)->getName();
+				$inheritedFrom = ProductCategory::findInTree($existingAttributes[$attribute->getId()]['inheritedFrom'], $categories);
 			}
 			else {
-				$inheritedFrom = '-';
+				$inheritedFrom = null;
 			}
 
 			$attributesRender .= Render::get('admin/product_categories/attribute', [
 				'attribute' => $attribute,
+				'attributeEnabled' => $attributeEnabled,
 				'inherited' => $existingAttributes[$attribute->getId()]['inherited'],
 				'inheritedFrom' => $inheritedFrom
 			]);

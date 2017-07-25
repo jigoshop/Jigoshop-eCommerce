@@ -48,4 +48,18 @@ class ProductCategory
 
 		return false;
 	}
+
+	public static function generateCategoryTreeFromIdToTopParent($id, array $categories) {
+		$category = self::findInTree($id, $categories);
+
+		$output = [];
+		$output[] = $category;
+		if($category->getParentId() == 0) {
+			return $output;
+		}
+
+		$output = array_merge($output, self::generateCategoryTreeFromIdToTopParent($category->getParentId(), $categories));
+
+		return $output;
+	}
 }

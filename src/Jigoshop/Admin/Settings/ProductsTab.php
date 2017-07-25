@@ -288,6 +288,29 @@ class ProductsTab implements TabInterface
                     ],
                 ],
             ],
+            [
+            	'id' => 'categoryAttributes',
+            	'title' => __('Category attributes', 'jigoshop'),
+            	'fields' => [
+            		[
+            			'name' => '[categoryAttributes][inheritance][defaultEnabled]',
+            			'title' => __('Inheritance enabled by default', 'jigoshop'),
+            			'type' => 'checkbox',
+            			'classes' => ['switch-medium'],
+            			'checked' => $this->options['categoryAttributes']['inheritance']['defaultEnabled']
+            		],
+            		[
+            			'name' => '[categoryAttributes][inheritance][defaultMode]',
+            			'title' => __('Inheritance default mode', 'jigoshop'),
+            			'type' => 'select',
+            			'options' => [
+            				'all' => __('All parent categories', 'jigoshop'),
+            				'direct' => __('Direct parent category', 'jigoshop')
+            			],
+            			'value' => $this->options['categoryAttributes']['inheritance']['defaultMode']
+            		]
+            	]
+            ]
         ];
 	}
 
@@ -350,6 +373,8 @@ class ProductsTab implements TabInterface
 			'height' => (int)$settings['images']['large']['height'],
 			'crop' => $settings['images']['large']['crop'] == 'on',
         ];
+
+        $settings['categoryAttributes']['inheritance']['defaultEnabled'] = $settings['categoryAttributes']['inheritance']['defaultEnabled'] == 'on';
 
 		return $settings;
 	}

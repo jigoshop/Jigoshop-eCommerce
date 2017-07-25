@@ -2,6 +2,8 @@
 namespace Jigoshop\Entity\Product;
 
 use Jigoshop\Entity\Product\Attribute\Multiselect;
+use Jigoshop\Helper\ProductCategory;
+use Jigoshop\Integration;
 
 class Category {
 	private $id = 0;
@@ -13,10 +15,14 @@ class Category {
 	private $level = 0;
 	private $count = 0;
 	private $thumbnailId = 0;
-	private $attributesInheritEnabled = false;
-	private $attributesInheritMode = 'all';
+	private $attributesInheritEnabled = null;
+	private $attributesInheritMode = null;
 	private $attributes = [];
+	private $enabledAttributesIds = [];
 	private $removedAttributesIds = [];
+
+	private $categoryService = null;
+	private $options = null;
 
 	public function getId() {
 		return $this->id;
@@ -95,6 +101,12 @@ class Category {
 	}
 
 	public function getAttributesInheritEnabled() {
+		if($this->attributesInheritEnabled === null) {
+			$this->getOptions();
+
+			$this->attributesInheritEnabled = $this->options->get('products.categoryAttributes.inheritance.defaultEnabled');
+		}
+
 		return $this->attributesInheritEnabled;
 	}
 
@@ -103,6 +115,12 @@ class Category {
 	}
 
 	public function getAttributesInheritMode() {
+		if($this->attributesInheritMode === null) {
+			$this->getOptions();
+
+			$this->attributesInheritMode = $this->options->get('products.categoryAttributes.inheritance.defaultMode');
+		}
+
 		return $this->attributesInheritMode;
 	}
 
@@ -124,6 +142,36 @@ class Category {
 		}
 	}
 
+	public function getAllAttributes() {
+		if($this->categoryService === null) {
+			$this->categoryService = Integration::getProductCategoryService();
+		}
+
+		$allCategories = $this->categoryService->findAll();
+		$categories = ProductCategory::generateCategoryTreeFromIdToTopParent($this->getId(), $allCategories);
+
+		$attributes = [];
+		foreach($categories as $category) {
+			foreach($category->getAttributes() as $attribute) {
+				if(isset($attributes[$attribute->getId()])) {
+					continue;
+				}
+
+				$attributes[$attribute->getId()] = $attribute;
+			}
+		}
+
+		return array_values($attributes);
+	}
+
+	public function getEnabledAttributesIds() {
+		return $this->enabledAttributesIds;
+	}
+
+	public function setEnabledAttributesIds($enabledAttributesIds) {
+		$this->enabledAttributesIds = $enabledAttributesIds;
+	}
+
 	public function getRemovedAttributesIds() {
 		return $this->removedAttributesIds;
 	}
@@ -132,11 +180,18 @@ class Category {
 		$this->removedAttributesIds = $removedAttributesIds;
 	}
 
+	private function getOptions() {
+		if($this->options === null) {
+			$this->options = Integration::getOptions();
+		}
+	}
+
 	public function toMeta() {
 		return [
 			'attributesInheritEnabled' => $this->attributesInheritEnabled,
 			'attributesInheritMode' => $this->attributesInheritMode,
 			'attributes' => $this->attributes,
+			'enabledAttributesIds' => $this->enabledAttributesIds,
 			'removedAttributesIds' => $this->removedAttributesIds
 		];
 	}
@@ -155,6 +210,10 @@ class Category {
 
 		if(isset($meta['attributes'])) {
 			$this->attributes = $meta['attributes'];
+		}
+
+		if(isset($meta['enabledAttributesIds'])) {
+			$this->enabledAttributesIds = $meta['enabledAttributesIds'];
 		}
 
 		if(isset($meta['removedAttributesIds'])) {

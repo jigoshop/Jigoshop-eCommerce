@@ -25,7 +25,12 @@ class CategoryService implements CategoryServiceInterface {
 		$category->setLevel($level);
 		$category->setChildCategories($this->findFromParent($id, $level + 1));
 
-		$meta = get_metadata(Core::TERMS, $id, 'category_meta', true);
+		if($id > 0) {
+			$meta = get_metadata(Core::TERMS, $id, 'category_meta', true);
+		}
+		else {
+			$meta = [];
+		}
 		if(is_array($meta)) {
 			$category->fromMeta($meta);
 		}

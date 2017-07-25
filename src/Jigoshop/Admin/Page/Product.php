@@ -367,19 +367,22 @@ class Product
             $attributes = [];
             foreach($_POST['categories'] as $categoryId) {
                 $category = $this->categoryService->find($categoryId);
-                foreach($category->getAttributes() as $attribute) {
-                    $attributes[] = [
-                        'id' => $attribute->getId(),
-                        'render' => Render::get('admin/product/box/attributes/attribute', [
-                                'attribute' => $attribute
-                            ])
-                    ];
-                }
+                $attributes = array_merge($attributes, $category->getAllAttributes());
+            }
+
+            $attributesRender = [];
+            foreach($attributes as $attribute) {
+                $attributesRender[] = [
+                    'id' => $attribute->getId(),
+                    'render' => Render::get('admin/product/box/attributes/attribute', [
+                        'attribute' => $attribute
+                    ])
+                ];
             }
 
             $result = [
                 'success' => true,
-                'attributes' => $attributes
+                'attributes' => $attributesRender
             ];
         }
         catch(Exception $e) {
