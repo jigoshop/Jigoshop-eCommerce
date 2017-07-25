@@ -106,17 +106,28 @@ AdminProductCategories = do ->
 
   AdminProductCategories::bindGeneralControls = ->
     self = this
+    if typeof jQuery.fn.bootstrapSwitch == "undefined"
+      jQuery.fn.bootstrapSwitch = self.bootstrapSwitch
+
+    if typeof jQuery.fn.jigoshop_media == "undefined"
+      jQuery.fn.jigoshop_media = self.jigoshop_media
+
+    if typeof jQuery.fn.select2 == 'undefined'
+      jQuery.fn.select2 = self.select2
+
+    if typeof jQuery.magnificPopup == 'undefined'
+      jQuery.magnificPopup = self.magnificPopup
+
     jQuery('.jigoshop-product-categories-edit-form').find('input[type="checkbox"]').each (index, element) ->
-      if typeof jQuery.fn.bootstrapSwitch == "undefined"
-        jQuery.fn.bootstrapSwitch = self.bootstrapSwitch
       jQuery(element).bootstrapSwitch
         size: 'small'
         onText: 'Yes'
         offText: 'No'
       return
+
+    jQuery('#parentId, #attributesInheritMode, #attributesNewSelector').select2
+
     jQuery('#parentId').on 'change', self.attributesGetAttributes
-    if typeof jQuery.fn.jigoshop_media == "undefined"
-      jQuery.fn.jigoshop_media = self.jigoshop_media
     jQuery('#jigoshop-product-categories-thumbnail-add-button').jigoshop_media
       field: jQuery('#thumbnailId')
       thumbnail: jQuery('#jigoshop-product-categories-thumbnail').find('img')
@@ -140,8 +151,7 @@ AdminProductCategories = do ->
     jQuery('#attributesInheritMode').on 'change', (e) ->
       self.attributesGetAttributes()
       return
-    if typeof jQuery.fn.select2 == "undefined"
-      jQuery.fn.select2 = self.select2
+
     jQuery('#parentId, #attributesInheritMode, #attributesNewSelector').select2()
     jQuery('#jigoshop-product-categories-attributes-add-button').click (e) ->
       e.preventDefault()
@@ -150,19 +160,10 @@ AdminProductCategories = do ->
         return
       self.attributesGetAttributes addedAttributes
 
-      if typeof jQuery.fn.select2 == 'undefined'
-        jQuery.fn.select2 = self.select2
-
       jQuery('#attributesNewSelector').select2 'val', ''
       return
 
     jQuery('#jigoshop-product-categories-attributes-add-new-button').click(self.attributesAddNewForm.bind(this))
-
-    if typeof jQuery.fn.select2 == 'undefined'
-      jQuery.fn.select2 = self.select2
-
-    if typeof jQuery.magnificPopup == 'undefined'
-      jQuery.magnificPopup = self.magnificPopup
     jQuery('#parentId, #attributesInheritMode, #attributesNewSelector').select2()
     return
 
@@ -187,6 +188,9 @@ AdminProductCategories = do ->
       existingAttribute = enabled: jQuery(element).find('input[type="checkbox"]').is(':checked')
       existingAttributes[jQuery(element).data('attribute-id')] = existingAttribute
       return
+
+    if not Array.isArray(addedAttributes)
+      addedAttributes = []
     jQuery.post ajaxurl, {
       action: 'jigoshop_product_categories_getAttributes'
       id: jQuery('#id').val()

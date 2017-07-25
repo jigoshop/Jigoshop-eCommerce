@@ -28,16 +28,18 @@ use Jigoshop\Helper\Render;
             <div class="col-xs-12 col-sm-10 clearfix">
                 <div class="tooltip-inline-badge"></div>
                 <div class="tooltip-inline-input">
-                    <?php wp_editor(isset($category)?$category->getName():'', 'description', array(
+                    <?php 
+                    wp_editor(isset($category)?$category->getName():'', 'description', array(
                             'editor_height'    => 300,
                             'media_buttons'    => true,
                             'textarea_name'    => 'description',
-                        )); ?>
-                    <?php if(defined('DOING_AJAX') && DOING_AJAX){
+                        ));
+                    if(defined('DOING_AJAX') && DOING_AJAX){
                         \_WP_Editors::enqueue_scripts();
-                        print_footer_scripts();
+                        //print_footer_scripts();
                         \_WP_Editors::editor_js();
-                    }; ?>
+                    }; 
+                    ?>
                 </div>
             </div>
         </div>
@@ -61,11 +63,11 @@ use Jigoshop\Helper\Render;
 		'options' => $parentOptions,
 		'value' => isset($category)?$category->getParentId():0
 	]);
-
+	
 	if(defined('DOING_AJAX') && DOING_AJAX){
         echo preg_replace('/<script\b[^>]*>(.*?)<\/script>/is', "", ob_get_clean());
     } else {
-	    echo ob_get_clean();;
+	    echo ob_get_clean();
     }
 	?>
 
@@ -117,10 +119,11 @@ use Jigoshop\Helper\Render;
 			],
 			'value' => isset($category)?$category->getAttributesInheritMode():'all'
 		]);
+		
         if(defined('DOING_AJAX') && DOING_AJAX){
             echo preg_replace('/<script\b[^>]*>(.*?)<\/script>/is', "", ob_get_clean());
         } else {
-            echo ob_get_clean();;
+            echo ob_get_clean();
         }
 		?>
 	</div>
@@ -155,7 +158,7 @@ use Jigoshop\Helper\Render;
             if(defined('DOING_AJAX') && DOING_AJAX){
                 echo preg_replace('/<script\b[^>]*>(.*?)<\/script>/is', "", ob_get_clean());
             } else {
-                echo ob_get_clean();;
+                echo ob_get_clean();
             }
 			?>
 		</div>
