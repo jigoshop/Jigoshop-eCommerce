@@ -90,9 +90,8 @@ AdminProductCategories = do ->
     jQuery('.jigoshop-product-categories-edit-form').find('input,select,textarea').each (index, element) ->
       if jQuery(element).closest('.description_field').length == 0
         jQuery(element).val ''
-      return
 
-      jQuery('#description').val('')
+    jQuery('#description').val('')
     return
 
   AdminProductCategories::showForm = ->
