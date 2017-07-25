@@ -1,7 +1,7 @@
 <?php
 use Jigoshop\Admin\Helper\Forms;
-use Jigoshop\Helper\Render;
 use Jigoshop\Helper\Scripts;
+use Jigoshop\Helper\Render;
 ?>
 <div id="jigoshop-product-categories-edit-form-content">
 	<?php
@@ -19,39 +19,31 @@ use Jigoshop\Helper\Scripts;
 		'value' => isset($category)?$category->getName():''
 	]);
 	?>
-
-	<div class="form-group description_field">
-    	<div class="row">
-        	<div class="col-sm-12">
-            	<label for="description" class="col-xs-12 col-sm-2 margin-top-bottom-9">
-                	<?= __('Description', 'jigoshop') ?>
-            	</label>
-            	<div class="col-xs-12 col-sm-10 clearfix">
-                	<div class="tooltip-inline-badge"></div>
-                	<div class="tooltip-inline-input">
-                    	<?php 
-                    	/*
-                    	wp_editor(isset($category)?$category->getName():'', 'description', array(
-                        	    'editor_height'    => 300,
-                            	'media_buttons'    => true,
-                            	'textarea_name'    => 'description',
-                        )); 
-                    	if(defined('DOING_AJAX') && DOING_AJAX){
-                        	Scripts::add('jigoshop.media', \JigoshopInit::getUrl() . '/assets/js/media.js', ['jquery']);
-                        	Scripts::add('jigoshop.vendors.bs-switch', \JigoshopInit::getUrl() . '/assets/js/vendors/bs_switch.js', ['jquery']);
-                        	\_WP_Editors::enqueue_scripts();
-                        	print_footer_scripts();
-                        	\_WP_Editors::editor_js();
-                    	};
-                    	*/
-                    	?>
-                	</div>
-            	</div>
-        	</div>
-    	</div>
-	</div>
-
-	<?php
+    <div class="form-group description_field clearfix">
+        <div class="row">
+            <div class="col-sm-12">
+            <label for="description" class="col-xs-12 col-sm-2 margin-top-bottom-9">
+                <?= __('Description', 'jigoshop') ?>
+            </label>
+            <div class="col-xs-12 col-sm-10 clearfix">
+                <div class="tooltip-inline-badge"></div>
+                <div class="tooltip-inline-input">
+                    <?php wp_editor(isset($category)?$category->getName():'', 'description', array(
+                            'editor_height'    => 300,
+                            'media_buttons'    => true,
+                            'textarea_name'    => 'description',
+                        )); ?>
+                    <?php if(defined('DOING_AJAX') && DOING_AJAX){
+                        \_WP_Editors::enqueue_scripts();
+                        print_footer_scripts();
+                        \_WP_Editors::editor_js();
+                    }; ?>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    <?php
 	Forms::text([
 		'id' => 'slug',
 		'name' => 'slug',
@@ -60,7 +52,8 @@ use Jigoshop\Helper\Scripts;
 		'value' => isset($category)?$category->getSlug():''
 	]);
 
-	//ob_start();
+	ob_start();
+
 	Forms::select([
 		'id' => 'parentId',
 		'name' => 'parentId',
@@ -69,14 +62,11 @@ use Jigoshop\Helper\Scripts;
 		'value' => isset($category)?$category->getParentId():0
 	]);
 
-	/*
-	if(defined('DOING_AJAX') && DOING_AJAX) {
-		echo preg_replace('/<script\b[^>]*>(.*?)<\/script>/is', "", ob_get_clean());
-	}	
-	else {
-		echo ob_get_clean();
-	}
-	*/
+	if(defined('DOING_AJAX') && DOING_AJAX){
+        echo preg_replace('/<script\b[^>]*>(.*?)<\/script>/is', "", ob_get_clean());
+    } else {
+	    echo ob_get_clean();;
+    }
 	?>
 
 	<div class="form-group thumbnail_field">
@@ -116,6 +106,7 @@ use Jigoshop\Helper\Scripts;
 
 	<div id="jigoshop-product-categories-attributes-inherit-mode">
 		<?php
+        ob_start();
 		Forms::select([
 			'id' => 'attributesInheritMode',
 			'name' => 'attributesInheritMode',
@@ -126,6 +117,11 @@ use Jigoshop\Helper\Scripts;
 			],
 			'value' => isset($category)?$category->getAttributesInheritMode():'all'
 		]);
+        if(defined('DOING_AJAX') && DOING_AJAX){
+            echo preg_replace('/<script\b[^>]*>(.*?)<\/script>/is', "", ob_get_clean());
+        } else {
+            echo ob_get_clean();;
+        }
 		?>
 	</div>
 
@@ -148,6 +144,7 @@ use Jigoshop\Helper\Scripts;
 	<div class="jigoshop-product-categories-attributes-new-controls">
 		<div class="col-sm-6">
 			<?php
+            ob_start();
 			Forms::select([
 				'id' => 'attributesNewSelector',
 				'name' => 'attributesNewSelector',
@@ -155,6 +152,11 @@ use Jigoshop\Helper\Scripts;
 				'options' => [],
 				'multiple' => true
 			]);
+            if(defined('DOING_AJAX') && DOING_AJAX){
+                echo preg_replace('/<script\b[^>]*>(.*?)<\/script>/is', "", ob_get_clean());
+            } else {
+                echo ob_get_clean();;
+            }
 			?>
 		</div>
 		<div class="col-sm-6">
