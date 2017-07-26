@@ -20,6 +20,7 @@ class Category {
 	private $attributes = [];
 	private $enabledAttributesIds = [];
 	private $removedAttributesIds = [];
+	private $orderOfAttributes = [];
 
 	private $categoryService = null;
 	private $options = null;
@@ -180,6 +181,14 @@ class Category {
 		$this->removedAttributesIds = $removedAttributesIds;
 	}
 
+	public function getOrderOfAttributes() {
+		return $this->orderOfAttributes;
+	}
+
+	public function setOrderOfAttributes($orderOfAttributes) {
+		$this->orderOfAttributes = $orderOfAttributes;
+	}
+
 	private function getOptions() {
 		if($this->options === null) {
 			$this->options = Integration::getOptions();
@@ -192,7 +201,8 @@ class Category {
 			'attributesInheritMode' => $this->attributesInheritMode,
 			'attributes' => $this->attributes,
 			'enabledAttributesIds' => $this->enabledAttributesIds,
-			'removedAttributesIds' => $this->removedAttributesIds
+			'removedAttributesIds' => $this->removedAttributesIds,
+			'orderOfAttributes' => $this->orderOfAttributes
 		];
 	}
 
@@ -218,6 +228,10 @@ class Category {
 
 		if(isset($meta['removedAttributesIds'])) {
 			$this->removedAttributesIds = $meta['removedAttributesIds'];
+		}
+
+		if(isset($meta['orderOfAttributes'])) {
+			$this->orderOfAttributes = $meta['orderOfAttributes'];
 		}
 	}
 }

@@ -5,6 +5,7 @@ use Jigoshop\Admin\PageInterface;
 use Jigoshop\Core\Messages;
 use Jigoshop\Entity\Product\Attribute;
 use Jigoshop\Entity\Product\Attribute\Option;
+use Jigoshop\Helper\Attribute as HelperAttribute;
 use Jigoshop\Helper\ProductCategory;
 use Jigoshop\Helper\Render;
 use Jigoshop\Helper\Scripts;
@@ -158,11 +159,14 @@ class Categories implements PageInterface {
 
 		$attributes = [];
 		$attributesEnabled = [];
+		$orderOfAttributes = [];
 		if(isset($_POST['attributes']) && is_array($_POST['attributes'])) {
 			foreach($_POST['attributes'] as $attributeId => $isAttributedInherited) {
 				if(isset($_POST['attributesEnabled'][$attributeId]) && $_POST['attributesEnabled'][$attributeId] === 'true') {
 					$attributesEnabled[] = $attributeId;
 				}
+
+				$orderOfAttributes[] = $attributeId;
 
 				if($isAttributedInherited) {
 					continue;
@@ -180,6 +184,7 @@ class Categories implements PageInterface {
 
 		$category->setAttributes($attributes);
 		$category->setEnabledAttributesIds($attributesEnabled);
+		$category->setOrderOfAttributes($orderOfAttributes);
 
 		try {
 			$this->categoryService->save($category);
@@ -332,6 +337,7 @@ class Categories implements PageInterface {
 		}		
 
 		$attributesRender = '';
+		$allAttributes = HelperAttribute::sortAttributesByOrder($allAttributes, $category->getOrderOfAttributes());
 		foreach($allAttributes as $attribute) {
 			if(!isset($existingAttributes[$attribute->getId()])) {
 				continue;

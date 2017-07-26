@@ -9,6 +9,7 @@ use Jigoshop\Entity\Product\Simple;
 use Jigoshop\Entity\Product\Variable;
 use Jigoshop\Entity\Product\Virtual;
 use Jigoshop\Exception;
+use Jigoshop\Helper\Attribute as HelperAttribute;
 use Jigoshop\Helper\Render;
 use Jigoshop\Helper\Scripts;
 use Jigoshop\Helper\Styles;
@@ -377,6 +378,8 @@ class Product
                         $categoryAttributes[$ca]->setVisible(false);
                     }
                 }
+
+                $categoryAttributes = HelperAttribute::sortAttributesByOrder($categoryAttributes, $category->getOrderOfAttributes());
 
                 $attributes = array_merge($attributes, $categoryAttributes);
             }
