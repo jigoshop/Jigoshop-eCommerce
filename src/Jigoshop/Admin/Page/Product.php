@@ -367,7 +367,18 @@ class Product
             $attributes = [];
             foreach($_POST['categories'] as $categoryId) {
                 $category = $this->categoryService->find($categoryId);
-                $attributes = array_merge($attributes, $category->getAllAttributes());
+                $categoryAttributes = $category->getAllAttributes();
+
+                for($ca = 0; $ca < count($categoryAttributes); $ca++) {
+                    if(in_array($categoryAttributes[$ca]->getId(), $category->getEnabledAttributesIds())) {
+                        $categoryAttributes[$ca]->setVisible(true);
+                    }
+                    else {
+                        $categoryAttributes[$ca]->setVisible(false);
+                    }
+                }
+
+                $attributes = array_merge($attributes, $categoryAttributes);
             }
 
             $attributesRender = [];

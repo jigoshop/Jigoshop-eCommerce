@@ -76,6 +76,7 @@ class AdminProduct
     }
     jQuery('#product_categorychecklist').find('input[type="checkbox"]')
       .on 'change', @getInherittedAttributes
+    @getInherittedAttributes()
 
   changeProductType: (event) =>
     $item = jQuery(event.target)
