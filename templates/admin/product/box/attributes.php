@@ -27,6 +27,12 @@ use Jigoshop\Helper\Render;
     ]); ?>
     <div class="clear"></div>
 </div>
+<div class="form-inline">
+    <button type="button" class="btn btn-default" id="add-inherited-attributes">
+        <span class="glyphicon glyphicon-arrow-down"></span>
+        <?php echo __('Add inherited attributes', 'jigoshop'); ?>
+    </button>
+</div>
 <ul id="product-attributes" class="list-group clearfix">
     <?php foreach ($attributes as $attribute): /** @var $attribute \Jigoshop\Entity\Product\Attribute */ ?>
         <?php Render::output('admin/product/box/attributes/attribute', ['attribute' => $attribute]); ?>

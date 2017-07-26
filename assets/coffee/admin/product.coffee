@@ -74,9 +74,7 @@ class AdminProduct
       action: 'jigoshop.admin.product.find'
       only_parent: true
     }
-    jQuery('#product_categorychecklist').find('input[type="checkbox"]')
-      .on 'change', @getInherittedAttributes
-    @getInherittedAttributes()
+    jQuery('#add-inherited-attributes').click(@getInherittedAttributes)
 
   changeProductType: (event) =>
     $item = jQuery(event.target)

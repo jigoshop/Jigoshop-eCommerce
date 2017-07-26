@@ -219,6 +219,8 @@ AdminProductCategories = do ->
         jQuery.each data.attributesPossibleToAdd, (key, value) ->
           jQuery('#attributesNewSelector').append new Option(value, key)
           return
+
+        jQuery('#jigoshop-product-categories-attributes tbody').sortable({axis: 'y'})
       return
     ), 'json'
     return

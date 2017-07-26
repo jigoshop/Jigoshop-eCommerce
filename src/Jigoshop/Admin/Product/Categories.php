@@ -49,7 +49,10 @@ class Categories implements PageInterface {
             Scripts::add('jigoshop.vendors.bs-switch', \JigoshopInit::getUrl() . '/assets/js/vendors/bs_switch.js', ['jquery']);
             Scripts::add('jigoshop.media', \JigoshopInit::getUrl() . '/assets/js/media.js', ['jquery']);
 			Scripts::add('jigoshop.vendors.magnific_popup', \JigoshopInit::getUrl() . '/assets/js/vendors/magnific_popup.js', ['jquery']);            
-            Scripts::add('jigoshop.admin.product_categories', \JigoshopInit::getUrl() . '/assets/js/admin/product_categories.js', ['jquery']);
+            Scripts::add('jigoshop.admin.product_categories', \JigoshopInit::getUrl() . '/assets/js/admin/product_categories.js', [
+            	'jquery',
+            	'jquery-ui-sortable'
+            ]);
 
             Scripts::localize('jigoshop.admin.product_categories', 'jigoshop_admin_product_categories_data', [
             	'thumbnailPlaceholder' => ProductCategory::getImage(0)['image'],
@@ -179,7 +182,7 @@ class Categories implements PageInterface {
 		$category->setEnabledAttributesIds($attributesEnabled);
 
 		try {
-			$this->categoryService->save($category, true);
+			$this->categoryService->save($category);
 
 			if($updatingCategory) {
 				$this->messages->addNotice(__('Category updated.', 'jigoshop'));
