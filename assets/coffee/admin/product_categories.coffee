@@ -71,6 +71,7 @@ AdminProductCategories = do ->
         fields[jQuery(element).attr('name')] = jQuery(element).val()
         return
       fields['action'] = 'jigoshop_product_categories_updateCategory'
+      fields['description'] = tinymce.activeEditor.getContent()
       jQuery.post ajaxurl, fields, ((data) ->
         if data.status == 1
           location.href = document.URL

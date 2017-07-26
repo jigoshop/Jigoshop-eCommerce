@@ -29,7 +29,7 @@ use Jigoshop\Helper\Render;
                 <div class="tooltip-inline-badge"></div>
                 <div class="tooltip-inline-input">
                     <?php 
-                    wp_editor(isset($category)?$category->getName():'', 'description', array(
+                    wp_editor(isset($category)?$category->getDescription():'', 'description', array(
                             'editor_height'    => 300,
                             'media_buttons'    => true,
                             'textarea_name'    => 'description',
