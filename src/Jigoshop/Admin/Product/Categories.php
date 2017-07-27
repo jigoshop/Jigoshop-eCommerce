@@ -261,6 +261,7 @@ class Categories implements PageInterface {
 		}
 
 		$inheritedAttributes = [];
+		$inheritedAttributesOrder = [];
 		if($_POST['inheritEnabled'] === 'true' && $_POST['parentId'] > 0) {
 			$parentCategory = ProductCategory::findInTree($_POST['parentId'], $categories);
 			if($parentCategory !== false) {
@@ -268,8 +269,10 @@ class Categories implements PageInterface {
 					$inheritedAttributes = $parentCategory->getAttributes();
 				}
 				else {
-					$inheritedAttributes = $this->getAttributesFromAll($parentCategory, $categories);
+					$inheritedAttributes = $parentCategory->getAllAttributes(true);
 				}
+
+				$inheritedAttributesOrder = HelperAttribute::getOrderOfAttributes($inheritedAttributes);
 			}
 		}
 
@@ -337,7 +340,12 @@ class Categories implements PageInterface {
 		}		
 
 		$attributesRender = '';
-		$allAttributes = HelperAttribute::sortAttributesByOrder($allAttributes, $category->getOrderOfAttributes());
+		if(is_object($category)) {
+			$allAttributes = HelperAttribute::sortAttributesByOrder($allAttributes, array_unique(array_merge($category->getOrderOfAttributes(), $inheritedAttributesOrder)));
+		}
+		else {
+			$allAttributes = HelperAttribute::sortAttributesByOrder($allAttributes, $inheritedAttributesOrder);
+		}
 		foreach($allAttributes as $attribute) {
 			if(!isset($existingAttributes[$attribute->getId()])) {
 				continue;

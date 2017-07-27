@@ -2,6 +2,7 @@
 namespace Jigoshop\Entity\Product;
 
 use Jigoshop\Entity\Product\Attribute\Multiselect;
+use Jigoshop\Helper\Attribute;
 use Jigoshop\Helper\ProductCategory;
 use Jigoshop\Integration;
 
@@ -130,7 +131,7 @@ class Category {
 	}
 
 	public function getAttributes() {
-		return $this->attributes;
+		return Attribute::sortAttributesByOrder($this->attributes, $this->getOrderOfAttributes());
 	}
 
 	public function setAttributes(array $attributes) {
@@ -143,13 +144,21 @@ class Category {
 		}
 	}
 
-	public function getAllAttributes() {
+	public function getAllAttributes($filterOwnAttributes = false) {
 		if($this->categoryService === null) {
 			$this->categoryService = Integration::getProductCategoryService();
 		}
 
 		$allCategories = $this->categoryService->findAll();
-		$categories = ProductCategory::generateCategoryTreeFromIdToTopParent($this->getId(), $allCategories);
+
+		if(!$filterOwnAttributes) {
+			$startId = $this->getId();
+		}
+		else {
+			$startId = $this->getParentId();
+		}
+
+		$categories = ProductCategory::generateCategoryTreeFromIdToTopParent($startId, $allCategories);
 
 		$attributes = [];
 		foreach($categories as $category) {
@@ -162,7 +171,10 @@ class Category {
 			}
 		}
 
-		return array_values($attributes);
+		$attributes = array_values($attributes);
+		$attributes = Attribute::sortAttributesByOrder($attributes, $this->getOrderOfAttributes());
+
+		return $attributes;
 	}
 
 	public function getEnabledAttributesIds() {

@@ -7,10 +7,6 @@ class Attribute {
 			$index1 = array_search($a1->getId(), $order);
 			$index2 = array_search($a2->getId(), $order);
 
-			if($index1 === false || $index2 === false) {
-				return 0;
-			}
-
 			if($index1 < $index2) {
 				return -1;
 			}
@@ -23,5 +19,14 @@ class Attribute {
 		});
 
 		return $attributes;
+	}
+
+	public static function getOrderOfAttributes($attributes) {
+		$order = [];
+		foreach($attributes as $attribute) {
+			$order[] = $attribute->getId();
+		}
+
+		return $order;
 	}
 }
