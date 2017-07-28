@@ -75,16 +75,18 @@ class CategoryService implements CategoryServiceInterface {
 			'parent' => $category->getParentId()
 		];
 
-		if(!term_exists($category->getId(), 'product_category')) {
+        remove_filter( 'pre_term_description', 'wp_filter_kses' );
+        if(!term_exists($category->getId(), 'product_category')) {
 			$result = wp_insert_term($category->getName(), 'product_category', $args); 
 		}
 		else {
 			$args['term_id'] = $category->getId();
 
 			$result = wp_update_term($category->getId(), 'product_category', $args);
-		}
+        }
+        add_filter( 'pre_term_description', 'wp_filter_kses' );
 
-		if($result instanceof \WP_Error) {
+        if($result instanceof \WP_Error) {
 			$errors = [];
 			foreach($result->errors as $errorField => $errorValues) {
 				$errors = array_merge($errors, $errorValues);
