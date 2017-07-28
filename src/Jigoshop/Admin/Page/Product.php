@@ -391,6 +391,7 @@ class Product
                 $attributes = array_merge($attributes, $categoryAttributes);
             }
 
+            $product = $this->productService->find($_POST['productId']);
             $attributesRender = [];
             foreach($attributes as $attribute) {
                 $attributesRender[] = [
@@ -399,7 +400,14 @@ class Product
                         'attribute' => $attribute
                     ])
                 ];
+
+                if(!$product->hasAttribute($attribute->getId())) {
+                    $attribute->setValue('');
+                    $product->addAttribute($attribute);
+                }
             }
+
+            $this->productService->save($product);
 
             $result = [
                 'success' => true,

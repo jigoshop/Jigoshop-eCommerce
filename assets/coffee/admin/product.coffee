@@ -280,6 +280,7 @@ class AdminProduct
     jQuery.post ajaxurl, {
       action: 'jigoshop.admin.product.get_inherited_attributes'
       categories: categories
+      productId: jQuery('#product-attributes').closest('.jigoshop').data('id')
     }, @processInheritedAttributes, 'json'
 
   processInheritedAttributes: (data) =>
