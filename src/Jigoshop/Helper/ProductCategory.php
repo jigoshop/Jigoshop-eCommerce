@@ -51,6 +51,9 @@ class ProductCategory
 
 	public static function generateCategoryTreeFromIdToTopParent($id, array $categories) {
 		$category = self::findInTree($id, $categories);
+		if(!is_object($category)) {
+			return $categories;
+		}
 
 		$output = [];
 		$output[] = $category;

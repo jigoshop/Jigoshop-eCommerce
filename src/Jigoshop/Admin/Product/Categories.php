@@ -158,12 +158,17 @@ class Categories implements PageInterface {
 		$category->setAttributesInheritMode($_POST['attributesInheritMode']);
 
 		$attributes = [];
-		$attributesEnabled = [];
+		$attributesStates = [];
 		$orderOfAttributes = [];
 		if(isset($_POST['attributes']) && is_array($_POST['attributes'])) {
 			foreach($_POST['attributes'] as $attributeId => $isAttributedInherited) {
-				if(isset($_POST['attributesEnabled'][$attributeId]) && $_POST['attributesEnabled'][$attributeId] === 'true') {
-					$attributesEnabled[] = $attributeId;
+				if(isset($_POST['attributesEnabled'][$attributeId])) {
+					if($_POST['attributesEnabled'][$attributeId] === 'true') {
+						$attributesStates[$attributeId] = true;
+					}
+					else {
+						$attributesStates[$attributeId] = false;
+					}
 				}
 
 				$orderOfAttributes[] = $attributeId;
@@ -183,7 +188,7 @@ class Categories implements PageInterface {
 		}
 
 		$category->setAttributes($attributes);
-		$category->setEnabledAttributesIds($attributesEnabled);
+		$category->setAttributesStates($attributesStates);
 		$category->setOrderOfAttributes($orderOfAttributes);
 
 		try {
@@ -269,24 +274,36 @@ class Categories implements PageInterface {
 					$inheritedAttributes = $parentCategory->getAttributes();
 				}
 				else {
-					$inheritedAttributes = $parentCategory->getAllAttributes(true);
+					$inheritedAttributes = $parentCategory->getAllAttributes();
 				}
 
 				$inheritedAttributesOrder = HelperAttribute::getOrderOfAttributes($inheritedAttributes);
 			}
 		}
 
-		$existingAttributes = [];
-		if(isset($_POST['existingAttributes']) && is_array($_POST['existingAttributes'])) {
-			$existingAttributes = $_POST['existingAttributes'];
-		}
-
-		$enabledAttributes = [];
-		if(isset($_POST['enabledAttributes']) && is_array($_POST['enabledAttributes'])) {
-			$enabledAttributes = $_POST['enabledAttributes'];
+		$attributesStates = [];
+		if(isset($_POST['attributesStates']) && is_array($_POST['attributesStates'])) {
+			foreach($_POST['attributesStates'] as $attributeId => $attributeState) {
+				if($attributeState['state'] === 'true') {
+					$attributesStates[$attributeId] = true;
+				}
+				else {
+					$attributesStates[$attributeId] = false;
+				}
+			}
 		}
 		if(is_object($category)) {
-			$enabledAttributes = array_merge($enabledAttributes, $category->getEnabledAttributesIds());
+			$attributesStates = $attributesStates + $category->getAttributesStates();
+		}
+
+		$existingAttributes = [];
+		if(isset($_POST['existingAttributes']) && is_array($_POST['existingAttributes'])) {
+			foreach($existingAttributes as $existingAttributeId) {
+				$existingAttributes[$existingAttributeId] = [
+					'enabled' => $this->getAttributeState($existingAttributeId, $attributesStates),
+					'inherited' => false
+				];
+			}
 		}
 
 		if(isset($_POST['addedAttributes']) && is_array($_POST['addedAttributes'])) {
@@ -296,7 +313,7 @@ class Categories implements PageInterface {
 				}
 
 				$existingAttributes[$addedAttributeId] = [
-					'enabled' => in_array($addedAttributeId, $enabledAttributes),
+					'enabled' => true,
 					'inherited' => false
 				];
 			}
@@ -308,7 +325,7 @@ class Categories implements PageInterface {
 			} 
 		
 			$existingAttributes[$inheritedAttribute->getId()] = [
-				'enabled' => in_array($inheritedAttribute->getId(), $enabledAttributes),
+				'enabled' => $this->getAttributeState($inheritedAttribute->getId(), $attributesStates),
 				'inherited' => true,
 				'inheritedFrom' => $inheritedAttribute->getCategoryId()
 			];
@@ -321,7 +338,7 @@ class Categories implements PageInterface {
 				}
 
 				$existingAttributes[$attribute->getId()] = [
-					'enabled' => in_array($attribute->getId(), $enabledAttributes),
+					'enabled' => $this->getAttributeState($attribute->getId(), $attributesStates),
 					'inherited' => false
 				];
 			}
@@ -382,17 +399,6 @@ class Categories implements PageInterface {
 		exit;
 	}
 
-	private function getAttributesFromAll($category, $categories) {
-		$attributes = [];
-		$attributes = $category->getAttributes();
-
-		if($category->getParentId() > 0) {
-			$attributes = array_merge($attributes, $this->getAttributesFromAll(ProductCategory::findInTree($category->getParentId(), $categories), $categories));
-		}
-
-		return $attributes;
-	}
-
 	public function ajaxSaveAttribute() {
 		$attribute = null;		
 		if(isset($_POST['attributeId']) && $_POST['attributeId']) {
@@ -430,5 +436,13 @@ class Categories implements PageInterface {
 		]);
 
 		exit;
+	}
+
+	private function getAttributeState($attributeId, $states) {
+		if(isset($states[$attributeId])) {
+			return $states[$attributeId];
+		}
+
+		return true;
 	}
 }

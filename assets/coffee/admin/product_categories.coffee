@@ -182,16 +182,22 @@ AdminProductCategories = do ->
 
   AdminProductCategories::attributesGetAttributes = (addedAttributes, removedAttributeId) ->
     self = this
-    existingAttributes = {}
+    existingAttributes = []
     jQuery('#jigoshop-product-categories-attributes').find('tbody').find('tr').each (index, element) ->
       if jQuery(element).data('attribute-inherited')
         return
-      existingAttribute = enabled: jQuery(element).find('input[type="checkbox"]').is(':checked')
-      existingAttributes[jQuery(element).data('attribute-id')] = existingAttribute
+      existingAttributes.push(jQuery(element).data('attribute-id'))
       return
 
     if not Array.isArray(addedAttributes)
       addedAttributes = []
+
+    attributesStates = {}
+    jQuery('#jigoshop-product-categories-attributes').find('input[type="checkbox"]').each (index, element) ->
+      attributesStates[jQuery(element).parents('tr').data('attribute-id')] = {
+        state: jQuery(element).is(':checked')
+      }
+
     jQuery.post ajaxurl, {
       action: 'jigoshop_product_categories_getAttributes'
       id: jQuery('#id').val()
@@ -201,6 +207,7 @@ AdminProductCategories = do ->
       existingAttributes: existingAttributes
       addedAttributes: addedAttributes
       removedAttributeId: removedAttributeId
+      attributesStates: attributesStates
     }, ((data) ->
       if data.status == 1
         jQuery('#jigoshop-product-categories-attributes').find('tbody').html data.attributes
@@ -241,6 +248,12 @@ AdminProductCategories = do ->
       type: 'inline'
       callbacks:
         open: ->
+          jQuery('#jigoshop-product-categories-attributes-add-new-button').removeAttr('disabled')
+          jQuery('#jigoshop-product-categories-attributes-add-new-close-button').click (e) ->
+            e.preventDefault()
+
+            jQuery.magnificPopup.close()
+
           jQuery('#jigoshop-product-categories-attributes-add-new-type').on('change', self.attributesAddNewTypeChanged).trigger 'change'
           jQuery('#jigoshop-product-categories-attributes-add-new-configure-button').click self.attributesAddNewConfigure
           jQuery('#jigoshop-product-categories-attributes-add-new-configure-container').find('.attribute-option-add-button')

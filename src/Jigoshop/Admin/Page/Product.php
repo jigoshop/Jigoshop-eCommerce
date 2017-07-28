@@ -369,17 +369,24 @@ class Product
             foreach($_POST['categories'] as $categoryId) {
                 $category = $this->categoryService->find($categoryId);
                 $categoryAttributes = $category->getAllAttributes();
+                $attributesStates = $category->getAttributesStates();
 
+                $filteredAttributes = [];
                 for($ca = 0; $ca < count($categoryAttributes); $ca++) {
-                    if(in_array($categoryAttributes[$ca]->getId(), $category->getEnabledAttributesIds())) {
-                        $categoryAttributes[$ca]->setVisible(true);
+                    if(in_array($categoryAttributes[$ca]->getId(), $category->getRemovedAttributesIds())) {
+                        continue;
                     }
-                    else {
-                        $categoryAttributes[$ca]->setVisible(false);
+
+                    $visible = true;
+                    if(isset($attributesStates[$categoryAttributes[$ca]->getId()]) && $attributesStates[$categoryAttributes[$ca]->getId()] === false) {
+                        $visible = false;
                     }
+
+                    $categoryAttributes[$ca]->setVisible($visible);
+                    $filteredAttributes[] = $categoryAttributes[$ca];
                 }
 
-                $categoryAttributes = HelperAttribute::sortAttributesByOrder($categoryAttributes, $category->getOrderOfAttributes());
+                $categoryAttributes = HelperAttribute::sortAttributesByOrder($filteredAttributes, $category->getOrderOfAttributes());
 
                 $attributes = array_merge($attributes, $categoryAttributes);
             }

@@ -19,7 +19,7 @@ class Category {
 	private $attributesInheritEnabled = null;
 	private $attributesInheritMode = null;
 	private $attributes = [];
-	private $enabledAttributesIds = [];
+	private $attributesStates = [];
 	private $removedAttributesIds = [];
 	private $orderOfAttributes = [];
 
@@ -151,17 +151,13 @@ class Category {
 
 		$allCategories = $this->categoryService->findAll();
 
-		if(!$filterOwnAttributes) {
-			$startId = $this->getId();
-		}
-		else {
-			$startId = $this->getParentId();
-		}
-
-		$categories = ProductCategory::generateCategoryTreeFromIdToTopParent($startId, $allCategories);
-
+		$categories = ProductCategory::generateCategoryTreeFromIdToTopParent($this->getId(), $allCategories);
 		$attributes = [];
 		foreach($categories as $category) {
+			if($filterOwnAttributes && $category->getId() == $this->getId()) {
+				continue;
+			}
+
 			foreach($category->getAttributes() as $attribute) {
 				if(isset($attributes[$attribute->getId()])) {
 					continue;
@@ -177,12 +173,12 @@ class Category {
 		return $attributes;
 	}
 
-	public function getEnabledAttributesIds() {
-		return $this->enabledAttributesIds;
+	public function getAttributesStates() {
+		return $this->attributesStates;
 	}
 
-	public function setEnabledAttributesIds($enabledAttributesIds) {
-		$this->enabledAttributesIds = $enabledAttributesIds;
+	public function setAttributesStates($attributesStates) {
+		$this->attributesStates = $attributesStates;
 	}
 
 	public function getRemovedAttributesIds() {
@@ -212,7 +208,7 @@ class Category {
 			'attributesInheritEnabled' => $this->attributesInheritEnabled,
 			'attributesInheritMode' => $this->attributesInheritMode,
 			'attributes' => $this->attributes,
-			'enabledAttributesIds' => $this->enabledAttributesIds,
+			'attributesStates' => $this->attributesStates,
 			'removedAttributesIds' => $this->removedAttributesIds,
 			'orderOfAttributes' => $this->orderOfAttributes
 		];
@@ -234,8 +230,8 @@ class Category {
 			$this->attributes = $meta['attributes'];
 		}
 
-		if(isset($meta['enabledAttributesIds'])) {
-			$this->enabledAttributesIds = $meta['enabledAttributesIds'];
+		if(isset($meta['attributesStates'])) {
+			$this->attributesStates = $meta['attributesStates'];
 		}
 
 		if(isset($meta['removedAttributesIds'])) {

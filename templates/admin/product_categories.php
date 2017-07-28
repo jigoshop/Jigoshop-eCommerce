@@ -137,7 +137,14 @@ use Jigoshop\Helper\Render;
 				</table>
 			</div>
 
-			<button type="submit" class="btn btn-primary pull-right" id="jigoshop-product-categories-attributes-add-new-button"><?php echo __('Add attribute', 'jigoshop'); ?></button>
+			<div class="col-sm-12">
+				<button type="submit" class="btn btn-primary pull-right" id="jigoshop-product-categories-attributes-add-new-button"><?php echo __('Add attribute', 'jigoshop'); ?></button>
+
+				<button type="submit" class="btn btn-default pull-right" id="jigoshop-product-categories-attributes-add-new-close-button">
+					<span class="glyphicon glyphicon-remove-circle"></span>
+					<?php echo __('Close', 'jigoshop'); ?>
+				</button>
+			</div>
 
 			<div class="clearfix"></div>
 		</form>
