@@ -402,11 +402,21 @@ class Product
                 ];
 
                 if(!$product->hasAttribute($attribute->getId())) {
-                    $attribute->setValue('');
+                    if($attribute->getType() == 1) {
+                        if(!empty($attribute->getOptions())) {
+                            $attribute->setValue(array_keys($attribute->getOptions())[0]);
+                        }
+                        else {
+                            $attribute->setValue(0);
+                        }                        
+                    }
+                    else {
+                        $attribute->setValue('');
+                    }
                     $product->addAttribute($attribute);
                 }
             }
-
+            \Jigoshop\Helper\Debug::da($product->getAttributes());
             $this->productService->save($product);
 
             $result = [

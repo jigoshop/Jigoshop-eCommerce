@@ -8,7 +8,7 @@
 	<dl class="dl-horizontal">
 		<?php foreach($product->getVisibleAttributes() as $attribute): /** @var $attribute \Jigoshop\Entity\Product\Attribute */?>
 			<dt><?= $attribute->getLabel(); ?></dt>
-			<dd><?= $attribute->printValue(); ?></dd>
+			<dd><?= ($attribute->printValue()?$attribute->printValue():'&nbsp;'); ?></dd>
 		<?php endforeach; ?>
 	</dl>
 </div>
