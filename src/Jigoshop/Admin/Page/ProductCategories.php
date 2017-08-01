@@ -11,13 +11,15 @@ use Jigoshop\Helper\Scripts;
 use Jigoshop\Helper\Styles;
 use WPAL\Wordpress;
 
-class ProductCategories
-{
-	/** @var \WPAL\Wordpress */
-	private $wp;
-
+class ProductCategories {
 	public function __construct(Wordpress $wp) {
-		$wp->wpSafeRedirect('edit.php?post_type=product&page=jigoshop_product_categories');
+		if(isset($_GET['tag_ID']) && $_GET['tag_ID']) {
+			$wp->wpSafeRedirect(sprintf('edit.php?post_type=product&page=jigoshop_product_categories&edit=%s', $_GET['tag_ID']));
+		}
+		else {
+			$wp->wpSafeRedirect('edit.php?post_type=product&page=jigoshop_product_categories');
+		}
+		
 		exit;
 	}
 }

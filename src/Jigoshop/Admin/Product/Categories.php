@@ -55,12 +55,18 @@ class Categories implements PageInterface {
             	'jquery-ui-sortable'
             ]);
 
-            Scripts::localize('jigoshop.admin.product_categories', 'jigoshop_admin_product_categories_data', [
+            $localization = [
             	'thumbnailPlaceholder' => ProductCategory::getImage(0)['image'],
             	'lang' => [
             		'categoryRemovalConfirmation' => __('Do you really want to remove this category?', 'jigoshop')
             	]
-            ]);
+            ];
+
+            if(isset($_GET['edit']) && $_GET['edit'] > 0) {
+            	$localization['forceEdit'] = $_GET['edit'];
+            }
+
+            Scripts::localize('jigoshop.admin.product_categories', 'jigoshop_admin_product_categories_data', $localization);
 		});	
 
 		$wp->addAction('wp_ajax_jigoshop_product_categories_updateCategory', [$this, 'ajaxUpdateCategory']);
