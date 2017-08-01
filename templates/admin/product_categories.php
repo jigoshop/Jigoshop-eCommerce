@@ -37,7 +37,7 @@ use Jigoshop\Helper\Render;
 		</form>
 	</div>
 
-	<form action="" method="" class="jigoshop-product-categories-edit-form">
+	<form action="" method="" class="jigoshop-product-categories-edit-form jigoshop">
 		<div class="tab-content">
 
 			<div id="messages"></div>	
@@ -51,8 +51,13 @@ use Jigoshop\Helper\Render;
 			]);
 			?>
 
-			<div class="col-sm-12">
+			<div class="margin-top-bottom-9 col-sm-12">
 				<button type="submit" class="btn btn-primary pull-right"><?php echo __('Save changes', 'jigoshop'); ?></button>
+
+				<a href="" id="jigoshop-product-categories-edit-form-link" target="_blank" class="btn btn-default pull-right">
+					<span class="glyphicon glyphicon-eye-open"></span>
+					<?php echo __('View', 'jigoshop'); ?>
+				</a>
 			</div>
 
 			<div class="clear"></div>

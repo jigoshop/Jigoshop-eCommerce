@@ -235,7 +235,8 @@ class Categories implements PageInterface {
 				'parentOptions' => $this->getParentOptions($categories),
 				'category' => $category,
 				'categoryImage' => ProductCategory::getImage($category->getId())
-			])
+			]),
+			'categoryLink' => get_term_link($category->getId(), 'product_category')
 		]);
 
 		exit;

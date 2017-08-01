@@ -90,6 +90,7 @@ AdminProductCategories = do ->
       categoryId: categoryId
     }, ((data) ->
       if data.status == 1
+        jQuery('#jigoshop-product-categories-edit-form-link').attr('href', data.categoryLink).show()
         jQuery('#jigoshop-product-categories-edit-form-content').replaceWith data.form
         self.showForm()
       return
@@ -101,6 +102,7 @@ AdminProductCategories = do ->
         jQuery(element).val ''
 
     jQuery('#description').val('')
+    jQuery('#jigoshop-product-categories-edit-form-link').hide()
     return
 
   AdminProductCategories::showForm = ->
