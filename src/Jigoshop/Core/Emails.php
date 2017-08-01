@@ -275,8 +275,15 @@ class Emails
             $itemResult .= $item->getQuantity() . ' x ' . html_entity_decode($this->wp->applyFilters('jigoshop\emails\product_title',
                     $item->getName(), $product, $item), ENT_QUOTES, 'UTF-8');
 
-            if ($product->getSku()) {
-                $itemResult .= ' (#' . $product->getSku() . ')';
+            $sku = '';
+            if ( $product instanceof Product\Variable) {
+                $sku = $product->getVariation($item->getMeta('variation_id')->getValue())->getProduct()->getSku();
+            } else {
+                $sku = $product->getSku();
+            }
+
+            if($sku) {
+                $itemResult .= ' (#' . $sku . ')';
             }
 
             $itemResult .= ' - ' . ProductHelper::formatPrice($item->getCost());
