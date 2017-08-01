@@ -256,18 +256,22 @@ AdminProductCategories = do ->
       type: 'inline'
       callbacks:
         open: ->
+          jQuery('#jigoshop-product-categories-attributes-add-new-form').find('input,textarea,select').each (index, element) ->
+            jQuery(element).val('')
+
           jQuery('#jigoshop-product-categories-attributes-add-new-button').removeAttr('disabled')
-          jQuery('#jigoshop-product-categories-attributes-add-new-close-button').click (e) ->
+          jQuery('#jigoshop-product-categories-attributes-add-new-close-button').off('click').click (e) ->
             e.preventDefault()
 
             jQuery.magnificPopup.close()
 
-          jQuery('#jigoshop-product-categories-attributes-add-new-type').on('change', self.attributesAddNewTypeChanged).trigger 'change'
-          jQuery('#jigoshop-product-categories-attributes-add-new-configure-button').click self.attributesAddNewConfigure
+          jQuery('#jigoshop-product-categories-attributes-add-new-type')
+            .off('change').on('change', self.attributesAddNewTypeChanged).trigger 'change'
+          jQuery('#jigoshop-product-categories-attributes-add-new-configure-button').off('click').click self.attributesAddNewConfigure
           jQuery('#jigoshop-product-categories-attributes-add-new-configure-container').find('.attribute-option-add-button')
-            .click self.attributesAddOption.bind(self)
+            .off('click').click self.attributesAddOption.bind(self)
           jQuery('#jigoshop-product-categories-attributes-add-new-configure-container').find('.attribute-option-remove-button').hide()
-          jQuery('#jigoshop-product-categories-attributes-add-new-form').submit self.attributesAddNewSave.bind(self)
+          jQuery('#jigoshop-product-categories-attributes-add-new-form').off('submit').submit self.attributesAddNewSave.bind(self)
           jQuery('#jigoshop-product-categories-attributes-add-new-container').css 'display', 'block'
           return
     return
@@ -275,7 +279,7 @@ AdminProductCategories = do ->
   AdminProductCategories::attributesAddNewTypeChanged = ->
     attributeType = undefined
     display = undefined
-    attributeType = jQuery('#jigoshop-product-categories-attributes-add-new-type').val()
+    attributeType = parseInt(jQuery('#jigoshop-product-categories-attributes-add-new-type').val())
     if attributeType == 2
       display = 'none'
     else

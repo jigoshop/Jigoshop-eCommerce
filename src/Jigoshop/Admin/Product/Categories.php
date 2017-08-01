@@ -304,7 +304,7 @@ class Categories implements PageInterface {
 
 		$existingAttributes = [];
 		if(isset($_POST['existingAttributes']) && is_array($_POST['existingAttributes'])) {
-			foreach($existingAttributes as $existingAttributeId) {
+			foreach($_POST['existingAttributes'] as $existingAttributeId) {
 				$existingAttributes[$existingAttributeId] = [
 					'enabled' => $this->getAttributeState($existingAttributeId, $attributesStates),
 					'inherited' => false
@@ -369,6 +369,7 @@ class Categories implements PageInterface {
 		else {
 			$allAttributes = HelperAttribute::sortAttributesByOrder($allAttributes, $inheritedAttributesOrder);
 		}
+
 		foreach($allAttributes as $attribute) {
 			if(!isset($existingAttributes[$attribute->getId()])) {
 				continue;
