@@ -429,8 +429,8 @@ class Product
                     $product->addAttribute($attribute);
                 }
             }
-            \Jigoshop\Helper\Debug::da($product->getAttributes());
-            $this->productService->save($product);
+            
+	    $this->productService->save($product);
 
             $result = [
                 'success' => true,
