@@ -365,9 +365,22 @@ class Product
                 throw new Exception(__('No categories specified.', 'jigoshop'));
             }
 
-            $attributes = [];
+            $categories = [];
+            $parents = [];
             foreach($_POST['categories'] as $categoryId) {
-                $category = $this->categoryService->find($categoryId);
+                $categories[$categoryId] = $this->categoryService->find($categoryId);
+
+                if($categories[$categoryId]->getParentId() > 0) {
+                    $parents[] = $categories[$categoryId]->getParentId();
+                }
+            }
+
+            $attributes = [];
+            foreach($categories as $categoryId => $category) {
+                if(in_array($categoryId, $parents)) {
+                    continue;
+                }
+
                 $categoryAttributes = $category->getAllAttributes();
                 $attributesStates = $category->getAttributesStates();
 
