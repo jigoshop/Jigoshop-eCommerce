@@ -21,6 +21,11 @@
 	<td><?php echo $category->getSlug(); ?></td>
 	<td><?php echo $category->getCount(); ?></td>
 	<td>
+		<a href="<?php echo get_term_link($category->getId(), 'product_category');?>" class="btn btn-default" target="_blank">
+			<span class="glyphicon glyphicon-eye-open"></span>
+			<?php echo __('View', 'jigoshop'); ?>
+		</a>
+	
 		<button type="submit" class="jigoshop-product-categories-edit-button btn btn-default text-left">
 			<span class="glyphicon glyphicon-plus"></span>
 			<?php echo __('Edit', 'jigoshop'); ?>

@@ -55,12 +55,18 @@ class Categories implements PageInterface {
             	'jquery-ui-sortable'
             ]);
 
-            Scripts::localize('jigoshop.admin.product_categories', 'jigoshop_admin_product_categories_data', [
+            $localization = [
             	'thumbnailPlaceholder' => ProductCategory::getImage(0)['image'],
             	'lang' => [
             		'categoryRemovalConfirmation' => __('Do you really want to remove this category?', 'jigoshop')
             	]
-            ]);
+            ];
+
+            if(isset($_GET['edit']) && $_GET['edit'] > 0) {
+            	$localization['forceEdit'] = $_GET['edit'];
+            }
+
+            Scripts::localize('jigoshop.admin.product_categories', 'jigoshop_admin_product_categories_data', $localization);
 		});	
 
 		$wp->addAction('wp_ajax_jigoshop_product_categories_updateCategory', [$this, 'ajaxUpdateCategory']);
@@ -229,7 +235,8 @@ class Categories implements PageInterface {
 				'parentOptions' => $this->getParentOptions($categories),
 				'category' => $category,
 				'categoryImage' => ProductCategory::getImage($category->getId())
-			])
+			]),
+			'categoryLink' => get_term_link($category->getId(), 'product_category')
 		]);
 
 		exit;
@@ -298,7 +305,7 @@ class Categories implements PageInterface {
 
 		$existingAttributes = [];
 		if(isset($_POST['existingAttributes']) && is_array($_POST['existingAttributes'])) {
-			foreach($existingAttributes as $existingAttributeId) {
+			foreach($_POST['existingAttributes'] as $existingAttributeId) {
 				$existingAttributes[$existingAttributeId] = [
 					'enabled' => $this->getAttributeState($existingAttributeId, $attributesStates),
 					'inherited' => false
@@ -363,6 +370,7 @@ class Categories implements PageInterface {
 		else {
 			$allAttributes = HelperAttribute::sortAttributesByOrder($allAttributes, $inheritedAttributesOrder);
 		}
+
 		foreach($allAttributes as $attribute) {
 			if(!isset($existingAttributes[$attribute->getId()])) {
 				continue;
