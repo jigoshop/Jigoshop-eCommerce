@@ -376,7 +376,7 @@ class Product implements EntityFactoryInterface
         $query = $wpdb->prepare("SELECT attachment_id as id, type as type FROM {$wpdb->prefix}jigoshop_product_attachment WHERE product_id = %d",
             [$productId]);
 
-        return $wpdb->get_results($query, ARRAY_A);
+        return $this->wp->applyFilters('jigoshop\factory\product\get_attachments', $wpdb->get_results($query, ARRAY_A), $productId);
     }
 
     /**

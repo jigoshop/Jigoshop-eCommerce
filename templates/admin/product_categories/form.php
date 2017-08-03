@@ -175,7 +175,8 @@ use Jigoshop\Helper\Render;
 				<?php echo __('Add new attribute', 'jigoshop'); ?>
 			</button>
 		</div>
+        <div class="clearfix"></div>
 
-		<div class="clearfix"></div>
+        <?php do_action('jigoshop\admin\product\category\form', isset($category) ? $category : null); ?>
 	</div>
 </div>

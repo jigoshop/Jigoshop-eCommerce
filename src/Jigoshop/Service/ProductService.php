@@ -511,7 +511,7 @@ class ProductService implements ProductServiceInterface
             }
         }
 
-        return $attachments;
+        return $this->wp->applyFilters('jigoshop\service\product\get_attachments', $attachments, $product);
     }
 
     /**

@@ -322,7 +322,6 @@ class Product implements PageInterface
         }))) {
             return;
         }
-
 		Render::output('shop/product/downloads', [
 			'product' => $product,
 			'currentTab' => $currentTab,
