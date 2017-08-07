@@ -48,14 +48,17 @@ AdminProductCategories = do ->
       e.preventDefault()
       jQuery('.jigoshop-product-categories-edit-form').find('button').attr 'disabled', 'disabled'
       fields = {}
+      fields['attachments'] = []
       jQuery('.jigoshop-product-categories-edit-form').find('input,select,textarea').each (index, element) ->
         if !jQuery(element).attr('name')
           return
         if jQuery(element).attr('type') == 'checkbox'
           fields[jQuery(element).attr('name')] = jQuery(element).is(':checked')
           return
-        fields[jQuery(element).attr('name')] = jQuery(element).val()
-        return
+        if jQuery(element).attr('name') == 'attachments[]'
+          fields['attachments'].push(jQuery(element).val())
+        else
+          fields[jQuery(element).attr('name')] = jQuery(element).val()
       fields['action'] = 'jigoshop_product_categories_updateCategory'
       fields['description'] = tinymce.activeEditor.getContent()
       jQuery.post ajaxurl, fields, ((data) ->

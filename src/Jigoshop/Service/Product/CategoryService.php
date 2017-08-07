@@ -84,6 +84,7 @@ class CategoryService implements CategoryServiceInterface {
 
 			$result = wp_update_term($category->getId(), 'product_category', $args);
         }
+        $category->setId($result['term_id']);
         add_filter( 'pre_term_description', 'wp_filter_kses' );
 
         if($result instanceof \WP_Error) {
