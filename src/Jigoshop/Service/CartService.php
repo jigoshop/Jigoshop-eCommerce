@@ -70,13 +70,13 @@ class CartService implements CartServiceInterface
 
 	private function generateCartId()
 	{
-		if ($this->wp->getCurrentUserId() > 0) {
-			$id = $this->wp->getCurrentUserId();
-		} elseif ($this->session->getField(self::CART_ID)) {
+		if ($this->session->getField(self::CART_ID)) {
 			$id = $this->session->getField(self::CART_ID);
 		} elseif (isset($_COOKIE[self::CART_ID])) {
 			$id = $_COOKIE[self::CART_ID];
-		} else {
+		} elseif ($this->wp->getCurrentUserId() > 0) {
+            $id = $this->wp->getCurrentUserId();
+        } else {
 			$id = md5((isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : '') .time().$_SERVER['REMOTE_ADDR'].rand(1, 10000000));
 		}
 
