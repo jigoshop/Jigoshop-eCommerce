@@ -197,6 +197,7 @@ class Emails
         return $this->wp->applyFilters('jigoshop\emails\order_variables', [
             'blog_name' => $this->wp->getBloginfo('name'),
             'order_number' => $order->getNumber(),
+            'order_status' => Order\Status::getName($order->getStatus()),
             'order_date' => $this->wp->getHelpers()->dateI18n($this->wp->getOption('date_format')),
             'shop_name' => $this->options->get('general.company_name'),
             'shop_address_1' => $this->options->get('general.company_address_1'),
@@ -312,6 +313,7 @@ class Emails
         return apply_filters('jigoshop\email\order_variables_description', [
             'blog_name' => __('Blog Name', 'jigoshop'),
             'order_number' => __('Order Number', 'jigoshop'),
+            'order_status' => __('Order Status', 'jigoshop'),
             'order_date' => __('Order Date', 'jigoshop'),
             'shop_name' => __('Shop Name', 'jigoshop'),
             'shop_address_1' => __('Shop Address part 1', 'jigoshop'),

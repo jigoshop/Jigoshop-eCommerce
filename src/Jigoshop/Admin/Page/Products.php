@@ -267,7 +267,12 @@ class Products
 	public function setTypeFilter($query)
 	{
 		if (isset($_GET['product_type']) && in_array($_GET['product_type'], array_keys($this->type->getEnabledTypes()))) {
-			$meta = $query->meta_query;
+			if($query->meta_query instanceof \WP_Meta_Query) {
+			    $meta = $query->meta_query->queries;
+            } else {
+                $meta = $query->meta_query;
+            }
+
 			$meta[] = [
 				'key' => 'type',
 				'value' => $_GET['product_type'],
