@@ -60,7 +60,8 @@ class Products
 			if ($wp->getPostType() == Types::PRODUCT) {
 				Scripts::add('jigoshop.admin.products', \JigoshopInit::getUrl().'/assets/js/admin/products.js', [
 					'jquery',
-					'jigoshop.helpers'
+					'jigoshop.helpers',
+                    'inline-edit-post'
                 ]);
 
 				Styles::add('jigoshop.admin.products_list', \JigoshopInit::getUrl().'/assets/css/admin/products_list.css', ['jigoshop.admin']);
