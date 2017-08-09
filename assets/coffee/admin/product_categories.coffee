@@ -71,14 +71,14 @@ AdminProductCategories = do ->
     category_name: 'product_category'
     placeholder: ''
 
-  AdminProductCategories::expandCategory = (e) ->
+  AdminProductCategories::expandCategory = (e, triggered) ->
     e.preventDefault()
-    console.log('tr')
+
     $row = jQuery(e.delegateTarget).parents('tr')
     categoryId = $row.data('category-id')
     state = $row.data('expanded')
 
-    if(!state)
+    if(!state && !triggered)
       $row.data('expanded', 1)
 
       $row.nextAll('tr').each (index, element) ->
@@ -90,7 +90,8 @@ AdminProductCategories = do ->
       $row.nextAll('tr').each (index, element) ->
         if jQuery(element).data('parent-category-id') == categoryId
           jQuery(element).hide()
-          jQuery(element).find('.jigoshop-product-categories-expand-subcategories').trigger('click')
+          if jQuery(element).data('expanded')
+            jQuery(element).find('.jigoshop-product-categories-expand-subcategories').trigger('click', [1])
   AdminProductCategories::editCategory = (categoryId) ->
     self = this
 
