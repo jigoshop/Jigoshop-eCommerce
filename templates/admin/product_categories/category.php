@@ -3,7 +3,7 @@
 		<a href="#" class="jigoshop-product-categories-expand-subcategories">
 			<?php
 			if($category->getLevel() > 0) {
-				echo str_repeat('- ', $category->getLevel());
+				echo str_repeat('-- ', $category->getLevel());
 			}
 
 			echo $category->getName();

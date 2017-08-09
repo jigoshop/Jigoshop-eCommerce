@@ -58,6 +58,11 @@ use Jigoshop\Helper\Render;
 					<span class="glyphicon glyphicon-eye-open"></span>
 					<?php echo __('View', 'jigoshop'); ?>
 				</a>
+
+				<a href="" id="jigoshop-product-categories-edit-form-close" class="btn btn-default pull-right">
+					<span class="glyphicon glyphicon-eject"></span>
+					<?php echo __('Close', 'jigoshop'); ?>
+				</a>
 			</div>
 
 			<div class="clear"></div>

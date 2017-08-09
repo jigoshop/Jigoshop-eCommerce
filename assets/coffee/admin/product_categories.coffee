@@ -169,6 +169,9 @@ AdminProductCategories = do ->
       return
     if jQuery('#thumbnailId').val() != ''
       jQuery('#jigoshop-product-categories-thumbnail-remove-button').css 'display', 'inline-block'
+    jQuery('#jigoshop-product-categories-edit-form-close').click (e) ->
+      e.preventDefault()
+      jQuery('.jigoshop-product-categories-edit-form').slideToggle()
     jQuery('#attributesInheritEnabled').on 'switchChange.bootstrapSwitch', (event, state) ->
       self.attributesInheritEnabledChange 1
       self.attributesGetAttributes()
