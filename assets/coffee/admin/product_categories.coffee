@@ -4,18 +4,9 @@ AdminProductCategories = do ->
   AdminProductCategories = (params) ->
     self = undefined
     self = this
-    jQuery('.jigoshop-product-categories-expand-subcategories').click (e) ->
-      categoryId = undefined
-      e.preventDefault()
-      categoryId = jQuery(e.delegateTarget).parents('tr').data('category-id')
-      jQuery('#jigoshop-product-categories').find('tr').each (index, element) ->
-        if jQuery(element).data('parent-category-id') == categoryId
-          if jQuery(element).css('display') == 'none'
-            jQuery(element).show()
-          else
-            jQuery(element).hide()
-        return
-      return
+    jQuery('.jigoshop-product-categories-expand-subcategories').click(@expandCategory)
+
+
     jQuery('#jigoshop-product-categories-add-button').click (e) ->
       e.preventDefault()
       self.resetForm()
@@ -80,6 +71,26 @@ AdminProductCategories = do ->
     category_name: 'product_category'
     placeholder: ''
 
+  AdminProductCategories::expandCategory = (e) ->
+    e.preventDefault()
+    console.log('tr')
+    $row = jQuery(e.delegateTarget).parents('tr')
+    categoryId = $row.data('category-id')
+    state = $row.data('expanded')
+
+    if(!state)
+      $row.data('expanded', 1)
+
+      $row.nextAll('tr').each (index, element) ->
+        if jQuery(element).data('parent-category-id') == categoryId
+          jQuery(element).show()
+    else
+      $row.data('expanded', 0)
+
+      $row.nextAll('tr').each (index, element) ->
+        if jQuery(element).data('parent-category-id') == categoryId
+          jQuery(element).hide()
+          jQuery(element).find('.jigoshop-product-categories-expand-subcategories').trigger('click')
   AdminProductCategories::editCategory = (categoryId) ->
     self = this
 

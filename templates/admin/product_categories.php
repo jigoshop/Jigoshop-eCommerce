@@ -15,7 +15,7 @@ use Jigoshop\Helper\Render;
 
 	<div class="tab-content">
 		<form role="form" method="POST">
-			<table class="table table-striped table-valign" id="jigoshop-product-categories">
+			<table class="table table-condensed table-valign" id="jigoshop-product-categories">
 				<thead>
 					<tr>
 						<th>
