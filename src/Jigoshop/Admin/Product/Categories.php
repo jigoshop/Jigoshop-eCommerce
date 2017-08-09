@@ -437,6 +437,7 @@ class Categories implements PageInterface {
 		}
 
 		$attribute->setVisible(true);
+
 		$attribute = $this->productService->saveAttribute($attribute);
 
 		echo json_encode([

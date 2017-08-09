@@ -102,6 +102,7 @@ use Jigoshop\Helper\Render;
 				<table id="jigoshop-product-categories-attributes-add-new-configure-container" class="add-new-attribute-configure-container table table-condensed">
 					<thead>
 						<tr>
+							<th></th>
 							<th><?php echo __('Label', 'jigoshop'); ?></th>
 							<th><?php echo __('Value', 'jigoshop'); ?></th>
 							<th></th>
@@ -109,6 +110,9 @@ use Jigoshop\Helper\Render;
 					</thead>
 					<tbody>
 						<tr id="attribute-option-prototype">
+							<td>
+								<span class="glyphicon glyphicon-sort" style="display: none"></span>
+							</td>
 							<td>
 								<?php
 								Forms::text([

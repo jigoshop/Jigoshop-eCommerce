@@ -52,6 +52,7 @@ use Jigoshop\Helper\Render;
 			<table class="table table-condensed">
 				<thead>
 				<tr>
+					<th scope="col" style="width: 30px"></th>
 					<th scope="col"><?php _e('Label', 'jigoshop'); ?></th>
 					<th scope="col"><?php _e('Value', 'jigoshop'); ?></th>
 					<th scope="col"></th>
@@ -64,6 +65,7 @@ use Jigoshop\Helper\Render;
 				</tbody>
 				<tfoot>
 				<tr>
+					<td></td>
 					<td>
 						<?php Forms::text([
 							'name' => 'option_label',
