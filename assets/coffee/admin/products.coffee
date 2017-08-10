@@ -30,6 +30,10 @@ class AdminProducts
       $item.closest('.toggle').show()
       if $item.prop('tagName') == 'INPUT' and $item.attr('type') == 'checkbox'
         $item.prop('checked', value)
+      else if $item.prop('tagName') == 'SELECT'
+        $item.val(value)
+        jQuery('option:selected', $item).attr('selected', false).change()
+        jQuery('option[value="' + value + '"').attr( 'selected', 'selected' ).change()
       else
         $item.val(value)
       $item.change()
