@@ -9,6 +9,7 @@
     * Fix: Properly display select attribute on product page.
     * Fix: Do not destroy session on logout.
     * Fix: Stock amount now can not be less than 0.
+    * Fix: Add email variables from JS1.
 * 2.1.4 - 2017.06.14:
     * New: Email action for order status change for admin.
     * New: Possibility to show prices with and without tax.
