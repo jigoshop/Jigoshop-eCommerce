@@ -66,7 +66,7 @@ use Jigoshop\Helper\Currency;
                         <option value="<?= Product::VISIBILITY_PUBLIC ?>"><?= __('Catalog & Search', 'jigoshop'); ?></option>
                         <option value="<?= Product::VISIBILITY_SEARCH ?>"><?= __('Search', 'jigoshop'); ?></option>
                         <option value="<?= Product::VISIBILITY_CATALOG ?>"><?= __('Catalog', 'jigoshop'); ?></option>
-                        <option value="<?= Product::VISIBILITY_NONE ?>">><?= __('Hidden', 'jigoshop'); ?></option>
+                        <option value="<?= Product::VISIBILITY_NONE ?>"><?= __('Hidden', 'jigoshop'); ?></option>
                     </select>
                 </span>
             </label>

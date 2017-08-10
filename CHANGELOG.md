@@ -1,6 +1,10 @@
 ## Changelog
 * 2.1.5:
     * New: Product quick edit fields.
+    * New: Product Categories admin page.
+    * New: Order status email variable.
+    * Fix: Special characters in product and order fields.
+    * Fix: Properly show variation sku in order email.
     * Fix: Sale price display.
     * Fix: Properly display select attribute on product page.
     * Fix: Do not destroy session on logout.

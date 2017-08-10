@@ -60,8 +60,7 @@ class Products
 			if ($wp->getPostType() == Types::PRODUCT) {
 				Scripts::add('jigoshop.admin.products', \JigoshopInit::getUrl().'/assets/js/admin/products.js', [
 					'jquery',
-					'jigoshop.helpers',
-                    'inline-edit-post'
+					'jigoshop.helpers'
                 ]);
 
 				Styles::add('jigoshop.admin.products_list', \JigoshopInit::getUrl().'/assets/css/admin/products_list.css', ['jigoshop.admin']);
@@ -287,7 +286,11 @@ class Products
     public function setFeaturedFilter($query)
     {
         if (isset($_GET['featured']) && $_GET['featured']) {
-            $meta = $query->meta_query;
+            if($query->meta_query instanceof \WP_Meta_Query) {
+                $meta = $query->meta_query->queries;
+            } else {
+                $meta = $query->meta_query;
+            }
             $meta[] = [
                 'key' => 'featured',
                 'value' => '1',

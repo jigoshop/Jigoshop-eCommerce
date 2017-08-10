@@ -9,7 +9,7 @@ use Jigoshop\Entity\Product;
     <?php if($product instanceof Product\Purchasable) : ?>
         <div class="regular-price"><?= $product->getRegularPrice(); ?></div>
         <?php if($product instanceof Product\Saleable) : ?>
-            <div class="sales-enebled"><?= $product->getSales()->isEnabled(); ?></div>
+            <div class="sales-enabled"><?= $product->getSales()->isEnabled(); ?></div>
             <div class="sales-price"><?= $product->getSales()->getPrice(); ?></div>
         <?php endif; ?>
     <?php endif; ?>
