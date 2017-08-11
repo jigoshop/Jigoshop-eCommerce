@@ -256,6 +256,7 @@ class Emails
             'is_bank_transfer' => $order->getPaymentMethod() instanceof Method && $order->getPaymentMethod()->getId() == BankTransfer::ID,
             'bank_info' => $this->getBankInfo(),
             'is_cash_on_delivery' => $order->getPaymentMethod() instanceof Method && $order->getPaymentMethod()->getId() == OnDelivery::ID,
+            'is_local_pickup' => $order->getShippingMethod() instanceof \Jigoshop\Shipping\Method && $order->getShippingMethod()->getId() == LocalPickup::NAME,
         ], $order);
     }
 
@@ -445,7 +446,7 @@ class Emails
 
     private function getBankInfo()
     {
-        $bankTransferOptions = $this->options->get('payment.' + BankTransfer::ID, []);
+        $bankTransferOptions = $this->options->get('payment.' . BankTransfer::ID, []);
         $bank_info = '';
         if ($bankTransferOptions['description']) $bank_info .= '<strong>'.__('Description', 'jigoshop').'</strong>: ' . wptexturize($bankTransferOptions['description']) . '<br />';
         if ($bankTransferOptions['bank_name']) $bank_info .= '<strong>'.__('Bank Name', 'jigoshop').'</strong>: ' . wptexturize($bankTransferOptions['bank_name']) . '<br />';
@@ -455,7 +456,7 @@ class Emails
         if ($bankTransferOptions['bic']) $bank_info .= '<strong>'.__('BIC Code', 'jigoshop').'</strong>: '. wptexturize($bankTransferOptions['bic']) . '<br />';
         if ($bankTransferOptions['additional_info']) $bank_info .= '<strong>'.__('Additional Info', 'jigoshop').'</strong>: '. wptexturize($bankTransferOptions['additional_info']) . '<br />';
 
-        return $bankTransferOptions;
+        return $bank_info;
     }
 }
 
