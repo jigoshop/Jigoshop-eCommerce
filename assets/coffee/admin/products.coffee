@@ -22,7 +22,6 @@ class AdminProducts
         jigoshop.addMessage('danger', data.error, 6000)
 
   quickEditInit: (event) =>
-    inlineEditPost.revert()
     jQuery('div.toggle').hide()
     inlineData = @getInlineData(jQuery(event.target).closest('tr').attr('id').replace('post-', ''))
     for key, value of inlineData
