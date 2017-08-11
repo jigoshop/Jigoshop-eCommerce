@@ -15,7 +15,7 @@ use Jigoshop\Helper\Render;
 
 	<div class="tab-content">
 		<form role="form" method="POST">
-			<table class="table table-striped table-valign" id="jigoshop-product-categories">
+			<table class="table table-condensed table-valign" id="jigoshop-product-categories">
 				<thead>
 					<tr>
 						<th>
@@ -52,11 +52,16 @@ use Jigoshop\Helper\Render;
 			?>
 
 			<div class="margin-top-bottom-9 col-sm-12">
-				<button type="submit" class="btn btn-primary pull-right"><?php echo __('Save changes', 'jigoshop'); ?></button>
+				<button type="submit" class="btn btn-primary pull-right margin-left-right-5"><?php echo __('Save changes', 'jigoshop'); ?></button>
 
-				<a href="" id="jigoshop-product-categories-edit-form-link" target="_blank" class="btn btn-default pull-right">
+				<a href="" id="jigoshop-product-categories-edit-form-link" target="_blank" class="btn btn-default pull-right margin-left-right-5">
 					<span class="glyphicon glyphicon-eye-open"></span>
 					<?php echo __('View', 'jigoshop'); ?>
+				</a>
+
+				<a href="" id="jigoshop-product-categories-edit-form-close" class="btn btn-default pull-right margin-left-right-5">
+					<span class="glyphicon glyphicon-eject"></span>
+					<?php echo __('Close', 'jigoshop'); ?>
 				</a>
 			</div>
 

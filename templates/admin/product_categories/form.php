@@ -163,18 +163,20 @@ use Jigoshop\Helper\Render;
 			?>
 		</div>
 		<div class="col-sm-6">
-			<button type="submit" class="btn btn-default pull-right" id="jigoshop-product-categories-attributes-add-button">
-				<span class="glyphicon glyphicon-plus"></span>
-				<?php echo __('Add', 'jigoshop'); ?>
-			</button>
+			<div class="row">
+				<button type="submit" class="btn btn-default" id="jigoshop-product-categories-attributes-add-button">
+					<span class="glyphicon glyphicon-plus"></span>
+					<?php echo __('Add', 'jigoshop'); ?>
+				</button>
+			</div>
+			<div class="row margin-top-bottom-9">
+				<button type="submit" class="btn btn-default" id="jigoshop-product-categories-attributes-add-new-button">
+					<span class="glyphicon glyphicon-plus"></span>
+					<?php echo __('Add new attribute', 'jigoshop'); ?>
+				</button>			
+			</div>
 		</div>
 
-		<div class="col-sm-12">
-			<button type="submit" class="btn btn-default pull-right" id="jigoshop-product-categories-attributes-add-new-button">
-				<span class="glyphicon glyphicon-plus"></span>
-				<?php echo __('Add new attribute', 'jigoshop'); ?>
-			</button>
-		</div>
         <div class="clearfix"></div>
 
         <?php do_action('jigoshop\admin\product\category\form', isset($category) ? $category : null); ?>
