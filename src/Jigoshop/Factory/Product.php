@@ -103,7 +103,7 @@ class Product implements EntityFactoryInterface
 
         if (!empty($_POST) && isset($_POST['post_title'])) {
             $helpers = $this->wp->getHelpers();
-            $product->setName($_POST['post_title']);
+            $product->setName(stripslashes_deep($_POST['post_title'])       );
             $product->setDescription($helpers->parsePostBody(stripslashes_deep($_POST['post_content'])));
             $this->convertData($_POST, $id);
             $product->restoreState($_POST['product']);
@@ -376,7 +376,7 @@ class Product implements EntityFactoryInterface
         $query = $wpdb->prepare("SELECT attachment_id as id, type as type FROM {$wpdb->prefix}jigoshop_product_attachment WHERE product_id = %d",
             [$productId]);
 
-        return $wpdb->get_results($query, ARRAY_A);
+        return $this->wp->applyFilters('jigoshop\factory\product\get_attachments', $wpdb->get_results($query, ARRAY_A), $productId);
     }
 
     /**

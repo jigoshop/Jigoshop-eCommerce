@@ -58,6 +58,12 @@ use Jigoshop\Helper\Tax;
 
             </div>
         <div class="clear"></div>
+        <?php else: ?>
+            <?php Forms::hidden([
+                'name' => 'jigoshop_order[different_shipping_address]',
+                'id' => 'different_shipping_address',
+                'value' => 'on',
+            ]); ?>
         <?php endif; ?>
         <div id="shipping-address" class="panel panel-default <?php !$differentShipping && !$alwaysShowShipping and print ' not-active'; ?>">
             <div class="panel-heading">

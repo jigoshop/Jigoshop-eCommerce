@@ -650,6 +650,6 @@ class Order
     {
         post_submit_meta_box($post);
         //TODO: move it to CSS file.
-        echo '<style>#major-publishing-actions, #minor-publishing-actions, #misc-publishing-actions div:first-of-type, #misc-publishing-actions #visibility {display:none;}</style>';
+        echo '<style>#major-publishing-actions, #minor-publishing-actions, .misc-pub-post-status, #misc-publishing-actions #visibility {display:none;}</style>';
     }
 }

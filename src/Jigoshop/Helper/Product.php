@@ -98,26 +98,25 @@ class Product
                     if(count($pricesRegular) == 2) {
                         if(strpos($product->getSales()->getPrice(), '%') !== false) {
                             $result = sprintf('
-                                <del>%s 
-                                %s</del>
-                                <strong>%s</strong>
-                                %s
-                                <ins>%s</ins>
+                                <del><p>%s</p><p>%s</p></del>
+                                <strong><p>%s <ins>%s</ins></p></strong><p>%s</p>
                                 ', $pricesRegular[0], $pricesRegular[1],
-                                $salePrices[0], $salePrices[1], sprintf(__('%s off!', 'jigoshop'), $product->getSales()->getPrice()));
+                                $salePrices[0], sprintf(__('%s off!', 'jigoshop'), $product->getSales()->getPrice()), $salePrices[1]);
                         } 
                         else {
                             $result = sprintf('
-                                <del>%s 
-                                %s</del>
-                                <strong>%s</strong>
-                                %s
-                                ', $pricesRegular[0], $pricesRegular[1],
+                                <del><p>%s</p><p>%s</p></del>
+                                <strong><p>%s</p></strong><p>%s</p>',
+                                $pricesRegular[0], $pricesRegular[1],
                                 $salePrices[0], $salePrices[1]);
                         }                       
                     }
                     else {
-                        $result = $pricesRegular[0];
+                        if(strpos($product->getSales()->getPrice(), '%') !== false) {
+                            $result = sprintf('<del>%s</del> %s %s', $pricesRegular[0], $salePrices[0], sprintf(__('%s off!', 'jigoshop'), $product->getSales()->getPrice()));
+                        } else {
+                            $result = sprintf('<del>%s</del> %s', $pricesRegular[0], $salePrices[0]);
+                        }
                     }
 
                     break;
@@ -128,8 +127,7 @@ class Product
                 $prices = self::generatePrices($price, $priceWithTax);
 
                 if(count($prices) == 2) {
-                    $result = sprintf('<strong>%s</strong>
-                        (%s)', $prices[0], $prices[1]);
+                    $result = sprintf('<strong><p>%s</p></strong><p>(%s)</p>', $prices[0], $prices[1]);
                 }
                 else {
                     $result = $prices[0];
@@ -159,8 +157,7 @@ class Product
 
                 if($price !== '') {
                     if(count($prices) == 2) {
-                        $result = sprintf(__('From: <strong>%s</strong> 
-                            (%s)', 'jigoshop'), $prices[0], $prices[1]);
+                        $result = sprintf(__('From: <strong><p>%s</p></strong><p>(%s)</p>', 'jigoshop'), $prices[0], $prices[1]);
                     }
                     else {
                         $result = sprintf(__('From: %s', 'jigoshop'), $prices[0]);
@@ -168,8 +165,7 @@ class Product
                 }
                 else {
                     if(count($prices) == 2) {
-                        $result = sprintf(__('<strong>%s</strong>
-                            (%s)', 'jigoshop'), $prices[0], $prices[1]);
+                        $result = sprintf(__('<strong><p>%s</p></strong><p>(%s)</p>', 'jigoshop'), $prices[0], $prices[1]);
                     }
                     else {
                         $result = $prices[0];

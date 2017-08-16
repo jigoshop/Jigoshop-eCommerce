@@ -49,7 +49,8 @@ class PagesConfiguration implements ConfigurationInterface
 			'wpal',
 			'jigoshop.options',
 			'jigoshop.post_type.product',
-			'jigoshop.service.product'
+			'jigoshop.service.product',
+			'jigoshop.service.product.category'
         ]);
 		$services->setDetails('jigoshop.admin.page.email', 'Jigoshop\Admin\Page\Email', [
 			'wpal',

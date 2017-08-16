@@ -8,6 +8,10 @@ use Jigoshop\Entity\Product;
 use Jigoshop\Helper\Country;
 use Jigoshop\Helper\Order as OrderHelper;
 use Jigoshop\Helper\Product as ProductHelper;
+use Jigoshop\Payment\BankTransfer;
+use Jigoshop\Payment\Cheque;
+use Jigoshop\Payment\Method;
+use Jigoshop\Payment\OnDelivery;
 use Jigoshop\Service\EmailServiceInterface;
 use Jigoshop\Shipping\LocalPickup;
 use WPAL\Wordpress;
@@ -194,9 +198,12 @@ class Emails
         $billingAddress = $order->getCustomer()->getBillingAddress();
         $shippingAddress = $order->getCustomer()->getShippingAddress();
 
+        $items = $this->formatItems($order);
+
         return $this->wp->applyFilters('jigoshop\emails\order_variables', [
             'blog_name' => $this->wp->getBloginfo('name'),
             'order_number' => $order->getNumber(),
+            'order_status' => Order\Status::getName($order->getStatus()),
             'order_date' => $this->wp->getHelpers()->dateI18n($this->wp->getOption('date_format')),
             'shop_name' => $this->options->get('general.company_name'),
             'shop_address_1' => $this->options->get('general.company_address_1'),
@@ -205,7 +212,8 @@ class Emails
             'shop_phone' => $this->options->get('general.company_phone'),
             'shop_email' => $this->options->get('general.company_email'),
             'customer_note' => $order->getCustomerNote(),
-            'order_items' => $this->formatItems($order),
+            'order_items' => $items,
+            'order_items_table' => $items,
             'subtotal' => ProductHelper::formatPrice($order->getSubtotal()),
             'shipping' => ProductHelper::formatPrice($order->getShippingPrice()),
             'shipping_cost' => ProductHelper::formatPrice($order->getShippingPrice()),
@@ -243,6 +251,12 @@ class Emails
             'shipping_state' => Country::hasStates($shippingAddress->getCountry()) ? Country::getStateName($shippingAddress->getCountry(),
                 $shippingAddress->getState()) : $shippingAddress->getState(),
             'shipping_state_raw' => $shippingAddress->getState(),
+            'is_cheque' => $order->getPaymentMethod() instanceof Method && $order->getPaymentMethod()->getId() == Cheque::ID,
+            'cheque_info' => str_replace(PHP_EOL, '', $this->options->get('payment.cheque.description', '')),
+            'is_bank_transfer' => $order->getPaymentMethod() instanceof Method && $order->getPaymentMethod()->getId() == BankTransfer::ID,
+            'bank_info' => $this->getBankInfo(),
+            'is_cash_on_delivery' => $order->getPaymentMethod() instanceof Method && $order->getPaymentMethod()->getId() == OnDelivery::ID,
+            'is_local_pickup' => $order->getShippingMethod() instanceof \Jigoshop\Shipping\Method && $order->getShippingMethod()->getId() == LocalPickup::NAME,
         ], $order);
     }
 
@@ -275,8 +289,15 @@ class Emails
             $itemResult .= $item->getQuantity() . ' x ' . html_entity_decode($this->wp->applyFilters('jigoshop\emails\product_title',
                     $item->getName(), $product, $item), ENT_QUOTES, 'UTF-8');
 
-            if ($product->getSku()) {
-                $itemResult .= ' (#' . $product->getSku() . ')';
+            $sku = '';
+            if ( $product instanceof Product\Variable) {
+                $sku = $product->getVariation($item->getMeta('variation_id')->getValue())->getProduct()->getSku();
+            } else {
+                $sku = $product->getSku();
+            }
+
+            if($sku) {
+                $itemResult .= ' (#' . $sku . ')';
             }
 
             $itemResult .= ' - ' . ProductHelper::formatPrice($item->getCost());
@@ -305,6 +326,7 @@ class Emails
         return apply_filters('jigoshop\email\order_variables_description', [
             'blog_name' => __('Blog Name', 'jigoshop'),
             'order_number' => __('Order Number', 'jigoshop'),
+            'order_status' => __('Order Status', 'jigoshop'),
             'order_date' => __('Order Date', 'jigoshop'),
             'shop_name' => __('Shop Name', 'jigoshop'),
             'shop_address_1' => __('Shop Address part 1', 'jigoshop'),
@@ -349,6 +371,12 @@ class Emails
             'shipping_country_raw' => __('Raw Shipping Country', 'jigoshop'),
             'shipping_state' => __('Shipping State', 'jigoshop'),
             'shipping state_raw' => __('Raw Shipping State', 'jigoshop'),
+            'is_bank_transfer' => __('Is payment method Bank Transfer?', 'jigoshop'),
+            'is_cash_on_delivery' => __('Is payment method Cash on Delivery?', 'jigoshop'),
+            'is_cheque' => __('Is payment method Cheque?', 'jigoshop'),
+            'is_local_pickup' => __('Is Local Pickup?', 'jigoshop'),
+            'bank_info' => __('Company bank transfer details', 'jigoshop'),
+            'cheque_info' => __('Company cheque details', 'jigoshop'),
         ]);
     }
 
@@ -414,6 +442,21 @@ class Emails
         $this->wp->addAction('jigoshop\product\low_stock', [$this, 'productLowStock']);
         $this->wp->addAction('jigoshop\product\out_of_stock', [$this, 'productOutOfStock']);
         $this->wp->addAction('jigoshop\product\backorders', [$this, 'productBackorders']);
+    }
+
+    private function getBankInfo()
+    {
+        $bankTransferOptions = $this->options->get('payment.' . BankTransfer::ID, []);
+        $bank_info = '';
+        if ($bankTransferOptions['description']) $bank_info .= '<strong>'.__('Description', 'jigoshop').'</strong>: ' . wptexturize($bankTransferOptions['description']) . '<br />';
+        if ($bankTransferOptions['bank_name']) $bank_info .= '<strong>'.__('Bank Name', 'jigoshop').'</strong>: ' . wptexturize($bankTransferOptions['bank_name']) . '<br />';
+        if ($bankTransferOptions['account_holder']) $bank_info .= '<strong>'.__('Account Number', 'jigoshop').'</strong>: '.wptexturize($bankTransferOptions['account_holder']) . '<br />';
+        if ($bankTransferOptions['sort_code']) $bank_info .= '<strong>'.__('Sort Code', 'jigoshop').'</strong>: '. wptexturize($bankTransferOptions['sort_code']) . '<br />';
+        if ($bankTransferOptions['iban']) $bank_info .= '<strong>'.__('IBAN', 'jigoshop').'</strong>: '. wptexturize($bankTransferOptions['iban']) . '<br />';
+        if ($bankTransferOptions['bic']) $bank_info .= '<strong>'.__('BIC Code', 'jigoshop').'</strong>: '. wptexturize($bankTransferOptions['bic']) . '<br />';
+        if ($bankTransferOptions['additional_info']) $bank_info .= '<strong>'.__('Additional Info', 'jigoshop').'</strong>: '. wptexturize($bankTransferOptions['additional_info']) . '<br />';
+
+        return $bank_info;
     }
 }
 

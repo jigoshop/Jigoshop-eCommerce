@@ -65,7 +65,9 @@ class ProductCategory implements Taxonomy
             ],
 			'hierarchical' => true,
 			'show_ui' => true,
+			'show_in_menu' => false,
 			'query_var' => true,
+            'show_in_nav_menus' => true,
 			'rewrite' => [
 				'slug' => $this->options->get('permalinks.category'),
 				'with_front' => $this->options->get('permalinks.with_front'),

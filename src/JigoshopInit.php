@@ -178,10 +178,6 @@ class JigoshopInit
             session_start();
             session_register_shutdown();
         }
-        add_action('wp_logout', function () {
-            session_destroy();
-            session_regenerate_id();
-        });
     }
 
     /**

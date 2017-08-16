@@ -9,10 +9,12 @@ use Jigoshop\Entity\Product\Simple;
 use Jigoshop\Entity\Product\Variable;
 use Jigoshop\Entity\Product\Virtual;
 use Jigoshop\Exception;
+use Jigoshop\Helper\Attribute as HelperAttribute;
 use Jigoshop\Helper\Render;
 use Jigoshop\Helper\Scripts;
 use Jigoshop\Helper\Styles;
 use Jigoshop\Service\ProductServiceInterface;
+use Jigoshop\Service\Product\CategoryServiceInterface;
 use WPAL\Wordpress;
 
 class Product
@@ -23,22 +25,26 @@ class Product
     private $options;
     /** @var \Jigoshop\Service\ProductServiceInterface */
     private $productService;
+    /** @var \Jigoshop\Service\Product\CategoryServiceInterface */
+    private $categoryService;
     /** @var Types\Product */
     private $type;
     /** @var array */
     private $menu;
 
-    public function __construct(Wordpress $wp, Options $options, Types\Product $type, ProductServiceInterface $productService)
+    public function __construct(Wordpress $wp, Options $options, Types\Product $type, ProductServiceInterface $productService, CategoryServiceInterface $categoryService)
     {
         $this->wp = $wp;
         $this->options = $options;
         $this->productService = $productService;
+        $this->categoryService = $categoryService;
         $this->type = $type;
 
         $wp->addAction('wp_ajax_jigoshop.admin.product.find', [$this, 'ajaxFindProduct'], 10, 0);
         $wp->addAction('wp_ajax_jigoshop.admin.product.update_type', [$this, 'ajaxUpdateType'], 10, 0);
         $wp->addAction('wp_ajax_jigoshop.admin.product.save_attribute', [$this, 'ajaxSaveAttribute'], 10, 0);
         $wp->addAction('wp_ajax_jigoshop.admin.product.remove_attribute', [$this, 'ajaxRemoveAttribute'], 10, 0);
+        $wp->addAction('wp_ajax_jigoshop.admin.product.get_inherited_attributes', [$this, 'ajaxGetInheritedAttributes'], 10, 0);
 
         $that = $this;
         $wp->addAction('add_meta_boxes_'.Types::PRODUCT, function () use ($wp, $that){
@@ -346,6 +352,95 @@ class Product
             $result = [
                 'success' => false,
                 'error' => $e->getMessage(),
+            ];
+        }
+
+        echo json_encode($result);
+        exit;
+    }
+
+    public function ajaxGetInheritedAttributes() {
+        try {
+            if(!isset($_POST['categories']) || !is_array($_POST['categories'])) {
+                throw new Exception(__('No categories specified.', 'jigoshop'));
+            }
+
+            $categories = [];
+            $parents = [];
+            foreach($_POST['categories'] as $categoryId) {
+                $categories[$categoryId] = $this->categoryService->find($categoryId);
+
+                if($categories[$categoryId]->getParentId() > 0) {
+                    $parents[] = $categories[$categoryId]->getParentId();
+                }
+            }
+
+            $attributes = [];
+            foreach($categories as $categoryId => $category) {
+                if(in_array($categoryId, $parents)) {
+                    continue;
+                }
+
+                $categoryAttributes = $category->getAllAttributes();
+                $attributesStates = $category->getAttributesStates();
+
+                $filteredAttributes = [];
+                for($ca = 0; $ca < count($categoryAttributes); $ca++) {
+                    if(in_array($categoryAttributes[$ca]->getId(), $category->getRemovedAttributesIds())) {
+                        continue;
+                    }
+
+                    $visible = true;
+                    if(isset($attributesStates[$categoryAttributes[$ca]->getId()]) && $attributesStates[$categoryAttributes[$ca]->getId()] === false) {
+                        $visible = false;
+                    }
+
+                    $categoryAttributes[$ca]->setVisible($visible);
+                    $filteredAttributes[] = $categoryAttributes[$ca];
+                }
+
+                $categoryAttributes = HelperAttribute::sortAttributesByOrder($filteredAttributes, $category->getOrderOfAttributes());
+
+                $attributes = array_merge($attributes, $categoryAttributes);
+            }
+
+            $product = $this->productService->find($_POST['productId']);
+            $attributesRender = [];
+            foreach($attributes as $attribute) {
+                $attributesRender[] = [
+                    'id' => $attribute->getId(),
+                    'render' => Render::get('admin/product/box/attributes/attribute', [
+                        'attribute' => $attribute
+                    ])
+                ];
+
+                if(!$product->hasAttribute($attribute->getId())) {
+                    if($attribute->getType() == 1) {
+                        if(!empty($attribute->getOptions())) {
+                            $attribute->setValue(array_keys($attribute->getOptions())[0]);
+                        }
+                        else {
+                            $attribute->setValue(0);
+                        }                        
+                    }
+                    else {
+                        $attribute->setValue('');
+                    }
+                    $product->addAttribute($attribute);
+                }
+            }
+            
+	    $this->productService->save($product);
+
+            $result = [
+                'success' => true,
+                'attributes' => $attributesRender
+            ];
+        }
+        catch(Exception $e) {
+            $result = [
+                'success' => false,
+                'error' => $e->getMessage()
             ];
         }
 

@@ -14,7 +14,7 @@ use Jigoshop\Helper;
 		}, 0); ?>
 		<li>
 			<a href="<?= get_edit_post_link($order->getId()); ?>">#<?= $order->getNumber(); ?></a>
-			<span class="order-customer"><?= $order->getCustomer()->getName(); ?></span>
+			<span class="order-customer"><?= $order->getCustomer()->getName() ? $order->getCustomer()->getName() : '&nbsp'; ?></span>
 			<?= Helper\Order::getStatus($order); ?>
 			<span class="order-time"><?= get_the_time(_x('M d, Y', 'dashboard', 'jigoshop'), $order->getId()); ?></span>
 			<small>

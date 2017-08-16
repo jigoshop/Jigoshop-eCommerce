@@ -167,6 +167,14 @@ class Integration
         return self::$di->get('jigoshop.service.product');
     }
 
+    public static function getProductCategoryService() {
+        return self::$di->get('jigoshop.service.product.category');
+    }
+
+    public static function getVariableService() {
+        return self::$di->get('jigoshop.service.product.variable');
+    }
+
     /**
      * @return \Jigoshop\Service\CartServiceInterface
      */

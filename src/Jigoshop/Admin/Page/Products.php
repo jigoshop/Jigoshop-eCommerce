@@ -36,8 +36,25 @@ class Products
 		$wp->addAction(sprintf('manage_%s_posts_custom_column', Types::PRODUCT), [$this, 'displayColumn'], 2);
 		$wp->addAction('restrict_manage_posts', [$this, 'categoryFilter']);
 		$wp->addAction('restrict_manage_posts', [$this, 'typeFilter']);
+		$wp->addAction('restrict_manage_posts', [$this, 'featuredFilter']);
 		$wp->addAction('pre_get_posts', [$this, 'setTypeFilter']);
+		$wp->addAction('pre_get_posts', [$this, 'setFeaturedFilter']);
 		$wp->addAction('wp_ajax_jigoshop.admin.products.feature_product', [$this, 'ajaxFeatureProduct']);
+
+		$wp->addAction('quick_edit_custom_box', function($col, $type) {
+            if($type == Types::PRODUCT && $col == 'type') {
+                $post = $this->wp->getGlobalPost();
+                if ($post === null) {
+                    return;
+                }
+
+                /** @var Product | Product\Variable $product */
+                $product = $this->productService->find($post->ID);
+                Render::output('admin/products/quick_edit', [
+                    'product' => $product,
+                ]);
+            }
+        }, 10, 2);
 
 		$wp->addAction('admin_enqueue_scripts', function () use ($wp){
 			if ($wp->getPostType() == Types::PRODUCT) {
@@ -105,6 +122,9 @@ class Products
 		switch ($column) {
 			case 'thumbnail':
 				echo ProductHelper::getFeaturedImage($product, Options::IMAGE_THUMBNAIL);
+				Render::output('admin/products/inline_product_data', [
+				    'product' => $product,
+                ]);
 				break;
 			case 'price':
 				echo ProductHelper::getPriceHtml($product);
@@ -205,6 +225,23 @@ class Products
         ]);
 	}
 
+    /**
+     * Filter products by type
+     */
+    public function featuredFilter()
+    {
+        $type = $this->wp->getTypeNow();
+        if ($type != Types::PRODUCT) {
+            return;
+        }
+
+        $current = isset($_GET['featured']) ? $_GET['featured'] : '';
+
+        Render::output('admin/products/featuredFilter', [
+            'current' => $current
+        ]);
+    }
+
 	/**
 	 * Finds and returns number of products of specified type.
 	 *
@@ -229,13 +266,37 @@ class Products
 	public function setTypeFilter($query)
 	{
 		if (isset($_GET['product_type']) && in_array($_GET['product_type'], array_keys($this->type->getEnabledTypes()))) {
-			$meta = $query->meta_query;
+			if($query->meta_query instanceof \WP_Meta_Query) {
+			    $meta = $query->meta_query->queries;
+            } else {
+                $meta = $query->meta_query;
+            }
+
 			$meta[] = [
 				'key' => 'type',
 				'value' => $_GET['product_type'],
             ];
 			$query->set('meta_query', $meta);
 		}
+	}
+
+    /**
+     * @param $query \WP_Query
+     */
+    public function setFeaturedFilter($query)
+    {
+        if (isset($_GET['featured']) && $_GET['featured']) {
+            if($query->meta_query instanceof \WP_Meta_Query) {
+                $meta = $query->meta_query->queries;
+            } else {
+                $meta = $query->meta_query;
+            }
+            $meta[] = [
+                'key' => 'featured',
+                'value' => '1',
+            ];
+            $query->set('meta_query', $meta);
+        }
 	}
 
 	/**

@@ -1,12 +1,11 @@
 <div class="jigoshop-links-widget">
 	<div class="links">
 		<ul>
-			<li><a href="https://www.jigoshop.com/tour/"><?php _e('Tour', 'jigoshop'); ?></a> &ndash; <?php _e('Take a tour of the plugin', 'jigoshop'); ?></li>
 			<li><a href="https://www.jigoshop.com/product-category/extensions/"><?php _e('Extensions', 'jigoshop'); ?></a> &ndash; <?php _e('Extend Jigoshop with extra plugins and modules.', 'jigoshop'); ?></li>
 			<li><a href="https://www.jigoshop.com/product-category/themes/"><?php _e('Themes', 'jigoshop'); ?></a> &ndash; <?php _e('Extend Jigoshop with themes.', 'jigoshop'); ?></li>
 			<li><a href="http://twitter.com/#!/jigoshop"><?php _e('@Jigoshop', 'jigoshop'); ?></a> &ndash; <?php _e('Follow us on Twitter.', 'jigoshop'); ?></li>
-			<li><a href="https://github.com/jigoshop/jigoshop"><?php _e('Jigoshop on Github', 'jigoshop'); ?></a> &ndash; <?php _e('Help extend Jigoshop.', 'jigoshop'); ?></li>
-			<li><a href="http://wordpress.org/plugins/jigoshop/"><?php _e('Jigoshop on WordPress.org', 'jigoshop'); ?></a> &ndash; <?php _e('Leave us a rating!', 'jigoshop'); ?></li>
+			<li><a href="https://github.com/jigoshop/jigoshop-ecommerce"><?php _e('Jigoshop eCommerce on Github', 'jigoshop'); ?></a> &ndash; <?php _e('Help extend Jigoshop.', 'jigoshop'); ?></li>
+			<li><a href="http://wordpress.org/plugins/jigoshop-ecommerce/"><?php _e('Jigoshop eCommerce on WordPress.org', 'jigoshop'); ?></a> &ndash; <?php _e('Leave us a rating!', 'jigoshop'); ?></li>
 		</ul>
 	</div>
 	<div class="clear"></div>
@@ -29,9 +28,8 @@
 	</div>
 	<div class="links jigo-links">
 		<ul>
-			<li><a href="http://www.jigoshop.com/"><?php _e('Learn more about the Jigoshop plugin', 'jigoshop'); ?></a></li>
 			<li><a href="https://www.jigoshop.com/documentation/"><?php _e('Stuck? Read the plugin\'s documentation.', 'jigoshop'); ?></a></li>
-			<li><a href="https://www.jigoshop.com/support/"><?php _e('Support', 'jigoshop'); ?></a></li>
+			<li><a href="https://wordpress.org/support/plugin/jigoshop-ecommerce"><?php _e('Support', 'jigoshop'); ?></a></li>
 		</ul>
 	</div>
 	<div class="clear"></div>

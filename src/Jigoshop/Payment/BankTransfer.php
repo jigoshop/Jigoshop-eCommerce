@@ -4,11 +4,10 @@ namespace Jigoshop\Payment;
 
 use Jigoshop\Core\Options;
 use Jigoshop\Entity\Order;
-use Jigoshop\Exception;
 use Jigoshop\Service\OrderServiceInterface;
 use WPAL\Wordpress;
 
-class BankTransfer implements Method
+class BankTransfer implements Method2
 {
 	const ID = 'bank_transfer';
 
@@ -48,6 +47,36 @@ class BankTransfer implements Method
 	public function isEnabled()
 	{
 		return $this->options['enabled'];
+	}
+
+	public function isActive() {
+		if(isset($this->options['enabled'])) {
+			return $this->options['enabled'];
+		}
+	}
+
+	public function setActive($state) {
+		if(is_array($this->options)) {
+			$this->options['enabled'] = $state;
+		}
+
+		return $this->options;
+	}
+
+	public function isConfigured() {
+		return true;
+	}
+
+	public function hasTestMode() {
+		return false;
+	}
+
+	public function isTestModeEnabled() {
+		return false;
+	}
+
+	public function setTestMode($state) {
+		return $this->options;
 	}
 
 	/**
