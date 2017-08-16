@@ -1,4 +1,4 @@
-<tr data-category-id="<?php echo $category->getId(); ?>" data-parent-category-id="<?php echo $category->getParentId(); ?>" <?php echo ($category->getParentId() > 0?'style="display: none"':''); ?>>
+<tr data-category-id="<?php echo $category->getId(); ?>" data-parent-category-id="<?php echo $category->getParentId(); ?>" <?php echo (!in_array($category->getId(), $visibleCategories) && $category->getParentId() > 0?'style="display: none"':''); ?> <?php echo in_array($category->getId(), $visibleCategories)?'data-expanded="1"':''; ?>>
 	<td>
 		<a href="#" class="jigoshop-product-categories-expand-subcategories">
 			<?php

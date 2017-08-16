@@ -4,8 +4,60 @@ AdminProductCategories = do ->
   AdminProductCategories = (params) ->
     self = undefined
     self = this
-    jQuery('.jigoshop-product-categories-expand-subcategories').click(@expandCategory)
 
+    this.bindCategoriesControls()
+
+    jQuery('.jigoshop-product-categories-edit-form').submit (e) ->
+      fields = undefined
+      visibleCategories = []
+
+      e.preventDefault()
+      jQuery('.jigoshop-product-categories-edit-form').find('button').attr 'disabled', 'disabled'
+      fields = {}
+      fields['attachments'] = []
+      jQuery('.jigoshop-product-categories-edit-form').find('input,select,textarea').each (index, element) ->
+        if !jQuery(element).attr('name')
+          return
+        if jQuery(element).attr('type') == 'checkbox'
+          fields[jQuery(element).attr('name')] = jQuery(element).is(':checked')
+          return
+        if jQuery(element).attr('name') == 'attachments[]'
+          fields['attachments'].push(jQuery(element).val())
+        else
+          fields[jQuery(element).attr('name')] = jQuery(element).val()
+      fields['action'] = 'jigoshop_product_categories_updateCategory'
+      fields['description'] = tinymce.activeEditor.getContent()
+      jQuery('#jigoshop-product-categories').find('tbody').find('tr').each (index, element) ->
+        if jQuery(element).css('display') != 'none'
+          visibleCategories.push(jQuery(element).data('category-id'))
+      fields['visibleCategories'] = visibleCategories
+      jQuery.post ajaxurl, fields, ((data) ->
+        jQuery('html,body').animate scrollTop: jQuery('.jigoshop-product-categories-edit-form').offset().top - 30
+
+        if data.status == 1
+          jigoshop.addMessage 'success', data.info, 3000
+
+          jQuery('#jigoshop-product-categories tbody').html(data.categoriesTable)
+          self.bindCategoriesControls()
+        else
+          jigoshop.addMessage 'danger', data.error, 3000
+        jQuery('.jigoshop-product-categories-edit-form').find('button').removeAttr 'disabled'
+      ), 'json'
+      return
+
+    if jigoshop_admin_product_categories_data.forceEdit
+      self.editCategory(jigoshop_admin_product_categories_data.forceEdit)
+
+    return
+
+  AdminProductCategories::params =
+    category_name: 'product_category'
+    placeholder: ''
+
+  AdminProductCategories::bindCategoriesControls = () ->
+    self = this
+
+    jQuery('.jigoshop-product-categories-expand-subcategories').click(@expandCategory)
 
     jQuery('#jigoshop-product-categories-add-button').click (e) ->
       e.preventDefault()
@@ -33,43 +85,6 @@ AdminProductCategories = do ->
             location.href = document.URL
           return
         ), 'json'
-      return
-    jQuery('.jigoshop-product-categories-edit-form').submit (e) ->
-      fields = undefined
-      e.preventDefault()
-      jQuery('.jigoshop-product-categories-edit-form').find('button').attr 'disabled', 'disabled'
-      fields = {}
-      fields['attachments'] = []
-      jQuery('.jigoshop-product-categories-edit-form').find('input,select,textarea').each (index, element) ->
-        if !jQuery(element).attr('name')
-          return
-        if jQuery(element).attr('type') == 'checkbox'
-          fields[jQuery(element).attr('name')] = jQuery(element).is(':checked')
-          return
-        if jQuery(element).attr('name') == 'attachments[]'
-          fields['attachments'].push(jQuery(element).val())
-        else
-          fields[jQuery(element).attr('name')] = jQuery(element).val()
-      fields['action'] = 'jigoshop_product_categories_updateCategory'
-      fields['description'] = tinymce.activeEditor.getContent()
-      jQuery.post ajaxurl, fields, ((data) ->
-        if data.status == 1
-          location.href = document.URL
-        else
-          jigoshop.addMessage 'danger', data.error, 3000
-          jQuery('.jigoshop-product-categories-edit-form').find('button').removeAttr 'disabled'
-        return
-      ), 'json'
-      return
-
-    if jigoshop_admin_product_categories_data.forceEdit
-      self.editCategory(jigoshop_admin_product_categories_data.forceEdit)
-
-    return
-
-  AdminProductCategories::params =
-    category_name: 'product_category'
-    placeholder: ''
 
   AdminProductCategories::expandCategory = (e, triggered) ->
     e.preventDefault()
@@ -118,7 +133,7 @@ AdminProductCategories = do ->
 
     jQuery('#description').val('')
     jQuery('#jigoshop-product-categories-edit-form-link').hide()
-    return
+    tinymce.activeEditor.setContent('')
 
   AdminProductCategories::showForm = ->
     @bindGeneralControls()
@@ -126,7 +141,7 @@ AdminProductCategories = do ->
     @attributesGetAttributes()
     if jQuery('.jigoshop-product-categories-edit-form').css('display') != 'block'
       jQuery('.jigoshop-product-categories-edit-form').slideToggle()
-    jQuery('html,body').animate scrollTop: jQuery('.jigoshop-product-categories-edit-form').offset().top
+    jQuery('html,body').animate scrollTop: jQuery('.jigoshop-product-categories-edit-form').offset().top - 30
     jQuery('.jigoshop-product-categories-edit-form').find('button').removeAttr 'disabled'
     return
 

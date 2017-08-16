@@ -84,7 +84,7 @@ class CategoryService implements CategoryServiceInterface {
 
 			$result = wp_update_term($category->getId(), 'product_category', $args);
         }
-        $category->setId($result['term_id']);
+        
         add_filter( 'pre_term_description', 'wp_filter_kses' );
 
         if($result instanceof \WP_Error) {
@@ -94,6 +94,9 @@ class CategoryService implements CategoryServiceInterface {
 			}
 
 			throw new \Exception(implode('<br />', $errors));
+		}
+		else {
+			$category->setId($result['term_id']);
 		}
 
 		update_metadata(Core::TERMS, $result['term_id'], 'thumbnail_id', (int)$category->getThumbnailId());

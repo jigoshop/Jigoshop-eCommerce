@@ -106,16 +106,17 @@ class Categories implements PageInterface {
 		]);
 	}
 
-	private function renderCategories($categories) {
+	private function renderCategories($categories, $visibleCategories = []) {
 		$render = '';
 
 		foreach($categories as $category) {
 			$render .= Render::get('admin/product_categories/category', [
-				'category' => $category
+				'category' => $category,
+				'visibleCategories' => $visibleCategories
 			]);
 
 			if(!empty($category->getChildCategories())) {
-				$render .= $this->renderCategories($category->getChildCategories());
+				$render .= $this->renderCategories($category->getChildCategories(), $visibleCategories);
 			}
 		}
 
@@ -201,15 +202,20 @@ class Categories implements PageInterface {
 			$this->categoryService->save($category);
             do_action('jigoshop\admin\product\category\save', $category);
 
+            $categories = $this->categoryService->findFromParent(0);
+            $categoriesRender = $this->renderCategories($categories, $_POST['visibleCategories']);
+
 			if($updatingCategory) {
-				$this->messages->addNotice(__('Category updated.', 'jigoshop'));
+				$message = __('Category updated.', 'jigoshop');
 			}
 			else {	
-				$this->messages->addNotice(__('Category added successfully.', 'jigoshop'));
+				$message = __('Category added successfully.', 'jigoshop');
 			}
 
 			echo json_encode([
-				'status' => 1
+				'status' => 1,
+				'categoriesTable' => $categoriesRender,
+				'info' => $message
 			]);
 		}
 		catch(\Exception $e) {
