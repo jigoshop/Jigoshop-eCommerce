@@ -1,5 +1,5 @@
 ## Changelog
-* 2.1.5:
+* 2.1.5 - 2017.08.16:
     * New: Product quick edit fields.
     * New: Product Categories admin page.
     * New: Order status email variable.
