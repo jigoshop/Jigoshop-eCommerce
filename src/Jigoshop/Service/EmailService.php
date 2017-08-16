@@ -291,11 +291,11 @@ class EmailService implements EmailServiceInterface
                 $email->setText(preg_replace('#\['.$key.'\](.*?)\[value\](.*?)\[else\](.*?)\[\/'.$key.'\]#si', '$1'.'['.$key.']'.'$2', $email->getText()));
                 $email->setText(preg_replace('#\['.$key.'\](.*?)\[else\](.*?)\[\/'.$key.'\]#si', '$1', $email->getText()));
                 $email->setText(preg_replace('#\['.$key.'\](.*?)\[value\](.*?)\[\/'.$key.'\]#si', '$1'.'['.$key.']'.'$2', $email->getText()));
+                $email->setText(preg_replace('#\[' . $key . '\](.*?)\[\/' . $key . '\]#si', '$1', $email->getText()));
                 $email->setText(str_replace('['.$key.']', $value, $email->getText()));
 			}
 		}
-
-	}
+    }
 
     /**
      * @return array

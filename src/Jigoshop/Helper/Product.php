@@ -99,9 +99,9 @@ class Product
                         if(strpos($product->getSales()->getPrice(), '%') !== false) {
                             $result = sprintf('
                                 <del><p>%s</p><p>%s</p></del>
-                                <strong><p>%s</p></strong><p>%s <ins>%s</ins></p>
+                                <strong><p>%s <ins>%s</ins></p></strong><p>%s</p>
                                 ', $pricesRegular[0], $pricesRegular[1],
-                                $salePrices[0], $salePrices[1], sprintf(__('%s off!', 'jigoshop'), $product->getSales()->getPrice()));
+                                $salePrices[0], sprintf(__('%s off!', 'jigoshop'), $product->getSales()->getPrice()), $salePrices[1]);
                         } 
                         else {
                             $result = sprintf('
@@ -112,7 +112,11 @@ class Product
                         }                       
                     }
                     else {
-                        $result = sprintf('<del>%s</del> %s', $pricesRegular[0], $salePrices[0]);
+                        if(strpos($product->getSales()->getPrice(), '%') !== false) {
+                            $result = sprintf('<del>%s</del> %s %s', $pricesRegular[0], $salePrices[0], sprintf(__('%s off!', 'jigoshop'), $product->getSales()->getPrice()));
+                        } else {
+                            $result = sprintf('<del>%s</del> %s', $pricesRegular[0], $salePrices[0]);
+                        }
                     }
 
                     break;
