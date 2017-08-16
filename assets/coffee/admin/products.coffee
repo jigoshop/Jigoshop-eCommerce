@@ -31,8 +31,11 @@ class AdminProducts
         $item.prop('checked', value)
       else if $item.prop('tagName') == 'SELECT'
         $item.val(value)
-        jQuery('option:selected', $item).attr('selected', false).change()
-        jQuery('option[value="' + value + '"').attr( 'selected', 'selected' ).change()
+        $item.find('option').each (index, element) ->
+          if jQuery(element).val() == value
+            jQuery(element).attr('selected', 'selected')
+          else
+            jQuery(element).removeAttr('selected')
       else
         $item.val(value)
       $item.change()
