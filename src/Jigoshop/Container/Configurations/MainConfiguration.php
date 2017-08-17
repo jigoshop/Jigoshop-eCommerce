@@ -139,6 +139,7 @@ class MainConfiguration implements ConfigurationInterface
         $services->setDetails('jigoshop.upgrade.create_discounts_tables', 'Jigoshop\Core\Upgrade\CreateDiscountsTables', []);
         $services->setDetails('jigoshop.upgrade.convert_all_discounts', 'Jigoshop\Core\Upgrade\ConvertAllDiscounts', []);
         $services->setDetails('jigoshop.upgrade.add_zones_to_advanced_flat_rate', 'Jigoshop\Core\Upgrade\AddZonesToAdvancedFlatRate', []);
+        $services->setDetails('jigoshop.upgrade.add_position_to_attributes_options', 'Jigoshop\Core\Upgrade\AddPositionToAttributesOptions', []);
 	}
 
 	/**
@@ -162,6 +163,7 @@ class MainConfiguration implements ConfigurationInterface
         $tags->add('jigoshop.upgrade.4', 'jigoshop.upgrade.create_discounts_tables');
         $tags->add('jigoshop.upgrade.4', 'jigoshop.upgrade.convert_all_discounts');
         $tags->add('jigoshop.upgrade.4', 'jigoshop.upgrade.add_zones_to_advanced_flat_rate');
+        $tags->add('jigoshop.upgrade.5', 'jigoshop.upgrade.add_position_to_attributes_options');
 	}
 
 	/**
