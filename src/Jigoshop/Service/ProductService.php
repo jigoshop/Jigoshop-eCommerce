@@ -528,6 +528,7 @@ class ProductService implements ProductServiceInterface
 		FROM {$wpdb->prefix}jigoshop_attribute a
 			LEFT JOIN {$wpdb->prefix}jigoshop_attribute_option ao ON a.id = ao.attribute_id
 			WHERE a.is_local = 0
+            ORDER BY a.id ASC, ao.position ASC, ao.id ASC
 		";
         $results = $wpdb->get_results($query, ARRAY_A);
         $attributes = [];
@@ -642,12 +643,14 @@ class ProductService implements ProductServiceInterface
             return $item->getId();
         }, $attribute->getOptions()));
 
+        $optionPosition = 1;
         foreach ($attribute->getOptions() as $option) {
             /** @var $option Attribute\Option */
             $data = [
                 'attribute_id' => $option->getAttribute()->getId(),
                 'label' => $option->getLabel(),
                 'value' => $option->getValue(),
+                'position' => $optionPosition
             ];
             if ($option->getId()) {
                 $wpdb->update($wpdb->prefix . 'jigoshop_attribute_option', $data, ['id' => $option->getId()]);
@@ -660,6 +663,8 @@ class ProductService implements ProductServiceInterface
                 }
                 $option->setId($wpdb->insert_id);
             }
+
+            $optionPosition++;
         }
 
         return $attribute;

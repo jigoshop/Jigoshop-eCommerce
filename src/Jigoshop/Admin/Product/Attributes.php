@@ -6,6 +6,7 @@ use Jigoshop\Admin\PageInterface;
 use Jigoshop\Core\Messages;
 use Jigoshop\Entity\Product\Attribute;
 use Jigoshop\Exception;
+use Jigoshop\Helper\Attribute as AttributeHelper;
 use Jigoshop\Helper\Render;
 use Jigoshop\Helper\Scripts;
 use Jigoshop\Helper\Styles;
@@ -49,7 +50,8 @@ class Attributes implements PageInterface
 			Styles::add('jigoshop.admin.product_attributes', \JigoshopInit::getUrl().'/assets/css/admin/product_attributes.css');
 			Scripts::add('jigoshop.admin.product_attributes', \JigoshopInit::getUrl().'/assets/js/admin/product_attributes.js', [
 				'jquery',
-				'jigoshop.helpers'
+				'jigoshop.helpers',
+				'jquery-ui-sortable'
             ]);
 			Scripts::localize('jigoshop.admin.product_attributes', 'jigoshop_admin_product_attributes', [
 				'i18n' => [
@@ -96,6 +98,10 @@ class Attributes implements PageInterface
 				$attribute->setSlug(trim(htmlspecialchars(strip_tags($_POST['slug']))));
 			} else {
 				$attribute->setSlug($this->wp->getHelpers()->sanitizeTitle($attribute->getLabel()));
+			}
+
+			if(isset($_POST['optionsOrder']) && is_array($_POST['optionsOrder'])) {
+				$attribute->setOptions(AttributeHelper::sortOptionsByOrder($attribute->getOptions(), $_POST['optionsOrder']));
 			}
 
 			$this->productService->saveAttribute($attribute);
