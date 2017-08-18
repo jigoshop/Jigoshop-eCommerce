@@ -36,7 +36,7 @@ use Jigoshop\Helper\Render;
                         ));
                     if(defined('DOING_AJAX') && DOING_AJAX){
                         \_WP_Editors::enqueue_scripts();
-                        //print_footer_scripts();
+                        print_footer_scripts();
                         \_WP_Editors::editor_js();
                     }; 
                     ?>
