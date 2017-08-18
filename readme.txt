@@ -1,14 +1,13 @@
 === Jigoshop eCommerce ===
 Contributors: jigoshop
-Tags: ecommerce, wordpress ecommerce, store, shop, shopping, cart, checkout, widgets, reports, shipping, tax, paypal, jigowatt, shipping, inventory, stock, online, sell, sales, weights, dimensions, configurable, variable, downloadable, external, affiliate, download, virtual, physical
-Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=XTG9C24KAA7VA
+Tags: ecommerce, wordpress ecommerce, store, shop, shopping, cart, checkout, widgets, reports, shipping, tax, paypal, jigowatt, shipping, inventory, stock, online, sell, sales, weights, dimensions, configurable, variable, downloadable, external, affiliate, download, virtual, physical, jigoshop-ecommerce, jigoshop-e-commerce, e-commerce, jigo, e-shop, eshop
+Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=7F5FZ5NGJ3XTL
 
 Requires at least: 4.0
 Tested up to: 4.8.1
 Stable tag: 2.1.5
 
 A feature-packed eCommerce plugin built upon WordPress core functionality ensuring excellent performance, customizability and control - robust Tax Settings, Stock Level Management, Free and Premium Extensions - you name it.
-
 
 == Description ==
 
@@ -17,7 +16,6 @@ Jigoshop eCommerce, a WordPress eCommerce plugin developed by professionals with
 = SETUP IN MINUTES =
 
 Complete your shop in minutes with physical and downloadable products or even services. Jigoshop eCommerce provides you with the features necessary to set up an eCommerce web site lickety-split.
-
 With the option to create a multitude of product types and apply detailed attributes customers can easily refine your catalog, ensuring they find what they're looking for in just a couple of clicks.
 
 = PRODUCT TYPES =
@@ -71,25 +69,18 @@ To list some important ones:
 = MORE INFO =
 
 Built upon the WordPress core you get all the benefits of this global leading platform: free, easy to use, secure, highly customisable and with a great support community to hold your hand.
-
 Find out more on our official Jigoshop website:
-
 http://www.jigoshop.com/
 
 = BECOME A PART OF THE COMMUNITY =
 
 You can become a part of the Jigoshop eCommerce in a variety of ways - either passively, by being a Jigoshop eCommerce user, or actively - let's focus on the latter:
-
 * Core Development - Resolve potential bugs and make improvements to the core of the plugin and get rewarded for it - check out our <a href="https://www.jigoshop.com/development/core-contributors/" title="Core Contributors">Core Contributors</a> Section for more information.
-
 * Theme Development - Create themes and increase their exposure by submitting them on our website - For more information visit our <a href="https://www.jigoshop.com/development/theme-developers/" title="Theme Developers">Theme Developers</a> Section.
-
 * Extension Development -
-
 * Language Translation - Provide Jigoshop eCommerce with your native language's translation. Check out our <a href="https://www.jigoshop.com/development/language-translations/" title="Language Translations">Language Translations</a> Section.
 
 == Installation ==
-
 
 * WordPress 4.0 or greater
 * PHP version 5.6 or greater
@@ -110,28 +101,23 @@ You can become a part of the Jigoshop eCommerce in a variety of ways - either pa
 2.  Go to Plugins -> Add New
 3.  Type "Jigoshop eCommerce" into the Search input
 4.  Click on "Install Now"
-5. 	Click on "Activate"
-
-= Setting up Jigoshop =
-
-Take a look through our <a href="http://forum.jigoshop.com/kb/" title="Jigoshop usage guide">Jigoshop usage guides</a> to help you setup Jigoshop for the first time.
+5.  Click on "Activate"
 
 == Frequently Asked Questions ==
 
 = Will Jigoshop eCommerce work with X theme? =
 
 Jigoshop eCommerce will in theory work with any theme, but of course, certain parts may need to be styled using CSS to make them match up - that's why we created the Layout Manager. We've added default styling for Twenty Thirteen,Twenty Fourteen,Twenty Fifteen,Twenty Sixteen and...WooThemes. We're developing custom themes for the plugin - they should be available soon!
-
 If you need a theme built, or have a theme that needs styling, <a href="http://www.jigoshop.com/contact/">give us a shout</a> and we may be able to assist.
 
 = Can I have Jigoshop eCommerce in my language =
 
 Jigoshop eCommerce comes with a .po file and is localisation ready in over 10 languages.
-You can also <a href="http://forum.jigoshop.com/kb/customize-jigoshop/languages">create your own translations</a> for Jigoshop eCommerce.
+You can also create your own translations for Jigoshop eCommerce.
 
 = Which payment gateways do you have? =
 
-Take a look through <a href="http://forum.jigoshop.com/kb/jigoshop-settings/payment-gateways">our list of payment gateways</a>. There are some free ones that are included with Jigoshop eCommerce, and even more are available <a href="http://www.jigoshop.com/product-category/extensions/">on jigoshop.com</a>.
+Take a look through <a href="https://www.jigoshop.com/product-category/payment-gateways/">our list of payment gateways</a>. There are some free ones that are included with Jigoshop eCommerce, and even more are available <a href="http://www.jigoshop.com/product-category/extensions/">on jigoshop.com</a>.
 
 = Will tax settings work in my country? =
 
@@ -139,8 +125,8 @@ Jigoshop eCommerce has a flexible tax rule system which allows you to define tax
 
 = I need help! =
 
-We have a <a href="http://forum.jigoshop.com" title="Jigoshop support forum">community forum</a> for getting help from other users.
-However, if you want priority, dedicated support from Jigoshop staff, we dp offer <a href="http://www.jigoshop.com/support/" title="Jigoshop Premium Support">premium support packages</a>.
+We have a <a href="https://wordpress.org/support/plugin/jigoshop-ecommerce/" title="Jigoshop support forum">community forum</a> for getting help from other users.
+However, if you want priority, dedicated support from Jigoshop staff, we do offer <a href="http://www.jigoshop.com/support/" title="Jigoshop Premium Support">premium support packages</a>.
 
 == Screenshots ==
 
