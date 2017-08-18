@@ -9,6 +9,9 @@ use Jigoshop\Admin\Helper\Forms;
 ?>
 <tr data-id="<?= $option_id; ?>">
 	<td>
+		<span class="glyphicon glyphicon-sort"></span>
+	</td>
+	<td>
 		<?php Forms::text([
 			'name' => 'attributes['.$id.'][options]['.$option_id.'][label]',
 			'classes' => ['option-label'],

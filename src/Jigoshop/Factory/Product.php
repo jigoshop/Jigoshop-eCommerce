@@ -327,6 +327,7 @@ class Product implements EntityFactoryInterface
 			LEFT JOIN {$wpdb->prefix}jigoshop_product_attribute pa ON pa.attribute_id = a.id
 			LEFT JOIN {$wpdb->prefix}jigoshop_product_attribute_meta pam ON pa.attribute_id = pam.attribute_id AND pa.product_id = pam.product_id
 			WHERE pa.product_id = %d
+            ORDER BY a.id ASC, ao.position ASC, ao.id ASC
 		", [$productId]);
         $results = $wpdb->get_results($query, ARRAY_A);
         $attributes = [];

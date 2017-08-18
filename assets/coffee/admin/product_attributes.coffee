@@ -11,6 +11,7 @@ class AdminProductAttributes
     jQuery('table#product-attributes > tbody')
       .on 'click', '.remove-attribute', @removeAttribute
       .on 'change', '.attribute input, .attribute select', @updateAttribute
+      .on 'sortupdate', '.ui-sortable', @updateAttribute
       .on 'click', '.configure-attribute, .options button', @configureAttribute
       .on 'click', '.remove-attribute-option', @removeAttributeOption
       .on 'click', '.add-option', @addAttributeOption
@@ -38,8 +39,16 @@ class AdminProductAttributes
         jQuery(data.html).appendTo($container)
       else
         jigoshop.addMessage('danger', data.error, 6000)
-  updateAttribute: (event) =>
-    $parent = jQuery(event.target).closest('tr')
+  updateAttribute: (event, ui) =>
+    if event.type == 'sortupdate'
+      $parent = jQuery(ui.item).parents('table').parents('tr').prevAll('tr.attribute:first')
+    else
+      $parent = jQuery(event.target).closest('tr')
+
+    optionsOrder = []
+    $parent.next('tr').find('tbody').find('tr').each (index, element) ->
+      optionsOrder.push(jQuery(element).data('id'))
+
     jQuery.ajax
       url: jigoshop.getAjaxUrl()
       type: 'post'
@@ -50,6 +59,7 @@ class AdminProductAttributes
         label: jQuery('input.attribute-label', $parent).val()
         slug: jQuery('input.attribute-slug', $parent).val()
         type: jQuery('select.attribute-type', $parent).val()
+        optionsOrder: optionsOrder
     .done (data) =>
       if data.success? and data.success
         $parent.replaceWith(data.html)
@@ -75,6 +85,8 @@ class AdminProductAttributes
   configureAttribute: (event) ->
     $parent = jQuery(event.target).closest('tr')
     $options = jQuery('tr.options[data-id=' + $parent.data('id') + ']').toggle()
+    $options.find('tbody').sortable()
+
   addAttributeOption: (event) ->
     $parent = jQuery(event.target).closest('tr.options')
     $container = jQuery('tbody', $parent)
