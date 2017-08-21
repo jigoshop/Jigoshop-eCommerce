@@ -2,7 +2,7 @@
 namespace Jigoshop\Entity\Product;
 
 use Jigoshop\Entity\Product\Attribute\Multiselect;
-use Jigoshop\Helper\Attribute;
+use Jigoshop\Helper\Attribute as AttributeHelper;
 use Jigoshop\Helper\ProductCategory;
 use Jigoshop\Integration;
 
@@ -131,7 +131,7 @@ class Category {
 	}
 
 	public function getAttributes() {
-		return Attribute::sortAttributesByOrder($this->attributes, $this->getOrderOfAttributes());
+		return AttributeHelper::sortAttributesByOrder($this->attributes, $this->getOrderOfAttributes());
 	}
 
 	public function setAttributes(array $attributes) {
@@ -168,7 +168,7 @@ class Category {
 		}
 
 		$attributes = array_values($attributes);
-		$attributes = Attribute::sortAttributesByOrder($attributes, $this->getOrderOfAttributes());
+		$attributes = AttributeHelper::sortAttributesByOrder($attributes, $this->getOrderOfAttributes());
 
 		return $attributes;
 	}
@@ -215,8 +215,9 @@ class Category {
 	}
 
 	public function fromMeta($meta) {
-		if(!is_array($meta))
+		if(!is_array($meta)) {
 			return false;
+		}
 
 		if(isset($meta['attributesInheritEnabled'])) {
 			$this->attributesInheritEnabled = $meta['attributesInheritEnabled'];
