@@ -42,6 +42,8 @@ AdminProductCategories = do ->
         if data.status == 1
           jigoshop.addMessage 'success', data.info, 3000
 
+          jQuery('#id').val(data.id)
+
           jQuery('#jigoshop-product-categories tbody').html(data.categoriesTable)
           self.bindCategoriesControls()
         else
