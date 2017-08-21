@@ -155,6 +155,7 @@ use Jigoshop\Helper\Render;
 				'options' => [],
 				'multiple' => true
 			]);
+			
             if(defined('DOING_AJAX') && DOING_AJAX){
                 echo preg_replace('/<script\b[^>]*>(.*?)<\/script>/is', "", ob_get_clean());
             } else {
