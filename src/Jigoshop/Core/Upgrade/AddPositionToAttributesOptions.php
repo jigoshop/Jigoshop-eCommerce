@@ -20,7 +20,7 @@ class AddPositionToAttributesOptions implements Upgrader
     public function up(Wordpress $wp, Container $di)
     {
         $wpdb = $wp->getWPDB();
-        $wpdb->query("ALTER TABLE `{$wpdb->prefix}jigoshop_attribute_option` ADD `position` INT NOT NULL AFTER `title`;");
+        $wpdb->query("ALTER TABLE `{$wpdb->prefix}jigoshop_attribute_option` ADD `position` INT NOT NULL AFTER `attribute_id`;");
     }
 
     /**
