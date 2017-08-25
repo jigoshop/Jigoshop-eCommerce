@@ -54,6 +54,10 @@ class ServicesConfiguration implements ConfigurationInterface
         	'wpal',
         	'jigoshop.factory.product.category'
         ]);
+        $services->setDetails('jigoshop.service.cron', 'Jigoshop\Service\CronService', [
+        	'wpal',
+        	'jigoshop.factory.cronjob'
+        ]);
 
 		$services->setLazyStaus('jigoshop.service.order', true);
 		$services->setLazyStaus('jigoshop.service.product', true);
@@ -66,6 +70,7 @@ class ServicesConfiguration implements ConfigurationInterface
 		$services->setLazyStaus('jigoshop.service.cart', true);
 		$services->setLazyStaus('jigoshop.service.coupon', true);
 		$services->setLazyStaus('jigoshop.service.product.category', true);
+		$services->setLazyStaus('jigoshop.service.cron', true);
 	}
 
 	/**
@@ -104,5 +109,6 @@ class ServicesConfiguration implements ConfigurationInterface
 		$factories->set('jigoshop.service.payment', 'jigoshop.factory.payment_service', 'getService');
 		$factories->set('jigoshop.service.session', 'jigoshop.factory.session_service', 'getService');
 		$factories->set('jigoshop.service.product.category', 'jigoshop.factory.product.category_service', 'getService');
+		$factories->set('jigoshop.service.cron', 'jigoshop.factory.cronjob_service', 'getService');
 	}
 }

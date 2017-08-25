@@ -97,6 +97,13 @@ class FactoriesConfiguration implements ConfigurationInterface
         	'wpal',
         	'jigoshop.factory.product.category'
         ]);
+        $services->setDetails('jigoshop.factory.cronjob', 'Jigoshop\Factory\Cronjob', [
+        	'wpal'
+        ]);
+        $services->setDetails('jigoshop.factory.cronjob_service', 'Jigoshop\Factory\CronjobService', [
+        	'wpal',
+        	'jigoshop.factory.cronjob'
+        ]);
 
 		$services->setLazyStaus('jigoshop.factory.product', true);
 		$services->setLazyStaus('jigoshop.factory.session', true);
@@ -106,6 +113,7 @@ class FactoriesConfiguration implements ConfigurationInterface
 		$services->setLazyStaus('jigoshop.factory.order', true);
 		$services->setLazyStaus('jigoshop.factory.coupon', true);
 		$services->setLazyStaus('jigoshop.factory.product.category', true);
+		$services->setLazyStaus('jigoshop.factory.cronjob', true);
 	}
 
 	/**
