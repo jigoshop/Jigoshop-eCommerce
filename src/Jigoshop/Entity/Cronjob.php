@@ -39,8 +39,14 @@ class Cronjob {
 
 	/**
 	 * Sets job to be executed "now" (or at next visit to the site).
+	 * 
+	 * @throws Exception If callback is invalid or not reachable.
 	 */
 	public function executeNow() {
+		if(!isset($this->callback[0]) || $this->callback[0] instanceof \__PHP_Incomplete_Class || !is_callable($this->callback)) {
+			throw new \Exception('Unable to call specified callback.');
+		}
+
 		call_user_func($this->callback, $this);
 
 		$this->lastExecutedAt = time();

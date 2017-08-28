@@ -26,13 +26,18 @@ class CronService implements CronServiceInterface {
 		if($lock !== false) {
 			return;
 		}
-		$this->wp->setTransient('jigoshop_cron_lock', 1, 1800);
+		$this->wp->setTransient('jigoshop_cron_lock', 1, 60);
 
 		$cronjobs = $this->getJobsToBeExecuteInThisRequest();
 		foreach($cronjobs as $cronjob) {
-			$cronjob->executeNow();
+			try {
+				$cronjob->executeNow();
 
-			$this->save($cronjob);
+				$this->save($cronjob);
+			}
+			catch(\Exception $e) {
+				return false;
+			}
 		}
 
 		$this->wp->deleteTransient('jigoshop_cron_lock');
@@ -182,5 +187,12 @@ class CronService implements CronServiceInterface {
 		$wpdb->delete($table, [
 			'jobKey' => $key
 		]);		
+	}
+
+	/**
+	 * Removes the lock. To be used primarly during development when called function stopped execution of entire script, so lock could not be removed properly.
+	 */
+	public function forceLockOff() {
+		$this->wp->deleteTransient('jigoshop_cron_lock');
 	}
 }
