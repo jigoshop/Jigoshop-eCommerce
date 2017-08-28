@@ -26,7 +26,12 @@ AdminProductCategories = do ->
         else
           fields[jQuery(element).attr('name')] = jQuery(element).val()
       fields['action'] = 'jigoshop_product_categories_updateCategory'
-      fields['description'] = tinymce.activeEditor.getContent()
+
+      if jQuery('#wp-description-wrap').hasClass('tmce-active')
+        fields['description'] = tinymce.activeEditor.getContent()
+      else
+        fields['description'] = jQuery('#description').val()
+
       jQuery('#jigoshop-product-categories').find('tbody').find('tr').each (index, element) ->
         if jQuery(element).css('display') != 'none'
           visibleCategories.push(jQuery(element).data('category-id'))
@@ -36,6 +41,8 @@ AdminProductCategories = do ->
 
         if data.status == 1
           jigoshop.addMessage 'success', data.info, 3000
+
+          jQuery('#id').val(data.id)
 
           jQuery('#jigoshop-product-categories tbody').html(data.categoriesTable)
           self.bindCategoriesControls()
@@ -131,14 +138,22 @@ AdminProductCategories = do ->
       if jQuery(element).closest('.description_field').length == 0
         jQuery(element).val ''
 
-    jQuery('#description').val('')
     jQuery('#jigoshop-product-categories-edit-form-link').hide()
-    tinymce.activeEditor.setContent('')
+    if tinymce.activeEditor != null
+      tinymce.activeEditor.setContent('')
+
+    jQuery('#description').val('')
 
   AdminProductCategories::showForm = ->
     @bindGeneralControls()
     @attributesInheritEnabledChange()
     @attributesGetAttributes()
+
+    tinymce.remove()
+    tinymce.init(tinyMCEPreInit.mceInit['description'])
+    tinyMCE.execCommand('mceAddEditor', false, 'description')
+    quicktags({id: 'description'})
+
     if jQuery('.jigoshop-product-categories-edit-form').css('display') != 'block'
       jQuery('.jigoshop-product-categories-edit-form').slideToggle()
     jQuery('html,body').animate scrollTop: jQuery('.jigoshop-product-categories-edit-form').offset().top - 30

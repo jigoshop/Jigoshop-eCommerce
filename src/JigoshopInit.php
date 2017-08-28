@@ -281,6 +281,8 @@ class JigoshopInit
         //$this->container->get('jigoshop.roles');
         // Initialize Cron
         $this->container->get('jigoshop.cron');
+
+        $this->container->get('jigoshop.service.cron');
         if (is_admin()) {
             $this->container->get('jigoshop.admin');
             if (defined('DOING_AJAX') && DOING_AJAX) {

@@ -200,6 +200,13 @@ class Integration
     }
 
     /**
+     * @return \Jigoshop\Service\Cron
+     */
+    public static function getCronService() {
+        return self::$di->get('jigoshop.service.cron');
+    }
+
+    /**
      * @return \Jigoshop\Core
      */
     public static function getCore()
