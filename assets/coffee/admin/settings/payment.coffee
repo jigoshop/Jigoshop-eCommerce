@@ -8,37 +8,27 @@ class Payment
       if targetMethod != undefined
         jQuery.magnificPopup.open
           mainClass: 'jigoshop'
-          closeOnContentClick: false
-          closeOnBgClick: false
-          closeBtnInside: true
-          showCloseBtn: true
-          enableEscapeKey: true
-          modal: true
           items: src: ''
           type: 'inline'
           callbacks:
             elementParse: (item) ->
-              item.src = '<div></div>'
-              return
+              item.src = jQuery('#payment-method-options-' + targetMethod).html()
             open: ->
-              that = undefined
-              jQuery('.mfp-content').empty()
-              jQuery('#payment-method-options-' + targetMethod).appendTo '.mfp-content'
               jQuery('.mfp-content input[type="checkbox"]').bootstrapSwitch
                 size: 'small'
                 onText: 'Yes'
                 offText: 'No'
-              that = this
-              jQuery('.mfp-content .payment-method-close').click (e) ->
+              jQuery('.mfp-content .payment-method-options-save').click (e) ->
                 e.preventDefault()
-                that.close()
-                return
-              return
+                jQuery.magnificPopup.close()
             close: ->
-              jQuery('#payment-method-options-' + targetMethod).appendTo '#payment-methods-container'
-              jQuery('.button-save-options').click()
-              return
-      return
+              jQuery(@content).find('input[type="checkbox"]').each (index, element) ->
+                jQuery(element).bootstrapSwitch 'destroy'
+              jQuery(@content).find('select').each (index, element) ->
+                jQuery(element).select2 'destroy'
+              jQuery('#payment-method-options-' + targetMethod).html jQuery(@content).get()
+              jQuery('.payment-method-options-save').click()
+
     jQuery('.payment-method-enable').on 'switchChange.bootstrapSwitch', (e, state) ->
       targetMethod = undefined
       targetMethod = jQuery(e.target).parents('tr').attr('id')
@@ -49,10 +39,7 @@ class Payment
           state: state
         }, ->
           location.href = document.URL
-          return
-        return
       ), 300
-      return
     jQuery('.payment-method-testMode').on 'switchChange.bootstrapSwitch', (e, state) ->
       targetMethod = undefined
       targetMethod = jQuery(e.target).parents('tr').attr('id')
@@ -63,11 +50,7 @@ class Payment
           state: state
         }, ->
           location.href = document.URL
-          return
-        return
       ), 300
-      return
-    return
 
 jQuery () ->
   new Payment()
