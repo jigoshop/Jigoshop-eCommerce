@@ -264,6 +264,12 @@ class CustomerList implements TableInterface
 
 		foreach ($this->getItems($this->getCsvColumns()) as $row)
 		{
+            $row = array_map(function($item) {
+                $item = strip_tags($item);
+                $item = html_entity_decode($item);
+
+                return $item;
+            }, $row);
 			fputcsv($csvSource, $row);
 		}
 
@@ -274,10 +280,10 @@ class CustomerList implements TableInterface
 	{
 		return [
 			'username'   => __('Username', 'jigoshop'),
-//			'email'      => __('Email', 'jigoshop'),
+			'email'      => __('Email', 'jigoshop'),
 			'orders'     => __('Orders', 'jigoshop'),
 			'spent'      => __('Money Spent', 'jigoshop'),
-//			'last_order' => __('Last order', 'jigoshop'),
+			'last_order' => __('Last order', 'jigoshop'),
         ];
 	}
 }
