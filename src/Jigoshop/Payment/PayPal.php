@@ -209,11 +209,15 @@ class PayPal implements Method2, Processable
 		$settings['force_payment'] = $settings['force_payment'] == 'on';
 		$settings['test_mode'] = $settings['test_mode'] == 'on';
 
-		if (!Validation::isEmail($settings['test_email'])) {
+		if($settings['test_mode'] && !Validation::isEmail($settings['test_email'])) {
 			$settings['test_email'] = '';
-			if ($settings['enabled']) {
+			if($settings['enabled']) {
 				$this->messages->addWarning(__('Test email address is not valid.', 'jigoshop'));
 			}
+		}
+
+		if($this->messages->hasErrors() || $this->messages->hasWarnings()) {
+			$settings['enabled'] = false;
 		}
 
 		return $settings;
