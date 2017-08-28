@@ -2,7 +2,7 @@ class Shipping
   ruleCount: 0
 
   constructor: ->
-    jQuery('.shipping-method-configure').click (e) ->
+    jQuery('.shipping-method-configure').click (e) =>
       targetMethod = jQuery(e.target).val()
       if targetMethod != undefined
         jQuery.magnificPopup.open
@@ -12,8 +12,7 @@ class Shipping
           callbacks:
             elementParse: (item) ->
               item.src = jQuery('#shipping-method-options-' + targetMethod).html()
-              return
-            open: ->
+            open: =>
               jQuery('.mfp-content input[type="checkbox"]').bootstrapSwitch
                 size: 'small'
                 onText: 'Yes'
@@ -22,34 +21,30 @@ class Shipping
                 jQuery(element).siblings().remove()
                 jQuery(element).select2 'destroy'
                 jQuery(element).select2()
-                return
-              that = this
               jQuery('.shipping-method-options-save').click ->
-                that.close()
-                return
-              return
+                jQuery.magnificPopup.close()
+
+              @initAdvancedFlatRateElements()
             close: ->
               jQuery(@content).find('input[type="checkbox"]').each (index, element) ->
                 jQuery(element).bootstrapSwitch 'destroy'
-                return
               jQuery(@content).find('select').each (index, element) ->
                 jQuery(element).select2 'destroy'
-                return
               jQuery('#shipping-method-options-' + targetMethod).html jQuery(@content).get()
               jQuery('.shipping-method-options-save').click()
-              return
-      return
-    @ruleCount = jQuery('#advanced-flat-rate li.list-group-item').length
-    jQuery('div.advanced_flat_rate_countries_field').show()
-    jQuery('#advanced_flat_rate_available_for').on 'change', @toggleSpecificCountires
-    jQuery('#advanced-flat-rate').on( 'click', '.add-rate', (event) =>
+
+  initAdvancedFlatRateElements: () ->
+    @ruleCount = jQuery('.mfp-content #advanced-flat-rate li.list-group-item').length
+    jQuery('.mfp-content div.advanced_flat_rate_countries_field').show()
+    jQuery('.mfp-content #advanced_flat_rate_available_for').on('change', @toggleSpecificCountires).trigger('change')
+    jQuery('.mfp-content #advanced-flat-rate').on( 'click', '.add-rate', (event) =>
       @addRate(event))
     .on('click', '.toggle-rate', @toggleRate)
     .on('click', '.remove-rate', @removeRate)
     .on('keyup', '.input-label, .input-cost', @updateTitle)
-    .on('change', 'input.rest-of-the-world', @toggleLocationFields)
-    jQuery('input.rest-of-the-world').trigger 'change'
-    jQuery('#advanced-flat-rate ul').sortable
+    .on('switchChange.bootstrapSwitch', 'input.rest-of-the-world', @toggleLocationFields)
+    jQuery('.mfp-content input.rest-of-the-world').trigger 'switchChange'
+    jQuery('.mfp-content #advanced-flat-rate ul').sortable
       handle: ".handle"
       axis: "y"
 
@@ -71,18 +66,25 @@ class Shipping
     event.preventDefault()
     template = wp.template('advanced-flat-rate')
     @ruleCount++
-    jQuery('#advanced-flat-rate ul.list-group').append template
+    jQuery('.mfp-content #advanced-flat-rate ul.list-group').append template
       id: @ruleCount
-    jQuery('#advanced-flat-rate ul.list-group li:last select').select2()
+    jQuery('.mfp-content #advanced-flat-rate ul.list-group li:last select').select2()
+    jQuery('.mfp-content').find('input[type="checkbox"]').each (index, element) ->
+      jQuery(element).bootstrapSwitch
+        size: 'small'
+        onText: 'Yes'
+        offText: 'No'
 
   toggleSpecificCountires: (event) ->
+    console.log('toggleSpecificCountires')
     if jQuery(event.target).val() == 'specific'
-      jQuery('#advanced_flat_rate_countries').closest('tr').show()
+      jQuery('.mfp-content .advanced_flat_rate_countries_field').show()
     else
-      jQuery('#advanced_flat_rate_countries').closest('tr').hide()
+      jQuery('.mfp-content .advanced_flat_rate_countries_field').hide()
 
   toggleRate: (event) ->
     $item = jQuery(event.target)
+    console.log('toggleRate')
     jQuery('.list-group-item-text', $item.closest('li')).slideToggle () ->
       jQuery('span', $item).toggleClass('glyphicon-collapse-down').toggleClass('glyphicon-collapse-up')
 
