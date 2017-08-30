@@ -47,7 +47,18 @@ class Cronjob {
 			throw new \Exception('Unable to call specified callback.');
 		}
 
-		call_user_func($this->callback, $this);
+		$className = get_class($this->callback[0]);
+		$object = new $className;
+		if(!is_object($object)) {
+			throw new \Exception('Unable to create object.');
+		}
+
+		$callback = [
+			$object,
+			$this->callback[1]
+		];
+
+		call_user_func($callback, $this);
 
 		$this->lastExecutedAt = time();
 		$this->recalculateNextScheduleTime();
