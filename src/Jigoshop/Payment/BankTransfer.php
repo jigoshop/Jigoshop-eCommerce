@@ -187,7 +187,8 @@ class BankTransfer implements Method2
 		$bank_info = '';
 		if ($this->options['description']) $bank_info .= '<strong>'.__('Description', 'jigoshop').'</strong>: ' . wptexturize($this->options['description']) . '<br />';
 		if ($this->options['bank_name']) $bank_info .= '<strong>'.__('Bank Name', 'jigoshop').'</strong>: ' . wptexturize($this->options['bank_name']) . '<br />';
-		if ($this->options['account_holder']) $bank_info .= '<strong>'.__('Account Number', 'jigoshop').'</strong>: '.wptexturize($this->options['account_holder']) . '<br />';
+		if ($this->options['account_number']) $bank_info .= '<strong>'.__('Account Number', 'jigoshop').'</strong>: '.wptexturize($this->options['account_number']) . '<br />';
+		if ($this->options['account_holder']) $bank_info .= '<strong>'.__('Account Holder', 'jigoshop').'</strong>: '.wptexturize($this->options['account_holder']) . '<br />';
 		if ($this->options['sort_code']) $bank_info .= '<strong>'.__('Sort Code', 'jigoshop').'</strong>: '. wptexturize($this->options['sort_code']) . '<br />';
 		if ($this->options['iban']) $bank_info .= '<strong>'.__('IBAN', 'jigoshop').'</strong>: '. wptexturize($this->options['iban']) . '<br />';
 		if ($this->options['bic']) $bank_info .= '<strong>'.__('BIC Code', 'jigoshop').'</strong>: '. wptexturize($this->options['bic']) . '<br />';
