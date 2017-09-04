@@ -634,8 +634,10 @@ class Forms
 		$defaults = [
 			'name' => '',
 			'title' => '',
+			'label' => '',
 			'tip' => '',
-			'display' => ''
+			'display' => '',
+			'size' => 12
 		];
 
 		$field = wp_parse_args($field, $defaults);
@@ -644,7 +646,9 @@ class Forms
 
 			Render::output(static::$userDefinedTemplate, [
 					'title' => isset($field['title'])?$field['title']:'',
+					'label' => isset($field['label'])?$field['label']:'',
 					'tip' => isset($field['tip'])?$field['tip']:'',
+					'size' => $field['size'],
 					'display' => $result
 				]);
 		}

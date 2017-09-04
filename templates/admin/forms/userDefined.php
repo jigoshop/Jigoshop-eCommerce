@@ -1,7 +1,15 @@
+<?php
+$hasLabel = !empty($label);
+?>
 <div class="form-group">
 	<div class="row">
 		<div class="col-sm-12">
-			<div class="col-xs-12 col-sm-10 clearfix">
+            <?php if ($hasLabel): $size -= 2; ?>
+                <label class="col-xs-12 col-sm-2 margin-top-bottom-9">
+                    <?= $label; ?>
+                </label>
+            <?php endif; ?>		
+			<div class="col-xs-12 col-sm-<?php echo $size; ?> clearfix">
 				<div class="tooltip-inline-badge">
 					<?php 
 					if($tip):
