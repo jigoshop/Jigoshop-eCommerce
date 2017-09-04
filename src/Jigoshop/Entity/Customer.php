@@ -125,7 +125,7 @@ class Customer implements EntityInterface, \JsonSerializable
 	{
 		if (!in_array($address, ['billing', 'shipping'])) {
 			if (WP_DEBUG) {
-				throw new Exception(sprintf(__('Unknown address type: "%s".', 'jigoshop'), $address));
+				throw new Exception(sprintf(__('Unknown address type: "%s".', 'jigoshop-ecommerce'), $address));
 			}
 
 			Registry::getInstance(JIGOSHOP_LOGGER)->addCritical(sprintf('Unknown address type: "%s".', $address));

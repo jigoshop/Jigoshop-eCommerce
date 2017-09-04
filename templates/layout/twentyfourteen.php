@@ -9,7 +9,7 @@ get_header('shop');
         <?php /** @deprecated */ do_action('jigoshop\shop\content\before'); ?>
         <?php do_action('jigoshop\template\shop\content\before'); ?>
 		<?= $content; ?>
-		<<?php /** @deprecated */ do_action('jigoshop\shop\content\after'); ?>
+		<?php /** @deprecated */ do_action('jigoshop\shop\content\after'); ?>
         <?php do_action('jigoshop\template\shop\content\after'); ?>
 	</div>
 </div>

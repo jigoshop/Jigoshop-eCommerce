@@ -20,11 +20,11 @@ class FeaturedProducts extends \WP_Widget
 	{
 		$options = [
 			'classname' => self::ID,
-			'description' => __('Featured products on your site', 'jigoshop')
+			'description' => __('Featured products on your site', 'jigoshop-ecommerce')
         ];
 
 		// Create the widget
-		parent::__construct(self::ID, __('Jigoshop: Featured Products', 'jigoshop'), $options);
+		parent::__construct(self::ID, __('Jigoshop: Featured Products', 'jigoshop-ecommerce'), $options);
 	}
 
 	public static function setProductService($productService)
@@ -47,7 +47,7 @@ class FeaturedProducts extends \WP_Widget
 		// Set the widget title
 		$title = apply_filters(
 			'widget_title',
-			($instance['title']) ? $instance['title'] : __('Featured Products', 'jigoshop'),
+			($instance['title']) ? $instance['title'] : __('Featured Products', 'jigoshop-ecommerce'),
 			$instance,
 			$this->id_base
 		);

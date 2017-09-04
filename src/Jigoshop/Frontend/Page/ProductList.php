@@ -29,7 +29,7 @@ class ProductList extends AbstractProductList
 
 	public function getTitle()
 	{
-		return __('All products', 'jigoshop');
+		return __('All products', 'jigoshop-ecommerce');
 	}
 
 	public function getContent()

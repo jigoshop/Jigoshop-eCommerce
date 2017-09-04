@@ -13,8 +13,8 @@ use Jigoshop\Helper\Product;
  * @var $checkout_url string
  */
 
-$view_cart_label = isset($instance['view_cart_button']) ? $instance['view_cart_button'] : __('View Cart', 'jigoshop');
-$checkout_label = isset($instance['checkout_button']) ? $instance['checkout_button'] : __('Checkout', 'jigoshop');
+$view_cart_label = isset($instance['view_cart_button']) ? $instance['view_cart_button'] : __('View Cart', 'jigoshop-ecommerce');
+$checkout_label = isset($instance['checkout_button']) ? $instance['checkout_button'] : __('Checkout', 'jigoshop-ecommerce');
 
 echo $before_widget;
 if ($title) {
@@ -35,15 +35,15 @@ if ($title) {
 	<?php endforeach; ?>
 </ul>
 <p class="total">
-	<strong><?php _e('Subtotal', 'jigoshop'); ?>:</strong>
+	<strong><?php _e('Subtotal', 'jigoshop-ecommerce'); ?>:</strong>
 	<?= Product::formatPrice($cart->getTotal()); ?>
 	<?php do_action('jigoshop_widget_cart_before_buttons'); ?>
 	<p class="buttons">
-		<a href="<?= $cart_url; ?>" class="btn btn-default"><?php _e($view_cart_label, 'jigoshop'); ?></a>
-		<a href="<?= $checkout_url; ?>" class="btn btn-primary"><?php _e($checkout_label, 'jigoshop'); ?></a>
+		<a href="<?= $cart_url; ?>" class="btn btn-default"><?php _e($view_cart_label, 'jigoshop-ecommerce'); ?></a>
+		<a href="<?= $checkout_url; ?>" class="btn btn-primary"><?php _e($checkout_label, 'jigoshop-ecommerce'); ?></a>
 	</p>
 </p>
 <?php else: ?>
-	<span class="empty"><?php _e('No products in the cart.', 'jigoshop'); ?></span>
+	<span class="empty"><?php _e('No products in the cart.', 'jigoshop-ecommerce'); ?></span>
 <?php endif; ?>
 <?= $after_widget;

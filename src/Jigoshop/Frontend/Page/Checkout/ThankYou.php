@@ -102,7 +102,7 @@ class ThankYou implements PageInterface
 	public function action()
 	{
 		if (!isset($_REQUEST['order']) || !isset($_REQUEST['key'])) {
-			$this->messages->addNotice(__('No order to display.', 'jigoshop'));
+			$this->messages->addNotice(__('No order to display.', 'jigoshop-ecommerce'));
 			$this->wp->redirectTo($this->options->getPageId(Pages::SHOP));
 		}
 	}
@@ -113,7 +113,7 @@ class ThankYou implements PageInterface
 		/** @var Order $order */
 		$order = $this->orderService->find((int)$_REQUEST['order']);
 		if ($order->getKey() != $_REQUEST['key']) {
-			$this->messages->addError(__('Invalid security key. The order was processed.', 'jigoshop'));
+			$this->messages->addError(__('Invalid security key. The order was processed.', 'jigoshop-ecommerce'));
 			$this->wp->redirectTo($this->options->getPageId(Pages::SHOP));
 		}
 

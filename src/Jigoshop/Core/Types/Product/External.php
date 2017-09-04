@@ -29,7 +29,7 @@ class External implements Type
 	 */
 	public function getName()
 	{
-		return __('External / Affiliate', 'jigoshop');
+		return __('External / Affiliate', 'jigoshop-ecommerce');
 	}
 
 	/**
@@ -98,7 +98,7 @@ class External implements Type
 	public function addToCart($value, $product)
 	{
 		if ($product instanceof Entity) {
-            throw new Exception(__('The external product cannot be added to cart', 'jigoshop'));
+            throw new Exception(__('The external product cannot be added to cart', 'jigoshop-ecommerce'));
 		}
 
 		return $value;

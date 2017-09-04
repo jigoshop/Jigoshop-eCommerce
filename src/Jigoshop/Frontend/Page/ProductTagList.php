@@ -21,7 +21,7 @@ class ProductTagList extends AbstractProductList
 		$term = $this->wp->getTermBy('slug', $this->wp->getQueryParameter(Types\ProductTag::NAME), Types\ProductTag::NAME);
 
 		if ($term) {
-			return sprintf(__('Products tagged with "%s"', 'jigoshop'), $term->name);
+			return sprintf(__('Products tagged with "%s"', 'jigoshop-ecommerce'), $term->name);
 		}
 
 		return $this->wp->getQueryParameter(Types\ProductTag::NAME);

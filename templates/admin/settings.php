@@ -9,7 +9,7 @@ use Jigoshop\Helper\Render;
  */
 ?>
 <div class="wrap jigoshop">
-	<h1><?php _e('Jigoshop &raquo; Settings', 'jigoshop'); ?></h1>
+	<h1><?php _e('Jigoshop &raquo; Settings', 'jigoshop-ecommerce'); ?></h1>
 	<?php settings_errors(); ?>
 	<?php Render::output('shop/messages', ['messages' => $messages]);
 	$menuContent = '';
@@ -47,7 +47,7 @@ use Jigoshop\Helper\Render;
 		</ul>
 	</nav>
 	<noscript>
-		<div class="alert alert-danger" role="alert"><?php _e('<strong>Warning</strong> Options panel will not work properly without JavaScript.', 'jigoshop'); ?></div>
+		<div class="alert alert-danger" role="alert"><?php _e('<strong>Warning</strong> Options panel will not work properly without JavaScript.', 'jigoshop-ecommerce'); ?></div>
 	</noscript>
 	<div class="tab-content">
 		<div class="tab-pane active">
@@ -55,7 +55,7 @@ use Jigoshop\Helper\Render;
 				<input type="hidden" name="tab" value="<?= $current_tab; ?>" />
 				<?php settings_fields(Settings::NAME); ?>
 				<?php do_settings_sections(Settings::NAME); ?>
-				<button type="submit" class="btn btn-primary pull-right button-save-options"><?= __('Save changes', 'jigoshop'); ?></button>
+				<button type="submit" class="btn btn-primary pull-right button-save-options"><?= __('Save changes', 'jigoshop-ecommerce'); ?></button>
 			</form>
 		</div>
 	</div>

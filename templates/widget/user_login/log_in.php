@@ -21,20 +21,20 @@ do_action('jigoshop_widget_login_before_form');
 ?>
 <form action="<?= $loginUrl; ?>" method="post" class="jigoshop_login_widget">
 	<p>
-		<input type="text" name="log" class="input-text username" placeholder="<?php _e('Username', 'jigoshop'); ?>" />
+		<input type="text" name="log" class="input-text username" placeholder="<?php _e('Username', 'jigoshop-ecommerce'); ?>" />
 	</p>
 	<p>
-		<input type="password" name="pwd" class="input-text password" placeholder="<?php _e('Password', 'jigoshop'); ?>" />
+		<input type="password" name="pwd" class="input-text password" placeholder="<?php _e('Password', 'jigoshop-ecommerce'); ?>" />
 	</p>
 	<p>
-		<input type="submit" name="submit" value="<?php _e('Login', 'jigoshop'); ?>" class="input-submit" />
+		<input type="submit" name="submit" value="<?php _e('Login', 'jigoshop-ecommerce'); ?>" class="input-submit" />
 	</p>
 	<p>
-		<a class="forgot" href="<?= $passwordUrl; ?>"><?php _e('Remind password', 'jigoshop'); ?></a>
+		<a class="forgot" href="<?= $passwordUrl; ?>"><?php _e('Remind password', 'jigoshop-ecommerce'); ?></a>
 	</p>
 	<?php if (\Jigoshop\Helper\Options::getOptions('shopping')['allow_registration']): ?>
 		<p class="register">
-			<?php wp_register(__('New user?', 'jigoshop') . ' ', '', true); ?>
+			<?php wp_register(__('New user?', 'jigoshop-ecommerce') . ' ', '', true); ?>
 		</p>
 	<?php endif; ?>
 </form>
@@ -42,7 +42,7 @@ do_action('jigoshop_widget_login_before_form');
 	<nav role="navigation">
 		<ul class="pagenav">
 			<?php foreach ($links as $title => $href): ?>
-				<li><a title="<?php printf(__('Go to %s', 'jigoshop'), $title); ?>" href="<?= $href; ?>"><?= $title; ?></a></li>
+				<li><a title="<?php printf(__('Go to %s', 'jigoshop-ecommerce'), $title); ?>" href="<?= $href; ?>"><?= $title; ?></a></li>
 			<?php endforeach; ?>
 		</ul>
 	</nav>

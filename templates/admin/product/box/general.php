@@ -12,31 +12,31 @@ use Jigoshop\Helper\Product as ProductHelper;
 	<?php
 	Forms::text([
 		'name' => 'product[regular_price]',
-		'label' => __('Price', 'jigoshop').' ('.Currency::symbol().')',
-		'placeholder' => __('Price not announced', 'jigoshop'),
+		'label' => __('Price', 'jigoshop-ecommerce').' ('.Currency::symbol().')',
+		'placeholder' => __('Price not announced', 'jigoshop-ecommerce'),
 		'classes' => ['product-simple', $product instanceof Product\Purchasable ? '' : 'not-active'],
 		'value' => $product instanceof Product\Purchasable ? $product->getRegularPrice() : 0,
     ]);
 	Forms::text([
 		'name' => 'product[sku]',
-		'label' => __('SKU', 'jigoshop'),
+		'label' => __('SKU', 'jigoshop-ecommerce'),
 		'value' => $product->getSku(),
 		'placeholder' => $product->getId(),
     ]);
 	Forms::text([
 		'name' => 'product[brand]',
-		'label' => __('Brand', 'jigoshop'),
+		'label' => __('Brand', 'jigoshop-ecommerce'),
 		'value' => $product->getBrand(),
     ]);
 	Forms::text([
 		'name' => 'product[gtin]',
-		'label' => __('GTIN', 'jigoshop'),
+		'label' => __('GTIN', 'jigoshop-ecommerce'),
 		'tip' => 'Global Trade Item Number',
 		'value' => $product->getGtin(),
     ]);
 	Forms::text([
 		'name' => 'product[mpn]',
-		'label' => __('MPN', 'jigoshop'),
+		'label' => __('MPN', 'jigoshop-ecommerce'),
 		'tip' => 'Manufacturer Part Number',
 		'value' => $product->getMpn(),
     ]);
@@ -46,22 +46,22 @@ use Jigoshop\Helper\Product as ProductHelper;
 	<?php
 	Forms::text([
 		'name' => 'product[size_weight]',
-		'label' => __('Weight', 'jigoshop').' ('.ProductHelper::weightUnit().')',
+		'label' => __('Weight', 'jigoshop-ecommerce').' ('.ProductHelper::weightUnit().')',
 		'value' => $product->getSize()->getWeight(),
     ]);
 	Forms::text([
 		'name' => 'product[size_length]',
-		'label' => __('Length', 'jigoshop').' ('.ProductHelper::dimensionsUnit().')',
+		'label' => __('Length', 'jigoshop-ecommerce').' ('.ProductHelper::dimensionsUnit().')',
 		'value' => $product->getSize()->getLength(),
     ]);
 	Forms::text([
 		'name' => 'product[size_width]',
-		'label' => __('Width', 'jigoshop').' ('.ProductHelper::dimensionsUnit().')',
+		'label' => __('Width', 'jigoshop-ecommerce').' ('.ProductHelper::dimensionsUnit().')',
 		'value' => $product->getSize()->getWidth(),
     ]);
 	Forms::text([
 		'name' => 'product[size_height]',
-		'label' => __('Height', 'jigoshop').' ('.ProductHelper::dimensionsUnit().')',
+		'label' => __('Height', 'jigoshop-ecommerce').' ('.ProductHelper::dimensionsUnit().')',
 		'value' => $product->getSize()->getHeight(),
     ]);
 	?>
@@ -70,20 +70,20 @@ use Jigoshop\Helper\Product as ProductHelper;
 	<?php
 	Forms::select([
 		'name' => 'product[visibility]',
-		'label' => __('Visibility', 'jigoshop'),
+		'label' => __('Visibility', 'jigoshop-ecommerce'),
 		'options' => [
-			Product::VISIBILITY_PUBLIC => __('Catalog & Search', 'jigoshop'),
-			Product::VISIBILITY_CATALOG => __('Catalog Only', 'jigoshop'),
-			Product::VISIBILITY_SEARCH => __('Search Only', 'jigoshop'),
-			Product::VISIBILITY_NONE => __('Hidden', 'jigoshop')
+			Product::VISIBILITY_PUBLIC => __('Catalog & Search', 'jigoshop-ecommerce'),
+			Product::VISIBILITY_CATALOG => __('Catalog Only', 'jigoshop-ecommerce'),
+			Product::VISIBILITY_SEARCH => __('Search Only', 'jigoshop-ecommerce'),
+			Product::VISIBILITY_NONE => __('Hidden', 'jigoshop-ecommerce')
         ],
 		'value' => $product->getVisibility(),
     ]);
 	Forms::checkbox([
 		'name' => 'product[featured]',
-		'label' => __('Featured?', 'jigoshop'),
+		'label' => __('Featured?', 'jigoshop-ecommerce'),
 		'checked' => $product->isFeatured(),
-		'description' => __('Enable this option to feature this product', 'jigoshop'),
+		'description' => __('Enable this option to feature this product', 'jigoshop-ecommerce'),
     ]);
 	?>
 </fieldset>
@@ -91,12 +91,12 @@ use Jigoshop\Helper\Product as ProductHelper;
     <?php
     Forms::text([
         'name' => 'product[cross_sells]',
-        'label' => __('Cross Sells', 'jigoshop'),
+        'label' => __('Cross Sells', 'jigoshop-ecommerce'),
         'value' => join(',', $product->getCrossSells())
     ]);
     Forms::text([
         'name' => 'product[up_sells]',
-        'label' => __('Up Sells', 'jigoshop'),
+        'label' => __('Up Sells', 'jigoshop-ecommerce'),
         'value' => join(',', $product->getUpSells())
     ]);
     ?>

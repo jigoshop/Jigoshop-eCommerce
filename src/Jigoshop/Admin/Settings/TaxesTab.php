@@ -43,7 +43,7 @@ class TaxesTab implements TabInterface
 			$states = [];
 			foreach (Country::getAllStates() as $country => $stateList) {
 				$states[$country] = [
-					['id' => '', 'text' => _x('All states', 'admin_taxing', 'jigoshop')],
+					['id' => '', 'text' => _x('All states', 'admin_taxing', 'jigoshop-ecommerce')],
                 ];
 				foreach ($stateList as $code => $state) {
 					$states[$country][] = ['id' => $code, 'text' => $state];
@@ -51,7 +51,7 @@ class TaxesTab implements TabInterface
 			}
 
 			$countries = array_merge(
-				['' => __('All countries', 'jigoshop')],
+				['' => __('All countries', 'jigoshop-ecommerce')],
 				Country::getAll()
 			);
 
@@ -75,7 +75,7 @@ class TaxesTab implements TabInterface
 	 */
 	public function getTitle()
 	{
-		return __('Taxes', 'jigoshop');
+		return __('Taxes', 'jigoshop-ecommerce');
 	}
 
 	/**
@@ -98,13 +98,13 @@ class TaxesTab implements TabInterface
 
 		return [
 			[
-				'title' => __('Main', 'jigoshop'),
+				'title' => __('Main', 'jigoshop-ecommerce'),
 				'id' => 'main',
 				'fields' => [
 //                    [
 //                        'id' => 'default_country',
 //                        'name' => '[default_country]',
-//                        'title' => __('Default country', 'jigoshop'),
+//                        'title' => __('Default country', 'jigoshop-ecommerce'),
 //                        'type' => 'select',
 //                        'value' => $this->options['country'],
 //                        'options' => Country::getAll(),
@@ -112,91 +112,91 @@ class TaxesTab implements TabInterface
 //                    [
 //                        'id' => 'default_state',
 //                        'name' => '[default_state]',
-//                        'title' => __('Default state', 'jigoshop'),
+//                        'title' => __('Default state', 'jigoshop-ecommerce'),
 //                        'type' => 'text',
 //                        'value' => $this->options['state'],
 //                    ],
 //                    [
 //                        'id' => 'default_postcode',
 //                        'name' => '[default_postcode]',
-//                        'title' => __('Default postcode', 'jigoshop'),
+//                        'title' => __('Default postcode', 'jigoshop-ecommerce'),
 //                        'type' => 'text',
 //                        'value' => $this->options['postcode'],
 //                    ],
 					[
 						'name' => '[shipping]',
-						'title' => __('Taxes based on shipping country?', 'jigoshop'),
+						'title' => __('Taxes based on shipping country?', 'jigoshop-ecommerce'),
 						'type' => 'checkbox',
-						'description' => __('By default, taxes based on billing country.', 'jigoshop'),
+						'description' => __('By default, taxes based on billing country.', 'jigoshop-ecommerce'),
 						'checked' => $this->options['shipping'],
 						'classes' => ['switch-medium'],
 					],
 				],
 			],
             [
-                'title' => __('Prices', 'jigoshop'),
+                'title' => __('Prices', 'jigoshop-ecommerce'),
                 'id' => 'prices',
                 'fields' => [
                     [
                         'name' => '[prices_entered]',
-                        'title' => __('Entered prices tax status', 'jigoshop'),
+                        'title' => __('Entered prices tax status', 'jigoshop-ecommerce'),
                         'type' => 'select',
                         'value' => $this->options['prices_entered'],
                         'options' => [
-                            'without_tax' => __('I will enter prices without tax', 'jigoshop'),
-                            'with_tax' => __('I will enter prices with tax included', 'jigoshop'),
+                            'without_tax' => __('I will enter prices without tax', 'jigoshop-ecommerce'),
+                            'with_tax' => __('I will enter prices with tax included', 'jigoshop-ecommerce'),
                         ]
                     ],
                     [
                         'name' => '[item_prices]',
-                        'title' => __('Show prices in cart and checkout', 'jigoshop'),
+                        'title' => __('Show prices in cart and checkout', 'jigoshop-ecommerce'),
                         'type' => 'select',
                         'value' => $this->options['item_prices'],
                         'options' => [
-                            'including_tax' => __('Including tax', 'jigoshop'),
-                            'excluding_tax' => __('Excluding tax', 'jigoshop'),
-                            'both_including_first' => __('Both (including tax first)', 'jigoshop'),
-                            'both_excluding_first' => __('Both (excluding tax first)', 'jigoshop')
+                            'including_tax' => __('Including tax', 'jigoshop-ecommerce'),
+                            'excluding_tax' => __('Excluding tax', 'jigoshop-ecommerce'),
+                            'both_including_first' => __('Both (including tax first)', 'jigoshop-ecommerce'),
+                            'both_excluding_first' => __('Both (excluding tax first)', 'jigoshop-ecommerce')
                         ]
                     ],
                     [
                         'name' => '[product_prices]',
-                        'title' => __('Show product prices', 'jigoshop'),
+                        'title' => __('Show product prices', 'jigoshop-ecommerce'),
                         'type' => 'select',
                         'value' => $this->options['product_prices'],
                         'options' => [
-                            'including_tax' => __('Including tax', 'jigoshop'),
-                            'excluding_tax' => __('Excluding tax', 'jigoshop'),
-                            'both_including_first' => __('Both (including tax first)', 'jigoshop'),
-                            'both_excluding_first' => __('Both (excluding tax first)', 'jigoshop')
+                            'including_tax' => __('Including tax', 'jigoshop-ecommerce'),
+                            'excluding_tax' => __('Excluding tax', 'jigoshop-ecommerce'),
+                            'both_including_first' => __('Both (including tax first)', 'jigoshop-ecommerce'),
+                            'both_excluding_first' => __('Both (excluding tax first)', 'jigoshop-ecommerce')
                         ]
                     ],
                     [
                         'name' => '[show_suffix]',
-                        'title' => __('Show tax suffix', 'jigoshop'),
+                        'title' => __('Show tax suffix', 'jigoshop-ecommerce'),
                         'type' => 'select',
                         'value' => $this->options['show_suffix'],
                         'options' => [
-                            'in_cart_totals' => __('In cart totals', 'jigoshop'),
-                            'everywhere' => __('Everywhere', 'jigoshop'),
+                            'in_cart_totals' => __('In cart totals', 'jigoshop-ecommerce'),
+                            'everywhere' => __('Everywhere', 'jigoshop-ecommerce'),
                         ]
                     ],
                     [
                         'name' => '[suffix_for_included]',
-                        'title' => __('Suffix for prices with tax included', 'jigoshop'),
+                        'title' => __('Suffix for prices with tax included', 'jigoshop-ecommerce'),
                         'type' => 'text',
                         'value' => $this->options['suffix_for_included'],
                     ],
                     [
                         'name' => '[suffix_for_excluded]',
-                        'title' => __('Suffix for prices without tax', 'jigoshop'),
+                        'title' => __('Suffix for prices without tax', 'jigoshop-ecommerce'),
                         'type' => 'text',
                         'value' => $this->options['suffix_for_excluded'],
                     ],
                 ]
             ],
 			[
-				'title' => __('Classes', 'jigoshop'),
+				'title' => __('Classes', 'jigoshop-ecommerce'),
 				'id' => 'classes',
 				'fields' => [
 					[
@@ -208,7 +208,7 @@ class TaxesTab implements TabInterface
                 ],
             ],
 			[
-				'title' => __('Rules', 'jigoshop'),
+				'title' => __('Rules', 'jigoshop-ecommerce'),
 				'id' => 'rules',
 				'fields' => [
 					[
@@ -220,19 +220,19 @@ class TaxesTab implements TabInterface
                 ],
             ],
 			[
-				'title' => __('New products', 'jigoshop'),
-				'description' => __('This section defines default tax settings for new products.', 'jigoshop'),
+				'title' => __('New products', 'jigoshop-ecommerce'),
+				'description' => __('This section defines default tax settings for new products.', 'jigoshop-ecommerce'),
 				'id' => 'defaults',
 				'fields' => [
 					[
-						'title' => __('Is taxable?', 'jigoshop'),
+						'title' => __('Is taxable?', 'jigoshop-ecommerce'),
 						'name' => '[defaults][taxable]',
 						'type' => 'checkbox',
 						'checked' => $this->options['defaults']['taxable'],
 						'classes' => ['switch-medium'],
                     ],
 					[
-						'title' => __('Tax classes', 'jigoshop'),
+						'title' => __('Tax classes', 'jigoshop-ecommerce'),
 						'name' => '[defaults][classes]',
 						'type' => 'select',
 						'multiple' => true,
@@ -258,7 +258,7 @@ class TaxesTab implements TabInterface
 			$classes[$class['class']] = $class['label'];
 		}
 		$countries = array_merge(
-			['' => __('All countries', 'jigoshop')],
+			['' => __('All countries', 'jigoshop-ecommerce')],
 			Country::getAll()
 		);
 		Render::output('admin/settings/tax/rules', [
@@ -324,7 +324,7 @@ class TaxesTab implements TabInterface
 		unset($settings['rules']);
 
 		//if (!in_array($settings['price_tax'], array('with_tax', 'without_tax'))) {
-		//	$this->messages->addWarning(sprintf(__('Invalid prices option: "%s". Value set to %s.', 'jigoshop'), $settings['price_tax'], __('Without tax', 'jigoshop')));
+		//	$this->messages->addWarning(sprintf(__('Invalid prices option: "%s". Value set to %s.', 'jigoshop-ecommerce'), $settings['price_tax'], __('Without tax', 'jigoshop-ecommerce')));
 		//	$settings['price_tax'] = 'without_tax';
 		//}
 

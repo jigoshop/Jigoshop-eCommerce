@@ -22,6 +22,6 @@ $product = $variation ? $variation->getProduct() : $product;
 	<td class="quantity"><?php Forms::text(['name' => 'quantity['.$id.']', 'value' => $item->getQuantity()]); ?></td>
 	<td class="total"><?php Forms::constant(['name' => 'order[items]['.$id.'][total]', 'value' => Product::formatPrice($item->getCost())]); ?></td>
 	<td class="actions">
-		<a href="" class="close remove"><span aria-hidden="true">&times;</span><span class="sr-only"><?php _e('Remove', 'jigoshop'); ?></span></a>
+		<a href="" class="close remove"><span aria-hidden="true">&times;</span><span class="sr-only"><?php _e('Remove', 'jigoshop-ecommerce'); ?></span></a>
 	</td>
 </tr>

@@ -60,7 +60,7 @@ class PayPal implements Method2, Processable
 	 */
 	public function getName()
 	{
-		return $this->wp->isAdmin() ? $this->getLogoImage().' '.__('PayPal', 'jigoshop') : $this->settings['title'];
+		return $this->wp->isAdmin() ? $this->getLogoImage().' '.__('PayPal', 'jigoshop-ecommerce') : $this->settings['title'];
 	}
 
 	private function getLogoImage()
@@ -89,18 +89,15 @@ class PayPal implements Method2, Processable
 	}
 
 	public function isConfigured() {
-		if(isset($this->settings['enabled']) && $this->settings['enabled']) {
-			if(isset($this->settings['test_mode']) && $this->settings['test_mode']) {
-				if(isset($this->settings['test_email']) && $this->settings['test_email']) {
-					return true;
-				}
-
-				return false;
-			}
-
-			if(isset($this->settings['email']) && $this->settings['email']) {
+		if(isset($this->settings['test_mode']) && $this->settings['test_mode']) {
+			if(isset($this->settings['test_email']) && $this->settings['test_email']) {
 				return true;
 			}
+			return false;
+		}
+
+		if(isset($this->settings['email']) && $this->settings['email']) {
+			return true;
 		}
 
 		return false;
@@ -130,58 +127,58 @@ class PayPal implements Method2, Processable
 		return [
 			[
 				'name' => sprintf('[%s][enabled]', self::ID),
-				'title' => __('Is enabled?', 'jigoshop'),
+				'title' => __('Is enabled?', 'jigoshop-ecommerce'),
 				'type' => 'checkbox',
 				'checked' => $this->settings['enabled'],
 				'classes' => ['switch-medium'],
             ],
 			[
 				'name' => sprintf('[%s][title]', self::ID),
-				'title' => __('Title', 'jigoshop'),
+				'title' => __('Title', 'jigoshop-ecommerce'),
 				'type' => 'text',
 				'value' => $this->settings['title'],
             ],
 			[
 				'name' => sprintf('[%s][description]', self::ID),
-				'title' => __('Description', 'jigoshop'),
-				'tip' => sprintf(__('Allowed HTML tags are: %s', 'jigoshop'), '<p>, <a>, <strong>, <em>, <b>, <i>'),
+				'title' => __('Description', 'jigoshop-ecommerce'),
+				'tip' => sprintf(__('Allowed HTML tags are: %s', 'jigoshop-ecommerce'), '<p>, <a>, <strong>, <em>, <b>, <i>'),
 				'type' => 'text',
 				'value' => $this->settings['description'],
             ],
 			[
 				'name' => sprintf('[%s][email]', self::ID),
-				'title' => __('PayPal email address', 'jigoshop'),
-				'tip' => __('Please enter your PayPal email address; this is needed in order to take payment!', 'jigoshop'),
+				'title' => __('PayPal email address', 'jigoshop-ecommerce'),
+				'tip' => __('Please enter your PayPal email address; this is needed in order to take payment!', 'jigoshop-ecommerce'),
 				'type' => 'text',
 				'value' => $this->settings['email'],
             ],
 			[
 				'name' => sprintf('[%s][send_shipping]', self::ID),
-				'title' => __('Send shipping details to PayPal', 'jigoshop'),
-				'tip' => __('If your checkout page does not ask for shipping details, or if you do not want to send shipping information to PayPal, set this option to no. If you enable this option PayPal may restrict where things can be sent, and will prevent some orders going through for your protection.', 'jigoshop'),
+				'title' => __('Send shipping details to PayPal', 'jigoshop-ecommerce'),
+				'tip' => __('If your checkout page does not ask for shipping details, or if you do not want to send shipping information to PayPal, set this option to no. If you enable this option PayPal may restrict where things can be sent, and will prevent some orders going through for your protection.', 'jigoshop-ecommerce'),
 				'type' => 'checkbox',
 				'checked' => $this->settings['send_shipping'],
 				'classes' => ['switch-medium'],
             ],
 			[
 				'name' => sprintf('[%s][force_payment]', self::ID),
-				'title' => __('Force payment', 'jigoshop'),
-				'tip' => __('If product totals are free and shipping is also free (excluding taxes), this will force 0.01 to allow paypal to process payment. Shop owner is responsible for refunding customer.', 'jigoshop'),
+				'title' => __('Force payment', 'jigoshop-ecommerce'),
+				'tip' => __('If product totals are free and shipping is also free (excluding taxes), this will force 0.01 to allow paypal to process payment. Shop owner is responsible for refunding customer.', 'jigoshop-ecommerce'),
 				'type' => 'checkbox',
 				'checked' => $this->settings['force_payment'],
 				'classes' => ['switch-medium'],
             ],
 			[
 				'name' => sprintf('[%s][test_mode]', self::ID),
-				'title' => __('Enable Sandbox', 'jigoshop'),
+				'title' => __('Enable Sandbox', 'jigoshop-ecommerce'),
 				'type' => 'checkbox',
 				'checked' => $this->settings['test_mode'],
 				'classes' => ['switch-medium'],
             ],
 			[
 				'name' => sprintf('[%s][test_email]', self::ID),
-				'title' => __('PayPal test email address', 'jigoshop'),
-				'tip' => __('Please enter your test PayPal email address; this is needed for testing purposes and used when test mode is enabled.', 'jigoshop'),
+				'title' => __('PayPal test email address', 'jigoshop-ecommerce'),
+				'tip' => __('Please enter your test PayPal email address; this is needed for testing purposes and used when test mode is enabled.', 'jigoshop-ecommerce'),
 				'type' => 'text',
 				'value' => $this->settings['test_email'],
             ],
@@ -204,7 +201,7 @@ class PayPal implements Method2, Processable
 		if (!Validation::isEmail($settings['email'])) {
 			$settings['email'] = '';
 			if ($settings['enabled']) {
-				$this->messages->addWarning(__('Email address is not valid.', 'jigoshop'));
+				$this->messages->addWarning(__('Email address is not valid.', 'jigoshop-ecommerce'));
 			}
 		}
 
@@ -215,7 +212,7 @@ class PayPal implements Method2, Processable
 		if (!Validation::isEmail($settings['test_email'])) {
 			$settings['test_email'] = '';
 			if ($settings['enabled']) {
-				$this->messages->addWarning(__('Test email address is not valid.', 'jigoshop'));
+				$this->messages->addWarning(__('Test email address is not valid.', 'jigoshop-ecommerce'));
 			}
 		}
 
@@ -336,7 +333,7 @@ class PayPal implements Method2, Processable
 							$value = $item->getMeta($attribute->getAttribute()->getSlug())->getValue();
 						}
 
-						return sprintf(_x('%s: %s', 'product_variation', 'jigoshop'), $attribute->getAttribute()->getLabel(), $attribute->getAttribute()
+						return sprintf(_x('%s: %s', 'product_variation', 'jigoshop-ecommerce'), $attribute->getAttribute()->getLabel(), $attribute->getAttribute()
 							->getOption($value)
 							->getLabel());
 					}, $product->getVariation($item->getMeta('variation_id')->getValue())->getAttributes()))).')';
@@ -351,7 +348,7 @@ class PayPal implements Method2, Processable
 		// Shipping Cost
 		if ($this->options->get('shipping.enabled') && $order->getShippingPrice() > 0) {
 			$item_loop++;
-			$args['item_name_'.$item_loop] = __('Shipping cost', 'jigoshop');
+			$args['item_name_'.$item_loop] = __('Shipping cost', 'jigoshop-ecommerce');
 			$args['quantity_'.$item_loop] = '1';
 			$args['amount_'.$item_loop] = number_format($order->getShippingPrice(), $this->decimals);
 		}
@@ -361,13 +358,13 @@ class PayPal implements Method2, Processable
 
 		if ($this->settings['force_payment'] && $order->getTotal() == 0) {
 			$item_loop++;
-			$args['item_name_'.$item_loop] = __('Force payment on free orders', 'jigoshop');
+			$args['item_name_'.$item_loop] = __('Force payment on free orders', 'jigoshop-ecommerce');
 			$args['quantity_'.$item_loop] = '1';
 			$args['amount_'.$item_loop] = 0.01;
 		}
 
 		$args = $this->wp->applyFilters('jigoshop\paypal\args', $args);
-		$order->setStatus(Order\Status::PENDING, __('Waiting for PayPal payment.', 'jigoshop'));
+		$order->setStatus(Order\Status::PENDING, __('Waiting for PayPal payment.', 'jigoshop-ecommerce'));
 
 		return $url.http_build_query($args);
 	}
@@ -397,13 +394,13 @@ class PayPal implements Method2, Processable
 						case 'completed':
 							if (!in_array(strtolower($posted['txn_type']), $accepted_types)) {
 								// Put this order on-hold for manual checking
-								$order->setStatus(Order\Status::ON_HOLD, sprintf(__('PayPal Validation Error: Unknown "txn_type" of "%s" for Order ID: %s.', 'jigoshop'), $posted['txn_type'], $posted['custom']));
+								$order->setStatus(Order\Status::ON_HOLD, sprintf(__('PayPal Validation Error: Unknown "txn_type" of "%s" for Order ID: %s.', 'jigoshop-ecommerce'), $posted['txn_type'], $posted['custom']));
 								break;
 							}
 
 							if ($order->getNumber() !== $posted['invoice']) {
 								// Put this order on-hold for manual checking
-								$order->setStatus(Order\Status::ON_HOLD, sprintf(__('PayPal Validation Error: Order Invoice Number does NOT match PayPal posted invoice (%s) for Order ID: .', 'jigoshop'), $posted['invoice'], $posted['custom']));
+								$order->setStatus(Order\Status::ON_HOLD, sprintf(__('PayPal Validation Error: Order Invoice Number does NOT match PayPal posted invoice (%s) for Order ID: .', 'jigoshop-ecommerce'), $posted['invoice'], $posted['custom']));
 								$service->save($order);
 								exit;
 							}
@@ -411,33 +408,33 @@ class PayPal implements Method2, Processable
 							// Validate Amount
 							if (number_format($order->getTotal(), $this->decimals, '.', '') != $posted['mc_gross']) {
 								// Put this order on-hold for manual checking
-								$order->setStatus(Order\Status::ON_HOLD, sprintf(__('PayPal Validation Error: Payment amounts do not match initial order (gross %s).', 'jigoshop'), $posted['mc_gross']));
+								$order->setStatus(Order\Status::ON_HOLD, sprintf(__('PayPal Validation Error: Payment amounts do not match initial order (gross %s).', 'jigoshop-ecommerce'), $posted['mc_gross']));
 								$service->save($order);
 								exit;
 							}
 
 							if (strcasecmp(trim($posted['business']), trim($merchant)) != 0) {
 								// Put this order on-hold for manual checking
-								$order->setStatus(Order\Status::ON_HOLD, sprintf(__('PayPal Validation Error: Payment Merchant email received does not match PayPal Gateway settings. (%s)', 'jigoshop'), $posted['business']));
+								$order->setStatus(Order\Status::ON_HOLD, sprintf(__('PayPal Validation Error: Payment Merchant email received does not match PayPal Gateway settings. (%s)', 'jigoshop-ecommerce'), $posted['business']));
 								$service->save($order);
 								exit;
 							}
 
 							if ($posted['mc_currency'] != $this->options->get('general.currency')) {
 								// Put this order on-hold for manual checking
-								$order->setStatus(Order\Status::ON_HOLD, sprintf(__('PayPal Validation Error: Payment currency received (%s) does not match Shop currency.', 'jigoshop'), $posted['mc_currency']));
+								$order->setStatus(Order\Status::ON_HOLD, sprintf(__('PayPal Validation Error: Payment currency received (%s) does not match Shop currency.', 'jigoshop-ecommerce'), $posted['mc_currency']));
 								$service->save($order);
 								exit;
 							}
 
-							$order->setStatus(OrderHelper::getStatusAfterCompletePayment($order), __('PayPal payment completed', 'jigoshop'));
+							$order->setStatus(OrderHelper::getStatusAfterCompletePayment($order), __('PayPal payment completed', 'jigoshop-ecommerce'));
 							break;
 						case 'denied':
 						case 'expired':
 						case 'failed':
 						case 'voided':
 							// Failed order
-							$order->setStatus(Order\Status::ON_HOLD, sprintf(__('Payment %s via PayPal.', 'jigoshop'), strtolower($posted['payment_status'])));
+							$order->setStatus(Order\Status::ON_HOLD, sprintf(__('Payment %s via PayPal.', 'jigoshop-ecommerce'), strtolower($posted['payment_status'])));
 							break;
 						case 'refunded':
 						case 'reversed':

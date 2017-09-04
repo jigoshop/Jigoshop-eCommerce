@@ -1,0 +1,1016 @@
+[
+    {
+        "name": "jigoshop/wpal",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/jigoshop/WPAL.git",
+            "reference": "0950a3677e3b6a3dcbc2c420ef3de759b3335417"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/jigoshop/WPAL/zipball/0950a3677e3b6a3dcbc2c420ef3de759b3335417",
+            "reference": "0950a3677e3b6a3dcbc2c420ef3de759b3335417",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">= 5.3.3"
+        },
+        "time": "2017-03-10 15:10:30",
+        "type": "library",
+        "installation-source": "source",
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Amadeusz Starzykiewicz",
+                "email": "megawebmaster@gmail.com"
+            },
+            {
+                "name": "Jigoshop Ltd",
+                "email": "support@jigoshop.com"
+            }
+        ],
+        "description": "WordPress Abstraction Layer"
+    },
+    {
+        "name": "nitra/php-min",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/nitra/PhpMin.git",
+            "reference": "f2d5e3f16ca837a20bbe11ebafe6143b59de3497"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/nitra/PhpMin/zipball/f2d5e3f16ca837a20bbe11ebafe6143b59de3497",
+            "reference": "f2d5e3f16ca837a20bbe11ebafe6143b59de3497",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3"
+        },
+        "time": "2013-03-02 05:59:09",
+        "type": "library",
+        "installation-source": "source",
+        "autoload": {
+            "psr-0": {
+                "CssMin": "CssMin/",
+                "JSMinPlus": "JSMinPlus/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Joe Scylla",
+                "email": "joe.scylla@gmail.com",
+                "homepage": "https://profiles.google.com/joe.scylla"
+            },
+            {
+                "name": "Tino Zijdel",
+                "email": "crisp@tweakers.net",
+                "homepage": "https://raw.github.com/mrclay/minify/master/min/lib/JSMinPlus.php"
+            }
+        ],
+        "description": "Minifying CSS, JS",
+        "homepage": "http://code.google.com/p/cssmin/",
+        "keywords": [
+            "cssmin",
+            "jsminplus",
+            "minify"
+        ]
+    },
+    {
+        "name": "tuupola/base62",
+        "version": "0.7.0",
+        "version_normalized": "0.7.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/tuupola/base62.git",
+            "reference": "1c9501ccfd11f68562c3c39d05664debe56b9084"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/tuupola/base62/zipball/1c9501ccfd11f68562c3c39d05664debe56b9084",
+            "reference": "1c9501ccfd11f68562c3c39d05664debe56b9084",
+            "shasum": ""
+        },
+        "require": {
+            "php": "^5.5 || ^7.0"
+        },
+        "require-dev": {
+            "paragonie/random_compat": "^2.0",
+            "phpunit/phpunit": "^4.8",
+            "squizlabs/php_codesniffer": "^2.5"
+        },
+        "time": "2016-10-09 19:31:03",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Tuupola\\": "src"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Mika Tuupola",
+                "email": "tuupola@appelsiini.net",
+                "homepage": "http://www.appelsiini.net/",
+                "role": "Developer"
+            }
+        ],
+        "description": "Base62 encoder and decoder for arbitrary data",
+        "homepage": "https://github.com/tuupola/base62",
+        "keywords": [
+            "base62"
+        ]
+    },
+    {
+        "name": "psr/log",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/php-fig/log.git",
+            "reference": "4ebe3a8bf773a19edfe0a84b6585ba3d401b724d"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/php-fig/log/zipball/4ebe3a8bf773a19edfe0a84b6585ba3d401b724d",
+            "reference": "4ebe3a8bf773a19edfe0a84b6585ba3d401b724d",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.0"
+        },
+        "time": "2016-10-10 12:19:37",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "1.0.x-dev"
+            }
+        },
+        "installation-source": "source",
+        "autoload": {
+            "psr-4": {
+                "Psr\\Log\\": "Psr/Log/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "PHP-FIG",
+                "homepage": "http://www.php-fig.org/"
+            }
+        ],
+        "description": "Common interface for logging libraries",
+        "homepage": "https://github.com/php-fig/log",
+        "keywords": [
+            "log",
+            "psr",
+            "psr-3"
+        ]
+    },
+    {
+        "name": "erusev/parsedown",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/erusev/parsedown.git",
+            "reference": "728952b90a333b5c6f77f06ea9422b94b585878d"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/erusev/parsedown/zipball/728952b90a333b5c6f77f06ea9422b94b585878d",
+            "reference": "728952b90a333b5c6f77f06ea9422b94b585878d",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.0"
+        },
+        "time": "2017-05-14 14:47:48",
+        "type": "library",
+        "installation-source": "source",
+        "autoload": {
+            "psr-0": {
+                "Parsedown": ""
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Emanuil Rusev",
+                "email": "hello@erusev.com",
+                "homepage": "http://erusev.com"
+            }
+        ],
+        "description": "Parser for Markdown.",
+        "homepage": "http://parsedown.org",
+        "keywords": [
+            "markdown",
+            "parser"
+        ]
+    },
+    {
+        "name": "psr/simple-cache",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/php-fig/simple-cache.git",
+            "reference": "753fa598e8f3b9966c886fe13f370baa45ef0e24"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/php-fig/simple-cache/zipball/753fa598e8f3b9966c886fe13f370baa45ef0e24",
+            "reference": "753fa598e8f3b9966c886fe13f370baa45ef0e24",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.0"
+        },
+        "time": "2017-01-02 13:31:39",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "1.0.x-dev"
+            }
+        },
+        "installation-source": "source",
+        "autoload": {
+            "psr-4": {
+                "Psr\\SimpleCache\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "PHP-FIG",
+                "homepage": "http://www.php-fig.org/"
+            }
+        ],
+        "description": "Common interfaces for simple caching",
+        "keywords": [
+            "cache",
+            "caching",
+            "psr",
+            "psr-16",
+            "simple-cache"
+        ]
+    },
+    {
+        "name": "psr/cache",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/php-fig/cache.git",
+            "reference": "78c5a01ddbf11cf731f1338a4f5aba23b14d5b47"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/php-fig/cache/zipball/78c5a01ddbf11cf731f1338a4f5aba23b14d5b47",
+            "reference": "78c5a01ddbf11cf731f1338a4f5aba23b14d5b47",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.0"
+        },
+        "time": "2016-10-13 14:48:10",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "1.0.x-dev"
+            }
+        },
+        "installation-source": "source",
+        "autoload": {
+            "psr-4": {
+                "Psr\\Cache\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "PHP-FIG",
+                "homepage": "http://www.php-fig.org/"
+            }
+        ],
+        "description": "Common interface for caching libraries",
+        "keywords": [
+            "cache",
+            "psr",
+            "psr-6"
+        ]
+    },
+    {
+        "name": "phpfastcache/phpfastcache",
+        "version": "v7.x-dev",
+        "version_normalized": "7.9999999.9999999.9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/PHPSocialNetwork/phpfastcache.git",
+            "reference": "23c54c1251c8983e3163cf0b11cbbc2c71422669"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/PHPSocialNetwork/phpfastcache/zipball/23c54c1251c8983e3163cf0b11cbbc2c71422669",
+            "reference": "23c54c1251c8983e3163cf0b11cbbc2c71422669",
+            "shasum": ""
+        },
+        "require": {
+            "ext-json": "*",
+            "ext-mbstring": "*",
+            "php": "^5.6 || ^7.0",
+            "psr/cache": "~1.0.0",
+            "psr/simple-cache": "~1.0.0"
+        },
+        "conflict": {
+            "doctrine/couchdb": "*"
+        },
+        "suggest": {
+            "ext-apc": "*",
+            "ext-intl": "*",
+            "ext-leveldb": "*",
+            "ext-memcache": "*",
+            "ext-memcached": "*",
+            "ext-redis": "*",
+            "ext-sqlite": "*",
+            "ext-wincache": "*",
+            "ext-xcache": "*",
+            "mongodb/mongodb": "^1.1",
+            "phpfastcache/couchdb": "~1.0.0",
+            "phpfastcache/phpssdb": "~1.0.0",
+            "predis/predis": "~1.1.0"
+        },
+        "time": "2017-05-11 21:38:24",
+        "type": "library",
+        "installation-source": "source",
+        "autoload": {
+            "psr-4": {
+                "phpFastCache\\": "src/phpFastCache/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Khoa Bui",
+                "email": "khoaofgod@gmail.com",
+                "homepage": "http://www.phpfastcache.com",
+                "role": "Developer"
+            },
+            {
+                "name": "Georges.L",
+                "email": "contact@geolim4.com",
+                "homepage": "https://github.com/Geolim4",
+                "role": "Developer"
+            }
+        ],
+        "description": "PHP Cache Class - Reduce your database call using cache system. PhpFastCache handles a lot of drivers such as Apc(u), Cassandra, CouchBase, Couchdb, Mongodb, Files, (P)redis, Leveldb, Memcache(d), Ssdb, Sqlite, Wincache, Xcache, Zend Data Cache.",
+        "homepage": "http://www.phpfastcache.com",
+        "keywords": [
+            "LevelDb",
+            "apc",
+            "apcu",
+            "cache",
+            "cache class",
+            "caching",
+            "cassandra",
+            "cookie",
+            "couchbase",
+            "couchdb",
+            "files cache",
+            "memcache",
+            "memcached",
+            "mongodb",
+            "mysql cache",
+            "pdo cache",
+            "php cache",
+            "predis",
+            "redis",
+            "ssdb",
+            "wincache",
+            "xcache",
+            "zend",
+            "zend data cache",
+            "zend disk cache",
+            "zend memory cache",
+            "zend server"
+        ]
+    },
+    {
+        "name": "spatie/array-to-xml",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/spatie/array-to-xml.git",
+            "reference": "658681c5020aa4367a6a07e99a122da91ab4679a"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/spatie/array-to-xml/zipball/658681c5020aa4367a6a07e99a122da91ab4679a",
+            "reference": "658681c5020aa4367a6a07e99a122da91ab4679a",
+            "shasum": ""
+        },
+        "require": {
+            "php": "^7.0"
+        },
+        "require-dev": {
+            "mockery/mockery": "0.9.*",
+            "phpunit/phpunit": "^5.7",
+            "spatie/phpunit-snapshot-assertions": "^0.4.1"
+        },
+        "time": "2017-05-30 18:52:30",
+        "type": "library",
+        "installation-source": "source",
+        "autoload": {
+            "psr-4": {
+                "Spatie\\ArrayToXml\\": "src"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Freek Van der Herten",
+                "email": "freek@spatie.be",
+                "homepage": "https://murze.be",
+                "role": "Developer"
+            }
+        ],
+        "description": "Convert an array to xml",
+        "homepage": "https://github.com/spatie/array-to-xml",
+        "keywords": [
+            "array",
+            "convert",
+            "xml"
+        ]
+    },
+    {
+        "name": "psr/container",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/php-fig/container.git",
+            "reference": "2cc4a01788191489dc7459446ba832fa79a216a7"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/php-fig/container/zipball/2cc4a01788191489dc7459446ba832fa79a216a7",
+            "reference": "2cc4a01788191489dc7459446ba832fa79a216a7",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.0"
+        },
+        "time": "2017-06-28 15:35:32",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "1.0.x-dev"
+            }
+        },
+        "installation-source": "source",
+        "autoload": {
+            "psr-4": {
+                "Psr\\Container\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "PHP-FIG",
+                "homepage": "http://www.php-fig.org/"
+            }
+        ],
+        "description": "Common Container Interface (PHP FIG PSR-11)",
+        "homepage": "https://github.com/php-fig/container",
+        "keywords": [
+            "PSR-11",
+            "container",
+            "container-interface",
+            "container-interop",
+            "psr"
+        ]
+    },
+    {
+        "name": "container-interop/container-interop",
+        "version": "1.2.0",
+        "version_normalized": "1.2.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/container-interop/container-interop.git",
+            "reference": "79cbf1341c22ec75643d841642dd5d6acd83bdb8"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/container-interop/container-interop/zipball/79cbf1341c22ec75643d841642dd5d6acd83bdb8",
+            "reference": "79cbf1341c22ec75643d841642dd5d6acd83bdb8",
+            "shasum": ""
+        },
+        "require": {
+            "psr/container": "^1.0"
+        },
+        "time": "2017-02-14 19:40:03",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Interop\\Container\\": "src/Interop/Container/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "description": "Promoting the interoperability of container objects (DIC, SL, etc.)",
+        "homepage": "https://github.com/container-interop/container-interop"
+    },
+    {
+        "name": "nikic/fast-route",
+        "version": "v1.2.0",
+        "version_normalized": "1.2.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/nikic/FastRoute.git",
+            "reference": "b5f95749071c82a8e0f58586987627054400cdf6"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/nikic/FastRoute/zipball/b5f95749071c82a8e0f58586987627054400cdf6",
+            "reference": "b5f95749071c82a8e0f58586987627054400cdf6",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.4.0"
+        },
+        "time": "2017-01-19 11:35:12",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "FastRoute\\": "src/"
+            },
+            "files": [
+                "src/functions.php"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "BSD-3-Clause"
+        ],
+        "authors": [
+            {
+                "name": "Nikita Popov",
+                "email": "nikic@php.net"
+            }
+        ],
+        "description": "Fast request router for PHP",
+        "keywords": [
+            "router",
+            "routing"
+        ]
+    },
+    {
+        "name": "psr/http-message",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/php-fig/http-message.git",
+            "reference": "f6561bf28d520154e4b0ec72be95418abe6d9363"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/php-fig/http-message/zipball/f6561bf28d520154e4b0ec72be95418abe6d9363",
+            "reference": "f6561bf28d520154e4b0ec72be95418abe6d9363",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.0"
+        },
+        "time": "2016-08-06 14:39:51",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "1.0.x-dev"
+            }
+        },
+        "installation-source": "source",
+        "autoload": {
+            "psr-4": {
+                "Psr\\Http\\Message\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "PHP-FIG",
+                "homepage": "http://www.php-fig.org/"
+            }
+        ],
+        "description": "Common interface for HTTP messages",
+        "homepage": "https://github.com/php-fig/http-message",
+        "keywords": [
+            "http",
+            "http-message",
+            "psr",
+            "psr-7",
+            "request",
+            "response"
+        ]
+    },
+    {
+        "name": "pimple/pimple",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/silexphp/Pimple.git",
+            "reference": "2af86acb99d69fda50fe441cc45574d70c6267b8"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/silexphp/Pimple/zipball/2af86acb99d69fda50fe441cc45574d70c6267b8",
+            "reference": "2af86acb99d69fda50fe441cc45574d70c6267b8",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.0"
+        },
+        "require-dev": {
+            "symfony/phpunit-bridge": "^3.2"
+        },
+        "time": "2017-06-04 15:04:52",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "3.0.x-dev"
+            }
+        },
+        "installation-source": "source",
+        "autoload": {
+            "psr-0": {
+                "Pimple": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Fabien Potencier",
+                "email": "fabien@symfony.com"
+            }
+        ],
+        "description": "Pimple, a simple Dependency Injection Container",
+        "homepage": "http://pimple.sensiolabs.org",
+        "keywords": [
+            "container",
+            "dependency injection"
+        ]
+    },
+    {
+        "name": "firebase/php-jwt",
+        "version": "v4.0.0",
+        "version_normalized": "4.0.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/firebase/php-jwt.git",
+            "reference": "dccf163dc8ed7ed6a00afc06c51ee5186a428d35"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/firebase/php-jwt/zipball/dccf163dc8ed7ed6a00afc06c51ee5186a428d35",
+            "reference": "dccf163dc8ed7ed6a00afc06c51ee5186a428d35",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.0"
+        },
+        "time": "2016-07-18 04:51:16",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Firebase\\JWT\\": "src"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "BSD-3-Clause"
+        ],
+        "authors": [
+            {
+                "name": "Neuman Vong",
+                "email": "neuman+pear@twilio.com",
+                "role": "Developer"
+            },
+            {
+                "name": "Anant Narayanan",
+                "email": "anant@php.net",
+                "role": "Developer"
+            }
+        ],
+        "description": "A simple library to encode and decode JSON Web Tokens (JWT) in PHP. Should conform to the current spec.",
+        "homepage": "https://github.com/firebase/php-jwt"
+    },
+    {
+        "name": "tuupola/slim-jwt-auth",
+        "version": "2.x-dev",
+        "version_normalized": "2.9999999.9999999.9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/tuupola/slim-jwt-auth.git",
+            "reference": "04ad891db9bf51575bcd5dedb9b7a9adf6c3826f"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/tuupola/slim-jwt-auth/zipball/04ad891db9bf51575bcd5dedb9b7a9adf6c3826f",
+            "reference": "04ad891db9bf51575bcd5dedb9b7a9adf6c3826f",
+            "shasum": ""
+        },
+        "require": {
+            "firebase/php-jwt": "^3.0 || ^4.0",
+            "php": "^5.5 || ^7.0",
+            "psr/http-message": "^1.0",
+            "psr/log": "^1.0"
+        },
+        "require-dev": {
+            "phpunit/phpunit": "^4.6",
+            "squizlabs/php_codesniffer": "^2.3",
+            "zendframework/zend-diactoros": "^1.3"
+        },
+        "time": "2017-03-28 13:01:56",
+        "type": "library",
+        "installation-source": "source",
+        "autoload": {
+            "psr-4": {
+                "Slim\\Middleware\\": "src"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Mika Tuupola",
+                "email": "tuupola@appelsiini.net",
+                "homepage": "http://www.appelsiini.net/",
+                "role": "Developer"
+            }
+        ],
+        "description": "PSR-7 JWT Authentication Middleware",
+        "homepage": "https://github.com/tuupola/slim-jwt-auth",
+        "keywords": [
+            "auth",
+            "json",
+            "jwt",
+            "middleware",
+            "psr-7"
+        ]
+    },
+    {
+        "name": "tuupola/slim-basic-auth",
+        "version": "2.x-dev",
+        "version_normalized": "2.9999999.9999999.9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/tuupola/slim-basic-auth.git",
+            "reference": "7e79729cb060a689acfd752540ef23c38c423c48"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/tuupola/slim-basic-auth/zipball/7e79729cb060a689acfd752540ef23c38c423c48",
+            "reference": "7e79729cb060a689acfd752540ef23c38c423c48",
+            "shasum": ""
+        },
+        "require": {
+            "php": "^5.5 || ^7.0",
+            "psr/http-message": "^1.0"
+        },
+        "require-dev": {
+            "phpunit/phpunit": "^4.3",
+            "squizlabs/php_codesniffer": "^2.3",
+            "zendframework/zend-diactoros": "^1.3"
+        },
+        "time": "2017-04-24 02:22:53",
+        "type": "library",
+        "installation-source": "source",
+        "autoload": {
+            "psr-4": {
+                "Slim\\Middleware\\": "src"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Mika Tuupola",
+                "email": "tuupola@appelsiini.net",
+                "homepage": "http://www.appelsiini.net/"
+            }
+        ],
+        "description": "PSR-7 HTTP Basic Authentication Middleware",
+        "homepage": "http://www.appelsiini.net/projects/slim-basic-auth",
+        "keywords": [
+            "auth",
+            "middleware",
+            "psr-7"
+        ]
+    },
+    {
+        "name": "monolog/monolog",
+        "version": "1.x-dev",
+        "version_normalized": "1.9999999.9999999.9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/Seldaek/monolog.git",
+            "reference": "fd8c787753b3a2ad11bc60c063cff1358a32a3b4"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/Seldaek/monolog/zipball/fd8c787753b3a2ad11bc60c063cff1358a32a3b4",
+            "reference": "fd8c787753b3a2ad11bc60c063cff1358a32a3b4",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.0",
+            "psr/log": "~1.0"
+        },
+        "provide": {
+            "psr/log-implementation": "1.0.0"
+        },
+        "require-dev": {
+            "aws/aws-sdk-php": "^2.4.9 || ^3.0",
+            "doctrine/couchdb": "~1.0@dev",
+            "graylog2/gelf-php": "~1.0",
+            "jakub-onderka/php-parallel-lint": "0.9",
+            "php-amqplib/php-amqplib": "~2.4",
+            "php-console/php-console": "^3.1.3",
+            "phpunit/phpunit": "~4.5",
+            "phpunit/phpunit-mock-objects": "2.3.0",
+            "ruflin/elastica": ">=0.90 <3.0",
+            "sentry/sentry": "^0.13",
+            "swiftmailer/swiftmailer": "^5.3|^6.0"
+        },
+        "suggest": {
+            "aws/aws-sdk-php": "Allow sending log messages to AWS services like DynamoDB",
+            "doctrine/couchdb": "Allow sending log messages to a CouchDB server",
+            "ext-amqp": "Allow sending log messages to an AMQP server (1.0+ required)",
+            "ext-mongo": "Allow sending log messages to a MongoDB server",
+            "graylog2/gelf-php": "Allow sending log messages to a GrayLog2 server",
+            "mongodb/mongodb": "Allow sending log messages to a MongoDB server via PHP Driver",
+            "php-amqplib/php-amqplib": "Allow sending log messages to an AMQP server using php-amqplib",
+            "php-console/php-console": "Allow sending log messages to Google Chrome",
+            "rollbar/rollbar": "Allow sending log messages to Rollbar",
+            "ruflin/elastica": "Allow sending log messages to an Elastic Search server",
+            "sentry/sentry": "Allow sending log messages to a Sentry server"
+        },
+        "time": "2017-06-19 01:22:40",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "2.0.x-dev"
+            }
+        },
+        "installation-source": "source",
+        "autoload": {
+            "psr-4": {
+                "Monolog\\": "src/Monolog"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Jordi Boggiano",
+                "email": "j.boggiano@seld.be",
+                "homepage": "http://seld.be"
+            }
+        ],
+        "description": "Sends your logs to files, sockets, inboxes, databases and various web services",
+        "homepage": "http://github.com/Seldaek/monolog",
+        "keywords": [
+            "log",
+            "logging",
+            "psr-3"
+        ]
+    },
+    {
+        "name": "slim/slim",
+        "version": "3.x-dev",
+        "version_normalized": "3.9999999.9999999.9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/slimphp/Slim.git",
+            "reference": "698749716d8fe4ca50513d97a1b069bedb314729"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/slimphp/Slim/zipball/698749716d8fe4ca50513d97a1b069bedb314729",
+            "reference": "698749716d8fe4ca50513d97a1b069bedb314729",
+            "shasum": ""
+        },
+        "require": {
+            "container-interop/container-interop": "^1.2",
+            "nikic/fast-route": "^1.0",
+            "php": ">=5.5.0",
+            "pimple/pimple": "^3.0",
+            "psr/container": "^1.0",
+            "psr/http-message": "^1.0"
+        },
+        "provide": {
+            "psr/http-message-implementation": "1.0"
+        },
+        "require-dev": {
+            "phpunit/phpunit": "^4.0",
+            "squizlabs/php_codesniffer": "^2.5"
+        },
+        "time": "2017-06-15 10:33:34",
+        "type": "library",
+        "installation-source": "source",
+        "autoload": {
+            "psr-4": {
+                "Slim\\": "Slim"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Rob Allen",
+                "email": "rob@akrabat.com",
+                "homepage": "http://akrabat.com"
+            },
+            {
+                "name": "Josh Lockhart",
+                "email": "hello@joshlockhart.com",
+                "homepage": "https://joshlockhart.com"
+            },
+            {
+                "name": "Gabriel Manricks",
+                "email": "gmanricks@me.com",
+                "homepage": "http://gabrielmanricks.com"
+            },
+            {
+                "name": "Andrew Smith",
+                "email": "a.smith@silentworks.co.uk",
+                "homepage": "http://silentworks.co.uk"
+            }
+        ],
+        "description": "Slim is a PHP micro framework that helps you quickly write simple yet powerful web applications and APIs",
+        "homepage": "https://slimframework.com",
+        "keywords": [
+            "api",
+            "framework",
+            "micro",
+            "router"
+        ]
+    }
+]

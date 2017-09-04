@@ -54,7 +54,7 @@ class External extends Product implements Purchasable, Saleable
 	 */
 	public function setStock(Product\Attributes\StockStatus $stock)
 	{
-		throw new Exception(__('External product does not support stock management.', 'jigoshop'));
+		throw new Exception(__('External product does not support stock management.', 'jigoshop-ecommerce'));
 	}
 
 	/**

@@ -31,6 +31,10 @@ abstract class Attribute implements \JsonSerializable
 	private $visible;
 	/** @var bool */
 	private $exists;
+	/** @var int */
+	private $categoryId = 0;
+	/** @var int */
+	private $inheritedFromCategoryId = 0;
 	/** @var Option[] */
 	protected $options = [];
 	/** @var mixed */
@@ -43,9 +47,9 @@ abstract class Attribute implements \JsonSerializable
 	{
 		if (self::$types === null) {
 			self::$types = [
-				Multiselect::TYPE => __('Multiselect', 'jigoshop'),
-				Select::TYPE => __('Select', 'jigoshop'),
-				Text::TYPE => __('Text', 'jigoshop'),
+				Multiselect::TYPE => __('Multiselect', 'jigoshop-ecommerce'),
+				Select::TYPE => __('Select', 'jigoshop-ecommerce'),
+				Text::TYPE => __('Text', 'jigoshop-ecommerce'),
             ];
 		}
 
@@ -72,6 +76,22 @@ abstract class Attribute implements \JsonSerializable
 	public function setExists($exists)
 	{
 		$this->exists = $exists;
+	}
+
+	public function getCategoryId() {
+		return $this->categoryId;
+	}
+
+	public function setCategoryId($categoryId) {
+		$this->categoryId = $categoryId;
+	}
+
+	public function getInheritedCategoryId() {
+		return $this->inheritedFromCategoryId;
+	}
+
+	public function setInheritedCategoryId($inheritedFromCategoryId) {
+		$this->inheritedFromCategoryId = $inheritedFromCategoryId;
 	}
 
 	/**

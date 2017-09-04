@@ -12,13 +12,13 @@ use Jigoshop\Entity\Product;
 	Forms::checkbox([
 		'name' => 'product[is_taxable]',
 		'id' => 'is_taxable',
-		'label' => __('Is taxable?', 'jigoshop'),
+		'label' => __('Is taxable?', 'jigoshop-ecommerce'),
 		'checked' => $product->isTaxable(),
     ]);
 	Forms::select([
 		'name' => 'product[tax_classes]',
 		'id' => 'tax_classes',
-		'label' => __('Tax classes', 'jigoshop'),
+		'label' => __('Tax classes', 'jigoshop-ecommerce'),
 		'multiple' => true,
 		'value' => $product->getTaxClasses(),
 		'options' => $taxClasses,

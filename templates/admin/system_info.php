@@ -8,7 +8,7 @@ use Jigoshop\Admin\SystemInfo;
 
 ?>
 <div class="wrap jigoshop">
-	<h1><?php _e('Jigoshop &raquo; System Information', 'jigoshop'); ?></h1>
+	<h1><?php _e('Jigoshop &raquo; System Information', 'jigoshop-ecommerce'); ?></h1>
 	<?php
 	$menuContent = '';
 	$activeTitle = '';
@@ -45,7 +45,7 @@ use Jigoshop\Admin\SystemInfo;
 		</ul>
 	</nav>
 	<noscript>
-		<div class="alert alert-danger" role="alert"><?php _e('<strong>Warning</strong> System Info panel will not work properly without JavaScript.', 'jigoshop'); ?></div>
+		<div class="alert alert-danger" role="alert"><?php _e('<strong>Warning</strong> System Info panel will not work properly without JavaScript.', 'jigoshop-ecommerce'); ?></div>
 	</noscript>
 	<div class="tab-content">
 		<div class="tab-pane active">

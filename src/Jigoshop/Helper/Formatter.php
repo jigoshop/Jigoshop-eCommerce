@@ -38,8 +38,8 @@ class Formatter
 	 */
 	public static function date($timestamp)
 	{
-		$fullFormat = _x('Y/m/d g:i:s A', 'time', 'jigoshop');
-		$format = _x('Y/m/d', 'time', 'jigoshop');
+		$fullFormat = _x('Y/m/d g:i:s A', 'time', 'jigoshop-ecommerce');
+		$format = _x('Y/m/d', 'time', 'jigoshop-ecommerce');
 		$fullDate = apply_filters('jigoshop\formatter\date', date($fullFormat, $timestamp), $fullFormat, $timestamp);
 		$date = apply_filters('jigoshop\formatter\date', date($format, $timestamp), $format, $timestamp);
 

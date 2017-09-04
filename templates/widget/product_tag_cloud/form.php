@@ -6,6 +6,6 @@
  */
 ?>
 <p>
-	<label for="<?= $title_id; ?>"><?php _e('Title:', 'jigoshop'); ?></label>
+	<label for="<?= $title_id; ?>"><?php _e('Title:', 'jigoshop-ecommerce'); ?></label>
 	<input class="widefat" id="<?= $title_id; ?>"  name="<?= $title_name; ?>" type="text" value="<?= $title; ?>" />
 </p>

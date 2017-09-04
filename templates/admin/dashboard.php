@@ -5,9 +5,9 @@
 ?>
 <div id="jigoshop-metaboxes-main" class="wrap">
 	<form action="admin-post.php" method="post">
-		<h3><?php _e('Jigoshop Dashboard', 'jigoshop'); ?></h3>
+		<h3><?php _e('Jigoshop Dashboard', 'jigoshop-ecommerce'); ?></h3>
 
-		<p id="wp-version-message"><?php _e('You are using version:	', 'jigoshop'); ?>
+		<p id="wp-version-message"><?php _e('You are using version:	', 'jigoshop-ecommerce'); ?>
 			<strong><?= \Jigoshop\Core::VERSION; ?></strong>
 		</p>
 
@@ -42,7 +42,7 @@
 		// close postboxes that should be closed
 		$('.if-js-closed').removeClass('if-js-closed').addClass('closed');
 		// postboxes setup
-		postboxes.add_postbox_toggles('jigoshop');
+		postboxes.add_postbox_toggles('jigoshop-ecommerce');
 	});
 	//]]>
 </script>

@@ -40,7 +40,7 @@ else {
 <tr data-id="<?= $key; ?>" data-product="<?= $product->getId(); ?>">
 	<td class="product-thumbnail"><a href="<?= $url; ?>"><?= Product::getFeaturedImage($product, 'shop_tiny'); ?></a></td>
 	<td class="product-name">
-		<a href="<?= $url; ?>"><?= apply_filters('jigoshop\template\shop\checkout\product_title', $product->getName(), $product, $item); ?></a>
+		<a href="<?= $url; ?>"><?= apply_filters('jigoshop\template\shop\checkout\product_title', $product->getId() ? $product->getName() : $item->getName(), $product, $item); ?></a>
 		<?= Product::getVariation($variation, $item); ?>
 		<?php do_action('jigoshop\template\shop\checkout\after_product_title', $product, $item); ?>
 	</td>

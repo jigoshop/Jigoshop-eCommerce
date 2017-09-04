@@ -22,7 +22,7 @@ class TopSellers implements WidgetInterface
 
 	public function getTitle()
 	{
-		return __('Top Sellers', 'jigoshop');
+		return __('Top Sellers', 'jigoshop-ecommerce');
 	}
 
 	public function getArgs()

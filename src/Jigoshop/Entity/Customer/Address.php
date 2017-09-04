@@ -248,17 +248,17 @@ class Address implements \Serializable, \JsonSerializable
             [', ,', ', <'],
             ['', '<'],
             sprintf(
-                _x('<strong>%1$s</strong><br/>%2$s, %3$s, %4$s<br/>%5$s, %6$s', 'order-address', 'jigoshop'),
+                _x('<strong>%1$s</strong><br/>%2$s, %3$s, %4$s<br/>%5$s, %6$s', 'order-address', 'jigoshop-ecommerce'),
                 $this->getName(), $this->address, $this->city, $this->postcode, Country::getName($this->country),
                 Country::getStateName($this->country, $this->state)
             )
         ), ', ');
 
         if (!empty($this->phone)) {
-            $result .= sprintf(_x('<br/>Phone: %s', 'order-address', 'jigoshop'), $this->phone);
+            $result .= sprintf(_x('<br/>Phone: %s', 'order-address', 'jigoshop-ecommerce'), $this->phone);
         }
         if (!empty($this->email)) {
-            $result .= sprintf(_x('<br/>Email: <a href="mailto: %1$s">%1$s</a>', 'order-address', 'jigoshop'),
+            $result .= sprintf(_x('<br/>Email: <a href="mailto: %1$s">%1$s</a>', 'order-address', 'jigoshop-ecommerce'),
                 $this->email);
         }
 
@@ -282,7 +282,7 @@ class Address implements \Serializable, \JsonSerializable
     {
         // TODO: Write documentation about changing customer location string
         return trim(sprintf(
-            _x('%1$s, %2$s', 'customer', 'jigoshop'),
+            _x('%1$s, %2$s', 'customer', 'jigoshop-ecommerce'),
             Country::getName($this->getCountry()),
             Country::hasStates($this->getCountry()) ? Country::getStateName($this->getCountry(),
                 $this->getState()) : $this->getState(),

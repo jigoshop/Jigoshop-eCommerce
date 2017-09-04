@@ -45,17 +45,17 @@ class ProductCategory implements Taxonomy
 	{
 		return [
 			'labels' => [
-				'menu_name' => __('Categories', 'jigoshop'),
-				'name' => __('Product Categories', 'jigoshop'),
-				'singular_name' => __('Product Category', 'jigoshop'),
-				'search_items' => __('Search Product Categories', 'jigoshop'),
-				'all_items' => __('All Product Categories', 'jigoshop'),
-				'parent_item' => __('Parent Product Category', 'jigoshop'),
-				'parent_item_colon' => __('Parent Product Category:', 'jigoshop'),
-				'edit_item' => __('Edit Product Category', 'jigoshop'),
-				'update_item' => __('Update Product Category', 'jigoshop'),
-				'add_new_item' => __('Add New Product Category', 'jigoshop'),
-				'new_item_name' => __('New Product Category Name', 'jigoshop'),
+				'menu_name' => __('Categories', 'jigoshop-ecommerce'),
+				'name' => __('Product Categories', 'jigoshop-ecommerce'),
+				'singular_name' => __('Product Category', 'jigoshop-ecommerce'),
+				'search_items' => __('Search Product Categories', 'jigoshop-ecommerce'),
+				'all_items' => __('All Product Categories', 'jigoshop-ecommerce'),
+				'parent_item' => __('Parent Product Category', 'jigoshop-ecommerce'),
+				'parent_item_colon' => __('Parent Product Category:', 'jigoshop-ecommerce'),
+				'edit_item' => __('Edit Product Category', 'jigoshop-ecommerce'),
+				'update_item' => __('Update Product Category', 'jigoshop-ecommerce'),
+				'add_new_item' => __('Add New Product Category', 'jigoshop-ecommerce'),
+				'new_item_name' => __('New Product Category Name', 'jigoshop-ecommerce'),
             ],
 			'capabilities' => [
 				'manage_terms' => 'manage_product_terms',
@@ -65,7 +65,9 @@ class ProductCategory implements Taxonomy
             ],
 			'hierarchical' => true,
 			'show_ui' => true,
+			'show_in_menu' => false,
 			'query_var' => true,
+            'show_in_nav_menus' => true,
 			'rewrite' => [
 				'slug' => $this->options->get('permalinks.category'),
 				'with_front' => $this->options->get('permalinks.with_front'),

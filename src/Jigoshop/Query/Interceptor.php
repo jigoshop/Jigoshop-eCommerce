@@ -130,6 +130,10 @@ class Interceptor
 
 	private function isProductCategory($request)
 	{
+	    if(isset($request['product']) && $request['product']) {
+	        return false;
+        }
+
 		return isset($request[Types\ProductCategory::NAME]) || (isset($request['taxonomy']) && $request['taxonomy'] == Types\ProductCategory::NAME);
 	}
 
@@ -188,6 +192,10 @@ class Interceptor
 
 	private function isProductTag($request)
 	{
+        if(isset($request['product']) && $request['product']) {
+            return false;
+        }
+
         return isset($request[Types\ProductTag::NAME]) || (isset($request['taxonomy']) && $request['taxonomy'] == Types\ProductTag::NAME);
 	}
 

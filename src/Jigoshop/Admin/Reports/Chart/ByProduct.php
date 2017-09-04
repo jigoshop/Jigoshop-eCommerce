@@ -78,19 +78,19 @@ class ByProduct extends Chart
 		}, $this->reportData->orderItems));
 
 		$legend[] = [
-			'title' => sprintf(__('%s sales for the selected items', 'jigoshop'), '<strong>'.Product::formatPrice($totalSales).'</strong>'),
+			'title' => sprintf(__('%s sales for the selected items', 'jigoshop-ecommerce'), '<strong>'.Product::formatPrice($totalSales).'</strong>'),
 			'color' => $this->chartColours['sales_amount'],
 			'highlight_series' => 2
         ];
 
 		$legend[] = [
-			'title' => sprintf(__('%s purchases for the selected items', 'jigoshop'), '<strong>'.$totalItems.'</strong>'),
+			'title' => sprintf(__('%s purchases for the selected items', 'jigoshop-ecommerce'), '<strong>'.$totalItems.'</strong>'),
 			'color' => $this->chartColours['item_count'],
 			'highlight_series' => 1
         ];
 
 		$legend[] = [
-			'title' => sprintf(__('%s purchased quantity', 'jigoshop'), '<strong>'.$totalQuantity.'</strong>'),
+			'title' => sprintf(__('%s purchased quantity', 'jigoshop-ecommerce'), '<strong>'.$totalQuantity.'</strong>'),
 			'color' => $this->chartColours['item_quantity'],
 			'highlight_series' => 0
         ];
@@ -199,13 +199,13 @@ class ByProduct extends Chart
 	{
 		/** @noinspection PhpUnusedLocalVariableInspection */
 		$ranges = [
-			'all' => __('All Time', 'jigoshop'),
-			'year' => __('Year', 'jigoshop'),
-			'last_month' => __('Last Month', 'jigoshop'),
-			'month' => __('This Month', 'jigoshop'),
-			'30day' => __('Last 30 Days', 'jigoshop'),
-			'7day' => __('Last 7 Days', 'jigoshop'),
-			'today' => __('Today', 'jigoshop'),
+			'all' => __('All Time', 'jigoshop-ecommerce'),
+			'year' => __('Year', 'jigoshop-ecommerce'),
+			'last_month' => __('Last Month', 'jigoshop-ecommerce'),
+			'month' => __('This Month', 'jigoshop-ecommerce'),
+			'30day' => __('Last 30 Days', 'jigoshop-ecommerce'),
+			'7day' => __('Last 7 Days', 'jigoshop-ecommerce'),
+			'today' => __('Today', 'jigoshop-ecommerce'),
         ];
 
 		Render::output('admin/reports/chart', [
@@ -388,7 +388,7 @@ class ByProduct extends Chart
 	{
 		return [
 			'download' => 'report-'.esc_attr($this->currentRange).'-'.date_i18n('Y-m-d', current_time('timestamp')).'.csv',
-			'xaxes' => __('Date', 'jigoshop'),
+			'xaxes' => __('Date', 'jigoshop-ecommerce'),
 			'groupby' => $this->chartGroupBy,
         ];
 	}
@@ -404,7 +404,7 @@ class ByProduct extends Chart
 		$data = [];
 		$data['series'] = [];
 		$data['series'][] = $this->arrayToObject([
-			'label' => __('Sold quantity', 'jigoshop'),
+			'label' => __('Sold quantity', 'jigoshop-ecommerce'),
 			'data' => array_values($orderItemQuantity),
 			'color' => $this->chartColours['item_quantity'],
 			'bars' => $this->arrayToObject([
@@ -419,7 +419,7 @@ class ByProduct extends Chart
 			'hoverable' => false
         ]);
 		$data['series'][] = $this->arrayToObject([
-			'label' => __('Number of purchases', 'jigoshop'),
+			'label' => __('Number of purchases', 'jigoshop-ecommerce'),
 			'data' => array_values($orderItemCounts),
 			'color' => $this->chartColours['item_count'],
 			'bars' => $this->arrayToObject([
@@ -434,7 +434,7 @@ class ByProduct extends Chart
 			'hoverable' => false
         ]);
 		$data['series'][] = $this->arrayToObject([
-			'label' => __('Sales amount', 'jigoshop'),
+			'label' => __('Sales amount', 'jigoshop-ecommerce'),
 			'data' => array_values($orderItemAmounts),
 			'yaxis' => 2,
 			'color' => $this->chartColours['sales_amount'],

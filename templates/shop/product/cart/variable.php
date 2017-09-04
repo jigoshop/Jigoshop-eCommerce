@@ -16,22 +16,22 @@ $defaultAttributesValues = Product::getVariationAttributes($product, $product->g
 			'label' => $attribute['label'],
 			'options' => $attribute['options'],
 			'value' => isset($defaultAttributesValues[$id]) ? $defaultAttributesValues[$id] : '',
-			'placeholder' => __('Please select...', 'jigoshop'),
+			'placeholder' => __('Please select...', 'jigoshop-ecommerce'),
         ]); ?>
 	<?php endforeach; ?>
 	<div id="add-to-cart-buttons">
-		<div class="price"><?php _e('Current price:', 'jigoshop'); ?> <span></span></div>
+		<div class="price"><?php _e('Current price:', 'jigoshop-ecommerce'); ?> <span></span></div>
 		<?php \Jigoshop\Helper\Forms::number([
 			'id' => 'product-quantity',
 			'name' => 'quantity',
-			'label' => __('Quantity', 'jigoshop'),
+			'label' => __('Quantity', 'jigoshop-ecommerce'),
 			'value' => 1,
 			'min' => 1,
         ]); ?>
 		<input type="hidden" name="variation_id" id="variation-id" value="" />
-		<button class="btn btn-primary" type="submit"><?php _e('Add to cart', 'jigoshop'); ?></button>
+		<button class="btn btn-primary" type="submit"><?php _e('Add to cart', 'jigoshop-ecommerce'); ?></button>
 	</div>
 	<div id="add-to-cart-messages">
-		<div class="alert alert-warning"><?php _e('Selected variation is not available.', 'jigoshop'); ?></div>
+		<div class="alert alert-warning"><?php _e('Selected variation is not available.', 'jigoshop-ecommerce'); ?></div>
 	</div>
 </form>

@@ -34,7 +34,7 @@ class Product implements Post
 
 			if (!($type instanceof Types\Product\Type)) {
 				if (WP_DEBUG) {
-					throw new Exception(sprintf(__('Invalid type definition! Offending class: "%s".', 'jigoshop'), $typeClass));
+					throw new Exception(sprintf(__('Invalid type definition! Offending class: "%s".', 'jigoshop-ecommerce'), $typeClass));
 				}
 
 				Registry::getInstance(JIGOSHOP_LOGGER)->addWarning(sprintf('Invalid type definition! Offending class: "%s".', $typeClass));
@@ -67,22 +67,22 @@ class Product implements Post
 	{
 		return [
 			'labels' => [
-				'name' => __('Products', 'jigoshop'),
-				'singular_name' => __('Product', 'jigoshop'),
-				'all_items' => __('All Products', 'jigoshop'),
-				'add_new' => __('Add New', 'jigoshop'),
-				'add_new_item' => __('Add New Product', 'jigoshop'),
-				'edit' => __('Edit', 'jigoshop'),
-				'edit_item' => __('Edit Product', 'jigoshop'),
-				'new_item' => __('New Product', 'jigoshop'),
-				'view' => __('View Product', 'jigoshop'),
-				'view_item' => __('View Product', 'jigoshop'),
-				'search_items' => __('Search Products', 'jigoshop'),
-				'not_found' => __('No Products found', 'jigoshop'),
-				'not_found_in_trash' => __('No Products found in trash', 'jigoshop'),
-				'parent' => __('Parent Product', 'jigoshop'),
+				'name' => __('Products', 'jigoshop-ecommerce'),
+				'singular_name' => __('Product', 'jigoshop-ecommerce'),
+				'all_items' => __('All Products', 'jigoshop-ecommerce'),
+				'add_new' => __('Add New', 'jigoshop-ecommerce'),
+				'add_new_item' => __('Add New Product', 'jigoshop-ecommerce'),
+				'edit' => __('Edit', 'jigoshop-ecommerce'),
+				'edit_item' => __('Edit Product', 'jigoshop-ecommerce'),
+				'new_item' => __('New Product', 'jigoshop-ecommerce'),
+				'view' => __('View Product', 'jigoshop-ecommerce'),
+				'view_item' => __('View Product', 'jigoshop-ecommerce'),
+				'search_items' => __('Search Products', 'jigoshop-ecommerce'),
+				'not_found' => __('No Products found', 'jigoshop-ecommerce'),
+				'not_found_in_trash' => __('No Products found in trash', 'jigoshop-ecommerce'),
+				'parent' => __('Parent Product', 'jigoshop-ecommerce'),
             ],
-			'description' => __('This is where you can add new products to your store.', 'jigoshop'),
+			'description' => __('This is where you can add new products to your store.', 'jigoshop-ecommerce'),
 			'public' => true,
 			'show_ui' => true,
 			'capability_type' => self::NAME,
@@ -123,7 +123,7 @@ class Product implements Post
 	public function getType($type)
 	{
 		if (!isset($this->enabledTypes[$type])) {
-			throw new Exception(sprintf(__('Unknown type: "%s".', 'jigoshop'), $type));
+			throw new Exception(sprintf(__('Unknown type: "%s".', 'jigoshop-ecommerce'), $type));
 		}
 
 		return $this->enabledTypes[$type];

@@ -105,6 +105,12 @@ class Options
 					'crop' => false,
                 ],
             ],
+            'categoryAttributes' => [
+            	'inheritance' => [
+            		'defaultEnabled' => false,
+            		'defaultMode' => 'all'
+            	]
+            ]
         ],
 		'tax' => [
             'shipping' => false,

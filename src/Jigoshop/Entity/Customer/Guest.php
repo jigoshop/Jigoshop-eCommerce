@@ -16,7 +16,7 @@ class Guest extends Customer
 	public function setId($id)
 	{
 		if (WP_DEBUG) {
-			throw new Exception(__('Guest customer cannot be updated!', 'jigoshop'));
+			throw new Exception(__('Guest customer cannot be updated!', 'jigoshop-ecommerce'));
 		}
 
 		Registry::getInstance(JIGOSHOP_LOGGER)->addDebug('Guest customer cannot be updated!');
@@ -30,7 +30,7 @@ class Guest extends Customer
 	public function setLogin($login)
 	{
 		if (WP_DEBUG) {
-			throw new Exception(__('Guest customer cannot be updated!', 'jigoshop'));
+			throw new Exception(__('Guest customer cannot be updated!', 'jigoshop-ecommerce'));
 		}
 
 		Registry::getInstance(JIGOSHOP_LOGGER)->addDebug('Guest customer cannot be updated!');
@@ -39,7 +39,7 @@ class Guest extends Customer
 	public function setName($name)
 	{
 		if (WP_DEBUG) {
-			throw new Exception(__('Guest customer cannot be updated!', 'jigoshop'));
+			throw new Exception(__('Guest customer cannot be updated!', 'jigoshop-ecommerce'));
 		}
 
 		Registry::getInstance(JIGOSHOP_LOGGER)->addDebug('Guest customer cannot be updated!');
@@ -52,7 +52,7 @@ class Guest extends Customer
 
 	public function getName()
 	{
-		return __('Guest', 'jigoshop');
+		return __('Guest', 'jigoshop-ecommerce');
 	}
 
 	public function getStateToSave()

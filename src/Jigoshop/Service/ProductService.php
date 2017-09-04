@@ -197,7 +197,7 @@ class ProductService implements ProductServiceInterface
             //if object does not exist insert new one
             $id = $this->insertPost($this->wp, $object, Types::PRODUCT);
             if (!is_int($id) || $id === 0) {
-                throw new Exception(__('Unable to save product. Please try again.', 'jigoshop'));
+                throw new Exception(__('Unable to save product. Please try again.', 'jigoshop-ecommerce'));
             }
             $object->setId($id);
         }
@@ -511,7 +511,7 @@ class ProductService implements ProductServiceInterface
             }
         }
 
-        return $attachments;
+        return $this->wp->applyFilters('jigoshop\service\product\get_attachments', $attachments, $product);
     }
 
     /**

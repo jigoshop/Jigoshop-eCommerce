@@ -20,11 +20,11 @@ class TopRated extends \WP_Widget
 	{
 		$options = [
 			'classname' => self::ID,
-			'description' => __('The best of the best on your site', 'jigoshop')
+			'description' => __('The best of the best on your site', 'jigoshop-ecommerce')
         ];
 
 		// Create the widget
-		parent::__construct(self::ID, __('Jigoshop: Top Rated Products', 'jigoshop'), $options);
+		parent::__construct(self::ID, __('Jigoshop: Top Rated Products', 'jigoshop-ecommerce'), $options);
 
 		// Flush cache after every save
 		add_action('save_post', [$this, 'deleteTransient']);
@@ -63,7 +63,7 @@ class TopRated extends \WP_Widget
 		// Set the widget title
 		$title = apply_filters(
 			'widget_title',
-			($instance['title']) ? $instance['title'] : __('Top Rated Products', 'jigoshop'),
+			($instance['title']) ? $instance['title'] : __('Top Rated Products', 'jigoshop-ecommerce'),
 			$instance,
 			$this->id_base
 		);

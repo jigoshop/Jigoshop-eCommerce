@@ -39,15 +39,15 @@ class Coupons
 	{
 		return $this->wp->applyFilters('jigoshop\admin\coupons\columns', [
 			'cb' => '<input type="checkbox" />',
-			'title' => _x('Title', 'coupon', 'jigoshop'),
-			'code' => _x('Code', 'coupon', 'jigoshop'),
-			'type' => _x('Type', 'coupon', 'jigoshop'),
-			'amount' => _x('Amount', 'coupon', 'jigoshop'),
-			'usage_limit' => _x('Usage limit', 'coupon', 'jigoshop'),
-			'usage' => _x('Used', 'coupon', 'jigoshop'),
-			'from' => _x('From', 'coupon', 'jigoshop'),
-			'to' => _x('To', 'coupon', 'jigoshop'),
-			'is_individual' => _x('For individual use?', 'coupon', 'jigoshop'),
+			'title' => _x('Title', 'coupon', 'jigoshop-ecommerce'),
+			'code' => _x('Code', 'coupon', 'jigoshop-ecommerce'),
+			'type' => _x('Type', 'coupon', 'jigoshop-ecommerce'),
+			'amount' => _x('Amount', 'coupon', 'jigoshop-ecommerce'),
+			'usage_limit' => _x('Usage limit', 'coupon', 'jigoshop-ecommerce'),
+			'usage' => _x('Used', 'coupon', 'jigoshop-ecommerce'),
+			'from' => _x('From', 'coupon', 'jigoshop-ecommerce'),
+			'to' => _x('To', 'coupon', 'jigoshop-ecommerce'),
+			'is_individual' => _x('For individual use?', 'coupon', 'jigoshop-ecommerce'),
         ]);
 	}
 
@@ -92,7 +92,7 @@ class Coupons
 				echo sprintf(
 					'<span class="glyphicon %s" aria-hidden="true"></span> <span class="sr-only">%s</span>',
 					$coupon->isIndividualUse() ? 'glyphicon-ok' : 'glyphicon-remove',
-					$coupon->isIndividualUse() ? __('Yes', 'jigoshop') : __('No', 'jigoshop')
+					$coupon->isIndividualUse() ? __('Yes', 'jigoshop-ecommerce') : __('No', 'jigoshop-ecommerce')
 				);
 				break;
 		}

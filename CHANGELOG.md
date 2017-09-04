@@ -1,10 +1,15 @@
 ## Changelog
-* 2.1.5:
+* 2.1.5 - 2017.08.16:
     * New: Product quick edit fields.
+    * New: Product Categories admin page.
+    * New: Order status email variable.
+    * Fix: Special characters in product and order fields.
+    * Fix: Properly show variation sku in order email.
     * Fix: Sale price display.
     * Fix: Properly display select attribute on product page.
     * Fix: Do not destroy session on logout.
     * Fix: Stock amount now can not be less than 0.
+    * Fix: Add email variables from JS1.
 * 2.1.4 - 2017.06.14:
     * New: Email action for order status change for admin.
     * New: Possibility to show prices with and without tax.

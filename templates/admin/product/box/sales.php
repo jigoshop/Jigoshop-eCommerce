@@ -15,12 +15,22 @@ if ($product instanceof Product\Saleable) {
 	$enabled = $product->getSales()->isEnabled();
 	$price = $product->getSales()->getPrice();
 
-	if($product->getSales()->getFrom()->getTimestamp() < time() && $product->getSales()->getTo()->getTimestamp() < time()) {
-		$product->getSales()->getFrom()->setTimestamp(time());
-		$product->getSales()->getTo()->setTimestamp(time());
-	}
-	$from = $product->getSales()->getFrom()->format('m/d/Y');
-	$to = $product->getSales()->getTo()->format('m/d/Y');
+    if($product->getSales()->getFrom()->getTimestamp() == '') {
+        $from = '';
+    } else {
+        if($product->getSales()->getFrom()->getTimestamp() < time()) {
+            $product->getSales()->getFrom()->setTimestamp(time());
+        }
+        $from = $product->getSales()->getFrom()->format('m/d/Y');
+    }
+    if($product->getSales()->getTo()->getTimestamp() == '') {
+        $to = '';
+    } else {
+        if($product->getSales()->getTo()->getTimestamp() < time()) {
+            $product->getSales()->getTo()->setTimestamp(time());
+        }
+        $to = $product->getSales()->getTo()->format('m/d/Y');
+    }
 }
 ?>
 <fieldset>
@@ -28,20 +38,20 @@ if ($product instanceof Product\Saleable) {
 	Forms::checkbox([
 		'name' => 'product[sales_enabled]',
 		'id' => 'sales-enabled',
-		'label' => __('Put product on sale?', 'jigoshop'),
-		'description' => __('To enable sale please set up actual sale dates', 'jigoshop'),
+		'label' => __('Put product on sale?', 'jigoshop-ecommerce'),
+		'description' => __('To enable sale please set up actual sale dates', 'jigoshop-ecommerce'),
         'checked' => $enabled,
     ]);
 	?>
 </fieldset>
 <fieldset class="schedule" style="<?php !$enabled and print 'display: none;'; ?>">
-	<h3><?php _e('Schedule', 'jigoshop'); ?></h3>
+	<h3><?php _e('Schedule', 'jigoshop-ecommerce'); ?></h3>
 	<?php
 	Forms::text([
 		'name' => 'product[sales_price]',
-		'label' => __('Sale price', 'jigoshop'),
+		'label' => __('Sale price', 'jigoshop-ecommerce'),
 		'value' => $price,
-		'placeholder' => __('15% or 19.99', 'jigoshop'),
+		'placeholder' => __('15% or 19.99', 'jigoshop-ecommerce'),
     ]);
 	Forms::daterange([
 		'id' => 'product_sales_date',
@@ -50,12 +60,12 @@ if ($product instanceof Product\Saleable) {
 			'to' => 'product[sales_to]',
         ],
 		'id' => 'sales-range',
-		'label' => __('Sale date', 'jigoshop'),
+		'label' => __('Sale date', 'jigoshop-ecommerce'),
 		'value' => [
 			'from' => $from,
 			'to' => $to,
         ],
-        'description' => __('The above sale period will be set for all the product variations. If you need to set different sale time frame for individual variation, please use the sale setting on the variation edit pane.', 'jigoshop'),
+        'description' => __('The above sale period will be set for all the product variations. If you need to set different sale time frame for individual variation, please use the sale setting on the variation edit pane.', 'jigoshop-ecommerce'),
     ]);
 	?>
 </fieldset>

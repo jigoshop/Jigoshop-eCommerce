@@ -57,7 +57,7 @@ class PaymentTab implements TabInterface
 	 */
 	public function getTitle()
 	{
-		return __('Payment', 'jigoshop');
+		return __('Payment', 'jigoshop-ecommerce');
 	}
 
 	/**
@@ -75,12 +75,12 @@ class PaymentTab implements TabInterface
 	{
 		return [
 			[
-				'title'  => __('Default Gateway', 'jigoshop'),
+				'title'  => __('Default Gateway', 'jigoshop-ecommerce'),
 				'id'     => 'default_gateway',
 				'fields' => [
 					[
 						'name'    => "[default_gateway]",
-						'title'   => __('Set default gataway', 'jigoshop'),
+						'title'   => __('Set default gataway', 'jigoshop-ecommerce'),
 						'type'    => "select",
 						'value'   => $this->settings['default_gateway'],
 						'options' => $this->getDefaultGatewayOptions()
@@ -88,7 +88,7 @@ class PaymentTab implements TabInterface
                 ],
             ],
             [
-            	'title' => __('Payment methods', 'jigoshop'),
+            	'title' => __('Payment methods', 'jigoshop-ecommerce'),
             	'id' => 'paymentMethodsSection',
             	'display' => [$this, 'generatePaymentMethods']
             ]
@@ -100,14 +100,14 @@ class PaymentTab implements TabInterface
 		$methods = $this->paymentService->getAvailable();
 
 		if(count($methods) > 0) {
-			$options[] = __('Please select a gateway', 'jigoshop');
+			$options[] = __('Please select a gateway', 'jigoshop-ecommerce');
 
 			foreach($methods as $method) {
 				$options[] = trim(strip_tags($method->getName()));
 			}
 		}
 		else {
-			$options['no_default_gateway'] = __('All gateways are disabled. Please turn on a gateway.', 'jigoshop');		
+			$options['no_default_gateway'] = __('All gateways are disabled. Please turn on a gateway.', 'jigoshop-ecommerce');
 		}
 
 		return $options;
@@ -120,18 +120,18 @@ class PaymentTab implements TabInterface
 				$status = '';
 
 				if(!$method->isActive()) {
-					$status = __('Disabled', 'jigoshop');
+					$status = __('Disabled', 'jigoshop-ecommerce');
 				}
 				else {
 					if(!$method->isConfigured()) {
-						$status = __('Disabled; Not configured', 'jigoshop');
+						$status = __('Disabled; Not configured', 'jigoshop-ecommerce');
 					}
 					else {
 						if($method->hasTestMode() && $method->isTestModeEnabled()) {
-							$status = __('Enabled in test mode', 'jigoshop');
+							$status = __('Enabled in test mode', 'jigoshop-ecommerce');
 						}
 						else {
-							$status = __('Enabled', 'jigoshop');
+							$status = __('Enabled', 'jigoshop-ecommerce');
 						}
 					}
 				}
@@ -207,14 +207,20 @@ class PaymentTab implements TabInterface
 
 		if($method instanceof Method2) {
 			if($_POST['state'] == 'true') {
+				if(!$method->isConfigured()) {
+					$this->messages->addWarning(sprintf(__('%s was not enabled, as it isn\'t configured properly.', 'jigoshop-ecommerce'), $method->getName()));
+
+					exit;
+				}
+
 				$state = true;
 
-				$this->messages->addNotice(__(sprintf('%s enabled.', $method->getName()), 'jigoshop'));
+				$this->messages->addNotice(sprintf(__('%s enabled.', 'jigoshop-ecommerce'), $method->getName()));
 			}
 			else {
 				$state = false;
 
-				$this->messages->addNotice(__(sprintf('%s disabled.', $method->getName()), 'jigoshop'));
+				$this->messages->addNotice(sprintf(__('%s disabled.', 'jigoshop-ecommerce'), $method->getName()));
 			}
 
 			$settings = $method->setActive($state);
@@ -233,12 +239,12 @@ class PaymentTab implements TabInterface
 			if($_POST['state'] == 'true') {
 				$state = true;
 
-				$this->messages->addNotice(__(sprintf('%s test mode enabled.', $method->getName()), 'jigoshop'));
+				$this->messages->addNotice(sprintf(__('%s test mode enabled.', 'jigoshop-ecommerce'), $method->getName()));
 			}
 			else {
 				$state = false;
 
-				$this->messages->addNotice(__(sprintf('%s test mode disabled.', $method->getName()), 'jigoshop'));
+				$this->messages->addNotice(sprintf(__('%s test mode disabled.', 'jigoshop-ecommerce'), $method->getName()));
 			}
 
 			$settings = $method->setTestMode($state);

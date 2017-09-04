@@ -18,10 +18,10 @@ use Jigoshop\Helper\Render;
 		<?php Product::printAddToCartForm($product, 'product'); ?>
 		<dl class="dl-horizontal">
 			<?php if($product->getSku()): ?>
-			<dt><?= __('SKU', 'jigoshop'); ?></dt><dd><?= $product->getSku(); ?></dd>
+			<dt><?= __('SKU', 'jigoshop-ecommerce'); ?></dt><dd><?= $product->getSku(); ?></dd>
 			<?php endif; ?>
 			<?php if(count($product->getCategories()) > 0): ?>
-			<dt><?= __('Categories', 'jigoshop'); ?></dt>
+			<dt><?= __('Categories', 'jigoshop-ecommerce'); ?></dt>
 			<dd class="categories">
 				<?php foreach($product->getCategories() as $category): ?>
 					<a href="<?= $category['link']; ?>"><?= $category['name']; ?></a>
@@ -29,7 +29,7 @@ use Jigoshop\Helper\Render;
 			</dd>
 			<?php endif; ?>
 			<?php if(count($product->getTags()) > 0): ?>
-			<dt><?= __('Tagged as', 'jigoshop'); ?></dt>
+			<dt><?= __('Tagged as', 'jigoshop-ecommerce'); ?></dt>
 			<dd class="tags">
 				<?php foreach($product->getTags() as $tag): ?>
 					<a href="<?= $tag['link']; ?>"><?= $tag['name']; ?></a>

@@ -84,7 +84,7 @@ class Checkout implements PageInterface
 		Scripts::localize('jigoshop.checkout', 'jigoshop_checkout', [
 			'assets' => \JigoshopInit::getUrl().'/assets',
 			'i18n' => [
-				'loading' => __('Loading...', 'jigoshop'),
+				'loading' => __('Loading...', 'jigoshop-ecommerce'),
             ],
         ]);
 
@@ -287,7 +287,7 @@ class Checkout implements PageInterface
 				if ($this->options->get('shopping.validate_zip') && !Validation::isPostcode($_POST['value'], $customer->getShippingAddress()->getCountry())) {
 					echo json_encode([
 						'success' => false,
-						'error' => __('Shipping postcode is not valid!', 'jigoshop'),
+						'error' => __('Shipping postcode is not valid!', 'jigoshop-ecommerce'),
                     ]);
 					exit;
 				}
@@ -301,7 +301,7 @@ class Checkout implements PageInterface
 				if ($this->options->get('shopping.validate_zip') && !Validation::isPostcode($_POST['value'], $customer->getBillingAddress()->getCountry())) {
 					echo json_encode([
 						'success' => false,
-						'error' => __('Billing postcode is not valid!', 'jigoshop'),
+						'error' => __('Billing postcode is not valid!', 'jigoshop-ecommerce'),
                     ]);
 					exit;
 				}
@@ -331,12 +331,12 @@ class Checkout implements PageInterface
 		$cart = $this->cartService->getCurrent();
 
 		if ($cart->isEmpty()) {
-			$this->messages->addWarning(__('Your cart is empty, please add products before proceeding.', 'jigoshop'));
+			$this->messages->addWarning(__('Your cart is empty, please add products before proceeding.', 'jigoshop-ecommerce'));
 			$this->wp->redirectTo($this->options->getPageId(Pages::SHOP));
 		}
 
 		if (!$this->isAllowedToEnterCheckout()) {
-			$this->messages->addError(__('You need to log in before processing to checkout.', 'jigoshop'));
+			$this->messages->addError(__('You need to log in before processing to checkout.', 'jigoshop-ecommerce'));
 			$this->wp->redirectTo($this->options->getPageId(Pages::CART));
 		}
 
@@ -349,14 +349,14 @@ class Checkout implements PageInterface
 
 				if (!$this->isAllowedToCheckout($cart)) {
 					if ($allowRegistration) {
-						throw new Exception(__('You need either to log in or create account to purchase.', 'jigoshop'));
+						throw new Exception(__('You need either to log in or create account to purchase.', 'jigoshop-ecommerce'));
 					}
 
-					throw new Exception(__('You need to log in before purchasing.', 'jigoshop'));
+					throw new Exception(__('You need to log in before purchasing.', 'jigoshop-ecommerce'));
 				}
 
 				if ($this->options->get('advanced.pages.terms') > 0 && (!isset($_POST['terms']) || $_POST['terms'] != 'on')) {
-					throw new Exception(__('You need to accept terms &amp; conditions!', 'jigoshop'));
+					throw new Exception(__('You need to accept terms &amp; conditions!', 'jigoshop-ecommerce'));
 				}
 
 				$this->cartService->validate($cart);
@@ -371,14 +371,14 @@ class Checkout implements PageInterface
 
 				$shipping = $cart->getShippingMethod();
 				if ($this->isShippingRequired($cart) && (!$shipping || !$shipping->isEnabled())) {
-					throw new Exception(__('Shipping is required for this order. Please select shipping method.', 'jigoshop'));
+					throw new Exception(__('Shipping is required for this order. Please select shipping method.', 'jigoshop-ecommerce'));
 				}
 
 				$payment = $cart->getPaymentMethod();
 				$isPaymentRequired = $this->isPaymentRequired($cart);
 				$this->wp->doAction('jigoshop\checkout\payment', $payment);
 				if ($isPaymentRequired && (!$payment || !$payment->isEnabled())) {
-					throw new Exception(__('Payment is required for this order. Please select payment method.', 'jigoshop'));
+					throw new Exception(__('Payment is required for this order. Please select payment method.', 'jigoshop-ecommerce'));
 				}
 
 				$order = $this->orderService->createFromCart($cart);
@@ -443,25 +443,25 @@ class Checkout implements PageInterface
 		$password = $_POST['jigoshop_account']['password'];
 
 		if (empty($login) || empty($password)) {
-			throw new Exception(__('You need to fill username and password fields.', 'jigoshop'));
+			throw new Exception(__('You need to fill username and password fields.', 'jigoshop-ecommerce'));
 		}
 
 		if ($password != $_POST['jigoshop_account']['password2']) {
-			throw new Exception(__('Passwords do not match.', 'jigoshop'));
+			throw new Exception(__('Passwords do not match.', 'jigoshop-ecommerce'));
 		}
 
 		$id = $this->wp->wpCreateUser($login, $password, $email);
 
 		if (!$id) {
 			throw new Exception(sprintf(
-				__("<strong>Error</strong> Couldn't register an account for you. Please contact the <a href=\"mailto:%s\">administrator</a>.", 'jigoshop'),
+				__("<strong>Error</strong> Couldn't register an account for you. Please contact the <a href=\"mailto:%s\">administrator</a>.", 'jigoshop-ecommerce'),
 				$this->options->get('general.email')
 			));
 		}
 
  		if (is_wp_error($id)){
  			throw new Exception(sprintf(
-				__("<strong>Error</strong> Account creation failed: %s", 'jigoshop'),
+				__("<strong>Error</strong> Account creation failed: %s", 'jigoshop-ecommerce'),
 				$id->get_error_message($id->get_error_code())
 			));
 		}
