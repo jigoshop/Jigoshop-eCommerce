@@ -45,20 +45,20 @@ class ChangePassword implements PageInterface
 
 			/** @noinspection PhpUndefinedFieldInspection */
 			if (!$this->wp->wpCheckPassword($_POST['password'], $user->user_pass, $user->ID)) {
-				$errors[] = __('Current password is invalid.', 'jigoshop');
+				$errors[] = __('Current password is invalid.', 'jigoshop-ecommerce');
 			}
 
 			if (empty($_POST['new-password'])) {
-				$errors[] = __('Please enter new password.', 'jigoshop');
+				$errors[] = __('Please enter new password.', 'jigoshop-ecommerce');
 			} else if ($_POST['new-password'] != $_POST['new-password-2']) {
-				$errors[] = __('Passwords do not match.', 'jigoshop');
+				$errors[] = __('Passwords do not match.', 'jigoshop-ecommerce');
 			}
 
 			if (!empty($errors)) {
 				$this->messages->addError(join('<br/>', $errors), false);
 			} else {
 				$this->wp->wpUpdateUser(['ID' => $user->ID, 'user_pass' => $_POST['new-password']]);
-				$this->messages->addNotice(__('Password changed.', 'jigoshop'));
+				$this->messages->addNotice(__('Password changed.', 'jigoshop-ecommerce'));
 				$this->wp->redirectTo($this->options->getPageId(Pages::ACCOUNT));
 			}
 		}

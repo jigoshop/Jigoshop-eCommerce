@@ -39,22 +39,22 @@ class Order implements Post
 	{
 		return [
 			'labels' => [
-				'name' => __('Orders', 'jigoshop'),
-				'singular_name' => __('Order', 'jigoshop'),
-				'all_items' => __('All orders', 'jigoshop'),
-				'add_new' => __('Add new', 'jigoshop'),
-				'add_new_item' => __('New order', 'jigoshop'),
-				'edit' => __('Edit', 'jigoshop'),
-				'edit_item' => __('Edit order', 'jigoshop'),
-				'new_item' => __('New order', 'jigoshop'),
-				'view' => __('View order', 'jigoshop'),
-				'view_item' => __('View order', 'jigoshop'),
-				'search_items' => __('Search', 'jigoshop'),
-				'not_found' => __('No orders found', 'jigoshop'),
-				'not_found_in_trash' => __('No orders found in trash', 'jigoshop'),
-				'parent' => __('Parent orders', 'jigoshop')
+				'name' => __('Orders', 'jigoshop-ecommerce'),
+				'singular_name' => __('Order', 'jigoshop-ecommerce'),
+				'all_items' => __('All orders', 'jigoshop-ecommerce'),
+				'add_new' => __('Add new', 'jigoshop-ecommerce'),
+				'add_new_item' => __('New order', 'jigoshop-ecommerce'),
+				'edit' => __('Edit', 'jigoshop-ecommerce'),
+				'edit_item' => __('Edit order', 'jigoshop-ecommerce'),
+				'new_item' => __('New order', 'jigoshop-ecommerce'),
+				'view' => __('View order', 'jigoshop-ecommerce'),
+				'view_item' => __('View order', 'jigoshop-ecommerce'),
+				'search_items' => __('Search', 'jigoshop-ecommerce'),
+				'not_found' => __('No orders found', 'jigoshop-ecommerce'),
+				'not_found_in_trash' => __('No orders found in trash', 'jigoshop-ecommerce'),
+				'parent' => __('Parent orders', 'jigoshop-ecommerce')
             ],
-			'description' => __('This is where store orders are stored.', 'jigoshop'),
+			'description' => __('This is where store orders are stored.', 'jigoshop-ecommerce'),
 			'public' => false,
 			'show_ui' => true,
 			'show_in_nav_menus' => false,
@@ -82,7 +82,7 @@ class Order implements Post
 				'exclude_from_search' => false,
 				'show_in_admin_all_list' => true,
 				'show_in_admin_status_list' => true,
-				'label_count' => _n_noop($label.' <span class="count">(%s)</span>', $label.' <span class="count">(%s)</span>', 'jigoshop'),
+				'label_count' => _n_noop($label.' <span class="count">(%s)</span>', $label.' <span class="count">(%s)</span>', 'jigoshop-ecommerce'),
             ]);
 		}
 	}
@@ -90,12 +90,12 @@ class Order implements Post
 	public function updateMessages($messages)
 	{
 		if ($this->wp->getPostType() === self::NAME) {
-			$messages['post'][1] = __('Order updated.', 'jigoshop');
-			$messages['post'][4] = __('Order updated.', 'jigoshop');
-			$messages['post'][6] = __('Order updated.', 'jigoshop');
+			$messages['post'][1] = __('Order updated.', 'jigoshop-ecommerce');
+			$messages['post'][4] = __('Order updated.', 'jigoshop-ecommerce');
+			$messages['post'][6] = __('Order updated.', 'jigoshop-ecommerce');
 
-			$messages['post'][8] = __('Order submitted.', 'jigoshop');
-			$messages['post'][10] = __('Order draft updated.', 'jigoshop');
+			$messages['post'][8] = __('Order submitted.', 'jigoshop-ecommerce');
+			$messages['post'][10] = __('Order draft updated.', 'jigoshop-ecommerce');
 		}
 
 		return $messages;

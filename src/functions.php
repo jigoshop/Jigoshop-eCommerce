@@ -32,7 +32,7 @@ function addRequiredVersionNotice($source, $version)
 {
 	if (!isMinimumVersion($version)) {
 		add_action('admin_notices', function () use ($source, $version){
-			$message = sprintf(__('<strong>%s</strong>: required Jigoshop version: %s. Current version: %s. Please upgrade.', 'jigoshop'), $source, $version, Core::VERSION);
+			$message = sprintf(__('<strong>%s</strong>: required Jigoshop version: %s. Current version: %s. Please upgrade.', 'jigoshop-ecommerce'), $source, $version, Core::VERSION);
 			echo '<div class="error"><p>'.$message.'</p></div>';
 		});
 

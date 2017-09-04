@@ -33,7 +33,7 @@ class CustomersTab implements TabInterface
 	 */
 	public function getTitle()
 	{
-		return __('Customers', 'jigoshop');
+		return __('Customers', 'jigoshop-ecommerce');
 	}
 
 	/**
@@ -59,8 +59,8 @@ class CustomersTab implements TabInterface
 	private function getTypes()
 	{
 		return $this->wp->applyFilters('jigoshop\admin\reports\customers\types', [
-			'customers_vs_guests' => __('Customers vs Guests', 'jigoshop'),
-			'customer_list' => __('Customer List', 'jigoshop')
+			'customers_vs_guests' => __('Customers vs Guests', 'jigoshop-ecommerce'),
+			'customer_list' => __('Customer List', 'jigoshop-ecommerce')
         ]);
 	}
 

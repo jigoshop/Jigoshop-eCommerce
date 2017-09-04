@@ -8,7 +8,7 @@ use Jigoshop\Exception;
 use Jigoshop\Service\OrderServiceInterface;
 use WPAL\Wordpress;
 
-class Cheque implements Method
+class Cheque implements Method2
 {
 	const ID = 'cheque';
 
@@ -39,7 +39,7 @@ class Cheque implements Method
 	 */
 	public function getName()
 	{
-		return $this->wp->isAdmin() ? __('Cheque', 'jigoshop') : $this->options['title'];
+		return $this->wp->isAdmin() ? __('Cheque', 'jigoshop-ecommerce') : $this->options['title'];
 	}
 
 	/**
@@ -50,6 +50,36 @@ class Cheque implements Method
 		return $this->options['enabled'];
 	}
 
+	public function isActive() {
+		if(isset($this->options['enabled'])) {
+			return $this->options['enabled'];
+		}
+	}
+
+	public function setActive($state) {
+		if(is_array($this->options)) {
+			$this->options['enabled'] = $state;
+		}
+
+		return $this->options;
+	}
+
+	public function isConfigured() {
+		return true;
+	}
+
+	public function hasTestMode() {
+		return false;
+	}
+
+	public function isTestModeEnabled() {
+		return false;
+	}
+
+	public function setTestMode($state) {
+		return $this->options;
+	}	
+
 	/**
 	 * @return array List of options to display on Payment settings page.
 	 */
@@ -58,21 +88,21 @@ class Cheque implements Method
 		return [
 			[
 				'name' => sprintf('[%s][enabled]', self::ID),
-				'title' => __('Is enabled?', 'jigoshop'),
+				'title' => __('Is enabled?', 'jigoshop-ecommerce'),
 				'type' => 'checkbox',
 				'checked' => $this->options['enabled'],
 				'classes' => ['switch-medium'],
             ],
 			[
 				'name' => sprintf('[%s][title]', self::ID),
-				'title' => __('Title', 'jigoshop'),
+				'title' => __('Title', 'jigoshop-ecommerce'),
 				'type' => 'text',
 				'value' => $this->options['title'],
             ],
 			[
 				'name' => sprintf('[%s][description]', self::ID),
-				'title' => __('Description', 'jigoshop'),
-				'tip' => sprintf(__('Allowed HTML tags are: %s', 'jigoshop'), '<p>, <a>, <strong>, <em>, <b>, <i>'),
+				'title' => __('Description', 'jigoshop-ecommerce'),
+				'tip' => sprintf(__('Allowed HTML tags are: %s', 'jigoshop-ecommerce'), '<p>, <a>, <strong>, <em>, <b>, <i>'),
 				'type' => 'text',
 				'value' => $this->options['description'],
             ],
@@ -111,7 +141,7 @@ class Cheque implements Method
 	 */
 	public function process($order)
 	{
-		$order->setStatus(Order\Status::ON_HOLD, __('Waiting for cheque to arrive.', 'jigoshop'));
+		$order->setStatus(Order\Status::ON_HOLD, __('Waiting for cheque to arrive.', 'jigoshop-ecommerce'));
         $this->orderService->save($order);
 
 		return '';

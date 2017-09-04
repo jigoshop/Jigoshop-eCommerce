@@ -10,7 +10,7 @@
                 <input type="hidden" name="product[attachments][datafile][]" value="{{{ data.id }}}">
             </div>
         </script>
-        <p class="empty-downloads"><?php _e('This product does not have files to download.', 'jigoshop' ); ?></p>
+        <p class="empty-downloads"><?php _e('This product does not have files to download.', 'jigoshop-ecommerce' ); ?></p>
     </div>
     <div class="clear"></div>
     <a href="#" class="btn btn-default add-product-attachments" data-type="datafile">Select</a>

@@ -4,11 +4,10 @@ namespace Jigoshop\Payment;
 
 use Jigoshop\Core\Options;
 use Jigoshop\Entity\Order;
-use Jigoshop\Exception;
 use Jigoshop\Service\OrderServiceInterface;
 use WPAL\Wordpress;
 
-class BankTransfer implements Method
+class BankTransfer implements Method2
 {
 	const ID = 'bank_transfer';
 
@@ -39,7 +38,7 @@ class BankTransfer implements Method
 	 */
 	public function getName()
 	{
-		return $this->wp->isAdmin() ? __('Bank Transfer', 'jigoshop') : $this->options['title'];
+		return $this->wp->isAdmin() ? __('Bank Transfer', 'jigoshop-ecommerce') : $this->options['title'];
 	}
 
 	/**
@@ -50,6 +49,36 @@ class BankTransfer implements Method
 		return $this->options['enabled'];
 	}
 
+	public function isActive() {
+		if(isset($this->options['enabled'])) {
+			return $this->options['enabled'];
+		}
+	}
+
+	public function setActive($state) {
+		if(is_array($this->options)) {
+			$this->options['enabled'] = $state;
+		}
+
+		return $this->options;
+	}
+
+	public function isConfigured() {
+		return true;
+	}
+
+	public function hasTestMode() {
+		return false;
+	}
+
+	public function isTestModeEnabled() {
+		return false;
+	}
+
+	public function setTestMode($state) {
+		return $this->options;
+	}
+
 	/**
 	 * @return array List of options to display on Payment settings page.
 	 */
@@ -58,68 +87,68 @@ class BankTransfer implements Method
 		return [
 			[
 				'name'    => sprintf('[%s][enabled]', self::ID),
-				'title'   => __('Is enabled?', 'jigoshop'),
+				'title'   => __('Is enabled?', 'jigoshop-ecommerce'),
 				'type'    => 'checkbox',
 				'checked' => $this->options['enabled'],
 				'classes' => ['switch-medium'],
             ],
 			[
 				'name'  => sprintf('[%s][title]', self::ID),
-				'title' => __('Title', 'jigoshop'),
+				'title' => __('Title', 'jigoshop-ecommerce'),
 				'type'  => 'text',
 				'value' => $this->options['title'],
             ],
 			[
 				'name'  => sprintf('[%s][description]', self::ID),
-				'title' => __('Description', 'jigoshop'),
-				'tip'   => sprintf(__('Allowed HTML tags are: %s', 'jigoshop'), '<p>, <a>, <strong>, <em>, <b>, <i>'),
+				'title' => __('Description', 'jigoshop-ecommerce'),
+				'tip'   => sprintf(__('Allowed HTML tags are: %s', 'jigoshop-ecommerce'), '<p>, <a>, <strong>, <em>, <b>, <i>'),
 				'type'  => 'text',
 				'value' => $this->options['description'],
             ],
 			[
 				'name'  => sprintf('[%s][bank_name]', self::ID),
-				'title' => __('Bank Name', 'jigoshop'),
+				'title' => __('Bank Name', 'jigoshop-ecommerce'),
 				'type'  => 'text',
 				'value' => $this->options['bank_name'],
             ],
 			[
 				'name'  => sprintf('[%s][account_number]', self::ID),
-				'title' => __('Account Number', 'jigoshop'),
+				'title' => __('Account Number', 'jigoshop-ecommerce'),
 				'type'  => 'text',
 				'value' => $this->options['account_number'],
             ],
 			[
 				'name'  => sprintf('[%s][account_holder]', self::ID),
-				'title' => __('Account Holder', 'jigoshop'),
-				'tip'   => __('The account name your account is registered to.', 'jigoshop'),
+				'title' => __('Account Holder', 'jigoshop-ecommerce'),
+				'tip'   => __('The account name your account is registered to.', 'jigoshop-ecommerce'),
 				'type'  => 'text',
 				'value' => $this->options['account_holder'],
             ],
             [
                 'name'  => sprintf('[%s][sort_code]', self::ID),
-                'title' => __('Sort Code', 'jigoshop'),
-                'tip'   => __('Your branch Sort Code.','jigoshop'),
+                'title' => __('Sort Code', 'jigoshop-ecommerce'),
+                'tip'   => __('Your branch Sort Code.','jigoshop-ecommerce'),
                 'type'  => 'text',
                 'value' => $this->options['sort_code'],
             ],
             [
                 'name'  => sprintf('[%s][iban]', self::ID),
-                'title' => __('IBAN', 'jigoshop'),
-                'tip'   => __('Your IBAN number. (for International transfers)','jigoshop'),
+                'title' => __('IBAN', 'jigoshop-ecommerce'),
+                'tip'   => __('Your IBAN number. (for International transfers)','jigoshop-ecommerce'),
                 'type'  => 'text',
                 'value' => $this->options['iban'],
             ],
             [
                 'name'  => sprintf('[%s][bic]', self::ID),
-                'title' => __('BIC Code', 'jigoshop'),
-                'tip'   => __('Your Branch Identification Code. (BIC Number)','jigoshop'),
+                'title' => __('BIC Code', 'jigoshop-ecommerce'),
+                'tip'   => __('Your Branch Identification Code. (BIC Number)','jigoshop-ecommerce'),
                 'type'  => 'text',
                 'value' => $this->options['bic'],
             ],
 			[
 				'name'  => sprintf('[%s][additional_info]', self::ID),
-				'title' => __('Additional Info', 'jigoshop'),
-				'tip'   => sprintf(__('Additional information you want to display to your customer. Allowed HTML tags are: %s', 'jigoshop'), '<p>, <a>, <strong>, <em>, <b>, <i>'),
+				'title' => __('Additional Info', 'jigoshop-ecommerce'),
+				'tip'   => sprintf(__('Additional information you want to display to your customer. Allowed HTML tags are: %s', 'jigoshop-ecommerce'), '<p>, <a>, <strong>, <em>, <b>, <i>'),
 				'type'  => 'textarea',
 				'value' => $this->options['additional_info'],
             ],
@@ -156,13 +185,13 @@ class BankTransfer implements Method
 	public function render()
 	{
 		$bank_info = '';
-		if ($this->options['description']) $bank_info .= '<strong>'.__('Description', 'jigoshop').'</strong>: ' . wptexturize($this->options['description']) . '<br />';
-		if ($this->options['bank_name']) $bank_info .= '<strong>'.__('Bank Name', 'jigoshop').'</strong>: ' . wptexturize($this->options['bank_name']) . '<br />';
-		if ($this->options['account_holder']) $bank_info .= '<strong>'.__('Account Number', 'jigoshop').'</strong>: '.wptexturize($this->options['account_holder']) . '<br />';
-		if ($this->options['sort_code']) $bank_info .= '<strong>'.__('Sort Code', 'jigoshop').'</strong>: '. wptexturize($this->options['sort_code']) . '<br />';
-		if ($this->options['iban']) $bank_info .= '<strong>'.__('IBAN', 'jigoshop').'</strong>: '. wptexturize($this->options['iban']) . '<br />';
-		if ($this->options['bic']) $bank_info .= '<strong>'.__('BIC Code', 'jigoshop').'</strong>: '. wptexturize($this->options['bic']) . '<br />';
-		if ($this->options['additional_info']) $bank_info .= '<strong>'.__('Additional Info', 'jigoshop').'</strong>: '. wptexturize($this->options['additional_info']) . '<br />';
+		if ($this->options['description']) $bank_info .= '<strong>'.__('Description', 'jigoshop-ecommerce').'</strong>: ' . wptexturize($this->options['description']) . '<br />';
+		if ($this->options['bank_name']) $bank_info .= '<strong>'.__('Bank Name', 'jigoshop-ecommerce').'</strong>: ' . wptexturize($this->options['bank_name']) . '<br />';
+		if ($this->options['account_holder']) $bank_info .= '<strong>'.__('Account Number', 'jigoshop-ecommerce').'</strong>: '.wptexturize($this->options['account_holder']) . '<br />';
+		if ($this->options['sort_code']) $bank_info .= '<strong>'.__('Sort Code', 'jigoshop-ecommerce').'</strong>: '. wptexturize($this->options['sort_code']) . '<br />';
+		if ($this->options['iban']) $bank_info .= '<strong>'.__('IBAN', 'jigoshop-ecommerce').'</strong>: '. wptexturize($this->options['iban']) . '<br />';
+		if ($this->options['bic']) $bank_info .= '<strong>'.__('BIC Code', 'jigoshop-ecommerce').'</strong>: '. wptexturize($this->options['bic']) . '<br />';
+		if ($this->options['additional_info']) $bank_info .= '<strong>'.__('Additional Info', 'jigoshop-ecommerce').'</strong>: '. wptexturize($this->options['additional_info']) . '<br />';
 
 		echo $bank_info;
 	}
@@ -175,7 +204,7 @@ class BankTransfer implements Method
 	 */
 	public function process($order)
 	{
-		$order->setStatus(Order\Status::ON_HOLD, __('Waiting for the confirmation of the bank transfer.', 'jigoshop'));
+		$order->setStatus(Order\Status::ON_HOLD, __('Waiting for the confirmation of the bank transfer.', 'jigoshop-ecommerce'));
         $this->orderService->save($order);
 
 		return '';

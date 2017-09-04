@@ -12,9 +12,9 @@ use Jigoshop\Entity\Product;
     <?php
     Forms::text([
         'name' => 'product[variation][' . $variation->getId() . '][product][url]',
-        'label' => __('Product URL', 'jigoshop'),
+        'label' => __('Product URL', 'jigoshop-ecommerce'),
         'classes' => ['product-external', $product instanceof Product\External ? '' : 'not-active'],
-        'placeholder' => __('Enter external product URL...', 'jigoshop'),
+        'placeholder' => __('Enter external product URL...', 'jigoshop-ecommerce'),
         'size' => 11,
         'value' => $product instanceof Product\External ? $product->getUrl() : '',
     ]);

@@ -71,7 +71,7 @@ class Endpoint
 
 				if (!($processor instanceof Endpoint\Processable) && !($processor instanceof Api\Processable) ) {
 					if (WP_DEBUG) {
-						throw new Exception(__('Provided Endpoint is not processable.', 'jigoshop'));
+						throw new Exception(__('Provided Endpoint is not processable.', 'jigoshop-ecommerce'));
 					}
 
 					return;

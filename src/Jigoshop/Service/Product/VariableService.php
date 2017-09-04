@@ -105,14 +105,22 @@ class VariableService implements VariableServiceInterface
 	/**
 	 * @param $variation Product\Variable\Variation
 	 * @param $product   Product\Variable
+	 * @param $type 	 string
 	 *
 	 * @return Product
 	 */
-	public function createVariableProduct($variation, $product)
+	public function createVariableProduct($variation, $product, $type = '')
 	{
 		$variableId = $this->createVariablePost($variation);
 		/** @var Product|Product\Purchasable|Product\Saleable $variableProduct */
-		$variableProduct = $this->productService->find($variableId);
+		if($type == '') {
+			$variableProduct = $this->productService->find($variableId);
+		}
+		else {
+			$variableProduct = $this->productService->create($type);
+			$variableProduct->setId($variableId);
+		}
+
 		$variableProduct->setVisibility(Product::VISIBILITY_NONE);
 		$variableProduct->setTaxable($product->isTaxable());
 		$variableProduct->setTaxClasses($product->getTaxClasses());

@@ -12,14 +12,14 @@ use Jigoshop\Helper\Render;
 <div class="clearfix padding-bottom-5">
     <div style="width: 70%; float: left">
         <?php \Jigoshop\Admin\Helper\Forms::select([
-            'placeholder' => __('Select action...', 'jigoshop'),
+            'placeholder' => __('Select action...', 'jigoshop-ecommerce'),
             'name' => 'variation_bulk_actions',
             'id' => 'variation-bulk-actions',
             'options' => $bulkActions,
             'value' => false,
         ]); ?>
     </div>
-    <button type="button" class="btn btn-default pull-right" id="do-bulk-action"><?= __('Go', 'jigoshop'); ?></button>
+    <button type="button" class="btn btn-default pull-right" id="do-bulk-action"><?= __('Go', 'jigoshop-ecommerce'); ?></button>
 </div>
 <ul id="product-variations" class="list-group">
 	<?php if ($product instanceof Product\Variable): ?>

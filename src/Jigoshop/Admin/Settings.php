@@ -84,7 +84,7 @@ class Settings implements PageInterface
 	 */
 	public function getTitle()
 	{
-		return __('Settings', 'jigoshop');
+		return __('Settings', 'jigoshop-ecommerce');
 	}
 
 	/** @return string Parent of the page string. */
@@ -136,7 +136,6 @@ class Settings implements PageInterface
 		foreach ($sections as $section) {
 			$this->wp->addSettingsSection($section['id'], $section['title'], function () use ($tab, $section, $that){
 				$that->displaySection($tab, $section);
-				
 				if(isset($section['display']) && is_callable($section['display'])) {
 					echo call_user_func($section['display']);
 				}				

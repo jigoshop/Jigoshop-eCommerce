@@ -51,7 +51,7 @@ class LayoutTab implements TabInterface
      */
     public function getTitle()
     {
-        return __('Layout', 'jigoshop');
+        return __('Layout', 'jigoshop-ecommerce');
     }
 
     /**
@@ -69,19 +69,19 @@ class LayoutTab implements TabInterface
     {
         return $this->wp->applyFilters('jigoshop\admin\settings\layout\sections', [
             [
-                'title' => __('Main', 'jigoshop'),
+                'title' => __('Main', 'jigoshop-ecommerce'),
                 'id' => 'main',
                 'fields' => [
                     [
                         'name' => '[enabled]',
-                        'title' => __('Enable custom layout', 'jigoshop'),
+                        'title' => __('Enable custom layout', 'jigoshop-ecommerce'),
                         'type' => 'checkbox',
                         'checked' => $this->options['enabled'],
                         'classes' => ['switch-medium'],
                     ],
                     [
                         'name' => '[page_width]',
-                        'title' => __('Page width', 'jigoshop'),
+                        'title' => __('Page width', 'jigoshop-ecommerce'),
                         'type' => 'select',
                         'value' => $this->options['page_width'],
                         'options' => [
@@ -91,7 +91,7 @@ class LayoutTab implements TabInterface
                     ],
                     [
                         'name' => '[global_css]',
-                        'title' => __('Custom global CSS', 'jigoshop'),
+                        'title' => __('Custom global CSS', 'jigoshop-ecommerce'),
                         'type' => 'user_defined',
                         'value' => $this->options['global_css'],
                         'display' => function ($field) {
@@ -105,47 +105,47 @@ class LayoutTab implements TabInterface
                 ],
             ],
             [
-                'title' => __('Default', 'jigoshop'),
+                'title' => __('Default', 'jigoshop-ecommerce'),
                 'id' => 'default',
                 'fields' => $this->getFields('default'),
             ],
             [
-                'title' => $this->getSectionTitle(__('Product List', 'jigoshop'), Pages::PRODUCT_LIST),
+                'title' => $this->getSectionTitle(__('Product List', 'jigoshop-ecommerce'), Pages::PRODUCT_LIST),
                 'id' => Pages::PRODUCT_LIST,
                 'fields' => $this->getFields(Pages::PRODUCT_LIST),
             ],
             [
-                'title' => $this->getSectionTitle(__('Cart', 'jigoshop'), Pages::CART),
+                'title' => $this->getSectionTitle(__('Cart', 'jigoshop-ecommerce'), Pages::CART),
                 'id' => Pages::CART,
                 'fields' => $this->getFields(Pages::CART),
             ],
             [
-                'title' => $this->getSectionTitle(__('Checkout', 'jigoshop'), Pages::CHECKOUT),
+                'title' => $this->getSectionTitle(__('Checkout', 'jigoshop-ecommerce'), Pages::CHECKOUT),
                 'id' => Pages::CHECKOUT,
                 'fields' => $this->getFields(Pages::CHECKOUT),
             ],
             [
-                'title' => $this->getSectionTitle(__('Product', 'jigoshop'), Pages::PRODUCT),
+                'title' => $this->getSectionTitle(__('Product', 'jigoshop-ecommerce'), Pages::PRODUCT),
                 'id' => Pages::PRODUCT,
                 'fields' => $this->getFields(Pages::PRODUCT),
             ],
             [
-                'title' => $this->getSectionTitle(__('Product Category', 'jigoshop'), Pages::PRODUCT_CATEGORY),
+                'title' => $this->getSectionTitle(__('Product Category', 'jigoshop-ecommerce'), Pages::PRODUCT_CATEGORY),
                 'id' => Pages::PRODUCT_CATEGORY,
                 'fields' => $this->getFields(Pages::PRODUCT_CATEGORY),
             ],
             [
-                'title' => $this->getSectionTitle(__('Product Tag', 'jigoshop'), Pages::PRODUCT_TAG),
+                'title' => $this->getSectionTitle(__('Product Tag', 'jigoshop-ecommerce'), Pages::PRODUCT_TAG),
                 'id' => Pages::PRODUCT_TAG,
                 'fields' => $this->getFields(Pages::PRODUCT_TAG),
             ],
             [
-                'title' => $this->getSectionTitle(__('Account', 'jigoshop'), Pages::ACCOUNT),
+                'title' => $this->getSectionTitle(__('Account', 'jigoshop-ecommerce'), Pages::ACCOUNT),
                 'id' => Pages::ACCOUNT,
                 'fields' => $this->getFields(Pages::ACCOUNT),
             ],
             [
-                'title' => $this->getSectionTitle(__('Thank You', 'jigoshop'), Pages::THANK_YOU),
+                'title' => $this->getSectionTitle(__('Thank You', 'jigoshop-ecommerce'), Pages::THANK_YOU),
                 'id' => Pages::THANK_YOU,
                 'fields' => $this->getFields(Pages::THANK_YOU),
             ],
@@ -184,7 +184,7 @@ class LayoutTab implements TabInterface
         return [
             [
                 'name' => '[' . $parent . '][structure]',
-                'title' => __('Structure', 'jigoshop'),
+                'title' => __('Structure', 'jigoshop-ecommerce'),
                 'type' => 'user_defined',
                 'value' => $this->options[$parent]['structure'],
                 'display' => function ($field) {
@@ -197,36 +197,36 @@ class LayoutTab implements TabInterface
             ],
             [
                 'name' => '[' . $parent . '][sidebar]',
-                'title' => __('Sidebar', 'jigoshop'),
+                'title' => __('Sidebar', 'jigoshop-ecommerce'),
                 'type' => 'select',
                 'value' => $this->options[$parent]['sidebar'],
                 'options' => [
-                    '1' => __('Jigoshop Sidebar 1', 'jigoshop'),
-                    '2' => __('Jigoshop Sidebar 2', 'jigoshop'),
-                    '3' => __('Jigoshop Sidebar 3', 'jigoshop'),
-                    '4' => __('Jigoshop Sidebar 4', 'jigoshop'),
-                    '5' => __('Jigoshop Sidebar 5', 'jigoshop'),
-                    '6' => __('Jigoshop Sidebar 6', 'jigoshop'),
-                    '7' => __('Jigoshop Sidebar 7', 'jigoshop'),
-                    '8' => __('Jigoshop Sidebar 8', 'jigoshop'),
-                    '9' => __('Jigoshop Sidebar 9', 'jigoshop'),
+                    '1' => __('Jigoshop Sidebar 1', 'jigoshop-ecommerce'),
+                    '2' => __('Jigoshop Sidebar 2', 'jigoshop-ecommerce'),
+                    '3' => __('Jigoshop Sidebar 3', 'jigoshop-ecommerce'),
+                    '4' => __('Jigoshop Sidebar 4', 'jigoshop-ecommerce'),
+                    '5' => __('Jigoshop Sidebar 5', 'jigoshop-ecommerce'),
+                    '6' => __('Jigoshop Sidebar 6', 'jigoshop-ecommerce'),
+                    '7' => __('Jigoshop Sidebar 7', 'jigoshop-ecommerce'),
+                    '8' => __('Jigoshop Sidebar 8', 'jigoshop-ecommerce'),
+                    '9' => __('Jigoshop Sidebar 9', 'jigoshop-ecommerce'),
                 ]
             ],
             [
                 'name' => '[' . $parent . '][proportions]',
-                'title' => __('Proportions', 'jigoshop'),
+                'title' => __('Proportions', 'jigoshop-ecommerce'),
                 'type' => 'select',
                 'value' => $this->options[$parent]['proportions'],
                 'classes' => ['proportions'],
                 'options' => [
                     '66-34' => '66% - 34%',
                     '70-30' => '70% - 30%',
-                    'custom' => __('Custom', 'jigoshop'),
+                    'custom' => __('Custom', 'jigoshop-ecommerce'),
                 ]
             ],
             [
                 'name' => '[' . $parent . '][custom_proportions]',
-                'title' => __('Custom Proportions', 'jigoshop'),
+                'title' => __('Custom Proportions', 'jigoshop-ecommerce'),
                 'type' => 'user_defined',
                 'value' => $this->options[$parent]['custom_proportions'],
                 'display' => function ($field) {
@@ -239,7 +239,7 @@ class LayoutTab implements TabInterface
             ],
             [
                 'name' => '[' . $parent . '][css]',
-                'title' => __('Custom CSS', 'jigoshop'),
+                'title' => __('Custom CSS', 'jigoshop-ecommerce'),
                 'type' => 'user_defined',
                 'value' => $this->options[$parent]['css'],
                 'display' => function ($field) {
@@ -276,8 +276,8 @@ class LayoutTab implements TabInterface
         Forms::checkbox([
             'id' => $parent . '_enabled',
             'name' => 'jigoshop[' . $parent . '][enabled]',
-            'title' => __('Is enabled?', 'jigoshop'),
-            'description' => __('Override default settings for this page.', 'jigoshop'),
+            'title' => __('Is enabled?', 'jigoshop-ecommerce'),
+            'description' => __('Override default settings for this page.', 'jigoshop-ecommerce'),
             'type' => 'checkbox',
             'checked' => $this->options[$parent]['enabled'],
             'classes' => ['switch-medium', 'enable_section'],

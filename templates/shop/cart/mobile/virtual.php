@@ -41,13 +41,13 @@ else {
         <div class="buttons pull-right">
             <div class="product-remove pull-right">
                 <a class="remove" href="<?= \Jigoshop\Helper\Order::getRemoveLink($key); ?>">
-                    <button type="button" class="remove-product btn btn-default pull-right" title="<?php _e('Remove', 'jigoshop'); ?>">
+                    <button type="button" class="remove-product btn btn-default pull-right" title="<?php _e('Remove', 'jigoshop-ecommerce'); ?>">
                         <span class="glyphicon glyphicon-remove"></span>
                     </button>
                 </a>
             </div>
 
-            <button type="button" class="show-product btn btn-default pull-right" title="<?php _e('Expand', 'jigoshop'); ?>">
+            <button type="button" class="show-product btn btn-default pull-right" title="<?php _e('Expand', 'jigoshop-ecommerce'); ?>">
                 <span class="glyphicon glyphicon-collapse-down"></span>
             </button>
         </div>
@@ -74,7 +74,7 @@ else {
             <fieldset>
                 <div class="form-group">
                     <label class="margin-top-bottom-9">
-                        <?php _e('Unit Price', 'jigoshop'); ?>
+                        <?php _e('Unit Price', 'jigoshop-ecommerce'); ?>
                     </label>
                     <div class="clearfix product-price">
                         <?= apply_filters('jigoshop\template\shop\cart\product_price', $pricesStr, $price, $product, $item); ?>
@@ -83,7 +83,7 @@ else {
                 <div class="form-group product_quantity_field padding-bottom-5">
                     <div class="row">
                         <label for="product_quantity" class="margin-top-bottom-9">
-                            <?php _e('Quantity', 'jigoshop'); ?>
+                            <?php _e('Quantity', 'jigoshop-ecommerce'); ?>
                         </label>
                         <div class="clearfix">
                             <div class="tooltip-inline-badge">
@@ -98,7 +98,7 @@ else {
                 <div class="form-group product_regular_price_field ">
                     <div class="row">
                         <label for="product_regular_price" class="margin-top-bottom-9">
-                            <?php _e('Price', 'jigoshop'); ?>
+                            <?php _e('Price', 'jigoshop-ecommerce'); ?>
                         </label>
                         <div class="clearfix product-subtotal">
                             <?= apply_filters('jigoshop\template\shop\cart\product_subtotal', $pricesTotalStr, $item->getQuantity() * $price, $product, $item); ?>

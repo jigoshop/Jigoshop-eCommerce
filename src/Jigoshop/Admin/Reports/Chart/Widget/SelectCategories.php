@@ -25,7 +25,7 @@ class SelectCategories implements WidgetInterface
 
     public function getTitle()
     {
-        return __('Select Categories', 'jigoshop');
+        return __('Select Categories', 'jigoshop-ecommerce');
     }
 
     public function getArgs()

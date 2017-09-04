@@ -126,7 +126,7 @@ class Coupons implements Tool
 			$wpdb->query("ROLLBACK");
 			$wpdb->query("SET AUTOCOMMIT=" . $var_autocommit_sql);
 
-			Migration::saveLog(__('Migration coupons end with error: ', 'jigoshop') . $e);
+			Migration::saveLog(__('Migration coupons end with error: ', 'jigoshop-ecommerce') . $e);
 
 			return false;
 		}
@@ -183,7 +183,7 @@ class Coupons implements Tool
 //			1 - if first time ajax request
 			if($_POST['msgLog'] == 1)
 			{
-				Migration::saveLog(__('Migration coupons START.', 'jigoshop'), true);
+				Migration::saveLog(__('Migration coupons START.', 'jigoshop-ecommerce'), true);
 			}
 
 			$wpdb = $this->wp->getWPDB();
@@ -238,13 +238,13 @@ class Coupons implements Tool
 				else
 				{
 					$ajax_response['success'] = false;
-					Migration::saveLog(__('Migration coupons end with error.', 'jigoshop'));
+					Migration::saveLog(__('Migration coupons end with error.', 'jigoshop-ecommerce'));
 				}
 			}
 			elseif($countRemain == 0)
 			{
 				$this->wp->updateOption('jigoshop_coupons_migrate_id', serialize($couponsIdsMigration));
-				Migration::saveLog(__('Migration coupons END.', 'jigoshop'));
+				Migration::saveLog(__('Migration coupons END.', 'jigoshop-ecommerce'));
 			}
 
 			echo json_encode($ajax_response);
@@ -258,7 +258,7 @@ class Coupons implements Tool
 				'success' => false,
             ]);
 
-			Migration::saveLog(__('Migration coupons end with error: ', 'jigoshop') . $e);
+			Migration::saveLog(__('Migration coupons end with error: ', 'jigoshop-ecommerce') . $e);
 		}
 
 		exit;

@@ -10,16 +10,16 @@
 				<li>
 					<?= get_avatar($comment->comment_author, '32'); ?>
 					<div class="star-rating" title="<?= esc_attr($rating); ?>">
-						<span style="width:<?= ($rating * 16); ?>px"><?= $rating.' '.__('out of 5', 'jigoshop'); ?></span>
+						<span style="width:<?= ($rating * 16); ?>px"><?= $rating.' '.__('out of 5', 'jigoshop-ecommerce'); ?></span>
 					</div>
 					<h4 class="meta"><a
-							href="<?= get_permalink($comment->ID); ?>#comment-<?= $comment->comment_ID; ?>"><?= $comment->post_title; ?></a><?= __(' reviewed by ', 'jigoshop'); ?> <?= strip_tags($comment->comment_author); ?>
+							href="<?= get_permalink($comment->ID); ?>#comment-<?= $comment->comment_ID; ?>"><?= $comment->post_title; ?></a><?= __(' reviewed by ', 'jigoshop-ecommerce'); ?> <?= strip_tags($comment->comment_author); ?>
 					</h4>
 					<blockquote><?= strip_tags($comment->comment_excerpt); ?> [...]</blockquote>
 				</li>
 			<?php endforeach; ?>
 		</ul>
 	<?php else: ?>
-		<p><?= __('There are no product reviews yet.', 'jigoshop'); ?></p>
+		<p><?= __('There are no product reviews yet.', 'jigoshop-ecommerce'); ?></p>
 	<?php endif; ?>
 </div>

@@ -1454,7 +1454,7 @@ class Country
     {
         if(!isset(self::$cache['continents'])) {
             $continets = array_map(function($item) {
-                return __($item, 'jigoshop');
+                return __($item, 'jigoshop-ecommerce');
             }, self::$continents);
             asort($continets, SORT_LOCALE_STRING);
             self::$cache['continents'] = $continets;
@@ -1490,7 +1490,7 @@ class Country
 		if (!isset(self::$cache['countries'])) {
 			$countries = array_map(function($countries) {
                 return array_map(function ($item){
-                    return __($item, 'jigoshop');
+                    return __($item, 'jigoshop-ecommerce');
                 }, $countries);
             }, self::$countries);
 			$countries = array_merge(...array_values($countries));

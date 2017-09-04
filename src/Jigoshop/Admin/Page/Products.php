@@ -36,8 +36,25 @@ class Products
 		$wp->addAction(sprintf('manage_%s_posts_custom_column', Types::PRODUCT), [$this, 'displayColumn'], 2);
 		$wp->addAction('restrict_manage_posts', [$this, 'categoryFilter']);
 		$wp->addAction('restrict_manage_posts', [$this, 'typeFilter']);
+		$wp->addAction('restrict_manage_posts', [$this, 'featuredFilter']);
 		$wp->addAction('pre_get_posts', [$this, 'setTypeFilter']);
+		$wp->addAction('pre_get_posts', [$this, 'setFeaturedFilter']);
 		$wp->addAction('wp_ajax_jigoshop.admin.products.feature_product', [$this, 'ajaxFeatureProduct']);
+
+		$wp->addAction('quick_edit_custom_box', function($col, $type) {
+            if($type == Types::PRODUCT && $col == 'type') {
+                $post = $this->wp->getGlobalPost();
+                if ($post === null) {
+                    return;
+                }
+
+                /** @var Product | Product\Variable $product */
+                $product = $this->productService->find($post->ID);
+                Render::output('admin/products/quick_edit', [
+                    'product' => $product,
+                ]);
+            }
+        }, 10, 2);
 
 		$wp->addAction('admin_enqueue_scripts', function () use ($wp){
 			if ($wp->getPostType() == Types::PRODUCT) {
@@ -71,16 +88,16 @@ class Products
 		$columns = [
 			'cb' => '<input type="checkbox" />',
 			'thumbnail' => null,
-			'title' => _x('Name', 'product', 'jigoshop'),
+			'title' => _x('Name', 'product', 'jigoshop-ecommerce'),
 			'featured' => sprintf(
 				'<span class="glyphicon glyphicon-star" aria-hidden="true"></span> <span class="sr-only">%s</span>',
-				_x('Is featured?', 'product', 'jigoshop')
+				_x('Is featured?', 'product', 'jigoshop-ecommerce')
 			),
-			'type' => _x('Type', 'product', 'jigoshop'),
-			'sku' => _x('SKU', 'product', 'jigoshop'),
-			'stock' => _x('Stock', 'product', 'jigoshop'),
-			'price' => _x('Price', 'product', 'jigoshop'),
-			'creation' => _x('Created at', 'product', 'jigoshop'),
+			'type' => _x('Type', 'product', 'jigoshop-ecommerce'),
+			'sku' => _x('SKU', 'product', 'jigoshop-ecommerce'),
+			'stock' => _x('Stock', 'product', 'jigoshop-ecommerce'),
+			'price' => _x('Price', 'product', 'jigoshop-ecommerce'),
+			'creation' => _x('Created at', 'product', 'jigoshop-ecommerce'),
         ];
 
 		if ($this->options->get('products.enable_sku', 'yes') !== 'yes') {
@@ -105,6 +122,9 @@ class Products
 		switch ($column) {
 			case 'thumbnail':
 				echo ProductHelper::getFeaturedImage($product, Options::IMAGE_THUMBNAIL);
+				Render::output('admin/products/inline_product_data', [
+				    'product' => $product,
+                ]);
 				break;
 			case 'price':
 				echo ProductHelper::getPriceHtml($product);
@@ -126,16 +146,16 @@ class Products
 				echo Formatter::date($timestamp);
 
 				if ($product->isVisible()) {
-					echo '<br /><strong>'.__('Visible in', 'jigoshop').'</strong>: ';
+					echo '<br /><strong>'.__('Visible in', 'jigoshop-ecommerce').'</strong>: ';
 					switch ($product->getVisibility()) {
 						case ProductEntity::VISIBILITY_SEARCH:
-							echo __('Search only', 'jigoshop');
+							echo __('Search only', 'jigoshop-ecommerce');
 							break;
 						case ProductEntity::VISIBILITY_CATALOG:
-							echo __('Catalog only', 'jigoshop');
+							echo __('Catalog only', 'jigoshop-ecommerce');
 							break;
 						case ProductEntity::VISIBILITY_PUBLIC:
-							echo __('Catalog and search', 'jigoshop');
+							echo __('Catalog and search', 'jigoshop-ecommerce');
 							break;
 					}
 				}
@@ -205,6 +225,23 @@ class Products
         ]);
 	}
 
+    /**
+     * Filter products by type
+     */
+    public function featuredFilter()
+    {
+        $type = $this->wp->getTypeNow();
+        if ($type != Types::PRODUCT) {
+            return;
+        }
+
+        $current = isset($_GET['featured']) ? $_GET['featured'] : '';
+
+        Render::output('admin/products/featuredFilter', [
+            'current' => $current
+        ]);
+    }
+
 	/**
 	 * Finds and returns number of products of specified type.
 	 *
@@ -229,13 +266,37 @@ class Products
 	public function setTypeFilter($query)
 	{
 		if (isset($_GET['product_type']) && in_array($_GET['product_type'], array_keys($this->type->getEnabledTypes()))) {
-			$meta = $query->meta_query;
+			if($query->meta_query instanceof \WP_Meta_Query) {
+			    $meta = $query->meta_query->queries;
+            } else {
+                $meta = $query->meta_query;
+            }
+
 			$meta[] = [
 				'key' => 'type',
 				'value' => $_GET['product_type'],
             ];
 			$query->set('meta_query', $meta);
 		}
+	}
+
+    /**
+     * @param $query \WP_Query
+     */
+    public function setFeaturedFilter($query)
+    {
+        if (isset($_GET['featured']) && $_GET['featured']) {
+            if($query->meta_query instanceof \WP_Meta_Query) {
+                $meta = $query->meta_query->queries;
+            } else {
+                $meta = $query->meta_query;
+            }
+            $meta[] = [
+                'key' => 'featured',
+                'value' => '1',
+            ];
+            $query->set('meta_query', $meta);
+        }
 	}
 
 	/**

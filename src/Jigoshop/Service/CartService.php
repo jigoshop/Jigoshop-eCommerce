@@ -70,13 +70,13 @@ class CartService implements CartServiceInterface
 
 	private function generateCartId()
 	{
-		if ($this->wp->getCurrentUserId() > 0) {
-			$id = $this->wp->getCurrentUserId();
-		} elseif ($this->session->getField(self::CART_ID)) {
+		if ($this->session->getField(self::CART_ID)) {
 			$id = $this->session->getField(self::CART_ID);
 		} elseif (isset($_COOKIE[self::CART_ID])) {
 			$id = $_COOKIE[self::CART_ID];
-		} else {
+		} elseif ($this->wp->getCurrentUserId() > 0) {
+            $id = $this->wp->getCurrentUserId();
+        } else {
 			$id = md5((isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : '') .time().$_SERVER['REMOTE_ADDR'].rand(1, 10000000));
 		}
 
@@ -235,14 +235,14 @@ class CartService implements CartServiceInterface
 		$billingErrors = $this->validateAddress($customer->getBillingAddress());
 
 		if ($customer->getBillingAddress()->getEmail() == null) {
-			$billingErrors[] = __('Email address is empty.', 'jigoshop');
+			$billingErrors[] = __('Email address is empty.', 'jigoshop-ecommerce');
 		}
 		if ($customer->getBillingAddress()->getPhone() == null) {
-			$billingErrors[] = __('Phone is empty.', 'jigoshop');
+			$billingErrors[] = __('Phone is empty.', 'jigoshop-ecommerce');
 		}
 
 		if (!Validation::isEmail($customer->getBillingAddress()->getEmail())) {
-			$billingErrors[] = __('Email address is invalid.', 'jigoshop');
+			$billingErrors[] = __('Email address is invalid.', 'jigoshop-ecommerce');
 		}
 
 		$shippingErrors = $this->validateAddress($customer->getShippingAddress());
@@ -261,10 +261,10 @@ class CartService implements CartServiceInterface
 
 		$error = '';
 		if (!empty($billingErrors)) {
-			$error .= $this->prepareAddressError(__('Billing address is not valid.', 'jigoshop'), $billingErrors);
+			$error .= $this->prepareAddressError(__('Billing address is not valid.', 'jigoshop-ecommerce'), $billingErrors);
 		}
 		if (!empty($shippingErrors)) {
-			$error .= $this->prepareAddressError(__('Shipping address is not valid.', 'jigoshop'), $shippingErrors);
+			$error .= $this->prepareAddressError(__('Shipping address is not valid.', 'jigoshop-ecommerce'), $shippingErrors);
 		}
 		if (!empty($error)) {
 			throw new Exception($error);
@@ -282,36 +282,36 @@ class CartService implements CartServiceInterface
 
 		if ($address->isValid()) {
 			if ($address->getFirstName() == null) {
-				$errors[] = __('First name is empty.', 'jigoshop');
+				$errors[] = __('First name is empty.', 'jigoshop-ecommerce');
 			}
 			if ($address->getLastName() == null) {
-				$errors[] = __('Last name is empty.', 'jigoshop');
+				$errors[] = __('Last name is empty.', 'jigoshop-ecommerce');
 			}
 			if ($address->getAddress() == null) {
-				$errors[] = __('Address is empty.', 'jigoshop');
+				$errors[] = __('Address is empty.', 'jigoshop-ecommerce');
 			}
 			if ($address->getCountry() == null) {
-				$errors[] = __('Country is not selected.', 'jigoshop');
+				$errors[] = __('Country is not selected.', 'jigoshop-ecommerce');
 			}
 			if ($address->getState() == null) {
-				$errors[] = __('State or province is not selected.', 'jigoshop');
+				$errors[] = __('State or province is not selected.', 'jigoshop-ecommerce');
 			}
 			if ($address->getCity() == null) {
-				$errors[] = __('City is empty.', 'jigoshop');
+				$errors[] = __('City is empty.', 'jigoshop-ecommerce');
 			}
 			if ($address->getPostcode() == null) {
-				$errors[] = __('Postcode is empty.', 'jigoshop');
+				$errors[] = __('Postcode is empty.', 'jigoshop-ecommerce');
 			}
 			if ($this->options->get('shopping.validate_zip') && !Validation::isPostcode($address->getPostcode(), $address->getCountry())) {
-				$errors[] = __('Invalid postcode.', 'jigoshop');
+				$errors[] = __('Invalid postcode.', 'jigoshop-ecommerce');
 			}
 		}
 
 		if (!Country::exists($address->getCountry())) {
-			$errors[] = sprintf(__('Country "%s" does not exist.', 'jigoshop'), $address->getCountry());
+			$errors[] = sprintf(__('Country "%s" does not exist.', 'jigoshop-ecommerce'), $address->getCountry());
 		}
 		if (Country::hasStates($address->getCountry()) && !Country::hasState($address->getCountry(), $address->getState())) {
-			$errors[] = sprintf(__('Country "%s" does not have state "%s".', 'jigoshop'), $address->getCountry(), $address->getState());
+			$errors[] = sprintf(__('Country "%s" does not have state "%s".', 'jigoshop-ecommerce'), $address->getCountry(), $address->getState());
 		}
 
 		return $errors;

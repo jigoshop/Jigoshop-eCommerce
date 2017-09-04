@@ -34,9 +34,9 @@ use Jigoshop\Helper\Render;
 	</td>
 	<td>
 		<?php if ($attribute->getType() != Attribute\Text::TYPE): ?>
-		<button type="button" class="configure-attribute btn btn-default"><?php _e('Configure', 'jigoshop'); ?></button>
+		<button type="button" class="configure-attribute btn btn-default"><?php _e('Configure', 'jigoshop-ecommerce'); ?></button>
 		<?php endif; ?>
-		<button type="button" class="remove-attribute btn btn-default" title="<?php _e('Remove', 'jigoshop'); ?>"><span class="glyphicon glyphicon-remove"></span></button>
+		<button type="button" class="remove-attribute btn btn-default" title="<?php _e('Remove', 'jigoshop-ecommerce'); ?>"><span class="glyphicon glyphicon-remove"></span></button>
 	</td>
 </tr>
 <?php if ($attribute->getType() != Attribute\Text::TYPE): ?>
@@ -45,15 +45,15 @@ use Jigoshop\Helper\Render;
 		<div class="panel panel-default">
 			<div class="panel-heading">
 				<h5 class="panel-title">
-					<?php _e('Attribute options', 'jigoshop'); ?>
-					<button type="button" class="btn btn-default pull-right"><?php _e('Close', 'jigoshop'); ?></button>
+					<?php _e('Attribute options', 'jigoshop-ecommerce'); ?>
+					<button type="button" class="btn btn-default pull-right"><?php _e('Close', 'jigoshop-ecommerce'); ?></button>
 				</h5>
 			</div>
 			<table class="table table-condensed">
 				<thead>
 				<tr>
-					<th scope="col"><?php _e('Label', 'jigoshop'); ?></th>
-					<th scope="col"><?php _e('Value', 'jigoshop'); ?></th>
+					<th scope="col"><?php _e('Label', 'jigoshop-ecommerce'); ?></th>
+					<th scope="col"><?php _e('Value', 'jigoshop-ecommerce'); ?></th>
 					<th scope="col"></th>
 				</tr>
 				</thead>
@@ -68,18 +68,18 @@ use Jigoshop\Helper\Render;
 						<?php Forms::text([
 							'name' => 'option_label',
 							'classes' => ['new-option-label'],
-							'placeholder' => __('New option label', 'jigoshop'),
+							'placeholder' => __('New option label', 'jigoshop-ecommerce'),
                         ]); ?>
 					</td>
 					<td>
 						<?php Forms::text([
 							'name' => 'option_value',
 							'classes' => ['new-option-value'],
-							'placeholder' => __('New option value', 'jigoshop'),
+							'placeholder' => __('New option value', 'jigoshop-ecommerce'),
                         ]); ?>
 					</td>
 					<td>
-						<button type="button" class="btn btn-default add-option"><span class="glyphicon glyphicon-plus"></span> <?php _e('Add', 'jigoshop'); ?></button>
+						<button type="button" class="btn btn-default add-option"><span class="glyphicon glyphicon-plus"></span> <?php _e('Add', 'jigoshop-ecommerce'); ?></button>
 					</td>
 				</tr>
 				</tfoot>

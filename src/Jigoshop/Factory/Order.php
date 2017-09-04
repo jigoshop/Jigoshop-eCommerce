@@ -71,6 +71,7 @@ class Order implements EntityFactoryInterface
     {
         $post = $this->wp->getPost($id);
 
+        $_POST = stripslashes_deep($_POST);
         // Support for our own post types and "Publish" button.
         if (isset($_POST['original_post_status'])) {
             $post->post_status = $_POST['original_post_status'];

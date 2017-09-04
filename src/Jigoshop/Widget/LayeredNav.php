@@ -25,11 +25,11 @@ class LayeredNav extends \WP_Widget
 	{
 		$options = [
 			'classname' => self::ID,
-			'description' => __('Shows a custom attribute in a widget which lets you narrow down the list of shown products in categories.', 'jigoshop'),
+			'description' => __('Shows a custom attribute in a widget which lets you narrow down the list of shown products in categories.', 'jigoshop-ecommerce'),
         ];
 
 		// Create the widget
-		parent::__construct(self::ID, __('Jigoshop: Layered Nav', 'jigoshop'), $options);
+		parent::__construct(self::ID, __('Jigoshop: Layered Nav', 'jigoshop-ecommerce'), $options);
 
 		add_action('wp_enqueue_scripts', [$this, 'assets']);
 		add_filter('jigoshop\service\product\find_by_query', [$this, 'query']);
@@ -114,7 +114,7 @@ class LayeredNav extends \WP_Widget
 		// Set the widget title
 		$title = apply_filters(
 			'widget_title',
-			($instance['title']) ? $instance['title'] : __('Filter by Attributes', 'jigoshop'),
+			($instance['title']) ? $instance['title'] : __('Filter by Attributes', 'jigoshop-ecommerce'),
 			$instance,
 			$this->id_base
 		);

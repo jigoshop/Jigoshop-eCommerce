@@ -34,7 +34,7 @@ class Variable implements Initializer
 		";
         if (!$wpdb->query($query)) {
             Registry::getInstance(JIGOSHOP_LOGGER)->addCritical(sprintf('Unable to create table "%s". Error: "%s".', 'jigoshop_tax', $wpdb->last_error));
-            echo __('Unable to create Jigoshop tables.', 'jigoshop');
+            echo __('Unable to create Jigoshop tables.', 'jigoshop-ecommerce');
             exit;
         }
 	}

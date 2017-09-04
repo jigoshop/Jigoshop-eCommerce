@@ -23,7 +23,7 @@ if ($title) {
 }
 ?>
 <select name="<?= Types::PRODUCT_CATEGORY; ?>" id="dropdown_product_category">
-	<option value="" <?php Forms::selected($value, ''); ?>><?php _e('View all categories', 'jigoshop'); ?></option>
+	<option value="" <?php Forms::selected($value, ''); ?>><?php _e('View all categories', 'jigoshop-ecommerce'); ?></option>
 	<?= $walker->walk($terms, 0, $query); ?>
 </select>
 <script type='text/javascript'>

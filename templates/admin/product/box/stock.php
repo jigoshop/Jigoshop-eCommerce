@@ -13,17 +13,17 @@ $stock = $product instanceof Product\Purchasable ? $product->getStock() : new St
 	Forms::checkbox([
 		'name' => 'product[stock_manage]',
 		'id' => 'stock-manage',
-		'label' => __('Manage stock?', 'jigoshop'),
+		'label' => __('Manage stock?', 'jigoshop-ecommerce'),
 		'checked' => $stock->getManage(),
     ]);
 	Forms::select([
 		'name' => 'product[stock_status]',
 		'id' => 'stock-status',
-		'label' => __('Status', 'jigoshop'),
+		'label' => __('Status', 'jigoshop-ecommerce'),
 		'value' => $stock->getStatus(),
 		'options' => [
-			StockStatus::IN_STOCK => __('In stock', 'jigoshop'),
-			StockStatus::OUT_STOCK => __('Out of stock', 'jigoshop'),
+			StockStatus::IN_STOCK => __('In stock', 'jigoshop-ecommerce'),
+			StockStatus::OUT_STOCK => __('Out of stock', 'jigoshop-ecommerce'),
         ],
 		'classes' => [$stock->getManage() ? 'not-active' : ''],
     ]);
@@ -33,7 +33,7 @@ $stock = $product instanceof Product\Purchasable ? $product->getStock() : new St
 	<?php
 	Forms::number([
 		'name' => 'product[stock_stock]',
-		'label' => __('Items in stock', 'jigoshop'),
+		'label' => __('Items in stock', 'jigoshop-ecommerce'),
 		'value' => $stock->getStock(),
 		'min' => 0,
     ]);
@@ -41,12 +41,12 @@ $stock = $product instanceof Product\Purchasable ? $product->getStock() : new St
 	<?php
 	Forms::select([
 		'name' => 'product[stock_allow_backorders]',
-		'label' => __('Allow backorders?', 'jigoshop'),
+		'label' => __('Allow backorders?', 'jigoshop-ecommerce'),
 		'value' => $stock->getAllowBackorders(),
 		'options' => [
-			StockStatus::BACKORDERS_FORBID => __('Do not allow', 'jigoshop'),
-			StockStatus::BACKORDERS_NOTIFY => __('Allow, but notify customer', 'jigoshop'),
-			StockStatus::BACKORDERS_ALLOW => __('Allow', 'jigoshop')
+			StockStatus::BACKORDERS_FORBID => __('Do not allow', 'jigoshop-ecommerce'),
+			StockStatus::BACKORDERS_NOTIFY => __('Allow, but notify customer', 'jigoshop-ecommerce'),
+			StockStatus::BACKORDERS_ALLOW => __('Allow', 'jigoshop-ecommerce')
         ],
     ]);
 	?>

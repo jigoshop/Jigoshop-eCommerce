@@ -20,9 +20,9 @@
  * Description:         Jigoshop, a WordPress eCommerce plugin that works.
  * Author:              Jigoshop
  * Author URI:          http://www.jigoshop.com
- * Version:             2.1.4
+ * Version:             2.1.5
  * Requires at least:   4.0
- * Tested up to:        4.8
+ * Tested up to:        4.8.1
  * Text Domain:         jigoshop
  * Domain Path:         /languages/
  *
@@ -71,7 +71,7 @@ define('JIGOSHOP_WORDPRESS_VERSION', '3.8');
 if(version_compare(PHP_VERSION, JIGOSHOP_PHP_VERSION, '<')){
 	function jigoshop_required_version(){
 		echo '<div class="error"><p>'.
-			sprintf(__('<strong>Error!</strong> Jigoshop requires at least PHP %s! Your version is: %s. Please upgrade.', 'jigoshop'), JIGOSHOP_PHP_VERSION, PHP_VERSION).
+			sprintf(__('<strong>Error!</strong> Jigoshop requires at least PHP %s! Your version is: %s. Please upgrade.', 'jigoshop-ecommerce'), JIGOSHOP_PHP_VERSION, PHP_VERSION).
 			'</p></div>';
 	}
 	add_action('admin_notices', 'jigoshop_required_version');
@@ -86,7 +86,7 @@ if(version_compare($wp_version, JIGOSHOP_WORDPRESS_VERSION, '<')){
 		include ABSPATH.WPINC.'/version.php';
 		/** @noinspection PhpUndefinedVariableInspection */
 		echo '<div class="error"><p>'.
-			sprintf(__('<strong>Error!</strong> Jigoshop requires at least WordPress %s! Your version is: %s. Please upgrade.', 'jigoshop'), JIGOSHOP_WORDPRESS_VERSION, $wp_version).
+			sprintf(__('<strong>Error!</strong> Jigoshop requires at least WordPress %s! Your version is: %s. Please upgrade.', 'jigoshop-ecommerce'), JIGOSHOP_WORDPRESS_VERSION, $wp_version).
 			'</p></div>';
 	}
 	add_action('admin_notices', 'jigoshop_required_wordpress_version');
@@ -111,7 +111,7 @@ if(isset($memory[1])) {
         {
             $ini_memory_limit = ini_get('memory_limit');
             echo '<div class="error"><p>' .
-                sprintf(__('<strong>Warning!</strong> Jigoshop requires at least %sM of memory! Your system currently has: %s.', 'jigoshop'), JIGOSHOP_REQUIRED_MEMORY, $ini_memory_limit) .
+                sprintf(__('<strong>Warning!</strong> Jigoshop requires at least %sM of memory! Your system currently has: %s.', 'jigoshop-ecommerce'), JIGOSHOP_REQUIRED_MEMORY, $ini_memory_limit) .
                 '</p></div>';
         }
 
@@ -136,7 +136,7 @@ if(isset($memory[1])) {
         function jigoshop_required_wp_memory_warning()
         {
             echo '<div class="error"><p>' .
-                sprintf(__('<strong>Warning!</strong> Jigoshop requires at least %sM of memory for WordPress! Your system currently has: %s. <a href="%s" target="_blank">How to change?</a>', 'jigoshop'),
+                sprintf(__('<strong>Warning!</strong> Jigoshop requires at least %sM of memory for WordPress! Your system currently has: %s. <a href="%s" target="_blank">How to change?</a>', 'jigoshop-ecommerce'),
                     JIGOSHOP_REQUIRED_WP_MEMORY, WP_MEMORY_LIMIT, 'http://codex.wordpress.org/Editing_wp-config.php#Increasing_memory_allocated_to_PHP') .
                 '</p></div>';
         }

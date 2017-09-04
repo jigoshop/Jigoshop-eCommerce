@@ -32,7 +32,7 @@
                 ]); ?>
             <?php endif; ?>
         </ul>
-        <a href="#" class="add-user btn btn-default pull-right"><?php _e('Add User', 'jigoshop'); ?></a>
+        <a href="#" class="add-user btn btn-default pull-right"><?php _e('Add User', 'jigoshop-ecommerce'); ?></a>
     </div>
 </div>
 <script type="text/template" id="tmpl-api-user">

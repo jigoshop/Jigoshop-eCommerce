@@ -26,7 +26,7 @@ class MostDiscount implements WidgetInterface
 
 	public function getTitle()
 	{
-		return sprintf(__('Most Discount %s Codes', 'jigoshop'), Type::getName($this->type));
+		return sprintf(__('Most Discount %s Codes', 'jigoshop-ecommerce'), Type::getName($this->type));
 	}
 
 	public function getArgs()

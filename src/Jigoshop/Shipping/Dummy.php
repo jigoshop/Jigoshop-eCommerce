@@ -89,7 +89,7 @@ class Dummy implements Method
 	public function calculate(OrderInterface $order)
 	{
 		if (WP_DEBUG) {
-			throw new Exception(sprintf(__('Shipping method "%s" does not exist in the system. This should never happen, please contact Jigoshop support.', 'jigoshop'), $this->id));
+			throw new Exception(sprintf(__('Shipping method "%s" does not exist in the system. This should never happen, please contact Jigoshop support.', 'jigoshop-ecommerce'), $this->id));
 		}
 
 		return 0.0;

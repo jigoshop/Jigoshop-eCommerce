@@ -49,8 +49,10 @@ class SettingsConfiguration implements ConfigurationInterface
             'jigoshop.service.shipping',
         ]);
 		$services->setDetails('jigoshop.admin.settings.payment', 'Jigoshop\Admin\Settings\PaymentTab', [
+			'wpal',
 			'jigoshop.options',
-			'jigoshop.service.payment'
+			'jigoshop.service.payment',
+			'jigoshop.messages'
         ]);
         $services->setDetails('jigoshop.admin.settings.layout', 'Jigoshop\Admin\Settings\LayoutTab', [
             'wpal',

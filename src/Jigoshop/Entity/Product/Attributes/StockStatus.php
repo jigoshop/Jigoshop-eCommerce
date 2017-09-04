@@ -105,11 +105,15 @@ class StockStatus implements \Serializable, \JsonSerializable
 	public function modifyStock($stock)
 	{
 		$this->stock += $stock;
-		if($this->getManage() && $this->stock > 0){
-			$this->setStatus(self::IN_STOCK);
-		} else {
-			$this->setStatus(self::OUT_STOCK);
-		}
+
+        $this->stock = $this->stock > 0 ? $this->stock : 0;
+        if($this->getManage()) {
+            if ($this->stock > 0) {
+                $this->setStatus(self::IN_STOCK);
+            } else {
+                $this->setStatus(self::OUT_STOCK);
+            }
+        }
 	}
 
 	/**

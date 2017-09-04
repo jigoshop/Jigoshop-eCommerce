@@ -124,7 +124,7 @@ class EmailService implements EmailServiceInterface
             //if object does not exist insert new one
             $id = $this->insertPost($this->wp, $object, Types::EMAIL);
             if (!is_int($id) || $id === 0) {
-                throw new Exception(__('Unable to save email. Please try again.', 'jigoshop'));
+                throw new Exception(__('Unable to save email. Please try again.', 'jigoshop-ecommerce'));
             }
             $object->setId($id);
         }
@@ -291,11 +291,11 @@ class EmailService implements EmailServiceInterface
                 $email->setText(preg_replace('#\['.$key.'\](.*?)\[value\](.*?)\[else\](.*?)\[\/'.$key.'\]#si', '$1'.'['.$key.']'.'$2', $email->getText()));
                 $email->setText(preg_replace('#\['.$key.'\](.*?)\[else\](.*?)\[\/'.$key.'\]#si', '$1', $email->getText()));
                 $email->setText(preg_replace('#\['.$key.'\](.*?)\[value\](.*?)\[\/'.$key.'\]#si', '$1'.'['.$key.']'.'$2', $email->getText()));
+                $email->setText(preg_replace('#\[' . $key . '\](.*?)\[\/' . $key . '\]#si', '$1', $email->getText()));
                 $email->setText(str_replace('['.$key.']', $value, $email->getText()));
 			}
 		}
-
-	}
+    }
 
     /**
      * @return array

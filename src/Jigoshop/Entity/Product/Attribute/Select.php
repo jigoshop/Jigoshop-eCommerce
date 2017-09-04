@@ -34,6 +34,12 @@ class Select extends Attribute
 	 */
 	public function printValue()
 	{
-		return $this->getLabel();
+	    $options = $this->options;
+	    $value = $this->value;
+
+	    echo array_reduce($options, function($carry, $option) use ($value) {
+		    /** @var $option Option */
+            return $option->getId() == $value ? $option->getLabel() : $carry;
+        });
 	}
 }

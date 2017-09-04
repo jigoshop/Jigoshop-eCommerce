@@ -46,17 +46,17 @@ class CustomersVsGuests extends Chart
 		$guestOrderCount = array_sum(array_map($mapTotalOrder, $this->reportData->guestOrders));
 
 		$legend[] = [
-			'title' => sprintf(__('%s customer orders in this period', 'jigoshop'), '<strong>'.$customerOrderCount.'</strong>'),
+			'title' => sprintf(__('%s customer orders in this period', 'jigoshop-ecommerce'), '<strong>'.$customerOrderCount.'</strong>'),
 			'color' => $this->chartColours['customers'],
 			'highlight_series' => 0
         ];
 		$legend[] = [
-			'title' => sprintf(__('%s guest orders in this period', 'jigoshop'), '<strong>'.$guestOrderCount.'</strong>'),
+			'title' => sprintf(__('%s guest orders in this period', 'jigoshop-ecommerce'), '<strong>'.$guestOrderCount.'</strong>'),
 			'color' => $this->chartColours['guests'],
 			'highlight_series' => 1
         ];
 		$legend[] = [
-			'title' => sprintf(__('%s signups in this period', 'jigoshop'), '<strong>'.sizeof($this->reportData->customers).'</strong>'),
+			'title' => sprintf(__('%s signups in this period', 'jigoshop-ecommerce'), '<strong>'.sizeof($this->reportData->customers).'</strong>'),
 			'color' => $this->chartColours['signups'],
 			'highlight_series' => 2
         ];
@@ -253,13 +253,13 @@ class CustomersVsGuests extends Chart
 	{
 		/** @noinspection PhpUnusedLocalVariableInspection */
 		$ranges = [
-			'all' => __('All Time', 'jigoshop'),
-			'year' => __('Year', 'jigoshop'),
-			'last_month' => __('Last Month', 'jigoshop'),
-			'month' => __('This Month', 'jigoshop'),
-			'30day' => __('Last 30 Days', 'jigoshop'),
-			'7day' => __('Last 7 Days', 'jigoshop'),
-			'today' => __('Today', 'jigoshop'),
+			'all' => __('All Time', 'jigoshop-ecommerce'),
+			'year' => __('Year', 'jigoshop-ecommerce'),
+			'last_month' => __('Last Month', 'jigoshop-ecommerce'),
+			'month' => __('This Month', 'jigoshop-ecommerce'),
+			'30day' => __('Last 30 Days', 'jigoshop-ecommerce'),
+			'7day' => __('Last 7 Days', 'jigoshop-ecommerce'),
+			'today' => __('Today', 'jigoshop-ecommerce'),
         ];
 
 		Render::output('admin/reports/chart', [
@@ -280,7 +280,7 @@ class CustomersVsGuests extends Chart
 	{
 		return [
 			'download' => 'report-'.esc_attr($this->currentRange).'-'.date_i18n('Y-m-d', current_time('timestamp')).'.csv',
-			'xaxes' => __('Date', 'jigoshop'),
+			'xaxes' => __('Date', 'jigoshop-ecommerce'),
 			'groupby' => $this->chartGroupBy,
         ];
 	}
@@ -295,7 +295,7 @@ class CustomersVsGuests extends Chart
 		$data = [];
 		$data['series'] = [];
 		$data['series'][] = $this->arrayToObject([
-			'label' => __('Customer Orders', 'jigoshop'),
+			'label' => __('Customer Orders', 'jigoshop-ecommerce'),
 			'data' => array_values($customerOrders),
 			'color' => $this->chartColours['customers'],
 			'bars' => $this->arrayToObject([
@@ -308,11 +308,11 @@ class CustomersVsGuests extends Chart
             ]),
 			'shadowSize' => 0,
 			'enable_tooltip' => true,
-			'append_tooltip' => sprintf(' %s', __('customer orders', 'jigoshop')),
+			'append_tooltip' => sprintf(' %s', __('customer orders', 'jigoshop-ecommerce')),
 			'hoverable' => false
         ]);
 		$data['series'][] = $this->arrayToObject([
-			'label' => __('Guest Orders', 'jigoshop'),
+			'label' => __('Guest Orders', 'jigoshop-ecommerce'),
 			'data' => array_values($guestOrders),
 			'color' => $this->chartColours['guests'],
 			'bars' => $this->arrayToObject([
@@ -325,11 +325,11 @@ class CustomersVsGuests extends Chart
             ]),
 			'shadowSize' => 0,
 			'enable_tooltip' => true,
-			'append_tooltip' => sprintf(' %s', __('guest orders', 'jigoshop')),
+			'append_tooltip' => sprintf(' %s', __('guest orders', 'jigoshop-ecommerce')),
 			'hoverable' => false
         ]);
 		$data['series'][] = $this->arrayToObject([
-			'label' => __('Signups', 'jigoshop'),
+			'label' => __('Signups', 'jigoshop-ecommerce'),
 			'data' => array_values($signups),
 			'color' => $this->chartColours['signups'],
 			'points' => $this->arrayToObject([
@@ -346,7 +346,7 @@ class CustomersVsGuests extends Chart
             ]),
 			'shadowSize' => 0,
 			'enable_tooltip' => true,
-			'append_tooltip' => sprintf(' %s', __('new users', 'jigoshop')),
+			'append_tooltip' => sprintf(' %s', __('new users', 'jigoshop-ecommerce')),
 			'stack' => false
         ]);
 

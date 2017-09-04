@@ -11,11 +11,11 @@
 					<input type="hidden" name="<?= $key; ?>" value="<?= $value; ?>">
 				<?php endforeach; ?>
 				<div class="row">
-					<div class="col-xs-6"><input class="form-control" type="text" name="search" value="<?= $search; ?>" placeholder="<?= __('Search', 'jigoshop'); ?>"></div>
+					<div class="col-xs-6"><input class="form-control" type="text" name="search" value="<?= $search; ?>" placeholder="<?= __('Search', 'jigoshop-ecommerce'); ?>"></div>
 					<div class="col-xs-3"><button class="btn btn-default" type="submit"><?= $search_title; ?></button></div>
 					<?php if(!empty($csv_download_link)): ?>
 						<a href="<?= $csv_download_link; ?>" class="btn btn-default export-csv" aria-label="Left Align">
-							<span class="glyphicon glyphicon-export" aria-hidden="true"></span><?php _e('Export CSV', 'jigoshop'); ?>
+							<span class="glyphicon glyphicon-export" aria-hidden="true"></span><?php _e('Export CSV', 'jigoshop-ecommerce'); ?>
 						</a>
 					<?php endif; ?>
 				</div>
@@ -51,7 +51,7 @@
 					</nav>
 				<?php endif; ?>
 			</div>
-			<div class="col-xs-3 item-count"><?php printf('%s: %d', __('Items', 'jigoshop'), $total_items); ?></div>
+			<div class="col-xs-3 item-count"><?php printf('%s: %d', __('Items', 'jigoshop-ecommerce'), $total_items); ?></div>
 			<div class="clear"></div>
 		</div>
 	</div>

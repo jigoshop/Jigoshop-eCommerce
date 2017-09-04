@@ -26,11 +26,11 @@ class PriceFilter extends \WP_Widget
 	{
 		$options = [
 			'classname' => self::ID,
-			'description' => __('Outputs a price filter slider', 'jigoshop')
+			'description' => __('Outputs a price filter slider', 'jigoshop-ecommerce')
         ];
 
 		// Create the widget
-		parent::__construct(self::ID, __('Jigoshop: Price Filter', 'jigoshop'), $options);
+		parent::__construct(self::ID, __('Jigoshop: Price Filter', 'jigoshop-ecommerce'), $options);
 
 		// Add price filter init to init hook
 		add_action('wp_enqueue_scripts', [$this, 'assets']);
@@ -97,7 +97,7 @@ class PriceFilter extends \WP_Widget
 		// Set the widget title
 		$title = apply_filters(
 			'widget_title',
-			($instance['title']) ? $instance['title'] : __('Filter by Price', 'jigoshop'),
+			($instance['title']) ? $instance['title'] : __('Filter by Price', 'jigoshop-ecommerce'),
 			$instance,
 			$this->id_base
 		);

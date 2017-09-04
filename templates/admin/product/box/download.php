@@ -10,9 +10,9 @@ use Jigoshop\Entity\Product;
 	<?php
 	Forms::text([
 		'name' => 'product[url]',
-		'label' => __('File path', 'jigoshop'),
+		'label' => __('File path', 'jigoshop-ecommerce'),
 		'classes' => ['product-downloadable'],
-		'placeholder' => __('Enter file URL...', 'jigoshop'),
+		'placeholder' => __('Enter file URL...', 'jigoshop-ecommerce'),
 		'value' => $product instanceof Product\Downloadable ? $product->getUrl() : '',
     ]);
 	?>
@@ -20,8 +20,8 @@ use Jigoshop\Entity\Product;
 	Forms::text([
 		'name' => 'product[limit]',
 		'type' => 'number',
-		'label' => __('Downloads limit', 'jigoshop'),
-		'description' => __('Leave empty for unlimited downloads.', 'jigoshop'),
+		'label' => __('Downloads limit', 'jigoshop-ecommerce'),
+		'description' => __('Leave empty for unlimited downloads.', 'jigoshop-ecommerce'),
 		'classes' => ['product-downloadable'],
 		'placeholder' => 0,
 		'value' => $product instanceof Product\Downloadable ? $product->getLimit() : '',

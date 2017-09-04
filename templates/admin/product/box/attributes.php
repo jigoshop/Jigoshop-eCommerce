@@ -10,22 +10,28 @@ use Jigoshop\Helper\Render;
 ?>
 <div class="form-inline">
     <?php Forms::select([
-        'placeholder' => __('Select attribute...', 'jigoshop'),
+        'placeholder' => __('Select attribute...', 'jigoshop-ecommerce'),
         'name' => 'new_attribute',
         'id' => 'new-attribute',
         'options' => $availableAttributes,
         'value' => false,
     ]); ?>
     <button type="button" class="btn btn-default pull-right" id="add-attribute"><span
-            class="glyphicon glyphicon-plus"></span> <?php _e('Add', 'jigoshop'); ?></button>
+            class="glyphicon glyphicon-plus"></span> <?php _e('Add', 'jigoshop-ecommerce'); ?></button>
     <?php Forms::text([
-        'placeholder' => __('Enter attribute name...', 'jigoshop'),
+        'placeholder' => __('Enter attribute name...', 'jigoshop-ecommerce'),
         'name' => 'new_attribute_label',
         'id' => 'new-attribute-label',
         'value' => '',
         'classes' => ['not-active'],
     ]); ?>
     <div class="clear"></div>
+</div>
+<div class="form-inline">
+    <button type="button" class="btn btn-default" id="add-inherited-attributes">
+        <span class="glyphicon glyphicon-arrow-down"></span>
+        <?php echo __('Add inherited attributes', 'jigoshop-ecommerce'); ?>
+    </button>
 </div>
 <ul id="product-attributes" class="list-group clearfix">
     <?php foreach ($attributes as $attribute): /** @var $attribute \Jigoshop\Entity\Product\Attribute */ ?>

@@ -80,13 +80,13 @@ class Extensions
         try {
             if ($extension->getPlugin()->getVersion() && $this->isMinimumVersion($extension->getPlugin()->getVersion()) == false) {
                 $errors[] = sprintf(
-                    __('Required Jigoshop version: %s. Current version: %s. Please upgrade.', 'jigoshop'),
+                    __('Required Jigoshop version: %s. Current version: %s. Please upgrade.', 'jigoshop-ecommerce'),
                     $extension->getPlugin()->getVersion(),
                     Core::VERSION);
             }
             if ($extension->getPlugin()->getId() && $this->isLicenseEnabled($extension->getPlugin()->getId()) == false) {
                 $errors[] = __('The License is not valid. Please enter your <b>Licence Key</b> on the Jigoshop->Manage Licences Menu with your <b>Order email address</b>.  Until then, the plugin will not be enabled for use.',
-                    'jigoshop');
+                    'jigoshop-ecommerce');
             }
             if (!empty($errors)) {
                 throw new Exception(join('</li><li>', $errors));
@@ -130,7 +130,7 @@ class Extensions
             add_action('admin_notices', function () use ($error, $extension) {
                 $message = sprintf(
                     __('<strong>%s</strong>: There were some errors on plugin activation. See list below:
-                        <ul style="padding-left:15px;list-style: initial"><li>%s</li></ul>', 'jigoshop'),
+                        <ul style="padding-left:15px;list-style: initial"><li>%s</li></ul>', 'jigoshop-ecommerce'),
                     $extension->getPlugin()->getName(),
                     $error
                 );

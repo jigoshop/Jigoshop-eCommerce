@@ -26,7 +26,7 @@ $aria_req = ( $req ? " aria-required='true'" : '' );
     <?php endforeach; ?>
     <div class="comment-form">
         <?php comment_form([
-            'comment_field' => '<p class="comment-form-rating"><label for="rating">' . __( 'Rating', 'jigoshop' ) . '</label>' .
+            'comment_field' => '<p class="comment-form-rating"><label for="rating">' . __( 'Rating', 'jigoshop-ecommerce' ) . '</label>' .
                 '<a href="#" data-rating="1"><span class="glyphicon glyphicon-star"></span></a>'.
                 '<a href="#" data-rating="2"><span class="glyphicon glyphicon-star-empty"></span></a>'.
                 '<a href="#" data-rating="3"><span class="glyphicon glyphicon-star-empty"></span></a>'.

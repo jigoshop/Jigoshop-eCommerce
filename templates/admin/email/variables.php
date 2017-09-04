@@ -18,7 +18,7 @@
 			}
 			asort($keys);
 			if(empty($keys)){
-				_e('Selected actions have not common variables', 'jigoshop');
+				_e('Selected actions have not common variables', 'jigoshop-ecommerce');
 			}
 			foreach ($keys as $key) : ?>
 				<?php if($i % 3 == 0): ?> <tr> <?php endif; ?>
@@ -27,7 +27,7 @@
 				<?php $i++; ?>
 			<?php endforeach;
 		} else {
-			_e('Select email action to see available variables', 'jigoshop');
+			_e('Select email action to see available variables', 'jigoshop-ecommerce');
 		}?>
 	</table>
 </div>

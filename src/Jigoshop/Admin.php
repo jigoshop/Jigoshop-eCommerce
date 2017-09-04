@@ -98,7 +98,7 @@ class Admin
 
         $this->wp->doAction('jigoshop\admin\before_menu');
 
-		$this->wp->addMenuPage(__('Jigoshop'), __('Jigoshop'), 'manage_jigoshop', 'jigoshop', [$this->dashboard, 'display'], null, 55);
+		$this->wp->addMenuPage(__('jigoshop-ecommerce'), __('jigoshop-ecommerce'), 'manage_jigoshop', 'jigoshop', [$this->dashboard, 'display'], null, 55);
 		foreach ($this->pages['jigoshop'] as $page) {
 			/** @var $page PageInterface */
 			$this->wp->addSubmenuPage(self::MENU, $page->getTitle(), $page->getTitle(), $page->getCapability(), $page->getMenuSlug(), [$page, 'display']);

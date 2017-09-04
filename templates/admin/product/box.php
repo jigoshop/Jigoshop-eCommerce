@@ -25,7 +25,7 @@ $isHidden = function($options) use ($product) {
 		<?php Forms::select([
 			'id' => 'product-type',
 			'name' => 'product[type]',
-			'label' => __('Product type', 'jigoshop'),
+			'label' => __('Product type', 'jigoshop-ecommerce'),
 			'options' => $types,
 			'value' => $product->getType(),
 			'size' => 10,

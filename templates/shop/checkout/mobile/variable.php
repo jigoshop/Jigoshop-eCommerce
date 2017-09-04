@@ -41,7 +41,7 @@ else {
     <div class="list-group-item-heading clearfix">
         <div class="buttons pull-right">
             <button type="button" class="show-product btn btn-default pull-right"
-                    title="<?php _e('Expand', 'jigoshop'); ?>">
+                    title="<?php _e('Expand', 'jigoshop-ecommerce'); ?>">
                 <span class="glyphicon glyphicon-collapse-down"></span>
             </button>
         </div>
@@ -68,7 +68,7 @@ else {
             <fieldset>
                 <div class="form-group">
                     <label class="margin-top-bottom-9">
-                        <?php _e('Unit Price', 'jigoshop'); ?>
+                        <?php _e('Unit Price', 'jigoshop-ecommerce'); ?>
                     </label>
                     <div class="clearfix product-price">
                         <?= apply_filters('jigoshop\template\shop\checkout\product_price', $pricesStr, $price, $product, $item); ?>
@@ -76,7 +76,7 @@ else {
                 </div>
                 <div class="form-group product_quantity_field padding-bottom-5">
                         <label for="product_quantity" class="margin-top-bottom-9">
-                            <?php _e('Quantity', 'jigoshop'); ?>
+                            <?php _e('Quantity', 'jigoshop-ecommerce'); ?>
                         </label>
                         <div class="clearfix">
                             <div class="tooltip-inline-badge">
@@ -88,7 +88,7 @@ else {
                 </div>
                 <div class="form-group product_regular_price_field ">
                         <label for="product_regular_price" class="margin-top-bottom-9">
-                            <?php _e('Price', 'jigoshop'); ?>
+                            <?php _e('Price', 'jigoshop-ecommerce'); ?>
                         </label>
                         <div class="clearfix product-subtotal">
                             <?= apply_filters('jigoshop\template\shop\checkout\product_subtotal', $pricesTotalStr, $item->getQuantity() * $price, $product, $item); ?>

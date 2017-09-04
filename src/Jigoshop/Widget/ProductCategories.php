@@ -24,11 +24,11 @@ class ProductCategories extends \WP_Widget
 	{
 		$options = [
 			'classname' => self::ID,
-			'description' => __('A list or dropdown of product categories', 'jigoshop'),
+			'description' => __('A list or dropdown of product categories', 'jigoshop-ecommerce'),
         ];
 
 		// Create the widget
-		parent::__construct(self::ID, __('Jigoshop: Product Categories', 'jigoshop'), $options);
+		parent::__construct(self::ID, __('Jigoshop: Product Categories', 'jigoshop-ecommerce'), $options);
 
 		// Flush cache after every save
 		add_action('save_post', [$this, 'deleteTransient']);
@@ -63,9 +63,10 @@ class ProductCategories extends \WP_Widget
 	{
 		// Get the best selling products from the transient
 		$cache = get_transient(Core::WIDGET_CACHE);
+        $oneLevelOnly = isset($instance['one_level_only']) ? $instance['one_level_only'] : false;
 
 		// If cached get from the cache
-		if (isset($cache[$args['widget_id']])) {
+		if (isset($cache[$args['widget_id']]) && !$oneLevelOnly) {
 			echo $cache[$args['widget_id']];
 
 			return;
@@ -77,7 +78,7 @@ class ProductCategories extends \WP_Widget
 		// Set the widget title
 		$title = apply_filters(
 			'widget_title',
-			($instance['title']) ? $instance['title'] : __('Product Categories', 'jigoshop'),
+			($instance['title']) ? $instance['title'] : __('Product Categories', 'jigoshop-ecommerce'),
 			$instance,
 			$this->id_base
 		);
@@ -93,7 +94,22 @@ class ProductCategories extends \WP_Widget
 			'hierarchical' => $is_hierarchical,
 			'taxonomy' => Core\Types::PRODUCT_CATEGORY,
 			'title_li' => null,
+            'hide_title_if_empty' => true
         ];
+
+		if($oneLevelOnly) {
+		    /** @var \WP_Term $queriedTerm */
+            $queriedTerm = self::$wp->getTermBy(
+                'slug',
+                self::$wp->getQueryParameter(Core\Types::PRODUCT_CATEGORY),
+                Core\Types::PRODUCT_CATEGORY
+            );
+            if($queriedTerm) {
+                $query['parent'] = $queriedTerm->term_id;
+            } else {
+                $query['parent'] = 0;
+            }
+        }
 
 		if (Pages::isProduct()) {
 			global $post;
@@ -131,6 +147,10 @@ class ProductCategories extends \WP_Widget
 				'shopUrl' => get_permalink(self::$options->getPageId(Pages::SHOP)),
             ]));
 		} else {
+            $terms = get_terms(Core\Types::PRODUCT_CATEGORY, $query);
+            if (!$terms) {
+                return;
+            }
 			Render::output('widget/product_categories/list', array_merge($args, [
 				'title' => $title,
 				'args' => $query,
@@ -160,6 +180,7 @@ class ProductCategories extends \WP_Widget
 		$instance['dropdown'] = isset($new_instance['dropdown']) ? $new_instance['dropdown'] == 'on' : false;
 		$instance['count'] = isset($new_instance['count']) ? $new_instance['count'] == 'on' : false;
 		$instance['hierarchical'] = isset($new_instance['hierarchical']) ? $new_instance['hierarchical'] == 'on' : false;
+		$instance['one_level_only'] = isset($new_instance['one_level_only']) ? $new_instance['one_level_only'] == 'on' : false;
 
 		// Flush the cache
 		$this->deleteTransient();
@@ -186,6 +207,8 @@ class ProductCategories extends \WP_Widget
 		$dropdown = isset($instance['dropdown']) ? $instance['dropdown'] : false;
 		$count = isset($instance['count']) ? $instance['count'] : false;
 		$hierarchical = isset($instance['hierarchical']) ? $instance['hierarchical'] : false;
+		$oneLevelOnly = isset($instance['one_level_only']) ? $instance['one_level_only'] : false;
+
 
 		Render::output('widget/product_categories/form', [
 			'title_id' => $this->get_field_id('title'),
@@ -200,6 +223,9 @@ class ProductCategories extends \WP_Widget
 			'hierarchical_id' => $this->get_field_id('hierarchical'),
 			'hierarchical_name' => $this->get_field_name('hierarchical'),
 			'hierarchical' => $hierarchical,
+            'one_level_only_id' => $this->get_field_id('one_level_only'),
+			'one_level_only_name' => $this->get_field_name('one_level_only'),
+			'one_level_only' => $oneLevelOnly,
         ]);
 	}
 }

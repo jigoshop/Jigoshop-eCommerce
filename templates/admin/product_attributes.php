@@ -9,22 +9,22 @@ use Jigoshop\Helper\Render;
  */
 ?>
 <div class="wrap jigoshop">
-	<h1><?php _e('Jigoshop &raquo; Product &raquo; Attributes', 'jigoshop'); ?></h1>
-	<div class="alert alert-info"><?php _e('Every change to attributes is automatically saved.', 'jigoshop'); ?></div>
+	<h1><?php _e('Jigoshop &raquo; Product &raquo; Attributes', 'jigoshop-ecommerce'); ?></h1>
+	<div class="alert alert-info"><?php _e('Every change to attributes is automatically saved.', 'jigoshop-ecommerce'); ?></div>
 	<div id="messages">
 		<?php Render::output('shop/messages', ['messages' => $messages]); ?>
 	</div>
 	<noscript>
-		<div class="alert alert-danger" role="alert"><?php _e('<strong>Warning</strong> Attributes panel will not work properly without JavaScript.', 'jigoshop'); ?></div>
+		<div class="alert alert-danger" role="alert"><?php _e('<strong>Warning</strong> Attributes panel will not work properly without JavaScript.', 'jigoshop-ecommerce'); ?></div>
 	</noscript>
 	<div class="tab-content">
 		<form role="form" method="POST">
 			<table class="table table-condensed" id="product-attributes">
 				<thead>
 					<tr>
-						<th scope="col"><?php _e('Label', 'jigoshop'); ?></th>
-						<th scope="col"><?php _e('Slug', 'jigoshop'); ?></th>
-						<th scope="col"><?php _e('Type', 'jigoshop'); ?></th>
+						<th scope="col"><?php _e('Label', 'jigoshop-ecommerce'); ?></th>
+						<th scope="col"><?php _e('Slug', 'jigoshop-ecommerce'); ?></th>
+						<th scope="col"><?php _e('Type', 'jigoshop-ecommerce'); ?></th>
 						<th scope="col"></th>
 					</tr>
 				</thead>
@@ -39,14 +39,14 @@ use Jigoshop\Helper\Render;
 							<?php Forms::text([
 								'name' => 'label',
 								'id' => 'attribute-label',
-								'placeholder' => __('New attribute label', 'jigoshop'),
+								'placeholder' => __('New attribute label', 'jigoshop-ecommerce'),
                             ]); ?>
 						</td>
 						<td>
 							<?php Forms::text([
 								'name' => 'slug',
 								'id' => 'attribute-slug',
-								'placeholder' => __('New attribute slug', 'jigoshop'),
+								'placeholder' => __('New attribute slug', 'jigoshop-ecommerce'),
                             ]); ?>
 						</td>
 						<td>
@@ -57,7 +57,7 @@ use Jigoshop\Helper\Render;
                             ]); ?>
 						</td>
 						<td>
-							<button type="button" class="btn btn-default" id="add-attribute"><span class="glyphicon glyphicon-plus"></span> <?php _e('Add', 'jigoshop'); ?></button>
+							<button type="button" class="btn btn-default" id="add-attribute"><span class="glyphicon glyphicon-plus"></span> <?php _e('Add', 'jigoshop-ecommerce'); ?></button>
 						</td>
 					</tr>
 				</tfoot>

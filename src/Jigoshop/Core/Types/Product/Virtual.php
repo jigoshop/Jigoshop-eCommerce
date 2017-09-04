@@ -27,7 +27,7 @@ class Virtual implements Type
 	 */
 	public function getName()
 	{
-		return __('Virtual', 'jigoshop');
+		return __('Virtual', 'jigoshop-ecommerce');
 	}
 
 	/**

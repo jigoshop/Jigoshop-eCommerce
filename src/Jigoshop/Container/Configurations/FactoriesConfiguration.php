@@ -90,6 +90,13 @@ class FactoriesConfiguration implements ConfigurationInterface
 		$services->setDetails('jigoshop.factory.coupon', 'Jigoshop\Factory\Coupon', [
 			'wpal'
         ]);
+        $services->setDetails('jigoshop.factory.product.category', 'Jigoshop\Factory\Product\Category', [
+        	'wpal'
+        ]);
+        $services->setDetails('jigoshop.factory.product.category_service', 'Jigoshop\Factory\Product\CategoryService', [
+        	'wpal',
+        	'jigoshop.factory.product.category'
+        ]);
 
 		$services->setLazyStaus('jigoshop.factory.product', true);
 		$services->setLazyStaus('jigoshop.factory.session', true);
@@ -98,6 +105,7 @@ class FactoriesConfiguration implements ConfigurationInterface
 		$services->setLazyStaus('jigoshop.factory.customer', true);
 		$services->setLazyStaus('jigoshop.factory.order', true);
 		$services->setLazyStaus('jigoshop.factory.coupon', true);
+		$services->setLazyStaus('jigoshop.factory.product.category', true);
 	}
 
 	/**

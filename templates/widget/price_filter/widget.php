@@ -20,8 +20,8 @@ if ($title) {
 	<div class="price_slider_wrapper">
 		<div class="price_slider"></div>
 		<div class="price_slider_amount">
-			<button type="submit" class="button"><?php _e('Filter', 'jigoshop'); ?></button>
-			<?php _e('Price: ', 'jigoshop'); ?><span></span>
+			<button type="submit" class="button"><?php _e('Filter', 'jigoshop-ecommerce'); ?></button>
+			<?php _e('Price: ', 'jigoshop-ecommerce'); ?><span></span>
 			<input type="hidden" id="max_price" name="max_price" value="<?= esc_attr($max); ?>" />
 			<input type="hidden" id="min_price" name="min_price" value="0" />
 			<?php \Jigoshop\Helper\Forms::printHiddenFields($fields, ['max_price', 'min_price']); ?>

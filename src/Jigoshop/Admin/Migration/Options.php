@@ -118,7 +118,7 @@ class Options implements Tool
                 $rateDate = [
                     'id' => '',
                     'rate' => $tax['rate'],
-                    'label' => empty($tax['label']) ? __('Tax', 'jigoshop') : $tax['label'],
+                    'label' => empty($tax['label']) ? __('Tax', 'jigoshop-ecommerce') : $tax['label'],
                     // TODO: Check how other classes are used
                     'class' => $tax['class'] == '*' ? 'standard' : $tax['class'],
                     'country' => $tax['country'],
@@ -160,7 +160,7 @@ class Options implements Tool
             $wpdb->query("ROLLBACK");
             $wpdb->query("SET AUTOCOMMIT=" . $var_autocommit_sql);
 
-            Migration::saveLog(__('Migration options end with error: ', 'jigoshop') . $e);
+            Migration::saveLog(__('Migration options end with error: ', 'jigoshop-ecommerce') . $e);
 
             return false;
         }
@@ -385,7 +385,7 @@ class Options implements Tool
         try {
 //			1 - if first time ajax request
             if ($_POST['msgLog'] == 1) {
-                Migration::saveLog(__('Migration options START.', 'jigoshop'), true);
+                Migration::saveLog(__('Migration options START.', 'jigoshop-ecommerce'), true);
             }
 
             $countAll = 93;
@@ -410,10 +410,10 @@ class Options implements Tool
                     $this->wp->updateOption('jigoshop_options_migrate_id', '1');
                 } else {
                     $ajax_response['success'] = false;
-                    Migration::saveLog(__('Migration coupons end with error.', 'jigoshop'));
+                    Migration::saveLog(__('Migration coupons end with error.', 'jigoshop-ecommerce'));
                 }
             } elseif ($countRemain == 0) {
-                Migration::saveLog(__('Migration coupons END.', 'jigoshop'));
+                Migration::saveLog(__('Migration coupons END.', 'jigoshop-ecommerce'));
             }
 
             echo json_encode($ajax_response);
@@ -426,7 +426,7 @@ class Options implements Tool
                 'success' => false,
             ]);
 
-            Migration::saveLog(__('Migration options end with error: ', 'jigoshop') . $e);
+            Migration::saveLog(__('Migration options end with error: ', 'jigoshop-ecommerce') . $e);
         }
 
         exit;
