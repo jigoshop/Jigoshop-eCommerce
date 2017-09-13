@@ -1,4 +1,14 @@
 ## Changelog
+* 2.1.6:
+    * New: Cron.
+    * New: Ability to sort option in attributes.
+    * Fix: Category description editor errors.
+    * Fix: Issues with advanced flat rate.
+    * Fix: Unified button text in settings.
+    * Fix: Ability to close popup on payment settings.
+    * Fix: CSV customer reports now properly show first and last name.
+    * Fix: Properly display bank account number.
+    * Fix: Paypal payment link on some weird server configuration.
 * 2.1.5 - 2017.08.16:
     * New: Product quick edit fields.
     * New: Product Categories admin page.
