@@ -370,7 +370,7 @@ class PayPal implements Method2, Processable
 		$args = $this->wp->applyFilters('jigoshop\paypal\args', $args);
 		$order->setStatus(Order\Status::PENDING, __('Waiting for PayPal payment.', 'jigoshop'));
 
-		return $url.http_build_query($args);
+		return $url.http_build_query($args, '', '&');
 	}
 
 	public function processResponse()
