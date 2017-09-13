@@ -28,9 +28,14 @@ class TaxService
 	 */
 	public function getService()
 	{
+		$optionClasses = $this->options->get('tax.classes');
+		if(!is_array($optionClasses)) {
+			$optionClasses = [];
+		}
+
 		$classes = array_map(function ($item){
 			return $item['class'];
-		}, $this->options->get('tax.classes'));
+		}, $optionClasses);
 		$service = new Service($this->wp, $classes, $this->customerService);
 
 		switch ($this->options->get('advanced.cache')) {

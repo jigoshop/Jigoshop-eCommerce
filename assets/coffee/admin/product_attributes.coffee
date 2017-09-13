@@ -44,7 +44,6 @@ class AdminProductAttributes
       $parent = jQuery(ui.item).parents('table').parents('tr').prevAll('tr.attribute:first')
     else
       $parent = jQuery(event.target).closest('tr')
-
     optionsOrder = []
     $parent.next('tr').find('tbody').find('tr').each (index, element) ->
       optionsOrder.push(jQuery(element).data('id'))
@@ -62,7 +61,6 @@ class AdminProductAttributes
         optionsOrder: optionsOrder
     .done (data) =>
       if data.success? and data.success
-        $parent.replaceWith(data.html)
         jigoshop.addMessage('success', @params.i18n.saved, 2000)
       else
         jigoshop.addMessage('danger', data.error, 6000)
