@@ -450,7 +450,8 @@ class Emails
         $bank_info = '';
         if ($bankTransferOptions['description']) $bank_info .= '<strong>'.__('Description', 'jigoshop').'</strong>: ' . wptexturize($bankTransferOptions['description']) . '<br />';
         if ($bankTransferOptions['bank_name']) $bank_info .= '<strong>'.__('Bank Name', 'jigoshop').'</strong>: ' . wptexturize($bankTransferOptions['bank_name']) . '<br />';
-        if ($bankTransferOptions['account_holder']) $bank_info .= '<strong>'.__('Account Number', 'jigoshop').'</strong>: '.wptexturize($bankTransferOptions['account_holder']) . '<br />';
+        if ($bankTransferOptions['account_holder']) $bank_info .= '<strong>'.__('Account Holder', 'jigoshop').'</strong>: '.wptexturize($bankTransferOptions['account_holder']) . '<br />';
+        if ($bankTransferOptions['account_number']) $bank_info .= '<strong>'.__('Account Number', 'jigoshop').'</strong>: '.wptexturize($bankTransferOptions['account_number']) . '<br />';
         if ($bankTransferOptions['sort_code']) $bank_info .= '<strong>'.__('Sort Code', 'jigoshop').'</strong>: '. wptexturize($bankTransferOptions['sort_code']) . '<br />';
         if ($bankTransferOptions['iban']) $bank_info .= '<strong>'.__('IBAN', 'jigoshop').'</strong>: '. wptexturize($bankTransferOptions['iban']) . '<br />';
         if ($bankTransferOptions['bic']) $bank_info .= '<strong>'.__('BIC Code', 'jigoshop').'</strong>: '. wptexturize($bankTransferOptions['bic']) . '<br />';
