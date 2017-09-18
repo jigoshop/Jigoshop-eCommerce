@@ -69,6 +69,13 @@ class Licence
 			add_filter('plugins_api', [$this, 'getUpdateData'], 20, 3);
 		}
 
+		// add jigoshop.com to allowed hosts for updating plugins
+		add_filter('allowed_redirect_hosts', function($hosts) {
+			$hosts[] = 'www.jigoshop.com';
+
+			return $hosts;
+		});
+
 		// define the alternative API for updating checking
 		add_filter('pre_set_site_transient_update_plugins', [$this, 'checkUpdates']);
 		add_action('in_plugin_update_message-'.$this->plugin_slug, [$this, 'updateMessage'], 10, 2);
