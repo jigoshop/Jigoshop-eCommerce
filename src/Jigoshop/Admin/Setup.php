@@ -7,6 +7,7 @@ use Jigoshop\Admin\Settings\GeneralTab;
 use Jigoshop\Admin\Settings\ProductsTab;
 use Jigoshop\Entity\Product\Attributes\StockStatus;
 use Jigoshop\Helper\Country;
+use Jigoshop\Helper\Currency;
 use Jigoshop\Helper\Render;
 use Jigoshop\Helper\Scripts;
 use Jigoshop\Helper\Styles;
@@ -111,10 +112,12 @@ class Setup implements DashboardInterface
     public function getOptions()
     {
         $pages = [];
+        $pages[0] = __('None', 'jigoshop');
         foreach(get_pages() as $page) {
             $pages[$page->ID] = $page->post_title;
         }
         $settings = Integration::getOptions()->getAll();
+
         $weightUnit = [
             'kg' => __('Kilograms', 'jigoshop'),
             'lbs' => __('Pounds', 'jigoshop'),
@@ -170,10 +173,17 @@ class Setup implements DashboardInterface
                     'label' => __('Terms page', 'jigoshop'),
                     'type' => 'select',
                     'value' => $settings[AdvancedTab::SLUG]['pages']['terms'],
-                    'options' => array_merge([0 => __('None', 'jigoshop')], $pages)
+                    'options' => $pages,
                 ],
             ],
             'store-settings' => [
+                [
+                    'name' => 'jigoshop['.GeneralTab::SLUG.'][email]',
+                    'label' => __('Administrator e-mail', 'jigoshop'),
+                    'type' => 'text',
+                    'tip' => __('The email address used to send all Jigoshop related emails, such as order confirmations and notices.', 'jigoshop'),
+                    'value' => $settings[GeneralTab::SLUG]['email'],
+                ],
                 [
                     'id' => 'country',
                     'name' => 'jigoshop['.GeneralTab::SLUG.'][country]',
@@ -190,11 +200,36 @@ class Setup implements DashboardInterface
                     'value' => $settings[GeneralTab::SLUG]['state'],
                 ],
                 [
-                    'name' => 'jigoshop['.GeneralTab::SLUG.'][email]',
-                    'label' => __('Administrator e-mail', 'jigoshop'),
+                    'name' => 'jigoshop['.GeneralTab::SLUG.'][currency]',
+                    'label' => __('Currency', 'jigoshop'),
+                    'type' => 'select',
+                    'value' => $settings[GeneralTab::SLUG]['currency'],
+                    'options' => Currency::countries(),
+                ],
+                [
+                    'name' => 'jigoshop['.GeneralTab::SLUG.'][currency_position]',
+                    'label' => __('Currency position', 'jigoshop'),
+                    'type' => 'select',
+                    'value' => $settings[GeneralTab::SLUG]['currency_position'],
+                    'options' => Currency::positions(),
+                ],
+                [
+                    'name' => 'jigoshop['.GeneralTab::SLUG.'][currency_decimals]',
+                    'label' => __('Number of decimals', 'jigoshop'),
                     'type' => 'text',
-                    'tip' => __('The email address used to send all Jigoshop related emails, such as order confirmations and notices.', 'jigoshop'),
-                    'value' => $settings[GeneralTab::SLUG]['email'],
+                    'value' => $settings[GeneralTab::SLUG]['currency_decimals'],
+                ],
+                [
+                    'name' => 'jigoshop['.GeneralTab::SLUG.'][currency_thousand_separator]',
+                    'label' => __('Thousands separator', 'jigoshop'),
+                    'type' => 'text',
+                    'value' => $settings[GeneralTab::SLUG]['currency_thousand_separator'],
+                ],
+                [
+                    'name' => 'jigoshop['.GeneralTab::SLUG.'][currency_decimal_separator]',
+                    'label' => __('Decimal separator', 'jigoshop'),
+                    'type' => 'text',
+                    'value' => $settings[GeneralTab::SLUG]['currency_decimal_separator'],
                 ],
             ],
             'shipping' => [
