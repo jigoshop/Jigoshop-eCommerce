@@ -23,6 +23,9 @@ class Ajax implements ConfigurationInterface
     public function addServices(Services $services)
     {
         $services->setDetails('jigoshop.ajax.get_states', 'Jigoshop\Ajax\GetStates', []);
+        $services->setDetails('jigoshop.ajax.save_setup_step', 'Jigoshop\Ajax\SaveSetupStep', [
+            'jigoshop.options'
+        ]);
         $services->setDetails('jigoshop.ajax.disable_notice', 'Jigoshop\Ajax\DisableNotice', [
             'jigoshop.options'
         ]);
