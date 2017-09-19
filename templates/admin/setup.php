@@ -13,11 +13,11 @@ $printDone = true;
     <title><?php _e('Jigoshop &raquo; Setup', 'jigoshop'); ?></title>
     <?php wp_print_scripts(); ?>
     <?php do_action( 'admin_print_styles' ); ?>
-    <?php do_action( 'admin_head' ); ?>
+    <?php do_action( 'admin_head' ); ?>git
 </head>
 <body class="jigo-setup jigo-core-ui jigoshop">
     <h1 id="jigo-logo"><a href="https://www.jigoshop.com/" target="_blank">
-            <img src="<?= JigoshopInit::getUrl().'/assets/images/logo-black.png'; ?>"
+            <img src="<?= JigoshopInit::getUrl().'/assets/images/logo-dark.png'; ?>"
                 alt="Jigoshop eCommerce"></a>
     </h1>
     <ol class="jigo-setup-steps">
