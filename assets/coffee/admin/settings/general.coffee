@@ -1,12 +1,16 @@
 class GeneralSettings
   params:
     states: {}
+    currency: {}
 
   constructor: (@params) ->
     jQuery('#show_message').on 'switchChange.bootstrapSwitch', @toggleCustomMessage
     jQuery('#custom_message').show().closest('div.form-group').show()
 
     jQuery('select#country').on 'change', @updateStateField
+    jQuery('select#currency')
+      .on 'change', @updateCurrencyPositionField
+      .change()
     @updateFields()
 
   updateStateField: (event) =>
@@ -17,6 +21,11 @@ class GeneralSettings
       @_attachSelectField($states, @params.states[country])
     else
       @_attachTextField($states)
+
+  updateCurrencyPositionField: (event) =>
+    currency = jQuery(event.target).val()
+    $position = jQuery('input#currency_position')
+    @_attachSelectField($position, @params.currency[currency])
 
   toggleCustomMessage: ->
     jQuery('#custom_message').closest('tr').toggle()

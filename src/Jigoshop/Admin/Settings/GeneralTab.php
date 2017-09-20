@@ -40,9 +40,33 @@ class GeneralTab implements TabInterface
 				}
 			}
 
+            $currency = [];
+            foreach (Currency::countries() as $key => $value) {
+                $symbols = Currency::symbols();
+                $symbol = $symbols[$key];
+                $separator = Currency::decimalSeparator();
+                $code = $key;
+
+                $currency[$key] = [
+                    ['id' => '%1$s%3$s', 'text' => html_entity_decode(sprintf('%1$s0%2$s00', $symbol, $separator))],// symbol.'0'.separator.'00'
+                    ['id' => '%1$s %3$s', 'text'  => html_entity_decode(sprintf('%1$s 0%2$s00', $symbol, $separator))],// symbol.' 0'.separator.'00'
+                    ['id' => '%3$s%1$s', 'text'  => html_entity_decode(sprintf('0%2$s00%1$s', $symbol, $separator))],// '0'.separator.'00'.symbol
+                    ['id' => '%3$s %1$s', 'text'  => html_entity_decode(sprintf('0%2$s00 %1$s', $symbol, $separator))],// '0'.separator.'00 '.symbol
+                    ['id' => '%2$s%3$s', 'text'  => html_entity_decode(sprintf('%1$s0%2$s00', $code, $separator))],// code.'0'.separator.'00'
+                    ['id' => '%2$s %3$s', 'text'  => html_entity_decode(sprintf('%1$s 0%2$s00', $code, $separator))],// code.' 0'.separator.'00'
+                    ['id' => '%3$s%2$s', 'text'  => html_entity_decode(sprintf('0%2$s00%1$s', $code, $separator))],// '0'.separator.'00'.code
+                    ['id' => '%3$s %2$s', 'text'  => html_entity_decode(sprintf('0%2$s00 %1$s', $code, $separator))],// '0'.separator.'00 '.code
+                    ['id' => '%1$s%3$s%2$s', 'text'  => html_entity_decode(sprintf('%1$s0%2$s00%3$s', $symbol, $separator, $code))],// symbol.'0'.separator.'00'.code
+                    ['id' => '%1$s %3$s %2$s', 'text'  => html_entity_decode(sprintf('%1$s 0%2$s00 %3$s', $symbol, $separator, $code))],// symbol.' 0'.separator.'00 '.code
+                    ['id' => '%2$s%3$s%1$s', 'text'  => html_entity_decode(sprintf('%3$s0%2$s00%1$s', $symbol, $separator, $code))],// code.'0'.separator.'00'.symbol
+                    ['id' => '%2$s %3$s %1$s', 'text'  => html_entity_decode(sprintf('%3$s 0%2$s00 %1$s', $symbol, $separator, $code))],// code.' 0'.separator.'00 '.symbol
+                ];
+            }
+
 			Scripts::add('jigoshop.admin.settings.general', \JigoshopInit::getUrl().'/assets/js/admin/settings/general.js', ['jquery'], ['page' => 'jigoshop_page_jigoshop_settings']);
 			Scripts::localize('jigoshop.admin.settings.general', 'jigoshop_admin_general', [
 				'states' => $states,
+                'currency' => $currency,
             ]);
 		});
 	}
@@ -128,6 +152,7 @@ class GeneralTab implements TabInterface
 				'id' => 'pricing',
 				'fields' => [
 					[
+					    'id' => 'currency',
 						'name' => '[currency]',
 						'title' => __('Currency', 'jigoshop'),
 						'type' => 'select',
@@ -135,11 +160,12 @@ class GeneralTab implements TabInterface
 						'options' => Currency::countries(),
                     ],
 					[
+					    'id' => 'currency_position',
 						'name' => '[currency_position]',
 						'title' => __('Currency position', 'jigoshop'),
-						'type' => 'select',
+						'type' => 'text',
 						'value' => $this->options['currency_position'],
-						'options' => Currency::positions(),
+						//'options' => Currency::positions(),
                     ],
 					[
 						'name' => '[currency_decimals]',
