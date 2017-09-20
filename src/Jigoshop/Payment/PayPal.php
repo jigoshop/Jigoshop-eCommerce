@@ -292,7 +292,7 @@ class PayPal implements Method2, Processable
 				'invoice' => $order->getNumber(),
 				'amount' => number_format($order->getTotal(), $this->options->get('general.currency_decimals'), '.', ''),
 				//BN code
-				'bn' => 'Jigoshop_SP'
+				//'bn' => 'Jigoshop_SP'
             ],
 			$phone
 		);
@@ -443,8 +443,9 @@ class PayPal implements Method2, Processable
 						case 'refunded':
 						case 'reversed':
 						case 'chargeback':
-							// TODO: Implement refunds
-							break;
+						    // Refunded order
+                            $order->setStatus(Order\Status::REFUNDED, sprintf(__('Payment %s via PayPal.', 'jigoshop'), strtolower($posted['payment_status'])));
+                        break;
 						default:
 							// No action
 							break;
