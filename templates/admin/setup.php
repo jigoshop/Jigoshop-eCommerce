@@ -29,11 +29,11 @@ $printDone = true;
     </ol>
     <div class="jigo-setup-content">
         <?php if(count($options) == 0 && $currentStep == ''): ?>
-            <h1>Welcome to the world of Jigoshop!</h1>
-            <p>Thank you for choosing Jigoshop to power your online store! This quick setup wizard will help you configure the
-                basic settings. <strong>It’s completely optional and shouldn’t take longer than five minutes.</strong></p>
-            <p>No time right now? If you don’t want to go through the wizard, you can skip and return to the WordPress
-                dashboard. Come back anytime if you change your mind!</p>
+            <h1><?= __('Welcome to the world of Jigoshop!', 'jigoshop'); ?></h1>
+            <p><?= __('Thank you for choosing Jigoshop (yup, you made the right choice) to give your eCommerce site the power it needs to turn even more profit than it already does!', 'jigoshop'); ?><br/>
+            <strong><?= __('This quick setup wizard will help you configure the basic settings of the platform.', 'jigoshop'); ?></strong></p>
+            <br/>
+            <p><?= __('It\'s completely optional (but recommended) and it shouldn\'t take you more than five minutes.', 'jigoshop'); ?></p>
         <?php endif; ?>
         <?php if(count($options)): ?>
             <form id="form" action="#">
@@ -43,9 +43,9 @@ $printDone = true;
             </form>
         <?php endif; ?>
         <?php if($currentStep == 'ready') : ?>
-            <h1>Your store is ready!</h1>
-
-            Plsee rate us etc itd. Coś chwytliwego trzeba wymyślić.
+            <h1><?= __('Your store is ready now!', 'jigoshop'); ?></h1>
+            <p><?= sprintf(__('If you\'re satisfied with this wizard, please consider rating us at %s.<br/>', 'jigoshop'), '<a href="https://wordpress.org/support/plugin/jigoshop-ecommerce/reviews/#new-post" target="_blank">Wordpress.org</a>'); ?>
+                <?= sprintf(__('If you have any thoughts or suggestions, feel free to post them at our %s - your feedback is valuable to us.', 'jigoshop'), '<a href="https://wordpress.org/support/plugin/jigoshop-ecommerce/" target="_blank">' . __('support forum', 'jigoshop') .'</a>'); ?></p>
         <?php endif; ?>
         <p class="jigo-setup-actions step">
             <?php if($nextStep && $currentStep != '') : ?>
