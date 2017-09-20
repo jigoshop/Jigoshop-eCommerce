@@ -29,4 +29,19 @@ class Attribute {
 
 		return $order;
 	}
+
+	public static function sortOptionsByOrder(array $options, array $order) {
+		$sortedOptions = [];
+		foreach($order as $orderId) {
+			foreach($options as $optionId => $data) {
+				if($orderId == $optionId) {
+					$sortedOptions[$optionId] = $data;
+
+					break;
+				}
+			}
+		}
+
+		return $sortedOptions;
+	}
 }

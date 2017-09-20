@@ -162,6 +162,10 @@ class CustomerList implements TableInterface
 		switch ($columnKey) {
 			case 'customer_name' :
 				return ($user->last_name && $user->first_name) ? $user->last_name.', '.$user->first_name : '-';
+            case 'customer_first_name' :
+                return $user->first_name;
+            case 'customer_last_name' :
+                return $user->last_name;
 			case 'username' :
 				return $user->user_login;
 			case 'location' :
@@ -264,6 +268,12 @@ class CustomerList implements TableInterface
 
 		foreach ($this->getItems($this->getCsvColumns()) as $row)
 		{
+            $row = array_map(function($item) {
+                $item = strip_tags($item);
+                $item = html_entity_decode($item);
+
+                return $item;
+            }, $row);
 			fputcsv($csvSource, $row);
 		}
 
@@ -274,10 +284,12 @@ class CustomerList implements TableInterface
 	{
 		return [
 			'username'   => __('Username', 'jigoshop'),
-//			'email'      => __('Email', 'jigoshop'),
+            'customer_first_name' => __('First Name', 'jigoshop'),
+            'customer_last_name' => __('Last Name', 'jigoshop'),
+			'email'      => __('Email', 'jigoshop'),
 			'orders'     => __('Orders', 'jigoshop'),
 			'spent'      => __('Money Spent', 'jigoshop'),
-//			'last_order' => __('Last order', 'jigoshop'),
+			'last_order' => __('Last order', 'jigoshop'),
         ];
 	}
 }

@@ -66,14 +66,17 @@ class Categories implements PageInterface {
             	$localization['forceEdit'] = $_GET['edit'];
             }
 
-            Scripts::localize('jigoshop.admin.product_categories', 'jigoshop_admin_product_categories_data', $localization);
-		});	
+            Scripts::localize('jigoshop.admin.product_categories', 'jigoshop_admin_product_categories_data', $localization); 
+		});			
 
 		$wp->addAction('wp_ajax_jigoshop_product_categories_updateCategory', [$this, 'ajaxUpdateCategory']);
 		$wp->addAction('wp_ajax_jigoshop_product_categories_getEditForm', [$this, 'ajaxGetEditForm']);	
 		$wp->addAction('wp_ajax_jigoshop_product_categories_removeCategory', [$this, 'ajaxRemoveCategory']);
 		$wp->addAction('wp_ajax_jigoshop_product_categories_getAttributes', [$this, 'ajaxGetAttributes']);
 		$wp->addAction('wp_ajax_jigoshop_product_categories_saveAttribute', [$this, 'ajaxSaveAttribute']);
+
+		$this->wp->addAction('admin_print_footer_scripts', function() {
+		});
 	}
 
 	public function getTitle() {
@@ -214,6 +217,7 @@ class Categories implements PageInterface {
 
 			echo json_encode([
 				'status' => 1,
+				'id' => $category->getId(),
 				'categoriesTable' => $categoriesRender,
 				'info' => $message
 			]);
@@ -443,6 +447,7 @@ class Categories implements PageInterface {
 		}
 
 		$attribute->setVisible(true);
+
 		$attribute = $this->productService->saveAttribute($attribute);
 
 		echo json_encode([

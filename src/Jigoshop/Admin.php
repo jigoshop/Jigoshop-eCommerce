@@ -3,6 +3,7 @@
 namespace Jigoshop;
 
 use Jigoshop\Admin\Dashboard;
+use Jigoshop\Admin\DashboardInterface;
 use Jigoshop\Admin\PageInterface;
 use Jigoshop\Admin\Permalinks;
 use Jigoshop\Admin\Settings;
@@ -31,14 +32,24 @@ class Admin
 		'orders' => [],
     ];
 	private $dashboard;
+	/** @var  DashboardInterface[] */
+	private $dashboards = [];
 
 	public function __construct(Wordpress $wp, Dashboard $dashboard, Permalinks $permalinks)
 	{
 		$this->wp = $wp;
 		$this->dashboard = $dashboard;
 
+        if ( get_transient( 'jigoshop_activation_redirect' ) ) {
+            delete_transient('jigoshop_activation_redirect');
+
+            wp_redirect(admin_url('admin.php?page=' . Admin\Setup::SLUG));
+            exit;
+        }
+
 		$wp->addAction('admin_menu', [$this, 'beforeMenu'], 9);
 		$wp->addAction('admin_menu', [$this, 'afterMenu'], 50);
+        $wp->addAction('admin_menu', [$this, 'initDashboards']);
 
 		//TODO do wyrzucenia, przeniesienia do osobnych widokow
 		Scripts::add('jigoshop.vendors.bs_tab_trans_tooltip_collapse', \JigoshopInit::getUrl().'/assets/js/vendors/bs_tab_trans_tooltip_collapse.js', ['jquery']);
@@ -133,4 +144,33 @@ class Admin
 
 		$this->wp->doAction('jigoshop\admin\after_menu');
 	}
+
+    /**
+     * @return DashboardInterface[]
+     */
+    public function getDashboards()
+    {
+        return $this->dashboards;
+    }
+
+    /**
+     * @param DashboardInterface $dashboard
+     */
+    public function addDashboard($dashboard)
+    {
+        $this->dashboards[] = $dashboard;
+    }
+
+    public function initDashboards()
+    {
+        $di = Integration::getContainer();
+        $dashboards = $di->tags->get('jigoshop.admin.dashboard');
+        foreach ($dashboards as $dashboard) {
+            $class = $di->getServices()->getClassName($dashboard);
+            if($class::SLUG == $_GET['page']) {
+                $dashboard = $di->get($dashboard);
+                add_dashboard_page($dashboard->getTitle(), $dashboard->getTitle(), $dashboard->getCapability(), $dashboard->getMenuSlug());
+            }
+        }
+    }
 }

@@ -2,6 +2,7 @@
 
 namespace Jigoshop\Core;
 
+use Jigoshop\Admin\Setup;
 use Jigoshop\Core;
 use Jigoshop\Frontend\Pages;
 use Jigoshop\Service\EmailServiceInterface;
@@ -16,7 +17,7 @@ use WPAL\Wordpress;
  */
 class Installer
 {
-    const DB_VERSION = 4;
+    const DB_VERSION = 6;
 
     /** @var \WPAL\Wordpress */
     private $wp;
@@ -70,6 +71,8 @@ class Installer
 
             $this->cron->clear();
             $this->wp->updateSiteOption('jigoshop_database_version', 1);
+            // Setup wizard redirect
+            set_transient('jigoshop_activation_redirect', 1);
         }
 
         // Flush rules on first Jigoshop init after activation.

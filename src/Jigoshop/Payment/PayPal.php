@@ -209,11 +209,15 @@ class PayPal implements Method2, Processable
 		$settings['force_payment'] = $settings['force_payment'] == 'on';
 		$settings['test_mode'] = $settings['test_mode'] == 'on';
 
-		if (!Validation::isEmail($settings['test_email'])) {
+		if($settings['test_mode'] && !Validation::isEmail($settings['test_email'])) {
 			$settings['test_email'] = '';
-			if ($settings['enabled']) {
+			if($settings['enabled']) {
 				$this->messages->addWarning(__('Test email address is not valid.', 'jigoshop'));
 			}
+		}
+
+		if($this->messages->hasErrors() || $this->messages->hasWarnings()) {
+			$settings['enabled'] = false;
 		}
 
 		return $settings;
@@ -288,7 +292,7 @@ class PayPal implements Method2, Processable
 				'invoice' => $order->getNumber(),
 				'amount' => number_format($order->getTotal(), $this->options->get('general.currency_decimals'), '.', ''),
 				//BN code
-				'bn' => 'Jigoshop_SP'
+				//'bn' => 'Jigoshop_SP'
             ],
 			$phone
 		);
@@ -366,7 +370,7 @@ class PayPal implements Method2, Processable
 		$args = $this->wp->applyFilters('jigoshop\paypal\args', $args);
 		$order->setStatus(Order\Status::PENDING, __('Waiting for PayPal payment.', 'jigoshop'));
 
-		return $url.http_build_query($args);
+		return $url.http_build_query($args, '', '&');
 	}
 
 	public function processResponse()
@@ -439,8 +443,9 @@ class PayPal implements Method2, Processable
 						case 'refunded':
 						case 'reversed':
 						case 'chargeback':
-							// TODO: Implement refunds
-							break;
+						    // Refunded order
+                            $order->setStatus(Order\Status::REFUNDED, sprintf(__('Payment %s via PayPal.', 'jigoshop'), strtolower($posted['payment_status'])));
+                        break;
 						default:
 							// No action
 							break;

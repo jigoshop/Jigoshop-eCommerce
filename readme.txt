@@ -1,11 +1,11 @@
 === Jigoshop eCommerce ===
 Contributors: jigoshop
 Tags: ecommerce, wordpress ecommerce, store, shop, shopping, cart, checkout, widgets, reports, shipping, tax, paypal, jigowatt, shipping, inventory, stock, online, sell, sales, weights, dimensions, configurable, variable, downloadable, external, affiliate, download, virtual, physical
-Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=XTG9C24KAA7VA
+Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=7F5FZ5NGJ3XTL
 
 Requires at least: 4.0
-Tested up to: 4.8.1
-Stable tag: 2.1.5
+Tested up to: 4.8.2
+Stable tag: 2.1.6
 
 A feature-packed eCommerce plugin built upon WordPress core functionality ensuring excellent performance, customizability and control - robust Tax Settings, Stock Level Management, Free and Premium Extensions - you name it.
 
@@ -151,6 +151,18 @@ However, if you want priority, dedicated support from Jigoshop staff, we dp offe
 
 == Changelog ==
 
+= 2.1.6 - 2017.09.29 =
+* New: Cron.
+* New: Ability to sort option in attributes.
+* New: Setup wizard.
+* Fix: Category description editor errors.
+* Fix: Paypal now changes status to refunded.
+* Fix: Issues with advanced flat rate.
+* Fix: Unified button text in settings.
+* Fix: Ability to close popup on payment settings.
+* Fix: CSV customer reports now properly show first and last name.
+* Fix: Properly display bank account number.
+* Fix: Paypal payment link on some weird server configuration.
 = 2.1.5 - 2017.08.16 =
 * New: Product quick edit fields.
 * New: Product Categories admin page.

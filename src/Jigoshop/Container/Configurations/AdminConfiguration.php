@@ -39,6 +39,7 @@ class AdminConfiguration implements ConfigurationInterface
 			'jigoshop.service.order',
 			'jigoshop.service.product'
         ]);
+        $services->setDetails('jigoshop.admin.setup', 'Jigoshop\Admin\Setup', []);
 		$services->setDetails('jigoshop.admin.reports', 'Jigoshop\Admin\Reports', [
 			'wpal',
 			'jigoshop.messages',
@@ -94,6 +95,7 @@ class AdminConfiguration implements ConfigurationInterface
 		$tags->add('jigoshop.admin.page', 'jigoshop.admin.migration');
 		$tags->add('jigoshop.admin.page', 'jigoshop.admin.product.categories');
 		$tags->add('jigoshop.admin.page', 'jigoshop.admin.product.attributes');
+		$tags->add('jigoshop.admin.dashboard', 'jigoshop.admin.setup');
 	}
 
 	/**
