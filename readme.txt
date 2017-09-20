@@ -4,8 +4,8 @@ Tags: ecommerce, wordpress ecommerce, store, shop, shopping, cart, checkout, wid
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=7F5FZ5NGJ3XTL
 
 Requires at least: 4.0
-Tested up to: 4.8.1
-Stable tag: 2.1.5
+Tested up to: 4.8.2
+Stable tag: 2.1.6
 
 A feature-packed eCommerce plugin built upon WordPress core functionality ensuring excellent performance, customizability and control - robust Tax Settings, Stock Level Management, Free and Premium Extensions - you name it.
 
