@@ -1,8 +1,10 @@
 ## Changelog
-* 2.1.6:
+* 2.1.6 - 2017.09.29:
     * New: Cron.
     * New: Ability to sort option in attributes.
+    * New: Setup wizard.
     * Fix: Category description editor errors.
+    * Fix: Paypal now changes status to refunded.
     * Fix: Issues with advanced flat rate.
     * Fix: Unified button text in settings.
     * Fix: Ability to close popup on payment settings.
