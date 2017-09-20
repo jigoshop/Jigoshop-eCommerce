@@ -25,3 +25,11 @@ jQuery(document).ready ($) ->
     else
       $states.select2 'destroy'
   .change()
+
+  $('select#currency').on 'change', (event) ->
+    currency = $(event.target).val()
+    $position = $('input#currency_position')
+    $position.select2
+      data: jigoshop_setup.currency[currency]
+      multiple: false
+  .change()

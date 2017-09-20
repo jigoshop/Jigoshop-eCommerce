@@ -49,8 +49,31 @@ class Setup implements DashboardInterface
                 $states[$country][] = ['id' => $code, 'text' => $state];
             }
         }
+        $currency = [];
+        foreach (Currency::countries() as $key => $value) {
+            $symbols = Currency::symbols();
+            $symbol = $symbols[$key];
+            $separator = Currency::decimalSeparator();
+            $code = $key;
+
+            $currency[$key] = [
+                ['id' => '%1$s%3$s', 'text' => html_entity_decode(sprintf('%1$s0%2$s00', $symbol, $separator))],// symbol.'0'.separator.'00'
+                ['id' => '%1$s %3$s', 'text'  => html_entity_decode(sprintf('%1$s 0%2$s00', $symbol, $separator))],// symbol.' 0'.separator.'00'
+                ['id' => '%3$s%1$s', 'text'  => html_entity_decode(sprintf('0%2$s00%1$s', $symbol, $separator))],// '0'.separator.'00'.symbol
+                ['id' => '%3$s %1$s', 'text'  => html_entity_decode(sprintf('0%2$s00 %1$s', $symbol, $separator))],// '0'.separator.'00 '.symbol
+                ['id' => '%2$s%3$s', 'text'  => html_entity_decode(sprintf('%1$s0%2$s00', $code, $separator))],// code.'0'.separator.'00'
+                ['id' => '%2$s %3$s', 'text'  => html_entity_decode(sprintf('%1$s 0%2$s00', $code, $separator))],// code.' 0'.separator.'00'
+                ['id' => '%3$s%2$s', 'text'  => html_entity_decode(sprintf('0%2$s00%1$s', $code, $separator))],// '0'.separator.'00'.code
+                ['id' => '%3$s %2$s', 'text'  => html_entity_decode(sprintf('0%2$s00 %1$s', $code, $separator))],// '0'.separator.'00 '.code
+                ['id' => '%1$s%3$s%2$s', 'text'  => html_entity_decode(sprintf('%1$s0%2$s00%3$s', $symbol, $separator, $code))],// symbol.'0'.separator.'00'.code
+                ['id' => '%1$s %3$s %2$s', 'text'  => html_entity_decode(sprintf('%1$s 0%2$s00 %3$s', $symbol, $separator, $code))],// symbol.' 0'.separator.'00 '.code
+                ['id' => '%2$s%3$s%1$s', 'text'  => html_entity_decode(sprintf('%3$s0%2$s00%1$s', $symbol, $separator, $code))],// code.'0'.separator.'00'.symbol
+                ['id' => '%2$s %3$s %1$s', 'text'  => html_entity_decode(sprintf('%3$s 0%2$s00 %1$s', $symbol, $separator, $code))],// code.' 0'.separator.'00 '.symbol
+            ];
+        }
         Scripts::localize('jigoshop.admin.setup', 'jigoshop_setup', [
             'states' => $states,
+            'currency' => $currency,
         ]);
 
         $this->display();
@@ -156,7 +179,7 @@ class Setup implements DashboardInterface
                 ],
                 [
                     'name' => 'jigoshop['.AdvancedTab::SLUG.'][pages][checkout_thank_you]',
-                    'label' => __('Thanks page', 'jigoshop'),
+                    'label' => __('Thank you page', 'jigoshop'),
                     'type' => 'select',
                     'value' => $settings[AdvancedTab::SLUG]['pages']['checkout_thank_you'],
                     'options' => $pages,
@@ -200,6 +223,7 @@ class Setup implements DashboardInterface
                     'value' => $settings[GeneralTab::SLUG]['state'],
                 ],
                 [
+                    'id' => 'currency',
                     'name' => 'jigoshop['.GeneralTab::SLUG.'][currency]',
                     'label' => __('Currency', 'jigoshop'),
                     'type' => 'select',
@@ -207,11 +231,12 @@ class Setup implements DashboardInterface
                     'options' => Currency::countries(),
                 ],
                 [
+                    'id' => 'currency_position',
                     'name' => 'jigoshop['.GeneralTab::SLUG.'][currency_position]',
                     'label' => __('Currency position', 'jigoshop'),
-                    'type' => 'select',
+                    'type' => 'text',
                     'value' => $settings[GeneralTab::SLUG]['currency_position'],
-                    'options' => Currency::positions(),
+                    //'options' => Currency::positions(),
                 ],
                 [
                     'name' => 'jigoshop['.GeneralTab::SLUG.'][currency_decimals]',

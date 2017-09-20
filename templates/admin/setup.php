@@ -48,13 +48,17 @@ $printDone = true;
             Plsee rate us etc itd. Coś chwytliwego trzeba wymyślić.
         <?php endif; ?>
         <p class="jigo-setup-actions step">
-            <?php if($nextStep) : ?>
-            <a id="next-step" href="#" data-url="<?= admin_url('admin.php?page=' . \Jigoshop\Admin\Setup::SLUG . '&step='. $nextStep); ?>"
-               class="button-primary button button-large button-next"><?= __('Let\'s go!', 'jigoshop'); ?></a>
-            <a href="<?= admin_url('admin.php?page=' . \Jigoshop\Admin\Setup::SLUG . '&step='. $nextStep); ?>" class="button button-large"><?= __('Skip', 'jigoshop'); ?></a>
+            <?php if($nextStep && $currentStep != '') : ?>
+                <a id="next-step" href="#" data-url="<?= admin_url('admin.php?page=' . \Jigoshop\Admin\Setup::SLUG . '&step='. $nextStep); ?>"
+                   class="button-primary button button-large button-next"><?= __('Let\'s go!', 'jigoshop'); ?></a>
+                <a href="<?= admin_url('admin.php?page=' . \Jigoshop\Admin\Setup::SLUG . '&step='. $nextStep); ?>" class="button button-large"><?= __('Skip', 'jigoshop'); ?></a>
+            <?php elseif($nextStep && $currentStep == '') : ?>
+                <a href="<?= admin_url('admin.php?page=' . \Jigoshop\Admin\Setup::SLUG . '&step='. $nextStep); ?>"
+                   class="button-primary button button-large button-next"><?= __('Let\'s go!', 'jigoshop'); ?></a>
+                <a href="<?= admin_url('admin.php?page=' . \Jigoshop\Admin\Dashboard::NAME); ?>" class="button button-large"><?= __('No thanks', 'jigoshop'); ?></a>
             <?php else : ?>
                 <a href="<?= admin_url('admin.php?page=' . \Jigoshop\Admin\Dashboard::NAME); ?>"
-                   class="button-primary button button-large button-next"><?= __('Go to admin page.', 'jigoshop'); ?></a>
+                   class="button-primary button button-large button-next"><?= __('Go to admin page', 'jigoshop'); ?></a>
             <?php endif; ?>
         </p>
     </div>

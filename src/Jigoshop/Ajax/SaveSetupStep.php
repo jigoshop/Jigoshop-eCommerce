@@ -29,10 +29,12 @@ class SaveSetupStep  implements Processable
      */
     public function process()
     {
-        $settings = $this->validate($_POST['jigoshop']);
-        $settings = array_merge($this->options->getAll(), $settings);
+        if(isset($_POST['jigoshop']) && !empty($_POST['jigoshop'])) {
+            $settings = $this->validate($_POST['jigoshop']);
+            $settings = array_replace_recursive($this->options->getAll(), $settings);
 
-        update_option(Options::NAME, $settings);
+            update_option(Options::NAME, $settings);
+        }
 
         return [
             'success' => true,
