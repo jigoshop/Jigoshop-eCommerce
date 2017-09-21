@@ -5,7 +5,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 
 Requires at least: 4.0
 Tested up to: 4.8.2
-Stable tag: 2.1.6
+Stable tag: 2.1.6.1
 
 A feature-packed eCommerce plugin built upon WordPress core functionality ensuring excellent performance, customizability and control - robust Tax Settings, Stock Level Management, Free and Premium Extensions - you name it.
 
@@ -151,7 +151,9 @@ However, if you want priority, dedicated support from Jigoshop staff, we dp offe
 
 == Changelog ==
 
-= 2.1.6 - 2017.09.29 =
+= 2.1.6.1 - 2017.09.21 =
+* Fix: Added BN code to paypal plugin.
+= 2.1.6 - 2017.09.20 =
 * New: Cron.
 * New: Ability to sort option in attributes.
 * New: Setup wizard.
