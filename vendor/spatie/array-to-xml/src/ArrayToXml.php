@@ -11,7 +11,7 @@ class ArrayToXml
     /**
      * The root DOM Document.
      *
-     * @var \DOMDocument
+     * @var DOMDocument
      */
     protected $document;
 
@@ -26,14 +26,14 @@ class ArrayToXml
      * Construct a new instance.
      *
      * @param string[] $array
-     * @param string   $rootElementName
-     * @param bool     $replaceSpacesByUnderScoresInKeyNames
-     * @param string   $xmlEncoding
-     * @param string   $xmlVersion
+     * @param string|array $rootElement
+     * @param bool $replaceSpacesByUnderScoresInKeyNames
+     * @param string $xmlEncoding
+     * @param string $xmlVersion
      *
      * @throws DOMException
      */
-    public function __construct(array $array, $rootElementName = '', $replaceSpacesByUnderScoresInKeyNames = true, $xmlEncoding = null, $xmlVersion = '1.0')
+    public function __construct(array $array, $rootElement = '', $replaceSpacesByUnderScoresInKeyNames = true, $xmlEncoding = null, $xmlVersion = '1.0')
     {
         $this->document = new DOMDocument($xmlVersion, $xmlEncoding);
         $this->replaceSpacesByUnderScoresInKeyNames = $replaceSpacesByUnderScoresInKeyNames;
@@ -42,7 +42,7 @@ class ArrayToXml
             throw new DOMException('Invalid Character Error');
         }
 
-        $root = $this->document->createElement($rootElementName == '' ? 'root' : $rootElementName);
+        $root = $this->createRootElement($rootElement);
 
         $this->document->appendChild($root);
 
@@ -53,10 +53,10 @@ class ArrayToXml
      * Convert the given array to an xml string.
      *
      * @param string[] $array
-     * @param string   $rootElementName
-     * @param bool     $replaceSpacesByUnderScoresInKeyNames
-     * @param string   $xmlEncoding
-     * @param string   $xmlVersion
+     * @param string $rootElementName
+     * @param bool $replaceSpacesByUnderScoresInKeyNames
+     * @param string $xmlEncoding
+     * @param string $xmlVersion
      *
      * @return string
      */
@@ -90,7 +90,7 @@ class ArrayToXml
     /**
      * Parse individual element.
      *
-     * @param \DOMElement     $element
+     * @param DOMElement $element
      * @param string|string[] $value
      */
     private function convertElement(DOMElement $element, $value)
@@ -109,6 +109,8 @@ class ArrayToXml
                     $this->addAttributes($element, $data);
                 } elseif ((($key === '_value') || ($key === '@value')) && is_string($data)) {
                     $element->nodeValue = htmlspecialchars($data);
+                } elseif ((($key === '_cdata') || ($key === '@cdata')) && is_string($data)) {
+                    $element->appendChild($this->document->createCDATASection($data));
                 } else {
                     $this->addNode($element, $key, $data);
                 }
@@ -123,8 +125,8 @@ class ArrayToXml
     /**
      * Add node.
      *
-     * @param \DOMElement     $element
-     * @param string          $key
+     * @param DOMElement $element
+     * @param string $key
      * @param string|string[] $value
      */
     protected function addNode(DOMElement $element, $key, $value)
@@ -141,14 +143,14 @@ class ArrayToXml
     /**
      * Add collection node.
      *
-     * @param \DOMElement     $element
+     * @param DOMElement $element
      * @param string|string[] $value
      *
      * @internal param string $key
      */
     protected function addCollectionNode(DOMElement $element, $value)
     {
-        if ($element->childNodes->length == 0) {
+        if ($element->childNodes->length === 0 && $element->attributes->length === 0) {
             $this->convertElement($element, $value);
 
             return;
@@ -162,7 +164,7 @@ class ArrayToXml
     /**
      * Add sequential node.
      *
-     * @param \DOMElement     $element
+     * @param DOMElement $element
      * @param string|string[] $value
      *
      * @internal param string $key
@@ -203,13 +205,42 @@ class ArrayToXml
     /**
      * Add attributes.
      *
-     * @param \DOMElement $element
-     * @param string[]    $data
+     * @param DOMElement $element
+     * @param string[] $data
      */
     protected function addAttributes($element, $data)
     {
         foreach ($data as $attrKey => $attrVal) {
             $element->setAttribute($attrKey, $attrVal);
         }
+    }
+
+    /**
+     * Create the root element.
+     *
+     * @param  string|array $rootElement
+     * @return DOMElement
+     */
+    protected function createRootElement($rootElement)
+    {
+        if (is_string($rootElement)) {
+            $rootElementName = $rootElement ?: 'root';
+
+            return $this->document->createElement($rootElementName);
+        }
+
+        $rootElementName = $rootElement['rootElementName'] ?? 'root';
+
+        $element = $this->document->createElement($rootElementName);
+
+        foreach ($rootElement as $key => $value) {
+            if ($key !== '_attributes' && $key !== '@attributes') {
+                continue;
+            }
+
+            $this->addAttributes($element, $rootElement[$key]);
+        }
+
+        return $element;
     }
 }

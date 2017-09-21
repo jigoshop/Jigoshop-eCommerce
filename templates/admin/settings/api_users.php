@@ -15,7 +15,7 @@
                         'name' => $name,
                         'login' => $keyData['login'],
                         'password' => $keyData['password'],
-                        'permissions' => $keyData['permissions'],
+                        'permissions' => isset($keyData['permissions'])?$keyData['permissions']:[],
                         'availablePermissions' => $availablePermissions,
                         'active' => false
                     ]); ?>

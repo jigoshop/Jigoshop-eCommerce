@@ -292,7 +292,7 @@ class PayPal implements Method2, Processable
 				'invoice' => $order->getNumber(),
 				'amount' => number_format($order->getTotal(), $this->options->get('general.currency_decimals'), '.', ''),
 				//BN code
-				//'bn' => 'Jigoshop_SP'
+				'bn' => 'JigoLtd_SP'
             ],
 			$phone
 		);
