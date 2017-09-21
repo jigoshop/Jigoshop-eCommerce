@@ -346,7 +346,7 @@ class PayPal implements Method2, Processable
 			$args['item_name_'.$item_loop] = $title;
 			$args['quantity_'.$item_loop] = $item->getQuantity();
 			// Apparently, PayPal did not like "28.4525" as the amount. Changing that to "28.45" fixed the issue.
-			$args['amount_'.$item_loop] = number_format($this->wp->applyFilters('jigoshop\paypal\item_price', $item->getPrice(), $item), $this->decimals);
+			$args['amount_'.$item_loop] = number_format($this->wp->applyFilters('jigoshop\paypal\item_price', $item->getPrice(), $item), $this->decimals, '.','');
 		}
 
 		// Shipping Cost
@@ -354,11 +354,11 @@ class PayPal implements Method2, Processable
 			$item_loop++;
 			$args['item_name_'.$item_loop] = __('Shipping cost', 'jigoshop');
 			$args['quantity_'.$item_loop] = '1';
-			$args['amount_'.$item_loop] = number_format($order->getShippingPrice(), $this->decimals);
+			$args['amount_'.$item_loop] = number_format($order->getShippingPrice(), $this->decimals, '.', '');
 		}
 
-		$args['tax'] = $args['tax_cart'] = number_format($order->getTotalCombinedTax(), $this->decimals);
-		$args['discount_amount_cart'] = number_format($order->getDiscount(), $this->decimals);
+		$args['tax'] = $args['tax_cart'] = number_format($order->getTotalCombinedTax(), $this->decimals, '.', '');
+		$args['discount_amount_cart'] = number_format($order->getDiscount(), $this->decimals, '.', '');
 
 		if ($this->settings['force_payment'] && $order->getTotal() == 0) {
 			$item_loop++;

@@ -17,7 +17,7 @@ Jigoshop is a feature-packed eCommerce plugin built upon WordPress core function
 
 Have a bug? Please create an issue here on GitHub!
 
-[https://github.com/jigoshop/jigoshop/issues](https://github.com/jigoshop/jigoshop/issues)
+[https://github.com/jigoshop/jigoshop-ecommerce/issues](https://github.com/jigoshop/jigoshop-ecommerce/issues)
 
 ## Contributing
 
@@ -27,7 +27,7 @@ Anyone and everyone is welcome to contribute. Jigoshop wouldn't be what it is to
 
 There are several ways you can help out:
 
-* Raising [issues](https://github.com/jigoshop/jigoshop/issues) on GitHub.
+* Raising [issues](https://github.com/jigoshop/jigoshop-ecommerce/issues) on GitHub.
 * Submit bug fixes or offer new features / improvements by sending [pull requests](http://help.github.com/send-pull-requests/).
 * Offering [your own translations](https://os958g2.oneskyapp.com).
 
@@ -40,4 +40,4 @@ See [CHANGELOG.md](CHANGELOG.md)
 * Web: http://www.jigoshop.com
 * Docs: http://docs.jigoshop.com
 * Twitter: http://twitter.com/jigoshop
-* Source: http://github.com/jigoshop/jigoshop
+* Source: http://github.com/jigoshop/jigoshop-ecommerce
