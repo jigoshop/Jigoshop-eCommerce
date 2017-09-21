@@ -167,7 +167,7 @@ class Admin
         $dashboards = $di->tags->get('jigoshop.admin.dashboard');
         foreach ($dashboards as $dashboard) {
             $class = $di->getServices()->getClassName($dashboard);
-            if($class::SLUG == $_GET['page']) {
+            if(isset($_GET['page']) && $class::SLUG == $_GET['page']) {
                 $dashboard = $di->get($dashboard);
                 add_dashboard_page($dashboard->getTitle(), $dashboard->getTitle(), $dashboard->getCapability(), $dashboard->getMenuSlug());
             }
