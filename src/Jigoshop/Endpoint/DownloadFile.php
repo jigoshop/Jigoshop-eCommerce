@@ -50,41 +50,41 @@ class DownloadFile implements Processable
             try {
                 $data = explode('.', $_GET['file']);
                 if (count($data) != 3) {
-                    throw new Exception(__('Invalid download key. Unable to download file.', 'jigoshop'));
+                    throw new Exception(__('Invalid download key. Unable to download file.', 'jigoshop-ecommerce'));
                 }
                 list($key, $id, $itemKey) = $data;
                 $order = $this->orderService->find((int)$id);
                 /** @var $order Order */
                 if(!$order instanceof Order) {
-                    throw new Exception(__('Invalid order id. Unable to download file.', 'jigoshop'));
+                    throw new Exception(__('Invalid order id. Unable to download file.', 'jigoshop-ecommerce'));
                 }
                 if ($order->getKey() !== $key) {
-                    throw new Exception(__('Invalid security key. Unable to download file.', 'jigoshop'));
+                    throw new Exception(__('Invalid security key. Unable to download file.', 'jigoshop-ecommerce'));
                 }
                 if (!in_array($order->getStatus(), [Order\Status::COMPLETED, Order\Status::PROCESSING])) {
-                    throw new Exception(__('Invalid order.', 'jigoshop'));
+                    throw new Exception(__('Invalid order.', 'jigoshop-ecommerce'));
                 }
                 $item = $order->getItem($itemKey);
                 if ($item === null) {
-                    throw new Exception(__('Product not found.', 'jigoshop'));
+                    throw new Exception(__('Product not found.', 'jigoshop-ecommerce'));
                 }
                 if ($item->getMeta('file') === null && $item->getMeta('downloads') === null) {
-                    throw new Exception(__('Invalid file to download.', 'jigoshop'));
+                    throw new Exception(__('Invalid file to download.', 'jigoshop-ecommerce'));
                 }
                 $downloads = $item->getMeta('downloads')->getValue();
                 if ($downloads === 0) {
-                    throw new Exception(__('Sorry, you have reached your download limit for this file.', 'jigoshop'));
+                    throw new Exception(__('Sorry, you have reached your download limit for this file.', 'jigoshop-ecommerce'));
                 }
                 if ($this->options->get('shopping.login_for_downloads')) {
                     if (!$this->wp->isUserLoggedIn()) {
-                        throw new Exception(__('You have to log in before you can download a file.', 'jigoshop'));
+                        throw new Exception(__('You have to log in before you can download a file.', 'jigoshop-ecommerce'));
                     } else if ($order->getCustomer()->getId() != $this->wp->getCurrentUserId()) {
-                        throw new Exception(__('This is not your download link.', 'jigoshop'));
+                        throw new Exception(__('This is not your download link.', 'jigoshop-ecommerce'));
                     }
                 }
                 $file = $item->getMeta('file')->getValue();
                 if (!$file) {
-                    throw new Exception(__('File not found.', 'jigoshop'));
+                    throw new Exception(__('File not found.', 'jigoshop-ecommerce'));
                 }
                 if ($downloads !== '') {
                     $item->getMeta('downloads')->setValue($downloads - 1);
@@ -173,7 +173,7 @@ class DownloadFile implements Processable
                     header('Content-Length: '.filesize($file));
                     readfile($file);
                 } else {
-                    throw new Exception(__('File not found.', 'jigoshop'));
+                    throw new Exception(__('File not found.', 'jigoshop-ecommerce'));
                 }
             } catch (Exception $e) {
                 $this->messages->addError($e->getMessage());

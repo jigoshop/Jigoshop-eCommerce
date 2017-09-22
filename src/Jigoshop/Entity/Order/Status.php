@@ -18,10 +18,10 @@ class Status
 	const COMPLETED = 'jigoshop-completed';
 	const CANCELLED = 'jigoshop-cancelled';
 	const REFUNDED = 'jigoshop-refunded';
-//			'failed' => __('Failed', 'jigoshop'), /* can be set from PayPal, not currently shown anywhere -JAP- */
-//			'denied' => __('Denied', 'jigoshop'), /* can be set from PayPal, not currently shown anywhere -JAP- */
-//			'expired' => __('Expired', 'jigoshop'), /* can be set from PayPal, not currently shown anywhere -JAP- */
-//			'voided' => __('Voided', 'jigoshop'), /* can be set from PayPal, not currently shown anywhere -JAP- */
+//			'failed' => __('Failed', 'jigoshop-ecommerce'), /* can be set from PayPal, not currently shown anywhere -JAP- */
+//			'denied' => __('Denied', 'jigoshop-ecommerce'), /* can be set from PayPal, not currently shown anywhere -JAP- */
+//			'expired' => __('Expired', 'jigoshop-ecommerce'), /* can be set from PayPal, not currently shown anywhere -JAP- */
+//			'voided' => __('Voided', 'jigoshop-ecommerce'), /* can be set from PayPal, not currently shown anywhere -JAP- */
 
 	private static $statuses;
 	/** @var Wordpress */
@@ -56,12 +56,12 @@ class Status
 	{
 		if (self::$statuses === null) {
 			self::$statuses = self::$wp->applyFilters('jigoshop\order\statuses', [
-				Status::PENDING => __('Pending', 'jigoshop'),
-				Status::ON_HOLD => __('On-Hold', 'jigoshop'),
-				Status::PROCESSING => __('Processing', 'jigoshop'),
-				Status::COMPLETED => __('Completed', 'jigoshop'),
-				Status::CANCELLED => __('Cancelled', 'jigoshop'),
-				Status::REFUNDED => __('Refunded', 'jigoshop'),
+				Status::PENDING => __('Pending', 'jigoshop-ecommerce'),
+				Status::ON_HOLD => __('On-Hold', 'jigoshop-ecommerce'),
+				Status::PROCESSING => __('Processing', 'jigoshop-ecommerce'),
+				Status::COMPLETED => __('Completed', 'jigoshop-ecommerce'),
+				Status::CANCELLED => __('Cancelled', 'jigoshop-ecommerce'),
+				Status::REFUNDED => __('Refunded', 'jigoshop-ecommerce'),
             ]);
 		}
 

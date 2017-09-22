@@ -15,7 +15,7 @@
                 ]); ?>
             <?php endfor; ?>
         </ul>
-        <a href="#" class="add-rate btn btn-primary"><?php _e('Add Rate', 'jigoshop'); ?></a>
+        <a href="#" class="add-rate btn btn-primary"><?php _e('Add Rate', 'jigoshop-ecommerce'); ?></a>
     </div>
 </div>
 <script type="text/template" id="tmpl-advanced-flat-rate">
@@ -24,7 +24,7 @@
         'id' => '{{{ data.id }}}',
         'name' => $name,
         'value' => [
-            'label' => __('New rate', 'jigoshop'),
+            'label' => __('New rate', 'jigoshop-ecommerce'),
             'cost' => '0',
             'continents' => [],
             'countries' => [],

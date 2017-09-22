@@ -45,17 +45,17 @@ class ProductTag implements Taxonomy
 	{
 		return [
 			'labels' => [
-				'menu_name' => __('Tags', 'jigoshop'),
-				'name' => __('Product Tags', 'jigoshop'),
-				'singular_name' => __('Product Tag', 'jigoshop'),
-				'search_items' => __('Search Product Tags', 'jigoshop'),
-				'all_items' => __('All Product Tags', 'jigoshop'),
-				'parent_item' => __('Parent Product Tag', 'jigoshop'),
-				'parent_item_colon' => __('Parent Product Tag:', 'jigoshop'),
-				'edit_item' => __('Edit Product Tag', 'jigoshop'),
-				'update_item' => __('Update Product Tag', 'jigoshop'),
-				'add_new_item' => __('Add New Product Tag', 'jigoshop'),
-				'new_item_name' => __('New Product Tag Name', 'jigoshop')
+				'menu_name' => __('Tags', 'jigoshop-ecommerce'),
+				'name' => __('Product Tags', 'jigoshop-ecommerce'),
+				'singular_name' => __('Product Tag', 'jigoshop-ecommerce'),
+				'search_items' => __('Search Product Tags', 'jigoshop-ecommerce'),
+				'all_items' => __('All Product Tags', 'jigoshop-ecommerce'),
+				'parent_item' => __('Parent Product Tag', 'jigoshop-ecommerce'),
+				'parent_item_colon' => __('Parent Product Tag:', 'jigoshop-ecommerce'),
+				'edit_item' => __('Edit Product Tag', 'jigoshop-ecommerce'),
+				'update_item' => __('Update Product Tag', 'jigoshop-ecommerce'),
+				'add_new_item' => __('Add New Product Tag', 'jigoshop-ecommerce'),
+				'new_item_name' => __('New Product Tag Name', 'jigoshop-ecommerce')
             ],
 			'capabilities' => [
 				'manage_terms' => 'manage_product_terms',

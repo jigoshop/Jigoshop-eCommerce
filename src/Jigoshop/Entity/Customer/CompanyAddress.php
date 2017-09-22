@@ -70,7 +70,7 @@ class CompanyAddress extends Address
 			[', ,', ', <'],
 			['', '<'],
 			sprintf(
-				_x('<strong>%1$s</strong>, %2$s<br/>%3$s, %4$s, %5$s<br/>%6$s, %7$s', 'order-address', 'jigoshop'),
+				_x('<strong>%1$s</strong>, %2$s<br/>%3$s, %4$s, %5$s<br/>%6$s, %7$s', 'order-address', 'jigoshop-ecommerce'),
 				$this->getName(), $this->company, $this->getAddress(), $this->getCity(), $this->getPostcode(), Country::getName($this->getCountry()),
 				Country::getStateName($this->getCountry(), $this->getState())
 			)
@@ -78,11 +78,11 @@ class CompanyAddress extends Address
 
 		$phone = $this->getPhone();
 		if (!empty($phone)) {
-			$result .= sprintf(_x('<br/>Phone: %s', 'order-address', 'jigoshop'), $phone);
+			$result .= sprintf(_x('<br/>Phone: %s', 'order-address', 'jigoshop-ecommerce'), $phone);
 		}
 		$email = $this->getEmail();
 		if (!empty($email)) {
-			$result .= sprintf(_x('<br/>Email: <a href="mailto: %1$s">%1$s</a>', 'order-address', 'jigoshop'), $email);
+			$result .= sprintf(_x('<br/>Email: <a href="mailto: %1$s">%1$s</a>', 'order-address', 'jigoshop-ecommerce'), $email);
 		}
 
 		return $result;

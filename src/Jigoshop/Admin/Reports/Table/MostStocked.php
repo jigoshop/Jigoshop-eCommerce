@@ -31,7 +31,7 @@ class MostStocked implements TableInterface
 
 	public function getTitle()
 	{
-		return __('Most Stocked', 'jigoshop');
+		return __('Most Stocked', 'jigoshop-ecommerce');
 	}
 
 	public function getColumns()
@@ -41,23 +41,23 @@ class MostStocked implements TableInterface
 		}
 		$this->columns = [
 			'product' => [
-				'name' => __('Product', 'jigoshop'),
+				'name' => __('Product', 'jigoshop-ecommerce'),
 				'size' => 4
             ],
 			'parent' => [
-				'name' => __('Parent', 'jigoshop'),
+				'name' => __('Parent', 'jigoshop-ecommerce'),
 				'size' => 4
             ],
 			'units_in_stock' => [
-				'name' => __('Units in stock', 'jigoshop'),
+				'name' => __('Units in stock', 'jigoshop-ecommerce'),
 				'size' => 1
             ],
 			'stock_status' => [
-				'name' => __('Stock status', 'jigoshop'),
+				'name' => __('Stock status', 'jigoshop-ecommerce'),
 				'size' => 1
             ],
 			'user_actions' => [
-				'name' => __('Actions', 'jigoshop'),
+				'name' => __('Actions', 'jigoshop-ecommerce'),
 				'size' => 2
             ]
         ];
@@ -86,7 +86,7 @@ class MostStocked implements TableInterface
 
 	public function noItems()
 	{
-		return __('No products found.', 'jigoshop');
+		return __('No products found.', 'jigoshop-ecommerce');
 	}
 
 	public function display()
@@ -148,14 +148,14 @@ class MostStocked implements TableInterface
 
 				$actions['edit'] = [
 					'url' => admin_url('post.php?post='.$action_id.'&action=edit'),
-					'name' => __('Edit', 'jigoshop'),
+					'name' => __('Edit', 'jigoshop-ecommerce'),
 					'action' => "edit"
                 ];
 
 				if (!$this->isProductHidden($action_id)) {
 					$actions['view'] = [
 							'url' => get_permalink($action_id),
-							'name' => __('View', 'jigoshop'),
+							'name' => __('View', 'jigoshop-ecommerce'),
 							'action' => "view"
                     ];
 				}

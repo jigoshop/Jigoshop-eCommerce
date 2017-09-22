@@ -8,5 +8,9 @@ assets/fonts
 compiler.sh
 composer.lock
 dist/
+languages/*
+!languages/countries.php
+!languages/strings.php
+!languages/jigoshop-ecommerce.pot
 node_modules
 vendor/

@@ -8,6 +8,7 @@ check = require('gulp-if')
 uglify = require('gulp-uglify')
 rimraf = require('gulp-rimraf')
 replace = require('gulp-replace')
+wpPot = require('gulp-wp-pot')
 minify = true
 # Sources declaration
 
@@ -35,7 +36,7 @@ jsFiles =
 coffeeFiles = []
 
 
-defaultTask = ['scripts', 'styles', 'fonts']
+defaultTask = ['scripts', 'styles', 'fonts', 'refresh-pot-file']
 
 # Processing
 
@@ -97,6 +98,13 @@ gulp.task 'lint', ->
 gulp.task 'fonts', ->
   gulp.src 'assets/bower/bootstrap/fonts/*'
     .pipe gulp.dest('assets/fonts')
+
+gulp.task 'refresh-pot-file', ->
+  gulp.src  ['/jigoshop.php', '**/*.php']
+    .pipe wpPot
+      domain: 'jigoshop-ecommerce'
+      package: 'Jigoshop eCommerce'
+    .pipe gulp.dest('languages/jigoshop-ecommerce.pot')
 
 gulp.task 'clean', ->
   gulp.src ['!assets/css/prettyPhoto.css', 'assets/css/*', '!assets/js/flot', '!assets/js/flot/**',

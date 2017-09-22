@@ -22,7 +22,7 @@ class OrderStatusFilter implements WidgetInterface
 
 	public function getTitle()
 	{
-		return __('Order Status Filter', 'jigoshop');
+		return __('Order Status Filter', 'jigoshop-ecommerce');
 	}
 
 	public function getArgs()

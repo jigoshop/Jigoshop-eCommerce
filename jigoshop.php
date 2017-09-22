@@ -23,7 +23,7 @@
  * Version:             2.1.7
  * Requires at least:   4.0
  * Tested up to:        4.8.2
- * Text Domain:         jigoshop
+ * Text Domain:         jigoshop-ecommerce
  * Domain Path:         /languages/
  *
  * DISCLAIMER

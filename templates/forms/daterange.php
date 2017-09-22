@@ -42,7 +42,7 @@ $hasLabel = !empty($label);
                 }
                 ?>
                 />
-                <span class="input-group-addon"><?php _e('to', 'jigoshop'); ?></span>
+                <span class="input-group-addon"><?php _e('to', 'jigoshop-ecommerce'); ?></span>
                 <input type="<?= $type; ?>" id="<?= $id; ?>-to" name="<?= $name['to']; ?>"
                        class="form-control <?= join(' ', $classes); ?>" placeholder="<?= $placeholder; ?>"
                        value="<?= $value['to']; ?>"

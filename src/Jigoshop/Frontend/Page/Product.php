@@ -119,7 +119,7 @@ class Product implements PageInterface
 				$item = $this->wp->applyFilters('jigoshop\cart\add', null, $product);
 
 				if ($item === null) {
-					throw new Exception(__('Unable to add product to the cart.', 'jigoshop'));
+					throw new Exception(__('Unable to add product to the cart.', 'jigoshop-ecommerce'));
 				}
 
 				if (isset($_POST['quantity'])) {
@@ -145,26 +145,26 @@ class Product implements PageInterface
 					case 'product':
 					case 'same_page':
 					default:
-						$button = sprintf('<a href="%s" class="btn btn-warning pull-right">%s</a>', $this->wp->getPermalink($this->options->getPageId(Pages::CART)), __('View cart', 'jigoshop'));
+						$button = sprintf('<a href="%s" class="btn btn-warning pull-right">%s</a>', $this->wp->getPermalink($this->options->getPageId(Pages::CART)), __('View cart', 'jigoshop-ecommerce'));
 				}
 
-				$this->messages->addNotice(sprintf(__('%s successfully added to your cart. %s', 'jigoshop'), $product->getName(), $button));
+				$this->messages->addNotice(sprintf(__('%s successfully added to your cart. %s', 'jigoshop-ecommerce'), $product->getName(), $button));
 				if ($url !== false) {
 					$this->messages->preserveMessages();
 					$this->wp->wpRedirect($url);
 				}
 			} catch (NotEnoughStockException $e) {
 				if ($e->getStock() == 0) {
-					$message = sprintf(__('Sorry, we do not have "%s" in stock.', 'jigoshop'), $product->getName());
+					$message = sprintf(__('Sorry, we do not have "%s" in stock.', 'jigoshop-ecommerce'), $product->getName());
 				} else if ($this->options->get('products.show_stock')) {
-					$message = sprintf(__('Sorry, we do not have enough "%s" in stock to fulfill your order. We only have %d available at this time. Please edit your cart and try again. We apologize for any inconvenience caused.', 'jigoshop'), $product->getName(), $e->getStock());
+					$message = sprintf(__('Sorry, we do not have enough "%s" in stock to fulfill your order. We only have %d available at this time. Please edit your cart and try again. We apologize for any inconvenience caused.', 'jigoshop-ecommerce'), $product->getName(), $e->getStock());
 				} else {
-					$message = sprintf(__('Sorry, we do not have enough "%s" in stock to fulfill your order. Please edit your cart and try again. We apologize for any inconvenience caused.', 'jigoshop'), $product->getName());
+					$message = sprintf(__('Sorry, we do not have enough "%s" in stock to fulfill your order. Please edit your cart and try again. We apologize for any inconvenience caused.', 'jigoshop-ecommerce'), $product->getName());
 				}
 
 				$this->messages->addError($message);
 			} catch (Exception $e) {
-				$this->messages->addError(sprintf(__('A problem ocurred when adding to cart: %s', 'jigoshop'), $e->getMessage()));
+				$this->messages->addError(sprintf(__('A problem ocurred when adding to cart: %s', 'jigoshop-ecommerce'), $e->getMessage()));
 			}
 		}
 	}
@@ -228,18 +228,18 @@ class Product implements PageInterface
 	{
 		$tabs = [];
 		if ($product->getDescription()) {
-			$tabs['description'] = __('Description', 'jigoshop');
+			$tabs['description'] = __('Description', 'jigoshop-ecommerce');
 		}
 		if ($product->getVisibleAttributes()) {
-			$tabs['attributes'] = __('Additional information', 'jigoshop');
+			$tabs['attributes'] = __('Additional information', 'jigoshop-ecommerce');
 		}
 		if (array_filter($product->getAttachments(), function($item) {
 		    return $item['type'] == Datafile::TYPE;
         })) {
-			$tabs['downloads'] = __('Files to download', 'jigoshop');
+			$tabs['downloads'] = __('Files to download', 'jigoshop-ecommerce');
 		}
         if ($this->options->get('products.reviews', false)) {
-            $tabs['reviews'] = __('Reviews', 'jigoshop');
+            $tabs['reviews'] = __('Reviews', 'jigoshop-ecommerce');
         }
 
 		$tabs = $this->wp->applyFilters('jigoshop\product\tabs', $tabs, $product);

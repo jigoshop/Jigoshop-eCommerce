@@ -37,7 +37,7 @@ class PaymentService implements PaymentServiceInterface
 	public function get($id)
 	{
 		if (!isset($this->methods[$id])) {
-			Registry::getInstance(JIGOSHOP_LOGGER)->addWarning(sprintf(__('Payment gateway "%s" does not exists', 'jigoshop'), $id));
+			Registry::getInstance(JIGOSHOP_LOGGER)->addWarning(sprintf(__('Payment gateway "%s" does not exists', 'jigoshop-ecommerce'), $id));
 
 			return new Dummy($id);
 		}

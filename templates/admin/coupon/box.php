@@ -11,7 +11,7 @@ use Jigoshop\Admin\Helper\Forms;
 	<fieldset>
 		<?php Forms::constant([
 			'name' => 'jigoshop_coupon[code]',
-			'label' => __('Code', 'jigoshop'),
+			'label' => __('Code', 'jigoshop-ecommerce'),
 			'description' => $coupon->getCode() ? '' : __('Will not appear until coupon is saved.  This is the front end code for use on the Cart.','jigoshop'),
 			'value' => $coupon->getCode(),
         ]); ?>
@@ -20,16 +20,16 @@ use Jigoshop\Admin\Helper\Forms;
 		<?php Forms::select([
 			'id' => 'jigoshop_coupon_type',
 			'name' => 'jigoshop_coupon[type]',
-			'label' => __('Type', 'jigoshop'),
+			'label' => __('Type', 'jigoshop-ecommerce'),
 			'options' => $types,
 			'value' => $coupon->getType(),
         ]); ?>
 		<?php Forms::text([
 			'name' => 'jigoshop_coupon[amount]',
-			'label' => __('Amount', 'jigoshop'),
+			'label' => __('Amount', 'jigoshop-ecommerce'),
 			'type' => 'number',
 			'description' => __('Enter an amount e.g. 9.99.','jigoshop'),
-			'tip' => __('Amount this coupon is worth. If it is a percentage, just include the number without the percentage sign.', 'jigoshop'),
+			'tip' => __('Amount this coupon is worth. If it is a percentage, just include the number without the percentage sign.', 'jigoshop-ecommerce'),
 			'placeholder' => \Jigoshop\Helper\Product::formatNumericPrice(0),
 			'value' => $coupon->getAmount(),
         ]); ?>
@@ -41,9 +41,9 @@ use Jigoshop\Admin\Helper\Forms;
 				'from' => 'jigoshop_coupon[from]',
 				'to' => 'jigoshop_coupon[to]',
             ],
-			'label' => __('Coupon date', 'jigoshop'),
+			'label' => __('Coupon date', 'jigoshop-ecommerce'),
 			'tip' => __('Choose between which dates this coupon is enabled.  Leave empty for any date.','jigoshop'),
-			'placeholder' => __('Any date', 'jigoshop'),
+			'placeholder' => __('Any date', 'jigoshop-ecommerce'),
 			'value' => [
 				'from' => $coupon->getFrom() ? $coupon->getFrom()->format('m/d/Y') : '',
 				'to' =>  $coupon->getTo() ? $coupon->getTo()->format('m/d/Y') : '',
@@ -54,22 +54,22 @@ use Jigoshop\Admin\Helper\Forms;
 	<fieldset>
 		<?php Forms::text([
 			'name' => 'jigoshop_coupon[usage_limit]',
-			'label' => __('Usage limit', 'jigoshop'),
+			'label' => __('Usage limit', 'jigoshop-ecommerce'),
 			'type' => 'number',
 			'description' => sprintf(__('Times used: %s','jigoshop'), $coupon->getUsage()),
-			'tip' => __('Control how many times this coupon may be used.', 'jigoshop'),
+			'tip' => __('Control how many times this coupon may be used.', 'jigoshop-ecommerce'),
 			'placeholder' => 0,
 			'value' => $coupon->getUsageLimit(),
         ]); ?>
 		<?php Forms::checkbox([
 			'name' => 'jigoshop_coupon[individual_use]',
-			'label' => __('Individual use', 'jigoshop'),
+			'label' => __('Individual use', 'jigoshop-ecommerce'),
 			'description' => __('Prevent other coupons from being used while this one is applied to the Cart.','jigoshop'),
 			'checked' => $coupon->isIndividualUse(),
         ]); ?>
 		<?php Forms::checkbox([
 			'name' => 'jigoshop_coupon[free_shipping]',
-			'label' => __('Free shipping', 'jigoshop'),
+			'label' => __('Free shipping', 'jigoshop-ecommerce'),
 			'description' => __('Show the Free Shipping method on the Checkout with this enabled.','jigoshop'),
 			'checked' => $coupon->isFreeShipping(),
         ]); ?>
@@ -77,31 +77,31 @@ use Jigoshop\Admin\Helper\Forms;
 	<fieldset>
 		<?php Forms::text([
 			'name' => 'jigoshop_coupon[order_total_minimum]',
-			'label' => __('Order total minimum', 'jigoshop'),
+			'label' => __('Order total minimum', 'jigoshop-ecommerce'),
 			'type' => 'number',
 			'description' => __('Set the required minimum subtotal for this coupon to be valid on an order.','jigoshop'),
-			'placeholder' => __('No minimum', 'jigoshop'),
+			'placeholder' => __('No minimum', 'jigoshop-ecommerce'),
 			'value' => $coupon->getOrderTotalMinimum(),
         ]); ?>
 		<?php Forms::text([
 			'name' => 'jigoshop_coupon[order_total_maximum]',
-			'label' => __('Order total maximum', 'jigoshop'),
+			'label' => __('Order total maximum', 'jigoshop-ecommerce'),
 			'type' => 'number',
 			'description' => __('Set the required maximum subtotal for this coupon to be valid on an order.','jigoshop'),
-			'placeholder' => __('No maximum', 'jigoshop'),
+			'placeholder' => __('No maximum', 'jigoshop-ecommerce'),
 			'value' => $coupon->getOrderTotalMaximum(),
         ]); ?>
 	</fieldset>
 	<fieldset>
 		<?php Forms::text([
 			'name' => 'jigoshop_coupon[products]',
-			'label' => __('Include products', 'jigoshop'),
+			'label' => __('Include products', 'jigoshop-ecommerce'),
 			'description' => __('Control which products this coupon can apply to. If this is left blank it will have effect on all of the products.','jigoshop'),
 			'value' => join(',', $coupon->getProducts()),
         ]); ?>
 		<?php Forms::text([
 			'name' => 'jigoshop_coupon[excluded_products]',
-			'label' => __('Excluded products', 'jigoshop'),
+			'label' => __('Excluded products', 'jigoshop-ecommerce'),
 			'description' => __('Control which products this coupon cannot be applied to.','jigoshop'),
 			'value' => join(',', $coupon->getExcludedProducts()),
         ]); ?>
@@ -109,13 +109,13 @@ use Jigoshop\Admin\Helper\Forms;
 	<fieldset>
 		<?php Forms::text([
 			'name' => 'jigoshop_coupon[categories]',
-			'label' => __('Include categories', 'jigoshop'),
+			'label' => __('Include categories', 'jigoshop-ecommerce'),
 			'description' => __('Control which categories this coupon can apply to. If this is left blank it will have effect on all of the products.','jigoshop'),
 			'value' => join(',', $coupon->getCategories()),
         ]); ?>
 		<?php Forms::text([
 			'name' => 'jigoshop_coupon[excluded_categories]',
-			'label' => __('Excluded categories', 'jigoshop'),
+			'label' => __('Excluded categories', 'jigoshop-ecommerce'),
 			'description' => __('Control which categories this coupon cannot be applied to.','jigoshop'),
 			'value' => join(',', $coupon->getExcludedCategories()),
         ]); ?>
@@ -123,7 +123,7 @@ use Jigoshop\Admin\Helper\Forms;
 	<fieldset>
 		<?php Forms::select([
 			'name' => 'jigoshop_coupon[payment_methods]',
-			'label' => __('Payment methods', 'jigoshop'),
+			'label' => __('Payment methods', 'jigoshop-ecommerce'),
 			'description' => __('Control which payment methods are allowed for this coupon to be effective.','jigoshop'),
 			'multiple' => true,
 			'value' => $coupon->getPaymentMethods(),

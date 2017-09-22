@@ -15,24 +15,24 @@ use Jigoshop\Helper\Render;
 					<table class="table table-striped" id="tax-rules">
 						<thead>
 						<tr>
-							<th scope="col"><?php _e('Label', 'jigoshop'); ?></th>
+							<th scope="col"><?php _e('Label', 'jigoshop-ecommerce'); ?></th>
 							<th scope="col">
-								<?php _e('Class', 'jigoshop'); ?>
-								<span data-toggle="tooltip" class="badge" data-placement="top" title="<?php _e('Tax classes needs to be saved first before updating rules.', 'jigoshop'); ?>">?</span>
+								<?php _e('Class', 'jigoshop-ecommerce'); ?>
+								<span data-toggle="tooltip" class="badge" data-placement="top" title="<?php _e('Tax classes needs to be saved first before updating rules.', 'jigoshop-ecommerce'); ?>">?</span>
 							</th>
 							<th scope="col">
-								<?php _e('Is compound?', 'jigoshop'); ?>
-								<span data-toggle="tooltip" class="badge" data-placement="top" title="<?php _e('A compound tax, is calculated on top of a primary tax.', 'jigoshop'); ?>">?</span>
+								<?php _e('Is compound?', 'jigoshop-ecommerce'); ?>
+								<span data-toggle="tooltip" class="badge" data-placement="top" title="<?php _e('A compound tax, is calculated on top of a primary tax.', 'jigoshop-ecommerce'); ?>">?</span>
 							</th>
-							<th scope="col"><?php _e('Rate', 'jigoshop'); ?></th>
-							<th scope="col"><?php _e('Country', 'jigoshop'); ?></th>
+							<th scope="col"><?php _e('Rate', 'jigoshop-ecommerce'); ?></th>
+							<th scope="col"><?php _e('Country', 'jigoshop-ecommerce'); ?></th>
 							<th scope="col">
-								<?php _e('State', 'jigoshop'); ?>
-								<span data-toggle="tooltip" class="badge" data-placement="top" title="<?php _e('You can enter more states separating them with comma.', 'jigoshop'); ?>">?</span>
+								<?php _e('State', 'jigoshop-ecommerce'); ?>
+								<span data-toggle="tooltip" class="badge" data-placement="top" title="<?php _e('You can enter more states separating them with comma.', 'jigoshop-ecommerce'); ?>">?</span>
 							</th>
 							<th scope="col">
-								<?php _e('Postcodes', 'jigoshop'); ?>
-								<span data-toggle="tooltip" class="badge" data-placement="top" title="<?php _e('Enter list of postcodes, separating with comma.', 'jigoshop'); ?>">?</span>
+								<?php _e('Postcodes', 'jigoshop-ecommerce'); ?>
+								<span data-toggle="tooltip" class="badge" data-placement="top" title="<?php _e('Enter list of postcodes, separating with comma.', 'jigoshop-ecommerce'); ?>">?</span>
 							</th>
 							<th scope="col"></th>
 						</tr>
@@ -47,7 +47,7 @@ use Jigoshop\Helper\Render;
 						<tfoot>
 						<tr>
 							<td colspan="6" class="pull-text-left">
-								<button type="button" class="btn btn-default text-left" id="add-tax-rule"><span class="glyphicon glyphicon-plus"></span> <?php _e('Add', 'jigoshop'); ?></button>
+								<button type="button" class="btn btn-default text-left" id="add-tax-rule"><span class="glyphicon glyphicon-plus"></span> <?php _e('Add', 'jigoshop-ecommerce'); ?></button>
 							</td>
 						</tr>
 						</tfoot>

@@ -11,7 +11,7 @@ use Jigoshop\Helper\Render;
 ?>
 
 <?php if(is_search()): ?>
-	<h1 class="page-title"><?php _e('Search Results:', 'jigoshop'); ?> &ldquo;<?php the_search_query(); ?>&rdquo; <?php if (get_query_var('paged')) echo ' &mdash; Page '.get_query_var('paged'); ?></h1>
+	<h1 class="page-title"><?php _e('Search Results:', 'jigoshop-ecommerce'); ?> &ldquo;<?php the_search_query(); ?>&rdquo; <?php if (get_query_var('paged')) echo ' &mdash; Page '.get_query_var('paged'); ?></h1>
 <?php else: ?>
 	<?= apply_filters('jigoshop\shop\content\title', '<h1 class="page-title">'.$title.'</h1>', $title); ?>
 <?php endif; ?>

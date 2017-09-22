@@ -21,7 +21,7 @@ class CustomRange implements WidgetInterface
 
 	public function getTitle()
 	{
-		return __('Custom Range', 'jigoshop');
+		return __('Custom Range', 'jigoshop-ecommerce');
 	}
 
 	public function getArgs()

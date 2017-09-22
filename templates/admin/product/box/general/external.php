@@ -10,9 +10,9 @@ use Jigoshop\Entity\Product;
 	<?php
 	Forms::text([
 		'name' => 'product[external_url]',
-		'label' => __('Product URL', 'jigoshop'),
+		'label' => __('Product URL', 'jigoshop-ecommerce'),
 		'classes' => ['product-external'],
-		'placeholder' => __('Enter external product URL...', 'jigoshop'),
+		'placeholder' => __('Enter external product URL...', 'jigoshop-ecommerce'),
 		'value' => $product instanceof Product\External ? $product->getUrl() : '',
     ]);
 	?>

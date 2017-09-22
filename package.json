@@ -22,6 +22,7 @@
     "gulp-replace": "^0.3.0",
     "gulp-rimraf": "^0.1.0",
     "gulp-uglify": "^0.2.1",
+    "gulp-wp-pot": "*",
     "jquery-flot": "^0.8.3",
     "require-dir": "~0.1.0",
     "yargs": "^1.2.6",

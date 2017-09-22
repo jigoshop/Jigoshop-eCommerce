@@ -38,29 +38,29 @@ class ShoppingTab implements TabInterface
 		$this->messages = $messages;
 
 		$this->addToCartRedirectionOptions = $wp->applyFilters('jigoshop\admin\settings\shopping\add_to_cart_redirect', [
-			'same_page' => __('Stay on the same page', 'jigoshop'),
-			'product' => __('Redirect to product page', 'jigoshop'),
-			'cart' => __('Redirect to cart', 'jigoshop'),
-			'checkout' => __('Redirect to checkout', 'jigoshop'),
-			'product_list' => __('Redirect to product list', 'jigoshop'),
+			'same_page' => __('Stay on the same page', 'jigoshop-ecommerce'),
+			'product' => __('Redirect to product page', 'jigoshop-ecommerce'),
+			'cart' => __('Redirect to cart', 'jigoshop-ecommerce'),
+			'checkout' => __('Redirect to checkout', 'jigoshop-ecommerce'),
+			'product_list' => __('Redirect to product list', 'jigoshop-ecommerce'),
         ]);
 		$this->backToShopRedirectionOptions = $wp->applyFilters('jigoshop\admin\settings\shopping\continue_shopping_redirect', [
-			'product_list' => __('Product list', 'jigoshop'),
-			'my_account' => __('My account', 'jigoshop'),
+			'product_list' => __('Product list', 'jigoshop-ecommerce'),
+			'my_account' => __('My account', 'jigoshop-ecommerce'),
         ]);
 		$this->catalogOrderBy = $wp->applyFilters('jigoshop\admin\settings\shopping\catalog_order_by', [
-			'post_date' => __('Date', 'jigoshop'),
-			'post_title' => __('Product name', 'jigoshop'),
-			'menu_order' => __('Product post order', 'jigoshop'),
+			'post_date' => __('Date', 'jigoshop-ecommerce'),
+			'post_title' => __('Product name', 'jigoshop-ecommerce'),
+			'menu_order' => __('Product post order', 'jigoshop-ecommerce'),
         ]);
 		$this->catalogOrder = $wp->applyFilters('jigoshop\admin\settings\shopping\catalog_order', [
-			'ASC' => __('Ascending', 'jigoshop'),
-			'DESC' => __('Descending', 'jigoshop'),
+			'ASC' => __('Ascending', 'jigoshop-ecommerce'),
+			'DESC' => __('Descending', 'jigoshop-ecommerce'),
         ]);
 		$this->productButtonType = $wp->applyFilters('jigoshop\admin\settings\shopping\catalog_product_button_type', [
-			'add_to_cart' => __('Add to cart', 'jigoshop'),
-			'view_product' => __('View Product', 'jigoshop'),
-			'no_button' => __('No button', 'jigoshop'),
+			'add_to_cart' => __('Add to cart', 'jigoshop-ecommerce'),
+			'view_product' => __('View Product', 'jigoshop-ecommerce'),
+			'no_button' => __('No button', 'jigoshop-ecommerce'),
         ]);
 
 		$wp->addAction('admin_enqueue_scripts', function (){
@@ -75,7 +75,7 @@ class ShoppingTab implements TabInterface
 	 */
 	public function getTitle()
 	{
-		return __('Shopping', 'jigoshop');
+		return __('Shopping', 'jigoshop-ecommerce');
 	}
 
 	/**
@@ -93,39 +93,39 @@ class ShoppingTab implements TabInterface
 	{
 		return [
 			[
-				'title' => __('Catalog', 'jigoshop'),
+				'title' => __('Catalog', 'jigoshop-ecommerce'),
 				'id' => 'catalog',
 				'fields' => [
 					[
 						'name' => '[catalog_per_page]',
-						'title' => __('Items per page', 'jigoshop'),
+						'title' => __('Items per page', 'jigoshop-ecommerce'),
 						'type' => 'number',
 						'value' => $this->options['catalog_per_page'],
                     ],
 					[
 						'name' => '[catalog_order_by]',
-						'title' => __('Order by', 'jigoshop'),
+						'title' => __('Order by', 'jigoshop-ecommerce'),
 						'type' => 'select',
 						'value' => $this->options['catalog_order_by'],
 						'options' => $this->catalogOrderBy,
                     ],
 					[
 						'name' => '[catalog_order]',
-						'title' => __('Ordering', 'jigoshop'),
+						'title' => __('Ordering', 'jigoshop-ecommerce'),
 						'type' => 'select',
 						'value' => $this->options['catalog_order'],
 						'options' => $this->catalogOrder,
                     ],
 					[
 						'name' => '[catalog_product_button_type]',
-						'title' => __('Product button type', 'jigoshop'),
+						'title' => __('Product button type', 'jigoshop-ecommerce'),
 						'type' => 'select',
 						'value' => $this->options['catalog_product_button_type'],
 						'options' => $this->productButtonType,
                     ],
 					[
 						'name' => '[hide_out_of_stock]',
-						'title' => __('Hide out of stock items', 'jigoshop'),
+						'title' => __('Hide out of stock items', 'jigoshop-ecommerce'),
 						'type' => 'checkbox',
 						'checked' => $this->options['hide_out_of_stock'],
 						'classes' => ['switch-medium'],
@@ -133,27 +133,27 @@ class ShoppingTab implements TabInterface
                 ],
             ],
 			[
-				'title' => __('Cart', 'jigoshop'),
+				'title' => __('Cart', 'jigoshop-ecommerce'),
 				'id' => 'redirection',
 				'fields' => [
 					[
 						'name' => '[redirect_add_to_cart]',
-						'title' => __('After adding to cart', 'jigoshop'),
+						'title' => __('After adding to cart', 'jigoshop-ecommerce'),
 						'type' => 'select',
 						'value' => $this->options['redirect_add_to_cart'],
 						'options' => $this->addToCartRedirectionOptions,
                     ],
 					[
 						'name' => '[redirect_continue_shopping]',
-						'title' => __('Coming back to shop', 'jigoshop'),
-						'description' => __("This will point users to the page you set for buttons like 'Return to shop' or 'Continue Shopping'.", 'jigoshop'),
+						'title' => __('Coming back to shop', 'jigoshop-ecommerce'),
+						'description' => __("This will point users to the page you set for buttons like 'Return to shop' or 'Continue Shopping'.", 'jigoshop-ecommerce'),
 						'type' => 'select',
 						'value' => $this->options['redirect_continue_shopping'],
 						'options' => $this->backToShopRedirectionOptions,
                     ],
                     [
                         'name' => '[cross_sells_product_limit]',
-                        'title' => __('Number of cross sell products to display', 'jigoshop'),
+                        'title' => __('Number of cross sell products to display', 'jigoshop-ecommerce'),
                         'tip' => __('Enter the number of products to limit the items displayed in Cart page',
                             'jigoshop'),
                         'description' => '',
@@ -163,13 +163,13 @@ class ShoppingTab implements TabInterface
                 ],
             ],
 			[
-				'title' => __('Checkout', 'jigoshop'),
+				'title' => __('Checkout', 'jigoshop-ecommerce'),
 				'id' => 'checkout',
-				'description' => __('This section allows you to modify checkout requirements for being signed in.', 'jigoshop'),
+				'description' => __('This section allows you to modify checkout requirements for being signed in.', 'jigoshop-ecommerce'),
 				'fields' => [
 					[
 						'name' => '[validate_zip]',
-						'title' => __('Validate postcode', 'jigoshop'),
+						'title' => __('Validate postcode', 'jigoshop-ecommerce'),
 						'type' => 'checkbox',
 						'checked' => $this->options['validate_zip'],
 						'classes' => ['switch-medium'],
@@ -177,8 +177,8 @@ class ShoppingTab implements TabInterface
 					[
 						'name' => '[restrict_selling_locations]',
 						'id' => 'restrict_selling_locations',
-						'title' => __('Restrict selling locations?', 'jigoshop'),
-						'description' => __('This option allows you to select what countries you want to sell to.', 'jigoshop'),
+						'title' => __('Restrict selling locations?', 'jigoshop-ecommerce'),
+						'description' => __('This option allows you to select what countries you want to sell to.', 'jigoshop-ecommerce'),
 						'type' => 'checkbox',
 						'checked' => $this->options['restrict_selling_locations'],
 						'classes' => ['switch-medium'],
@@ -186,7 +186,7 @@ class ShoppingTab implements TabInterface
 					[
 						'name' => '[selling_locations]',
 						'id' => 'selling_locations',
-						'title' => __('Selling locations', 'jigoshop'),
+						'title' => __('Selling locations', 'jigoshop-ecommerce'),
 						'type' => 'select',
 						'multiple' => true,
 						'value' => $this->options['selling_locations'],
@@ -196,8 +196,8 @@ class ShoppingTab implements TabInterface
 					[
 						'name' => '[enable_verification_message]',
 						'id' => 'enable_verification_message',
-						'title' => __('Enable verification message', 'jigoshop'),
-						'tip' => __('Enabling this setting will display a message at the bottom of the Checkout asking customers to verify all their informatioin is correctly entered before placing their Order.  This is useful in particular for Countries that have states to ensure the correct shipping state is selected.', 'jigoshop'),
+						'title' => __('Enable verification message', 'jigoshop-ecommerce'),
+						'tip' => __('Enabling this setting will display a message at the bottom of the Checkout asking customers to verify all their informatioin is correctly entered before placing their Order.  This is useful in particular for Countries that have states to ensure the correct shipping state is selected.', 'jigoshop-ecommerce'),
 						'type' => 'checkbox',
 						'checked' => $this->options['enable_verification_message'],
 						'classes' => ['switch-medium'],
@@ -205,7 +205,7 @@ class ShoppingTab implements TabInterface
 					[
 						'name' => '[verification_message]',
 						'id' => 'verification_message',
-						'title' => __('Verification message', 'jigoshop'),
+						'title' => __('Verification message', 'jigoshop-ecommerce'),
 						'description' => __('For example: "Please verify that all your information is correctly entered before placing your Order".'),
 						'type' => 'textarea',
 						'value' => $this->options['verification_message'],
@@ -213,45 +213,45 @@ class ShoppingTab implements TabInterface
                     ],
 					[
 						'name' => '[guest_purchases]',
-						'title' => __('Allow guest purchases', 'jigoshop'),
+						'title' => __('Allow guest purchases', 'jigoshop-ecommerce'),
 						'type' => 'checkbox',
 						'checked' => $this->options['guest_purchases'],
 						'classes' => ['switch-medium'],
                     ],
 					[
 						'name' => '[show_login_form]',
-						'title' => __('Show login form', 'jigoshop'),
-						'description' => __('Add login form on checkout page.', 'jigoshop'),
+						'title' => __('Show login form', 'jigoshop-ecommerce'),
+						'description' => __('Add login form on checkout page.', 'jigoshop-ecommerce'),
 						'type' => 'checkbox',
 						'checked' => $this->options['show_login_form'],
 						'classes' => ['switch-medium'],
                     ],
 					[
 						'name' => '[allow_registration]',
-						'title' => __('Allow registration', 'jigoshop'),
-						'description' => __('Add registration form on checkout page.', 'jigoshop'),
+						'title' => __('Allow registration', 'jigoshop-ecommerce'),
+						'description' => __('Add registration form on checkout page.', 'jigoshop-ecommerce'),
 						'type' => 'checkbox',
 						'checked' => $this->options['allow_registration'],
 						'classes' => ['switch-medium'],
                     ],
 					[
 						'name' => '[login_for_downloads]',
-						'title' => __('Require login for downloads', 'jigoshop'),
-						'description' => __('Forces user to log in before they could download files.', 'jigoshop'),
+						'title' => __('Require login for downloads', 'jigoshop-ecommerce'),
+						'description' => __('Forces user to log in before they could download files.', 'jigoshop-ecommerce'),
 						'type' => 'checkbox',
 						'checked' => $this->options['login_for_downloads'],
 						'classes' => ['switch-medium'],
                     ],
 					[
 						'name' => '[unpaid_orders_number]',
-						'title' => __('Number of unpaid orders in My Account', 'jigoshop'),
+						'title' => __('Number of unpaid orders in My Account', 'jigoshop-ecommerce'),
 						'type' => 'number',
 						'value' => $this->options['unpaid_orders_number'],
                     ],
 					[
 						'name'        => '[force_ssl]',
-						'title'       => __('Force SSL on checkout', 'jigoshop'),
-						'description' => __('Enforces WordPress to use SSL on checkout pages.', 'jigoshop'),
+						'title'       => __('Force SSL on checkout', 'jigoshop-ecommerce'),
+						'description' => __('Enforces WordPress to use SSL on checkout pages.', 'jigoshop-ecommerce'),
 						'type'        => 'checkbox',
 						'checked'     => $this->options['force_ssl'],
 						'classes'     => ['switch-medium'],
@@ -273,15 +273,15 @@ class ShoppingTab implements TabInterface
 	{
 		$settings['catalog_per_page'] = (int)$settings['catalog_per_page'];
 		if ($settings['catalog_per_page'] <= 0) {
-			$this->messages->addWarning(sprintf(__('Invalid products per page value: "%d". Value set to 12.', 'jigoshop'), $settings['catalog_per_page']));
+			$this->messages->addWarning(sprintf(__('Invalid products per page value: "%d". Value set to 12.', 'jigoshop-ecommerce'), $settings['catalog_per_page']));
 			$settings['catalog_per_page'] = 12;
 		}
 		if (!in_array($settings['catalog_order_by'], array_keys($this->catalogOrderBy))) {
-			$this->messages->addWarning(sprintf(__('Invalid products sorting: "%s". Value set to %s.', 'jigoshop'), $settings['catalog_order_by'], $this->catalogOrderBy['post_date']));
+			$this->messages->addWarning(sprintf(__('Invalid products sorting: "%s". Value set to %s.', 'jigoshop-ecommerce'), $settings['catalog_order_by'], $this->catalogOrderBy['post_date']));
 			$settings['catalog_order_by'] = 'post_date';
 		}
 		if (!in_array($settings['catalog_order'], array_keys($this->catalogOrder))) {
-			$this->messages->addWarning(sprintf(__('Invalid products sorting orientation: "%s". Value set to %s.', 'jigoshop'), $settings['catalog_order'], $this->catalogOrder['DESC']));
+			$this->messages->addWarning(sprintf(__('Invalid products sorting orientation: "%s". Value set to %s.', 'jigoshop-ecommerce'), $settings['catalog_order'], $this->catalogOrder['DESC']));
 			$settings['catalog_order'] = 'DESC';
 		}
 
@@ -302,11 +302,11 @@ class ShoppingTab implements TabInterface
 			$settings['selling_locations'] = array_intersect($settings['selling_locations'], array_keys(Country::getAll()));
 		}
 		if (!in_array($settings['redirect_add_to_cart'], array_keys($this->addToCartRedirectionOptions))) {
-			$this->messages->addWarning(sprintf(__('Invalid add to cart redirection: "%s". Value set to %s.', 'jigoshop'), $settings['redirect_add_to_cart'], $this->addToCartRedirectionOptions['same_page']));
+			$this->messages->addWarning(sprintf(__('Invalid add to cart redirection: "%s". Value set to %s.', 'jigoshop-ecommerce'), $settings['redirect_add_to_cart'], $this->addToCartRedirectionOptions['same_page']));
 			$settings['redirect_add_to_cart'] = 'same_page';
 		}
 		if (!in_array($settings['redirect_continue_shopping'], array_keys($this->backToShopRedirectionOptions))) {
-			$this->messages->addWarning(sprintf(__('Invalid continue shopping redirection: "%s". Value set to %s.', 'jigoshop'), $settings['redirect_continue_shopping'], $this->backToShopRedirectionOptions['product_list']));
+			$this->messages->addWarning(sprintf(__('Invalid continue shopping redirection: "%s". Value set to %s.', 'jigoshop-ecommerce'), $settings['redirect_continue_shopping'], $this->backToShopRedirectionOptions['product_list']));
 			$settings['redirect_continue_shopping'] = 'product_list';
 		}
         $settings['cross_sells_product_limit'] = $settings['cross_sells_product_limit'] >= 0 ? $settings['cross_sells_product_limit'] : 0;

@@ -31,7 +31,7 @@ class OutOfStock implements TableInterface
 
     public function getTitle()
     {
-        return __('Out Of Stock', 'jigoshop');
+        return __('Out Of Stock', 'jigoshop-ecommerce');
     }
 
     public function getColumns()
@@ -41,15 +41,15 @@ class OutOfStock implements TableInterface
         }
         $this->columns = [
             'product' => [
-                'name' => __('Product', 'jigoshop'),
+                'name' => __('Product', 'jigoshop-ecommerce'),
                 'size' => 5
             ],
             'parent' => [
-                'name' => __('Parent', 'jigoshop'),
+                'name' => __('Parent', 'jigoshop-ecommerce'),
                 'size' => 5
             ],
             'user_actions' => [
-                'name' => __('Actions', 'jigoshop'),
+                'name' => __('Actions', 'jigoshop-ecommerce'),
                 'size' => 2
             ]
         ];
@@ -78,7 +78,7 @@ class OutOfStock implements TableInterface
 
     public function noItems()
     {
-        return __('No out of stock products found.', 'jigoshop');
+        return __('No out of stock products found.', 'jigoshop-ecommerce');
     }
 
     public function display()
@@ -139,14 +139,14 @@ class OutOfStock implements TableInterface
 
                 $actions['edit'] = [
                     'url' => admin_url('post.php?post=' . $action_id . '&action=edit'),
-                    'name' => __('Edit', 'jigoshop'),
+                    'name' => __('Edit', 'jigoshop-ecommerce'),
                     'action' => "edit"
                 ];
 
                 if (!$this->isProductHidden($action_id)) {
                     $actions['view'] = [
                         'url' => get_permalink($action_id),
-                        'name' => __('View', 'jigoshop'),
+                        'name' => __('View', 'jigoshop-ecommerce'),
                         'action' => "view"
                     ];
                 }

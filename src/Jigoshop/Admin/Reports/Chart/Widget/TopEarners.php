@@ -23,7 +23,7 @@ class TopEarners implements WidgetInterface
 
 	public function getTitle()
 	{
-		return __('Top Earners', 'jigoshop');
+		return __('Top Earners', 'jigoshop-ecommerce');
 	}
 
 	public function getArgs()

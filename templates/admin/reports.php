@@ -9,7 +9,7 @@ use Jigoshop\Helper\Render;
  */
 ?>
 <div class="wrap jigoshop">
-	<h1><?php _e('Jigoshop &raquo; Reports', 'jigoshop'); ?></h1>
+	<h1><?php _e('Jigoshop &raquo; Reports', 'jigoshop-ecommerce'); ?></h1>
 	<?php settings_errors(); ?>
 	<?php Render::output('shop/messages', ['messages' => $messages]); ?>
 	<?php
@@ -48,7 +48,7 @@ use Jigoshop\Helper\Render;
 		</ul>
 	</nav>
 	<noscript>
-		<div class="alert alert-danger" role="alert"><?php _e('<strong>Warning</strong> Reports panel will not work properly without JavaScript.', 'jigoshop'); ?></div>
+		<div class="alert alert-danger" role="alert"><?php _e('<strong>Warning</strong> Reports panel will not work properly without JavaScript.', 'jigoshop-ecommerce'); ?></div>
 	</noscript>
 	<div class="tab-content darker">
 		<div class="tab-pane active">
