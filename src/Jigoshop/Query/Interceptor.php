@@ -34,6 +34,8 @@ class Interceptor
 		$this->addEndpoints();
 		$this->wp->addFilter('request', [$this, 'intercept']);
 		$this->wp->addFilter('wp_nav_menu_objects', [$this, 'menu']);
+		$this->wp->addFilter('posts_join', [$this, 'improveSearchQueryJoin'], 10, 2);
+		$this->wp->addFilter('posts_where', [$this, 'improveSearchQueryWhere'], 10, 2);
 	}
 
 	/**
@@ -184,7 +186,6 @@ class Interceptor
         // Support for search queries
         if (isset($request['s'])) {
             $result['s'] = $request['s'];
-            $this->improveSearchQuery(['sku']);
 		}
 
 		return $this->wp->applyFilters('jigoshop\query\product_list_base', $result, $request);
@@ -261,10 +262,6 @@ class Interceptor
 
     private function getAdminOrderListQuery($request)
     {
-        if(isset($request['s']) && $request['s'] !== '') {
-            $this->improveSearchQuery(['number', 'customer']);
-        }
-
         return $request;
     }
 
@@ -275,42 +272,56 @@ class Interceptor
 
     private function getAdminProductListQuery($request)
     {
-        if(isset($request['s']) && $request['s'] !== '') {
-            $this->improveSearchQuery(['sku']);
-        }
-
         return $request;
     }
 
-    private function improveSearchQuery($fields)
+    /**
+     * @param string $join
+     * @param \WP_Query $query
+     *
+     * @return string
+     */
+    public function improveSearchQueryJoin($join, $query)
     {
+        if (isset($query->query, $query->query['s'], $query->query['post_type']) &&  in_array($query->query['post_type'], [Types::ORDER, Types::PRODUCT])) {
         $wpdb = $this->wp->getWPDB();
+        $fields = $this->getSearchFields($query->query['post_type']);
 
-        $joinClosure = function($join) use ($wpdb, $fields, &$joinClosure) {
-            if ( is_search() ) {
-                for($i = 0; $i < count($fields); $i++) {
-                    $join .=" LEFT JOIN {$wpdb->postmeta} as jse_search_{$i} ON ({$wpdb->posts}.ID = jse_search_{$i}.post_id  AND jse_search_{$i}.meta_key = '{$fields[$i]}')";
-                }
+            for($i = 0; $i < count($fields); $i++) {
+                $join .=" LEFT JOIN {$wpdb->postmeta} as jse_search_{$i} ON ({$wpdb->posts}.ID = jse_search_{$i}.post_id  AND jse_search_{$i}.meta_key = '{$fields[$i]}')";
             }
+        }
 
-            remove_filter('posts_join', $joinClosure);
-            return $join;
-        };
+        return $join;
+    }
 
-        $whereClosure = function($where) use ($wpdb, $fields, &$whereClosure) {
-            if ( is_search() ) {
-                for($i = 0; $i < count($fields); $i++) {
-                    $where = preg_replace(
-                        "/\(\s*{$wpdb->posts}.post_title\s+LIKE\s*(\'[^\']+\')\s*\)/",
-                        "({$wpdb->posts}.post_title LIKE $1) OR (jse_search_{$i}.meta_value LIKE $1)", $where);
-                }
+    /**
+     * @param string $where
+     * @param \WP_Query $query
+     * @return mixed
+     */
+    public function improveSearchQueryWhere($where, $query)
+    {
+        if (isset($query->query, $query->query['s'], $query->query['post_type']) &&  in_array($query->query['post_type'], [Types::ORDER, Types::PRODUCT])) {
+            $wpdb = $this->wp->getWPDB();
+            $fields = $this->getSearchFields($query->query['post_type']);
+
+            for($i = 0; $i < count($fields); $i++) {
+                $where = preg_replace(
+                    "/\(\s*{$wpdb->posts}.post_title\s+LIKE\s*(\'[^\']+\')\s*\)/",
+                    "({$wpdb->posts}.post_title LIKE $1) OR (jse_search_{$i}.meta_value LIKE $1)", $where);
             }
+        }
 
-            remove_filter('posts_where', $whereClosure);
-            return $where;
-        };
+        return $where;
+    }
 
-        add_filter('posts_join', $joinClosure);
-        add_filter('posts_where', $whereClosure);
+    private function getSearchFields($postType)
+    {
+        if($postType == Types::PRODUCT) {
+            return ['sku'];
+        } elseif ($postType == Types::ORDER) {
+            return ['number', 'customer'];
+        }
     }
 }
