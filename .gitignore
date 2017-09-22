@@ -8,5 +8,6 @@ assets/fonts
 compiler.sh
 composer.lock
 dist/
+languages/*
 node_modules
 vendor/
