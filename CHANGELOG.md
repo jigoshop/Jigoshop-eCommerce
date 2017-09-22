@@ -1,5 +1,6 @@
 ## Changelog
 * 2.1.7:
+    * Fix: Now plugin is available to translate.
     * Fix: Do not add thousand separator to paypal amounts.
     * Fix: Improve product and order search mechanism.
 * 2.1.6.1 - 2017.09.21:
