@@ -16,7 +16,7 @@ use Jigoshop\Core\Types;
 			       value="<?= $image['thumbnail_id']; ?>" />
 			<a id="add-image" href="#" class="button"
 			   data-title="<?php esc_attr_e('Choose thumbnail image', 'jigoshop-ecommerce'); ?>"
-			   data-button="<?php esc_attr_e('Set as thumbnail', 'jigoshop'); ?>"><?php _e('Change image', 'jigoshop-ecommerce'); ?></a>
+			   data-button="<?php esc_attr_e('Set as thumbnail', 'jigoshop-ecommerce'); ?>"><?php _e('Change image', 'jigoshop-ecommerce'); ?></a>
 			<a id="remove-image" href="#" class="button"
 			   style="display: none;"><?php _e('Remove image', 'jigoshop-ecommerce'); ?></a>
 		</div>

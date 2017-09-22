@@ -798,7 +798,7 @@ class SystemStatusTab implements TabInterface
 					'title' => $pluginName,
 					'tip' => '',
 					'type' => 'constant',
-					'value' => sprintf(_x('by %s', 'by author', 'jigoshop'), $pluginData['Author']).' &ndash; '.esc_html($pluginData['Version']).$versionString.$networkString,
+					'value' => sprintf(_x('by %s', 'by author', 'jigoshop-ecommerce'), $pluginData['Author']).' &ndash; '.esc_html($pluginData['Version']).$versionString.$networkString,
                 ];
 			}
 		}

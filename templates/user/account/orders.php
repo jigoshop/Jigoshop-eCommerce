@@ -32,7 +32,7 @@ use Jigoshop\Helper\Render;
 				</h4>
 				<dl class="dl-horizontal list-group-item-text">
 					<dt><?php _e('Date', 'jigoshop-ecommerce'); ?></dt>
-					<dd><?= $order->getCreatedAt()->format(_x('d.m.Y, H:i', 'account', 'jigoshop')); ?></dd>
+					<dd><?= $order->getCreatedAt()->format(_x('d.m.Y, H:i', 'account', 'jigoshop-ecommerce')); ?></dd>
 					<dt><?php _e('Status', 'jigoshop-ecommerce'); ?></dt>
 					<dd><?= Status::getName($order->getStatus()); ?></dd>
 					<dt><?php _e('Total', 'jigoshop-ecommerce'); ?></dt>

@@ -337,7 +337,7 @@ class PayPal implements Method2, Processable
 							$value = $item->getMeta($attribute->getAttribute()->getSlug())->getValue();
 						}
 
-						return sprintf(_x('%s: %s', 'product_variation', 'jigoshop'), $attribute->getAttribute()->getLabel(), $attribute->getAttribute()
+						return sprintf(_x('%s: %s', 'product_variation', 'jigoshop-ecommerce'), $attribute->getAttribute()->getLabel(), $attribute->getAttribute()
 							->getOption($value)
 							->getLabel());
 					}, $product->getVariation($item->getMeta('variation_id')->getValue())->getAttributes()))).')';

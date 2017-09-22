@@ -454,14 +454,14 @@ class Checkout implements PageInterface
 
 		if (!$id) {
 			throw new Exception(sprintf(
-				__("<strong>Error</strong> Couldn't register an account for you. Please contact the <a href=\"mailto:%s\">administrator</a>.", 'jigoshop'),
+				__("<strong>Error</strong> Couldn't register an account for you. Please contact the <a href=\"mailto:%s\">administrator</a>.", 'jigoshop-ecommerce'),
 				$this->options->get('general.email')
 			));
 		}
 
  		if (is_wp_error($id)){
  			throw new Exception(sprintf(
-				__("<strong>Error</strong> Account creation failed: %s", 'jigoshop'),
+				__("<strong>Error</strong> Account creation failed: %s", 'jigoshop-ecommerce'),
 				$id->get_error_message($id->get_error_code())
 			));
 		}

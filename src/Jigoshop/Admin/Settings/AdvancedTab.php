@@ -45,7 +45,7 @@ class AdvancedTab implements TabInterface
         $this->messages = $messages;
 
         $this->caches = [
-            'simple' => _x('Simple', 'cache', 'jigoshop'),
+            'simple' => _x('Simple', 'cache', 'jigoshop-ecommerce'),
             'php_fast_cache' => _x('Php Fast Cache - Use this option only if your database is responding slowly. ',
                 'cache', 'jigoshop'),
         ];
@@ -125,7 +125,7 @@ class AdvancedTab implements TabInterface
 //					array(
 //						'name' => '[integration][share_this]',
 //						'title' => __('ShareThis Publisher ID', 'jigoshop-ecommerce'),
-//						'description' => __("Enter your <a href='http://sharethis.com/account/'>ShareThis publisher ID</a> to show ShareThis on product pages.", 'jigoshop'),
+//						'description' => __("Enter your <a href='http://sharethis.com/account/'>ShareThis publisher ID</a> to show ShareThis on product pages.", 'jigoshop-ecommerce'),
 //						'tip' => __('ShareThis is a small social sharing widget for posting links on popular sites such as Twitter and Facebook.', 'jigoshop-ecommerce'),
 //						'type' => 'text',
 //						'value' => $this->settings['integration']['share_this'],

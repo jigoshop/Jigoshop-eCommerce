@@ -327,14 +327,14 @@ class Product
             case Entity\Product\Downloadable::TYPE:
                 /** @var $product Entity\Product\Simple */
                 $stock = $product->getStock()->getStatus() == Entity\Product\Attributes\StockStatus::IN_STOCK ?
-                    _x('In stock', 'product', 'jigoshop') :
-                    '<strong class="attention">' . _x('Out of stock', 'product', 'jigoshop') . '</strong>';
+                    _x('In stock', 'product', 'jigoshop-ecommerce') :
+                    '<strong class="attention">' . _x('Out of stock', 'product', 'jigoshop-ecommerce') . '</strong>';
 
                 if (!self::$options->get('products.show_stock') || !$product->getStock()->getManage()) {
                     break;
                 }
 
-                $stock = sprintf(_x('%s <strong>(%d available)</strong>', 'product', 'jigoshop'), $stock,
+                $stock = sprintf(_x('%s <strong>(%d available)</strong>', 'product', 'jigoshop-ecommerce'), $stock,
                     $product->getStock()->getStock());
                 break;
             default:
@@ -427,7 +427,7 @@ class Product
             '<a href="#" data-id="%d" class="product-featured"><span class="glyphicon %s" aria-hidden="true"></span> <span class="sr-only">%s</span></a>',
             $product->getId(),
             $product->isFeatured() ? 'glyphicon-star' : 'glyphicon-star-empty',
-            $product->isFeatured() ? __('Yes', 'jigoshop') : __('No', 'jigoshop-ecommerce')
+            $product->isFeatured() ? __('Yes', 'jigoshop-ecommerce') : __('No', 'jigoshop-ecommerce')
         );
     }
 

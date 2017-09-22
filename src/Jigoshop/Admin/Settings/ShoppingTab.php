@@ -146,7 +146,7 @@ class ShoppingTab implements TabInterface
 					[
 						'name' => '[redirect_continue_shopping]',
 						'title' => __('Coming back to shop', 'jigoshop-ecommerce'),
-						'description' => __("This will point users to the page you set for buttons like 'Return to shop' or 'Continue Shopping'.", 'jigoshop'),
+						'description' => __("This will point users to the page you set for buttons like 'Return to shop' or 'Continue Shopping'.", 'jigoshop-ecommerce'),
 						'type' => 'select',
 						'value' => $this->options['redirect_continue_shopping'],
 						'options' => $this->backToShopRedirectionOptions,

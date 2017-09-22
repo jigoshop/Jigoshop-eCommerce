@@ -20,7 +20,7 @@ use Jigoshop\Helper\Render;
 <?php Render::output('shop/messages', ['messages' => $messages]); ?>
 <dl class="dl-horizontal">
 	<dt><?php _e('Made on', 'jigoshop-ecommerce'); ?></dt>
-	<dd><?= $order->getCreatedAt()->format(_x('d.m.Y, H:i', 'account', 'jigoshop')); ?></dd>
+	<dd><?= $order->getCreatedAt()->format(_x('d.m.Y, H:i', 'account', 'jigoshop-ecommerce')); ?></dd>
 	<dt><?php _e('Status', 'jigoshop-ecommerce'); ?></dt>
 	<dd><?= Status::getName($order->getStatus()); ?></dd>
 </dl>

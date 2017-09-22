@@ -55,7 +55,7 @@ use Jigoshop\Core\Options;
 		'id' => 'tax_rule_states_'.$rule['id'],
 		'name' => Options::NAME.'[rules][states]['.$rule['id'].']',
 		'classes' => ['tax-rule-states'],
-		'placeholder' => _x('Write the state', 'admin_taxing', 'jigoshop'),
+		'placeholder' => _x('Write the state', 'admin_taxing', 'jigoshop-ecommerce'),
 		'value' => is_array($rule['states']) ? join(',', $rule['states']) : $rule['states'],
     ]); ?>
 	</td>

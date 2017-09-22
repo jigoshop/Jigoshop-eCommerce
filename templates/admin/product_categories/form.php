@@ -84,7 +84,7 @@ use Jigoshop\Helper\Render;
 						<div id="jigoshop-product-categories-thumbnail-controls">
 							<input type="hidden" name="thumbnailId" id="thumbnailId" value="<?php echo $categoryImage['thumbnail_id']; ?>" />
 
-							<a id="jigoshop-product-categories-thumbnail-add-button" href="#" class="button" data-title="<?php echo __('Choose thumbnail image', 'jigoshop'); ?>" data-button="<?php echo __('Set as thumbnail', 'jigoshop'); ?>"><?php echo __('Change image', 'jigoshop-ecommerce'); ?></a>
+							<a id="jigoshop-product-categories-thumbnail-add-button" href="#" class="button" data-title="<?php echo __('Choose thumbnail image', 'jigoshop-ecommerce'); ?>" data-button="<?php echo __('Set as thumbnail', 'jigoshop-ecommerce'); ?>"><?php echo __('Change image', 'jigoshop-ecommerce'); ?></a>
 
 							<a id="jigoshop-product-categories-thumbnail-remove-button" href="#" class="button"><?php echo __('Remove image', 'jigoshop-ecommerce'); ?></a>
 						</div>

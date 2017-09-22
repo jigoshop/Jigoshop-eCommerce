@@ -1,4 +1,4 @@
-<div class="alert alert-warning"><?php _e('Already registered?', 'jigoshop'); ?> <a href="#" id="jigoshop-login"><?php _e('Click here to login.', 'jigoshop-ecommerce'); ?></a></div>
+<div class="alert alert-warning"><?php _e('Already registered?', 'jigoshop-ecommerce'); ?> <a href="#" id="jigoshop-login"><?php _e('Click here to login.', 'jigoshop-ecommerce'); ?></a></div>
 <form role="form" action="<?= wp_login_url(); ?>" method="post" id="jigoshop-login-form" class="not-active">
 	<div class="form-group">
 		<label for="user_login"><?php _e('Username', 'jigoshop-ecommerce'); ?></label>

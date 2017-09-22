@@ -298,7 +298,7 @@ class Dashboard implements PageInterface
 						return [
 							'title' => $wp->getHelpers()->wptexturize($item->get_title()),
 							'link' => $item->get_permalink(),
-							'date' => (abs(time() - $date)) < 86400 ? sprintf(__('%s ago', 'jigoshop'), $wp->humanTimeDiff($date)) : date(__('F jS Y', 'jigoshop-ecommerce'), $date),
+							'date' => (abs(time() - $date)) < 86400 ? sprintf(__('%s ago', 'jigoshop-ecommerce'), $wp->humanTimeDiff($date)) : date(__('F jS Y', 'jigoshop-ecommerce'), $date),
                         ];
 					}, $rssItems);
 				}

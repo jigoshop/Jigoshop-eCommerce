@@ -57,7 +57,7 @@ class Permalinks
 		$permalink = $this->options->get('permalinks.category');
 		?>
 		<input name="jigoshop_product_category_slug" type="text" class="regular-text code" value="<?php echo $permalink; ?>"
-		       placeholder="<?php echo _x('product-category', 'slug', 'jigoshop') ?>"/>
+		       placeholder="<?php echo _x('product-category', 'slug', 'jigoshop-ecommerce') ?>"/>
 		<?php
 	}
 
@@ -69,7 +69,7 @@ class Permalinks
 		$permalink = $this->options->get('permalinks.tag');
 		?>
 		<input name="jigoshop_product_tag_slug" type="text" class="regular-text code" value="<?php echo $permalink; ?>"
-		       placeholder="<?php echo _x('product-tag', 'slug', 'jigoshop') ?>"/>
+		       placeholder="<?php echo _x('product-tag', 'slug', 'jigoshop-ecommerce') ?>"/>
 		<?php
 	}
 
@@ -86,8 +86,8 @@ class Permalinks
 
 		// Get shop page
 		$shopPageId = $this->options->getPageId(FrontendPages::SHOP);
-		$base = urldecode(($shopPageId > 0 && $this->wp->getPost($shopPageId)) ? $this->wp->getPageUri($shopPageId) : _x('shop', 'default-slug', 'jigoshop'));
-		$productBase = _x('product', 'default-slug', 'jigoshop');
+		$base = urldecode(($shopPageId > 0 && $this->wp->getPost($shopPageId)) ? $this->wp->getPageUri($shopPageId) : _x('shop', 'default-slug', 'jigoshop-ecommerce'));
+		$productBase = _x('product', 'default-slug', 'jigoshop-ecommerce');
 
 		$structures = [
 			0 => '',
@@ -133,7 +133,7 @@ class Permalinks
 
 				// This is an invalid base structure and breaks pages
 				if ('%'.Types::PRODUCT_CATEGORY.'%' == $product_permalink) {
-					$product_permalink = _x('product', 'slug', 'jigoshop').'/'.$product_permalink;
+					$product_permalink = _x('product', 'slug', 'jigoshop-ecommerce').'/'.$product_permalink;
 				}
 			} elseif (empty($product_permalink)) {
 				$product_permalink = false;
@@ -143,7 +143,7 @@ class Permalinks
 
 			// Shop base may require verbose page rules if nesting pages
 			$shopPageId = $this->options->getPageId(FrontendPages::SHOP);
-			$shop_permalink = urldecode(($shopPageId > 0 && $this->wp->getPost($shopPageId)) ? $this->wp->getPageUri($shopPageId) : _x('shop', 'default-slug', 'jigoshop'));
+			$shop_permalink = urldecode(($shopPageId > 0 && $this->wp->getPost($shopPageId)) ? $this->wp->getPageUri($shopPageId) : _x('shop', 'default-slug', 'jigoshop-ecommerce'));
 			if ($shopPageId && trim($permalinks['product'], '/') === $shop_permalink) {
 				$permalinks['verbose'] = true;
 			}

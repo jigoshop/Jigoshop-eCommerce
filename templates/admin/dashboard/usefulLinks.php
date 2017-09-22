@@ -1,11 +1,11 @@
 <div class="jigoshop-links-widget">
 	<div class="links">
 		<ul>
-			<li><a href="https://www.jigoshop.com/product-category/extensions/"><?php _e('Extensions', 'jigoshop'); ?></a> &ndash; <?php _e('Extend Jigoshop with extra plugins and modules.', 'jigoshop-ecommerce'); ?></li>
-			<li><a href="https://www.jigoshop.com/product-category/themes/"><?php _e('Themes', 'jigoshop'); ?></a> &ndash; <?php _e('Extend Jigoshop with themes.', 'jigoshop-ecommerce'); ?></li>
-			<li><a href="http://twitter.com/#!/jigoshop"><?php _e('@Jigoshop', 'jigoshop'); ?></a> &ndash; <?php _e('Follow us on Twitter.', 'jigoshop-ecommerce'); ?></li>
-			<li><a href="https://github.com/jigoshop/jigoshop-ecommerce"><?php _e('Jigoshop eCommerce on Github', 'jigoshop'); ?></a> &ndash; <?php _e('Help extend Jigoshop.', 'jigoshop-ecommerce'); ?></li>
-			<li><a href="http://wordpress.org/plugins/jigoshop-ecommerce/"><?php _e('Jigoshop eCommerce on WordPress.org', 'jigoshop'); ?></a> &ndash; <?php _e('Leave us a rating!', 'jigoshop-ecommerce'); ?></li>
+			<li><a href="https://www.jigoshop.com/product-category/extensions/"><?php _e('Extensions', 'jigoshop-ecommerce'); ?></a> &ndash; <?php _e('Extend Jigoshop with extra plugins and modules.', 'jigoshop-ecommerce'); ?></li>
+			<li><a href="https://www.jigoshop.com/product-category/themes/"><?php _e('Themes', 'jigoshop-ecommerce'); ?></a> &ndash; <?php _e('Extend Jigoshop with themes.', 'jigoshop-ecommerce'); ?></li>
+			<li><a href="http://twitter.com/#!/jigoshop"><?php _e('@Jigoshop', 'jigoshop-ecommerce'); ?></a> &ndash; <?php _e('Follow us on Twitter.', 'jigoshop-ecommerce'); ?></li>
+			<li><a href="https://github.com/jigoshop/jigoshop-ecommerce"><?php _e('Jigoshop eCommerce on Github', 'jigoshop-ecommerce'); ?></a> &ndash; <?php _e('Help extend Jigoshop.', 'jigoshop-ecommerce'); ?></li>
+			<li><a href="http://wordpress.org/plugins/jigoshop-ecommerce/"><?php _e('Jigoshop eCommerce on WordPress.org', 'jigoshop-ecommerce'); ?></a> &ndash; <?php _e('Leave us a rating!', 'jigoshop-ecommerce'); ?></li>
 		</ul>
 	</div>
 	<div class="clear"></div>

@@ -63,14 +63,14 @@ class Orders
 	{
 		$columns = [
 			'cb' => '<input type="checkbox" />',
-			'status' => _x('Status', 'order', 'jigoshop'),
-			'title' => _x('Order', 'order', 'jigoshop'),
-			'customer' => _x('Customer', 'order', 'jigoshop'),
-			'billing_address' => _x('Billing address', 'order', 'jigoshop'),
-			'shipping_address' => _x('Shipping address', 'order', 'jigoshop'),
-			'shipping_payment' => _x('Shipping &amp; Payment', 'order', 'jigoshop'),
-			'total' => _x('Total', 'order', 'jigoshop'),
-			'products' => _x('Products', 'order', 'jigoshop'),
+			'status' => _x('Status', 'order', 'jigoshop-ecommerce'),
+			'title' => _x('Order', 'order', 'jigoshop-ecommerce'),
+			'customer' => _x('Customer', 'order', 'jigoshop-ecommerce'),
+			'billing_address' => _x('Billing address', 'order', 'jigoshop-ecommerce'),
+			'shipping_address' => _x('Shipping address', 'order', 'jigoshop-ecommerce'),
+			'shipping_payment' => _x('Shipping &amp; Payment', 'order', 'jigoshop-ecommerce'),
+			'total' => _x('Total', 'order', 'jigoshop-ecommerce'),
+			'products' => _x('Products', 'order', 'jigoshop-ecommerce'),
         ];
 
 		return $columns;
@@ -164,8 +164,8 @@ class Orders
 		unset($actions['inline hide-if-no-js']);
 
 		if ($post->post_type == Types::ORDER) {
-			$fullFormat = _x('Y/m/d g:i:s A', 'time', 'jigoshop');
-			$format = _x('Y/m/d', 'time', 'jigoshop');
+			$fullFormat = _x('Y/m/d g:i:s A', 'time', 'jigoshop-ecommerce');
+			$format = _x('Y/m/d', 'time', 'jigoshop-ecommerce');
 			$fullDate = $this->wp->getHelpers()->mysql2date($fullFormat, $post->post_date);
 			$date = $this->wp->getHelpers()->mysql2date($format, $post->post_date);
 			echo '<time title="'.$fullDate.'">'.$this->wp->applyFilters('post_date_column_time', $date, $post).'</time>';

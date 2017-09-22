@@ -45,7 +45,7 @@ $printDone = true;
         <?php if($currentStep == 'ready') : ?>
             <h1><?= __('Your store is ready now!', 'jigoshop-ecommerce'); ?></h1>
             <p><?= sprintf(__('If you\'re satisfied with this wizard, please consider rating us at %s.<br/>', 'jigoshop-ecommerce'), '<a href="https://wordpress.org/support/plugin/jigoshop-ecommerce/reviews/#new-post" target="_blank">Wordpress.org</a>'); ?>
-                <?= sprintf(__('If you have any thoughts or suggestions, feel free to post them at our %s - your feedback is valuable to us.', 'jigoshop'), '<a href="https://wordpress.org/support/plugin/jigoshop-ecommerce/" target="_blank">' . __('support forum', 'jigoshop-ecommerce') .'</a>'); ?></p>
+                <?= sprintf(__('If you have any thoughts or suggestions, feel free to post them at our %s - your feedback is valuable to us.', 'jigoshop-ecommerce'), '<a href="https://wordpress.org/support/plugin/jigoshop-ecommerce/" target="_blank">' . __('support forum', 'jigoshop-ecommerce') .'</a>'); ?></p>
         <?php endif; ?>
         <p class="jigo-setup-actions step">
             <?php if($nextStep && $currentStep != '') : ?>

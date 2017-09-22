@@ -43,7 +43,7 @@ class TaxesTab implements TabInterface
 			$states = [];
 			foreach (Country::getAllStates() as $country => $stateList) {
 				$states[$country] = [
-					['id' => '', 'text' => _x('All states', 'admin_taxing', 'jigoshop')],
+					['id' => '', 'text' => _x('All states', 'admin_taxing', 'jigoshop-ecommerce')],
                 ];
 				foreach ($stateList as $code => $state) {
 					$states[$country][] = ['id' => $code, 'text' => $state];
@@ -324,7 +324,7 @@ class TaxesTab implements TabInterface
 		unset($settings['rules']);
 
 		//if (!in_array($settings['price_tax'], array('with_tax', 'without_tax'))) {
-		//	$this->messages->addWarning(sprintf(__('Invalid prices option: "%s". Value set to %s.', 'jigoshop'), $settings['price_tax'], __('Without tax', 'jigoshop-ecommerce')));
+		//	$this->messages->addWarning(sprintf(__('Invalid prices option: "%s". Value set to %s.', 'jigoshop-ecommerce'), $settings['price_tax'], __('Without tax', 'jigoshop-ecommerce')));
 		//	$settings['price_tax'] = 'without_tax';
 		//}
 
