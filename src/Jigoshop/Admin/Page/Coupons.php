@@ -92,7 +92,7 @@ class Coupons
 				echo sprintf(
 					'<span class="glyphicon %s" aria-hidden="true"></span> <span class="sr-only">%s</span>',
 					$coupon->isIndividualUse() ? 'glyphicon-ok' : 'glyphicon-remove',
-					$coupon->isIndividualUse() ? __('Yes', 'jigoshop') : __('No', 'jigoshop')
+					$coupon->isIndividualUse() ? __('Yes', 'jigoshop') : __('No', 'jigoshop-ecommerce')
 				);
 				break;
 		}

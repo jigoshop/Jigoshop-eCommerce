@@ -12,11 +12,11 @@ class ProductSearch extends \WP_Widget
 	{
 		$options = [
 			'classname' => self::ID,
-			'description' => __('A search form for your products', 'jigoshop')
+			'description' => __('A search form for your products', 'jigoshop-ecommerce')
         ];
 
 		// Create the widget
-		parent::__construct(self::ID, __('Jigoshop: Product Search', 'jigoshop'), $options);
+		parent::__construct(self::ID, __('Jigoshop: Product Search', 'jigoshop-ecommerce'), $options);
 
 		// Add own hidden fields to filter
 		add_filter('jigoshop\get_fields', [$this, 'hiddenFields']);
@@ -47,7 +47,7 @@ class ProductSearch extends \WP_Widget
 		// Set the widget title
 		$title = apply_filters(
 			'widget_title',
-			($instance['title']) ? $instance['title'] : __('Product Search', 'jigoshop'),
+			($instance['title']) ? $instance['title'] : __('Product Search', 'jigoshop-ecommerce'),
 			$instance,
 			$this->id_base
 		);

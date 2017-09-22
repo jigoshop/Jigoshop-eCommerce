@@ -18,7 +18,7 @@ if ($title) {
 	echo $before_title.$title.$after_title;
 }
 ?>
-	<a class="layered_nav_clear" href="<?= $baseUrl; ?>"><?php _e('Clear', 'jigoshop'); ?></a>
+	<a class="layered_nav_clear" href="<?= $baseUrl; ?>"><?php _e('Clear', 'jigoshop-ecommerce'); ?></a>
 	<ul>
 		<?php foreach ($attribute->getOptions() as $option): /** @var $option \Jigoshop\Entity\Product\Attribute\Option */?>
 			<li<?php in_array($option->getId(), $selected) and print ' class="chosen"'; ?>>

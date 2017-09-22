@@ -28,7 +28,7 @@ class StockTab implements TabInterface
 	 */
 	public function getTitle()
 	{
-		return __('Stock', 'jigoshop');
+		return __('Stock', 'jigoshop-ecommerce');
 	}
 
 	/**
@@ -54,9 +54,9 @@ class StockTab implements TabInterface
 	private function getTypes()
 	{
 		return $this->wp->applyFilters('jigoshop\admin\reports\stock\types', [
-				'low_in_stock' => __('Low in Stock', 'jigoshop'),
-				'out_of_stock' => __('Out of Stock', 'jigoshop'),
-				'most_stocked' => __('Most Stocked', 'jigoshop'),
+				'low_in_stock' => __('Low in Stock', 'jigoshop-ecommerce'),
+				'out_of_stock' => __('Out of Stock', 'jigoshop-ecommerce'),
+				'most_stocked' => __('Most Stocked', 'jigoshop-ecommerce'),
         ]);
 	}
 

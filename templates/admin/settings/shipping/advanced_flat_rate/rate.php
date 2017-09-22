@@ -17,11 +17,11 @@ foreach (\Jigoshop\Helper\Country::getAll() as $countryCode => $countryName) {
         <span class="handle ui-sortable-handle"></span>
         <span class="title"><?php printf('%s - %s', $value['label'], $value['cost']); ?></span>
         <button type="button" class="remove-rate btn btn-default pull-right"
-                title="<?php _e('Remove', 'jigoshop'); ?>">
+                title="<?php _e('Remove', 'jigoshop-ecommerce'); ?>">
             <span class="glyphicon glyphicon-remove"></span>
         </button>
         <button type="button" class="toggle-rate btn btn-default pull-right"
-                title="<?php _e('Expand', 'jigoshop'); ?>">
+                title="<?php _e('Expand', 'jigoshop-ecommerce'); ?>">
             <span class="glyphicon glyphicon-collapse-down"></span>
         </button>
     </h4>
@@ -29,13 +29,13 @@ foreach (\Jigoshop\Helper\Country::getAll() as $countryCode => $countryName) {
         <div class="col-sm-6">
             <?php \Jigoshop\Helper\Forms::text([
                 'name' => sprintf('%s[%s][label]', $name, $id),
-                'label' => __('Label', 'jigoshop'),
+                'label' => __('Label', 'jigoshop-ecommerce'),
                 'value' => $value['label'],
                 'classes' => ['input-label']
             ]); ?>
             <?php \Jigoshop\Helper\Forms::text([
                 'name' => sprintf('%s[%s][cost]', $name, $id),
-                'label' => __('Cost', 'jigoshop'),
+                'label' => __('Cost', 'jigoshop-ecommerce'),
                 'value' => $value['cost'],
                 'classes' => ['input-cost']
             ]); ?>
@@ -43,7 +43,7 @@ foreach (\Jigoshop\Helper\Country::getAll() as $countryCode => $countryName) {
         <div class="col-sm-6">
             <?php \Jigoshop\Helper\Forms::select([
                 'name' => sprintf('%s[%s][continents]', $name, $id),
-                'label' => __('Continents', 'jigoshop'),
+                'label' => __('Continents', 'jigoshop-ecommerce'),
                 'value' => $value['continents'],
                 'multiple' => true,
                 'options' => \Jigoshop\Helper\Country::getContinents(),
@@ -51,7 +51,7 @@ foreach (\Jigoshop\Helper\Country::getAll() as $countryCode => $countryName) {
             ]); ?>
             <?php \Jigoshop\Helper\Forms::select([
                 'name' => sprintf('%s[%s][countries]', $name, $id),
-                'label' => __('Countries', 'jigoshop'),
+                'label' => __('Countries', 'jigoshop-ecommerce'),
                 'value' => $value['countries'],
                 'multiple' => true,
                 'options' => \Jigoshop\Helper\Country::getAll(),
@@ -59,27 +59,27 @@ foreach (\Jigoshop\Helper\Country::getAll() as $countryCode => $countryName) {
             ]); ?>
             <?php \Jigoshop\Helper\Forms::select([
                 'name' => sprintf('%s[%s][states]', $name, $id),
-                'label' => __('States', 'jigoshop'),
+                'label' => __('States', 'jigoshop-ecommerce'),
                 'value' => $value['states'],
                 'multiple' => true,
                 'options' => $availableStates,
                 'classes' => ['states'],
-                'placeholder' => __('All states', 'jigoshop'),
+                'placeholder' => __('All states', 'jigoshop-ecommerce'),
             ]); ?>
             <?php \Jigoshop\Helper\Forms::text([
                 'name' => sprintf('%s[%s][postcode]', $name, $id),
-                'label' => __('Postcode', 'jigoshop'),
+                'label' => __('Postcode', 'jigoshop-ecommerce'),
                 'value' => $value['postcode'],
-                'placeholder' => __('All postcodes', 'jigoshop'),
-                'description' => __('123* means all postcodes which begin with 123', 'jigoshop'),
+                'placeholder' => __('All postcodes', 'jigoshop-ecommerce'),
+                'description' => __('123* means all postcodes which begin with 123', 'jigoshop-ecommerce'),
                 'classes' => ['postcode']
 
             ]); ?>
             <?php \Jigoshop\Helper\Forms::checkbox([
                 'name' => sprintf('%s[%s][rest_of_the_world]', $name, $id),
-                'label' => __('Rest of the world', 'jigoshop'),
+                'label' => __('Rest of the world', 'jigoshop-ecommerce'),
                 'checked' => $value['rest_of_the_world'],
-                'description' => __('', 'jigoshop'),
+                'description' => __('', 'jigoshop-ecommerce'),
                 'classes' => ['rest-of-the-world']
             ]); ?>
             <?php \Jigoshop\Helper\Forms::hidden([

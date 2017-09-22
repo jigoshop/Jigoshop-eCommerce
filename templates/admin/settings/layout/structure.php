@@ -19,7 +19,7 @@ $url = JigoshopInit::getUrl().'/assets/images/';
     <div style="float: left">
         <input class="structure" id="<?= $id.'_sidebar_left'; ?>" type="radio" name="<?= $name; ?>" value="sidebar_left" <?php checked('sidebar_left', $value); ?>>
         <label for="<?= $id.'_sidebar_left'; ?>">
-            <span data-toggle="tooltip" data-placement="top" title="" data-original-title="<?php _e('Sidebar on left', 'jigoshop'); ?>">
+            <span data-toggle="tooltip" data-placement="top" title="" data-original-title="<?php _e('Sidebar on left', 'jigoshop-ecommerce'); ?>">
                 <img src="<?= $url.'sidebar_left.png'; ?>"/>
             </span>
         </label>
@@ -27,7 +27,7 @@ $url = JigoshopInit::getUrl().'/assets/images/';
     <div style="float: left">
         <input class="structure" id="<?= $id.'_only_content'; ?>" type="radio" name="<?= $name; ?>" value="only_content" <?php checked('only_content', $value); ?>>
         <label for="<?= $id.'_only_content'; ?>">
-            <span data-toggle="tooltip" data-placement="top" title="" data-original-title="<?php _e('Only content', 'jigoshop'); ?>">
+            <span data-toggle="tooltip" data-placement="top" title="" data-original-title="<?php _e('Only content', 'jigoshop-ecommerce'); ?>">
                 <img src="<?= $url.'only_content.png'; ?>"/>
             </span>
         </label>
@@ -35,7 +35,7 @@ $url = JigoshopInit::getUrl().'/assets/images/';
     <div style="float: left">
         <input class="structure" id="<?= $id.'_sidebar_right'; ?>" type="radio" name="<?= $name; ?>" value="sidebar_right" <?php checked('sidebar_right', $value); ?>>
         <label for="<?= $id.'_sidebar_right'; ?>">
-            <span data-toggle="tooltip" data-placement="top" title="" data-original-title="<?php _e('Sidebar on right', 'jigoshop'); ?>">
+            <span data-toggle="tooltip" data-placement="top" title="" data-original-title="<?php _e('Sidebar on right', 'jigoshop-ecommerce'); ?>">
                 <img src="<?= $url.'sidebar_right.png'; ?>"/>
             </span>
         </label>

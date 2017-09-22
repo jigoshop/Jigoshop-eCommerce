@@ -80,7 +80,7 @@ class Extensions
         try {
             if ($extension->getPlugin()->getVersion() && $this->isMinimumVersion($extension->getPlugin()->getVersion()) == false) {
                 $errors[] = sprintf(
-                    __('Required Jigoshop version: %s. Current version: %s. Please upgrade.', 'jigoshop'),
+                    __('Required Jigoshop version: %s. Current version: %s. Please upgrade.', 'jigoshop-ecommerce'),
                     $extension->getPlugin()->getVersion(),
                     Core::VERSION);
             }

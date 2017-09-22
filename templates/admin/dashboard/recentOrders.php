@@ -19,7 +19,7 @@ use Jigoshop\Helper;
 			<span class="order-time"><?= get_the_time(_x('M d, Y', 'dashboard', 'jigoshop'), $order->getId()); ?></span>
 			<small>
 				<?= count($order->getItems()); ?> <?= _n('Item', 'Items', count($order->getItems()), 'jigoshop'); ?>,
-				<span	class="total-quantity"><?= __('Total Quantity', 'jigoshop'); ?> <?= $totalItems; ?></span>
+				<span	class="total-quantity"><?= __('Total Quantity', 'jigoshop-ecommerce'); ?> <?= $totalItems; ?></span>
 				<span	class="order-cost"><?= Helper\Product::formatPrice($order->getTotal()); ?></span>
 			</small>
 		</li>

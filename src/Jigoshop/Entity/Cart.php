@@ -31,11 +31,11 @@ class Cart extends Order
 	public function updateQuantity($key, $quantity)
 	{
 		if (!$this->hasItem($key)) {
-			throw new Exception(__('Item does not exists', 'jigoshop'));
+			throw new Exception(__('Item does not exists', 'jigoshop-ecommerce'));
 		}
 
 		if (!is_numeric($quantity)) {
-			throw new Exception(__('Quantity has to be numeric value', 'jigoshop'));
+			throw new Exception(__('Quantity has to be numeric value', 'jigoshop-ecommerce'));
 		}
 
 		if ($quantity <= 0) {
@@ -50,7 +50,7 @@ class Cart extends Order
         }
 
 		if ($product === null || $product->getId() === 0) {
-			throw new Exception(__('Product not found', 'jigoshop'));
+			throw new Exception(__('Product not found', 'jigoshop-ecommerce'));
 		}
 
 		if ($product instanceof Product\Purchasable && !$this->checkStock($product, $quantity)) {
@@ -79,11 +79,11 @@ class Cart extends Order
 		$quantity = $item->getQuantity();
 
 		if ($product === null || $product->getId() === 0) {
-			throw new Exception(__('Product not found', 'jigoshop'));
+			throw new Exception(__('Product not found', 'jigoshop-ecommerce'));
 		}
 
 		if ($quantity <= 0) {
-			throw new Exception(__('Quantity has to be positive number', 'jigoshop'));
+			throw new Exception(__('Quantity has to be positive number', 'jigoshop-ecommerce'));
 		}
 
 		if ($this->hasItem($item->getKey())) {
@@ -104,7 +104,7 @@ class Cart extends Order
 
 		$isValid = apply_filters('jigoshop\cart\validate_new_item', true, $product->getId(), $item->getQuantity());
 		if (!$isValid) {
-			throw new Exception(__('Could not add to cart.', 'jigoshop'));
+			throw new Exception(__('Could not add to cart.', 'jigoshop-ecommerce'));
 		}
 
 		$item = apply_filters('jigoshop\cart\new_item', $item);
@@ -201,7 +201,7 @@ class Cart extends Order
 		}
 
 		if ($coupon->getUsageLimit() > 0 && $coupon->getUsageLimit() <= $coupon->getUsage()) {
-		    throw new Exception(sprintf(__('Cannot apply coupon "%s". The usage limit was reached.', 'jigoshop'), $coupon->getCode()));
+		    throw new Exception(sprintf(__('Cannot apply coupon "%s". The usage limit was reached.', 'jigoshop-ecommerce'), $coupon->getCode()));
         }
 
 		if (is_numeric($coupon->getOrderTotalMinimum()) && $this->getTotal() < $coupon->getOrderTotalMinimum()) {

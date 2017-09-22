@@ -30,19 +30,19 @@ class Permalinks
 	public function init()
 	{
 		// Add a section to the permalinks page
-		$this->wp->addSettingsSection('jigoshop-permalink', __('Product permalink base', 'jigoshop'), [$this, 'settings'], 'permalink');
+		$this->wp->addSettingsSection('jigoshop-permalink', __('Product permalink base', 'jigoshop-ecommerce'), [$this, 'settings'], 'permalink');
 
 		// Add our settings
 		$this->wp->addSettingsField(
 			'jigoshop_product_category_slug',
-			__('Product category base', 'jigoshop'),
+			__('Product category base', 'jigoshop-ecommerce'),
 			[$this, 'product_category_slug_input'],
 			'permalink',
 			'optional'
 		);
 		$this->wp->addSettingsField(
 			'jigoshop_product_tag_slug',
-			__('Product tag base', 'jigoshop'),
+			__('Product tag base', 'jigoshop-ecommerce'),
 			[$this, 'product_tag_slug_input'],
 			'permalink',
 			'optional'
@@ -78,7 +78,7 @@ class Permalinks
 	 */
 	public function settings()
 	{
-		echo '<p>'.__('These settings control the permalinks used for products. These settings only apply when <strong>not using "default" permalinks above</strong>.', 'jigoshop').'</p>';
+		echo '<p>'.__('These settings control the permalinks used for products. These settings only apply when <strong>not using "default" permalinks above</strong>.', 'jigoshop-ecommerce').'</p>';
 
 		$helpers = $this->wp->getHelpers();
 		$permalink = $helpers->trailingslashit($this->options->get('permalinks.product'));

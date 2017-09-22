@@ -103,7 +103,7 @@ class Order implements OrderInterface, \JsonSerializable
 	 */
 	public function getTitle()
 	{
-		return sprintf(__('Order %s', 'jigoshop'), $this->getNumber());
+		return sprintf(__('Order %s', 'jigoshop-ecommerce'), $this->getNumber());
 	}
 
 	/**
@@ -306,7 +306,7 @@ class Order implements OrderInterface, \JsonSerializable
 	{
 		if (!isset($this->items[$key])) {
 			if (WP_DEBUG) {
-				throw new Exception(sprintf(__('No item with ID %d in order %d', 'jigoshop'), $key, $this->id));
+				throw new Exception(sprintf(__('No item with ID %d in order %d', 'jigoshop-ecommerce'), $key, $this->id));
 			}
 
 			Registry::getInstance(JIGOSHOP_LOGGER)->addWarning(sprintf('No item with ID %d in order %d', $key, $this->id));
@@ -644,17 +644,17 @@ class Order implements OrderInterface, \JsonSerializable
 	public function updateQuantity($key, $quantity)
 	{
 		if (!isset($this->items[$key])) {
-			throw new Exception(__('Item does not exists', 'jigoshop'));
+			throw new Exception(__('Item does not exists', 'jigoshop-ecommerce'));
 		}
 
 		if (!is_numeric($quantity)) {
-			throw new Exception(__('Quantity has to be numeric value', 'jigoshop'));
+			throw new Exception(__('Quantity has to be numeric value', 'jigoshop-ecommerce'));
 		}
 
 		$item = $this->removeItem($key);
 
 		if ($item === null) {
-			throw new Exception(__('Item not found.', 'jigoshop'));
+			throw new Exception(__('Item not found.', 'jigoshop-ecommerce'));
 		}
 
 		if ($quantity <= 0) {

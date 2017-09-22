@@ -86,7 +86,7 @@ class Cart implements PageInterface
 		Scripts::localize('jigoshop.shop.cart', 'jigoshop_cart', [
 			'assets' => \JigoshopInit::getUrl().'/assets',
 			'i18n' => [
-				'loading' => __('Loading...', 'jigoshop'),
+				'loading' => __('Loading...', 'jigoshop-ecommerce'),
             ],
         ]);
 
@@ -285,7 +285,7 @@ class Cart implements PageInterface
 		if ($this->options->get('shopping.validate_zip') && !Validation::isPostcode($_POST['value'], $customer->getShippingAddress()->getCountry())) {
 			echo json_encode([
 				'success' => false,
-				'error' => __('Postcode is not valid!', 'jigoshop'),
+				'error' => __('Postcode is not valid!', 'jigoshop-ecommerce'),
             ]);
 			exit;
 		}
@@ -317,7 +317,7 @@ class Cart implements PageInterface
 
 			if ($method instanceof MultipleMethod) {
 				if (!isset($_POST['rate'])) {
-					throw new Exception(__('Method rate is required.', 'jigoshop'));
+					throw new Exception(__('Method rate is required.', 'jigoshop-ecommerce'));
 				}
 
 				$method->setShippingRate($_POST['rate']);
@@ -394,7 +394,7 @@ class Cart implements PageInterface
 			$item = $cart->getItem($_POST['item']);
 
 			if ($item === null) {
-				throw new Exception(__('Item not found.', 'jigoshop'));
+				throw new Exception(__('Item not found.', 'jigoshop-ecommerce'));
 			}
 
             $response = $this->getAjaxCartResponse($cart);
@@ -431,7 +431,7 @@ class Cart implements PageInterface
 		} catch (NotEnoughStockException $e) {
 			$response = [
 				'success' => false,
-				'error' => sprintf(__('Sorry, we do not have enough units in stock. We have got only %s in stock', 'jigoshop'), $e->getStock())
+				'error' => sprintf(__('Sorry, we do not have enough units in stock. We have got only %s in stock', 'jigoshop-ecommerce'), $e->getStock())
             ];
 		} catch (Exception $e) {
 			if ($cart->isEmpty()) {
@@ -460,13 +460,13 @@ class Cart implements PageInterface
 						$order = $this->orderService->find((int)$_REQUEST['id']);
 
 						if ($order->getKey() != $_REQUEST['key']) {
-							$this->messages->addError(__('Invalid order key.', 'jigoshop'));
+							$this->messages->addError(__('Invalid order key.', 'jigoshop-ecommerce'));
 
 							return;
 						}
 
 						if ($order->getStatus() != Status::PENDING) {
-							$this->messages->addError(__('Unable to cancel order.', 'jigoshop'));
+							$this->messages->addError(__('Unable to cancel order.', 'jigoshop-ecommerce'));
 
 							return;
 						}
@@ -475,7 +475,7 @@ class Cart implements PageInterface
 						$cart = $this->cartService->createFromOrder($this->cartService->getCartIdForCurrentUser(), $order);
 						$this->orderService->save($order);
 						$this->cartService->save($cart);
-						$this->messages->addNotice(__('The order has been cancelled', 'jigoshop'));
+						$this->messages->addNotice(__('The order has been cancelled', 'jigoshop-ecommerce'));
 					}
 					break;
 				case 'update-shipping':
@@ -502,13 +502,13 @@ class Cart implements PageInterface
 
 						if ($cart->getShippingMethod() && !$cart->getShippingMethod()->isEnabled()) {
 							$cart->removeShippingMethod();
-							$this->messages->addWarning(__('Previous shipping method is unavailable. Please select different one.', 'jigoshop'));
+							$this->messages->addWarning(__('Previous shipping method is unavailable. Please select different one.', 'jigoshop-ecommerce'));
 						}
 
 						if ($this->options->get('shopping.validate_zip')) {
 							$address = $cart->getCustomer()->getShippingAddress();
 							if ($address->getPostcode() && !Validation::isPostcode($address->getPostcode(), $address->getCountry())) {
-								throw new Exception(__('Postcode is not valid!', 'jigoshop'));
+								throw new Exception(__('Postcode is not valid!', 'jigoshop-ecommerce'));
 							}
 						}
 
@@ -518,7 +518,7 @@ class Cart implements PageInterface
 						$this->messages->preserveMessages();
 						$this->wp->redirectTo($this->options->getPageId(Pages::CHECKOUT));
 					} catch (Exception $e) {
-						$this->messages->addError(sprintf(__('Error occurred while updating cart: %s', 'jigoshop'), $e->getMessage()));
+						$this->messages->addError(sprintf(__('Error occurred while updating cart: %s', 'jigoshop-ecommerce'), $e->getMessage()));
 					}
 					break;
 				case 'update-cart':
@@ -527,9 +527,9 @@ class Cart implements PageInterface
 							$cart = $this->cartService->getCurrent();
 							$this->updateQuantities($cart);
 							$this->cartService->save($cart);
-							$this->messages->addNotice(__('Successfully updated the cart.', 'jigoshop'));
+							$this->messages->addNotice(__('Successfully updated the cart.', 'jigoshop-ecommerce'));
 						} catch (Exception $e) {
-							$this->messages->addError(sprintf(__('Error occurred while updating cart: %s', 'jigoshop'), $e->getMessage()));
+							$this->messages->addError(sprintf(__('Error occurred while updating cart: %s', 'jigoshop-ecommerce'), $e->getMessage()));
 						}
 					}
 			}
@@ -539,7 +539,7 @@ class Cart implements PageInterface
 			$cart = $this->cartService->getCurrent();
 			$cart->removeItem((int)$_GET['item']);
 			$this->cartService->save($cart);
-			$this->messages->addNotice(__('Successfully removed item from cart.', 'jigoshop'), false);
+			$this->messages->addNotice(__('Successfully removed item from cart.', 'jigoshop-ecommerce'), false);
 		}
 	}
 

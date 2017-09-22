@@ -22,7 +22,7 @@ class TopFreebies implements WidgetInterface
 
 	public function getTitle()
 	{
-		return __('Top Freebies', 'jigoshop');
+		return __('Top Freebies', 'jigoshop-ecommerce');
 	}
 
 	public function getArgs()

@@ -273,14 +273,14 @@ class Orders extends PostController implements ApiControllerContract
         }
 
         if (!isset($args['id']) || empty($args['id'])) {
-            throw new Exception(__('Order ID was not provided', 'jigoshop'), 404);
+            throw new Exception(__('Order ID was not provided', 'jigoshop-ecommerce'), 404);
         }
         /** @var OrderService $service */
         $service = $this->app->getContainer()->di->get('jigoshop.service.order');
         $order = $service->find($args['id']);
 
         if (!$order instanceof OrderEntity) {
-            throw new Exception(__('Order not found.', 'jigoshop'), 404);
+            throw new Exception(__('Order not found.', 'jigoshop-ecommerce'), 404);
         }
 
         return $response->withJson([
@@ -414,14 +414,14 @@ class Orders extends PostController implements ApiControllerContract
             $product = $productService->findforPost($post);
 
             if ($product->getId() === null) {
-                throw new Exception(__('Product not found.', 'jigoshop'));
+                throw new Exception(__('Product not found.', 'jigoshop-ecommerce'));
             }
 
             /** @var OrderEntity\Item $item */
             $item = $wp->applyFilters('jigoshop\cart\add', null, $product);
 
             if ($item === null) {
-                throw new Exception(__('Product cannot be added to the order.', 'jigoshop'));
+                throw new Exception(__('Product cannot be added to the order.', 'jigoshop-ecommerce'));
             }
             $key = $productService->generateItemKey($item);
             $item->setKey($key);
@@ -466,7 +466,7 @@ class Orders extends PostController implements ApiControllerContract
 
         $id = $wpdb->insert_id;
         if (!is_int($id) || $id === 0) {
-            throw new Exception(__('Unable to save order. Please try again.', 'jigoshop'));
+            throw new Exception(__('Unable to save order. Please try again.', 'jigoshop-ecommerce'));
         }
         return $id;
     }

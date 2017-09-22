@@ -14,7 +14,7 @@ use Jigoshop\Core\Options;
 		'id' => 'tax_rule_label_'.$rule['id'],
 		'name' => Options::NAME.'[rules][label]['.$rule['id'].']',
 		'value' => $rule['label'],
-		'placeholder' => __('Rule label', 'jigoshop'),
+		'placeholder' => __('Rule label', 'jigoshop-ecommerce'),
     ]); ?>
 	</td>
 	<td>
@@ -23,7 +23,7 @@ use Jigoshop\Core\Options;
 		'name' => Options::NAME.'[rules][class]['.$rule['id'].']',
 		'value' => $rule['class'],
 		'options' => $classes,
-		'placeholder' => __('Tax class', 'jigoshop'),
+		'placeholder' => __('Tax class', 'jigoshop-ecommerce'),
     ]); ?>
 	</td>
 	<td>
@@ -38,7 +38,7 @@ use Jigoshop\Core\Options;
 		'id' => 'tax_rule_rate_'.$rule['id'],
 		'name' => Options::NAME.'[rules][rate]['.$rule['id'].']',
 		'value' => $rule['rate'],
-		'placeholder' => __('Tax rate', 'jigoshop'),
+		'placeholder' => __('Tax rate', 'jigoshop-ecommerce'),
     ]); ?>
 	</td>
 	<td>
@@ -65,11 +65,11 @@ use Jigoshop\Core\Options;
 			'name' => Options::NAME.'[rules][postcodes]['.$rule['id'].']',
 			'classes' => ['tax-rule-postcodes'],
 			'value' => is_array($rule['postcodes']) ? join(',', $rule['postcodes']) : $rule['postcodes'],
-			'placeholder' => __('Postcodes', 'jigoshop'),
+			'placeholder' => __('Postcodes', 'jigoshop-ecommerce'),
         ]); ?>
 	</td>
 	<td class="vert-align">
 		<input type="hidden" name="<?= Options::NAME.'[rules][id]['.$rule['id'].']'; ?>" value="<?= $rule['id']; ?>" />
-		<button type="button" class="remove-tax-rule btn btn-default" title="<?php _e('Remove', 'jigoshop'); ?>"><span class="glyphicon glyphicon-remove"></span></button>
+		<button type="button" class="remove-tax-rule btn btn-default" title="<?php _e('Remove', 'jigoshop-ecommerce'); ?>"><span class="glyphicon glyphicon-remove"></span></button>
 	</td>
 </tr>

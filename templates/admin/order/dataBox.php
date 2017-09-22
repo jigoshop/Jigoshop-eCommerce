@@ -16,27 +16,27 @@ use Jigoshop\Entity\Order\Status;
 	<input name="post_title" type="hidden" value="<?= $order->getTitle(); ?>" />
 
 	<ul class="nav nav-tabs nav-justified" role="tablist">
-		<li class="active"><a href="#order" role="tab" data-toggle="tab"><?php _e('Order', 'jigoshop'); ?></a></li>
-		<li><a href="#billing-address" role="tab" data-toggle="tab"><?php _e('Billing address', 'jigoshop'); ?></a></li>
+		<li class="active"><a href="#order" role="tab" data-toggle="tab"><?php _e('Order', 'jigoshop-ecommerce'); ?></a></li>
+		<li><a href="#billing-address" role="tab" data-toggle="tab"><?php _e('Billing address', 'jigoshop-ecommerce'); ?></a></li>
 		<?php if(!$billingOnly): ?>
-		<li><a href="#shipping-address" role="tab" data-toggle="tab"><?php _e('Shipping address', 'jigoshop'); ?></a></li>
+		<li><a href="#shipping-address" role="tab" data-toggle="tab"><?php _e('Shipping address', 'jigoshop-ecommerce'); ?></a></li>
 		<?php endif; ?>
 		<!-- TODO: Maybe a filter to show/hide insignificant data? -->
 	</ul>
 	<noscript>
-		<div class="alert alert-danger" role="alert"><?php _e('<strong>Warning</strong> Order panel will not work properly without JavaScript.', 'jigoshop'); ?></div>
+		<div class="alert alert-danger" role="alert"><?php _e('<strong>Warning</strong> Order panel will not work properly without JavaScript.', 'jigoshop-ecommerce'); ?></div>
 	</noscript>
 	<div class="tab-content form-horizontal">
 		<div class="tab-pane active" id="order">
 			<?php Forms::select([
 				'name' => 'jigoshop_order[status]',
-				'label' => __('Order status', 'jigoshop'),
+				'label' => __('Order status', 'jigoshop-ecommerce'),
 				'value' => $order->getStatus(),
 				'options' => Status::getStatuses(),
             ]); ?>
 			<?php Forms::select([
 				'name' => 'jigoshop_order[customer]',
-				'label' => __('Customer', 'jigoshop'),
+				'label' => __('Customer', 'jigoshop-ecommerce'),
 				'value' => $order->getCustomer() ? $order->getCustomer()->getId() : '',
 				'options' => $customers,
             ]); ?>

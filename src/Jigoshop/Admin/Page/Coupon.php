@@ -37,7 +37,7 @@ class Coupon
 			'ajaxFindCategory'
         ], 10, 0);
 		$wp->addAction('add_meta_boxes_'.Types::COUPON, function () use ($wp, $that){
-			$wp->addMetaBox('jigoshop-coupon-data', __('Coupon Data', 'jigoshop'), [
+			$wp->addMetaBox('jigoshop-coupon-data', __('Coupon Data', 'jigoshop-ecommerce'), [
 				$that,
 				'box'
             ], Types::COUPON, 'normal', 'default');
@@ -79,7 +79,7 @@ class Coupon
 					$categories[] = $this->wp->getTerm($id, Types\ProductCategory::NAME);
 				}
 			} else {
-				throw new Exception(__('Neither query nor value is provided to find categories.', 'jigoshop'));
+				throw new Exception(__('Neither query nor value is provided to find categories.', 'jigoshop-ecommerce'));
 			}
 
 			$result = [

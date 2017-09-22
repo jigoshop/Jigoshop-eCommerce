@@ -58,7 +58,7 @@ class Categories implements PageInterface {
             $localization = [
             	'thumbnailPlaceholder' => ProductCategory::getImage(0)['image'],
             	'lang' => [
-            		'categoryRemovalConfirmation' => __('Do you really want to remove this category?', 'jigoshop')
+            		'categoryRemovalConfirmation' => __('Do you really want to remove this category?', 'jigoshop-ecommerce')
             	]
             ];
 
@@ -80,7 +80,7 @@ class Categories implements PageInterface {
 	}
 
 	public function getTitle() {
-		return __('Categories', 'jigoshop');
+		return __('Categories', 'jigoshop-ecommerce');
 	}
 
 	public function getParent() {
@@ -128,7 +128,7 @@ class Categories implements PageInterface {
 
 	private function getParentOptions($categories) {
 		$options = [
-			0 => __('None', 'jigoshop')
+			0 => __('None', 'jigoshop-ecommerce')
 		];
 
 		foreach($categories as $category) {
@@ -209,10 +209,10 @@ class Categories implements PageInterface {
             $categoriesRender = $this->renderCategories($categories, $_POST['visibleCategories']);
 
 			if($updatingCategory) {
-				$message = __('Category updated.', 'jigoshop');
+				$message = __('Category updated.', 'jigoshop-ecommerce');
 			}
 			else {	
-				$message = __('Category added successfully.', 'jigoshop');
+				$message = __('Category added successfully.', 'jigoshop-ecommerce');
 			}
 
 			echo json_encode([
@@ -260,7 +260,7 @@ class Categories implements PageInterface {
 
 		$this->categoryService->remove($_POST['categoryId']);
 
-		$this->messages->addNotice(__('Category removed successfully.', 'jigoshop'));
+		$this->messages->addNotice(__('Category removed successfully.', 'jigoshop-ecommerce'));
 
 		echo json_encode([
 			'status' => 1

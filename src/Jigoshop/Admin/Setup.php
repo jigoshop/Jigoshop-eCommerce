@@ -82,7 +82,7 @@ class Setup implements DashboardInterface
     /** @return string Title of page. */
     public function getTitle()
     {
-        return __('Setup', 'jigoshop');
+        return __('Setup', 'jigoshop-ecommerce');
     }
 
     /** @return string Required capability to view the page. */
@@ -100,12 +100,12 @@ class Setup implements DashboardInterface
     public function getSteps()
     {
         return [
-            'page-setup' => __('Page setup', 'jigoshop'),
-            'store-settings' => __('Store Settings', 'jigoshop'),
-            'shipping' => __('Shipping', 'jigoshop'),
-            //'payments' => __('Payments', 'jigoshop'),
-            //'theme' => __('Theme', 'jigoshop'),
-            'ready' => __('Ready!', 'jigoshop'),
+            'page-setup' => __('Page setup', 'jigoshop-ecommerce'),
+            'store-settings' => __('Store Settings', 'jigoshop-ecommerce'),
+            'shipping' => __('Shipping', 'jigoshop-ecommerce'),
+            //'payments' => __('Payments', 'jigoshop-ecommerce'),
+            //'theme' => __('Theme', 'jigoshop-ecommerce'),
+            'ready' => __('Ready!', 'jigoshop-ecommerce'),
         ];
     }
 
@@ -135,65 +135,65 @@ class Setup implements DashboardInterface
     public function getOptions()
     {
         $pages = [];
-        $pages[0] = __('None', 'jigoshop');
+        $pages[0] = __('None', 'jigoshop-ecommerce');
         foreach(get_pages() as $page) {
             $pages[$page->ID] = $page->post_title;
         }
         $settings = Integration::getOptions()->getAll();
 
         $weightUnit = [
-            'kg' => __('Kilograms', 'jigoshop'),
-            'lbs' => __('Pounds', 'jigoshop'),
+            'kg' => __('Kilograms', 'jigoshop-ecommerce'),
+            'lbs' => __('Pounds', 'jigoshop-ecommerce'),
         ];
         $dimensionUnit = [
-            'cm' => __('Centimeters', 'jigoshop'),
-            'in' => __('Inches', 'jigoshop'),
+            'cm' => __('Centimeters', 'jigoshop-ecommerce'),
+            'in' => __('Inches', 'jigoshop-ecommerce'),
         ];
         $stockStatuses = [
-            StockStatus::IN_STOCK => __('In stock', 'jigoshop'),
-            StockStatus::OUT_STOCK => __('Out of stock', 'jigoshop'),
+            StockStatus::IN_STOCK => __('In stock', 'jigoshop-ecommerce'),
+            StockStatus::OUT_STOCK => __('Out of stock', 'jigoshop-ecommerce'),
         ];
 
         $options = [
             'page-setup' => [
                 [
                     'name' => 'jigoshop['.AdvancedTab::SLUG.'][pages][shop]',
-                    'label' => __('Shop page', 'jigoshop'),
+                    'label' => __('Shop page', 'jigoshop-ecommerce'),
                     'type' => 'select',
                     'value' => $settings[AdvancedTab::SLUG]['pages']['shop'],
                     'options' => $pages,
                 ],
                 [
                     'name' => 'jigoshop['.AdvancedTab::SLUG.'][pages][cart]',
-                    'label' => __('Cart page', 'jigoshop'),
+                    'label' => __('Cart page', 'jigoshop-ecommerce'),
                     'type' => 'select',
                     'value' => $settings[AdvancedTab::SLUG]['pages']['cart'],
                     'options' => $pages,
                 ],
                 [
                     'name' => 'jigoshop['.AdvancedTab::SLUG.'][pages][checkout]',
-                    'label' => __('Checkout page', 'jigoshop'),
+                    'label' => __('Checkout page', 'jigoshop-ecommerce'),
                     'type' => 'select',
                     'value' => $settings[AdvancedTab::SLUG]['pages']['checkout'],
                     'options' => $pages,
                 ],
                 [
                     'name' => 'jigoshop['.AdvancedTab::SLUG.'][pages][checkout_thank_you]',
-                    'label' => __('Thank you page', 'jigoshop'),
+                    'label' => __('Thank you page', 'jigoshop-ecommerce'),
                     'type' => 'select',
                     'value' => $settings[AdvancedTab::SLUG]['pages']['checkout_thank_you'],
                     'options' => $pages,
                 ],
                 [
                     'name' => 'jigoshop['.AdvancedTab::SLUG.'][pages][account]',
-                    'label' => __('My account page', 'jigoshop'),
+                    'label' => __('My account page', 'jigoshop-ecommerce'),
                     'type' => 'select',
                     'value' => $settings[AdvancedTab::SLUG]['pages']['account'],
                     'options' => $pages,
                 ],
                 [
                     'name' => 'jigoshop['.AdvancedTab::SLUG.'][pages][terms]',
-                    'label' => __('Terms page', 'jigoshop'),
+                    'label' => __('Terms page', 'jigoshop-ecommerce'),
                     'type' => 'select',
                     'value' => $settings[AdvancedTab::SLUG]['pages']['terms'],
                     'options' => $pages,
@@ -202,15 +202,15 @@ class Setup implements DashboardInterface
             'store-settings' => [
                 [
                     'name' => 'jigoshop['.GeneralTab::SLUG.'][email]',
-                    'label' => __('Administrator e-mail', 'jigoshop'),
+                    'label' => __('Administrator e-mail', 'jigoshop-ecommerce'),
                     'type' => 'text',
-                    'tip' => __('The email address used to send all Jigoshop related emails, such as order confirmations and notices.', 'jigoshop'),
+                    'tip' => __('The email address used to send all Jigoshop related emails, such as order confirmations and notices.', 'jigoshop-ecommerce'),
                     'value' => $settings[GeneralTab::SLUG]['email'],
                 ],
                 [
                     'id' => 'country',
                     'name' => 'jigoshop['.GeneralTab::SLUG.'][country]',
-                    'label' => __('Shop location (country)', 'jigoshop'),
+                    'label' => __('Shop location (country)', 'jigoshop-ecommerce'),
                     'type' => 'select',
                     'value' => $settings[GeneralTab::SLUG]['country'],
                     'options' => Country::getAll(),
@@ -218,14 +218,14 @@ class Setup implements DashboardInterface
                 [
                     'id' => 'state',
                     'name' => 'jigoshop['.GeneralTab::SLUG.'][state]',
-                    'label' => __('Shop location (state)', 'jigoshop'),
+                    'label' => __('Shop location (state)', 'jigoshop-ecommerce'),
                     'type' => 'text',
                     'value' => $settings[GeneralTab::SLUG]['state'],
                 ],
                 [
                     'id' => 'currency',
                     'name' => 'jigoshop['.GeneralTab::SLUG.'][currency]',
-                    'label' => __('Currency', 'jigoshop'),
+                    'label' => __('Currency', 'jigoshop-ecommerce'),
                     'type' => 'select',
                     'value' => $settings[GeneralTab::SLUG]['currency'],
                     'options' => Currency::countries(),
@@ -233,26 +233,26 @@ class Setup implements DashboardInterface
                 [
                     'id' => 'currency_position',
                     'name' => 'jigoshop['.GeneralTab::SLUG.'][currency_position]',
-                    'label' => __('Currency position', 'jigoshop'),
+                    'label' => __('Currency position', 'jigoshop-ecommerce'),
                     'type' => 'text',
                     'value' => $settings[GeneralTab::SLUG]['currency_position'],
                     //'options' => Currency::positions(),
                 ],
                 [
                     'name' => 'jigoshop['.GeneralTab::SLUG.'][currency_decimals]',
-                    'label' => __('Number of decimals', 'jigoshop'),
+                    'label' => __('Number of decimals', 'jigoshop-ecommerce'),
                     'type' => 'text',
                     'value' => $settings[GeneralTab::SLUG]['currency_decimals'],
                 ],
                 [
                     'name' => 'jigoshop['.GeneralTab::SLUG.'][currency_thousand_separator]',
-                    'label' => __('Thousands separator', 'jigoshop'),
+                    'label' => __('Thousands separator', 'jigoshop-ecommerce'),
                     'type' => 'text',
                     'value' => $settings[GeneralTab::SLUG]['currency_thousand_separator'],
                 ],
                 [
                     'name' => 'jigoshop['.GeneralTab::SLUG.'][currency_decimal_separator]',
-                    'label' => __('Decimal separator', 'jigoshop'),
+                    'label' => __('Decimal separator', 'jigoshop-ecommerce'),
                     'type' => 'text',
                     'value' => $settings[GeneralTab::SLUG]['currency_decimal_separator'],
                 ],
@@ -260,22 +260,22 @@ class Setup implements DashboardInterface
             'shipping' => [
                 [
                     'name' => 'jigoshop['.ProductsTab::SLUG.'][weight_unit]',
-                    'label' => __('Weight units', 'jigoshop'),
+                    'label' => __('Weight units', 'jigoshop-ecommerce'),
                     'type' => 'select',
                     'value' => $settings[ProductsTab::SLUG]['weight_unit'],
                     'options' => $weightUnit,
                 ],
                 [
                     'name' => 'jigoshop['.ProductsTab::SLUG.'][dimensions_unit]',
-                    'label' => __('Dimensions unit', 'jigoshop'),
+                    'label' => __('Dimensions unit', 'jigoshop-ecommerce'),
                     'type' => 'select',
                     'value' => $settings[ProductsTab::SLUG]['dimensions_unit'],
                     'options' => $dimensionUnit,
                 ],
                 [
                     'name' => 'jigoshop['.ProductsTab::SLUG.'][stock_status]',
-                    'label' => __('Stock status', 'jigoshop'),
-                    'description' => __('This option allows you to change default stock status for new products.', 'jigoshop'),
+                    'label' => __('Stock status', 'jigoshop-ecommerce'),
+                    'description' => __('This option allows you to change default stock status for new products.', 'jigoshop-ecommerce'),
                     'type' => 'select',
                     'value' => $settings[ProductsTab::SLUG]['stock_status'],
                     'options' => $stockStatuses,

@@ -105,7 +105,7 @@ class Item implements Product\Purchasable, Product\Taxable, \Serializable, \Json
 	{
 		if ($quantity < 0) {
 			if (WP_DEBUG) {
-				throw new Exception(__('Item quantity cannot be below 0', 'jigoshop'));
+				throw new Exception(__('Item quantity cannot be below 0', 'jigoshop-ecommerce'));
 			}
 
 			Registry::getInstance(JIGOSHOP_LOGGER)->addCritical('Item quantity cannot be below 0');
@@ -354,7 +354,7 @@ class Item implements Product\Purchasable, Product\Taxable, \Serializable, \Json
 	 */
 	public function getStock()
 	{
-		throw new Exception(__('Items do not have stock.', 'jigoshop'));
+		throw new Exception(__('Items do not have stock.', 'jigoshop-ecommerce'));
 	}
 
     /**

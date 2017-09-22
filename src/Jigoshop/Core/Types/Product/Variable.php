@@ -64,7 +64,7 @@ class Variable implements Type
 	 */
 	public function getName()
 	{
-		return __('Variable', 'jigoshop');
+		return __('Variable', 'jigoshop-ecommerce');
 	}
 
 	/**
@@ -290,7 +290,7 @@ class Variable implements Type
 				'name' => 'product[attributes]['.$attribute->getId().'][is_variable]',
 				'id' => 'product_attributes_'.$attribute->getId().'_variable',
 				'classes' => ['attribute-options'],
-				'label' => __('Is for variations?', 'jigoshop'),
+				'label' => __('Is for variations?', 'jigoshop-ecommerce'),
 				'checked' => $attribute->isVariable(),
 				'size' => 6,
 				// TODO: Visibility based on current product - if not variable should be hidden
@@ -307,7 +307,7 @@ class Variable implements Type
 	 */
 	public function addProductMenu($menu)
 	{
-		$menu['variations'] = ['label' => __('Variations', 'jigoshop'), 'visible' => [Product\Variable::TYPE]];
+		$menu['variations'] = ['label' => __('Variations', 'jigoshop-ecommerce'), 'visible' => [Product\Variable::TYPE]];
 		$menu['advanced']['visible'][] = Product\Variable::TYPE;
 
 		return $menu;
@@ -335,54 +335,54 @@ class Variable implements Type
 		}
 
 		$bulkActions = $this->wp->applyFilters('jigoshop\core\types\variable\bulk_actions', [
-            1 => __('Add Variation', 'jigoshop'),
-            2 => __('Create variations from all attributes', 'jigoshop'),
-            3 => __('Remove all variations', 'jigoshop'),
+            1 => __('Add Variation', 'jigoshop-ecommerce'),
+            2 => __('Create variations from all attributes', 'jigoshop-ecommerce'),
+            3 => __('Remove all variations', 'jigoshop-ecommerce'),
             'type' => [
-                'label' => __('Type', 'jigoshop'),
+                'label' => __('Type', 'jigoshop-ecommerce'),
                 'items' => [],
             ],
             'pricing' => [
-                'label' => __('Pricing', 'jigoshop'),
+                'label' => __('Pricing', 'jigoshop-ecommerce'),
                 'items' => [
-                    5 => __('Set regular price', 'jigoshop'),
-                    6 => __('Increase regular price', 'jigoshop'),
-                    7 => __('Decrease regular price', 'jigoshop'),
-                    8 => __('Set sale prices', 'jigoshop'),
-                    9 => __('Increase sale prices', 'jigoshop'),
-                    10 => __('Decrease sale prices', 'jigoshop'),
-                    11 => __('Set scheduled sale dates', 'jigoshop'),
+                    5 => __('Set regular price', 'jigoshop-ecommerce'),
+                    6 => __('Increase regular price', 'jigoshop-ecommerce'),
+                    7 => __('Decrease regular price', 'jigoshop-ecommerce'),
+                    8 => __('Set sale prices', 'jigoshop-ecommerce'),
+                    9 => __('Increase sale prices', 'jigoshop-ecommerce'),
+                    10 => __('Decrease sale prices', 'jigoshop-ecommerce'),
+                    11 => __('Set scheduled sale dates', 'jigoshop-ecommerce'),
                 ],
             ],
             'inventory' => [
-                'label' => __('Inventory', 'jigoshop'),
+                'label' => __('Inventory', 'jigoshop-ecommerce'),
                 'items' => [
-                    12 => __('Toggle manage stock', 'jigoshop'),
-                    13 => __('Set stock', 'jigoshop'),
-                    14 => __('Increase stock', 'jigoshop'),
-                    15 => __('Decrease stock', 'jigoshop'),
+                    12 => __('Toggle manage stock', 'jigoshop-ecommerce'),
+                    13 => __('Set stock', 'jigoshop-ecommerce'),
+                    14 => __('Increase stock', 'jigoshop-ecommerce'),
+                    15 => __('Decrease stock', 'jigoshop-ecommerce'),
                 ],
             ],
             'dimensions' => [
-                'label' => __('Dimensions', 'jigoshop'),
+                'label' => __('Dimensions', 'jigoshop-ecommerce'),
                 'items' => [
-                    16 => __('Set length', 'jigoshop'),
-                    17 => __('Set width', 'jigoshop'),
-                    18 => __('Set height', 'jigoshop'),
-                    19 => __('Set weight', 'jigoshop'),
+                    16 => __('Set length', 'jigoshop-ecommerce'),
+                    17 => __('Set width', 'jigoshop-ecommerce'),
+                    18 => __('Set height', 'jigoshop-ecommerce'),
+                    19 => __('Set weight', 'jigoshop-ecommerce'),
                 ],
             ],
             'downloads' => [
-                'label' => __('Downloads', 'jigoshop'),
+                'label' => __('Downloads', 'jigoshop-ecommerce'),
                 'items' => [
-                    20 => __('Set download limit', 'jigoshop'),
+                    20 => __('Set download limit', 'jigoshop-ecommerce'),
                 ]
             ],
         ]);
 
 		foreach ($this->allowedSubtypes as $type) {
             /** @var $type Type */
-            $bulkActions['type']['items']['4-'.$type->getId()] = sprintf(__('Set "%s"', 'jigoshop'), $type->getName());
+            $bulkActions['type']['items']['4-'.$type->getId()] = sprintf(__('Set "%s"', 'jigoshop-ecommerce'), $type->getName());
         }
 
 		$tabs['variations'] = [
@@ -412,22 +412,22 @@ class Variable implements Type
         ]);
 		Scripts::localize('jigoshop.admin.product.variable', 'jigoshop_admin_product_variable', [
 			'i18n' => [
-				'confirm_remove' => __('Are you sure?', 'jigoshop'),
-				'variation_removed' => __('Variation successfully removed.', 'jigoshop'),
-				'saved' => __('Variation saved.', 'jigoshop'),
-                'create_all_variations_confirmation' => __('Are you sure you want to create all variations? It will take some time.', 'jigoshop'),
-                'remove_all_variations' => __('Are you sure you want to remove all variations? This cannot be undone.', 'jigoshop'),
-                'set_field' => __('Enter a value', 'jigoshop'),
-                'modify_field' => __('Enter a value (fixed or %)', 'jigoshop'),
-                'sale_start_date' => __('Sale start date (MM/DD/YYYY format or leave blank)', 'jigoshop'),
-                'sale_end_date' => __('Sale end date (MM/DD/YYYY format or leave blank)', 'jigoshop'),
+				'confirm_remove' => __('Are you sure?', 'jigoshop-ecommerce'),
+				'variation_removed' => __('Variation successfully removed.', 'jigoshop-ecommerce'),
+				'saved' => __('Variation saved.', 'jigoshop-ecommerce'),
+                'create_all_variations_confirmation' => __('Are you sure you want to create all variations? It will take some time.', 'jigoshop-ecommerce'),
+                'remove_all_variations' => __('Are you sure you want to remove all variations? This cannot be undone.', 'jigoshop-ecommerce'),
+                'set_field' => __('Enter a value', 'jigoshop-ecommerce'),
+                'modify_field' => __('Enter a value (fixed or %)', 'jigoshop-ecommerce'),
+                'sale_start_date' => __('Sale start date (MM/DD/YYYY format or leave blank)', 'jigoshop-ecommerce'),
+                'sale_end_date' => __('Sale end date (MM/DD/YYYY format or leave blank)', 'jigoshop-ecommerce'),
                 'buttons' => [
-                    'done' => __('Done!', 'jigoshop'),
-                    'cancel' => __('Cancel', 'jigoshop'),
-                    'next' => __('Next', 'jigoshop'),
-                    'back' => __('Back', 'jigoshop'),
-                    'yes' => __('Yes', 'jigoshop'),
-                    'no' => __('No', 'jigoshop'),
+                    'done' => __('Done!', 'jigoshop-ecommerce'),
+                    'cancel' => __('Cancel', 'jigoshop-ecommerce'),
+                    'next' => __('Next', 'jigoshop-ecommerce'),
+                    'back' => __('Back', 'jigoshop-ecommerce'),
+                    'yes' => __('Yes', 'jigoshop-ecommerce'),
+                    'no' => __('No', 'jigoshop-ecommerce'),
                 ],
             ],
         ]);
@@ -479,20 +479,20 @@ class Variable implements Type
 	{
 		try {
 			if (!isset($_POST['product_id']) || empty($_POST['product_id'])) {
-				throw new Exception(__('Product was not specified.', 'jigoshop'));
+				throw new Exception(__('Product was not specified.', 'jigoshop-ecommerce'));
 			}
 			if (!is_numeric($_POST['product_id'])) {
-				throw new Exception(__('Invalid product ID.', 'jigoshop'));
+				throw new Exception(__('Invalid product ID.', 'jigoshop-ecommerce'));
 			}
 
 			$product = $this->productService->find((int)$_POST['product_id']);
 
 			if (!$product->getId()) {
-				throw new Exception(__('Product does not exists.', 'jigoshop'));
+				throw new Exception(__('Product does not exists.', 'jigoshop-ecommerce'));
 			}
 
 			if (!($product instanceof Product\Variable)) {
-				throw new Exception(__('Product is not variable - unable to add variation.', 'jigoshop'));
+				throw new Exception(__('Product is not variable - unable to add variation.', 'jigoshop-ecommerce'));
 			}
 
 			$variation = $this->factory->createVariation($product);
@@ -535,34 +535,34 @@ class Variable implements Type
 	{
 		try {
 			if (!isset($_POST['product_id']) || empty($_POST['product_id'])) {
-				throw new Exception(__('Product was not specified.', 'jigoshop'));
+				throw new Exception(__('Product was not specified.', 'jigoshop-ecommerce'));
 			}
 			if (!is_numeric($_POST['product_id'])) {
-				throw new Exception(__('Invalid product ID.', 'jigoshop'));
+				throw new Exception(__('Invalid product ID.', 'jigoshop-ecommerce'));
 			}
 			if (!isset($_POST['variation_id']) || empty($_POST['variation_id'])) {
-				throw new Exception(__('Variation was not specified.', 'jigoshop'));
+				throw new Exception(__('Variation was not specified.', 'jigoshop-ecommerce'));
 			}
 			if (!is_numeric($_POST['variation_id'])) {
-				throw new Exception(__('Invalid variation ID.', 'jigoshop'));
+				throw new Exception(__('Invalid variation ID.', 'jigoshop-ecommerce'));
 			}
 
 			if (!isset($_POST['image_id']) || !is_numeric($_POST['image_id'])) {
-				throw new Exception(__('Image is not not specified.', 'jigoshop'));
+				throw new Exception(__('Image is not not specified.', 'jigoshop-ecommerce'));
 			}
 
 			$product = $this->productService->find((int)$_POST['product_id']);
 
 			if (!$product->getId()) {
-				throw new Exception(__('Product does not exists.', 'jigoshop'));
+				throw new Exception(__('Product does not exists.', 'jigoshop-ecommerce'));
 			}
 
 			if (!($product instanceof Product\Variable)) {
-				throw new Exception(__('Product is not variable - unable to add variation.', 'jigoshop'));
+				throw new Exception(__('Product is not variable - unable to add variation.', 'jigoshop-ecommerce'));
 			}
 
 			if (!$product->hasVariation((int)$_POST['variation_id'])) {
-				throw new Exception(__('Variation does not exists.', 'jigoshop'));
+				throw new Exception(__('Variation does not exists.', 'jigoshop-ecommerce'));
 			}
 
 			$this->wp->setPostThumbnail($_POST['variation_id'], $_POST['image_id']);
@@ -591,15 +591,15 @@ class Variable implements Type
     {
         try {
             if (!isset($_POST['product_id']) || empty($_POST['product_id'])) {
-                throw new Exception(__('Product was not specified.', 'jigoshop'));
+                throw new Exception(__('Product was not specified.', 'jigoshop-ecommerce'));
             }
             if (!is_numeric($_POST['product_id'])) {
-                throw new Exception(__('Invalid product ID.', 'jigoshop'));
+                throw new Exception(__('Invalid product ID.', 'jigoshop-ecommerce'));
             }
 
             $product = $this->productService->find($_POST['product_id']);
             if(!$product instanceof Product\Variable) {
-                throw new Exception(__('Invalid product type.', 'jigoshop'));
+                throw new Exception(__('Invalid product type.', 'jigoshop-ecommerce'));
             }
 
             $attributes = $product->getVariableAttributes();
@@ -715,34 +715,34 @@ class Variable implements Type
 	{
 		try {
 			if (!isset($_POST['product_id']) || empty($_POST['product_id'])) {
-				throw new Exception(__('Product was not specified.', 'jigoshop'));
+				throw new Exception(__('Product was not specified.', 'jigoshop-ecommerce'));
 			}
 			if (!is_numeric($_POST['product_id'])) {
-				throw new Exception(__('Invalid product ID.', 'jigoshop'));
+				throw new Exception(__('Invalid product ID.', 'jigoshop-ecommerce'));
 			}
 			if (!isset($_POST['variation_id']) || empty($_POST['variation_id'])) {
-				throw new Exception(__('Variation was not specified.', 'jigoshop'));
+				throw new Exception(__('Variation was not specified.', 'jigoshop-ecommerce'));
 			}
 			if (!is_numeric($_POST['variation_id'])) {
-				throw new Exception(__('Invalid variation ID.', 'jigoshop'));
+				throw new Exception(__('Invalid variation ID.', 'jigoshop-ecommerce'));
 			}
 
 			if (!isset($_POST['attributes']) || !is_array($_POST['attributes'])) {
-				throw new Exception(__('Attribute values are not specified.', 'jigoshop'));
+				throw new Exception(__('Attribute values are not specified.', 'jigoshop-ecommerce'));
 			}
 
 			$product = $this->productService->find((int)$_POST['product_id']);
 
 			if (!$product->getId()) {
-				throw new Exception(__('Product does not exists.', 'jigoshop'));
+				throw new Exception(__('Product does not exists.', 'jigoshop-ecommerce'));
 			}
 
 			if (!($product instanceof Product\Variable)) {
-				throw new Exception(__('Product is not variable - unable to add variation.', 'jigoshop'));
+				throw new Exception(__('Product is not variable - unable to add variation.', 'jigoshop-ecommerce'));
 			}
 
 			if (!$product->hasVariation((int)$_POST['variation_id'])) {
-				throw new Exception(__('Variation does not exists.', 'jigoshop'));
+				throw new Exception(__('Variation does not exists.', 'jigoshop-ecommerce'));
 			}
 
 			$variation = $product->removeVariation((int)$_POST['variation_id']);
@@ -805,26 +805,26 @@ class Variable implements Type
 	{
 		try {
 			if (!isset($_POST['product_id']) || empty($_POST['product_id'])) {
-				throw new Exception(__('Product was not specified.', 'jigoshop'));
+				throw new Exception(__('Product was not specified.', 'jigoshop-ecommerce'));
 			}
 			if (!is_numeric($_POST['product_id'])) {
-				throw new Exception(__('Invalid product ID.', 'jigoshop'));
+				throw new Exception(__('Invalid product ID.', 'jigoshop-ecommerce'));
 			}
 			if (!isset($_POST['variation_id']) || empty($_POST['variation_id'])) {
-				throw new Exception(__('Variation was not specified.', 'jigoshop'));
+				throw new Exception(__('Variation was not specified.', 'jigoshop-ecommerce'));
 			}
 			if (!is_numeric($_POST['variation_id'])) {
-				throw new Exception(__('Invalid variation ID.', 'jigoshop'));
+				throw new Exception(__('Invalid variation ID.', 'jigoshop-ecommerce'));
 			}
 
 			$product = $this->productService->find((int)$_POST['product_id']);
 
 			if (!$product->getId()) {
-				throw new Exception(__('Product does not exists.', 'jigoshop'));
+				throw new Exception(__('Product does not exists.', 'jigoshop-ecommerce'));
 			}
 
 			if (!($product instanceof Product\Variable)) {
-				throw new Exception(__('Product is not variable - unable to add variation.', 'jigoshop'));
+				throw new Exception(__('Product is not variable - unable to add variation.', 'jigoshop-ecommerce'));
 			}
 
 			$variation = $product->removeVariation((int)$_POST['variation_id']);
@@ -847,17 +847,17 @@ class Variable implements Type
     {
         try {
             if (!isset($_POST['product_id']) || empty($_POST['product_id'])) {
-                throw new Exception(__('Product was not specified.', 'jigoshop'));
+                throw new Exception(__('Product was not specified.', 'jigoshop-ecommerce'));
             }
             if (!is_numeric($_POST['product_id'])) {
-                throw new Exception(__('Invalid product ID.', 'jigoshop'));
+                throw new Exception(__('Invalid product ID.', 'jigoshop-ecommerce'));
             }
             $product = $this->productService->find((int)$_POST['product_id']);
             if (!$product->getId()) {
-                throw new Exception(__('Product does not exists.', 'jigoshop'));
+                throw new Exception(__('Product does not exists.', 'jigoshop-ecommerce'));
             }
             if (!($product instanceof Product\Variable)) {
-                throw new Exception(__('Product is not variable - unable to add variation.', 'jigoshop'));
+                throw new Exception(__('Product is not variable - unable to add variation.', 'jigoshop-ecommerce'));
             }
 
             foreach ($product->getVariations() as $variation) {

@@ -146,16 +146,16 @@ class Products
 				echo Formatter::date($timestamp);
 
 				if ($product->isVisible()) {
-					echo '<br /><strong>'.__('Visible in', 'jigoshop').'</strong>: ';
+					echo '<br /><strong>'.__('Visible in', 'jigoshop-ecommerce').'</strong>: ';
 					switch ($product->getVisibility()) {
 						case ProductEntity::VISIBILITY_SEARCH:
-							echo __('Search only', 'jigoshop');
+							echo __('Search only', 'jigoshop-ecommerce');
 							break;
 						case ProductEntity::VISIBILITY_CATALOG:
-							echo __('Catalog only', 'jigoshop');
+							echo __('Catalog only', 'jigoshop-ecommerce');
 							break;
 						case ProductEntity::VISIBILITY_PUBLIC:
-							echo __('Catalog and search', 'jigoshop');
+							echo __('Catalog and search', 'jigoshop-ecommerce');
 							break;
 					}
 				}

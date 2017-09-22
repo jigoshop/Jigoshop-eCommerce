@@ -81,12 +81,12 @@ class DiscountSummary extends Chart
             }, (array)$reportData));
 
             $legend[] = [
-                'title' => sprintf(__('%s %s discounts in total', 'jigoshop'), '<strong>'.Product::formatPrice($totalAmount).'</strong>', Type::getName($type)),
+                'title' => sprintf(__('%s %s discounts in total', 'jigoshop-ecommerce'), '<strong>'.Product::formatPrice($totalAmount).'</strong>', Type::getName($type)),
                 'color' => $this->chartColours[$index + sizeof($this->reportData->discounts)],
                 'highlight_series' => $index + sizeof($this->reportData->discounts)
             ];
             $legend[] = [
-                'title' => sprintf(__('%s %s discounts used in total', 'jigoshop'), '<strong>'.$totalCount.'</strong>', Type::getName($type)),
+                'title' => sprintf(__('%s %s discounts used in total', 'jigoshop-ecommerce'), '<strong>'.$totalCount.'</strong>', Type::getName($type)),
                 'color' => $this->chartColours[$index],
                 'highlight_series' => $index
             ];
@@ -103,13 +103,13 @@ class DiscountSummary extends Chart
 	{
 		/** @noinspection PhpUnusedLocalVariableInspection */
 		$ranges = [
-			'all' => __('All Time', 'jigoshop'),
-			'year' => __('Year', 'jigoshop'),
-			'last_month' => __('Last Month', 'jigoshop'),
-			'month' => __('This Month', 'jigoshop'),
-			'30day' => __('Last 30 Days', 'jigoshop'),
-			'7day' => __('Last 7 Days', 'jigoshop'),
-			'today' => __('Today', 'jigoshop'),
+			'all' => __('All Time', 'jigoshop-ecommerce'),
+			'year' => __('Year', 'jigoshop-ecommerce'),
+			'last_month' => __('Last Month', 'jigoshop-ecommerce'),
+			'month' => __('This Month', 'jigoshop-ecommerce'),
+			'30day' => __('Last 30 Days', 'jigoshop-ecommerce'),
+			'7day' => __('Last 7 Days', 'jigoshop-ecommerce'),
+			'today' => __('Today', 'jigoshop-ecommerce'),
         ];
 
 		Render::output('admin/reports/chart', [
@@ -331,7 +331,7 @@ class DiscountSummary extends Chart
 	{
 		return [
 			'download' => 'report-'.esc_attr($this->currentRange).'-'.date_i18n('Y-m-d', current_time('timestamp')).'.csv',
-			'xaxes' => __('Date', 'jigoshop'),
+			'xaxes' => __('Date', 'jigoshop-ecommerce'),
 			'groupby' => $this->chartGroupBy,
         ];
 	}
@@ -352,7 +352,7 @@ class DiscountSummary extends Chart
 		    $dataCounts = $this->prepareChartData($reportData, 'post_date', 'count', $this->chartInterval, $this->range['start'], $this->chartGroupBy);
 
             $data['series'][$index + sizeof($this->reportData->discounts)] = $this->arrayToObject([
-                'label' => sprintf(__('%s discounts in total', 'jigoshop'), Type::getName($type)),
+                'label' => sprintf(__('%s discounts in total', 'jigoshop-ecommerce'), Type::getName($type)),
                 'data' => array_values($dataAmounts),
                 'yaxis' => 2,
                 'color' => $this->chartColours[$index + sizeof($this->reportData->discounts)],
@@ -377,7 +377,7 @@ class DiscountSummary extends Chart
                 $dataCounts[$i][0] += $offset;
             }
             $data['series'][$index] = $this->arrayToObject([
-                'label' => sprintf(__('%s discounts used in total', 'jigoshop'), Type::getName($type)),
+                'label' => sprintf(__('%s discounts used in total', 'jigoshop-ecommerce'), Type::getName($type)),
                 'data' => $dataCounts,
                 'color' => $this->chartColours[$index],
                 'bars' => $this->arrayToObject([
@@ -397,7 +397,7 @@ class DiscountSummary extends Chart
 		if(empty($data['series'])) {
             $dummy = $this->prepareChartData([], '', '', $this->chartInterval, $this->range['start'], $this->chartGroupBy);
             $data['series'][] = $this->arrayToObject([
-                'label' => __('No discounts for selected period.', 'jigoshop'),
+                'label' => __('No discounts for selected period.', 'jigoshop-ecommerce'),
                 'data' => array_values($dummy),
                 'yaxis' => 2,
                 'color' => $this->chartColours[0],

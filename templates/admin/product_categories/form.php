@@ -14,8 +14,8 @@ use Jigoshop\Helper\Render;
 	Forms::text([
 		'id' => 'name',
 		'name' => 'name',
-		'label' => __('Name', 'jigoshop'),
-		'description' => __('The name is how it appears on your site.', 'jigoshop'),
+		'label' => __('Name', 'jigoshop-ecommerce'),
+		'description' => __('The name is how it appears on your site.', 'jigoshop-ecommerce'),
 		'value' => isset($category)?$category->getName():''
 	]);
 	?>
@@ -23,7 +23,7 @@ use Jigoshop\Helper\Render;
         <div class="row">
             <div class="col-sm-12">
             <label for="description" class="col-xs-12 col-sm-2 margin-top-bottom-9">
-                <?= __('Description', 'jigoshop') ?>
+                <?= __('Description', 'jigoshop-ecommerce') ?>
             </label>
             <div class="col-xs-12 col-sm-10 clearfix">
                 <div class="tooltip-inline-badge"></div>
@@ -49,8 +49,8 @@ use Jigoshop\Helper\Render;
 	Forms::text([
 		'id' => 'slug',
 		'name' => 'slug',
-		'label' => __('Slug', 'jigoshop'),
-		'description' => __('The “slug” is the URL-friendly version of the name. It is usually all lowercase and containonly letters, numbers, and hyphens.', 'jigoshop'),
+		'label' => __('Slug', 'jigoshop-ecommerce'),
+		'description' => __('The “slug” is the URL-friendly version of the name. It is usually all lowercase and containonly letters, numbers, and hyphens.', 'jigoshop-ecommerce'),
 		'value' => isset($category)?$category->getSlug():''
 	]);
 
@@ -59,7 +59,7 @@ use Jigoshop\Helper\Render;
 	Forms::select([
 		'id' => 'parentId',
 		'name' => 'parentId',
-		'label' => __('Parent category', 'jigoshop'),
+		'label' => __('Parent category', 'jigoshop-ecommerce'),
 		'options' => $parentOptions,
 		'value' => isset($category)?$category->getParentId():0
 	]);
@@ -74,7 +74,7 @@ use Jigoshop\Helper\Render;
 	<div class="form-group thumbnail_field">
 		<div class="row">
 			<div class="col-sm-12">
-				<label for="thumbnail" class="col-xs-12 col-sm-2 margin-top-bottom-9"><?php echo __('Thumbnail', 'jigoshop'); ?></label>
+				<label for="thumbnail" class="col-xs-12 col-sm-2 margin-top-bottom-9"><?php echo __('Thumbnail', 'jigoshop-ecommerce'); ?></label>
 				<div class="col-xs-12 col-sm-10 clearfix">
 					<div class="tooltip-inline-badge"></div>
 					<div class="tooltip-inline-input">
@@ -84,9 +84,9 @@ use Jigoshop\Helper\Render;
 						<div id="jigoshop-product-categories-thumbnail-controls">
 							<input type="hidden" name="thumbnailId" id="thumbnailId" value="<?php echo $categoryImage['thumbnail_id']; ?>" />
 
-							<a id="jigoshop-product-categories-thumbnail-add-button" href="#" class="button" data-title="<?php echo __('Choose thumbnail image', 'jigoshop'); ?>" data-button="<?php echo __('Set as thumbnail', 'jigoshop'); ?>"><?php echo __('Change image', 'jigoshop'); ?></a>
+							<a id="jigoshop-product-categories-thumbnail-add-button" href="#" class="button" data-title="<?php echo __('Choose thumbnail image', 'jigoshop'); ?>" data-button="<?php echo __('Set as thumbnail', 'jigoshop'); ?>"><?php echo __('Change image', 'jigoshop-ecommerce'); ?></a>
 
-							<a id="jigoshop-product-categories-thumbnail-remove-button" href="#" class="button"><?php echo __('Remove image', 'jigoshop'); ?></a>
+							<a id="jigoshop-product-categories-thumbnail-remove-button" href="#" class="button"><?php echo __('Remove image', 'jigoshop-ecommerce'); ?></a>
 						</div>
 					</div>
 				</div>
@@ -100,7 +100,7 @@ use Jigoshop\Helper\Render;
 	Forms::checkbox([
 		'id' => 'attributesInheritEnabled',
 		'name' => 'attributesInheritEnabled',
-		'label' => __('Enable inherited attributes', 'jigoshop'),
+		'label' => __('Enable inherited attributes', 'jigoshop-ecommerce'),
 		'classes' => ['switch-medium'],
 		'checked' => isset($category)?$category->getAttributesInheritEnabled():false
 	]);
@@ -112,10 +112,10 @@ use Jigoshop\Helper\Render;
 		Forms::select([
 			'id' => 'attributesInheritMode',
 			'name' => 'attributesInheritMode',
-			'label' => __('Inherit attributes from', 'jigoshop'),
+			'label' => __('Inherit attributes from', 'jigoshop-ecommerce'),
 			'options' => [
-				'all' => __('All parent categories', 'jigoshop'),
-				'direct' => __('Direct parent category', 'jigoshop')
+				'all' => __('All parent categories', 'jigoshop-ecommerce'),
+				'direct' => __('Direct parent category', 'jigoshop-ecommerce')
 			],
 			'value' => isset($category)?$category->getAttributesInheritMode():'all'
 		]);
@@ -131,12 +131,12 @@ use Jigoshop\Helper\Render;
 	<table class="table table-striped table-valign" id="jigoshop-product-categories-attributes">
 		<thead>
 			<tr>
-				<th><?php echo __('Label', 'jigoshop'); ?></th>
-				<th><?php echo __('Slug', 'jigoshop'); ?></th>
-				<th><?php echo __('Type', 'jigoshop'); ?></th>
-				<th><?php echo __('Inherited from', 'jigoshop'); ?></th>
-				<th><?php echo __('Enabled', 'jigoshop'); ?></th>
-				<th><?php echo __('Remove', 'jigoshop'); ?></th>
+				<th><?php echo __('Label', 'jigoshop-ecommerce'); ?></th>
+				<th><?php echo __('Slug', 'jigoshop-ecommerce'); ?></th>
+				<th><?php echo __('Type', 'jigoshop-ecommerce'); ?></th>
+				<th><?php echo __('Inherited from', 'jigoshop-ecommerce'); ?></th>
+				<th><?php echo __('Enabled', 'jigoshop-ecommerce'); ?></th>
+				<th><?php echo __('Remove', 'jigoshop-ecommerce'); ?></th>
 			</tr>
 		</thead>
 		<tbody>
@@ -151,7 +151,7 @@ use Jigoshop\Helper\Render;
 			Forms::select([
 				'id' => 'attributesNewSelector',
 				'name' => 'attributesNewSelector',
-				'label' => __('Existing attr.', 'jigoshop'),
+				'label' => __('Existing attr.', 'jigoshop-ecommerce'),
 				'options' => [],
 				'multiple' => true
 			]);
@@ -167,13 +167,13 @@ use Jigoshop\Helper\Render;
 			<div class="row">
 				<button type="submit" class="btn btn-default" id="jigoshop-product-categories-attributes-add-button">
 					<span class="glyphicon glyphicon-plus"></span>
-					<?php echo __('Add', 'jigoshop'); ?>
+					<?php echo __('Add', 'jigoshop-ecommerce'); ?>
 				</button>
 			</div>
 			<div class="row margin-top-bottom-9">
 				<button type="submit" class="btn btn-default" id="jigoshop-product-categories-attributes-add-new-button">
 					<span class="glyphicon glyphicon-plus"></span>
-					<?php echo __('Add new attribute', 'jigoshop'); ?>
+					<?php echo __('Add new attribute', 'jigoshop-ecommerce'); ?>
 				</button>			
 			</div>
 		</div>

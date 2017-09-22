@@ -57,7 +57,7 @@ class AdvancedFlatRate implements MultipleMethod
      */
     public function getName()
     {
-        return is_admin() ? __('Advanced flat rate', 'jigoshop') : $this->settings['title'];
+        return is_admin() ? __('Advanced flat rate', 'jigoshop-ecommerce') : $this->settings['title'];
     }
 
     /**
@@ -106,44 +106,44 @@ class AdvancedFlatRate implements MultipleMethod
             [
                 'name' => sprintf('[%s][enabled]', self::ID),
                 'type' => 'checkbox',
-                'title' => __('Enable', 'jigoshop'),
+                'title' => __('Enable', 'jigoshop-ecommerce'),
                 'checked' => $this->settings['enabled'],
                 'classes' => ['switch-medium'],
             ],
             [
                 'name' => sprintf('[%s][title]', self::ID),
                 'type' => 'text',
-                'title' => __('Title', 'jigoshop'),
+                'title' => __('Title', 'jigoshop-ecommerce'),
                 'value' => $this->settings['title'],
             ],
             [
                 'name' => sprintf('[%s][taxable]', self::ID),
                 'type' => 'checkbox',
-                'title' => __('Is taxable?', 'jigoshop'),
+                'title' => __('Is taxable?', 'jigoshop-ecommerce'),
                 'checked' => $this->settings['taxable'],
                 'classes' => ['switch-medium'],
             ],
             [
                 'name' => sprintf('[%s][fee]', self::ID),
                 'type' => 'text',
-                'title' => __('Fee', 'jigoshop'),
+                'title' => __('Fee', 'jigoshop-ecommerce'),
                 'value' => $this->settings['fee'],
             ],
             [
                 'name' => sprintf('[%s][available_for]', self::ID),
                 'id' => 'advanced_flat_rate_available_for',
-                'title' => __('Available for', 'jigoshop'),
+                'title' => __('Available for', 'jigoshop-ecommerce'),
                 'type' => 'select',
                 'value' => $this->settings['available_for'],
                 'options' => [
-                    'all' => __('All allowed countries', 'jigoshop'),
-                    'specific' => __('Selected countries', 'jigoshop'),
+                    'all' => __('All allowed countries', 'jigoshop-ecommerce'),
+                    'specific' => __('Selected countries', 'jigoshop-ecommerce'),
                 ],
             ],
             [
                 'name' => sprintf('[%s][countries]', self::ID),
                 'id' => 'advanced_flat_rate_countries',
-                'title' => __('Select countries', 'jigoshop'),
+                'title' => __('Select countries', 'jigoshop-ecommerce'),
                 'type' => 'select',
                 'value' => $this->settings['countries'],
                 'options' => Country::getAllowed(),
@@ -152,7 +152,7 @@ class AdvancedFlatRate implements MultipleMethod
             ],
             [
                 'name' => sprintf('[%s][multiple_rates]', self::ID),
-                'title' => __('Show multiple rates', 'jigoshop'),
+                'title' => __('Show multiple rates', 'jigoshop-ecommerce'),
                 'description' => __('If enabled then all matched rates will be visible in cart/checkout. '.
                     'Otherwise, the first available rate, from the rates list, which includes the destination, will be used in cart. '.
                     '<br/>You can change the order/priority of created rates by movinge them up and down on the list.', 'jigoshop'),
@@ -162,7 +162,7 @@ class AdvancedFlatRate implements MultipleMethod
             ],
             [
                 'name' => sprintf('[%s][rates]', self::ID),
-                'title' => __('Rates', 'jigoshop'),
+                'title' => __('Rates', 'jigoshop-ecommerce'),
                 'type' => 'user_defined',
                 'value' => $this->settings['rates'],
                 'display' => function ($field) {
@@ -217,7 +217,7 @@ class AdvancedFlatRate implements MultipleMethod
             $settings['fee'] = (float)$settings['fee'];
         } else {
             $settings['fee'] = $this->options['fee'];
-            $this->messages->addWarning(__('Fee was below 0 - value is left unchanged.', 'jigoshop'));
+            $this->messages->addWarning(__('Fee was below 0 - value is left unchanged.', 'jigoshop-ecommerce'));
         }
 
         return $settings;

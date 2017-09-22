@@ -20,11 +20,11 @@ class RecentProducts extends \WP_Widget
 	{
 		$options = [
 			'classname' => self::ID,
-			'description' => __('The most recent products on your site', 'jigoshop')
+			'description' => __('The most recent products on your site', 'jigoshop-ecommerce')
         ];
 
 		// Create the widget
-		parent::__construct(self::ID, __('Jigoshop: New Products', 'jigoshop'), $options);
+		parent::__construct(self::ID, __('Jigoshop: New Products', 'jigoshop-ecommerce'), $options);
 
 		// Flush cache after every save
 		add_action('save_post', [$this, 'deleteTransient']);
@@ -63,7 +63,7 @@ class RecentProducts extends \WP_Widget
 		// Set the widget title
 		$title = apply_filters(
 			'widget_title',
-			($instance['title']) ? $instance['title'] : __('New Products', 'jigoshop'),
+			($instance['title']) ? $instance['title'] : __('New Products', 'jigoshop-ecommerce'),
 			$instance,
 			$this->id_base
 		);

@@ -150,7 +150,7 @@ class Orders
 		if ($post->post_type == Types::ORDER) {
 			/** @var Entity $order */
 			$order = $this->orderService->findForPost($post);
-			$title = sprintf(__('Order #%s', 'jigoshop'), $order->getNumber());
+			$title = sprintf(__('Order #%s', 'jigoshop-ecommerce'), $order->getNumber());
 		}
 
 		return $title;

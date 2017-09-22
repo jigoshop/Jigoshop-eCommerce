@@ -47,8 +47,8 @@ class Type
     {
         if (self::$types === null) {
             self::$types = self::$wp->applyFilters('jigoshop\order\discount\types', [
-                Type::COUPON => __('Coupon', 'jigoshop'),
-                Type::USER_DEFINED => __('User Defined', 'jigoshop'),
+                Type::COUPON => __('Coupon', 'jigoshop-ecommerce'),
+                Type::USER_DEFINED => __('User Defined', 'jigoshop-ecommerce'),
             ]);
         }
 

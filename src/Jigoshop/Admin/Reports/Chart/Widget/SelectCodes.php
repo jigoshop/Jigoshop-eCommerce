@@ -29,7 +29,7 @@ class SelectCodes implements WidgetInterface
 
 	public function getTitle()
 	{
-		return sprintf(__('Select %s codes', 'jigoshop'), Type::getName($this->type));
+		return sprintf(__('Select %s codes', 'jigoshop-ecommerce'), Type::getName($this->type));
 	}
 
 	public function getArgs()

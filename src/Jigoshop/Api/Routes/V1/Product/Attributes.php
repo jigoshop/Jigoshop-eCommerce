@@ -209,7 +209,7 @@ class Attributes extends BaseController implements ApiControllerContract
         $label = trim(strip_tags($_POST['attribute_label']));
 
         if (empty($label)) {
-            throw new Exception(__('Custom attribute requires label to be set.', 'jigoshop'), 422);
+            throw new Exception(__('Custom attribute requires label to be set.', 'jigoshop-ecommerce'), 422);
         }
 
         $attribute->setLabel($label);
@@ -218,7 +218,7 @@ class Attributes extends BaseController implements ApiControllerContract
         $attributeExists = false;
 
         if ($attribute === null) {
-            throw new Exception(__('Attribute does not exists.', 'jigoshop'), 404);
+            throw new Exception(__('Attribute does not exists.', 'jigoshop-ecommerce'), 404);
         }
 
         $this->populateAttribute($attribute, $attributeExists, $_POST);
@@ -255,7 +255,7 @@ class Attributes extends BaseController implements ApiControllerContract
         }
 
         if ($attribute === null) {
-            throw new Exception(__('Attribute does not exists.', 'jigoshop'), 404);
+            throw new Exception(__('Attribute does not exists.', 'jigoshop-ecommerce'), 404);
         }
 
         $this->populateAttribute($attribute, $attributeExists, $request->getParsedBody());
@@ -364,7 +364,7 @@ class Attributes extends BaseController implements ApiControllerContract
             $attribute->setValue(trim(htmlspecialchars(wp_kses_post($data['value']))));
         } else {
             if ($attributeExists) {
-                throw new Exception(sprintf(__('Attribute "%s" already exists.', 'jigoshop'), $attribute->getLabel()));
+                throw new Exception(sprintf(__('Attribute "%s" already exists.', 'jigoshop-ecommerce'), $attribute->getLabel()));
             } else {
                 $attribute->setValue('');
             }

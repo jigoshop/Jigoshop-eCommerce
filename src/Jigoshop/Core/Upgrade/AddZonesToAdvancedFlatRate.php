@@ -35,7 +35,7 @@ class AddZonesToAdvancedFlatRate implements Upgrader
             };
             $rates[$i]['rest_of_the_world'] = isset($rates[$i]['rest_of_the_world']) ? $rates[$i]['rest_of_the_world'] : false;
             $rates[$i] = array_merge([
-                'label' => __('New rate', 'jigoshop'),
+                'label' => __('New rate', 'jigoshop-ecommerce'),
                 'cost' => '0',
                 'continents' => [],
                 'countries' => [],

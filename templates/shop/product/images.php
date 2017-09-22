@@ -12,7 +12,7 @@ use Jigoshop\Helper\Product;
 ?>
 <div class="images">
 	<?php if (Product::isOnSale($product)): ?>
-		<span class="on-sale"><?= apply_filters('jigoshop\template\product\sale_text', __('Sale!', 'jigoshop'), $product) ?></span>
+		<span class="on-sale"><?= apply_filters('jigoshop\template\product\sale_text', __('Sale!', 'jigoshop-ecommerce'), $product) ?></span>
 	<?php endif; ?>
 	<?php do_action('jigoshop\template\product\before_featured_image', $product); ?>
     <div class="product-gallery">

@@ -23,7 +23,7 @@ class Render
         if(!isset(self::$locations[$key])) {
             self::$locations[$key] = $path;
         } else {
-            throw new Exception(sprintf(__('The key [%s] already exists.', 'jigoshop'), $key));
+            throw new Exception(sprintf(__('The key [%s] already exists.', 'jigoshop-ecommerce'), $key));
         }
     }
 
@@ -72,7 +72,7 @@ class Render
         $file = locate_template(['jigoshop/'.strtolower($key).'/'.$template.'.php'], false, false);
         if (empty($file)) {
             if(!isset(self::$locations[$key])) {
-                throw new Exception(sprintf(__('The key [%s] does not exist.', 'jigoshop'), $key));
+                throw new Exception(sprintf(__('The key [%s] does not exist.', 'jigoshop-ecommerce'), $key));
             }
 
             $file = self::$locations[$key].'/templates/'.$template.'.php';

@@ -58,7 +58,7 @@ class Dashboard implements PageInterface
 	/** @return string Title of page. */
 	public function getTitle()
 	{
-		return __('Dashboard', 'jigoshop');
+		return __('Dashboard', 'jigoshop-ecommerce');
 	}
 
 	/** @return string Parent of the page string. */
@@ -87,15 +87,15 @@ class Dashboard implements PageInterface
 		$this->wp->wpEnqueueScript('postbox');
 		Styles::add('wp-jquery-ui');
 
-		$this->wp->addMetaBox('jigoshop_dashboard_right_now', __('<span>Shop</span> Content', 'jigoshop'), [$this, 'rightNow'], 'jigoshop', 'side', 'core');
-		$this->wp->addMetaBox('jigoshop_dashboard_recent_orders', __('<span>Recent</span> Orders', 'jigoshop'), [$this, 'recentOrders'], 'jigoshop', 'side', 'core');
+		$this->wp->addMetaBox('jigoshop_dashboard_right_now', __('<span>Shop</span> Content', 'jigoshop-ecommerce'), [$this, 'rightNow'], 'jigoshop', 'side', 'core');
+		$this->wp->addMetaBox('jigoshop_dashboard_recent_orders', __('<span>Recent</span> Orders', 'jigoshop-ecommerce'), [$this, 'recentOrders'], 'jigoshop', 'side', 'core');
 		if ($this->options->get('products.manage_stock')) {
-			$this->wp->addMetaBox('jigoshop_dashboard_stock_report', __('<span>Stock</span> Report', 'jigoshop'), [$this, 'stockReport'], 'jigoshop', 'side', 'core');
+			$this->wp->addMetaBox('jigoshop_dashboard_stock_report', __('<span>Stock</span> Report', 'jigoshop-ecommerce'), [$this, 'stockReport'], 'jigoshop', 'side', 'core');
 		}
-		$this->wp->addMetaBox('jigoshop_dashboard_monthly_report', __('<span>Monthly</span> Report', 'jigoshop'), [$this, 'monthlyReport'], 'jigoshop', 'normal', 'core');
-		$this->wp->addMetaBox('jigoshop_dashboard_recent_reviews', __('<span>Recent</span> Reviews', 'jigoshop'), [$this, 'recentReviews'], 'jigoshop', 'normal', 'core');
-		$this->wp->addMetaBox('jigoshop_dashboard_latest_news', __('<span>Latest</span> News', 'jigoshop'), [$this, 'latestNews'], 'jigoshop', 'normal', 'core');
-		$this->wp->addMetaBox('jigoshop_dashboard_useful_links', __('<span>Useful</span> Links', 'jigoshop'), [$this, 'usefulLinks'], 'jigoshop', 'normal', 'core');
+		$this->wp->addMetaBox('jigoshop_dashboard_monthly_report', __('<span>Monthly</span> Report', 'jigoshop-ecommerce'), [$this, 'monthlyReport'], 'jigoshop', 'normal', 'core');
+		$this->wp->addMetaBox('jigoshop_dashboard_recent_reviews', __('<span>Recent</span> Reviews', 'jigoshop-ecommerce'), [$this, 'recentReviews'], 'jigoshop', 'normal', 'core');
+		$this->wp->addMetaBox('jigoshop_dashboard_latest_news', __('<span>Latest</span> News', 'jigoshop-ecommerce'), [$this, 'latestNews'], 'jigoshop', 'normal', 'core');
+		$this->wp->addMetaBox('jigoshop_dashboard_useful_links', __('<span>Useful</span> Links', 'jigoshop-ecommerce'), [$this, 'usefulLinks'], 'jigoshop', 'normal', 'core');
 
 		$submenu = $this->wp->getSubmenu();
 
@@ -298,7 +298,7 @@ class Dashboard implements PageInterface
 						return [
 							'title' => $wp->getHelpers()->wptexturize($item->get_title()),
 							'link' => $item->get_permalink(),
-							'date' => (abs(time() - $date)) < 86400 ? sprintf(__('%s ago', 'jigoshop'), $wp->humanTimeDiff($date)) : date(__('F jS Y', 'jigoshop'), $date),
+							'date' => (abs(time() - $date)) < 86400 ? sprintf(__('%s ago', 'jigoshop'), $wp->humanTimeDiff($date)) : date(__('F jS Y', 'jigoshop-ecommerce'), $date),
                         ];
 					}, $rssItems);
 				}

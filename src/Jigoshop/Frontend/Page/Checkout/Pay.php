@@ -54,25 +54,25 @@ class Pay implements PageInterface
 		$order = $this->orderService->find((int)$this->wp->getQueryParameter('pay'));
 
 		if ($order->getKey() !== $_GET['key']) {
-			$this->messages->addError(__('Invalid security key. Unable to process order.', 'jigoshop'));
+			$this->messages->addError(__('Invalid security key. Unable to process order.', 'jigoshop-ecommerce'));
 			$this->wp->redirectTo($this->options->getPageId(Pages::ACCOUNT));
 		}
 
 		if (isset($_POST['action']) && $_POST['action'] == 'purchase') {
 			try {
 				if ($this->options->get('advanced.pages.terms') > 0 && (!isset($_POST['terms']) || $_POST['terms'] != 'on')) {
-					throw new Exception(__('You need to accept terms &amp; conditions!', 'jigoshop'));
+					throw new Exception(__('You need to accept terms &amp; conditions!', 'jigoshop-ecommerce'));
 				}
 
 				if (!isset($_POST['payment_method'])) {
-					throw new Exception(__('Please select one of available payment methods.', 'jigoshop'));
+					throw new Exception(__('Please select one of available payment methods.', 'jigoshop-ecommerce'));
 				}
 
 				$payment = $this->paymentService->get($_POST['payment_method']);
 				$order->setPaymentMethod($payment);
 
 				if (!$payment->isEnabled()) {
-					throw new Exception(__('Selected payment method is not available. Please select another one.', 'jigoshop'));
+					throw new Exception(__('Selected payment method is not available. Please select another one.', 'jigoshop-ecommerce'));
 				}
 
 				$this->orderService->save($order);

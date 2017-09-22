@@ -15,7 +15,7 @@ $orderTax = $order->getTax();
 	<div class="form-horizontal">
 		<div class="form-group<?= $order->isShippingRequired() ? '' : ' not-active'; ?>">
 			<label for="order_shipping" class="col-sm-2 control-label">
-				<?= __('Shipping', 'jigoshop'); ?>
+				<?= __('Shipping', 'jigoshop-ecommerce'); ?>
 			</label>
 			<div class="col-sm-9">
 				<ul class="list-group" id="shipping-methods">
@@ -32,7 +32,7 @@ $orderTax = $order->getTax();
 		<?php Forms::constant([
 			'name' => 'order[subtotal]',
 			'id' => 'subtotal',
-			'label' => __('Subtotal', 'jigoshop'),
+			'label' => __('Subtotal', 'jigoshop-ecommerce'),
 			'placeholder' => 0.0,
 			'size' => 12,
 			'value' => Product::formatPrice($order->getSubtotal()),
@@ -40,7 +40,7 @@ $orderTax = $order->getTax();
         <?php if($order->getDiscount() > 0) : ?>
             <?php Forms::constant([
                 'name' => 'order[discount]',
-                'label' => __('Discount', 'jigoshop'),
+                'label' => __('Discount', 'jigoshop-ecommerce'),
                 'placeholder' => 0.0,
                 'size' => 12,
                 'value' => Product::formatPrice($order->getDiscount()),
@@ -59,7 +59,7 @@ $orderTax = $order->getTax();
 		<?php Forms::constant([
 			'name' => 'order[total]',
 			'id' => 'total',
-			'label' => __('Total', 'jigoshop'),
+			'label' => __('Total', 'jigoshop-ecommerce'),
 			'placeholder' => 0.0,
 			'size' => 12,
 			'value' => Product::formatPrice($order->getTotal())

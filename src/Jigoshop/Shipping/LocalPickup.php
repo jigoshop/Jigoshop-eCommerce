@@ -34,7 +34,7 @@ class LocalPickup implements Method
 	 */
 	public function getName()
 	{
-		return __('Local pickup', 'jigoshop');
+		return __('Local pickup', 'jigoshop-ecommerce');
 	}
 
 	/**
@@ -83,20 +83,20 @@ class LocalPickup implements Method
 		return [
 			[
 				'name' => sprintf('[%s][enabled]', self::NAME),
-				'title' => __('Is enabled?', 'jigoshop'),
+				'title' => __('Is enabled?', 'jigoshop-ecommerce'),
 				'type' => 'checkbox',
 				'checked' => $this->options['enabled'],
 				'classes' => ['switch-medium'],
             ],
 			[
 				'name' => sprintf('[%s][title]', self::NAME),
-				'title' => __('Method title', 'jigoshop'),
+				'title' => __('Method title', 'jigoshop-ecommerce'),
 				'type' => 'text',
 				'value' => $this->options['title'],
             ],
 			[
 				'name' => sprintf('[%s][fee]', self::NAME),
-				'title' => __('Handling Fee', 'jigoshop'),
+				'title' => __('Handling Fee', 'jigoshop-ecommerce'),
 				'type' => 'text',
 				'value' => $this->options['fee'],
             ],

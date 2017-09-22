@@ -88,7 +88,7 @@ class ByCategory extends Chart
 			}
 
 			$legend[] = [
-				'title' => sprintf(__('%s sales in %s', 'jigoshop'), '<strong>'.Product::formatPrice($total).'</strong>', $category->name),
+				'title' => sprintf(__('%s sales in %s', 'jigoshop-ecommerce'), '<strong>'.Product::formatPrice($total).'</strong>', $category->name),
 				'color' => $this->chartColours[$index % sizeof($this->chartColours)],
 				'highlight_series' => $index
             ];
@@ -200,13 +200,13 @@ class ByCategory extends Chart
 	{
 		/** @noinspection PhpUnusedLocalVariableInspection */
 		$ranges = [
-			'all' => __('All Time', 'jigoshop'),
-			'year' => __('Year', 'jigoshop'),
-			'last_month' => __('Last Month', 'jigoshop'),
-			'month' => __('This Month', 'jigoshop'),
-			'30day' => __('Last 30 Days', 'jigoshop'),
-			'7day' => __('Last 7 Days', 'jigoshop'),
-			'today' => __('Today', 'jigoshop'),
+			'all' => __('All Time', 'jigoshop-ecommerce'),
+			'year' => __('Year', 'jigoshop-ecommerce'),
+			'last_month' => __('Last Month', 'jigoshop-ecommerce'),
+			'month' => __('This Month', 'jigoshop-ecommerce'),
+			'30day' => __('Last 30 Days', 'jigoshop-ecommerce'),
+			'7day' => __('Last 7 Days', 'jigoshop-ecommerce'),
+			'today' => __('Today', 'jigoshop-ecommerce'),
         ];
 
 		$this->calculateCurrentRange();
@@ -233,7 +233,7 @@ class ByCategory extends Chart
 		foreach ($categories as $category) {
 			$allCategories[$category->term_id] = $category->name;
 		}
-		$allCategories[-1] = __('All categories', 'jigoshop');
+		$allCategories[-1] = __('All categories', 'jigoshop-ecommerce');
 		
 		$widgets[] = new Chart\Widget\CustomRange();
 		$widgets[] = new Chart\Widget\SelectCategories($this->showCategories, $allCategories);
@@ -245,7 +245,7 @@ class ByCategory extends Chart
 	{
 		return [
 			'download' => 'report-'.esc_attr($this->currentRange).'-'.date_i18n('Y-m-d', current_time('timestamp')).'.csv',
-			'xaxes' => __('Date', 'jigoshop'),
+			'xaxes' => __('Date', 'jigoshop-ecommerce'),
 			'groupby' => $this->chartGroupBy,
         ];
 	}
