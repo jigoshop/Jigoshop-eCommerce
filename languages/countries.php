@@ -10,8 +10,8 @@
  *
  * @package             Jigoshop
  * @category            Core
- * @author              Jigoshop
- * @copyright           Copyright © 2011-2014 Jigoshop.
+ * @author              Jigo Ltd
+ * @copyright           Copyright © 2011-2017 Jigo Ltd.
  * @license             GNU General Public License v3
  */
 
