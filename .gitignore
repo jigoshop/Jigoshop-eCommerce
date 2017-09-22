@@ -9,5 +9,7 @@ compiler.sh
 composer.lock
 dist/
 languages/*
+!languages/countries.php
+!languages/strings.php
 node_modules
 vendor/

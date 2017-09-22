@@ -165,8 +165,8 @@ class JigoshopInit
      */
     private function loadTextDomain()
     {
-        load_textdomain('jigoshop', WP_LANG_DIR . '/jigoshop/' . get_locale() . '.mo');
-        load_plugin_textdomain('jigoshop', false, basename(self::getDir()) . '/languages/');
+        load_textdomain('jigoshop-ecommerce', WP_LANG_DIR . '/jigoshop/' . get_locale() . '.mo');
+        load_plugin_textdomain('jigoshop-ecommerce', false, basename(self::getDir()) . '/languages/');
     }
 
     /**
