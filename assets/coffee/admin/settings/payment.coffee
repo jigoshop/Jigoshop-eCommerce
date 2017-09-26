@@ -21,7 +21,7 @@ class Payment
               jQuery('.mfp-content select').each (index, element) ->
                 jQuery(element).siblings().remove()
                 jQuery(element).select2 'destroy'
-                jQuery(element).select2()                
+                jQuery(element).select2()
               jQuery('.mfp-content .payment-method-options-save').click (e) ->
                 e.preventDefault()
                 jQuery.magnificPopup.close()
