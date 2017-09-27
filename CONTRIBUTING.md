@@ -9,7 +9,7 @@ __note__ GitHub is for bug reports and contributions only - if you have a suppor
 ## Getting Started
 
 * Check if the bug is still present in newest version of Jigoshop.
-* Submit a ticket for your issue, assuming one does not already exist on our [bugtracker](https://github.com/jigoshop/jigoshop/issues).
+* Submit a ticket for your issue, assuming one does not already exist on our [bugtracker](https://github.com/jigoshop/jigoshop-ecommerce/issues).
 * Clearly describe the issue including steps to reproduce when it is a bug.
 * Make sure you fill in the system info to ease reproducing and fixing.
 
@@ -27,4 +27,4 @@ At this point you're waiting on us to merge your pull request. We'll review all 
 
 * [General GitHub documentation](http://help.github.com/)
 * [GitHub pull request documentation](http://help.github.com/send-pull-requests/)
-* [WordPress' Jigoshop Support](http://wordpress.org/support/plugin/jigoshop)
+* [WordPress' Jigoshop Support](http://wordpress.org/support/plugin/jigoshop-ecommerce)

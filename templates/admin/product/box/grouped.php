@@ -34,7 +34,7 @@ if ((bool)$posts_in) {
 	// Only echo the form if we have grouped products
 	$args = [
 		'id' => 'parent_id',
-		'label' => __('Product Group', 'jigoshop'),
+		'label' => __('Product Group', 'jigoshop-ecommerce'),
 		'options' => $options,
 		'selected' => $post->post_parent,
     ];
@@ -44,7 +44,7 @@ if ((bool)$posts_in) {
 // Ordering
 $args = [
 	'id' => 'menu_order',
-	'label' => __('Sort Order', 'jigoshop'),
+	'label' => __('Sort Order', 'jigoshop-ecommerce'),
 	'type' => 'number',
 	'value' => $post->menu_order,
 ];

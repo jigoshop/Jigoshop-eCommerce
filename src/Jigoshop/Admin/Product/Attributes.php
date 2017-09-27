@@ -55,10 +55,10 @@ class Attributes implements PageInterface
             ]);
 			Scripts::localize('jigoshop.admin.product_attributes', 'jigoshop_admin_product_attributes', [
 				'i18n' => [
-					'saved' => __('Changes saved.', 'jigoshop'),
-					'removed' => __('Attribute has been successfully removed.', 'jigoshop'),
-					'option_removed' => __('Attribute option has been successfully removed.', 'jigoshop'),
-					'confirm_remove' => __('Are you sure?', 'jigoshop'),
+					'saved' => __('Changes saved.', 'jigoshop-ecommerce'),
+					'removed' => __('Attribute has been successfully removed.', 'jigoshop-ecommerce'),
+					'option_removed' => __('Attribute option has been successfully removed.', 'jigoshop-ecommerce'),
+					'confirm_remove' => __('Are you sure?', 'jigoshop-ecommerce'),
                 ],
             ]);
 		});
@@ -74,10 +74,10 @@ class Attributes implements PageInterface
 		try {
 			$errors = [];
 			if (!isset($_POST['label']) || empty($_POST['label'])) {
-				$errors[] = __('Attribute label is not set.', 'jigoshop');
+				$errors[] = __('Attribute label is not set.', 'jigoshop-ecommerce');
 			}
 			if (!isset($_POST['type']) || !in_array($_POST['type'], array_keys(Attribute::getTypes()))) {
-				$errors[] = __('Attribute type is not valid.', 'jigoshop');
+				$errors[] = __('Attribute type is not valid.', 'jigoshop-ecommerce');
 			}
 
 			if (!empty($errors)) {
@@ -128,7 +128,7 @@ class Attributes implements PageInterface
 	{
 		$errors = [];
 		if (!isset($_POST['id']) || empty($_POST['id'])) {
-			$errors[] = __('Attribute does not exist.', 'jigoshop');
+			$errors[] = __('Attribute does not exist.', 'jigoshop-ecommerce');
 		}
 
 		if (!empty($errors)) {
@@ -151,10 +151,10 @@ class Attributes implements PageInterface
 	{
 		$errors = [];
 		if (!isset($_POST['attribute_id']) || !is_numeric($_POST['attribute_id'])) {
-			$errors[] = __('Respective attribute is not set.', 'jigoshop');
+			$errors[] = __('Respective attribute is not set.', 'jigoshop-ecommerce');
 		}
 		if (!isset($_POST['label']) || empty($_POST['label'])) {
-			$errors[] = __('Option label is not set.', 'jigoshop');
+			$errors[] = __('Option label is not set.', 'jigoshop-ecommerce');
 		}
 
 		if (!empty($errors)) {
@@ -194,10 +194,10 @@ class Attributes implements PageInterface
 	{
 		$errors = [];
 		if (!isset($_POST['attribute_id']) || !is_numeric($_POST['attribute_id'])) {
-			$errors[] = __('Respective attribute is not set.', 'jigoshop');
+			$errors[] = __('Respective attribute is not set.', 'jigoshop-ecommerce');
 		}
 		if (!isset($_POST['id']) || empty($_POST['id'])) {
-			$errors[] = __('Option does not exist.', 'jigoshop');
+			$errors[] = __('Option does not exist.', 'jigoshop-ecommerce');
 		}
 
 		if (!empty($errors)) {
@@ -223,7 +223,7 @@ class Attributes implements PageInterface
 	 */
 	public function getTitle()
 	{
-		return __('Attributes', 'jigoshop');
+		return __('Attributes', 'jigoshop-ecommerce');
 	}
 
 	/** @return string Parent of the page string. */

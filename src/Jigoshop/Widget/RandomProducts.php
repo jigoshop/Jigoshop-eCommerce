@@ -20,11 +20,11 @@ class RandomProducts extends \WP_Widget
 	{
 		$options = [
 			'classname' => self::ID,
-			'description' => __('Lists a random selection of products on your site.', 'jigoshop')
+			'description' => __('Lists a random selection of products on your site.', 'jigoshop-ecommerce')
         ];
 
 		// Create the widget
-		parent::__construct(self::ID, __('Jigoshop: Random Products', 'jigoshop'), $options);
+		parent::__construct(self::ID, __('Jigoshop: Random Products', 'jigoshop-ecommerce'), $options);
 	}
 
 	public static function setProductService($productService)
@@ -47,7 +47,7 @@ class RandomProducts extends \WP_Widget
 		// Set the widget title
 		$title = apply_filters(
 			'widget_title',
-			($instance['title']) ? $instance['title'] : __('Random Products', 'jigoshop'),
+			($instance['title']) ? $instance['title'] : __('Random Products', 'jigoshop-ecommerce'),
 			$instance,
 			$this->id_base
 		);

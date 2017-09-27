@@ -22,7 +22,7 @@ class ProductSearch implements WidgetInterface
 
 	public function getTitle()
 	{
-		return __('Search for Products', 'jigoshop');
+		return __('Search for Products', 'jigoshop-ecommerce');
 	}
 
 	public function getArgs()

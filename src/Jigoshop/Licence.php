@@ -119,7 +119,7 @@ class Licence
 				if (isset($response->success) && $response->success) {
 					$messages[] = [
 						'success' => true,
-						'message' => sprintf(__('<b>Key deactivated.</b> License key for <i>%s</i> has been <b>deactivated</b>.', 'jigoshop'), self::$plugins[$product_id]['title'])
+						'message' => sprintf(__('<b>Key deactivated.</b> License key for <i>%s</i> has been <b>deactivated</b>.', 'jigoshop-ecommerce'), self::$plugins[$product_id]['title'])
                     ];
 					// set status as inactive and remove licence from database
 					$keys[$product_id] = [
@@ -130,7 +130,7 @@ class Licence
 				} else {
 					$messages[] = [
 						'success' => false,
-						'message' => sprintf(__('%s deactivation: ', 'jigoshop'), self::$plugins[$product_id]['title']).$response->error
+						'message' => sprintf(__('%s deactivation: ', 'jigoshop-ecommerce'), self::$plugins[$product_id]['title']).$response->error
                     ];
 				}
 			} // Activate this key
@@ -139,7 +139,7 @@ class Licence
 				if (isset($response->success) && $response->success) {
 					$messages[] = [
 						'success' => true,
-						'message' => sprintf(__('<b>Key activated.</b> License key for <i>%s</i> has been <b>activated</b>.', 'jigoshop'), self::$plugins[$product_id]['title'])
+						'message' => sprintf(__('<b>Key activated.</b> License key for <i>%s</i> has been <b>activated</b>.', 'jigoshop-ecommerce'), self::$plugins[$product_id]['title'])
                     ];
 
 					$keys[$product_id] = [
@@ -150,7 +150,7 @@ class Licence
 				} else {
 					$messages[] = [
 						'success' => false,
-						'message' => sprintf(__('%s activation: ', 'jigoshop'), self::$plugins[$product_id]['title']).$response->error
+						'message' => sprintf(__('%s activation: ', 'jigoshop-ecommerce'), self::$plugins[$product_id]['title']).$response->error
                     ];
 				}
 			}
@@ -326,7 +326,7 @@ class Licence
 		?>
 		<div class="error">
 			<p>
-				<?php echo sprintf(__('The License key for <i><b>%s</b></i> is not valid . Please enter your <b>Licence Key</b> on the Jigoshop->Manage Licences Menu with your <b>Order email address</b>.  Until then, the plugin will not be enabled for use.', 'jigoshop'), $this->title); ?>
+				<?php echo sprintf(__('The License key for <i><b>%s</b></i> is not valid . Please enter your <b>Licence Key</b> on the Jigoshop->Manage Licences Menu with your <b>Order email address</b>.  Until then, the plugin will not be enabled for use.', 'jigoshop-ecommerce'), $this->title); ?>
 			</p>
 		</div>
 		<?php
@@ -410,7 +410,7 @@ class Licence
 		?>
 		<div class="error">
 			<p>
-				<?php echo sprintf(__('The License key for <i><b>%s</b></i> is outdated. Please renew your license. Until then, the update for this plugin will not be accessible.', 'jigoshop'), $this->title); ?>
+				<?php echo sprintf(__('The License key for <i><b>%s</b></i> is outdated. Please renew your license. Until then, the update for this plugin will not be accessible.', 'jigoshop-ecommerce'), $this->title); ?>
 			</p>
 		</div>
 		<?php
@@ -454,7 +454,7 @@ class Licence
 					}
 					$obj->sections = $converted;
 				} else {
-					$obj->sections = ['changelog' => __('No update information available.', 'jigoshop')];
+					$obj->sections = ['changelog' => __('No update information available.', 'jigoshop-ecommerce')];
 				}
 
 				return $obj;
@@ -470,7 +470,7 @@ class Licence
 			return;
 		}
 
-		$m = __('Please enter your license key on the <a href="%s">Manage Licences</a> page to enable automatic updates. You can buy your licence on <a href="%s">Jigoshop.com</a>.', 'jigoshop');
+		$m = __('Please enter your license key on the <a href="%s">Manage Licences</a> page to enable automatic updates. You can buy your licence on <a href="%s">Jigoshop.com</a>.', 'jigoshop-ecommerce');
 		echo '<br />'.sprintf($m, admin_url('admin.php?page=jigoshop-licence-validator'), $r->url);
 	}
 }

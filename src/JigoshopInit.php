@@ -165,8 +165,8 @@ class JigoshopInit
      */
     private function loadTextDomain()
     {
-        load_textdomain('jigoshop', WP_LANG_DIR . '/jigoshop/' . get_locale() . '.mo');
-        load_plugin_textdomain('jigoshop', false, basename(self::getDir()) . '/languages/');
+        load_textdomain('jigoshop-ecommerce', WP_LANG_DIR . '/jigoshop/' . get_locale() . '.mo');
+        load_plugin_textdomain('jigoshop-ecommerce', false, basename(self::getDir()) . '/languages/');
     }
 
     /**
@@ -398,7 +398,7 @@ class JigoshopInit
 
         return sprintf(
             '<a target="_blank" href="https://www.jigoshop.com/support/">%s</a> | %s',
-            __('Contact support', 'jigoshop'),
+            __('Contact support', 'jigoshop-ecommerce'),
             str_replace(
                 ['[stars]', '[link]', '[/link]'],
                 [
@@ -406,7 +406,7 @@ class JigoshopInit
                     '<a target="_blank" href="http://wordpress.org/support/view/plugin-reviews/jigoshop-ecommerce#postform" >',
                     '</a>'
                 ],
-                __('Add your [stars] on [link]wordpress.org[/link] and keep this plugin essentially free.', 'jigoshop')
+                __('Add your [stars] on [link]wordpress.org[/link] and keep this plugin essentially free.', 'jigoshop-ecommerce')
             )
         );
     }
@@ -426,7 +426,7 @@ class JigoshopInit
         if (!is_admin() && ($manage_jigoshop || $manage_products || $manage_orders || $view_reports)) {
             $wp_admin_bar->add_node([
                 'id' => 'jigoshop',
-                'title' => __('Jigoshop', 'jigoshop'),
+                'title' => __('Jigoshop', 'jigoshop-ecommerce'),
                 'href' => $manage_jigoshop ? admin_url('admin.php?page=jigoshop') : '',
                 'parent' => false,
                 'meta' => [
@@ -437,7 +437,7 @@ class JigoshopInit
             if ($manage_jigoshop) {
                 $wp_admin_bar->add_node([
                     'id' => 'jigoshop_dashboard',
-                    'title' => __('Dashboard', 'jigoshop'),
+                    'title' => __('Dashboard', 'jigoshop-ecommerce'),
                     'parent' => 'jigoshop',
                     'href' => admin_url('admin.php?page=jigoshop'),
                 ]);
@@ -446,7 +446,7 @@ class JigoshopInit
             if ($manage_products) {
                 $wp_admin_bar->add_node([
                     'id' => 'jigoshop_products',
-                    'title' => __('Products', 'jigoshop'),
+                    'title' => __('Products', 'jigoshop-ecommerce'),
                     'parent' => 'jigoshop',
                     'href' => admin_url('edit.php?post_type=product'),
                 ]);
@@ -455,7 +455,7 @@ class JigoshopInit
             if ($manage_orders) {
                 $wp_admin_bar->add_node([
                     'id' => 'jigoshop_orders',
-                    'title' => __('Orders', 'jigoshop'),
+                    'title' => __('Orders', 'jigoshop-ecommerce'),
                     'parent' => 'jigoshop',
                     'href' => admin_url('edit.php?post_type=shop_order'),
                 ]);
@@ -464,7 +464,7 @@ class JigoshopInit
             if ($manage_jigoshop) {
                 $wp_admin_bar->add_node([
                     'id' => 'jigoshop_settings',
-                    'title' => __('Settings', 'jigoshop'),
+                    'title' => __('Settings', 'jigoshop-ecommerce'),
                     'parent' => 'jigoshop',
                     'href' => admin_url('admin.php?page=jigoshop_settings'),
                 ]);
@@ -475,9 +475,9 @@ class JigoshopInit
     public function pluginLinks($links)
     {
         return array_merge([
-            '<a href="' . admin_url('admin.php?page=jigoshop_settings') . '">' . __('Settings', 'jigoshop') . '</a>',
-            '<a href="https://www.jigoshop.com/documentation/">' . __('Docs', 'jigoshop') . '</a>',
-            '<a href="https://www.jigoshop.com/support/">' . __('Support', 'jigoshop') . '</a>',
+            '<a href="' . admin_url('admin.php?page=jigoshop_settings') . '">' . __('Settings', 'jigoshop-ecommerce') . '</a>',
+            '<a href="https://www.jigoshop.com/documentation/">' . __('Docs', 'jigoshop-ecommerce') . '</a>',
+            '<a href="https://www.jigoshop.com/support/">' . __('Support', 'jigoshop-ecommerce') . '</a>',
         ], $links);
     }
 

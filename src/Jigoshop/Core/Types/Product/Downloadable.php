@@ -47,7 +47,7 @@ class Downloadable implements Type
 	 */
 	public function getName()
 	{
-		return __('Downloadable', 'jigoshop');
+		return __('Downloadable', 'jigoshop-ecommerce');
 	}
 
 	/**
@@ -116,7 +116,7 @@ class Downloadable implements Type
 		}
 
 		if ($downloadable) {
-			$order->setStatus(Order\Status::COMPLETED, __('Complete downloadable only order.', 'jigoshop'));
+			$order->setStatus(Order\Status::COMPLETED, __('Complete downloadable only order.', 'jigoshop-ecommerce'));
 		}
 	}
 
@@ -191,7 +191,7 @@ class Downloadable implements Type
 
 		if ($product instanceof Product\Downloadable && in_array($order->getStatus(), [Order\Status::COMPLETED, Order\Status::PROCESSING])) {
 			$url = $this->wp->getHelpers()->addQueryArg(['file' => $order->getKey().'.'.$order->getId().'.'.$item->getKey()], Endpoint::getUrl(DownloadFile::NAME));
-			$result .= PHP_EOL.__('Your download link for this file is:', 'jigoshop');
+			$result .= PHP_EOL.__('Your download link for this file is:', 'jigoshop-ecommerce');
 			$result .= PHP_EOL.' - '.$url;
 		}
 
@@ -215,7 +215,7 @@ class Downloadable implements Type
 	 */
 	public function addProductMenu($menu)
 	{
-		$menu['download'] = ['label' => __('Downloads', 'jigoshop'), 'visible' => [Product\Downloadable::TYPE]];
+		$menu['download'] = ['label' => __('Downloads', 'jigoshop-ecommerce'), 'visible' => [Product\Downloadable::TYPE]];
 		$menu['advanced']['visible'][] = Product\Downloadable::TYPE;
 		$menu['stock']['visible'][] = Product\Downloadable::TYPE;
 		$menu['sales']['visible'][] = Product\Downloadable::TYPE;

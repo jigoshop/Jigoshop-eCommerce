@@ -125,16 +125,16 @@ class Orders implements Tool
                     'hierarchical' => true,
                     'update_count_callback' => '_update_post_term_count',
                     'labels' => [
-                        'name' => __('Order statuses', 'jigoshop'),
-                        'singular_name' => __('Order status', 'jigoshop'),
-                        'search_items' => __('Search Order statuses', 'jigoshop'),
-                        'all_items' => __('All  Order statuses', 'jigoshop'),
-                        'parent_item' => __('Parent Order status', 'jigoshop'),
-                        'parent_item_colon' => __('Parent Order status:', 'jigoshop'),
-                        'edit_item' => __('Edit Order status', 'jigoshop'),
-                        'update_item' => __('Update Order status', 'jigoshop'),
-                        'add_new_item' => __('Add New Order status', 'jigoshop'),
-                        'new_item_name' => __('New Order status Name', 'jigoshop')
+                        'name' => __('Order statuses', 'jigoshop-ecommerce'),
+                        'singular_name' => __('Order status', 'jigoshop-ecommerce'),
+                        'search_items' => __('Search Order statuses', 'jigoshop-ecommerce'),
+                        'all_items' => __('All  Order statuses', 'jigoshop-ecommerce'),
+                        'parent_item' => __('Parent Order status', 'jigoshop-ecommerce'),
+                        'parent_item_colon' => __('Parent Order status:', 'jigoshop-ecommerce'),
+                        'edit_item' => __('Edit Order status', 'jigoshop-ecommerce'),
+                        'update_item' => __('Update Order status', 'jigoshop-ecommerce'),
+                        'add_new_item' => __('Add New Order status', 'jigoshop-ecommerce'),
+                        'new_item_name' => __('New Order status Name', 'jigoshop-ecommerce')
                     ],
                     'public' => false,
                     'show_ui' => false,
@@ -441,9 +441,9 @@ class Orders implements Tool
                             }
                             $wpdb->query($wpdb->prepare(
                                 "INSERT INTO {$wpdb->prefix}jigoshop_order_tax (order_id, label, tax_class, rate, is_compound) VALUES (%d, %s, %s, %d, %d) ON DUPLICATE KEY UPDATE order_id = %d, label = %s ,tax_class = %s, rate = %d , is_compound= %d",
-                                $order->ID, __('Standard', 'jigoshop'), 'standard',
+                                $order->ID, __('Standard', 'jigoshop-ecommerce'), 'standard',
                                 $globalTaxRate / (count($data) == 0 ? 1 : count($data)), false,
-                                $order->ID, __('Standard', 'jigoshop'), 'standard',
+                                $order->ID, __('Standard', 'jigoshop-ecommerce'), 'standard',
                                 $globalTaxRate / (count($data) == 0 ? 1 : count($data)), false
                             ));
                             $this->checkSql();
@@ -468,7 +468,7 @@ class Orders implements Tool
             $wpdb->query("ROLLBACK");
             $wpdb->query("SET AUTOCOMMIT=" . $var_autocommit_sql);
 
-            Migration::saveLog(__('Migration orders end with error: ', 'jigoshop') . $e);
+            Migration::saveLog(__('Migration orders end with error: ', 'jigoshop-ecommerce') . $e);
 
             return false;
         }
@@ -584,7 +584,7 @@ class Orders implements Tool
         try {
 //			1 - if first time ajax request
             if ($_POST['msgLog'] == 1) {
-                Migration::saveLog(__('Migration orders START.', 'jigoshop'), true);
+                Migration::saveLog(__('Migration orders START.', 'jigoshop-ecommerce'), true);
             }
 
             $wpdb = $this->wp->getWPDB();
@@ -637,11 +637,11 @@ class Orders implements Tool
                     $this->wp->updateOption('jigoshop_orders_migrate_id', serialize($ordersIdsMigration));
                 } else {
                     $ajax_response['success'] = false;
-                    Migration::saveLog(__('Migration orders end with error.', 'jigoshop'));
+                    Migration::saveLog(__('Migration orders end with error.', 'jigoshop-ecommerce'));
                 }
             } elseif ($countRemain == 0) {
                 $this->wp->updateOption('jigoshop_orders_migrate_id', serialize($ordersIdsMigration));
-                Migration::saveLog(__('Migration orders END.', 'jigoshop'));
+                Migration::saveLog(__('Migration orders END.', 'jigoshop-ecommerce'));
             }
 
             echo json_encode($ajax_response);
@@ -654,7 +654,7 @@ class Orders implements Tool
                 'success' => false,
             ]);
 
-            Migration::saveLog(__('Migration orders end with error: ', 'jigoshop') . $e);
+            Migration::saveLog(__('Migration orders end with error: ', 'jigoshop-ecommerce') . $e);
         }
         exit;
     }

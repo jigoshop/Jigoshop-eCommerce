@@ -101,6 +101,6 @@ class Dummy implements Method2
 	 */
 	public function process($order)
 	{
-		throw new Exception(sprintf(__('Payment gateway "%s" does not exist in the system. This should never happen, please contact Jigoshop support.', 'jigoshop'), $this->id));
+		throw new Exception(sprintf(__('Payment gateway "%s" does not exist in the system. This should never happen, please contact Jigoshop support.', 'jigoshop-ecommerce'), $this->id));
 	}
 }

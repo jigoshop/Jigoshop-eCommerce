@@ -37,12 +37,12 @@ class FlatRate implements Method
 		$this->cartService = $cartService;
 		$this->messages = $messages;
 		$this->types = [
-			'per_order' => __('Per order', 'jigoshop'),
-			'per_item' => __('Per item', 'jigoshop'),
+			'per_order' => __('Per order', 'jigoshop-ecommerce'),
+			'per_item' => __('Per item', 'jigoshop-ecommerce'),
         ];
 		$this->availability = [
-			'all' => __('All allowed countries', 'jigoshop'),
-			'specific' => __('Selected countries', 'jigoshop'),
+			'all' => __('All allowed countries', 'jigoshop-ecommerce'),
+			'specific' => __('Selected countries', 'jigoshop-ecommerce'),
         ];
 
 		$wp->addAction('admin_enqueue_scripts', function () use ($wp){
@@ -72,7 +72,7 @@ class FlatRate implements Method
 	 */
 	public function getName()
 	{
-		return __('Flat rate', 'jigoshop');
+		return __('Flat rate', 'jigoshop-ecommerce');
 	}
 
 	/**
@@ -116,47 +116,47 @@ class FlatRate implements Method
 		return [
 			[
 				'name' => sprintf('[%s][enabled]', self::NAME),
-				'title' => __('Is enabled?', 'jigoshop'),
+				'title' => __('Is enabled?', 'jigoshop-ecommerce'),
 				'type' => 'checkbox',
 				'checked' => $this->options['enabled'],
 				'classes' => ['switch-medium'],
             ],
 			[
 				'name' => sprintf('[%s][title]', self::NAME),
-				'title' => __('Method title', 'jigoshop'),
+				'title' => __('Method title', 'jigoshop-ecommerce'),
 				'type' => 'text',
 				'value' => $this->getTitle(),
             ],
 			[
 				'name' => sprintf('[%s][type]', self::NAME),
-				'title' => __('Type', 'jigoshop'),
+				'title' => __('Type', 'jigoshop-ecommerce'),
 				'type' => 'select',
 				'value' => $this->options['type'],
 				'options' => $this->types,
             ],
 			[
 				'name' => sprintf('[%s][is_taxable]', self::NAME),
-				'title' => __('Is taxable?', 'jigoshop'),
+				'title' => __('Is taxable?', 'jigoshop-ecommerce'),
 				'type' => 'checkbox',
 				'checked' => $this->options['is_taxable'],
 				'classes' => ['switch-medium'],
             ],
 			[
 				'name' => sprintf('[%s][cost]', self::NAME),
-				'title' => __('Cost', 'jigoshop'),
+				'title' => __('Cost', 'jigoshop-ecommerce'),
 				'type' => 'text',
 				'value' => $this->options['cost'],
             ],
 			[
 				'name' => sprintf('[%s][fee]', self::NAME),
-				'title' => __('Handling fee', 'jigoshop'),
+				'title' => __('Handling fee', 'jigoshop-ecommerce'),
 				'type' => 'text',
 				'value' => $this->options['fee'],
             ],
 			[
 				'name' => sprintf('[%s][available_for]', self::NAME),
 				'id' => 'flat_rate_available_for',
-				'title' => __('Available for', 'jigoshop'),
+				'title' => __('Available for', 'jigoshop-ecommerce'),
 				'type' => 'select',
 				'value' => $this->options['available_for'],
 				'options' => $this->availability,
@@ -164,7 +164,7 @@ class FlatRate implements Method
 			[
 				'name' => sprintf('[%s][countries]', self::NAME),
 				'id' => 'flat_rate_countries',
-				'title' => __('Select countries', 'jigoshop'),
+				'title' => __('Select countries', 'jigoshop-ecommerce'),
 				'type' => 'select',
 				'value' => $this->options['countries'],
 				'options' => Country::getAllowed(),
@@ -188,34 +188,34 @@ class FlatRate implements Method
 
 		if (!in_array($settings['type'], array_keys($this->types))) {
 			$settings['type'] = $this->options['type'];
-			$this->messages->addWarning(__('Type is invalid - value is left unchanged.', 'jigoshop'));
+			$this->messages->addWarning(__('Type is invalid - value is left unchanged.', 'jigoshop-ecommerce'));
 		}
 
 		if (!is_numeric($settings['cost'])) {
 			$settings['cost'] = $this->options['cost'];
-			$this->messages->addWarning(__('Cost was invalid - value is left unchanged.', 'jigoshop'));
+			$this->messages->addWarning(__('Cost was invalid - value is left unchanged.', 'jigoshop-ecommerce'));
 		}
 		if ($settings['cost'] >= 0) {
 			$settings['cost'] = (float)$settings['cost'];
 		} else {
 			$settings['cost'] = $this->options['cost'];
-			$this->messages->addWarning(__('Cost was below 0 - value is left unchanged.', 'jigoshop'));
+			$this->messages->addWarning(__('Cost was below 0 - value is left unchanged.', 'jigoshop-ecommerce'));
 		}
 
 		if (!is_numeric($settings['fee'])) {
 			$settings['fee'] = $this->options['fee'];
-			$this->messages->addWarning(__('Fee was invalid - value is left unchanged.', 'jigoshop'));
+			$this->messages->addWarning(__('Fee was invalid - value is left unchanged.', 'jigoshop-ecommerce'));
 		}
 		if ($settings['fee'] >= 0) {
 			$settings['fee'] = (float)$settings['fee'];
 		} else {
 			$settings['fee'] = $this->options['fee'];
-			$this->messages->addWarning(__('Fee was below 0 - value is left unchanged.', 'jigoshop'));
+			$this->messages->addWarning(__('Fee was below 0 - value is left unchanged.', 'jigoshop-ecommerce'));
 		}
 
 		if (!in_array($settings['available_for'], array_keys($this->availability))) {
 			$settings['available_for'] = $this->options['available_for'];
-			$this->messages->addWarning(__('Availability is invalid - value is left unchanged.', 'jigoshop'));
+			$this->messages->addWarning(__('Availability is invalid - value is left unchanged.', 'jigoshop-ecommerce'));
 		}
 
 		if ($settings['available_for'] === 'specific') {

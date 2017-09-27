@@ -13,8 +13,8 @@ use Jigoshop\Helper\Render;
 					<table class="table table-striped" id="tax-classes">
 						<thead>
 						<tr>
-							<th scope="col"><?php _e('Label', 'jigoshop'); ?></th>
-							<th scope="col"><?php _e('Internal class name', 'jigoshop'); ?></th>
+							<th scope="col"><?php _e('Label', 'jigoshop-ecommerce'); ?></th>
+							<th scope="col"><?php _e('Internal class name', 'jigoshop-ecommerce'); ?></th>
 							<th scope="col"></th>
 						</tr>
 						</thead>
@@ -26,7 +26,7 @@ use Jigoshop\Helper\Render;
 						<tfoot>
 						<tr>
 							<td colspan="3">
-								<button type="button" class="btn btn-default" id="add-tax-class"><span class="glyphicon glyphicon-plus"></span> <?php _e('Add', 'jigoshop'); ?></button>
+								<button type="button" class="btn btn-default" id="add-tax-class"><span class="glyphicon glyphicon-plus"></span> <?php _e('Add', 'jigoshop-ecommerce'); ?></button>
 							</td>
 						</tr>
 						</tfoot>

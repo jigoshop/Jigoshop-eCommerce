@@ -48,17 +48,17 @@ class Product
 
         $that = $this;
         $wp->addAction('add_meta_boxes_'.Types::PRODUCT, function () use ($wp, $that){
-            $wp->addMetaBox('jigoshop-product-data', __('Product Data', 'jigoshop'), [$that, 'box'], Types::PRODUCT, 'normal', 'high');
-            $wp->addMetaBox('jigoshop-product-attachments', __('Attachments', 'jigoshop'), [$that, 'attachmentsBox'], Types::PRODUCT, 'side', 'low');
+            $wp->addMetaBox('jigoshop-product-data', __('Product Data', 'jigoshop-ecommerce'), [$that, 'box'], Types::PRODUCT, 'normal', 'high');
+            $wp->addMetaBox('jigoshop-product-attachments', __('Attachments', 'jigoshop-ecommerce'), [$that, 'attachmentsBox'], Types::PRODUCT, 'side', 'low');
             $wp->removeMetaBox('commentstatusdiv', null, 'normal');
         });
 
         $this->menu = $menu = $this->wp->applyFilters('jigoshop\admin\product\menu', [
-            'general' => ['label' => __('General', 'jigoshop'), 'visible' => true],
-            'advanced' => ['label' => __('Advanced', 'jigoshop'), 'visible' => [Simple::TYPE, Virtual::TYPE]],
-            'attributes' => ['label' => __('Attributes', 'jigoshop'), 'visible' => true],
-            'stock' => ['label' => __('Stock', 'jigoshop'), 'visible' => [Simple::TYPE, Virtual::TYPE]],
-            'sales' => ['label' => __('Sales', 'jigoshop'), 'visible' => [Simple::TYPE, Virtual::TYPE]],
+            'general' => ['label' => __('General', 'jigoshop-ecommerce'), 'visible' => true],
+            'advanced' => ['label' => __('Advanced', 'jigoshop-ecommerce'), 'visible' => [Simple::TYPE, Virtual::TYPE]],
+            'attributes' => ['label' => __('Attributes', 'jigoshop-ecommerce'), 'visible' => true],
+            'stock' => ['label' => __('Stock', 'jigoshop-ecommerce'), 'visible' => [Simple::TYPE, Virtual::TYPE]],
+            'sales' => ['label' => __('Sales', 'jigoshop-ecommerce'), 'visible' => [Simple::TYPE, Virtual::TYPE]],
         ]);
 
         $wp->addAction('admin_enqueue_scripts', function () use ($wp, $menu, $that){
@@ -78,11 +78,11 @@ class Product
                 ]);
                 Scripts::localize('jigoshop.admin.product', 'jigoshop_admin_product', [
                     'i18n' => [
-                        'saved' => __('Changes saved.', 'jigoshop'),
-                        'attribute_removed' => __('Attribute successfully removed.', 'jigoshop'),
-                        'confirm_remove' => __('Are you sure?', 'jigoshop'),
-                        'invalid_attribute' => __('Invalid attribute, please select another one.', 'jigoshop'),
-                        'attribute_without_label' => __('Please provide attribute label.', 'jigoshop'),
+                        'saved' => __('Changes saved.', 'jigoshop-ecommerce'),
+                        'attribute_removed' => __('Attribute successfully removed.', 'jigoshop-ecommerce'),
+                        'confirm_remove' => __('Are you sure?', 'jigoshop-ecommerce'),
+                        'invalid_attribute' => __('Invalid attribute, please select another one.', 'jigoshop-ecommerce'),
+                        'attribute_without_label' => __('Please provide attribute label.', 'jigoshop-ecommerce'),
                     ],
                     'menu' => array_map(function ($item){
                         return $item['visible'];
@@ -119,7 +119,7 @@ class Product
 
         $attributes = [
             '' => ['label' => ''],
-            '-1' => ['label' => __('Custom attribute', 'jigoshop')],
+            '-1' => ['label' => __('Custom attribute', 'jigoshop-ecommerce')],
         ];
         foreach ($this->productService->findAllAttributes() as $attribute) {
             /** @var $attribute Attribute */
@@ -159,8 +159,8 @@ class Product
     public function attachmentsBox()
     {
         $menu = [
-            'gallery' => __('Gallery', 'jigoshop'),
-            'downloads' => __('Downloads', 'jigoshop'),
+            'gallery' => __('Gallery', 'jigoshop-ecommerce'),
+            'downloads' => __('Downloads', 'jigoshop-ecommerce'),
         ];
 
         Render::output('admin/product/attachments', [
@@ -180,13 +180,13 @@ class Product
     {
         try {
             if (!isset($_POST['product_id']) || empty($_POST['product_id'])) {
-                throw new Exception(__('Product was not specified.', 'jigoshop'));
+                throw new Exception(__('Product was not specified.', 'jigoshop-ecommerce'));
             }
             if (!is_numeric($_POST['product_id'])) {
-                throw new Exception(__('Invalid product ID.', 'jigoshop'));
+                throw new Exception(__('Invalid product ID.', 'jigoshop-ecommerce'));
             }
             if (!isset($_POST['type']) || empty($_POST['type'])) {
-                throw new Exception(__('Product type was not specified.', 'jigoshop'));
+                throw new Exception(__('Product type was not specified.', 'jigoshop-ecommerce'));
             }
 
             update_post_meta((int)$_POST['product_id'], 'type', trim($_POST['type']));
@@ -208,23 +208,23 @@ class Product
     {
         try {
             if (!isset($_POST['product_id']) || empty($_POST['product_id'])) {
-                throw new Exception(__('Product was not specified.', 'jigoshop'));
+                throw new Exception(__('Product was not specified.', 'jigoshop-ecommerce'));
             }
             if (!is_numeric($_POST['product_id'])) {
-                throw new Exception(__('Invalid product ID.', 'jigoshop'));
+                throw new Exception(__('Invalid product ID.', 'jigoshop-ecommerce'));
             }
             if (!isset($_POST['attribute_id']) || empty($_POST['attribute_id'])) {
-                throw new Exception(__('Attribute was not specified.', 'jigoshop'));
+                throw new Exception(__('Attribute was not specified.', 'jigoshop-ecommerce'));
             }
             if (!is_numeric($_POST['attribute_id'])) {
-                throw new Exception(__('Invalid attribute ID.', 'jigoshop'));
+                throw new Exception(__('Invalid attribute ID.', 'jigoshop-ecommerce'));
             }
 
             /** @var \Jigoshop\Entity\Product $product */
             $product = $this->productService->find((int)$_POST['product_id']);
 
             if (!$product->getId()) {
-                throw new Exception(__('Product does not exists.', 'jigoshop'));
+                throw new Exception(__('Product does not exists.', 'jigoshop-ecommerce'));
             }
 
             $id = (int)$_POST['attribute_id'];
@@ -236,7 +236,7 @@ class Product
                 $label = trim(strip_tags($_POST['attribute_label']));
 
                 if (empty($label)) {
-                    throw new Exception(__('Custom attribute requires label to be set.', 'jigoshop'));
+                    throw new Exception(__('Custom attribute requires label to be set.', 'jigoshop-ecommerce'));
                 }
 
                 $attribute->setLabel($label);
@@ -249,13 +249,13 @@ class Product
             }
 
             if ($attribute === null) {
-                throw new Exception(__('Attribute does not exists.', 'jigoshop'));
+                throw new Exception(__('Attribute does not exists.', 'jigoshop-ecommerce'));
             }
 
             if (isset($_POST['value'])) {
                 $attribute->setValue(trim(htmlspecialchars(wp_kses_post($_POST['value']))));
             } else if ($attributeExists) {
-                throw new Exception(sprintf(__('Attribute "%s" already exists.', 'jigoshop'), $attribute->getLabel()));
+                throw new Exception(sprintf(__('Attribute "%s" already exists.', 'jigoshop-ecommerce'), $attribute->getLabel()));
             } else {
                 $attribute->setValue('');
             }
@@ -287,23 +287,23 @@ class Product
     {
         try {
             if (!isset($_POST['product_id']) || empty($_POST['product_id'])) {
-                throw new Exception(__('Product was not specified.', 'jigoshop'));
+                throw new Exception(__('Product was not specified.', 'jigoshop-ecommerce'));
             }
             if (!is_numeric($_POST['product_id'])) {
-                throw new Exception(__('Invalid product ID.', 'jigoshop'));
+                throw new Exception(__('Invalid product ID.', 'jigoshop-ecommerce'));
             }
             if (!isset($_POST['attribute_id']) || empty($_POST['attribute_id'])) {
-                throw new Exception(__('Attribute was not specified.', 'jigoshop'));
+                throw new Exception(__('Attribute was not specified.', 'jigoshop-ecommerce'));
             }
             if (!is_numeric($_POST['attribute_id'])) {
-                throw new Exception(__('Invalid attribute ID.', 'jigoshop'));
+                throw new Exception(__('Invalid attribute ID.', 'jigoshop-ecommerce'));
             }
 
             /** @var \Jigoshop\Entity\Product $product */
             $product = $this->productService->find((int)$_POST['product_id']);
 
             if (!$product->getId()) {
-                throw new Exception(__('Product does not exists.', 'jigoshop'));
+                throw new Exception(__('Product does not exists.', 'jigoshop-ecommerce'));
             }
 
             $product->removeAttribute((int)$_POST['attribute_id']);
@@ -337,7 +337,7 @@ class Product
                     $products[] = $this->productService->find($id);
                 }
             } else {
-                throw new Exception(__('Neither query nor value is provided to find products.', 'jigoshop'));
+                throw new Exception(__('Neither query nor value is provided to find products.', 'jigoshop-ecommerce'));
             }
 
             $products = array_filter($products, function($product) {
@@ -362,7 +362,7 @@ class Product
     public function ajaxGetInheritedAttributes() {
         try {
             if(!isset($_POST['categories']) || !is_array($_POST['categories'])) {
-                throw new Exception(__('No categories specified.', 'jigoshop'));
+                throw new Exception(__('No categories specified.', 'jigoshop-ecommerce'));
             }
 
             $categories = [];

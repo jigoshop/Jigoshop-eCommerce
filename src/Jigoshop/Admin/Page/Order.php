@@ -88,14 +88,14 @@ class Order
             $order = $orderService->findForPost($post);
             $wp->addMetaBox('jigoshop-order-data', $order->getTitle(), [$that, 'dataBox'], Types::ORDER, 'normal',
                 'high');
-            $wp->addMetaBox('jigoshop-order-items', __('Order Items', 'jigoshop'), [$that, 'itemsBox'],
+            $wp->addMetaBox('jigoshop-order-items', __('Order Items', 'jigoshop-ecommerce'), [$that, 'itemsBox'],
                 Types::ORDER, 'normal', 'high');
-            $wp->addMetaBox('jigoshop-order-totals', __('Order Totals', 'jigoshop'), [$that, 'totalsBox'],
+            $wp->addMetaBox('jigoshop-order-totals', __('Order Totals', 'jigoshop-ecommerce'), [$that, 'totalsBox'],
                 Types::ORDER, 'normal', 'high');
             $wp->removeMetaBox('commentstatusdiv', null, 'normal');
             $wp->removeMetaBox('submitdiv', Types::ORDER, 'side');
             $wp->addMetaBox('commentsdiv', __('Comments'), 'post_comment_meta_box', null, 'normal', 'core');
-            $wp->addMetaBox('submitdiv', __('Order Actions', 'jigoshop'), [$that, 'actionsBox'], Types::ORDER,
+            $wp->addMetaBox('submitdiv', __('Order Actions', 'jigoshop-ecommerce'), [$that, 'actionsBox'], Types::ORDER,
                 'side', 'default');
         });
     }
@@ -107,7 +107,7 @@ class Order
             $order = $this->orderService->find((int)$_POST['order']);
 
             if ($order->getId() === null) {
-                throw new Exception(__('Order not found.', 'jigoshop'));
+                throw new Exception(__('Order not found.', 'jigoshop-ecommerce'));
             }
 
             /** @var ProductEntity|ProductEntity\Purchasable $product */
@@ -122,14 +122,14 @@ class Order
             $product = $this->productService->findforPost($post);
 
             if ($product->getId() === null) {
-                throw new Exception(__('Product not found.', 'jigoshop'));
+                throw new Exception(__('Product not found.', 'jigoshop-ecommerce'));
             }
 
             /** @var Item $item */
             $item = $this->wp->applyFilters('jigoshop\cart\add', null, $product);
 
             if ($item === null) {
-                throw new Exception(__('Product cannot be added to the order.', 'jigoshop'));
+                throw new Exception(__('Product cannot be added to the order.', 'jigoshop-ecommerce'));
             }
 
             $key = $this->productService->generateItemKey($item);
@@ -246,23 +246,23 @@ class Order
     {
         try {
             if (!is_numeric($_POST['quantity']) || $_POST['quantity'] < 0) {
-                throw new Exception(__('Invalid quantity value.', 'jigoshop'));
+                throw new Exception(__('Invalid quantity value.', 'jigoshop-ecommerce'));
             }
             if (!is_numeric($_POST['price']) || $_POST['price'] < 0) {
-                throw new Exception(__('Invalid product price.', 'jigoshop'));
+                throw new Exception(__('Invalid product price.', 'jigoshop-ecommerce'));
             }
 
             /** @var \Jigoshop\Entity\Order $order */
             $order = $this->orderService->find((int)$_POST['order']);
 
             if ($order->getId() === null) {
-                throw new Exception(__('Order not found.', 'jigoshop'));
+                throw new Exception(__('Order not found.', 'jigoshop-ecommerce'));
             }
 
             $item = $order->removeItem($_POST['product']);
 
             if ($item === null) {
-                throw new Exception(__('Item not found.', 'jigoshop'));
+                throw new Exception(__('Item not found.', 'jigoshop-ecommerce'));
             }
 
             $item->setQuantity((int)$_POST['quantity']);
@@ -296,7 +296,7 @@ class Order
             $order = $this->orderService->find((int)$_POST['order']);
 
             if ($order->getId() === null) {
-                throw new Exception(__('Order not found.', 'jigoshop'));
+                throw new Exception(__('Order not found.', 'jigoshop-ecommerce'));
             }
 
             $order->removeItem($_POST['product']);
@@ -320,14 +320,14 @@ class Order
             $order = $this->orderService->find((int)$_POST['order']);
 
             if ($order->getId() === null) {
-                throw new Exception(__('Order not found.', 'jigoshop'));
+                throw new Exception(__('Order not found.', 'jigoshop-ecommerce'));
             }
 
             $shippingMethod = $this->shippingService->get($_POST['method']);
 
             if ($shippingMethod instanceof Shipping\MultipleMethod) {
                 if (!isset($_POST['rate'])) {
-                    throw new Exception(__('Method rate is required.', 'jigoshop'));
+                    throw new Exception(__('Method rate is required.', 'jigoshop-ecommerce'));
                 }
 
                 $shippingMethod->setShippingRate((int)$_POST['rate']);
@@ -377,7 +377,7 @@ class Order
     {
         try {
             if (!in_array($_POST['value'], array_keys(Country::getAllowed()))) {
-                throw new Exception(__('Invalid country.', 'jigoshop'));
+                throw new Exception(__('Invalid country.', 'jigoshop-ecommerce'));
             }
 
             $post = $this->wp->getPost((int)$_POST['order']);
@@ -386,7 +386,7 @@ class Order
             $order = $this->orderService->findForPost($post);
 
             if ($order->getId() === null) {
-                throw new Exception(__('Order not found.', 'jigoshop'));
+                throw new Exception(__('Order not found.', 'jigoshop-ecommerce'));
             }
 
             switch ($_POST['type']) {
@@ -428,7 +428,7 @@ class Order
             $order = $this->orderService->findForPost($post);
 
             if ($order->getId() === null) {
-                throw new Exception(__('Order not found.', 'jigoshop'));
+                throw new Exception(__('Order not found.', 'jigoshop-ecommerce'));
             }
 
             switch ($_POST['type']) {
@@ -443,7 +443,7 @@ class Order
             if (Country::hasStates($address->getCountry()) && !Country::hasState($address->getCountry(),
                     $_POST['value'])
             ) {
-                throw new Exception(__('Invalid state.', 'jigoshop'));
+                throw new Exception(__('Invalid state.', 'jigoshop-ecommerce'));
             }
 
             $address->setState($_POST['value']);
@@ -474,7 +474,7 @@ class Order
             $order = $this->orderService->findForPost($post);
 
             if ($order->getId() === null) {
-                throw new Exception(__('Order not found.', 'jigoshop'));
+                throw new Exception(__('Order not found.', 'jigoshop-ecommerce'));
             }
 
             switch ($_POST['type']) {
@@ -489,7 +489,7 @@ class Order
             if ($this->options->get('shopping.validate_zip') && !Validation::isPostcode($_POST['value'],
                     $address->getCountry())
             ) {
-                throw new Exception(__('Invalid postcode.', 'jigoshop'));
+                throw new Exception(__('Invalid postcode.', 'jigoshop-ecommerce'));
             }
 
             $address->setPostcode($_POST['value']);

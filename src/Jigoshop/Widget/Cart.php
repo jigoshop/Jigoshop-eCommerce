@@ -20,10 +20,10 @@ class Cart extends \WP_Widget
 	{
 		$options = [
 			'classname' => self::ID,
-			'description' => __('Shopping Cart for the sidebar', 'jigoshop')
+			'description' => __('Shopping Cart for the sidebar', 'jigoshop-ecommerce')
         ];
 
-		parent::__construct(self::ID, __('Jigoshop: Cart', 'jigoshop'), $options);
+		parent::__construct(self::ID, __('Jigoshop: Cart', 'jigoshop-ecommerce'), $options);
 	}
 
 	/**
@@ -58,7 +58,7 @@ class Cart extends \WP_Widget
 		// Set the widget title
 		$title = apply_filters(
 			'widget_title',
-			($instance['title']) ? $instance['title'] : __('Cart', 'jigoshop'),
+			($instance['title']) ? $instance['title'] : __('Cart', 'jigoshop-ecommerce'),
 			$instance,
 			$this->id_base
 		);

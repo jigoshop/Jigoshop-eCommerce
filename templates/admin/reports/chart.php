@@ -19,7 +19,7 @@ use Jigoshop\Admin\Reports;
 	</div>
 	<div class="col-sm-2">
 		<a href="#" download="<?= $export['download'] ?>" class="btn btn-default export-csv" data-export="chart" data-xaxes="<?= $export['xaxes']; ?>" data-exclude_series="2" data-groupby="<?= $export['groupby']; ?>" aria-label="Left Align">
-            <span class="glyphicon glyphicon-export" aria-hidden="true"></span><?php _e('Export CSV', 'jigoshop'); ?>
+            <span class="glyphicon glyphicon-export" aria-hidden="true"></span><?php _e('Export CSV', 'jigoshop-ecommerce'); ?>
 		</a>
 	</div>
 </div>
@@ -43,7 +43,7 @@ use Jigoshop\Admin\Reports;
 					<div class="content<?php $widget->isVisible() and print ' visible'; ?>"><?php $widget->display(); ?></div>
 				</div>
 			<?php endforeach; ?>
-			<button type="submit" class="btn btn-primary btn-block"><?php _e('Filter Report', 'jigoshop') ?></button>
+			<button type="submit" class="btn btn-primary btn-block"><?php _e('Filter Report', 'jigoshop-ecommerce') ?></button>
 		</form>
 	</div>
 </div>

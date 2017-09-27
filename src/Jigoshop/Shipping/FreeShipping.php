@@ -40,8 +40,8 @@ class FreeShipping implements Method
 		$this->messages = $messages;
 
 		$this->availability = [
-			'all' => __('All allowed countries', 'jigoshop'),
-			'specific' => __('Selected countries', 'jigoshop'),
+			'all' => __('All allowed countries', 'jigoshop-ecommerce'),
+			'specific' => __('Selected countries', 'jigoshop-ecommerce'),
         ];
 
 		$wp->addAction('admin_enqueue_scripts', function () use ($wp){
@@ -71,7 +71,7 @@ class FreeShipping implements Method
 	 */
 	public function getName()
 	{
-		return __('Free shipping', 'jigoshop');
+		return __('Free shipping', 'jigoshop-ecommerce');
 	}
 
 	/**
@@ -124,28 +124,28 @@ class FreeShipping implements Method
 		return [
 			[
 				'name' => sprintf('[%s][enabled]', self::NAME),
-				'title' => __('Is enabled?', 'jigoshop'),
+				'title' => __('Is enabled?', 'jigoshop-ecommerce'),
 				'type' => 'checkbox',
 				'checked' => $this->options['enabled'],
 				'classes' => ['switch-medium'],
             ],
 			[
 				'name' => sprintf('[%s][title]', self::NAME),
-				'title' => __('Method title', 'jigoshop'),
+				'title' => __('Method title', 'jigoshop-ecommerce'),
 				'type' => 'text',
 				'value' => $this->getTitle(),
             ],
 			[
 				'name' => sprintf('[%s][minimum]', self::NAME),
-				'title' => __('Minimum cart value', 'jigoshop'),
-				'description' => __('Minimum cart value above which the Free Shipping method should be available.', 'jigoshop'),
+				'title' => __('Minimum cart value', 'jigoshop-ecommerce'),
+				'description' => __('Minimum cart value above which the Free Shipping method should be available.', 'jigoshop-ecommerce'),
 				'type' => 'text',
 				'value' => $this->options['minimum'],
             ],
 			[
 				'name' => sprintf('[%s][available_for]', self::NAME),
 				'id' => 'free_shipping_available_for',
-				'title' => __('Available for', 'jigoshop'),
+				'title' => __('Available for', 'jigoshop-ecommerce'),
 				'type' => 'select',
 				'value' => $this->options['available_for'],
 				'options' => $this->availability,
@@ -153,7 +153,7 @@ class FreeShipping implements Method
 			[
 				'name' => sprintf('[%s][countries]', self::NAME),
 				'id' => 'free_shipping_countries',
-				'title' => __('Select countries', 'jigoshop'),
+				'title' => __('Select countries', 'jigoshop-ecommerce'),
 				'type' => 'select',
 				'value' => $this->options['countries'],
 				'options' => Country::getAllowed(),
@@ -176,19 +176,19 @@ class FreeShipping implements Method
 
 		if (!is_numeric($settings['minimum'])) {
 			$settings['minimum'] = $this->options['minimum'];
-			$this->messages->addWarning(__('Minimum cart value was invalid - value is left unchanged.', 'jigoshop'));
+			$this->messages->addWarning(__('Minimum cart value was invalid - value is left unchanged.', 'jigoshop-ecommerce'));
 		}
 
 		if ($settings['minimum'] >= 0) {
 			$settings['minimum'] = (int)$settings['minimum'];
 		} else {
 			$settings['minimum'] = $this->options['minimum'];
-			$this->messages->addWarning(__('Minimum cart value was below 0 - value is left unchanged.', 'jigoshop'));
+			$this->messages->addWarning(__('Minimum cart value was below 0 - value is left unchanged.', 'jigoshop-ecommerce'));
 		}
 
 		if (!in_array($settings['available_for'], array_keys($this->availability))) {
 			$settings['available_for'] = $this->options['available_for'];
-			$this->messages->addWarning(__('Availability is invalid - value is left unchanged.', 'jigoshop'));
+			$this->messages->addWarning(__('Availability is invalid - value is left unchanged.', 'jigoshop-ecommerce'));
 		}
 
 		if ($settings['available_for'] === 'specific') {

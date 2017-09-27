@@ -181,7 +181,7 @@ class Core
 
 		if ($this->options->get('general.demo_store') && Frontend\Pages::isJigoshop()) {
 			Render::output('shop/custom_message', [
-				'message' => __('This is a demo store for testing purposes &mdash; no orders shall be fulfilled.', 'jigoshop'),
+				'message' => __('This is a demo store for testing purposes &mdash; no orders shall be fulfilled.', 'jigoshop-ecommerce'),
             ]);
 		}
 	}

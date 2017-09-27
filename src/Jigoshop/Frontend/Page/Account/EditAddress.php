@@ -72,28 +72,28 @@ class EditAddress implements PageInterface
 
 			$postcode = trim(htmlspecialchars(strip_tags($_POST['address']['postcode'])));
 			if ($this->options->get('shopping.validate_zip') && !Validation::isPostcode($postcode, $address->getCountry())) {
-				$errors[] = __('Postcode is not valid!', 'jigoshop');
+				$errors[] = __('Postcode is not valid!', 'jigoshop-ecommerce');
 			} else {
 				$address->setPostcode($postcode);
 			}
 
 			$country = trim(htmlspecialchars(strip_tags($_POST['address']['country'])));
 			if (!Country::exists($country)) {
-				$errors[] = sprintf(__('Country "%s" does not exists.', 'jigoshop'), $country);
+				$errors[] = sprintf(__('Country "%s" does not exists.', 'jigoshop-ecommerce'), $country);
 			} else {
 				$address->setCountry($country);
 			}
 
 			$state = trim(htmlspecialchars(strip_tags($_POST['address']['state'])));
 			if (Country::hasStates($address->getCountry()) && !Country::hasState($address->getCountry(), $state)) {
-				$errors[] = sprintf(__('Country "%s" does not have state "%s".', 'jigoshop'), Country::getName($address->getCountry()), $state);
+				$errors[] = sprintf(__('Country "%s" does not have state "%s".', 'jigoshop-ecommerce'), Country::getName($address->getCountry()), $state);
 			} else {
 				$address->setState($state);
 			}
 
 			$email = trim(htmlspecialchars(strip_tags($_POST['address']['email'])));
 			if (!Validation::isEmail($email)) {
-				$errors[] = __('Invalid email address', 'jigoshop');
+				$errors[] = __('Invalid email address', 'jigoshop-ecommerce');
 			} else {
 				$address->setEmail($email);
 			}
@@ -102,7 +102,7 @@ class EditAddress implements PageInterface
 				$this->messages->addError(join('<br/>', $errors), false);
 			} else {
 				$this->customerService->save($customer);
-				$this->messages->addNotice(__('Address saved.', 'jigoshop'));
+				$this->messages->addNotice(__('Address saved.', 'jigoshop-ecommerce'));
 				$this->wp->redirectTo($this->options->getPageId(Pages::ACCOUNT));
 			}
 		}

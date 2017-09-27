@@ -30,9 +30,9 @@ class Email
 
 		$that = $this;
 		$wp->addAction('add_meta_boxes_'.Types::EMAIL, function () use ($wp, $that){
-			$wp->addMetaBox('jigoshop-email-data', __('Email Data', 'jigoshop'), [$that, 'box'], Types::EMAIL, 'normal', 'default');
-			$wp->addMetaBox('jigoshop-email-variable', __('Email Variables', 'jigoshop'), [$that, 'variablesBox'], Types::EMAIL, 'normal', 'default');
-			$wp->addMetaBox('jigoshop-email-attachments', __('Email Attachments', 'jigoshop'), [$that, 'attachmentsBox'], Types::EMAIL, 'side', 'default');
+			$wp->addMetaBox('jigoshop-email-data', __('Email Data', 'jigoshop-ecommerce'), [$that, 'box'], Types::EMAIL, 'normal', 'default');
+			$wp->addMetaBox('jigoshop-email-variable', __('Email Variables', 'jigoshop-ecommerce'), [$that, 'variablesBox'], Types::EMAIL, 'normal', 'default');
+			$wp->addMetaBox('jigoshop-email-attachments', __('Email Attachments', 'jigoshop-ecommerce'), [$that, 'attachmentsBox'], Types::EMAIL, 'side', 'default');
 		});
 
 		$wp->addAction('admin_enqueue_scripts', function () use ($wp){
@@ -61,7 +61,7 @@ class Email
 			$email = $this->emailService->find((int)$_POST['email']);
 
 			if ($email->getId() === null) {
-				throw new Exception(__('Email not found.', 'jigoshop'));
+				throw new Exception(__('Email not found.', 'jigoshop-ecommerce'));
 			}
 
 			$availableActions = $this->emailService->getAvailableActions();

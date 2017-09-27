@@ -30,10 +30,10 @@ class RecentReviews extends \WP_Widget
 	{
 		$options = [
 			'classname' => self::ID,
-			'description' => __('Display a list of your most recent product reviews', 'jigoshop')
+			'description' => __('Display a list of your most recent product reviews', 'jigoshop-ecommerce')
         ];
 
-		parent::__construct(self::ID, __('Jigoshop: Recent Reviews', 'jigoshop'), $options);
+		parent::__construct(self::ID, __('Jigoshop: Recent Reviews', 'jigoshop-ecommerce'), $options);
 
 		// Flush cache after every save
 		add_action('save_post', [$this, 'deleteTransient']);
@@ -72,7 +72,7 @@ class RecentReviews extends \WP_Widget
 		// Set the widget title
 		$title = apply_filters(
 			'widget_title',
-			($instance['title']) ? $instance['title'] : __('Recent Reviews', 'jigoshop'),
+			($instance['title']) ? $instance['title'] : __('Recent Reviews', 'jigoshop-ecommerce'),
 			$instance,
 			$this->id_base
 		);

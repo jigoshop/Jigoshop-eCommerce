@@ -27,7 +27,7 @@ if ($title) {
 			<span class="js_widget_product_title"><?= $product->getName(); ?></span>
 		</a>
 		<?= Product::getRatingHtml($comment->rating, 'recent_reviews'); ?>
-		<?php printf(_x('by %1$s', 'author', 'jigoshop'), get_comment_author($comment->comment_ID)); ?>
+		<?php printf(_x('by %1$s', 'author', 'jigoshop-ecommerce'), get_comment_author($comment->comment_ID)); ?>
 	</li>
 	<?php endforeach; ?>
 </ul>

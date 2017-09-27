@@ -126,7 +126,7 @@ class Emails implements Tool
 			$wpdb->query("ROLLBACK");
 			$wpdb->query("SET AUTOCOMMIT=" . $var_autocommit_sql);
 
-			Migration::saveLog(__('Migration emails end with error: ', 'jigoshop') . $e);
+			Migration::saveLog(__('Migration emails end with error: ', 'jigoshop-ecommerce') . $e);
 
 			return false;
 		}
@@ -175,7 +175,7 @@ class Emails implements Tool
 //			1 - if first time ajax request
 			if($_POST['msgLog'] == 1)
 			{
-				Migration::saveLog(__('Migration emails START.', 'jigoshop'), true);
+				Migration::saveLog(__('Migration emails START.', 'jigoshop-ecommerce'), true);
 			}
 
 			$wpdb = $this->wp->getWPDB();
@@ -230,13 +230,13 @@ class Emails implements Tool
 				else
 				{
 					$ajax_response['success'] = false;
-					Migration::saveLog(__('Migration emails end with error.', 'jigoshop'));
+					Migration::saveLog(__('Migration emails end with error.', 'jigoshop-ecommerce'));
 				}
 			}
 			elseif($countRemain == 0)
 			{
 				$this->wp->updateOption('jigoshop_emails_migrate_id', serialize($emailsIdsMigration));
-				Migration::saveLog(__('Migration emails END.', 'jigoshop'));
+				Migration::saveLog(__('Migration emails END.', 'jigoshop-ecommerce'));
 			}
 
 			echo json_encode($ajax_response);
@@ -250,7 +250,7 @@ class Emails implements Tool
 				'success' => false,
             ]);
 
-			Migration::saveLog(__('Migration emails end with error: ', 'jigoshop') . $e);
+			Migration::saveLog(__('Migration emails end with error: ', 'jigoshop-ecommerce') . $e);
 		}
 
 		exit;

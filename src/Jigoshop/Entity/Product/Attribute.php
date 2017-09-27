@@ -47,9 +47,9 @@ abstract class Attribute implements \JsonSerializable
 	{
 		if (self::$types === null) {
 			self::$types = [
-				Multiselect::TYPE => __('Multiselect', 'jigoshop'),
-				Select::TYPE => __('Select', 'jigoshop'),
-				Text::TYPE => __('Text', 'jigoshop'),
+				Multiselect::TYPE => __('Multiselect', 'jigoshop-ecommerce'),
+				Select::TYPE => __('Select', 'jigoshop-ecommerce'),
+				Text::TYPE => __('Text', 'jigoshop-ecommerce'),
             ];
 		}
 

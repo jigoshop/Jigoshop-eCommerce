@@ -20,7 +20,7 @@ if ($title) {
 	<nav role="navigation">
 		<ul class="pagenav">
 			<?php foreach ($links as $title => $href): ?>
-				<li><a title="<?php printf(__('Go to %s', 'jigoshop'), $title); ?>" href="<?= $href; ?>"><?= $title; ?></a></li>
+				<li><a title="<?php printf(__('Go to %s', 'jigoshop-ecommerce'), $title); ?>" href="<?= $href; ?>"><?= $title; ?></a></li>
 			<?php endforeach; ?>
 		</ul>
 	</nav>

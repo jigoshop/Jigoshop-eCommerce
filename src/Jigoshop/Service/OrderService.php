@@ -148,7 +148,7 @@ class OrderService implements OrderServiceInterface
 
             $id = $wpdb->insert_id;
             if (!is_int($id) || $id === 0) {
-                throw new Exception(__('Unable to save order. Please try again.', 'jigoshop'));
+                throw new Exception(__('Unable to save order. Please try again.', 'jigoshop-ecommerce'));
             }
 
             $object->setId($id);
@@ -181,7 +181,7 @@ class OrderService implements OrderServiceInterface
                 $this->wp->doAction('jigoshop\order\\' . $messages['old_status'] . '_to_' . $messages['new_status'],
                     $object);
                 $this->addNote($object,
-                    sprintf(__('%sOrder status changed from %s to %s.', 'jigoshop'), $messages['message'],
+                    sprintf(__('%sOrder status changed from %s to %s.', 'jigoshop-ecommerce'), $messages['message'],
                         Order\Status::getName($messages['old_status']),
                         Order\Status::getName($messages['new_status'])));
             }
@@ -414,12 +414,12 @@ class OrderService implements OrderServiceInterface
     {
         $comment = [
             'comment_post_ID' => $order->getId(),
-            'comment_author' => __('Jigoshop', 'jigoshop'),
+            'comment_author' => __('Jigoshop', 'jigoshop-ecommerce'),
             'comment_author_email' => '',
             'comment_author_url' => '',
             'comment_content' => $note,
             'comment_type' => 'order_note',
-            'comment_agent' => __('Jigoshop', 'jigoshop'),
+            'comment_agent' => __('Jigoshop', 'jigoshop-ecommerce'),
             'comment_parent' => 0,
             'comment_date' => $this->wp->getHelpers()->currentTime('mysql'),
             'comment_date_gmt' => $this->wp->getHelpers()->currentTime('mysql', true),

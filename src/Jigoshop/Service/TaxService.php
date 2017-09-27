@@ -424,7 +424,7 @@ class TaxService implements TaxServiceInterface
 
 		if (!isset($definitions[$taxClass])) {
 			if (WP_DEBUG) {
-				throw new Exception(sprintf(__('No tax class: %s', 'jigoshop'), $taxClass));
+				throw new Exception(sprintf(__('No tax class: %s', 'jigoshop-ecommerce'), $taxClass));
 			}
 
 			return $taxClass;
@@ -446,7 +446,7 @@ class TaxService implements TaxServiceInterface
 	{
 		if (!in_array($taxClass, $this->taxClasses)) {
 			if (WP_DEBUG) {
-				throw new Exception(sprintf(__('No tax class: %s', 'jigoshop'), $taxClass));
+				throw new Exception(sprintf(__('No tax class: %s', 'jigoshop-ecommerce'), $taxClass));
 			}
 
 			return $taxClass;

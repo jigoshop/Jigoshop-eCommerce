@@ -31,14 +31,14 @@ class Roles implements Initializer
 		$roles = $wp->getRoles();
 
 		// Customer role
-		$wp->addRole('customer', __('Customer', 'jigoshop'), $wp->applyFilters('jigoshop\role\customer', [
+		$wp->addRole('customer', __('Customer', 'jigoshop-ecommerce'), $wp->applyFilters('jigoshop\role\customer', [
 			'read' => true,
 			'edit_posts' => false,
 			'delete_posts' => false
         ]));
 
 		// Shop manager role
-		$wp->addRole('shop_manager', __('Shop Manager', 'jigoshop'), $wp->applyFilters('jigoshop\role\shop_manager', [
+		$wp->addRole('shop_manager', __('Shop Manager', 'jigoshop-ecommerce'), $wp->applyFilters('jigoshop\role\shop_manager', [
 			'read' => true,
 			'read_private_pages' => true,
 			'read_private_posts' => true,

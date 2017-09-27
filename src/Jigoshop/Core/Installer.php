@@ -99,7 +99,7 @@ class Installer
 		";
         if (!$wpdb->query($query)) {
             Registry::getInstance(JIGOSHOP_LOGGER)->addCritical(sprintf('Unable change table "%s" to InnoDB. Error: "%s".', 'wp_posts', $wpdb->last_error));
-            echo __('We haven\'t been able to change the engine of the table "posts" to InnoDB. This is a required option. Ask your server provider if this is possible.', 'jigoshop');
+            echo __('We haven\'t been able to change the engine of the table "posts" to InnoDB. This is a required option. Ask your server provider if this is possible.', 'jigoshop-ecommerce');
             exit;
         }
 
@@ -115,7 +115,7 @@ class Installer
 		";
         if (!$wpdb->query($query)) {
             Registry::getInstance(JIGOSHOP_LOGGER)->addCritical(sprintf('Unable to create table "%s". Error: "%s".', 'jigoshop_tax', $wpdb->last_error));
-            echo __('Unable to create Jigoshop tables.', 'jigoshop');
+            echo __('Unable to create Jigoshop tables.', 'jigoshop-ecommerce');
             exit;
         }
 
@@ -133,7 +133,7 @@ class Installer
 		";
         if (!$wpdb->query($query)) {
             Registry::getInstance(JIGOSHOP_LOGGER)->addCritical(sprintf('Unable to create table "%s". Error: "%s".', 'jigoshop_tax_location', $wpdb->last_error));
-            echo __('Unable to create Jigoshop tables.', 'jigoshop');
+            echo __('Unable to create Jigoshop tables.', 'jigoshop-ecommerce');
             exit;
         }
 
@@ -150,7 +150,7 @@ class Installer
 		";
         if (!$wpdb->query($query)) {
             Registry::getInstance(\JigoshopInit::getLogger())->addCritical(sprintf('Unable to create table "%s". Error: "%s".', 'jigoshop_order_item', $wpdb->last_error));
-            echo __('Unable to create Jigoshop tables.', 'jigoshop');
+            echo __('Unable to create Jigoshop tables.', 'jigoshop-ecommerce');
             exit;
         }
 
@@ -165,7 +165,7 @@ class Installer
 		";
         if (!$wpdb->query($query)) {
             Registry::getInstance(JIGOSHOP_LOGGER)->addCritical(sprintf('Unable to create table "%s". Error: "%s".', 'jigoshop_order_item_meta', $wpdb->last_error));
-            echo __('Unable to create Jigoshop tables.', 'jigoshop');
+            echo __('Unable to create Jigoshop tables.', 'jigoshop-ecommerce');
             exit;
         }
 
@@ -188,7 +188,7 @@ class Installer
 		";
         if (!$wpdb->query($query)) {
             Registry::getInstance(JIGOSHOP_LOGGER)->addCritical(sprintf('Unable to create table "%s". Error: "%s".', 'jigoshop_order_item', $wpdb->last_error));
-            echo __('Unable to create Jigoshop tables.', 'jigoshop');
+            echo __('Unable to create Jigoshop tables.', 'jigoshop-ecommerce');
             exit;
         }
 
@@ -203,7 +203,7 @@ class Installer
 		";
         if (!$wpdb->query($query)) {
             Registry::getInstance(JIGOSHOP_LOGGER)->addCritical(sprintf('Unable to create table "%s". Error: "%s".', 'jigoshop_order_item_meta', $wpdb->last_error));
-            echo __('Unable to create Jigoshop tables.', 'jigoshop');
+            echo __('Unable to create Jigoshop tables.', 'jigoshop-ecommerce');
             exit;
         }
 
@@ -220,7 +220,7 @@ class Installer
 		";
         if (!$wpdb->query($query)) {
             Registry::getInstance(JIGOSHOP_LOGGER)->addCritical(sprintf('Unable to create table "%s". Error: "%s".', 'jigoshop_order_tax', $wpdb->last_error));
-            echo __('Unable to create Jigoshop tables.', 'jigoshop');
+            echo __('Unable to create Jigoshop tables.', 'jigoshop-ecommerce');
             exit;
         }
 
@@ -236,7 +236,7 @@ class Installer
 		";
         if (!$wpdb->query($query)) {
             Registry::getInstance(JIGOSHOP_LOGGER)->addCritical(sprintf('Unable to create table "%s". Error: "%s".', 'jigoshop_attribute', $wpdb->last_error));
-            echo __('Unable to create Jigoshop tables.', 'jigoshop');
+            echo __('Unable to create Jigoshop tables.', 'jigoshop-ecommerce');
             exit;
         }
 
@@ -253,7 +253,7 @@ class Installer
 		";
         if (!$wpdb->query($query)) {
             Registry::getInstance(JIGOSHOP_LOGGER)->addCritical(sprintf('Unable to create table "%s". Error: "%s".', 'jigoshop_attribute_option', $wpdb->last_error));
-            echo __('Unable to create Jigoshop tables.', 'jigoshop');
+            echo __('Unable to create Jigoshop tables.', 'jigoshop-ecommerce');
             exit;
         }
 
@@ -269,7 +269,7 @@ class Installer
 		";
         if (!$wpdb->query($query)) {
             Registry::getInstance(JIGOSHOP_LOGGER)->addCritical(sprintf('Unable to create table "%s". Error: "%s".', 'jigoshop_product_attribute', $wpdb->last_error));
-            echo __('Unable to create Jigoshop tables.', 'jigoshop');
+            echo __('Unable to create Jigoshop tables.', 'jigoshop-ecommerce');
             exit;
         }
 
@@ -286,7 +286,7 @@ class Installer
 		";
         if (!$wpdb->query($query)) {
             Registry::getInstance()->addCritical(sprintf('Unable to create table "%s". Error: "%s".', 'jigoshop_product_attribute_meta', $wpdb->last_error));
-            echo __('Unable to create Jigoshop tables.', 'jigoshop');
+            echo __('Unable to create Jigoshop tables.', 'jigoshop-ecommerce');
             exit;
         }
 
@@ -302,7 +302,7 @@ class Installer
 
         if (!$wpdb->query($query)) {
             Registry::getInstance(JIGOSHOP_LOGGER)->addCritical(sprintf('Unable to create table "%s". Error: "%s".', 'jigoshop_attribute', $wpdb->last_error));
-            echo __('Unable to create Jigoshop tables.', 'jigoshop');
+            echo __('Unable to create Jigoshop tables.', 'jigoshop-ecommerce');
             exit;
         }
 
@@ -319,7 +319,7 @@ class Installer
         if (!$wpdb->query($query)) {
             Registry::getInstance(JIGOSHOP_LOGGER)
                 ->addCritical(sprintf('Unable to create table "%s". Error: "%s".', 'jigoshop_term_meta', $wpdb->last_error));
-            echo __('Unable to create Jigoshop tables.', 'jigoshop');
+            echo __('Unable to create Jigoshop tables.', 'jigoshop-ecommerce');
             exit;
         }
 
@@ -340,19 +340,19 @@ class Installer
         ];
 
         $this->_createPage(Pages::SHOP, array_merge($data, [
-            'post_title' => __('Shop', 'jigoshop'),
+            'post_title' => __('Shop', 'jigoshop-ecommerce'),
         ]));
         $this->_createPage(Pages::CART, array_merge($data, [
-            'post_title' => __('Cart', 'jigoshop'),
+            'post_title' => __('Cart', 'jigoshop-ecommerce'),
         ]));
         $this->_createPage(Pages::CHECKOUT, array_merge($data, [
-            'post_title' => __('Checkout', 'jigoshop'),
+            'post_title' => __('Checkout', 'jigoshop-ecommerce'),
         ]));
         $this->_createPage(Pages::THANK_YOU, array_merge($data, [
-            'post_title' => __('Checkout - thank you', 'jigoshop'),
+            'post_title' => __('Checkout - thank you', 'jigoshop-ecommerce'),
         ]));
         $this->_createPage(Pages::ACCOUNT, array_merge($data, [
-            'post_title' => __('My account', 'jigoshop'),
+            'post_title' => __('My account', 'jigoshop-ecommerce'),
         ]));
         $this->options->saveOptions();
     }

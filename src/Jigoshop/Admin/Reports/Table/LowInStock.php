@@ -31,7 +31,7 @@ class LowInStock implements TableInterface
 
 	public function getTitle()
 	{
-		return __('Low In Stock', 'jigoshop');
+		return __('Low In Stock', 'jigoshop-ecommerce');
 	}
 
 	public function getColumns()
@@ -41,19 +41,19 @@ class LowInStock implements TableInterface
 		}
 		$this->columns = [
 			'product' => [
-				'name' => __('Product', 'jigoshop'),
+				'name' => __('Product', 'jigoshop-ecommerce'),
 				'size' => 4
             ],
 			'parent' => [
-				'name' => __('Parent', 'jigoshop'),
+				'name' => __('Parent', 'jigoshop-ecommerce'),
 				'size' => 4
             ],
 			'units_in_stock' => [
-				'name' => __('Units in stock', 'jigoshop'),
+				'name' => __('Units in stock', 'jigoshop-ecommerce'),
 				'size' => 2
             ],
 			'user_actions' => [
-				'name' => __('Actions', 'jigoshop'),
+				'name' => __('Actions', 'jigoshop-ecommerce'),
 				'size' => 2
             ]
         ];
@@ -82,7 +82,7 @@ class LowInStock implements TableInterface
 
 	public function noItems()
 	{
-		return __('No low in stock products found.', 'jigoshop');
+		return __('No low in stock products found.', 'jigoshop-ecommerce');
 	}
 
 	public function display()
@@ -143,14 +143,14 @@ class LowInStock implements TableInterface
 
 				$actions['edit'] = [
 					'url' => admin_url('post.php?post='.$action_id.'&action=edit'),
-					'name' => __('Edit', 'jigoshop'),
+					'name' => __('Edit', 'jigoshop-ecommerce'),
 					'action' => "edit"
                 ];
 
 				if (!$this->isProductHidden($action_id)) {
 					$actions['view'] = [
 						'url' => get_permalink($action_id),
-						'name' => __('View', 'jigoshop'),
+						'name' => __('View', 'jigoshop-ecommerce'),
 						'action' => "view"
                     ];
 				}

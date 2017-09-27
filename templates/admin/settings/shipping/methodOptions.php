@@ -19,7 +19,7 @@ use Jigoshop\Admin\Helper\Forms;
 		}
 		?>
 
-		<button type="submit" class="btn btn-primary pull-right shipping-method-options-save"><?php echo __('Close & save changes', 'jigoshop'); ?></button>
+		<button type="submit" class="btn btn-primary pull-right shipping-method-options-save"><?php echo __('Close & save changes', 'jigoshop-ecommerce'); ?></button>
 
 		<div class="clearfix"></div>
 	</div>
