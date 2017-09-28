@@ -265,7 +265,7 @@ class Orders
 				Status::CANCELLED => '',
             ],
             Status::ON_HOLD => [
-                Status::CANCELLED,
+                Status::CANCELLED => '',
             ],
         ];
 
