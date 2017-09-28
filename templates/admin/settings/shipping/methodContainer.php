@@ -20,10 +20,12 @@ use Jigoshop\Helper\Render;
 	</tbody>
 </table>
 
-<?php 
-foreach($methods as $method) {
-	Render::output('admin/settings/shipping/methodOptions', [
-			'method' => $method
-		]);
-}
-?>
+<div id="shipping-methods-container">
+	<?php 
+	foreach($methods as $method) {
+		Render::output('admin/settings/shipping/methodOptions', [
+				'method' => $method
+			]);
+	}
+	?>
+</div>

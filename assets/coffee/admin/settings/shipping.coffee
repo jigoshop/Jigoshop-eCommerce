@@ -11,7 +11,8 @@ class Shipping
           type: 'inline'
           callbacks:
             elementParse: (item) ->
-              item.src = jQuery('#shipping-method-options-' + targetMethod).html()
+              item.src = jQuery('#shipping-method-options-' + targetMethod).detach()
+              jQuery(item.src).css('display', 'block')
             open: =>
               jQuery('.mfp-content input[type="checkbox"]').bootstrapSwitch
                 size: 'small'
@@ -26,11 +27,12 @@ class Shipping
 
               @initAdvancedFlatRateElements()
             close: ->
-              jQuery(@content).find('input[type="checkbox"]').each (index, element) ->
+              jQuery('.mfp-content').find('input[type="checkbox"]').each (index, element) ->
                 jQuery(element).bootstrapSwitch 'destroy'
-              jQuery(@content).find('select').each (index, element) ->
+              jQuery('.mfp-content').find('select').each (index, element) ->
                 jQuery(element).select2 'destroy'
-              jQuery('#shipping-method-options-' + targetMethod).html jQuery(@content).get()
+              contents = jQuery('.mfp-content').children('div').detach()
+              jQuery(contents).appendTo('#shipping-methods-container')
               jQuery('.shipping-method-options-save').click()
 
   initAdvancedFlatRateElements: () ->
