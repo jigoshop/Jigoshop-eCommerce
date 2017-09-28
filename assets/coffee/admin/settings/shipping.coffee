@@ -78,7 +78,6 @@ class Shipping
         offText: 'No'
 
   toggleSpecificCountires: (event) ->
-    console.log('toggleSpecificCountires')
     if jQuery(event.target).val() == 'specific'
       jQuery('.mfp-content .advanced_flat_rate_countries_field').show()
     else
@@ -86,7 +85,6 @@ class Shipping
 
   toggleRate: (event) ->
     $item = jQuery(event.target)
-    console.log('toggleRate')
     jQuery('.list-group-item-text', $item.closest('li')).slideToggle () ->
       jQuery('span', $item).toggleClass('glyphicon-collapse-down').toggleClass('glyphicon-collapse-up')
 
