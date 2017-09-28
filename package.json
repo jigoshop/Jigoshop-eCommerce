@@ -6,7 +6,8 @@
   "dependencies": {},
   "devDependencies": {
     "apidoc": "^0.17.5",
-    "apidoc-markdown2": "^0.3.2",
+    "apidoc-markdown2": "^0.3.5",
+    "blueimp-gallery": "^2.25",
     "coffee-script": "^1.7.1",
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^0.0.6",
@@ -25,8 +26,7 @@
     "gulp-wp-pot": "*",
     "jquery-flot": "^0.8.3",
     "require-dir": "~0.1.0",
-    "yargs": "^1.2.6",
-    "blueimp-gallery" : "^2.25"
+    "yargs": "^1.2.6"
   },
   "engines": {
     "node": ">=0.10.0"

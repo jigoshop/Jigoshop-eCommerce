@@ -13,7 +13,7 @@ use WPAL\Wordpress;
 
 class Core
 {
-	const VERSION = '2.1.6.1';
+	const VERSION = '2.1.7';
 	const WIDGET_CACHE = 'jigoshop_widget_cache';
 	const TERMS = 'jigoshop_term';
 
