@@ -52,6 +52,7 @@ class AdminProductVariable
       .on 'change', 'select.variation-attribute', @updateVariation
       .on 'change', '.list-group-item-text input.form-control' , @updateVariation
       .on 'change', '.list-group-item-text input[type="checkbox"]', @updateVariation
+      .on 'switchChange.bootstrapSwitch', '.list-group-item-text input[type="checkbox"]', @updateVariation
       .on 'change', '.list-group-item-text select.form-control', @updateVariation
       .on 'click', '.set_variation_image', @setImage
       .on 'click', '.remove_variation_image', @removeImage
@@ -130,10 +131,16 @@ class AdminProductVariable
                           .list-group-item-text select.form-control', $parent).toArray()
 
     for option in productData
-      results = /(?:^|\s)product\[variation]\[\d+]\[product]\[(.*?)](\[(.*?)])?(?:\s|$)/g.exec(option.name)
+      results = /(?:^|\s)product\[variation]\[\d+]\[product]\[(.*?)](\[(.*?)])?(\[(.*?)])?(?:\s|$)/g.exec(option.name)
       if results[3]?
-        product[results[1]] = {}
-        product[results[1]][results[3]] = getOptionValue(option)
+        if typeof(product[results[1]]) == "undefined"
+          product[results[1]] = {}
+        if results[5]?
+          if typeof(product[results[1]][results[3]])  == "undefined"
+            product[results[1]][results[3]] = {}
+          product[results[1]][results[3]][results[5]] = getOptionValue(option)
+        else
+          product[results[1]][results[3]] = getOptionValue(option)
       else
         product[results[1]] = getOptionValue(option)
 
