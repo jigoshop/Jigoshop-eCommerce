@@ -289,7 +289,7 @@ class Variable implements Type
 			Forms::checkbox([
 				'name' => 'product[attributes]['.$attribute->getId().'][is_variable]',
 				'id' => 'product_attributes_'.$attribute->getId().'_variable',
-				'classes' => ['attribute-options'],
+				'classes' => ['attribute-options', 'is-for-variations'],
 				'label' => __('Is for variations?', 'jigoshop-ecommerce'),
 				'checked' => $attribute->isVariable(),
 				'size' => 6,

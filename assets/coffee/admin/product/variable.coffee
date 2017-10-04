@@ -83,11 +83,16 @@ class AdminProductVariable
           .val ''
           .trigger 'change'
     jQuery('.set_variation_image').each @connectImage
+    if jQuery('#product-type').val() != 'variable'
+      jQuery('div.is-for-variations').slideUp()
 
   removeParameters: (event) ->
     $item = jQuery(event.target)
     if $item.val() == 'variable'
       jQuery('.product_regular_price_field').slideUp()
+      jQuery('div.is-for-variations').slideDown()
+    else
+      jQuery('div.is-for-variations').slideUp()
   addVariation: (event) ->
     event.preventDefault()
     $parent = jQuery('#product-variations')
