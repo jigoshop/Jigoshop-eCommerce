@@ -14,9 +14,6 @@ class PriceFilter extends \WP_Widget
 {
 	const ID = 'jigoshop_price_filter';
 
-	/** @var float */
-	private $max = 0.0;
-
 	/**
 	 * Constructor
 	 * Setup the widget with the available options
@@ -34,7 +31,6 @@ class PriceFilter extends \WP_Widget
 
 		// Add price filter init to init hook
 		add_action('wp_enqueue_scripts', [$this, 'assets']);
-		add_filter('jigoshop\service\product\find_by_query', [$this, 'query']);
 
 		// Add own hidden fields to filter
 		add_filter('jigoshop\get_fields', [$this, 'hiddenFields']);
@@ -48,23 +44,6 @@ class PriceFilter extends \WP_Widget
 		}
 
 		Styles::add('jigoshop.widget.price_filter', \JigoshopInit::getUrl().'/assets/css/widget/price_filter.css');
-	}
-
-	public function query($products)
-	{
-		$this->max = 0.0;
-		foreach ($products as $product) {
-			/** @var $product |Product\Purchasable Product */
-			if ($product instanceof Product\Purchasable) {
-				$price = $product->getPrice();
-
-				if ($price > $this->max) {
-					$this->max = $price;
-				}
-			}
-		}
-
-		return $products;
 	}
 
 	public function hiddenFields($fields)
@@ -90,6 +69,8 @@ class PriceFilter extends \WP_Widget
 	 */
 	public function widget($args, $instance)
 	{
+		global $wpdb;
+
 		if (!Pages::isProductList()) {
 			return;
 		}
@@ -104,9 +85,13 @@ class PriceFilter extends \WP_Widget
 
 		$fields = apply_filters('jigoshop\get_fields', []);
 
+		$maxPrice = 0.0;
+		$row = $wpdb->get_row("SELECT meta_value FROM {$wpdb->prefix}postmeta WHERE meta_key = 'regular_price' ORDER BY meta_value DESC LIMIT 1");
+		$maxPrice = $row->meta_value;
+
 		Render::output('widget/price_filter/widget', array_merge($args, [
 			'title' => $title,
-			'max' => $this->max,
+			'max' => $maxPrice,
 			'fields' => $fields,
         ]));
 	}
