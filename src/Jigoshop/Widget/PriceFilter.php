@@ -148,19 +148,29 @@ class PriceFilter extends \WP_Widget
 
 function filter($query)
 {
-	if (isset($_GET['max_price']) && isset($_GET['min_price'])) {
-		if (!isset($query['meta_query'])) {
-			$query['meta_query'] = [];
-		}
+	global $wpdb;
 
+	if (isset($_GET['max_price']) && isset($_GET['min_price'])) {
 		// TODO: How to support filtering using jigoshop_price() DB function?
-		// TODO: Support for variable products
-		$query['meta_query'][] = [
-			'key' => 'regular_price',
-			'value' => [$_GET['min_price'], $_GET['max_price']],
-			'type' => 'NUMERIC',
-			'compare' => 'BETWEEN'
-        ];
+        $postsIds = [];
+        $rows = $wpdb->get_results("SELECT ID
+        	FROM {$wpdb->prefix}posts as post
+        	LEFT JOIN {$wpdb->postmeta} as meta ON (post.ID = meta.post_id)
+        	WHERE post.post_type = 'product' AND (meta.meta_key = 'regular_price' AND meta.meta_value BETWEEN " . esc_sql($_GET['min_price']) . " AND " . esc_sql($_GET['max_price']) . ")");
+        foreach($rows as $row) {
+        	$postsIds[] = $row->ID;
+        }
+
+        $rows = $wpdb->get_results("SELECT post_parent 
+        	FROM {$wpdb->posts} as post
+        	LEFT JOIN {$wpdb->postmeta} as meta ON (post.ID = meta.post_id)
+        	WHERE post.post_type = 'product_variation' AND post.post_parent > 0 AND (meta.meta_key = 'regular_price' AND meta.meta_value BETWEEN " . esc_sql($_GET['min_price']) . " AND " . esc_sql($_GET['max_price']) . ")
+        	GROUP BY post_parent");
+        foreach($rows as $row) {
+        	$postsIds[] = $row->post_parent;
+        }
+
+        $query['post__in'] = $postsIds;
 	}
 
 	return $query;
