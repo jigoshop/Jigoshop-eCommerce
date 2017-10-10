@@ -89,10 +89,21 @@ class PriceFilter extends \WP_Widget
 		$row = $wpdb->get_row("SELECT meta_value FROM {$wpdb->prefix}postmeta WHERE meta_key = 'regular_price' ORDER BY meta_value DESC LIMIT 1");
 		$maxPrice = $row->meta_value;
 
+		if(isset($_GET['min_price']) && isset($_GET['max_price'])) {
+			$currentMinPrice = $_GET['min_price'];
+			$currentMaxPrice = $_GET['max_price'];
+		}
+		else {
+			$currentMinPrice = 0;
+			$currentMaxPrice = $maxPrice;
+		}
+
 		Render::output('widget/price_filter/widget', array_merge($args, [
 			'title' => $title,
 			'max' => $maxPrice,
 			'fields' => $fields,
+			'currentMinPrice' => $currentMinPrice,
+			'currentMaxPrice' => $currentMaxPrice
         ]));
 	}
 
