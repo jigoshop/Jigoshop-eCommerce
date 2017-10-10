@@ -86,7 +86,7 @@ class PriceFilter extends \WP_Widget
 		$fields = apply_filters('jigoshop\get_fields', []);
 
 		$maxPrice = 0.0;
-		$row = $wpdb->get_row("SELECT meta_value FROM {$wpdb->prefix}postmeta WHERE meta_key = 'regular_price' ORDER BY meta_value DESC LIMIT 1");
+		$row = $wpdb->get_row("SELECT meta_value FROM {$wpdb->prefix}postmeta WHERE meta_key = 'regular_price' ORDER BY CAST(meta_value AS DECIMAL) DESC LIMIT 1");
 		$maxPrice = $row->meta_value;
 
 		if(isset($_GET['min_price']) && isset($_GET['max_price'])) {
