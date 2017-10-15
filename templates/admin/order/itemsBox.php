@@ -24,7 +24,16 @@ use Jigoshop\Helper\Product;
 			</thead>
 			<tbody>
 			<?php foreach($order->getItems() as $item): /** @var $item \Jigoshop\Entity\Order\Item */?>
-				<?php \Jigoshop\Helper\Render::output('admin/order/item/'.$item->getType(), ['order' => $order, 'item' => $item]); ?>
+				<?php 
+				$template = null;
+				$template = apply_filters('jigoshop\template\admin\order\item', $template, $order, $item);
+				if($template === null) {
+					\Jigoshop\Helper\Render::output('admin/order/item/'.$item->getType(), ['order' => $order, 'item' => $item]); 
+				}
+				else {
+					echo $template;
+				}
+				?>
 			<?php endforeach; ?>
 			</tbody>
 			<tfoot>
