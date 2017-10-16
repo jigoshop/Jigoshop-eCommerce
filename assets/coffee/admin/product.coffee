@@ -80,9 +80,12 @@ class AdminProduct
     $item = jQuery(event.target)
     type = $item.val()
     jQuery('.jigoshop_product_data li').hide()
+    additionalTabs = []
     for own tab, visibility of @params.menu
       if visibility == true or type in visibility
         jQuery('.jigoshop_product_data li.' + tab).show()
+        if !jQuery('.tab-pane#' + tab).length
+          additionalTabs.push(tab)
     jQuery('.jigoshop_product_data li:first a').tab('show')
 
     jQuery.ajax
@@ -93,9 +96,13 @@ class AdminProduct
         action: 'jigoshop.admin.product.update_type'
         product_id: $item.closest('.jigoshop').data('id')
         type: type
+        additionalTabs: additionalTabs
     .done (data) =>
       if data.success? and data.success
         jigoshop.addMessage('success', @params.i18n.saved, 2000)
+
+        for tabName, tab of data.additionalTabs
+          jQuery('.jigoshop_product_data').siblings('.tab-content').append('<div class="tab-pane" id="' + tabName + '">' + tab + '</div>')
       else
         jigoshop.addMessage('danger', data.error, 6000)
 

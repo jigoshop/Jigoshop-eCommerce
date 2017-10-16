@@ -191,8 +191,20 @@ class Product
 
             update_post_meta((int)$_POST['product_id'], 'type', trim($_POST['type']));
 
+            $additionalTabs = [];
+            if(isset($_POST['additionalTabs']) && is_array($_POST['additionalTabs'])) {
+                $product = $this->productService->find($_POST['product_id']);
+                $tabs = $this->wp->applyFilters('jigoshop\admin\product\tabs', [], $product);
+                foreach($tabs as $tabName => $tab) {
+                    if(in_array($tabName, $_POST['additionalTabs'])) {
+                        $additionalTabs[$tabName] = $tab;
+                    }
+                }
+            }
+
             echo json_encode([
                 'success' => true,
+                'additionalTabs' => $additionalTabs
             ]);
         } catch (Exception $e) {
             echo json_encode([
