@@ -33,7 +33,7 @@
 * 2.1.4 - 2017.06.14:
     * New: Email action for order status change for admin.
     * New: Possibility to show prices with and without tax.
-    * New: All Forms now has data parameter.
+    * New: All forms now have data parameter.
     * New: Shipping and Payment interfaces.
     * Fix: Do not allow to add to cart variations with not enough stock.
     * Fix: Show only selected attribute options for specified variable product.
@@ -205,9 +205,9 @@
     * Fix: Typo in reports filter button.
     * Fix: Allow to change order date.
     * Fix: Cart tax calculation for logged users.
-    * Fix: Do not create product when doing an autosave. 
+    * Fix: Do not create product when doing an autosave.
     * Fix: Various fixes for virtual products.
-    * Fix: Properly display price field for every product type. 
+    * Fix: Properly display price field for every product type.
     * Fix: Properly display url field for external product.
 * 2.0.2 - 2016.11.7:
     * Fix: Paypal response url.
