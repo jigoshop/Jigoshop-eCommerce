@@ -5,6 +5,7 @@ node_modules
 assets/bower
 compiler.sh
 *.idea/*
+vendor/
 vendor/erusev/parsedown/test/*
 vendor/monolog/monolog/doc/*
 vendor/monolog/monolog/tests/*
