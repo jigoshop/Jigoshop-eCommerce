@@ -363,6 +363,18 @@ class Product
                 return $thumbnail;
             }
         }
+        elseif($product->getType() == 'variable') {
+            $defaultVariationId = $product->getDefaultVariationId();
+            if($product->hasVariation($defaultVariationId)) {
+                $variationProduct = $product->getVariation($defaultVariationId)->getProduct();
+
+                $thumbnail = apply_filters('jigoshop\helper\product\get_featured_image',
+                    get_the_post_thumbnail($variationProduct->getId(), $size, $attributes), $variationProduct, $size);
+                if ($thumbnail) {
+                    return $thumbnail;
+                }                
+            }
+        }
 
         return self::getImagePlaceholder($size);
     }

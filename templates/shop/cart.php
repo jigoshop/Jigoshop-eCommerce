@@ -42,11 +42,20 @@ use Jigoshop\Helper\Tax;
 			</thead>
 			<tbody>
 				<?php foreach($cart->getItems() as $key => $item): /** @var $item \Jigoshop\Entity\Order\Item */ ?>
-					<?php Render::output('shop/cart/item/'.$item->getType(), [
-						'cart' => $cart, 
-						'key' => $key, 
-						'item' => $item
+					<?php 
+		        	$template = null;
+		        	$template = apply_filters('jigoshop\template\shop\cart\item', $template, $cart, $key, $item);
+
+		        	if($template === null) {					
+						Render::output('shop/cart/item/'.$item->getType(), [
+							'cart' => $cart, 
+							'key' => $key, 
+							'item' => $item
 						]); 
+					}
+					else {
+						echo $template;
+					}
 					?>
 				<?php endforeach; ?>
 				<?php /** @deprectated */ do_action('jigoshop\cart\table_body', $cart); ?>

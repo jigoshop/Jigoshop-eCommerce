@@ -92,11 +92,21 @@ use Jigoshop\Helper\Tax;
 		</div>
 		<ul id="checkout-mobile">
 			<?php foreach($cart->getItems() as $key => $item): /** @var \Jigoshop\Entity\Order\Item $item */ ?>
-				<?php Render::output('shop/checkout/mobile/'.$item->getType(), [
-					'cart' => $cart, 
-					'key' => $key, 
-					'item' => $item
-				]); ?>
+				<?php 
+				$template = null;
+				$template = apply_filters('jigoshop\template\shop\checkout\mobile', $template, $cart, $key, $item);
+
+				if($template === null) {
+					Render::output('shop/checkout/mobile/'.$item->getType(), [
+						'cart' => $cart, 
+						'key' => $key, 
+						'item' => $item
+					]); 
+				}
+				else {
+					echo $template;
+				}
+				?>
 			<?php endforeach; ?>
 		</ul>
 		<div class="mobile-coupons-product-subtotal">
@@ -139,11 +149,21 @@ use Jigoshop\Helper\Tax;
 			</thead>
 			<tbody>
 			<?php foreach($cart->getItems() as $key => $item): /** @var \Jigoshop\Entity\Order\Item $item */ ?>
-				<?php Render::output('shop/checkout/item/'.$item->getType(), [
-						'cart' => $cart,
-						'key' => $key,
-						'item' => $item
-					]); ?>
+				<?php 
+				$template = null;
+				$template = apply_filters('jigoshop\template\shop\checkout\item', $template, $cart, $key, $item);
+
+				if($template === null) {
+					Render::output('shop/checkout/item/'.$item->getType(), [
+							'cart' => $cart,
+							'key' => $key,
+							'item' => $item
+					]); 
+				}
+				else {
+					echo $template;
+				}
+				?>
 			<?php endforeach; ?>
 			<?php /** @deprecated  */ do_action('jigoshop\checkout\table_body', $cart); ?>
 			<?php do_action('jigoshop\template\checkout\table_body', $cart); ?>

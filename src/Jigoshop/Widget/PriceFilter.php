@@ -14,9 +14,6 @@ class PriceFilter extends \WP_Widget
 {
 	const ID = 'jigoshop_price_filter';
 
-	/** @var float */
-	private $max = 0.0;
-
 	/**
 	 * Constructor
 	 * Setup the widget with the available options
@@ -34,7 +31,6 @@ class PriceFilter extends \WP_Widget
 
 		// Add price filter init to init hook
 		add_action('wp_enqueue_scripts', [$this, 'assets']);
-		add_filter('jigoshop\service\product\find_by_query', [$this, 'query']);
 
 		// Add own hidden fields to filter
 		add_filter('jigoshop\get_fields', [$this, 'hiddenFields']);
@@ -48,23 +44,6 @@ class PriceFilter extends \WP_Widget
 		}
 
 		Styles::add('jigoshop.widget.price_filter', \JigoshopInit::getUrl().'/assets/css/widget/price_filter.css');
-	}
-
-	public function query($products)
-	{
-		$this->max = 0.0;
-		foreach ($products as $product) {
-			/** @var $product |Product\Purchasable Product */
-			if ($product instanceof Product\Purchasable) {
-				$price = $product->getPrice();
-
-				if ($price > $this->max) {
-					$this->max = $price;
-				}
-			}
-		}
-
-		return $products;
 	}
 
 	public function hiddenFields($fields)
@@ -90,6 +69,8 @@ class PriceFilter extends \WP_Widget
 	 */
 	public function widget($args, $instance)
 	{
+		global $wpdb;
+
 		if (!Pages::isProductList()) {
 			return;
 		}
@@ -104,10 +85,25 @@ class PriceFilter extends \WP_Widget
 
 		$fields = apply_filters('jigoshop\get_fields', []);
 
+		$maxPrice = 0.0;
+		$row = $wpdb->get_row("SELECT meta_value FROM {$wpdb->prefix}postmeta WHERE meta_key = 'regular_price' ORDER BY CAST(meta_value AS DECIMAL) DESC LIMIT 1");
+		$maxPrice = $row->meta_value;
+
+		if(isset($_GET['min_price']) && isset($_GET['max_price'])) {
+			$currentMinPrice = $_GET['min_price'];
+			$currentMaxPrice = $_GET['max_price'];
+		}
+		else {
+			$currentMinPrice = 0;
+			$currentMaxPrice = $maxPrice;
+		}
+
 		Render::output('widget/price_filter/widget', array_merge($args, [
 			'title' => $title,
-			'max' => $this->max,
+			'max' => $maxPrice,
 			'fields' => $fields,
+			'currentMinPrice' => $currentMinPrice,
+			'currentMaxPrice' => $currentMaxPrice
         ]));
 	}
 
@@ -152,19 +148,29 @@ class PriceFilter extends \WP_Widget
 
 function filter($query)
 {
-	if (isset($_GET['max_price']) && isset($_GET['min_price'])) {
-		if (!isset($query['meta_query'])) {
-			$query['meta_query'] = [];
-		}
+	global $wpdb;
 
+	if (isset($_GET['max_price']) && isset($_GET['min_price'])) {
 		// TODO: How to support filtering using jigoshop_price() DB function?
-		// TODO: Support for variable products
-		$query['meta_query'][] = [
-			'key' => 'regular_price',
-			'value' => [$_GET['min_price'], $_GET['max_price']],
-			'type' => 'NUMERIC',
-			'compare' => 'BETWEEN'
-        ];
+        $postsIds = [];
+        $rows = $wpdb->get_results("SELECT ID
+        	FROM {$wpdb->prefix}posts as post
+        	LEFT JOIN {$wpdb->postmeta} as meta ON (post.ID = meta.post_id)
+        	WHERE post.post_type = 'product' AND (meta.meta_key = 'regular_price' AND meta.meta_value BETWEEN " . esc_sql($_GET['min_price']) . " AND " . esc_sql($_GET['max_price']) . ")");
+        foreach($rows as $row) {
+        	$postsIds[] = $row->ID;
+        }
+
+        $rows = $wpdb->get_results("SELECT post_parent 
+        	FROM {$wpdb->posts} as post
+        	LEFT JOIN {$wpdb->postmeta} as meta ON (post.ID = meta.post_id)
+        	WHERE post.post_type = 'product_variation' AND post.post_parent > 0 AND (meta.meta_key = 'regular_price' AND meta.meta_value BETWEEN " . esc_sql($_GET['min_price']) . " AND " . esc_sql($_GET['max_price']) . ")
+        	GROUP BY post_parent");
+        foreach($rows as $row) {
+        	$postsIds[] = $row->post_parent;
+        }
+
+        $query['post__in'] = $postsIds;
 	}
 
 	return $query;
