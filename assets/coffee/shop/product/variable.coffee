@@ -13,11 +13,18 @@ class ProductVariable
 
     jQuery('select.product-attribute').on 'change', @updateAttributes
     jQuery('select.product-attribute').trigger 'change'
+
   updateAttributes: (event) =>
     $buttons = jQuery('#add-to-cart-buttons')
     $messages = jQuery('#add-to-cart-messages')
     results = /(?:^|\s)attributes\[(\d+)](?:\s|$)/g.exec(event.target.name)
     @attributes[results[1]] = event.target.value
+
+    if event.target.value == ''
+      jQuery('.variable-product-gallery a').not('#variation-featured-image-parent').addClass('active')
+    else
+      jQuery('option[value=""]', event.target).remove()
+
 
     proper = @VARIATION_NOT_FULL
     size = Object.keys(@attributes).length
@@ -49,7 +56,7 @@ class ProductVariable
       jQuery('#variation-id').val('')
       jQuery('.featured-image').replaceWith(@defaultFeaturedImage)
       $buttons.slideUp()
-    if proper == @VARIATION_NOT_EXISTS
+    if proper == @VARIATION_NOT_EXISTS && event.target.value
       $messages.slideDown()
 
   refreshVariationGallery: (id) ->
