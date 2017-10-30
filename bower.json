@@ -1,0 +1,18 @@
+{
+  "name": "jigoshop",
+  "version": "2.0.0",
+  "dependencies": {
+    "bootstrap": "3.*",
+    "bootstrap-switch": "3.*",
+    "highlight-js": "8.*",
+    "select2": "3.5.*",
+    "bootstrap-tokenfield": "0.12.*",
+    "bootstrap-datepicker": "1.*",
+    "jquery-impromptu": "*",
+    "magnific-popup": "1.*"
+  },
+  "resolutions": {
+    "jquery": "2.*"
+  },
+  "devDependencies": {}
+}

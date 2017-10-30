@@ -1,0 +1,236 @@
+@import '../../bower/bootstrap/less/variables';
+@import '../../bower/bootstrap/less/mixins';
+
+.jigoshop {
+  @import '../../bower/bootstrap/less/component-animations';
+
+  @import '../../bower/bootstrap/less/grid';
+  @import '../../bower/bootstrap/less/tables';
+  @import '../../bower/bootstrap/less/buttons';
+  @import '../../bower/bootstrap/less/navs';
+  @import '../../bower/bootstrap/less/badges';
+  @import '../../bower/bootstrap/less/list-group';
+  @import '../../bower/bootstrap/less/tooltip';
+  @import '../../bower/bootstrap/less/utilities';
+  @import '../../bower/bootstrap/less/alerts';
+  @import '../../bower/bootstrap/less/type';
+
+  fieldset {
+    padding: 6px 12px
+  }
+  .input-group[class*="col-"] {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+  .panel-heading button {
+    margin-top: -@padding-large-horizontal/2;
+  }
+  .form-group, .nav-tabs {
+    .clearfix();
+  }
+  .nav-tabs {
+    li.hide {
+      display: none;
+    }
+    li {
+      a, &:hover a  {
+        text-decoration: none;
+      }
+    }
+  }
+  .schedule.hide {
+    display: none;
+  }
+  #attributes .form-inline {
+    margin-bottom: @padding-base-vertical;
+
+    .not-active {
+      display: none;
+    }
+    .form-group {
+      float: left;
+      width: 60%;
+      margin-right: @padding-base-horizontal;
+      margin-bottom: @padding-base-vertical;
+
+      .form-control {
+        width: 100%;
+      }
+
+      .text-right {
+        display: none;
+      }
+      @media (max-width: 768px) {
+        width: 70%;
+      }
+    }
+  }
+  #product-attributes {
+    .list-group-item-text {
+      display: none;
+    }
+  }
+  #add-variation {
+    margin-bottom: 2*@padding-base-vertical;
+  }
+
+  textarea.form-control {
+    height: auto;
+  }
+
+  .form-group {
+    margin: 0;
+
+    div.checkbox-inline {
+      input[type=checkbox] {
+        position: static;
+        margin: 0;
+      }
+    }
+    .help {
+      color: @gray-light;
+      font-style: italic;
+    }
+  }
+  .tab-content {
+    background: @body-bg;
+    border: 1px solid @nav-tabs-border-color;
+    border-top: 0;
+    padding: @padding-base-vertical 0;
+
+    #attributes {
+      padding: 0 @padding-base-horizontal;
+    }
+  }
+  h3 {
+    margin: 1em 0 !important;
+  }
+  .form-table {
+    th {
+      padding: 8px 0;
+    }
+    td {
+      padding: 0;
+
+      p {
+        margin: 0;
+      }
+    }
+  }
+  #messages {
+    position: fixed;
+    width: 100%;
+    z-index: 5;
+    opacity: 0.8;
+    top: 100px;
+    left:  0;
+  }
+  .alert {
+    vertical-align: middle;
+    text-align: center;
+    width: 60%;
+    margin: 10px 20%;
+  }
+  #gallery {
+    .gallery-image {
+      padding:5px!important;
+      position: relative;
+
+      img {
+        width:100%;
+      }
+
+      &:nth-of-type(3n + 4){
+        clear: both;
+      }
+    }
+    .delete {
+      background: #ce0404;
+      border-radius: 1em;
+      display: none;
+      height: 16px;
+      position: absolute;
+      width: 16px;
+      top: 0px;
+      right: 0px;
+
+      &:hover {
+        background: #e60404;
+      }
+      &::before {
+        background: #ffffff;
+        content: "";
+        display: block;
+        height: 2px;
+        right: 3px;
+        position: absolute;
+        top: 7px;
+        transform: rotateZ(45deg);
+        width: 10px;
+      }
+      &:after {
+        background: #ffffff;
+        content: "";
+        display: block;
+        height: 2px;
+        right: 3px;
+        position: absolute;
+        top: 7px;
+        transform: rotateZ(-45deg);
+        width: 10px;
+      }
+    }
+    .gallery-image ~ .empty-gallery {
+      display: none;
+    }
+  }
+  #downloads {
+    .downloads-file {
+      position: relative;
+      padding: 5px 15px;
+
+      &:nth-of-type(odd) {
+        background: #f3f3f3;
+      }
+    }
+    .delete {
+      background: #ce0404;
+      border-radius: 1em;
+      display: none;
+      height: 16px;
+      position: absolute;
+      width: 16px;
+      top: 5px;
+      right: 0px;
+
+      &:hover {
+        background: #e60404;
+      }
+      &:before {
+        background: #ffffff;
+        content: "";
+        display: block;
+        height: 2px;
+        right: 3px;
+        position: absolute;
+        top: 7px;
+        transform: rotateZ(45deg);
+        width: 10px;
+      }
+      &:after {
+        background: #ffffff;
+        content: "";
+        display: block;
+        height: 2px;
+        right: 3px;
+        position: absolute;
+        top: 7px;
+        transform: rotateZ(-45deg);
+        width: 10px;
+      }
+    }
+    .downloads-file ~ .empty-downloads {
+      display: none;
+    }
+  }
+}

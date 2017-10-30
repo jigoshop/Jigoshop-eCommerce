@@ -149,18 +149,16 @@ class Variable implements Type
                     ];
                 }
             }
-            if(count($images) < count($product->getVariations())) {
-                $image = \Jigoshop\Helper\Product::getFeaturedImage($product, Options::IMAGE_THUMBNAIL);
-                $url = \Jigoshop\Helper\Product::hasFeaturedImage($product) ? $this->wp->wpGetAttachmentUrl($this->wp->getPostThumbnailId($product->getId())) : '';
-                $title = \Jigoshop\Helper\Product::hasFeaturedImage($product) ? get_the_title($this->wp->getPostThumbnailId($product->getId())) : '';
-                if($url) {
-                    $images[] = [
-                        'id' => 'parent',
-                        'image' => $image,
-                        'url' => $url,
-                        'title' => $title,
-                    ];
-                }
+            $image = \Jigoshop\Helper\Product::getFeaturedImage($product, Options::IMAGE_THUMBNAIL);
+            $url = \Jigoshop\Helper\Product::hasFeaturedImage($product) ? $this->wp->wpGetAttachmentUrl($this->wp->getPostThumbnailId($product->getId())) : '';
+            $title = \Jigoshop\Helper\Product::hasFeaturedImage($product) ? get_the_title($this->wp->getPostThumbnailId($product->getId())) : '';
+            if($url) {
+                $images[] = [
+                    'id' => 'parent',
+                    'image' => $image,
+                    'url' => $url,
+                    'title' => $title,
+                ];
             }
 
             Render::output('shop/product/images/variable', [
@@ -289,7 +287,7 @@ class Variable implements Type
 			Forms::checkbox([
 				'name' => 'product[attributes]['.$attribute->getId().'][is_variable]',
 				'id' => 'product_attributes_'.$attribute->getId().'_variable',
-				'classes' => ['attribute-options'],
+				'classes' => ['attribute-options', 'is-for-variations'],
 				'label' => __('Is for variations?', 'jigoshop-ecommerce'),
 				'checked' => $attribute->isVariable(),
 				'size' => 6,

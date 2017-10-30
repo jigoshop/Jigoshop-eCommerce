@@ -5,7 +5,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 
 Requires at least: 4.0
 Tested up to: 4.8.2
-Stable tag: 2.1.7
+Stable tag: 2.1.8
 
 A feature-packed eCommerce plugin built upon WordPress core functionality ensuring excellent performance, customizability and control - robust Tax Settings, Stock Level Management, Free and Premium Extensions - you name it.
 
@@ -151,6 +151,12 @@ However, if you want priority, dedicated support from Jigoshop staff, we dp offe
 
 == Changelog ==
 
+= 2.1.8 - 2017.10.30 =
+* New: Default variation image will be shown if variable product has no featured image.
+* Fix: Checkout/cart page to allow external product types from plugins.
+* Fix: Product filter widget.
+* Fix: Form controls in payment/shipping methods.
+* Fix: Issues with product category WP editor.
 = 2.1.7 - 2017.09.27 =
 * Fix: Now plugin is available to translate.
 * Fix: Do not add thousand separator to paypal amounts.

@@ -1,0 +1,108 @@
+@import '../../bower/bootstrap/less/variables';
+@import '../../bower/bootstrap/less/mixins';
+
+.jigoshop {
+  @import '../../bower/bootstrap/less/grid';
+  @import '../../bower/bootstrap/less/tables';
+  @import '../../bower/bootstrap/less/forms';
+  @import '../../bower/bootstrap/less/buttons';
+  @import '../../bower/bootstrap/less/button-groups';
+  @import '../../bower/bootstrap/less/component-animations';
+  @import '../../bower/bootstrap/less/navs';
+  @import '../../bower/bootstrap/less/navbar';
+  @import '../../bower/bootstrap/less/badges';
+  @import '../../bower/bootstrap/less/tooltip';
+  @import '../../bower/bootstrap/less/utilities';
+  @import '../../bower/bootstrap/less/alerts';
+  @import '../../bower/bootstrap/less/type';
+  @import '../../bower/bootstrap/less/responsive-utilities';
+  @import '../../bower/bootstrap/less/list-group';
+
+  .form-group, .nav-tabs {
+    .clearfix();
+  }
+  .nav-tabs {
+    li.hide {
+      display: none;
+    }
+    li {
+      vertical-align: bottom;
+      a, &:hover a  {
+        text-decoration: none;
+      }
+    }
+  }
+  table .form-group {
+    margin: 0;
+
+    div.checkbox-inline {
+      input[type=checkbox] {
+        position: static;
+        margin: 0;
+      }
+    }
+    .help {
+      color: @gray-light;
+      font-style: italic;
+    }
+  }
+  .tab-content {
+    background: @body-bg;
+    border: 1px solid @nav-tabs-border-color;
+    border-top: 0;
+    padding: @padding-base-vertical @padding-base-horizontal;
+  }
+  h3 {
+    margin: 1em 0 !important;
+  }
+  .form-table {
+    th {
+      padding: 8px 0;
+    }
+    td {
+      padding: 0;
+
+      p {
+        margin: 0;
+      }
+    }
+  }
+  h2 {
+    .form-table {
+      th {
+        font-weight: 500;
+        font-size: 30px;
+      }
+    }
+  }
+
+  #tax-rules td, #tax-rules th  {
+    text-align: center;
+  }
+
+  .pull-text-left {
+    text-align: left !important;
+  }
+
+  .col-no-padding {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .table-valign td {
+    vertical-align: middle !important;
+  }
+
+  .shipping-method-options-container, .payment-method-options-container {
+    padding: 25px;
+    max-width: 85%;
+    margin: 0 auto;
+    background-color: #fff;
+    position: relative;
+    width: auto;
+  }
+}
+
+.mfp-wrap, .select2-drop-mask, .select2-drop {
+  z-index: 200000 !important;
+}

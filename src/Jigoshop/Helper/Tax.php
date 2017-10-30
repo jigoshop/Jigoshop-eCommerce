@@ -83,6 +83,10 @@ class Tax
                 $compoundRate += $definition['rate'] / 100;
             }
 
+            if($price === '') {
+                $price = 0;
+            }
+
             $price = ($price/((1 + $standardRate) * (1 + $compoundRate)));
         }
 

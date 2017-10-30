@@ -1,0 +1,75 @@
+@import '../../bower/bootstrap/less/variables';
+@import '../../bower/bootstrap/less/mixins';
+
+.jigoshop {
+  @import '../../bower/bootstrap/less/grid';
+  @import '../../bower/bootstrap/less/tables';
+  @import '../../bower/bootstrap/less/forms';
+  @import '../../bower/bootstrap/less/buttons';
+  @import '../../bower/bootstrap/less/component-animations';
+  @import '../../bower/bootstrap/less/navs';
+  @import '../../bower/bootstrap/less/navbar';
+  @import '../../bower/bootstrap/less/badges';
+  @import '../../bower/bootstrap/less/tooltip';
+  @import '../../bower/bootstrap/less/utilities';
+  @import '../../bower/bootstrap/less/alerts';
+  @import '../../bower/bootstrap/less/type';
+  @import '../../bower/bootstrap/less/responsive-utilities';
+  @import '../../bower/bootstrap/less/progress-bars';
+
+  div.migration_icon {
+    @media screen {
+      @media (max-width: @screen-sm) {
+        display: none;
+      }
+    }
+  }
+  span.migrate_header {
+    @media screen {
+      @media (max-width: @screen-sm) {
+        font-size: 120%;
+      }
+    }
+  }
+  .migration_icon {
+    font-size: 100px;
+  }
+  .max-width-270 {
+    max-width: 270px;
+  }
+  .progress_bar {
+    font-size: 20px;
+    line-height: 40px;
+  }
+  .parent_progress_bar {
+    height: 40px;
+  }
+  .btn_disabled {
+    background-color: silver !important;
+  }
+  .simple_border {
+    border: 1px solid silver;
+  }
+  .row {
+    clear: both;
+  }
+  .migration_header {
+    font-weight: bold;
+    font-size: @font-size-h3;
+  }
+  .padding_left_40 {
+    padding-left: 40px;
+  }
+  .padding_left_10 {
+    padding-left: 10px;
+  }
+  .font_md {
+    font-size: 16px;
+  }
+  .font_bold {
+    font-weight: bold;
+  }
+  .back-to-home {
+    margin-top: 30px;
+  }
+}

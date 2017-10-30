@@ -1,1 +1,0 @@
-jQuery(function(e){return jigoshop.delay(8e3,function(){return e(".alert-danger").not(".no-remove").slideUp(function(){return e(this).remove()})}),jigoshop.delay(4e3,function(){return e(".alert-success").not(".no-remove").slideUp(function(){return e(this).remove()})})});

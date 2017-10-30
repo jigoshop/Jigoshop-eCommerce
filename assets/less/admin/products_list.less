@@ -1,0 +1,43 @@
+@import '../../bower/bootstrap/less/variables';
+@import '../../bower/bootstrap/less/mixins';
+
+.check-column, .column-cb{
+  width: 2%!important;
+}
+.column-thumbnail {
+  width: 5%;
+  img {
+    width: 100%;
+    height: auto;
+  }
+}
+.column-title {
+  width: 30%;
+}
+.column-featured {
+  width: 5%;
+  text-align: center !important;
+}
+.column-type {
+  width: 8%;
+}
+.column-sku {
+  width: 10%;
+}
+.column-price {
+  width: 8%;
+}
+.column-creation {
+  width: 8%;
+}
+@media (max-width : 800px) {
+  .column-thumbnail, .column-thumbnail img {
+    display: none !important;
+  }
+  .check-column {
+    width: 35px!important;
+  }
+  .column-featured {
+    text-align: center !important;
+  }
+}

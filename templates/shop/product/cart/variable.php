@@ -10,7 +10,8 @@ $defaultAttributesValues = Product::getVariationAttributes($product, $product->g
 	<input type="hidden" name="action" value="add-to-cart" />
 	<?php do_action('jigoshop\template\product\before_cart', $product); ?>
 	<?php foreach ($product->getAssignedVariableAttributes() as $id => $attribute): /** @var $attribute \Jigoshop\Entity\Product\Attribute */ ?>
-		<?php \Jigoshop\Helper\Forms::select([
+        <?php $attribute['options'] =['' => __('Choose an option', 'jigoshop-ecommerce')] + $attribute['options']; ?>
+        <?php \Jigoshop\Helper\Forms::select([
 			'name' => 'attributes['.$id.']',
 			'classes' => ['product-attribute'],
 			'label' => $attribute['label'],

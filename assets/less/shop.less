@@ -1,0 +1,48 @@
+  @import '../bower/bootstrap/less/variables';
+@import '../bower/bootstrap/less/mixins';
+@import '../bower/bootstrap/less/glyphicons';
+
+.jigoshop {
+  @import '../bower/bootstrap/less/alerts';
+  @import '../bower/bootstrap/less/utilities';
+  @import '../bower/bootstrap/less/scaffolding';
+
+  padding: @padding-base-vertical @padding-base-horizontal;
+
+  .alert {
+    button, a.btn {
+      margin-top: -(@alert-padding/4);
+    }
+  }
+  .clear {
+    clear: both;
+  }
+  .not-active {
+    display: none;
+  }
+  span.on-sale {
+    background: #27ae60;
+    color: #ffffff;
+    height: 35px;
+    width: 80px;
+    padding-top: 7px;
+    font-size: 16px;
+    position: absolute;
+    text-align: center;
+    line-height: 100%;
+    top: 15px;
+    left: -10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.02), 0 6px 20px 0 rgba(0, 0, 0, 0.05);
+  }
+  .glyphicon-remove {
+    color: @btn-danger-bg;
+  }
+
+  div.content {
+    padding: 0 @padding-large-horizontal*2;
+  }
+
+  .select2-container {
+    padding: 0 !important;
+  }
+}

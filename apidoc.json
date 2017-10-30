@@ -1,0 +1,21 @@
+{
+  "name": "Jigoshop API",
+  "version": "0.1.0",
+  "description": "RESTful API developed for mobile usage purposes",
+  "title": "Jigoshop API",
+  "url": "https://jigoshop.dev/api/v1",
+  "order": [
+    "Main",
+    "Ping",
+    "Token"
+  ],
+  "template": {
+    "withCompare": true,
+    "withGenerator": true,
+    "forceLanguage": "en"
+  },
+  "header": {
+    "title": "Jigoshop Api",
+    "filename": "header.md"
+  }
+}

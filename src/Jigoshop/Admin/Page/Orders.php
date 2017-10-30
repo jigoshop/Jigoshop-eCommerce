@@ -229,7 +229,7 @@ class Orders
 			/** @var Entity $order */
 			$order = $this->orderService->find($orderId);
 
-			if($this->isAvailbleChange($order->getStatus(), $status)) {
+			if($this->isAvailableChange($order->getStatus(), $status)) {
 				$order->setStatus($status);
 				$this->orderService->save($order);
 				ob_start();
@@ -253,7 +253,7 @@ class Orders
 	 *
 	 * @return bool
 	 */
-	public function isAvailbleChange($from, $to)
+	public function isAvailableChange($from, $to)
 	{
 		$possibilities = [
 			Status::PENDING    => [
@@ -263,7 +263,10 @@ class Orders
 			Status::PROCESSING => [
 				Status::COMPLETED => '',
 				Status::CANCELLED => '',
-            ]
+            ],
+            Status::ON_HOLD => [
+                Status::CANCELLED => '',
+            ],
         ];
 
 		if (isset($possibilities[$from][$to]))
