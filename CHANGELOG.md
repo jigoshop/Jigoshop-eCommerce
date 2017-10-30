@@ -1,4 +1,10 @@
 ## Changelog
+* 2.1.8 - 2017.10.26
+    * New: Default variation image will be shown if variable product has no featured image.
+    * Fix: Checkout/cart page to allow external product types from plugins.
+    * Fix: Product filter widget.
+    * Fix: Form controls in payment/shipping methods.
+    * Fix: Issues with product category WP editor.
 * 2.1.7 - 2017.09.27:
     * Fix: Now plugin is available to translate.
     * Fix: Do not add thousand separator to paypal amounts.
