@@ -21,10 +21,8 @@ class ProductVariable
     @attributes[results[1]] = event.target.value
 
     if event.target.value == ''
-      jQuery('.variable-product-gallery a').not('#variation-featured-image-parent').addClass('active')
-    else
-      jQuery('option[value=""]', event.target).remove()
-
+      jQuery('.variable-product-gallery a').not('#variation-featured-image-parent').addClass('active');
+      @refreshVariationGallery('parent')
 
     proper = @VARIATION_NOT_FULL
     size = Object.keys(@attributes).length
@@ -55,6 +53,7 @@ class ProductVariable
     if proper != @VARIATION_EXISTS
       jQuery('#variation-id').val('')
       jQuery('.featured-image').replaceWith(@defaultFeaturedImage)
+      this.refreshVariationGallery('parent');
       $buttons.slideUp()
     if proper == @VARIATION_NOT_EXISTS && event.target.value
       $messages.slideDown()

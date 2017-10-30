@@ -491,12 +491,6 @@ class Product
                 Render::output("shop/{$template}/cart/virtual", ['product' => $product]);
                 break;
             case Entity\Product\Variable::TYPE:
-                /** @var $product Entity\Product\Variable */
-                $price = $product->getLowestPrice();
-                if (empty($price)) {
-                    return;
-                }
-
                 Render::output("shop/{$template}/cart/variable", ['product' => $product]);
                 break;
             default:
