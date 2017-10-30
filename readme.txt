@@ -151,7 +151,7 @@ However, if you want priority, dedicated support from Jigoshop staff, we dp offe
 
 == Changelog ==
 
-= 2.1.8 - 2017.10.26 =
+= 2.1.8 - 2017.10.30 =
 * New: Default variation image will be shown if variable product has no featured image.
 * Fix: Checkout/cart page to allow external product types from plugins.
 * Fix: Product filter widget.
