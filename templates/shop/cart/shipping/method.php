@@ -12,7 +12,7 @@ use Jigoshop\Helper\Product;
 		<input type="radio" name="jigoshop_order[shipping_method]" value="<?= $method->getId(); ?>" <?= Forms::checked($cart->hasShippingMethod($method), true); ?> />
 		<?= $method->getTitle(); ?>
 	</label>
-    <?php var_dump($method->getState()); try { ?>
+    <?php try { ?>
 	<span class="pull-right"><?= Product::formatPrice($method->calculate($cart)); ?></span>
     <?php } catch (Exception $e) {} ?>
 </li>
