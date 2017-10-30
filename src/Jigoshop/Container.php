@@ -129,6 +129,12 @@ class Container
 		}
 	}
 
+    /**
+	 * @param string $key
+     * @param array $params
+     *
+     * @return object
+	 */
 	private function getServiceFromFactory($key, $params)
 	{
 		$factoryData = $this->factories->get($key);
