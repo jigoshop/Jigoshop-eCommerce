@@ -149,18 +149,16 @@ class Variable implements Type
                     ];
                 }
             }
-            if(count($images) < count($product->getVariations())) {
-                $image = \Jigoshop\Helper\Product::getFeaturedImage($product, Options::IMAGE_THUMBNAIL);
-                $url = \Jigoshop\Helper\Product::hasFeaturedImage($product) ? $this->wp->wpGetAttachmentUrl($this->wp->getPostThumbnailId($product->getId())) : '';
-                $title = \Jigoshop\Helper\Product::hasFeaturedImage($product) ? get_the_title($this->wp->getPostThumbnailId($product->getId())) : '';
-                if($url) {
-                    $images[] = [
-                        'id' => 'parent',
-                        'image' => $image,
-                        'url' => $url,
-                        'title' => $title,
-                    ];
-                }
+            $image = \Jigoshop\Helper\Product::getFeaturedImage($product, Options::IMAGE_THUMBNAIL);
+            $url = \Jigoshop\Helper\Product::hasFeaturedImage($product) ? $this->wp->wpGetAttachmentUrl($this->wp->getPostThumbnailId($product->getId())) : '';
+            $title = \Jigoshop\Helper\Product::hasFeaturedImage($product) ? get_the_title($this->wp->getPostThumbnailId($product->getId())) : '';
+            if($url) {
+                $images[] = [
+                    'id' => 'parent',
+                    'image' => $image,
+                    'url' => $url,
+                    'title' => $title,
+                ];
             }
 
             Render::output('shop/product/images/variable', [
