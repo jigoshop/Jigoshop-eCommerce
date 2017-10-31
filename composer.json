@@ -28,7 +28,7 @@
 		"monolog/monolog": "~1.11@dev",
 		"nitra/php-min": "dev-master",
 		"erusev/parsedown": "*",
-		"phpfastcache/phpfastcache": "*",
+		"phpfastcache/phpfastcache": "^6.0.6",
 		"spatie/array-to-xml": "*",
 		"slim/slim": "^3.1",
 		"tuupola/slim-jwt-auth": "^2.3.1",
