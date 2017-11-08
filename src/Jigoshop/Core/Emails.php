@@ -228,6 +228,7 @@ class Emails
             'billing_first_name' => $billingAddress->getFirstName(),
             'billing_last_name' => $billingAddress->getLastName(),
             'billing_company' => $billingAddress instanceof CompanyAddress ? $billingAddress->getCompany() : '',
+            'billing_euvatno' => $billingAddress instanceof CompanyAddress ? $billingAddress->getVatNumber() : '',
             'billing_address_1' => $billingAddress->getAddress(),
             'billing_address_2' => '', // TODO: Remove address_2
             'billing_postcode' => $billingAddress->getPostcode(),
@@ -350,6 +351,7 @@ class Emails
             'billing_first_name' => __('Billing First Name', 'jigoshop-ecommerce'),
             'billing_last_name' => __('Billing Last Name', 'jigoshop-ecommerce'),
             'billing_company' => __('Billing Company', 'jigoshop-ecommerce'),
+            'billing_euvatno' => __('Billing Vat Number', 'jigoshop-ecommerce'),
             'billing_address_1' => __('Billing Address part 1', 'jigoshop-ecommerce'),
             'billing_address_2' => __('Billing Address part 2', 'jigoshop-ecommerce'),
             'billing_postcode' => __('Billing Postcode', 'jigoshop-ecommerce'),

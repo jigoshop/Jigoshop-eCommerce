@@ -131,7 +131,7 @@ You can also <a href="http://forum.jigoshop.com/kb/customize-jigoshop/languages"
 
 = Which payment gateways do you have? =
 
-Take a look through <a href="http://forum.jigoshop.com/kb/jigoshop-settings/payment-gateways">our list of payment gateways</a>. There are some free ones that are included with Jigoshop eCommerce, and even more are available <a href="http://www.jigoshop.com/product-category/extensions/">on jigoshop.com</a>.
+Take a look through <a href="https://www.jigoshop.com/product-category/extensions/">our list of payment gateways</a>. There are some free ones that are included with Jigoshop eCommerce, and even more are available <a href="http://www.jigoshop.com/product-category/extensions/">on jigoshop.com</a>.
 
 = Will tax settings work in my country? =
 
@@ -139,8 +139,8 @@ Jigoshop eCommerce has a flexible tax rule system which allows you to define tax
 
 = I need help! =
 
-We have a <a href="http://forum.jigoshop.com" title="Jigoshop support forum">community forum</a> for getting help from other users.
-However, if you want priority, dedicated support from Jigoshop staff, we dp offer <a href="http://www.jigoshop.com/support/" title="Jigoshop Premium Support">premium support packages</a>.
+We have a <a href="https://wordpress.org/support/plugin/jigoshop-ecommerce" title="Jigoshop support forum">community forum</a> for getting help from other users.
+However, if you want priority, dedicated support from Jigoshop staff, we dp offer <a href="https://www.jigoshop.com/support/" title="Jigoshop Premium Support">premium support packages</a>.
 
 == Screenshots ==
 

@@ -6,6 +6,14 @@ use Jigoshop\Helper\Country;
  */
 ?>
 <dl class="dl-horizontal clearfix address">
+    <?php if ($address instanceof \Jigoshop\Entity\Customer\CompanyAddress): ?>
+        <dt><?= __('Company', 'jigoshop-ecommerce'); ?></dt>
+        <dd><?= $address->getCompany(); ?></dd>
+        <?php if ($address->getVatNumber() != ''): ?>
+            <dt><?= __('VAT number', 'jigoshop-ecommerce'); ?></dt>
+            <dd><?= $address->getVatNumber(); ?></dd>
+        <?php endif; ?>
+    <?php endif; ?>
 	<dt><?= __('Name', 'jigoshop-ecommerce'); ?></dt>
 	<dd><?= $address->getName(); ?>&nbsp;</dd>
 	<dt><?= __('Address', 'jigoshop-ecommerce'); ?></dt>
