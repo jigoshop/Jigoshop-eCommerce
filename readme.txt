@@ -43,7 +43,7 @@ Manage your stock levels and customer orders easily. Jigoshop eCommerce has been
 
 Extend Jigoshop eCommerce with Payment Gateways, Shipping Methods, and various other plugins:
 
-http://www.jigoshop.com/product-category/extensions/
+<a href="https://www.jigoshop.com/product-category/extensions/" title="Extensions">Extensions</a>
 
 To list some important ones:
 
@@ -114,7 +114,7 @@ You can become a part of the Jigoshop eCommerce in a variety of ways - either pa
 
 = Setting up Jigoshop =
 
-Take a look through our <a href="http://forum.jigoshop.com/kb/" title="Jigoshop usage guide">Jigoshop usage guides</a> to help you setup Jigoshop for the first time.
+Take a look through our <a href="https://www.jigoshop.com/getting-started-guide/" title="Jigoshop usage guide">Jigoshop usage guides</a> to help you setup Jigoshop for the first time.
 
 == Frequently Asked Questions ==
 
@@ -126,12 +126,12 @@ If you need a theme built, or have a theme that needs styling, <a href="http://w
 
 = Can I have Jigoshop eCommerce in my language =
 
-Jigoshop eCommerce comes with a .po file and is localisation ready in over 10 languages.
-You can also <a href="http://forum.jigoshop.com/kb/customize-jigoshop/languages">create your own translations</a> for Jigoshop eCommerce.
+Jigoshop eCommerce comes with a .po file and is localisation ready.
+You can also <a href="https://www.jigoshop.com/development/language-translations/">create your own translations</a> for Jigoshop eCommerce.
 
 = Which payment gateways do you have? =
 
-Take a look through <a href="https://www.jigoshop.com/product-category/extensions/">our list of payment gateways</a>. There are some free ones that are included with Jigoshop eCommerce, and even more are available <a href="http://www.jigoshop.com/product-category/extensions/">on jigoshop.com</a>.
+Take a look through <a href="https://www.jigoshop.com/product-category/extensions/">our list of payment gateways</a>. There are some free ones that are included with Jigoshop eCommerce, and even more are available <a href="https://www.jigoshop.com/product-category/extensions/">on jigoshop.com</a>.
 
 = Will tax settings work in my country? =
 
