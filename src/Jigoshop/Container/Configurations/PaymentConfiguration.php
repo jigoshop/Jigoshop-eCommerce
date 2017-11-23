@@ -44,6 +44,12 @@ class PaymentConfiguration implements ConfigurationInterface
             'jigoshop.options',
             'jigoshop.messages',
         ]);
+		$services->setDetails('jigoshop.payment.wordpay', 'Jigoshop\Payment\WordPay', [
+			'wpal',
+			'di',
+			'jigoshop.options',
+			'jigoshop.messages',
+		]);
 		$services->setDetails('jigoshop.payment.bank_transfer', 'Jigoshop\Payment\BankTransfer', [
 			'wpal',
 			'jigoshop.options',
@@ -61,6 +67,7 @@ class PaymentConfiguration implements ConfigurationInterface
 		$tags->add('jigoshop.payment.method', 'jigoshop.payment.cheque');
 		$tags->add('jigoshop.payment.method', 'jigoshop.payment.on_delivery');
 		$tags->add('jigoshop.payment.method', 'jigoshop.payment.paypal');
+		$tags->add('jigoshop.payment.method', 'jigoshop.payment.wordpay');
 		$tags->add('jigoshop.payment.method', 'jigoshop.payment.bank_transfer');
 	}
 
