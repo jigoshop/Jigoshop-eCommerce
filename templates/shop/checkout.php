@@ -256,6 +256,7 @@ use Jigoshop\Helper\Tax;
 			</tbody>
 		</table>
 	</div>
+    <?php do_action('jigoshop\template\checkout\before_payment_methods', $cart); ?>
 	<?php if(count($paymentMethods) > 0): ?>
 	<div class="panel panel-default">
 		<div class="panel-heading">

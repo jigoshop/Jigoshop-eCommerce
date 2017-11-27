@@ -319,12 +319,15 @@ class JigoshopInit
     private function initLoggers()
     {
         $logger = new \Monolog\Logger(self::$logger);
-        $formatter = new Monolog\Formatter\LineFormatter('[%datetime%] %channel%.%level_name%: %message% %context%\n %extra%\n',
+        $formatter = new Monolog\Formatter\LineFormatter('[%datetime%] %channel%.%level_name%: %message% %context% %extra%',
             'Y-m-d H:i:s');
         if (WP_DEBUG) {
             $stream = new \Monolog\Handler\StreamHandler(self::$logDir . '/jigoshop.debug.log', \Monolog\Logger::DEBUG);
             $stream->setFormatter($formatter);
             $logger->pushHandler($stream);
+
+            $browserHandler = new \Monolog\Handler\BrowserConsoleHandler();
+            $logger->pushHandler($browserHandler);
         }
         $stream = new \Monolog\Handler\StreamHandler(self::$logDir . '/jigoshop.log', \Monolog\Logger::WARNING);
         $stream->setFormatter($formatter);
