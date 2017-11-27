@@ -1,8 +1,10 @@
 ## Changelog
-* 2.1.9:
+* 2.1.9 - 2017.11.27
     * Fix: Fix readme.txt.
     * Fix: Add Company name and Vat number to thank you page.
     * Fix: Add Vat number variable to order emails.
+    * Fix: Added filter to determine proper template for external product types.
+    * Fix: Added action before checkout payment methods.
 * 2.1.8 - 2017.10.30
     * New: Default variation image will be shown if variable product has no featured image.
     * Fix: Checkout/cart page to allow external product types from plugins.
