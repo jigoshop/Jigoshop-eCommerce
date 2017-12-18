@@ -34,8 +34,8 @@ class ShippingTab implements TabInterface
 
         $wp->addAction('admin_enqueue_scripts', function () {
             if (isset($_GET['tab']) && $_GET['tab'] == ShippingTab::SLUG) {
-                Scripts::add('jigoshop.admin.settings.shopping', \JigoshopInit::getUrl().'/assets/js/admin/settings/shipping.js',
-                    ['jquery', 'wp-util', 'jquery-ui-sortable'], 
+            	Scripts::add('jigoshop.admin.settings.shipping_payment', \JigoshopInit::getUrl() . '/assets/js/admin/settings/shipping_payment.js', 
+            	    ['jquery', 'wp-util', 'jquery-ui-sortable'], 
                     ['page' => 'jigoshop_page_jigoshop_settings']);
                 Scripts::add('jigoshop.magnific-popup', \JigoshopInit::getUrl() . '/assets/js/vendors/magnific_popup.js', ['jquery']);
                 
