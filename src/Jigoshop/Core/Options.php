@@ -190,6 +190,16 @@ class Options
 				'test_mode' => true,
 				'test_email' => '',
             ],
+//			'wordpay' => [
+//				'enabled' => false,
+//				'title' => 'WordPay',
+//				'description' => "Pay via Wordpay.",
+//				'admin_only' => false,
+//				'payment_type' => '',
+//				'api_key' => '',
+//				'test_mode' => true,
+//				'test_api_key' => '',
+//			],
             'bank_transfer' => [
                 'enabled' => false,
                 'title' => 'Bank Transfer',

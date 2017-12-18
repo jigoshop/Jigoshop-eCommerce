@@ -41,6 +41,7 @@
 		"mockery/mockery": "0.9.*",
 		"symfony/var-dumper": "*",
 		"sebastian/phpcpd": "*",
-		"phpmd/phpmd" : "@stable"
+		"phpmd/phpmd" : "@stable",
+		"worldpay/worldpay-lib-php": "~2.1.2"
 	}
 }
