@@ -35,6 +35,13 @@ class PaymentTab implements TabInterface
 
 		$wp->addAction('admin_enqueue_scripts', function() {
 			if(isset($_GET['tab']) && $_GET['tab'] == PaymentTab::SLUG) {
+				Scripts::add('jigoshop.admin.settings.shipping_payment', \JigoshopInit::getUrl() . '/assets/js/admin/settings/shipping_payment.js', [
+						'jquery',
+						'wp-util'
+					], [
+						'page' => 'jigoshop_page_jigoshop_settings'
+					]);
+
 				Scripts::add('jigoshop.admin.settings.payment', \JigoshopInit::getUrl() . '/assets/js/admin/settings/payment.js', [
 						'jquery',
 						'wp-util'
