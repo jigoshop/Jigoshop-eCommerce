@@ -1,4 +1,4 @@
-class Shipping
+class ShippingAdvancedFlatRate
   ruleCount: 0
 
   constructor: ->
@@ -59,4 +59,4 @@ class Shipping
       $item.remove()
 
 jQuery () ->
-  new Shipping()
+  new ShippingAdvancedFlatRate()
