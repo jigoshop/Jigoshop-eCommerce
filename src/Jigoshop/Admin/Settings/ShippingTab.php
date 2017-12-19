@@ -46,6 +46,10 @@ class ShippingTab implements TabInterface
             	    ['jquery', 'wp-util', 'jquery-ui-sortable'], 
                     ['page' => 'jigoshop_page_jigoshop_settings']);            	
 
+            	Scripts::add('jigoshop.admin.settings.shipping.free_shipping', \JigoshopInit::getUrl() . '/assets/js/admin/settings/shipping/free_shipping.js', 
+            	    ['jquery', 'wp-util', 'jquery-ui-sortable'], 
+                    ['page' => 'jigoshop_page_jigoshop_settings']);                	
+
                 Scripts::add('jigoshop.magnific-popup', \JigoshopInit::getUrl() . '/assets/js/vendors/magnific_popup.js', ['jquery']);
                 
                 Styles::add('jquery-ui-sortable');
