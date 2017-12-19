@@ -166,7 +166,7 @@ class AdvancedFlatRate implements MultipleMethod
                 'type' => 'user_defined',
                 'value' => $this->settings['rates'],
                 'display' => function ($field) {
-                    Render::output('admin/settings/shipping/advanced_flat_rate', [
+                    return Render::get('admin/settings/shipping/advanced_flat_rate', [
                         'name' => $field['name'],
                         'values' => $field['value'],
                     ]);

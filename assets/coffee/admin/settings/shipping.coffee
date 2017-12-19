@@ -2,51 +2,16 @@ class Shipping
   ruleCount: 0
 
   constructor: ->
-    jQuery('.shipping-method-configure').click (e) =>
-      targetMethod = jQuery(e.target).val()
-      if targetMethod != undefined
-        jQuery.magnificPopup.open
-          mainClass: 'jigoshop'
-          items: src: ''
-          type: 'inline'
-          callbacks:
-            elementParse: (item) ->
-              item.src = jQuery('#shipping-method-options-' + targetMethod).detach()
-              jQuery(item.src).css('display', 'block')
-            open: =>
-              jQuery('.mfp-content input[type="checkbox"]').bootstrapSwitch
-                size: 'small'
-                onText: 'Yes'
-                offText: 'No'
-              jQuery('.mfp-content select').each (index, element) ->
-                jQuery(element).siblings().remove()
-                jQuery(element).select2 'destroy'
-                jQuery(element).select2()
-              jQuery('.shipping-method-options-save').click ->
-                jQuery.magnificPopup.close()
-
-              @initAdvancedFlatRateElements()
-            close: ->
-              jQuery('.mfp-content').find('input[type="checkbox"]').each (index, element) ->
-                jQuery(element).bootstrapSwitch 'destroy'
-              jQuery('.mfp-content').find('select').each (index, element) ->
-                jQuery(element).select2 'destroy'
-              contents = jQuery('.mfp-content').children('div').detach()
-              jQuery(contents).appendTo('#shipping-methods-container')
-              jQuery('.shipping-method-options-save').click()
-
-  initAdvancedFlatRateElements: () ->
-    @ruleCount = jQuery('.mfp-content #advanced-flat-rate li.list-group-item').length
-    jQuery('.mfp-content div.advanced_flat_rate_countries_field').show()
-    jQuery('.mfp-content #advanced_flat_rate_available_for').on('change', @toggleSpecificCountires).trigger('change')
-    jQuery('.mfp-content #advanced-flat-rate').on( 'click', '.add-rate', (event) =>
+    @ruleCount = jQuery('#advanced-flat-rate li.list-group-item').length
+    jQuery('#advanced_flat_rate_available_for').on('change', @toggleSpecificCountires).trigger('change')
+    jQuery('#advanced-flat-rate').on( 'click', '.add-rate', (event) =>
       @addRate(event))
     .on('click', '.toggle-rate', @toggleRate)
     .on('click', '.remove-rate', @removeRate)
     .on('keyup', '.input-label, .input-cost', @updateTitle)
     .on('switchChange.bootstrapSwitch', 'input.rest-of-the-world', @toggleLocationFields)
-    jQuery('.mfp-content input.rest-of-the-world').trigger 'switchChange'
-    jQuery('.mfp-content #advanced-flat-rate ul').sortable
+    jQuery('input.rest-of-the-world').trigger 'switchChange'
+    jQuery('#advanced-flat-rate ul').sortable
       handle: ".handle"
       axis: "y"
 
@@ -79,9 +44,9 @@ class Shipping
 
   toggleSpecificCountires: (event) ->
     if jQuery(event.target).val() == 'specific'
-      jQuery('.mfp-content .advanced_flat_rate_countries_field').show()
+      jQuery('.mfp-content .advanced_flat_rate_countries_field').slideDown()
     else
-      jQuery('.mfp-content .advanced_flat_rate_countries_field').hide()
+      jQuery('.mfp-content .advanced_flat_rate_countries_field').slideUp()
 
   toggleRate: (event) ->
     $item = jQuery(event.target)
@@ -90,7 +55,7 @@ class Shipping
 
   removeRate: (event) ->
     $item = jQuery(event.target).closest('li')
-    $item.slideUp 1000, () ->
+    $item.slideUp 300, () ->
       $item.remove()
 
 jQuery () ->

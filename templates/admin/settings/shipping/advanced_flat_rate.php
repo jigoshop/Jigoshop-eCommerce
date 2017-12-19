@@ -4,7 +4,7 @@
  * @var array $values
  */
 ?>
-<div id="advanced-flat-rate" class="tooltip-inline-input ">
+<div id="advanced-flat-rate">
     <div class="col-xs-12">
         <ul class="list-group clearfix ui-sortable">
             <?php for ($i = 0; $i < count($values); $i++) : ?>
