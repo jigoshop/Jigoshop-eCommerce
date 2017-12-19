@@ -8,7 +8,7 @@ class Shipping
       @addRate(event))
     .on('click', '.toggle-rate', @toggleRate)
     .on('click', '.remove-rate', @removeRate)
-    .on('keyup', '.input-label, .input-cost', @updateTitle)
+    .on('change', '.input-label, .input-cost', @updateTitle)
     .on('switchChange.bootstrapSwitch', 'input.rest-of-the-world', @toggleLocationFields)
     jQuery('input.rest-of-the-world').trigger 'switchChange'
     jQuery('#advanced-flat-rate ul').sortable
@@ -24,10 +24,10 @@ class Shipping
       $fields.slideDown()
 
   updateTitle: (event) ->
-    $rule = jQuery(event.target).closest 'li'
-    label = $rule.find('.input-label').val()
-    cost = $rule.find('.input-cost').val()
-    $rule.find('span.title').html label + ' - ' + cost
+    $rule = jQuery(event.target).parents('li')
+    label = $rule.find('input.input-label').val()
+    cost = $rule.find('input.input-cost').val()
+    $rule.find('span.title').text(label + ' - ' + cost)
 
   addRate: (event) ->
     event.preventDefault()
