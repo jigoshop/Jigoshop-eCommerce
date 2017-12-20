@@ -45,7 +45,7 @@ class Options
 			'currency_thousand_separator' => ',',
 			'currency_decimal_separator' => '.',
 			'emails' => [
-				'from' => 'Jigoshop',
+				'from' => '',
 				'footer' => '',
             ],
         ],

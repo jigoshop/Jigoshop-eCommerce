@@ -1049,39 +1049,39 @@ msgstr ""
 msgid "<strong>%s</strong>: required Jigoshop version: %s. Current version: %s. Please upgrade."
 msgstr ""
 
-#: src/JigoshopInit.php:401
+#: src/JigoshopInit.php:404
 msgid "Contact support"
 msgstr ""
 
-#: src/JigoshopInit.php:409
+#: src/JigoshopInit.php:412
 msgid "Add your [stars] on [link]wordpress.org[/link] and keep this plugin essentially free."
 msgstr ""
 
-#: src/JigoshopInit.php:429, src/Jigoshop/Service/OrderService.php:417, src/Jigoshop/Service/OrderService.php:422
+#: src/JigoshopInit.php:432, src/Jigoshop/Service/OrderService.php:417, src/Jigoshop/Service/OrderService.php:422
 msgid "Jigoshop"
 msgstr ""
 
-#: src/JigoshopInit.php:440, src/Jigoshop/Admin/Dashboard.php:61
+#: src/JigoshopInit.php:443, src/Jigoshop/Admin/Dashboard.php:61
 msgid "Dashboard"
 msgstr ""
 
-#: src/JigoshopInit.php:449, src/Jigoshop/Admin/Migration.php:61, templates/admin/dashboard/rightNow.php:27, src/Jigoshop/Admin/Settings/ProductsTab.php:54, src/Jigoshop/Core/Types/Product.php:70
+#: src/JigoshopInit.php:452, src/Jigoshop/Admin/Migration.php:61, templates/admin/dashboard/rightNow.php:27, src/Jigoshop/Admin/Settings/ProductsTab.php:54, src/Jigoshop/Core/Types/Product.php:70
 msgid "Products"
 msgstr ""
 
-#: src/JigoshopInit.php:458, src/Jigoshop/Admin/Migration.php:65, src/Jigoshop/Core/Types/Order.php:42, src/Jigoshop/Admin/Reports/Table/CustomerList.php:72, src/Jigoshop/Admin/Reports/Table/CustomerList.php:290
+#: src/JigoshopInit.php:461, src/Jigoshop/Admin/Migration.php:65, src/Jigoshop/Core/Types/Order.php:42, src/Jigoshop/Admin/Reports/Table/CustomerList.php:72, src/Jigoshop/Admin/Reports/Table/CustomerList.php:290
 msgid "Orders"
 msgstr ""
 
-#: src/JigoshopInit.php:467, src/JigoshopInit.php:478, src/Jigoshop/Admin/Settings.php:87, src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:409
+#: src/JigoshopInit.php:470, src/JigoshopInit.php:481, src/Jigoshop/Admin/Settings.php:87, src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:409
 msgid "Settings"
 msgstr ""
 
-#: src/JigoshopInit.php:479
+#: src/JigoshopInit.php:482
 msgid "Docs"
 msgstr ""
 
-#: src/JigoshopInit.php:480, templates/admin/dashboard/usefulLinks.php:32
+#: src/JigoshopInit.php:483, templates/admin/dashboard/usefulLinks.php:32
 msgid "Support"
 msgstr ""
 
@@ -1185,7 +1185,7 @@ msgstr ""
 msgid "Remaining"
 msgstr ""
 
-#: templates/admin/migration.php:56, templates/shop/cart.php:190, templates/shop/checkout.php:253, templates/user/account.php:86, templates/admin/order/totalsBox.php:62, templates/shop/checkout/pay.php:88, templates/shop/checkout/thanks.php:121, templates/user/account/orders.php:38, templates/user/account/orders/single.php:115
+#: templates/admin/migration.php:56, templates/shop/cart.php:190, templates/shop/checkout.php:253, templates/user/account.php:86, templates/admin/order/totalsBox.php:62, templates/shop/checkout/pay.php:88, templates/shop/checkout/thanks.php:121, templates/user/account/orders.php:38, templates/user/account/orders/single.php:125
 msgid "Total"
 msgstr ""
 
@@ -1265,7 +1265,7 @@ msgstr ""
 msgid "Jigoshop &raquo; Product &raquo; Categories"
 msgstr ""
 
-#: templates/admin/product_categories.php:22, templates/admin/order/itemsBox.php:18, templates/admin/product_categories/form.php:17, templates/user/account/address.php:9, src/Jigoshop/Admin/Settings/GeneralTab.php:197, src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:531
+#: templates/admin/product_categories.php:22, templates/admin/order/itemsBox.php:18, templates/admin/product_categories/form.php:17, templates/user/account/address.php:17, src/Jigoshop/Admin/Settings/GeneralTab.php:197, src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:531
 msgid "Name"
 msgstr ""
 
@@ -1393,7 +1393,7 @@ msgstr ""
 msgid "Cart"
 msgstr ""
 
-#: templates/shop/cart.php:35, templates/shop/checkout.php:142, src/Jigoshop/Core/Emails.php:415, templates/shop/checkout/pay.php:27, templates/shop/checkout/thanks.php:52, templates/user/account/orders/single.php:54
+#: templates/shop/cart.php:35, templates/shop/checkout.php:142, src/Jigoshop/Core/Emails.php:417, templates/shop/checkout/pay.php:27, templates/shop/checkout/thanks.php:52, templates/user/account/orders/single.php:54
 msgid "Product Name"
 msgstr ""
 
@@ -1413,7 +1413,7 @@ msgstr ""
 msgid "Enter coupons..."
 msgstr ""
 
-#: templates/shop/cart.php:86, templates/shop/checkout.php:134, templates/shop/checkout.php:193, templates/shop/checkout/pay.php:45, templates/shop/checkout/thanks.php:79, templates/user/account/orders/single.php:72
+#: templates/shop/cart.php:86, templates/shop/checkout.php:134, templates/shop/checkout.php:193, templates/shop/checkout/pay.php:45, templates/shop/checkout/thanks.php:79, templates/user/account/orders/single.php:82
 msgid "Products subtotal"
 msgstr ""
 
@@ -1425,7 +1425,7 @@ msgstr ""
 msgid "Cart Totals"
 msgstr ""
 
-#: templates/shop/cart.php:109, templates/shop/checkout.php:222, src/Jigoshop/Admin/Setup.php:105, templates/admin/order/totalsBox.php:18, templates/shop/checkout/pay.php:61, templates/shop/checkout/thanks.php:94, src/Jigoshop/Admin/Settings/ShippingTab.php:55, templates/user/account/orders/single.php:88
+#: templates/shop/cart.php:109, templates/shop/checkout.php:222, src/Jigoshop/Admin/Setup.php:105, templates/admin/order/totalsBox.php:18, templates/shop/checkout/pay.php:61, templates/shop/checkout/thanks.php:94, src/Jigoshop/Admin/Settings/ShippingTab.php:55, templates/user/account/orders/single.php:98
 msgid "Shipping"
 msgstr ""
 
@@ -1437,7 +1437,7 @@ msgstr ""
 msgid "Select your destination"
 msgstr ""
 
-#: templates/shop/cart.php:167, src/Jigoshop/Helper/Product.php:672, src/Jigoshop/Helper/Product.php:742, templates/user/account/address.php:15, templates/user/account/edit_address.php:50, templates/admin/settings/shipping/advanced_flat_rate/rate.php:71
+#: templates/shop/cart.php:167, src/Jigoshop/Helper/Product.php:672, src/Jigoshop/Helper/Product.php:742, templates/user/account/address.php:23, templates/user/account/edit_address.php:50, templates/admin/settings/shipping/advanced_flat_rate/rate.php:71
 msgid "Postcode"
 msgstr ""
 
@@ -1445,11 +1445,11 @@ msgstr ""
 msgid "Change destination"
 msgstr ""
 
-#: templates/shop/cart.php:176, templates/shop/checkout.php:237, src/Jigoshop/Core/Emails.php:339, templates/admin/order/totalsBox.php:35, templates/shop/checkout/pay.php:72, templates/shop/checkout/thanks.php:105, templates/widget/cart/widget.php:38, templates/user/account/orders/single.php:99
+#: templates/shop/cart.php:176, templates/shop/checkout.php:237, src/Jigoshop/Core/Emails.php:340, templates/admin/order/totalsBox.php:35, templates/shop/checkout/pay.php:72, templates/shop/checkout/thanks.php:105, templates/widget/cart/widget.php:38, templates/user/account/orders/single.php:109
 msgid "Subtotal"
 msgstr ""
 
-#: templates/shop/cart.php:186, templates/shop/checkout.php:248, templates/admin/order/totalsBox.php:43, templates/shop/checkout/pay.php:84, templates/shop/checkout/thanks.php:117, templates/user/account/orders/single.php:111
+#: templates/shop/cart.php:186, templates/shop/checkout.php:248, templates/admin/order/totalsBox.php:43, templates/shop/checkout/pay.php:84, templates/shop/checkout/thanks.php:117, templates/user/account/orders/single.php:121
 msgid "Discount"
 msgstr ""
 
@@ -1485,15 +1485,15 @@ msgstr ""
 msgid "Totals"
 msgstr ""
 
-#: templates/shop/checkout.php:262, templates/shop/checkout/pay.php:98
+#: templates/shop/checkout.php:263, templates/shop/checkout/pay.php:98
 msgid "Select payment method"
 msgstr ""
 
-#: templates/shop/checkout.php:302
+#: templates/shop/checkout.php:303
 msgid "Back to cart"
 msgstr ""
 
-#: templates/shop/checkout.php:303
+#: templates/shop/checkout.php:304
 msgid "Purchase and pay"
 msgstr ""
 
@@ -1505,7 +1505,7 @@ msgstr ""
 msgid "<span class=\"meta-nav\">&larr;</span> Previous"
 msgstr ""
 
-#: templates/shop/product.php:21, src/Jigoshop/Core/Emails.php:416, templates/admin/order/itemsBox.php:17, templates/admin/products/quick_edit.php:31, templates/admin/product/box/general.php:22, templates/admin/product/box/variations/variation.php:85
+#: templates/shop/product.php:21, src/Jigoshop/Core/Emails.php:418, templates/admin/order/itemsBox.php:17, templates/admin/products/quick_edit.php:31, templates/admin/product/box/general.php:22, templates/admin/product/box/variations/variation.php:85
 msgid "SKU"
 msgstr ""
 
@@ -1562,7 +1562,7 @@ msgstr ""
 msgid "Status"
 msgstr ""
 
-#: templates/user/account.php:89, templates/shop/checkout/pay.php:134, templates/user/account/orders.php:29, templates/user/account/orders/single.php:125
+#: templates/user/account.php:89, templates/shop/checkout/pay.php:134, templates/user/account/orders.php:29, templates/user/account/orders/single.php:135
 msgid "Pay"
 msgstr ""
 
@@ -1935,243 +1935,247 @@ msgstr ""
 msgid "Amount"
 msgstr ""
 
-#: src/Jigoshop/Core/Emails.php:327, src/Jigoshop/Core/Emails.php:407
+#: src/Jigoshop/Core/Emails.php:328, src/Jigoshop/Core/Emails.php:409
 msgid "Blog Name"
 msgstr ""
 
-#: src/Jigoshop/Core/Emails.php:328
+#: src/Jigoshop/Core/Emails.php:329
 msgid "Order Number"
 msgstr ""
 
-#: src/Jigoshop/Core/Emails.php:329
+#: src/Jigoshop/Core/Emails.php:330
 msgid "Order Status"
 msgstr ""
 
-#: src/Jigoshop/Core/Emails.php:330
+#: src/Jigoshop/Core/Emails.php:331
 msgid "Order Date"
 msgstr ""
 
-#: src/Jigoshop/Core/Emails.php:331, src/Jigoshop/Core/Emails.php:408
+#: src/Jigoshop/Core/Emails.php:332, src/Jigoshop/Core/Emails.php:410
 msgid "Shop Name"
 msgstr ""
 
-#: src/Jigoshop/Core/Emails.php:332, src/Jigoshop/Core/Emails.php:409
+#: src/Jigoshop/Core/Emails.php:333, src/Jigoshop/Core/Emails.php:411
 msgid "Shop Address part 1"
 msgstr ""
 
-#: src/Jigoshop/Core/Emails.php:333, src/Jigoshop/Core/Emails.php:410
+#: src/Jigoshop/Core/Emails.php:334, src/Jigoshop/Core/Emails.php:412
 msgid "Shop Address part 2"
 msgstr ""
 
-#: src/Jigoshop/Core/Emails.php:334, src/Jigoshop/Core/Emails.php:411
+#: src/Jigoshop/Core/Emails.php:335, src/Jigoshop/Core/Emails.php:413
 msgid "Shop TaxNumber"
 msgstr ""
 
-#: src/Jigoshop/Core/Emails.php:335, src/Jigoshop/Core/Emails.php:412
+#: src/Jigoshop/Core/Emails.php:336, src/Jigoshop/Core/Emails.php:414
 msgid "Shop_Phone"
 msgstr ""
 
-#: src/Jigoshop/Core/Emails.php:336, src/Jigoshop/Core/Emails.php:413
+#: src/Jigoshop/Core/Emails.php:337, src/Jigoshop/Core/Emails.php:415
 msgid "Shop Email"
 msgstr ""
 
-#: src/Jigoshop/Core/Emails.php:337
+#: src/Jigoshop/Core/Emails.php:338
 msgid "Customer Note"
 msgstr ""
 
-#: src/Jigoshop/Core/Emails.php:338
+#: src/Jigoshop/Core/Emails.php:339
 msgid "Ordered Items"
 msgstr ""
 
-#: src/Jigoshop/Core/Emails.php:340
+#: src/Jigoshop/Core/Emails.php:341
 msgid "Shipping Price and Method"
 msgstr ""
 
-#: src/Jigoshop/Core/Emails.php:341
+#: src/Jigoshop/Core/Emails.php:342
 msgid "Shipping Cost"
 msgstr ""
 
-#: src/Jigoshop/Core/Emails.php:342
+#: src/Jigoshop/Core/Emails.php:343
 msgid "Raw Shipping Cost"
 msgstr ""
 
-#: src/Jigoshop/Core/Emails.php:343
+#: src/Jigoshop/Core/Emails.php:344
 msgid "Shipping Method"
 msgstr ""
 
-#: src/Jigoshop/Core/Emails.php:344
+#: src/Jigoshop/Core/Emails.php:345
 msgid "Discount Price"
 msgstr ""
 
-#: src/Jigoshop/Core/Emails.php:345
+#: src/Jigoshop/Core/Emails.php:346
 msgid "Total Tax"
 msgstr ""
 
-#: src/Jigoshop/Core/Emails.php:346
+#: src/Jigoshop/Core/Emails.php:347
 msgid "Total Price"
 msgstr ""
 
-#: src/Jigoshop/Core/Emails.php:347
+#: src/Jigoshop/Core/Emails.php:348
 msgid "Payment Method Title"
 msgstr ""
 
-#: src/Jigoshop/Core/Emails.php:348, src/Jigoshop/Core/Emails.php:377
+#: src/Jigoshop/Core/Emails.php:349, src/Jigoshop/Core/Emails.php:379
 msgid "Is Local Pickup?"
 msgstr ""
 
-#: src/Jigoshop/Core/Emails.php:349
+#: src/Jigoshop/Core/Emails.php:350
 msgid "If order is pending, show checkout url"
 msgstr ""
 
-#: src/Jigoshop/Core/Emails.php:350
+#: src/Jigoshop/Core/Emails.php:351
 msgid "Billing First Name"
 msgstr ""
 
-#: src/Jigoshop/Core/Emails.php:351
+#: src/Jigoshop/Core/Emails.php:352
 msgid "Billing Last Name"
 msgstr ""
 
-#: src/Jigoshop/Core/Emails.php:352
+#: src/Jigoshop/Core/Emails.php:353
 msgid "Billing Company"
 msgstr ""
 
-#: src/Jigoshop/Core/Emails.php:353
-msgid "Billing Address part 1"
-msgstr ""
-
 #: src/Jigoshop/Core/Emails.php:354
-msgid "Billing Address part 2"
+msgid "Billing Vat Number"
 msgstr ""
 
 #: src/Jigoshop/Core/Emails.php:355
-msgid "Billing Postcode"
+msgid "Billing Address part 1"
 msgstr ""
 
 #: src/Jigoshop/Core/Emails.php:356
-msgid "Billing City"
+msgid "Billing Address part 2"
 msgstr ""
 
 #: src/Jigoshop/Core/Emails.php:357
-msgid "Billing Country"
+msgid "Billing Postcode"
 msgstr ""
 
 #: src/Jigoshop/Core/Emails.php:358
-msgid "Raw Billing Country"
+msgid "Billing City"
 msgstr ""
 
 #: src/Jigoshop/Core/Emails.php:359
-msgid "Billing State"
+msgid "Billing Country"
 msgstr ""
 
 #: src/Jigoshop/Core/Emails.php:360
-msgid "Raw Billing State"
+msgid "Raw Billing Country"
 msgstr ""
 
 #: src/Jigoshop/Core/Emails.php:361
-msgid "Billing Email"
+msgid "Billing State"
 msgstr ""
 
 #: src/Jigoshop/Core/Emails.php:362
-msgid "Billing Phone    "
+msgid "Raw Billing State"
 msgstr ""
 
 #: src/Jigoshop/Core/Emails.php:363
-msgid "Shipping First Name"
+msgid "Billing Email"
 msgstr ""
 
 #: src/Jigoshop/Core/Emails.php:364
-msgid "Shipping Last Name"
+msgid "Billing Phone    "
 msgstr ""
 
 #: src/Jigoshop/Core/Emails.php:365
-msgid "Shipping Company"
+msgid "Shipping First Name"
 msgstr ""
 
 #: src/Jigoshop/Core/Emails.php:366
-msgid "Shipping Address part 1"
+msgid "Shipping Last Name"
 msgstr ""
 
 #: src/Jigoshop/Core/Emails.php:367
-msgid "Shipping_Address part 2"
+msgid "Shipping Company"
 msgstr ""
 
 #: src/Jigoshop/Core/Emails.php:368
-msgid "Shipping Postcode"
+msgid "Shipping Address part 1"
 msgstr ""
 
 #: src/Jigoshop/Core/Emails.php:369
-msgid "Shipping City"
+msgid "Shipping_Address part 2"
 msgstr ""
 
 #: src/Jigoshop/Core/Emails.php:370
-msgid "Shipping Country"
+msgid "Shipping Postcode"
 msgstr ""
 
 #: src/Jigoshop/Core/Emails.php:371
-msgid "Raw Shipping Country"
+msgid "Shipping City"
 msgstr ""
 
 #: src/Jigoshop/Core/Emails.php:372
-msgid "Shipping State"
+msgid "Shipping Country"
 msgstr ""
 
 #: src/Jigoshop/Core/Emails.php:373
-msgid "Raw Shipping State"
+msgid "Raw Shipping Country"
 msgstr ""
 
 #: src/Jigoshop/Core/Emails.php:374
-msgid "Is payment method Bank Transfer?"
+msgid "Shipping State"
 msgstr ""
 
 #: src/Jigoshop/Core/Emails.php:375
-msgid "Is payment method Cash on Delivery?"
+msgid "Raw Shipping State"
 msgstr ""
 
 #: src/Jigoshop/Core/Emails.php:376
-msgid "Is payment method Cheque?"
+msgid "Is payment method Bank Transfer?"
+msgstr ""
+
+#: src/Jigoshop/Core/Emails.php:377
+msgid "Is payment method Cash on Delivery?"
 msgstr ""
 
 #: src/Jigoshop/Core/Emails.php:378
+msgid "Is payment method Cheque?"
+msgstr ""
+
+#: src/Jigoshop/Core/Emails.php:380
 msgid "Company bank transfer details"
 msgstr ""
 
-#: src/Jigoshop/Core/Emails.php:379
+#: src/Jigoshop/Core/Emails.php:381
 msgid "Company cheque details"
 msgstr ""
 
-#: src/Jigoshop/Core/Emails.php:414
+#: src/Jigoshop/Core/Emails.php:416
 msgid "Product ID"
 msgstr ""
 
-#: src/Jigoshop/Core/Emails.php:451, src/Jigoshop/Payment/BankTransfer.php:103, src/Jigoshop/Payment/BankTransfer.php:188, src/Jigoshop/Payment/Cheque.php:104, src/Jigoshop/Payment/OnDelivery.php:104, src/Jigoshop/Payment/PayPal.php:143, templates/admin/product_categories/form.php:26, src/Jigoshop/Frontend/Page/Product.php:231
+#: src/Jigoshop/Core/Emails.php:453, src/Jigoshop/Payment/BankTransfer.php:103, src/Jigoshop/Payment/BankTransfer.php:188, src/Jigoshop/Payment/Cheque.php:104, src/Jigoshop/Payment/OnDelivery.php:104, src/Jigoshop/Payment/PayPal.php:143, src/Jigoshop/Payment/WordPay.php:110, templates/admin/product_categories/form.php:26, src/Jigoshop/Frontend/Page/Product.php:231
 msgid "Description"
 msgstr ""
 
-#: src/Jigoshop/Core/Emails.php:452, src/Jigoshop/Payment/BankTransfer.php:110, src/Jigoshop/Payment/BankTransfer.php:189
+#: src/Jigoshop/Core/Emails.php:454, src/Jigoshop/Payment/BankTransfer.php:110, src/Jigoshop/Payment/BankTransfer.php:189
 msgid "Bank Name"
 msgstr ""
 
-#: src/Jigoshop/Core/Emails.php:453, src/Jigoshop/Payment/BankTransfer.php:122, src/Jigoshop/Payment/BankTransfer.php:191
+#: src/Jigoshop/Core/Emails.php:455, src/Jigoshop/Payment/BankTransfer.php:122, src/Jigoshop/Payment/BankTransfer.php:191
 msgid "Account Holder"
 msgstr ""
 
-#: src/Jigoshop/Core/Emails.php:454, src/Jigoshop/Payment/BankTransfer.php:116, src/Jigoshop/Payment/BankTransfer.php:190
+#: src/Jigoshop/Core/Emails.php:456, src/Jigoshop/Payment/BankTransfer.php:116, src/Jigoshop/Payment/BankTransfer.php:190
 msgid "Account Number"
 msgstr ""
 
-#: src/Jigoshop/Core/Emails.php:455, src/Jigoshop/Payment/BankTransfer.php:129, src/Jigoshop/Payment/BankTransfer.php:192
+#: src/Jigoshop/Core/Emails.php:457, src/Jigoshop/Payment/BankTransfer.php:129, src/Jigoshop/Payment/BankTransfer.php:192
 msgid "Sort Code"
 msgstr ""
 
-#: src/Jigoshop/Core/Emails.php:456, src/Jigoshop/Payment/BankTransfer.php:136, src/Jigoshop/Payment/BankTransfer.php:193
+#: src/Jigoshop/Core/Emails.php:458, src/Jigoshop/Payment/BankTransfer.php:136, src/Jigoshop/Payment/BankTransfer.php:193
 msgid "IBAN"
 msgstr ""
 
-#: src/Jigoshop/Core/Emails.php:457, src/Jigoshop/Payment/BankTransfer.php:143, src/Jigoshop/Payment/BankTransfer.php:194
+#: src/Jigoshop/Core/Emails.php:459, src/Jigoshop/Payment/BankTransfer.php:143, src/Jigoshop/Payment/BankTransfer.php:194
 msgid "BIC Code"
 msgstr ""
 
-#: src/Jigoshop/Core/Emails.php:458, src/Jigoshop/Payment/BankTransfer.php:150, src/Jigoshop/Payment/BankTransfer.php:195
+#: src/Jigoshop/Core/Emails.php:460, src/Jigoshop/Payment/BankTransfer.php:150, src/Jigoshop/Payment/BankTransfer.php:195
 msgid "Additional Info"
 msgstr ""
 
@@ -2800,7 +2804,7 @@ msgstr ""
 msgid "Last Name"
 msgstr ""
 
-#: src/Jigoshop/Helper/Product.php:652, src/Jigoshop/Helper/Product.php:727, templates/user/account/edit_address.php:19
+#: src/Jigoshop/Helper/Product.php:652, src/Jigoshop/Helper/Product.php:727, templates/user/account/address.php:10, templates/user/account/edit_address.php:19
 msgid "Company"
 msgstr ""
 
@@ -2808,15 +2812,15 @@ msgstr ""
 msgid "EU VAT Number"
 msgstr ""
 
-#: src/Jigoshop/Helper/Product.php:662, src/Jigoshop/Helper/Product.php:732, templates/user/account/address.php:11, templates/user/account/edit_address.php:40
+#: src/Jigoshop/Helper/Product.php:662, src/Jigoshop/Helper/Product.php:732, templates/user/account/address.php:19, templates/user/account/edit_address.php:40
 msgid "Address"
 msgstr ""
 
-#: src/Jigoshop/Helper/Product.php:667, src/Jigoshop/Helper/Product.php:737, templates/user/account/address.php:13, templates/user/account/edit_address.php:45
+#: src/Jigoshop/Helper/Product.php:667, src/Jigoshop/Helper/Product.php:737, templates/user/account/address.php:21, templates/user/account/edit_address.php:45
 msgid "City"
 msgstr ""
 
-#: src/Jigoshop/Helper/Product.php:677, src/Jigoshop/Helper/Product.php:747, templates/user/account/address.php:19, templates/user/account/edit_address.php:61, templates/admin/settings/tax/rules.php:28
+#: src/Jigoshop/Helper/Product.php:677, src/Jigoshop/Helper/Product.php:747, templates/user/account/address.php:27, templates/user/account/edit_address.php:61, templates/admin/settings/tax/rules.php:28
 msgid "Country"
 msgstr ""
 
@@ -2824,7 +2828,7 @@ msgstr ""
 msgid "State/Province"
 msgstr ""
 
-#: src/Jigoshop/Helper/Product.php:687, templates/user/account/address.php:22, templates/user/account/edit_address.php:67
+#: src/Jigoshop/Helper/Product.php:687, templates/user/account/address.php:30, templates/user/account/edit_address.php:67
 msgid "Phone"
 msgstr ""
 
@@ -2844,15 +2848,15 @@ msgstr ""
 msgid "Bank Transfer"
 msgstr ""
 
-#: src/Jigoshop/Payment/BankTransfer.php:90, src/Jigoshop/Payment/Cheque.php:91, src/Jigoshop/Payment/OnDelivery.php:91, src/Jigoshop/Payment/PayPal.php:130, src/Jigoshop/Shipping/FlatRate.php:119, src/Jigoshop/Shipping/FreeShipping.php:127, src/Jigoshop/Shipping/LocalPickup.php:86, src/Jigoshop/Admin/Settings/LayoutTab.php:279
+#: src/Jigoshop/Payment/BankTransfer.php:90, src/Jigoshop/Payment/Cheque.php:91, src/Jigoshop/Payment/OnDelivery.php:91, src/Jigoshop/Payment/PayPal.php:130, src/Jigoshop/Payment/WordPay.php:97, src/Jigoshop/Shipping/FlatRate.php:119, src/Jigoshop/Shipping/FreeShipping.php:127, src/Jigoshop/Shipping/LocalPickup.php:86, src/Jigoshop/Admin/Settings/LayoutTab.php:279
 msgid "Is enabled?"
 msgstr ""
 
-#: src/Jigoshop/Payment/BankTransfer.php:97, src/Jigoshop/Payment/Cheque.php:98, src/Jigoshop/Payment/OnDelivery.php:98, src/Jigoshop/Payment/PayPal.php:137, src/Jigoshop/Shipping/AdvancedFlatRate.php:116
+#: src/Jigoshop/Payment/BankTransfer.php:97, src/Jigoshop/Payment/Cheque.php:98, src/Jigoshop/Payment/OnDelivery.php:98, src/Jigoshop/Payment/PayPal.php:137, src/Jigoshop/Payment/WordPay.php:104, src/Jigoshop/Shipping/AdvancedFlatRate.php:116
 msgid "Title"
 msgstr ""
 
-#: src/Jigoshop/Payment/BankTransfer.php:104, src/Jigoshop/Payment/Cheque.php:105, src/Jigoshop/Payment/OnDelivery.php:105, src/Jigoshop/Payment/PayPal.php:144
+#: src/Jigoshop/Payment/BankTransfer.php:104, src/Jigoshop/Payment/Cheque.php:105, src/Jigoshop/Payment/OnDelivery.php:105, src/Jigoshop/Payment/PayPal.php:144, src/Jigoshop/Payment/WordPay.php:111
 msgid "Allowed HTML tags are: %s"
 msgstr ""
 
@@ -2979,6 +2983,54 @@ msgstr ""
 
 #: src/Jigoshop/Payment/PayPal.php:440, src/Jigoshop/Payment/PayPal.php:446
 msgid "Payment %s via PayPal."
+msgstr ""
+
+#: src/Jigoshop/Payment/WordPay.php:69
+msgid "WordPay"
+msgstr ""
+
+#: src/Jigoshop/Payment/WordPay.php:117
+msgid "Admin only?"
+msgstr ""
+
+#: src/Jigoshop/Payment/WordPay.php:119
+msgid "Set this if payment has to be available only for admins."
+msgstr ""
+
+#: src/Jigoshop/Payment/WordPay.php:125
+msgid "Payment type"
+msgstr ""
+
+#: src/Jigoshop/Payment/WordPay.php:129, src/Jigoshop/Admin/Migration/Orders.php:444, src/Jigoshop/Admin/Migration/Orders.php:446
+msgid "Standard"
+msgstr ""
+
+#: src/Jigoshop/Payment/WordPay.php:134
+msgid "Api key"
+msgstr ""
+
+#: src/Jigoshop/Payment/WordPay.php:135
+msgid "Please enter your valid api key; this is needed in order to take payment!"
+msgstr ""
+
+#: src/Jigoshop/Payment/WordPay.php:141
+msgid "Enable testing mode"
+msgstr ""
+
+#: src/Jigoshop/Payment/WordPay.php:148
+msgid "Test api key"
+msgstr ""
+
+#: src/Jigoshop/Payment/WordPay.php:149
+msgid "Please enter your test api key; this is needed for testing purposes and used when test mode is enabled."
+msgstr ""
+
+#: src/Jigoshop/Payment/WordPay.php:172
+msgid "Please enter Api key."
+msgstr ""
+
+#: src/Jigoshop/Payment/WordPay.php:174
+msgid "Please enter test Api key."
 msgstr ""
 
 #: src/Jigoshop/Service/CartService.php:238
@@ -3964,11 +4016,11 @@ msgstr ""
 msgid "Order details"
 msgstr ""
 
-#: templates/shop/checkout/pay.php:55, templates/shop/checkout/thanks.php:88, src/Jigoshop/Admin/Page/Order.php:93, templates/user/account/orders/single.php:82
+#: templates/shop/checkout/pay.php:55, templates/shop/checkout/thanks.php:88, src/Jigoshop/Admin/Page/Order.php:93, templates/user/account/orders/single.php:92
 msgid "Order Totals"
 msgstr ""
 
-#: templates/shop/checkout/pay.php:132, templates/user/account/change_password.php:32, templates/user/account/edit_address.php:75, templates/user/account/orders.php:45, templates/user/account/orders/single.php:122
+#: templates/shop/checkout/pay.php:132, templates/user/account/change_password.php:32, templates/user/account/edit_address.php:75, templates/user/account/orders.php:45, templates/user/account/orders/single.php:132
 msgid "Go back to My account"
 msgstr ""
 
@@ -4028,11 +4080,15 @@ msgstr ""
 msgid "You may also like&hellip;"
 msgstr ""
 
-#: templates/user/account/address.php:17, templates/user/account/edit_address.php:55
+#: templates/user/account/address.php:13, templates/user/account/edit_address.php:24
+msgid "VAT number"
+msgstr ""
+
+#: templates/user/account/address.php:25, templates/user/account/edit_address.php:55
 msgid "State/province"
 msgstr ""
 
-#: templates/user/account/address.php:26, templates/user/account/edit_address.php:72, src/Jigoshop/Admin/Settings/GeneralTab.php:228, src/Jigoshop/Admin/Reports/Table/CustomerList.php:64, src/Jigoshop/Admin/Reports/Table/CustomerList.php:289
+#: templates/user/account/address.php:34, templates/user/account/edit_address.php:72, src/Jigoshop/Admin/Settings/GeneralTab.php:228, src/Jigoshop/Admin/Reports/Table/CustomerList.php:64, src/Jigoshop/Admin/Reports/Table/CustomerList.php:289
 msgid "Email"
 msgstr ""
 
@@ -4054,10 +4110,6 @@ msgstr ""
 
 #: templates/user/account/edit_address.php:13
 msgid "My account &raquo; Edit address"
-msgstr ""
-
-#: templates/user/account/edit_address.php:24
-msgid "VAT number"
 msgstr ""
 
 #: templates/user/account/edit_address.php:30
@@ -4243,10 +4295,6 @@ msgstr ""
 
 #: src/Jigoshop/Admin/Migration/Orders.php:137
 msgid "New Order status Name"
-msgstr ""
-
-#: src/Jigoshop/Admin/Migration/Orders.php:444, src/Jigoshop/Admin/Migration/Orders.php:446
-msgid "Standard"
 msgstr ""
 
 #: src/Jigoshop/Admin/Migration/Orders.php:471, src/Jigoshop/Admin/Migration/Orders.php:657
@@ -6821,7 +6869,7 @@ msgstr ""
 msgid "Made on"
 msgstr ""
 
-#: templates/user/account/orders/single.php:123
+#: templates/user/account/orders/single.php:133
 msgid "Go back to orders list"
 msgstr ""
 

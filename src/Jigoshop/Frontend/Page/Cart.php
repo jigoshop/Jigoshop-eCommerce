@@ -535,9 +535,9 @@ class Cart implements PageInterface
 			}
 		}
 
-		if (isset($_GET['action']) && isset($_GET['item']) && $_GET['action'] === 'remove-item' && is_numeric($_GET['item'])) {
+		if (isset($_GET['action']) && isset($_GET['item']) && $_GET['action'] === 'remove-item' && $_GET['item']) {
 			$cart = $this->cartService->getCurrent();
-			$cart->removeItem((int)$_GET['item']);
+			$cart->removeItem($_GET['item']);
 			$this->cartService->save($cart);
 			$this->messages->addNotice(__('Successfully removed item from cart.', 'jigoshop-ecommerce'), false);
 		}
