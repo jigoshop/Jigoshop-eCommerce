@@ -122,7 +122,7 @@ class CustomerList implements TableInterface
 			'total_items' => $this->totalItems,
 			'total_pages' => $this->totalPages,
 			'active_page' => $this->activePageNumber,
-			'search_title' => __('Search Customers'),
+			'search_title' => __('Search Customers', 'jigoshop-ecommerce'),
 			'search' => $this->getSearch(),
 			'csv_download_link' => $this->getDownloadLink(),
         ]);
