@@ -30,7 +30,7 @@ use Jigoshop\Helper\Render;
 	</tbody>
 </table>
 
-<div id="payment-methods-container" style="display: none">
+<div id="shipping-payment-methods-container" style="display: none">
 	<?php 
 	foreach($methods as $method) {
 		Render::output('admin/settings/payment/methodOptions', [
