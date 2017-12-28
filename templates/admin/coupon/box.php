@@ -92,34 +92,36 @@ use Jigoshop\Admin\Helper\Forms;
 			'value' => $coupon->getOrderTotalMaximum(),
         ]); ?>
 	</fieldset>
-	<fieldset>
-		<?php Forms::text([
-			'name' => 'jigoshop_coupon[products]',
-			'label' => __('Include products', 'jigoshop-ecommerce'),
-			'description' => __('Control which products this coupon can apply to. If this is left blank it will have effect on all of the products.','jigoshop'),
-			'value' => join(',', $coupon->getProducts()),
-        ]); ?>
-		<?php Forms::text([
-			'name' => 'jigoshop_coupon[excluded_products]',
-			'label' => __('Excluded products', 'jigoshop-ecommerce'),
-			'description' => __('Control which products this coupon cannot be applied to.','jigoshop'),
-			'value' => join(',', $coupon->getExcludedProducts()),
-        ]); ?>
-	</fieldset>
-	<fieldset>
-		<?php Forms::text([
-			'name' => 'jigoshop_coupon[categories]',
-			'label' => __('Include categories', 'jigoshop-ecommerce'),
-			'description' => __('Control which categories this coupon can apply to. If this is left blank it will have effect on all of the products.','jigoshop'),
-			'value' => join(',', $coupon->getCategories()),
-        ]); ?>
-		<?php Forms::text([
-			'name' => 'jigoshop_coupon[excluded_categories]',
-			'label' => __('Excluded categories', 'jigoshop-ecommerce'),
-			'description' => __('Control which categories this coupon cannot be applied to.','jigoshop'),
-			'value' => join(',', $coupon->getExcludedCategories()),
-        ]); ?>
-	</fieldset>
+	<div id="jigoshop_coupon_type_product">
+		<fieldset>
+			<?php Forms::text([
+				'name' => 'jigoshop_coupon[products]',
+				'label' => __('Include products', 'jigoshop-ecommerce'),
+				'description' => __('Control which products this coupon can apply to. If this is left blank it will have effect on all of the products.','jigoshop'),
+				'value' => join(',', $coupon->getProducts()),
+	        ]); ?>
+			<?php Forms::text([
+				'name' => 'jigoshop_coupon[excluded_products]',
+				'label' => __('Excluded products', 'jigoshop-ecommerce'),
+				'description' => __('Control which products this coupon cannot be applied to.','jigoshop'),
+				'value' => join(',', $coupon->getExcludedProducts()),
+	        ]); ?>
+		</fieldset>
+		<fieldset>
+			<?php Forms::text([
+				'name' => 'jigoshop_coupon[categories]',
+				'label' => __('Include categories', 'jigoshop-ecommerce'),
+				'description' => __('Control which categories this coupon can apply to. If this is left blank it will have effect on all of the products.','jigoshop'),
+				'value' => join(',', $coupon->getCategories()),
+	        ]); ?>
+			<?php Forms::text([
+				'name' => 'jigoshop_coupon[excluded_categories]',
+				'label' => __('Excluded categories', 'jigoshop-ecommerce'),
+				'description' => __('Control which categories this coupon cannot be applied to.','jigoshop'),
+				'value' => join(',', $coupon->getExcludedCategories()),
+	        ]); ?>
+		</fieldset>
+	</div>
 	<fieldset>
 		<?php Forms::select([
 			'name' => 'jigoshop_coupon[payment_methods]',
