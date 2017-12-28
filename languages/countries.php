@@ -251,7 +251,7 @@ __('Saint Vincent and the Grenadines', 'jigoshop-ecommerce');
 __('Venezuela', 'jigoshop-ecommerce');
 __('British Virgin Islands', 'jigoshop-ecommerce');
 __('U.S. Virgin Islands', 'jigoshop-ecommerce');
-__('Viet nam', 'jigoshop-ecommerce');
+__('Vietnam', 'jigoshop-ecommerce');
 __('Vanuatu', 'jigoshop-ecommerce');
 __('Wallis and Futuna', 'jigoshop-ecommerce');
 __('Samoa', 'jigoshop-ecommerce');
