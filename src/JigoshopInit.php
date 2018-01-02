@@ -35,6 +35,8 @@ class JigoshopInit
     private $extensions;
     /** @var \Composer\Autoload\ClassLoader */
     private $classLoader;
+    /** @var bool */
+    private static $isTemplateErrorHandlerRegistered;
 
     public function __construct($file)
     {
@@ -58,6 +60,11 @@ class JigoshopInit
         add_filter('admin_footer_text', [$this, 'footer']);
         add_action('admin_bar_menu', [$this, 'toolbar'], 35);
         add_action('jigoshop\extensions\install', [$this, 'installExtension']);
+        add_filter('template', function($template) {
+            self::registerTemplateErrorHandler();
+
+            return $template;
+        });
     }
 
     /**
@@ -535,5 +542,46 @@ class JigoshopInit
             $installer->init($this->container);
             $installer->install();
         }
+    }
+
+    /**
+     * Registers an error handler to handle template errors, if it was not registered before.
+     */
+    private static function registerTemplateErrorHandler() {
+        if(self::$isTemplateErrorHandlerRegistered === true) {
+            return;
+        }
+
+        register_shutdown_function(['JigoshopInit', 'templateErrorHandler']);
+
+        self::$isTemplateErrorHandlerRegistered = true;
+    }
+
+    /**
+     * Handles errors caused by themes.
+     */
+    public static function templateErrorHandler() {
+        $error = error_get_last();
+        if(is_array($error)) {
+            if(!preg_match('/wp-content\/themes\//', $error['file'])) {
+                return;
+            }
+
+            if(preg_match('/^Uncaught Error: Call to undefined function (jigoshop_[^\(]*)\(\)/', $error['message'], $regs)) {
+                $invalidEntityTitle = 'Invalid function/method';
+                $invalidEntity = sprintf('%s()', $regs[1]);
+            }
+            elseif(preg_match('/^Uncaught Error: Class \'([^\']*)\' not found/', $error['message'], $regs)) {
+                $invalidEntityTitle = 'Invalid class';
+                $invalidEntity = $regs[1];
+            }
+
+            $logFile = sprintf('%s/jigoshop.invalid-references.log', self::getLogDir());
+            $logEntry = sprintf("Date/time: %s\nType: %s\nName: %s\nFile: %s\nLine: %s\nPHP error: %s\n---\n", date('Y-m-d H:i:s'), $invalidEntityTitle, $invalidEntity, $error['file'], $error['line'], $error['message']);
+
+            $result = @file_put_contents($logFile, file_get_contents($logFile) . $logEntry);
+
+            print '<br />' . __('This error was probably caused by reference to old or deprecated function/method, not present in current Jigoshop version. Please check your Jigoshop eCommerce log directory for further details.', 'jigoshop-ecommerce');
+        }        
     }
 }
