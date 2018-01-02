@@ -56,6 +56,15 @@ class LogsTab implements TabInterface
 						'type' => 'textarea',
 						'value' => $this->getLogs('jigoshop.debug')
                     ],
+                    [
+                    	'id' => 'invalid-references-logs',
+                    	'name' => 'invalid-references-logs',
+                    	'title' => __('Invalid references logs', 'jigoshop-ecommerce'),
+                    	'classes' => ['plain-text'],
+                    	'description' => __('Contains invalid or deprecated references in theme files to functions/methods/classes not present in current version of Jigoshop eCommerce.', 'jigoshop-ecommerce'),
+                    	'type' => 'textarea',
+                    	'value' => $this->getLogs('jigoshop.invalid-references')
+                    ]
                 ]
             ]
         ];
