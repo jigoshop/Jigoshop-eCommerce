@@ -576,12 +576,16 @@ class JigoshopInit
                 $invalidEntity = $regs[1];
             }
 
+            if(!isset($invalidEntity) || !isset($invalidEntityTitle)) {
+                return;
+            }
+
             $logFile = sprintf('%s/jigoshop.invalid-references.log', self::getLogDir());
             $logEntry = sprintf("Date/time: %s\nType: %s\nName: %s\nFile: %s\nLine: %s\nPHP error: %s\n---\n", date('Y-m-d H:i:s'), $invalidEntityTitle, $invalidEntity, $error['file'], $error['line'], $error['message']);
 
             $result = @file_put_contents($logFile, file_get_contents($logFile) . $logEntry);
 
-            print '<br />' . __('This error was probably caused by reference to old or deprecated function/method, not present in current Jigoshop version. Please check your Jigoshop eCommerce log directory for further details.', 'jigoshop-ecommerce');
+            print '<br />' . __('This error was probably caused by reference to old or deprecated function/method/class, not present in current Jigoshop version. Please check your Jigoshop eCommerce log directory for further details.', 'jigoshop-ecommerce');
         }        
     }
 }
