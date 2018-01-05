@@ -251,7 +251,7 @@ class ToolsTab implements TabInterface
     {
         set_time_limit(0);
         $wpdb = $this->wp->getWPDB();
-        $wpdb->update($wpdb->postmeta, ['meta_value' => 0], ['meta_key' => 'stock_manage']);
-        $wpdb->update($wpdb->postmeta, ['meta_value' => StockStatus::IN_STOCK], ['meta_key' => 'stock_status']);
+        $wpdb->query("UPDATE {$wpdb->postmeta} SET meta_value = 0 WHERE meta_key = 'stock_manage' ");
+        $wpdb->query("UPDATE {$wpdb->postmeta} SET meta_value = 1 WHERE meta_key = 'stock_status' ");
     }
 }

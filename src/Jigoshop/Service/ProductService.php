@@ -431,7 +431,7 @@ class ProductService implements ProductServiceInterface
     public function saveReview($id, $approvew)
     {
         if (!isset($_POST['rating'])) {
-            throw new Exception('');
+            throw new Exception('Product review must have rating.');
         }
 
         update_comment_meta($id, 'rating', (int)$_POST['rating']);
