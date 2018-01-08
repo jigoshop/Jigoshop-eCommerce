@@ -93,7 +93,7 @@ class Cart extends Order
 				throw new NotEnoughStockException($product->getStock()->getStock());
 			}
 
-			$itemInCart->setQuantity($itemInCart->getQuantity() + $item->getQuantity());
+			$this->updateQuantity($itemInCart->getKey(), ($itemInCart->getQuantity() + $item->getQuantity()));
 
 			return;
 		}
