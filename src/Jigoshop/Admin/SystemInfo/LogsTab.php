@@ -52,7 +52,7 @@ class LogsTab implements TabInterface
 						'name' => 'debug-logs',
 						'title' => __('Debug Logs', 'jigoshop-ecommerce'),
 						'classes' => ['plain-text'],
-						'description' => __('Debug logs requires WP_DEBUG set to true in wp-config.php.'),
+						'description' => __('Debug logs requires WP_DEBUG set to true in wp-config.php.', 'jigoshop-ecommerce'),
 						'type' => 'textarea',
 						'value' => $this->getLogs('jigoshop.debug')
                     ],

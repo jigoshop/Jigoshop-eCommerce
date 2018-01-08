@@ -4,7 +4,7 @@ use Jigoshop\Helper\Render;
 ?>
 <div class="wrap jigoshop">
 	<h1 class="wp-heading-inline"><?php echo __('Jigoshop &raquo; Product &raquo; Categories', 'jigoshop-ecommerce'); ?></h1>
-	<a href="" class="page-title-action" id="jigoshop-product-categories-add-button">Add New</a>
+	<a href="" class="page-title-action" id="jigoshop-product-categories-add-button"><?php echo __('Add new', 'jigoshop-ecommerce'); ?></a>
 
 	<?php 
 	Render::output('shop/messages', [

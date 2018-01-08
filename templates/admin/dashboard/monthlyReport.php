@@ -56,8 +56,8 @@
 				$.plot(
 					$plot,
 					[
-						{ label: "<?= __('Number of sales','jigoshop'); ?>", data: d },
-						{ label: "<?=\ __('Sales amount','jigoshop'); ?>", data: d2, yaxis: 2 }
+						{ label: "<?= __('Number of sales','jigoshop-ecommerce'); ?>", data: d },
+						{ label: "<?= __('Sales amount','jigoshop-ecommerce'); ?>", data: d2, yaxis: 2 }
 					],
 					{
 						series: {

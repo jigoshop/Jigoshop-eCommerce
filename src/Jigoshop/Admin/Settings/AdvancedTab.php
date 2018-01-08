@@ -46,8 +46,7 @@ class AdvancedTab implements TabInterface
 
         $this->caches = [
             'simple' => _x('Simple', 'cache', 'jigoshop-ecommerce'),
-            'php_fast_cache' => _x('Php Fast Cache - Use this option only if your database is responding slowly. ',
-                'cache', 'jigoshop'),
+            'php_fast_cache' => _x('Php Fast Cache - Use this option only if your database is responding slowly. ', 'cache', 'jigoshop-ecommerce'),
         ];
         $this->sessionTypes = [
             'php' => __('Php session', 'jigoshop-ecommerce'),
@@ -97,9 +96,9 @@ class AdvancedTab implements TabInterface
                         'name' => '[automatic_complete]',
                         'title' => __('Complete processing orders', 'jigoshop-ecommerce'),
                         'description' => __("Change all 'Processing' orders older than one month to 'Completed'",
-                            'jigoshop'),
+                            'jigoshop-ecommerce'),
                         'tip' => __("For orders that have been completed but the status is still set to 'processing'.  This will move them to a 'completed' status without sending an email out to all the customers.",
-                            'jigoshop'),
+                            'jigoshop-ecommerce'),
                         'type' => 'checkbox',
                         'checked' => $this->settings['automatic_complete'],
                         'classes' => ['switch-medium'],
@@ -108,9 +107,9 @@ class AdvancedTab implements TabInterface
                         'name' => '[automatic_reset]',
                         'title' => __('Reset pending orders', 'jigoshop-ecommerce'),
                         'description' => __("Change all 'Pending' orders older than one month to 'On Hold'",
-                            'jigoshop'),
+                            'jigoshop-ecommerce'),
                         'tip' => __("For customers that have not completed the Checkout process or haven't paid for an order after a period of time, this will reset the Order to On Hold allowing the Shop owner to take action.  WARNING: For the first use on an existing Shop this setting <em>can</em> generate a <strong>lot</strong> of email!",
-                            'jigoshop'),
+                            'jigoshop-ecommerce'),
                         'type' => 'checkbox',
                         'checked' => $this->settings['automatic_reset'],
                         'classes' => ['switch-medium'],
@@ -134,7 +133,7 @@ class AdvancedTab implements TabInterface
                         'name' => '[integration][google_analytics]',
                         'title' => __('Google Analytics ID', 'jigoshop-ecommerce'),
                         'description' => __('Log into your Google Analytics account to find your ID. e.g. <code>UA-XXXXXXX-X</code>',
-                            'jigoshop'),
+                            'jigoshop-ecommerce'),
                         'type' => 'text',
                         'value' => $this->settings['integration']['google_analytics'],
                     ],
@@ -148,7 +147,7 @@ class AdvancedTab implements TabInterface
                         'name' => '[products_list][variations_sku_stock]',
                         'title' => __('Show variation\'s SKU and stock', 'jigoshop-ecommerce'),
                         'description' => __("Show all variation's SKU and stock on admin products list page.",
-                            'jigoshop'),
+                            'jigoshop-ecommerce'),
                         'type' => 'checkbox',
                         'checked' => $this->settings['products_list']['variations_sku_stock'],
                         'classes' => ['switch-medium'],
@@ -180,7 +179,7 @@ class AdvancedTab implements TabInterface
                         'title' => __('Ignore meta queries on product list', 'jigoshop-ecommerce'),
                         'description' => __('Ignores products\' visibility to enhance the loading time.
 Warning : This will result in showing "out of stock" products on the catalog page, as well as making all products visible in the catalog and search pages.',
-                            'jigoshop'),
+                            'jigoshop-ecommerce'),
                         'type' => 'checkbox',
                         'checked' => $this->settings['ignore_meta_queries'],
                         'classes' => ['switch-medium'],
@@ -243,7 +242,7 @@ Warning : This will result in showing "out of stock" products on the catalog pag
                 'title' => __('Pages', 'jigoshop-ecommerce'),
                 'id' => 'pages',
                 'description' => __('This section allows you to change content source page for each part of Jigoshop. It will not change the main behaviour though.',
-                    'jigoshop'),
+                    'jigoshop-ecommerce'),
                 'fields' => [
                     [
                         'name' => '[pages][shop]',

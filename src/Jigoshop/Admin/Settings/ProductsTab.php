@@ -91,8 +91,7 @@ class ProductsTab implements TabInterface
                     [
                         'name' => '[up_sells_product_limit]',
                         'title' => __('Number of up sell products to display', 'jigoshop-ecommerce'),
-                        'tip' => __('Enter the number of products to limit the items displayed in Product page',
-                            'jigoshop'),
+                        'tip' => __('Enter the number of products to limit the items displayed in Product page', 'jigoshop-ecommerce'),
                         'description' => '',
                         'type' => 'number',
                         'value' => $this->options['up_sells_product_limit'],
