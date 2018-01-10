@@ -117,7 +117,7 @@ class WorldPay implements Method3
 			],
 			[
 				'name' => sprintf('[%s][client_key]', self::ID),
-				'title' => __('Payment type', 'jigoshop-ecommerce'),
+				'title' => __('Client key', 'jigoshop-ecommerce'),
 				'tip' => '',
 				'type' => 'text',
 				'value' => $this->settings['client_key'],
