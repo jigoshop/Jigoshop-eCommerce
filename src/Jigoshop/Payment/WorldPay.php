@@ -2,34 +2,29 @@
 
 namespace Jigoshop\Payment;
 
-use Jigoshop\Endpoint\Processable;
 use Jigoshop\Container;
-use Jigoshop\Core;
 use Jigoshop\Core\Messages;
 use Jigoshop\Core\Options;
-use Jigoshop\Entity\Customer\CompanyAddress;
 use Jigoshop\Entity\Order;
-use Jigoshop\Entity\Product;
-use Jigoshop\Helper\Api;
+use Jigoshop\Helper\Country;
 use Jigoshop\Helper\Currency;
-use Jigoshop\Helper\Endpoint;
 use Jigoshop\Helper\Order as OrderHelper;
 use Jigoshop\Helper\Render;
 use Jigoshop\Helper\Scripts;
-use Jigoshop\Helper\Validation;
-use Monolog\Registry;
+use Worldpay\Worldpay as VendorWorldpay;
+use Worldpay\WorldpayException;
 use WPAL\Wordpress;
 use Jigoshop\Exception;
 
 /**
- * Class WordPay
+ * Class WorldPay
  * @package Jigoshop\Payment;
  * @author Krzysztof Kasowski
  */
-class WordPay implements Method3, RenderPayInterface
+class WorldPay implements Method3
 {
 
-	const ID = 'wordpay';
+	const ID = 'worldpay';
 	const STANDARD_PAYMENT = 'standard';
 
 	/** @var Wordpress */
@@ -66,7 +61,7 @@ class WordPay implements Method3, RenderPayInterface
 	 */
 	public function getName()
 	{
-		return $this->wp->isAdmin() ? $this->getLogoImage().' '.__('WordPay', 'jigoshop-ecommerce') : $this->settings['title'];
+		return $this->wp->isAdmin() ? $this->getLogoImage().' '.__('WorldPay', 'jigoshop-ecommerce') : $this->settings['title'];
 	}
 
 	/**
@@ -121,20 +116,18 @@ class WordPay implements Method3, RenderPayInterface
 				'classes' => ['switch-medium'],
 			],
 			[
-				'name' => sprintf('[%s][payment_type]', self::ID),
+				'name' => sprintf('[%s][client_key]', self::ID),
 				'title' => __('Payment type', 'jigoshop-ecommerce'),
 				'tip' => '',
-				'type' => 'select',
-				'options' => [
-					self::STANDARD_PAYMENT => __('Standard', 'jigoshop-ecommerce'),
-				],
+				'type' => 'text',
+				'value' => $this->settings['client_key'],
 			],
 			[
-				'name' => sprintf('[%s][api_key]', self::ID),
+				'name' => sprintf('[%s][service_key]', self::ID),
 				'title' => __('Api key', 'jigoshop-ecommerce'),
 				'tip' => __('Please enter your valid api key; this is needed in order to take payment!', 'jigoshop-ecommerce'),
 				'type' => 'text',
-				'value' => $this->settings['email'],
+				'value' => $this->settings['service_key'],
 			],
 			[
 				'name' => sprintf('[%s][test_mode]', self::ID),
@@ -144,11 +137,11 @@ class WordPay implements Method3, RenderPayInterface
 				'classes' => ['switch-medium'],
 			],
 			[
-				'name' => sprintf('[%s][test_api_key]', self::ID),
+				'name' => sprintf('[%s][test_service_key]', self::ID),
 				'title' => __('Test api key', 'jigoshop-ecommerce'),
 				'tip' => __('Please enter your test api key; this is needed for testing purposes and used when test mode is enabled.', 'jigoshop-ecommerce'),
 				'type' => 'text',
-				'value' => $this->settings['test_api_key'],
+				'value' => $this->settings['test_service_key'],
 			],
 		];
 	}
@@ -168,9 +161,9 @@ class WordPay implements Method3, RenderPayInterface
 		$settings['title'] = trim(htmlspecialchars(strip_tags($settings['title'])));
 		$settings['description'] = trim(htmlspecialchars(strip_tags($settings['description'], '<p><a><strong><em><b><i>')));
 
-		if ($settings['enabled'] && !$settings['test_mode'] && $settings['api_key'] == '') {
+		if ($settings['enabled'] && !$settings['test_mode'] && $settings['service_key'] == '') {
 			$this->messages->addWarning(__('Please enter Api key.', 'jigoshop-ecommerce'));
-		} elseif($settings['enabled'] && $settings['test_mode'] && $settings['test_api_key'] == '') {
+		} elseif($settings['enabled'] && $settings['test_mode'] && $settings['test_service_key'] == '') {
 			$this->messages->addWarning(__('Please enter test Api key.', 'jigoshop-ecommerce'));
 		}
 
@@ -186,7 +179,10 @@ class WordPay implements Method3, RenderPayInterface
 	 */
 	public function render()
     {
-		echo $this->settings['description'];
+        Scripts::add('worldpay', 'https://cdn.worldpay.com/v1/worldpay.js');
+        return Render::output('shop/checkout/pay/worldpay', [
+            'clientKey' => $this->settings['client_key'],
+        ]);
 	}
 
 	/**
@@ -197,7 +193,61 @@ class WordPay implements Method3, RenderPayInterface
 	 */
 	public function process($order)
     {
-		return OrderHelper::getPayLink($order, $this);
+        if(!isset($_POST['jigoshop_order'], $_POST['jigoshop_order']['worldpay'], $_POST['jigoshop_order']['worldpay']['token'])) {
+            throw new Exception(__('Invalid worldpay payment', 'jigoshop_ecommerce'));
+        }
+
+        try {
+            $worldpay = new VendorWorldpay($this->isTestModeEnabled() ? $this->settings['test_service_key'] : $this->settings['service_key']);
+            $response = $worldpay->createOrder([
+                'token' => $_POST['jigoshop_order']['worldpay']['token'],
+                'amount' => (int)($order->getTotal()*100),
+                'currencyCode' => Currency::code(),
+                'name' => $order->getCustomer()->getBillingAddress()->getName(),
+                'billingAddress' => [
+                    'address1' => $order->getCustomer()->getBillingAddress()->getAddress(),
+                    'address2' => '',
+                    'address3' => '',
+                    'postalCode' => $order->getCustomer()->getBillingAddress()->getPostcode(),
+                    'city' => $order->getCustomer()->getBillingAddress()->getCity(),
+                    'state' => Country::getStateName($order->getCustomer()->getBillingAddress()->getCountry(),
+                        $order->getCustomer()->getBillingAddress()->getState()),
+                    'countryCode' => $order->getCustomer()->getBillingAddress()->getCountry(),
+                ],
+                'deliveryAddress' => [
+                    'address1' => $order->getCustomer()->getShippingAddress()->getAddress(),
+                    'address2' => '',
+                    'address3' => '',
+                    'postalCode' => $order->getCustomer()->getShippingAddress()->getPostcode(),
+                    'city' => $order->getCustomer()->getShippingAddress()->getCity(),
+                    'state' => Country::getStateName($order->getCustomer()->getShippingAddress()->getCountry(),
+                        $order->getCustomer()->getShippingAddress()->getState()),
+                    'countryCode' => $order->getCustomer()->getShippingAddress()->getCountry(),
+                ],
+                'orderDescription' => $order->getNumber(),
+                'customerOrderCode' => $order->getId(),
+            ]);
+
+        } catch (WorldpayException $e) {
+            throw new Exception($e->getMessage());
+        }
+
+        if($response['paymentStatus'] == 'SUCCESS') {
+            $order->setStatus(
+                \Jigoshop\Helper\Order::getStatusAfterCompletePayment($order),
+                sprintf(__('Payment completed, Worldpay order code [%s]', 'jigoshop-ecommerce'), $response['orderCode'])
+            );
+        } elseif($response['paymentStatus'] == 'FAILED') {
+            $order->setStatus(
+                Order\Status::ON_HOLD,
+                sprintf(__('Payment error, Worldpay payment status reason [%s]', 'jigoshop-ecommerce'), $response['paymentStatusReason'])
+            );
+        }
+
+        update_post_meta($order->getId(), 'worldpay_order_code', $response['orderCode']);
+        $this->di->get('jigoshop.service.order')->save($order);
+
+		return OrderHelper::getThankYouLink($order);
 	}
 
 	/**
@@ -233,14 +283,18 @@ class WordPay implements Method3, RenderPayInterface
 	 */
 	public function isConfigured()
     {
+        if(!isset($this->settings['client_key']) || empty($this->settings['client_key'])) {
+            return false;
+        }
+
 		if(isset($this->settings['test_mode']) && $this->settings['test_mode']) {
-			if(isset($this->settings['test_api_key']) && $this->settings['test_api_key']) {
+			if(isset($this->settings['test_service_key']) && $this->settings['test_service_key']) {
 				return true;
 			}
 			return false;
 		}
 
-		if(isset($this->settings['api_key']) && $this->settings['api_key']) {
+		if(isset($this->settings['service_key']) && $this->settings['service_key']) {
 			return true;
 		}
 
@@ -315,20 +369,5 @@ class WordPay implements Method3, RenderPayInterface
 		$this->settings['admin_only'] = $state;
 
 		return $this->settings;
-	}
-
-    /**
-	 * @param Order $order
-	 *
-	 * @return string
-	 */
-	public function renderPay($order)
-    {
-		Scripts::add('wordpay', 'https://cdn.worldpay.com/v1/worldpay.js');
-		return Render::get('shop/checkout/pay/wordpay', [
-		    'clientKey' => '',
-            'order' => $order,
-            'notifyUrl' => Endpoint::getUrl(self::ID),
-        ]);
 	}
 }

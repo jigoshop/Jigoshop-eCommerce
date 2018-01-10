@@ -395,7 +395,12 @@ class Checkout implements PageInterface
 				if ($isPaymentRequired) {
 					$url = $this->wp->applyFilters('jigoshop\checkout\pay\before', $url, $order);
 					if(empty($url)) {
-						$url = $payment->process($order);
+					    try {
+						    $url = $payment->process($order);
+                        } catch (Exception $e) {
+                            $this->messages->addError($e->getMessage());
+                            $this->wp->wpRedirect(\Jigoshop\Helper\Order::getPayLink($order, $payment));
+                        }
 						$url = $this->wp->applyFilters('jigoshop\checkout\pay\after', $url, $order);
 					}
 				} else {
