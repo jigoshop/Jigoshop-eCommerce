@@ -773,7 +773,7 @@ class Product
         foreach($types as $type) {
             $attachments[$type] = array_values(array_map(function($attachment) use ($uploadDir) {
                 $meta = get_post_meta($attachment['id'], '_wp_attachment_metadata', true);
-                $meta['file'] = $uploadDir . '/' . $meta['file'];
+                $meta['file'] = $uploadDir . '/' . (isset($meta['file']) ? $meta['file'] : '');
                 if(isset($meta['sizes'])) {
                     $meta['sizes'] = array_map(function($size) use ($uploadDir) {
                         $size['file'] = $uploadDir . '/' . $size['file'];
