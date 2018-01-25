@@ -5,10 +5,12 @@ concat = require('gulp-concat')
 less = require('gulp-less')
 cssmin = require('gulp-cssmin')
 check = require('gulp-if')
-uglify = require('gulp-uglify')
 rimraf = require('gulp-rimraf')
 replace = require('gulp-replace')
 wpPot = require('gulp-wp-pot')
+uglifyes = require('uglify-es');
+composer = require('gulp-uglify/composer');
+uglify = composer(uglifyes, console);
 minify = true
 # Sources declaration
 
@@ -86,7 +88,13 @@ gulp.task 'scripts', ['lint'], ->
     'assets/coffee/**/*.coffee',
   ]
     .pipe coffee({bare: true})
-    .pipe check(minify, uglify())
+    .pipe check(minify, uglify({
+      mangle: false,
+      ecma: 6
+    }))
+    .on('error', (err) ->
+      gutil.log(gutil.colors.red('[Error]'), err.toString())
+    )
     .pipe gulp.dest('assets/js')
 
 gulp.task 'lint', ->

@@ -1,4 +1,13 @@
 ## Changelog
+* 2.1.10 - 2018.01.23
+    * New: WorldPay gateway.
+    * New: Template error handler.
+    * Fix: Unify payment and shipping settings tabs.
+    * Fix: Update product quantity in cart properly.
+    * Fix: `Disable manage stock and set ins stock status for all products` tool now works for all products.
+    * Fix: Show exception message when trying to add review without rating.
+    * Fix: Changed text domain in places where it was missing or invalid.
+    * Fix: Properly remove item from cart via url.
 * 2.1.9 - 2017.11.27
     * Fix: Fix readme.txt.
     * Fix: Add Company name and Vat number to thank you page.

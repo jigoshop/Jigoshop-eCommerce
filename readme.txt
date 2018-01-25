@@ -4,8 +4,8 @@ Tags: ecommerce, wordpress ecommerce, store, shop, shopping, cart, checkout, wid
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=7F5FZ5NGJ3XTL
 
 Requires at least: 4.0
-Tested up to: 4.8.2
-Stable tag: 2.1.8
+Tested up to: 4.9.2
+Stable tag: 2.1.10
 
 A feature-packed eCommerce plugin built upon WordPress core functionality ensuring excellent performance, customizability and control - robust Tax Settings, Stock Level Management, Free and Premium Extensions - you name it.
 
@@ -151,6 +151,15 @@ However, if you want priority, dedicated support from Jigoshop staff, we dp offe
 
 == Changelog ==
 
+= 2.1.10 - 2018.01.23 =
+* New: WorldPay gateway.
+* New: Template error handler.
+* Fix: Unify payment and shipping settings tabs.
+* Fix: Update product quantity in cart properly.
+* Fix: `Disable manage stock and set ins stock status for all products` tool now works for all products.
+* Fix: Show exception message when trying to add review without rating.
+* Fix: Changed text domain in places where it was missing or invalid.
+* Fix: Properly remove item from cart via url.
 = 2.1.9 - 2017.11.27 =
 * Fix: Fix readme.txt.
 * Fix: Add Company name and Vat number to thank you page.
