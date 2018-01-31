@@ -327,15 +327,20 @@ class Product
             case Entity\Product\Downloadable::TYPE:
                 /** @var $product Entity\Product\Simple */
                 $stock = $product->getStock()->getStatus() == Entity\Product\Attributes\StockStatus::IN_STOCK ?
-                    _x('In stock', 'product', 'jigoshop-ecommerce') :
-                    '<strong class="attention">' . _x('Out of stock', 'product', 'jigoshop-ecommerce') . '</strong>';
+                _x('In stock', 'product', 'jigoshop-ecommerce') :
+                '<strong class="attention">' . _x('Out of stock', 'product', 'jigoshop-ecommerce') . '</strong>';
 
                 if (!self::$options->get('products.show_stock') || !$product->getStock()->getManage()) {
                     break;
                 }
 
-                $stock = sprintf(_x('%s <strong>(%d available)</strong>', 'product', 'jigoshop-ecommerce'), $stock,
-                    $product->getStock()->getStock());
+                if($product->getStock()->getStock()) {
+                    sprintf(_x('%s <strong>(%d available)</strong>', 'product', 'jigoshop-ecommerce'), $stock,
+                        $product->getStock()->getStock());
+                } elseif (in_array($product->getStock()->getAllowBackorders(), [Entity\Product\Attributes\StockStatus::BACKORDERS_ALLOW, Entity\Product\Attributes\StockStatus::BACKORDERS_NOTIFY])) {
+                    $stock = sprintf(_x('%s <strong>(Available on request)</strong>', 'product', 'jigoshop-ecommerce'), $stock,
+                        $product->getStock()->getStock());
+                }
                 break;
             default:
                 $stock = apply_filters('jigoshop\helper\product\get_stock', '', $product);
