@@ -755,7 +755,7 @@ class Order implements OrderInterface, \JsonSerializable
 			'payment' => $payment,
 			'customer_note' => $this->customerNote,
 			'subtotal' => $this->subtotal,
-			'processingFee' => $this->processingFee,
+			'processingFee' => $this->getProcessingFee(),
 			'total' => $this->getTotal(),
 			'discount' => $this->getDiscount(),
 			'discounts' => $this->discounts,
