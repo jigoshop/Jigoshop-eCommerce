@@ -56,6 +56,17 @@ $orderTax = $order->getTax();
 				'classes' => [$orderTax[$class] > 0 ? '' : 'not-active'],
             ]); ?>
 		<?php endforeach; ?>
+		<?php 
+		if($order->getProcessingFee() > 0) {
+			Forms::constant([
+				'name' => 'order[processingFee]',
+				'id' => 'processingFee',
+				'label' => sprintf(__('%s processing fee', 'jigoshop-ecommerce'), $order->getPaymentMethod()->getName()),
+				'size' => 12,
+				'value' => Product::formatPrice($order->getProcessingFee())
+			]); 
+		}
+		?>
 		<?php Forms::constant([
 			'name' => 'order[total]',
 			'id' => 'total',
