@@ -121,6 +121,16 @@ use Jigoshop\Helper\Render;
 				<th scope="row"><?php _e('Discount', 'jigoshop-ecommerce'); ?></th>
 				<td><?= Product::formatPrice($order->getDiscount()); ?></td>
 			</tr>
+			<?php 
+			if($order->getProcessingFee() > 0) {
+			?>
+			<tr id="cart-payment-processing-fee">
+				<th scope="row"><?php echo strip_tags(sprintf(__('%s processing fee', 'jigoshop-ecommerce'), $order->getPaymentMethod()->getName())); ?></th>
+				<td><?php echo Product::formatPrice($order->getProcessingFee()); ?></td>
+			</tr>
+			<?php 
+			}
+			?>
 			<tr id="cart-total">
 				<th scope="row"><?php _e('Total', 'jigoshop-ecommerce'); ?></th>
 				<td><?= Product::formatPrice($order->getTotal()); ?></td>
