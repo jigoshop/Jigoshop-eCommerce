@@ -117,10 +117,16 @@ use Jigoshop\Helper\Render;
 					</tr>
 				<?php endif; ?>
 			<?php endforeach; ?>
-			<tr id="cart-discount"<?php $order->getDiscount() == 0 and print ' class="not-active"'; ?>>
+			<?php 
+			if($order->getDiscount() > 0) {
+			?>
+			<tr id="cart-discount">
 				<th scope="row"><?php _e('Discount', 'jigoshop-ecommerce'); ?></th>
 				<td><?= Product::formatPrice($order->getDiscount()); ?></td>
 			</tr>
+			<?php 
+			}
+			?>
 			<?php 
 			if($order->getProcessingFee() > 0) {
 			?>
