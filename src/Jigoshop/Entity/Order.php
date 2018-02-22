@@ -59,6 +59,8 @@ class Order implements OrderInterface, \JsonSerializable
 	private $totalCombinedTax;
 	/** @var float */
 	private $shippingPrice = 0.0;
+	/**	@var float */
+	private $processingFee = null;
 	/** @var string */
 	private $status = Status::PENDING;
 	/** @var string */
@@ -343,6 +345,7 @@ class Order implements OrderInterface, \JsonSerializable
 		}, $this->tax);
 		$this->totalTax = null;
 		$this->totalCombinedTax = null;
+		$this->processingFee = null;
 	}
 
 	/**
@@ -358,6 +361,7 @@ class Order implements OrderInterface, \JsonSerializable
 			return 0.0;
 		}, $this->shippingTax);
 		$this->totalCombinedTax = null;
+		$this->processingFee = null;
 	}
 
 	/**
@@ -540,7 +544,7 @@ class Order implements OrderInterface, \JsonSerializable
 	public function getTotal()
 	{
         //TODO: calculate it only once
-		return $this->subtotal + $this->getTotalCombinedTax() - $this->getDiscount();
+		return (($this->subtotal + $this->getTotalCombinedTax()) - $this->getDiscount()) + $this->getProcessingFee();
 	}
 
 	/**
@@ -680,6 +684,7 @@ class Order implements OrderInterface, \JsonSerializable
 			$this->productSubtotal -= $item->getCost();
 			$this->totalTax = null;
 			$this->totalCombinedTax = null;
+			$this->processingFee = null;
 			unset($this->items[$key]);
 
 			return $item;
@@ -699,6 +704,24 @@ class Order implements OrderInterface, \JsonSerializable
 		$this->subtotal += $item->getCost();
 		$this->totalTax = null;
 		$this->totalCombinedTax = null;
+		$this->processingFee = null;
+	}
+
+	/**
+	 * Returns processing fee value.
+	 * 
+	 * @return float Processing fee.
+	 */
+	public function getProcessingFee() {
+		if($this->paymentMethod === null || !$this->paymentMethod instanceof \Jigoshop\Payment\Method4) {
+			return 0;
+		}
+
+		if($this->processingFee === null) {
+			$this->processingFee = $this->paymentMethod->calculateProcessingFee($this);
+		}
+
+		return $this->processingFee;
 	}
 
 	/**
@@ -732,6 +755,7 @@ class Order implements OrderInterface, \JsonSerializable
 			'payment' => $payment,
 			'customer_note' => $this->customerNote,
 			'subtotal' => $this->subtotal,
+			'processingFee' => $this->processingFee,
 			'total' => $this->getTotal(),
 			'discount' => $this->getDiscount(),
 			'discounts' => $this->discounts,
@@ -832,6 +856,9 @@ class Order implements OrderInterface, \JsonSerializable
         if (isset($state['price_includes_tax'])) {
             $this->taxIncluded = (bool)$state['price_includes_tax'];
         }
+        if(isset($state['processingFee'])) {
+        	$this->processingFee = $state['processingFee'];
+        }
 	}
 
     /**
@@ -879,6 +906,7 @@ class Order implements OrderInterface, \JsonSerializable
            ],
            'payment' => $payment,
            'customer_note' => $this->customerNote,
+           'processingFee' => $this->processingFee,
            'total' => $this->getTotal(),
            'tax' => $this->tax,
            'shipping_tax' => $this->shippingTax,

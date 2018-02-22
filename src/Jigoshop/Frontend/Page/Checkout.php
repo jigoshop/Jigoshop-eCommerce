@@ -98,6 +98,8 @@ class Checkout implements PageInterface
 		$wp->addAction('wp_ajax_nopriv_jigoshop_checkout_change_state', [$this, 'ajaxChangeState']);
 		$wp->addAction('wp_ajax_jigoshop_checkout_change_postcode', [$this, 'ajaxChangePostcode']);
 		$wp->addAction('wp_ajax_nopriv_jigoshop_checkout_change_postcode', [$this, 'ajaxChangePostcode']);
+		$wp->addAction('wp_ajax_jigoshop_checkout_select_payment', [$this, 'ajaxSelectPayment']);
+		$wp->addAction('wp_ajax_nopriv_jigoshop_checkout_select_payment', [$this, 'ajaxSelectPayment']);
 	}
 
 	/**
@@ -318,6 +320,37 @@ class Checkout implements PageInterface
 		$cart->setCustomer($customer);
 
 		$response = $this->getAjaxLocationResponse($customer, $cart);
+
+		echo json_encode($response);
+		exit;
+	}
+
+	/**
+	 * Executes when user selects payment method on checkout page. 
+	 * Currently used for render payment method processing fee field.
+	 */
+	public function ajaxSelectPayment() {
+		$paymentMethod = $this->paymentService->get($_POST['method']);
+		$cart = $this->cartService->getCurrent();
+
+		$cart->setPaymentMethod($paymentMethod);
+
+		$processingFee = $cart->getProcessingFee();
+
+		if($processingFee > 0) {
+			$response = [
+				'feePresent' => true,
+				'title' => strip_tags(sprintf(__('%s processing fee', 'jigoshop-ecommerce'), $paymentMethod->getName())),
+				'fee' => ProductHelper::formatPrice($processingFee),
+				'total' => ProductHelper::formatPrice($cart->getTotal())
+			];
+		}
+		else {
+			$response = [
+				'feePresent' => false,
+				'total' => ProductHelper::formatPrice($cart->getTotal())
+			];
+		}
 
 		echo json_encode($response);
 		exit;

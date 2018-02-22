@@ -249,6 +249,10 @@ use Jigoshop\Helper\Tax;
 					<td><?= Product::formatPrice($cart->getDiscount()); ?></td>
 				</tr>
 			<?php do_action('jigoshop\template\shop\checkout\before_total'); ?>
+				<tr id="cart-payment-processing-fee" class="not-active">
+					<th scope="row"><?php _e('Processing fee', 'jigoshop-ecommerce'); ?></th>
+					<td></td>
+				</tr>
 				<tr id="cart-total" class="info">
 					<th scope="row"><?php _e('Total', 'jigoshop-ecommerce'); ?></th>
 					<td><strong><?= Product::formatPrice($cart->getTotal()); ?></strong></td>

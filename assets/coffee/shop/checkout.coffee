@@ -24,9 +24,7 @@ class Checkout
         jQuery('#jigoshop_order_shipping_address_country').change()
       else
         jQuery('#jigoshop_order_billing_address_country').change()
-    jQuery('#payment-methods').on 'change', 'li input[type=radio]', ->
-      jQuery('#payment-methods li > div').slideUp()
-      jQuery('div', jQuery(this).closest('li')).slideDown()
+    jQuery('#payment-methods').on 'change', 'li input[type=radio]', @selectPayment
     jQuery('#shipping-calculator')
       .on 'click', 'input[type=radio]', @selectShipping
     jQuery('#jigoshop_order_billing_address_country').on 'change', (event) =>
@@ -103,6 +101,27 @@ class Checkout
         @_updateTaxes(result.tax, result.html.tax)
       else
         jigoshop.addMessage('danger', result.error, 6000)
+
+  selectPayment: ->
+    jQuery('#payment-methods li > div').slideUp()
+    jQuery('div', jQuery(this).closest('li')).slideDown()
+
+    jQuery.ajax(
+      url: jigoshop.getAjaxUrl()
+      type: 'post'
+      dataType: 'json'
+      data:
+        action: 'jigoshop_checkout_select_payment'
+        method: jQuery(this).val()
+      ).done (result) ->
+        if(!result.feePresent)
+          jQuery('#cart-payment-processing-fee').addClass('not-active')
+        else
+          jQuery('#cart-payment-processing-fee').find('th').html(result.title)
+          jQuery('#cart-payment-processing-fee').find('td').html(result.fee)
+          jQuery('#cart-payment-processing-fee').removeClass('not-active')
+
+        jQuery('#cart-total').find('td').find('strong').html(result.total)
 
   updateCountry: (field, event) =>
     @block()
