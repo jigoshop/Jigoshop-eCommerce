@@ -857,7 +857,7 @@ class Order implements OrderInterface, \JsonSerializable
             $this->taxIncluded = (bool)$state['price_includes_tax'];
         }
         if(isset($state['processingFee'])) {
-        	$this->processingFee = $state['processingFee'];
+        	$this->processingFee = ($state['processingFee'] === 0?null:$state['processingFee']);
         }
 	}
 
@@ -906,7 +906,7 @@ class Order implements OrderInterface, \JsonSerializable
            ],
            'payment' => $payment,
            'customer_note' => $this->customerNote,
-           'processingFee' => $this->processingFee,
+           'processingFee' => $this->getProcessingFee(),
            'total' => $this->getTotal(),
            'tax' => $this->tax,
            'shipping_tax' => $this->shippingTax,
