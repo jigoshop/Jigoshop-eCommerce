@@ -718,13 +718,23 @@ class Order implements OrderInterface, \JsonSerializable
 			return 0;
 		}
 
+		$orderValue = $this->subtotal + $this->getTotalCombinedTax();
+
 		if($this->processingFee === null) {
 			$processingFeeRules = Integration::getOptions()->get('payment.processingFeeRules', []);
 			foreach($processingFeeRules as $rule) {
 				if(in_array($this->paymentMethod->getId(), $rule['methods'])) {
+					if($rule['minValue'] > 0 && $orderValue < $rule['minValue']) {
+						continue;
+					}
+
+					if($rule['maxValue'] > 0 && $orderValue > $rule['maxValue']) {
+						continue;
+					}
+
 					if(strstr($rule['value'], '%') !== false) {
 						$percent = str_replace('%', '', $rule['value']);
-						$this->processingFee = round(($percent / 100) * (($this->subtotal + $this->getTotalCombinedTax()) - $this->getDiscount()), 2);
+						$this->processingFee = round(($percent / 100) * ($orderValue - $this->getDiscount()), 2);
 					}
 					else {
 						$this->processingFee = $rule['value'];

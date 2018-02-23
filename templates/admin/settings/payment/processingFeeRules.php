@@ -7,6 +7,8 @@ use Jigoshop\Helper\Render;
 		<tr>
 			<th scope="col"></th>
 			<th scope="col"><?php echo __('Methods', 'jigoshop-ecommerce'); ?></th>
+			<th scope="col"><?php echo __('Min order value', 'jigoshop-ecommerce'); ?></th>
+			<th scope="col"><?php echo __('Max order value', 'jigoshop-ecommerce'); ?></th>
 			<th scope="col"><?php echo __('Fee', 'jigoshop-ecommerce'); ?></th>
 			<th scope="col"></th>
 		</tr>
@@ -18,6 +20,8 @@ use Jigoshop\Helper\Render;
 				'id' => $rule['id'],
 				'methods' => $methods,
 				'methodsSelected' => $rule['methods'],
+				'minValue' => $rule['minValue'],
+				'maxValue' => $rule['maxValue'],
 				'value' => $rule['value']
 			]);
 		}

@@ -242,9 +242,21 @@ class PaymentTab implements TabInterface
 				$processingFeeRule['value'] = 0;
 			}
 
+			$processingFeeRule['minValue'] = str_replace(',', '.', $processingFeeRule['minValue']);
+			if(!preg_match('/^[\d\.]*$/', $processingFeeRule['minValue']) || $processingFeeRule['minValue'] < 0) {
+				$processingFeeRule['minValue'] = '';
+			}
+
+			$processingFeeRule['maxValue'] = str_replace(',', '.', $processingFeeRule['maxValue']);
+			if(!preg_match('/^[\d\.]*$/', $processingFeeRule['maxValue']) || $processingFeeRule['maxValue'] < 0) {
+				$processingFeeRule['maxValue'] = '';
+			}			
+
 			$settings['processingFeeRules'][] = [
 				'id' => count($settings['processingFeeRules']),
 				'methods' => $processingFeeRule['methods'],
+				'minValue' => $processingFeeRule['minValue'],
+				'maxValue' => $processingFeeRule['maxValue'],
 				'value' => $processingFeeRule['value']
 			];
 		}
