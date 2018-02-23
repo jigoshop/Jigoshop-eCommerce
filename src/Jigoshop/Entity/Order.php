@@ -7,6 +7,7 @@ use Jigoshop\Entity\Order\Discount;
 use Jigoshop\Entity\Order\Item;
 use Jigoshop\Entity\Order\Status;
 use Jigoshop\Exception;
+use Jigoshop\Integration;
 use Jigoshop\Payment;
 use Jigoshop\Shipping;
 use Monolog\Registry;
@@ -713,12 +714,25 @@ class Order implements OrderInterface, \JsonSerializable
 	 * @return float Processing fee.
 	 */
 	public function getProcessingFee() {
-		if($this->paymentMethod === null || !$this->paymentMethod instanceof \Jigoshop\Payment\Method4) {
+		if($this->paymentMethod === null) {
 			return 0;
 		}
 
 		if($this->processingFee === null) {
-			$this->processingFee = $this->paymentMethod->calculateProcessingFee($this);
+			$processingFeeRules = Integration::getOptions()->get('payment.processingFeeRules', []);
+			foreach($processingFeeRules as $rule) {
+				if(in_array($this->paymentMethod->getId(), $rule['methods'])) {
+					if(strstr($rule['value'], '%') !== false) {
+						$percent = str_replace('%', '', $rule['value']);
+						$this->processingFee = round(($percent / 100) * (($this->subtotal + $this->getTotalCombinedTax()) - $this->getDiscount()), 2);
+					}
+					else {
+						$this->processingFee = $rule['value'];
+					}
+
+					break;
+				}
+			}
 		}
 
 		return $this->processingFee;
