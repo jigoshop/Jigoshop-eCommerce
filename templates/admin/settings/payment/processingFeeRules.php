@@ -24,6 +24,8 @@ use Jigoshop\Helper\Render;
 	</tbody>
 </table>
 
+<p class="help"><?php echo __('First rule which matches is taken into account.', 'jigoshop-ecommerce'); ?></p>
+
 <a id="processing-fee-add-rule" class="btn btn-default">
 	<span class="glyphicon glyphicon-plus"></span>
 	<?php echo __('Add', 'jigoshop-ecommerce'); ?>
