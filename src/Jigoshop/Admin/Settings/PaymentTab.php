@@ -26,6 +26,8 @@ class PaymentTab implements TabInterface
 	private $paymentService;
 	private $messages;
 
+	private $processingFeeRuleMethods = [];
+
 	public function __construct(Wordpress $wp, Options $options, PaymentServiceInterface $paymentService, Messages $messages)
 	{
 		$this->settings = $options->get(self::SLUG);
@@ -52,11 +54,22 @@ class PaymentTab implements TabInterface
 				Scripts::add('jigoshop.magnific-popup', \JigoshopInit::getUrl() . '/assets/js/vendors/magnific_popup.js', ['jquery']);
 
 				Styles::add('jigoshop.magnific-popup', \JigoshopInit::getUrl() . '/assets/css/vendors/magnific_popup.css');
+
+				Scripts::localize('jigoshop.admin.settings.payment', 'jigoshop_admin_payment', [
+					'processingFeeRule' => Render::get('admin/settings/payment/processingFeeRules/processingFeeRule', [
+						'id' => '%RULE_ID%',
+						'methods' => $this->processingFeeRuleMethods
+					])
+				]);
 			}
 		});
 
         $wp->addAction('wp_ajax_paymentMethodSaveEnable', [$this, 'ajaxPaymentMethodSaveEnable']);
-        $wp->addAction('wp_ajax_paymentMethodSaveTestMode', [$this, 'ajaxPaymentMethodSaveTestMode']);		
+        $wp->addAction('wp_ajax_paymentMethodSaveTestMode', [$this, 'ajaxPaymentMethodSaveTestMode']);
+
+        foreach($this->paymentService->getAvailable() as $method) {
+        	$this->processingFeeRuleMethods[$method->getId()] = strip_tags($method->getName());
+        }
 	}
 
 	/**
@@ -98,6 +111,11 @@ class PaymentTab implements TabInterface
             	'title' => __('Payment methods', 'jigoshop-ecommerce'),
             	'id' => 'paymentMethodsSection',
             	'display' => [$this, 'generatePaymentMethods']
+            ],
+            [
+            	'title' => __('Processing fee rules', 'jigoshop-ecommerce'),
+            	'id' => 'processingFeeRulesSection',
+            	'display' => [$this, 'generateProcessingFeeRules']
             ]
         ];		
 	}
@@ -169,6 +187,17 @@ class PaymentTab implements TabInterface
 			]);
 	}
 
+	public function generateProcessingFeeRules() {
+		if(!isset($this->settings['processingFeeRules']) || !is_array($this->settings['processingFeeRules'])) {
+			$this->settings['processingFeeRules'] = [];
+		}
+
+		return Render::get('admin/settings/payment/processingFeeRules', [
+			'methods' => $this->processingFeeRuleMethods,
+			'rules' => $this->settings['processingFeeRules']
+		]);
+	}
+
 	/**
 	 * Validate and sanitize input values.
 	 *
@@ -204,6 +233,19 @@ class PaymentTab implements TabInterface
 		{
 			$settings['default_gateway'] = $activeGatewayFromPost[0];
 
+		}
+
+		$settings['processingFeeRules'] = [];
+		foreach($_POST['processingFeeRules'] as $index => $processingFeeRule) {
+			if(!preg_match('/^[\d\.]*%?$/', $processingFeeRule['value']) || $processingFeeRule['value'] < 0) {
+				$processingFeeRule['value'] = 0;
+			}
+
+			$settings['processingFeeRules'][] = [
+				'id' => count($settings['processingFeeRules']),
+				'methods' => $processingFeeRule['methods'],
+				'value' => $processingFeeRule['value']
+			];
 		}
 
 		return $settings;
