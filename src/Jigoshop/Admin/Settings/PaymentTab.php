@@ -46,6 +46,7 @@ class PaymentTab implements TabInterface
 
 				Scripts::add('jigoshop.admin.settings.payment', \JigoshopInit::getUrl() . '/assets/js/admin/settings/payment.js', [
 						'jquery',
+						'jquery-ui-sortable',
 						'wp-util'
 					], [
 						'page' => 'jigoshop_page_jigoshop_settings'

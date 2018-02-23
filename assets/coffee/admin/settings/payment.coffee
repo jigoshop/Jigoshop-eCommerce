@@ -12,6 +12,8 @@ class Payment
     jQuery('#processing-fee-add-rule').click(@addProcessingFeeRule)
     @bindProcessingFeeRulesControls()
 
+    jQuery('#processing-fee-rules').find('tbody').sortable()
+
   toggleEnable: (e, state) ->
     targetMethod = jQuery(e.target).parents('tr').attr('id')
     setTimeout (->

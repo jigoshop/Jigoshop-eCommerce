@@ -5,6 +5,7 @@ use Jigoshop\Helper\Render;
 <table class="table table-striped table-valign" id="processing-fee-rules">
 	<thead>
 		<tr>
+			<th scope="col"></th>
 			<th scope="col"><?php echo __('Methods', 'jigoshop-ecommerce'); ?></th>
 			<th scope="col"><?php echo __('Fee', 'jigoshop-ecommerce'); ?></th>
 			<th scope="col"></th>

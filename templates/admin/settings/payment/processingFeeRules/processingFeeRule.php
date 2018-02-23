@@ -4,6 +4,9 @@ use Jigoshop\Admin\Helper\Forms;
 
 <tr>
 	<td>
+		<span class="glyphicon glyphicon-sort"></span>
+	</td>
+	<td>
 		<?php 
 		Forms::select([
 			'name' => sprintf('processingFeeRules[%s][methods]', $id),
