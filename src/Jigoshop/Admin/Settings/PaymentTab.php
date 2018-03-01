@@ -238,6 +238,7 @@ class PaymentTab implements TabInterface
 
 		$settings['processingFeeRules'] = [];
 		foreach($_POST['processingFeeRules'] as $index => $processingFeeRule) {
+			$processingFeeRule['value'] = str_replace(',', '.', $processingFeeRule['value']);
 			if(!preg_match('/^[\d\.]*%?$/', $processingFeeRule['value']) || $processingFeeRule['value'] < 0) {
 				$processingFeeRule['value'] = 0;
 			}
