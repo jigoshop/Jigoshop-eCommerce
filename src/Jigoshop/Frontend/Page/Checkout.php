@@ -340,7 +340,7 @@ class Checkout implements PageInterface
 		if($processingFee > 0) {
 			$response = [
 				'feePresent' => true,
-				'title' => strip_tags(sprintf(__('%s processing fee', 'jigoshop-ecommerce'), $paymentMethod->getName())),
+				'title' => strip_tags(sprintf(__('Payment processing fee (%s)', 'jigoshop-ecommerce'), $cart->getProcessingFeeAsPercent())),
 				'fee' => ProductHelper::formatPrice($processingFee),
 				'total' => ProductHelper::formatPrice($cart->getTotal())
 			];

@@ -749,6 +749,24 @@ class Order implements OrderInterface, \JsonSerializable
 	}
 
 	/**
+	 * Returns processing fee as percent of Order value.
+	 * 
+	 * @return string Percent.
+	 */
+	public function getProcessingFeeAsPercent() {
+		$fee = $this->getProcessingFee();
+		if($fee == 0) {
+			return '';
+		}
+
+		$orderValue = $this->subtotal + $this->getTotalCombinedTax();
+
+		$percent = round(($fee / $orderValue) * 100, 2);
+
+		return $percent . '%';
+	}
+
+	/**
 	 * @return array List of fields to update with according values.
 	 */
 	public function getStateToSave()

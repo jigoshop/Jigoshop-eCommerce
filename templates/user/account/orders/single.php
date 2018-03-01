@@ -131,7 +131,7 @@ use Jigoshop\Helper\Render;
 			if($order->getProcessingFee() > 0) {
 			?>
 			<tr id="cart-payment-processing-fee">
-				<th scope="row"><?php echo strip_tags(sprintf(__('%s processing fee', 'jigoshop-ecommerce'), $order->getPaymentMethod()->getName())); ?></th>
+				<th scope="row"><?php echo strip_tags(sprintf(__('Payment processing fee', 'jigoshop-ecommerce'), $order->getProcessingFeeAsPercent())); ?></th>
 				<td><?php echo Product::formatPrice($order->getProcessingFee()); ?></td>
 			</tr>
 			<?php 

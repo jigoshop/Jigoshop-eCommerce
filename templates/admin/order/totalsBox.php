@@ -61,7 +61,7 @@ $orderTax = $order->getTax();
 			Forms::constant([
 				'name' => 'order[processingFee]',
 				'id' => 'processingFee',
-				'label' => sprintf(__('%s processing fee', 'jigoshop-ecommerce'), $order->getPaymentMethod()->getName()),
+				'label' => sprintf(__('Payment processing fee (%s)', 'jigoshop-ecommerce'), $order->getProcessingFeeAsPercent()),
 				'size' => 12,
 				'value' => Product::formatPrice($order->getProcessingFee())
 			]); 
