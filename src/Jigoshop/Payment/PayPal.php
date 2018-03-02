@@ -367,6 +367,14 @@ class PayPal implements Method2, Processable
 			$args['amount_'.$item_loop] = 0.01;
 		}
 
+		// Add processing fee to PayPal.
+		if($order->getProcessingFee() > 0) {
+			$item_loop++;
+			$args['item_name_' . $item_loop] = __('Payment processing fee', 'jigoshop-ecommerce');
+			$args['quantity_' . $item_loop] = '1';
+			$args['amount_' . $item_loop] = number_format($order->getProcessingFee(), $this->decimals, '.', '');
+		}
+
 		$args = $this->wp->applyFilters('jigoshop\paypal\args', $args);
 		$order->setStatus(Order\Status::PENDING, __('Waiting for PayPal payment.', 'jigoshop-ecommerce'));
 
