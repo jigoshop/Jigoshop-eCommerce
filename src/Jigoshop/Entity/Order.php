@@ -760,6 +760,9 @@ class Order implements OrderInterface, \JsonSerializable
 		}
 
 		$orderValue = $this->subtotal + $this->getTotalCombinedTax();
+		if($orderValue == 0) {
+			return '0%';
+		}
 
 		$percent = round(($fee / $orderValue) * 100, 2);
 
