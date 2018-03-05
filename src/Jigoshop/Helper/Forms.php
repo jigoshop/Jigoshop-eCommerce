@@ -79,6 +79,9 @@ class Forms
 			case 'text':
 				self::text($field);
 				break;
+			case 'number':
+				self::number($field);
+				break;
 			case 'select':
 				self::select($field);
 				break;
