@@ -239,13 +239,17 @@ class Checkout
     for own shippingClass, value of shipping
       $method = jQuery(".shipping-#{shippingClass}")
       $method.addClass('existing')
+
+      if html[shippingClass] == undefined
+        continue
+
       if $method.length > 0
         if value > -1
           $item = jQuery(html[shippingClass].html).addClass('existing')
           $method.replaceWith($item)
         else
           $method.slideUp -> jQuery(this).remove()
-      else if html[shippingClass]?
+      else if html[shippingClass] != undefined
         $item = jQuery(html[shippingClass].html)
         $item.hide().addClass('existing').appendTo(jQuery('#shipping-methods')).slideDown()
     # Remove non-existent methods
