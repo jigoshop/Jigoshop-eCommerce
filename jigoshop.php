@@ -100,12 +100,18 @@ if(isset($memory[1])) {
     if (isset($memory[2])) {
         switch (strtoupper($memory[2])) {
             /** @noinspection PhpMissingBreakStatementInspection */
+            case 'G':
+                $memory_limit *= 1024 * 1024 * 1024;
+            break;
             case 'M':
                 $memory_limit *= 1024 * 1024;
+            break;
             case 'K':
                 $memory_limit *= 1024;
+            break;
         }
     }
+
     if ($memory_limit < JIGOSHOP_REQUIRED_MEMORY * 1024 * 1024) {
         function jigoshop_required_memory_warning()
         {
@@ -125,10 +131,15 @@ if(isset($memory[1])) {
     if (isset($memory[2])) {
         switch (strtoupper($memory[2])) {
             /** @noinspection PhpMissingBreakStatementInspection */
+            case 'G':
+                $memory_limit *= 1024 * 1024 * 1024;
+            break;
             case 'M':
                 $memory_limit *= 1024 * 1024;
+            break;
             case 'K':
                 $memory_limit *= 1024;
+            break;
         }
     }
 
