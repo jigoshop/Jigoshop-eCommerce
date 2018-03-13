@@ -100,10 +100,11 @@ class Products
 			'creation' => _x('Created at', 'product', 'jigoshop-ecommerce'),
         ];
 
-		if ($this->options->get('products.enable_sku', 'yes') !== 'yes') {
-			unset($columns['sku']);
-		}
-		if ($this->options->get('products.manage_stock', 'yes') !== 'yes') {
+		// TODO: there is no option to enable/disable sku remove it or consider adding this option
+//		if ($this->options->get('products.enable_sku', '1') !== '1') {
+//			unset($columns['sku']);
+//		}
+		if ($this->options->get('products.manage_stock', '1') !== '1') {
 			unset($columns['stock']);
 		}
 
