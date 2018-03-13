@@ -749,9 +749,15 @@ class Order implements OrderInterface, \JsonSerializable
 			}
 
 			if(strstr($rule['value'], '%') !== false) {
-				$percent = str_replace('%', '', $rule['value']) / 100;
-				$percent = 1.00 - $percent;
-				$this->processingFee = ($orderValue / $percent) - $orderValue;
+				if($rule['alternateMode']) {
+					$percent = str_replace('%', '', $rule['value']) / 100;
+					$percent = 1.00 - $percent;
+					$this->processingFee = ($orderValue / $percent) - $orderValue;
+				}
+				else {
+					$percent = str_replace('%', '', $rule['value']) / 100;
+					$this->processingFee = ($orderValue * $percent);
+				}
 			}
 			else {
 				$this->processingFee = $rule['value'];
@@ -772,10 +778,15 @@ class Order implements OrderInterface, \JsonSerializable
 			return '';
 		}
 
-		$orderValue = (($this->subtotal + $this->getTotalCombinedTax()) - $this->getDiscount()) + $fee;
+		$orderValue = (($this->subtotal + $this->getTotalCombinedTax()) - $this->getDiscount());
 		
 		if($orderValue == 0) {
 			return '0%';
+		}
+
+		$rule = $this->getProcessingFeeRule();
+		if($rule['alternateMode']) {
+			$orderValue += $fee;
 		}
 
 		$percent = number_format(($fee / $orderValue) * 100, 2);
