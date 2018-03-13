@@ -10,6 +10,7 @@ use Jigoshop\Helper\Render;
 			<th scope="col"><?php echo __('Min order value', 'jigoshop-ecommerce'); ?></th>
 			<th scope="col"><?php echo __('Max order value', 'jigoshop-ecommerce'); ?></th>
 			<th scope="col"><?php echo __('Fee', 'jigoshop-ecommerce'); ?></th>
+			<th scope="col"><?php echo __('Alternate mode', 'jigoshop-ecommerce'); ?></th>
 			<th scope="col"></th>
 		</tr>
 	</thead>
@@ -22,7 +23,8 @@ use Jigoshop\Helper\Render;
 				'methodsSelected' => $rule['methods'],
 				'minValue' => $rule['minValue'],
 				'maxValue' => $rule['maxValue'],
-				'value' => $rule['value']
+				'value' => $rule['value'],
+				'mode' => $rule['mode']
 			]);
 		}
 		?>
@@ -30,6 +32,7 @@ use Jigoshop\Helper\Render;
 </table>
 
 <p class="help"><?php echo __('First rule which matches is taken into account.', 'jigoshop-ecommerce'); ?></p>
+<p class="help"><?php echo __('Alternate mode: Fee is calculated based on final amount of payment, <strong>include the fee</strong>.', 'jigoshop-ecommerce'); ?></p>
 
 <a id="processing-fee-add-rule" class="btn btn-default">
 	<span class="glyphicon glyphicon-plus"></span>

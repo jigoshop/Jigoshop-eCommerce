@@ -44,6 +44,15 @@ use Jigoshop\Admin\Helper\Forms;
 		?>
 	</td>
 	<td>
+		<?php 
+		Forms::checkbox([
+			'name' => sprintf('processingFeeRules[%s][mode]', $id),
+			'classes' => ['switch-medium'],
+			'checked' => isset($mode)?$mode:false
+		]);
+		?>
+	</td>
+	<td>
 		<a class="btn btn-default processing-fee-remove-rule">
 			<span class="glyphicon glyphicon-remove"></span>
 		</a>

@@ -251,14 +251,22 @@ class PaymentTab implements TabInterface
 			$processingFeeRule['maxValue'] = str_replace(',', '.', $processingFeeRule['maxValue']);
 			if(!preg_match('/^[\d\.]*$/', $processingFeeRule['maxValue']) || $processingFeeRule['maxValue'] < 0) {
 				$processingFeeRule['maxValue'] = '';
+			}
+
+			if($processingFeeRule['mode'] === 'on') {
+				$processingFeeRule['mode'] = true;
 			}			
+			else {
+				$processingFeeRule['mode'] = false;
+			}
 
 			$settings['processingFeeRules'][] = [
 				'id' => count($settings['processingFeeRules']),
 				'methods' => $processingFeeRule['methods'],
 				'minValue' => $processingFeeRule['minValue'],
 				'maxValue' => $processingFeeRule['maxValue'],
-				'value' => $processingFeeRule['value']
+				'value' => $processingFeeRule['value'],
+				'mode' => $processingFeeRule['mode']
 			];
 		}
 
