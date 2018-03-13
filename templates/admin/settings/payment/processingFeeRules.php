@@ -24,7 +24,7 @@ use Jigoshop\Helper\Render;
 				'minValue' => $rule['minValue'],
 				'maxValue' => $rule['maxValue'],
 				'value' => $rule['value'],
-				'mode' => $rule['mode']
+				'alternateMode' => $rule['alternateMode']
 			]);
 		}
 		?>

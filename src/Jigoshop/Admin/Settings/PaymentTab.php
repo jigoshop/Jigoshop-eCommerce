@@ -253,11 +253,11 @@ class PaymentTab implements TabInterface
 				$processingFeeRule['maxValue'] = '';
 			}
 
-			if($processingFeeRule['mode'] === 'on') {
-				$processingFeeRule['mode'] = true;
+			if($processingFeeRule['alternateMode'] === 'on') {
+				$processingFeeRule['alternateMode'] = true;
 			}			
 			else {
-				$processingFeeRule['mode'] = false;
+				$processingFeeRule['alternateMode'] = false;
 			}
 
 			$settings['processingFeeRules'][] = [
@@ -266,7 +266,7 @@ class PaymentTab implements TabInterface
 				'minValue' => $processingFeeRule['minValue'],
 				'maxValue' => $processingFeeRule['maxValue'],
 				'value' => $processingFeeRule['value'],
-				'mode' => $processingFeeRule['mode']
+				'alternateMode' => $processingFeeRule['alternateMode']
 			];
 		}
 

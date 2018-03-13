@@ -46,9 +46,9 @@ use Jigoshop\Admin\Helper\Forms;
 	<td>
 		<?php 
 		Forms::checkbox([
-			'name' => sprintf('processingFeeRules[%s][mode]', $id),
+			'name' => sprintf('processingFeeRules[%s][alternateMode]', $id),
 			'classes' => ['switch-medium'],
-			'checked' => isset($mode)?$mode:false
+			'checked' => isset($alternateMode)?$alternateMode:false
 		]);
 		?>
 	</td>
