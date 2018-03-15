@@ -716,7 +716,7 @@ class Order implements OrderInterface, \JsonSerializable
 	private function getProcessingFeeRule() {
 		$processingFeeRules = Integration::getOptions()->get('payment.processingFeeRules', []);
 		foreach($processingFeeRules as $rule) {
-			if(in_array($this->paymentMethod->getId(), $rule['methods'])) {
+			if(is_array($rule['methods']) && in_array($this->paymentMethod->getId(), $rule['methods'])) {
 				if($rule['minValue'] > 0 && $orderValue < $rule['minValue']) {
 					continue;
 				}
