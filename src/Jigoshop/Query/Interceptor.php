@@ -215,10 +215,10 @@ class Interceptor
 
 	private function isProductList($request)
 	{
-		return !isset($request['product']) && !isset($request['preview']) && (
+        return (!isset($request['product']) && !isset($request['preview']) && (
 			(isset($request['pagename']) && $request['pagename'] == get_post_field('post_name', $this->options->getPageId(Pages::SHOP))) ||
 			(isset($request['post_type']) && $request['post_type'] == Types::PRODUCT)
-		);
+		)) || (empty($request) && get_option('page_on_front') == $this->options->getPageId(Pages::SHOP));
 	}
 
 	private function getProductListQuery($request)
