@@ -45,6 +45,10 @@ class Payment
 
     jQuery('#processing-fee-rules').find('tbody').append(rule)
     jQuery('#processing-fee-rules').find('tbody').find('tr').last().find('select').select2()
+    jQuery('#processing-fee-rules').find('tbody').find('tr').last().find('input[type="checkbox"].switch-medium').bootstrapSwitch
+      size: 'small'
+      onText: "Yes"
+      offText: "No"
 
     @bindProcessingFeeRulesControls()
 
