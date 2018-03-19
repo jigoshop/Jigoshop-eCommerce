@@ -1,4 +1,15 @@
 ## Changelog
+* 2.1.11 - 2018.03.19
+    * New: Order processing fee.
+    * Fix: Properly show product list, when shop page is set as static front page.
+    * Fix: Properly hide/show stock column in admin product list.
+    * Fix: Add product review only when rating was posted.
+    * Fix: Notices on Thank you page, when order does not have payment method.
+    * Fix: Php/wp memory limit, added *G value parsing.
+    * Fix: Errors on cart/checkout page when switching shipping location with inproperly configured shipping method present.
+    * Fix: Renamed `coffee-script` module to `coffeescript` in gulp.
+    * Fix: Hide discount section in My Account Order preview, when discount was not used.
+    * Fix: Show information about backorder on product page.
 * 2.1.10 - 2018.01.23
     * New: WorldPay gateway.
     * New: Template error handler.

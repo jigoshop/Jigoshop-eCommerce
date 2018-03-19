@@ -3,8 +3,8 @@ Contributors: jigoshop
 Tags: ecommerce, wordpress ecommerce, store, shop, shopping, cart, checkout, widgets, reports, shipping, tax, paypal, jigowatt, shipping, inventory, stock, online, sell, sales, weights, dimensions, configurable, variable, downloadable, external, affiliate, download, virtual, physical
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=7F5FZ5NGJ3XTL
 Requires at least: 4.0
-Tested up to: 4.9.2
-Stable tag: 2.1.10
+Tested up to: 4.9.4
+Stable tag: 2.1.11
 
 A feature-packed eCommerce plugin built upon WordPress core functionality ensuring excellent performance, customizability and control - robust Tax Settings, Stock Level Management, Free and Premium Extensions - you name it.
 
@@ -150,6 +150,17 @@ However, if you want priority, dedicated support from Jigoshop staff, we dp offe
 
 == Changelog ==
 
+= 2.1.11 - 2018.03.19 =
+* New: Order processing fee.
+* Fix: Properly show product list, when shop page is set as static front page.
+* Fix: Properly hide/show stock column in admin product list.
+* Fix: Add product review only when rating was posted.
+* Fix: Notices on Thank you page, when order does not have payment method.
+* Fix: Php/wp memory limit, added *G value parsing.
+* Fix: Errors on cart/checkout page when switching shipping location with inproperly configured shipping method present.
+* Fix: Renamed `coffee-script` module to `coffeescript` in gulp.
+* Fix: Hide discount section in My Account Order preview, when discount was not used.
+* Fix: Show information about backorder on product page.
 = 2.1.10 - 2018.01.23 =
 * New: WorldPay gateway.
 * New: Template error handler.
