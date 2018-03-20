@@ -226,11 +226,9 @@ class PaymentTab implements TabInterface
 		if (count($activeGatewayFromPost) == 0)
 		{
 			$settings['default_gateway'] = 'no_default_gateway';
-
-			return $settings;
 		}
 
-		if ($_POST['jigoshop'][$this->settings['default_gateway']]['enabled'] == 'off')
+		if ($_POST['jigoshop'][$this->settings['default_gateway']]['enabled'] == 'off' && !empty($settings['default_gateway']))
 		{
 			$settings['default_gateway'] = $activeGatewayFromPost[0];
 
