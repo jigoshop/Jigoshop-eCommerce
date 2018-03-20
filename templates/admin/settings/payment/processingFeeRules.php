@@ -32,7 +32,7 @@ use Jigoshop\Helper\Render;
 </table>
 
 <p class="help"><?php echo __('First rule which matches is taken into account.', 'jigoshop-ecommerce'); ?></p>
-<p class="help"><?php echo __('Alternate mode: Fee is calculated based on final amount of payment, <strong>include the fee</strong>.', 'jigoshop-ecommerce'); ?></p>
+<p class="help"><?php echo __('Alternate mode: Fee is calculated based on final amount of payment, <strong>including the fee</strong>.', 'jigoshop-ecommerce'); ?></p>
 
 <a id="processing-fee-add-rule" class="btn btn-default">
 	<span class="glyphicon glyphicon-plus"></span>
