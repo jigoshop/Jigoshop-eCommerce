@@ -4,7 +4,7 @@ Tags: ecommerce, wordpress ecommerce, store, shop, shopping, cart, checkout, wid
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=7F5FZ5NGJ3XTL
 Requires at least: 4.0
 Tested up to: 4.9.4
-Stable tag: 2.1.11
+Stable tag: 2.1.11.2
 
 A feature-packed eCommerce plugin built upon WordPress core functionality ensuring excellent performance, customizability and control - robust Tax Settings, Stock Level Management, Free and Premium Extensions - you name it.
 
@@ -150,6 +150,10 @@ However, if you want priority, dedicated support from Jigoshop staff, we dp offe
 
 == Changelog ==
 
+= 2.1.11.2 - 2018.03.20 =
+* Fix: Properly save settings on Payment page with no default gateway selected.
+= 2.1.11.1 - 2018.03.20 =
+* Updated all vendors and removed unused files.
 = 2.1.11 - 2018.03.19 =
 * New: Order processing fee.
 * Fix: Properly show product list, when shop page is set as static front page.
