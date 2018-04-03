@@ -80,6 +80,7 @@ class Options
 			'stock_status' => StockStatus::IN_STOCK,
 			'show_stock' => true,
 			'low_stock_threshold' => 2,
+			'hide_out_of_stock_variations' => false,
 			'notify_low_stock' => false,
 			'notify_out_of_stock' => true,
 			'notify_on_backorders' => false,

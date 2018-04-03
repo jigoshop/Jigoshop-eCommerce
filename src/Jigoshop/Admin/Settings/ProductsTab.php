@@ -160,6 +160,14 @@ class ProductsTab implements TabInterface
 //						'type' => 'checkbox',
 //						'checked' => $this->options['hide_out_of_stock'],
 //					),
+                    [
+                    	'name' => '[hide_out_of_stock_variations]',
+                    	'title' => __('Hide out of stock variations', 'jigoshop-ecommerce'),
+                    	'description' => __('This option allows you to hide product variations which are out of stock.', 'jigoshop-ecommerce'),
+                    	'type' => 'checkbox',
+                    	'classes' => ['switch-medium'],
+                    	'checked' => $this->options['hide_out_of_stock_variations']
+                    ]
                 ],
             ],
 			[
@@ -338,6 +346,7 @@ class ProductsTab implements TabInterface
 
 		$settings['manage_stock'] = $settings['manage_stock'] == 'on';
 		$settings['show_stock'] = $settings['show_stock'] == 'on';
+		$settings['hide_out_of_stock_variations'] = $settings['hide_out_of_stock_variations'] == 'on';
 		$settings['related'] = $settings['related'] == 'on';
 		$settings['reviews'] = $settings['reviews'] == 'on';
         $settings['up_sells_product_limit'] = $settings['up_sells_product_limit'] >= 0 ? $settings['up_sells_product_limit'] : 0;
