@@ -359,7 +359,7 @@ class ProductsTab implements TabInterface
 
 		$settings['notify_low_stock'] = $settings['notify_low_stock'] == 'on';
 		$settings['notify_out_of_stock'] = $settings['notify_out_of_stock'] == 'on';
-		$settings['notify_on_backorders'] = $settings['notify_on_backorders'] == 'on';
+		//$settings['notify_on_backorders'] = $settings['notify_on_backorders'] == 'on';
 
 		$settings['images']['tiny'] = [
 			'width' => (int)$settings['images']['tiny']['width'],
