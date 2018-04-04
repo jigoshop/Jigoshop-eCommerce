@@ -9,17 +9,20 @@ $defaultAttributesValues = Product::getVariationAttributes($product, $product->g
 <form action="" method="post" class="form" role="form">
 	<input type="hidden" name="action" value="add-to-cart" />
 	<?php do_action('jigoshop\template\product\before_cart', $product); ?>
-	<?php foreach ($product->getAssignedVariableAttributes() as $id => $attribute): /** @var $attribute \Jigoshop\Entity\Product\Attribute */ ?>
-        <?php $attribute['options'] =['' => __('Choose an option', 'jigoshop-ecommerce')] + $attribute['options']; ?>
-        <?php \Jigoshop\Helper\Forms::select([
+	<?php
+	/** @var $attribute \Jigoshop\Entity\Product\Attribute */
+	foreach ($product->getAssignedVariableAttributes() as $id => $attribute) {
+        $attribute['options'] = ['' => __('Choose an option', 'jigoshop-ecommerce')] + $attribute['options'];
+        \Jigoshop\Helper\Forms::select([
 			'name' => 'attributes['.$id.']',
 			'classes' => ['product-attribute'],
 			'label' => $attribute['label'],
 			'options' => $attribute['options'],
 			'value' => isset($defaultAttributesValues[$id]) ? $defaultAttributesValues[$id] : '',
 			'placeholder' => __('Please select...', 'jigoshop-ecommerce'),
-        ]); ?>
-	<?php endforeach; ?>
+    	]);
+    }
+    ?>
 	<div id="add-to-cart-buttons">
 		<div class="price"><?php _e('Current price:', 'jigoshop-ecommerce'); ?> <span></span></div>
 		<?php \Jigoshop\Helper\Forms::number([

@@ -5,6 +5,8 @@ namespace Jigoshop\Entity\Product;
 use Jigoshop\Entity\Order\Item;
 use Jigoshop\Entity\Product;
 use Jigoshop\Entity\Product\Attribute;
+use Jigoshop\Entity\Product\Attributes\StockStatus;
+use Jigoshop\Integration;
 
 class Variable extends Product implements Shippable, Saleable
 {
@@ -172,8 +174,16 @@ class Variable extends Product implements Shippable, Saleable
      */
     public function getAssignedVariableAttributes()
     {
+    	$hideOutOfStockVariations = Integration::getOptions()->get('products.hide_out_of_stock_variations', false);
+
         $attributes = [];
         foreach($this->variations as $variation) {
+        	if($hideOutOfStockVariations) {
+        		if($variation->getProduct()->getStock()->getStatus() == StockStatus::OUT_STOCK) {
+        			continue;
+        		}
+        	}
+
             foreach($variation->getAttributes() as $attribute) {
                 if(!isset($attributes[$attribute->getAttribute()->getId()])) {
                     $attributes[$attribute->getAttribute()->getId()] = [
