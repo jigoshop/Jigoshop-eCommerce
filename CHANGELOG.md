@@ -1,4 +1,11 @@
 ## Changelog
+* 2.1.12 - 2018.04.09
+    * New: Allow to hide out of stock variations.
+    * Fix: Properly show product stock status.
+* 2.1.11.2 - 2018.03.20
+    * Fix: Properly save settings on Payment page with no default gateway selected.
+* 2.1.11.1 - 2018.03.20
+    * Updated all vendors and removed unused files.
 * 2.1.11 - 2018.03.19
     * New: Order processing fee.
     * Fix: Properly show product list, when shop page is set as static front page.
