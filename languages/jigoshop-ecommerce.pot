@@ -1409,7 +1409,7 @@ msgstr ""
 msgid "Unit Price"
 msgstr ""
 
-#: templates/shop/cart.php:37, templates/shop/checkout.php:144, templates/admin/order/itemsBox.php:20, templates/shop/checkout/pay.php:29, templates/shop/checkout/thanks.php:54, templates/shop/cart/mobile/downloadable.php:86, templates/shop/cart/mobile/external.php:86, templates/shop/cart/mobile/simple.php:86, templates/shop/cart/mobile/variable.php:88, templates/shop/cart/mobile/virtual.php:86, templates/shop/checkout/mobile/downloadable.php:76, templates/shop/checkout/mobile/external.php:76, templates/shop/checkout/mobile/simple.php:76, templates/shop/checkout/mobile/variable.php:79, templates/shop/checkout/mobile/virtual.php:76, templates/shop/product/cart/simple.php:10, templates/shop/product/cart/variable.php:28, templates/user/account/orders/single.php:56
+#: templates/shop/cart.php:37, templates/shop/checkout.php:144, templates/admin/order/itemsBox.php:20, templates/shop/checkout/pay.php:29, templates/shop/checkout/thanks.php:54, templates/shop/cart/mobile/downloadable.php:86, templates/shop/cart/mobile/external.php:86, templates/shop/cart/mobile/simple.php:86, templates/shop/cart/mobile/variable.php:88, templates/shop/cart/mobile/virtual.php:86, templates/shop/checkout/mobile/downloadable.php:76, templates/shop/checkout/mobile/external.php:76, templates/shop/checkout/mobile/simple.php:76, templates/shop/checkout/mobile/variable.php:79, templates/shop/checkout/mobile/virtual.php:76, templates/shop/product/cart/simple.php:10, templates/shop/product/cart/variable.php:31, templates/user/account/orders/single.php:56
 msgid "Quantity"
 msgstr ""
 
@@ -1795,7 +1795,7 @@ msgstr ""
 msgid "In stock"
 msgstr ""
 
-#: src/Jigoshop/Admin/Setup.php:154, templates/admin/products/quick_edit.php:42, src/Jigoshop/Admin/Settings/ProductsTab.php:45, src/Jigoshop/Admin/Settings/ProductsTab.php:179, templates/admin/product/box/stock.php:26, templates/admin/product/box/variations/variation.php:127
+#: src/Jigoshop/Admin/Setup.php:154, templates/admin/products/quick_edit.php:42, src/Jigoshop/Admin/Settings/ProductsTab.php:45, src/Jigoshop/Admin/Settings/ProductsTab.php:187, templates/admin/product/box/stock.php:26, templates/admin/product/box/variations/variation.php:127
 msgid "Out of stock"
 msgstr ""
 
@@ -4037,11 +4037,11 @@ msgstr ""
 msgid "Inherit attributes from"
 msgstr ""
 
-#: templates/admin/product_categories/form.php:117, src/Jigoshop/Admin/Settings/ProductsTab.php:306
+#: templates/admin/product_categories/form.php:117, src/Jigoshop/Admin/Settings/ProductsTab.php:314
 msgid "All parent categories"
 msgstr ""
 
-#: templates/admin/product_categories/form.php:118, src/Jigoshop/Admin/Settings/ProductsTab.php:307
+#: templates/admin/product_categories/form.php:118, src/Jigoshop/Admin/Settings/ProductsTab.php:315
 msgid "Direct parent category"
 msgstr ""
 
@@ -5201,23 +5201,23 @@ msgstr ""
 msgid "Enabled in test mode"
 msgstr ""
 
-#: src/Jigoshop/Admin/Settings/PaymentTab.php:282
+#: src/Jigoshop/Admin/Settings/PaymentTab.php:280
 msgid "%s was not enabled, as it isn't configured properly."
 msgstr ""
 
-#: src/Jigoshop/Admin/Settings/PaymentTab.php:289
+#: src/Jigoshop/Admin/Settings/PaymentTab.php:287
 msgid "%s enabled."
 msgstr ""
 
-#: src/Jigoshop/Admin/Settings/PaymentTab.php:294
+#: src/Jigoshop/Admin/Settings/PaymentTab.php:292
 msgid "%s disabled."
 msgstr ""
 
-#: src/Jigoshop/Admin/Settings/PaymentTab.php:313
+#: src/Jigoshop/Admin/Settings/PaymentTab.php:311
 msgid "%s test mode enabled."
 msgstr ""
 
-#: src/Jigoshop/Admin/Settings/PaymentTab.php:318
+#: src/Jigoshop/Admin/Settings/PaymentTab.php:316
 msgid "%s test mode disabled."
 msgstr ""
 
@@ -5273,123 +5273,131 @@ msgstr ""
 msgid "Low stock threshold"
 msgstr ""
 
+#: src/Jigoshop/Admin/Settings/ProductsTab.php:165
+msgid "Hide out of stock variations"
+msgstr ""
+
 #: src/Jigoshop/Admin/Settings/ProductsTab.php:166
+msgid "This option allows you to hide product variations which are out of stock."
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/ProductsTab.php:174
 msgid "Stock notifications"
 msgstr ""
 
-#: src/Jigoshop/Admin/Settings/ProductsTab.php:171
+#: src/Jigoshop/Admin/Settings/ProductsTab.php:179
 msgid "Low stock"
 msgstr ""
 
-#: src/Jigoshop/Admin/Settings/ProductsTab.php:172
+#: src/Jigoshop/Admin/Settings/ProductsTab.php:180
 msgid "Notify when product reaches low stock"
 msgstr ""
 
-#: src/Jigoshop/Admin/Settings/ProductsTab.php:180
+#: src/Jigoshop/Admin/Settings/ProductsTab.php:188
 msgid "Notify when product becomes out of stock"
 msgstr ""
 
-#: src/Jigoshop/Admin/Settings/ProductsTab.php:196
+#: src/Jigoshop/Admin/Settings/ProductsTab.php:204
 msgid "Images"
 msgstr ""
 
-#: src/Jigoshop/Admin/Settings/ProductsTab.php:197
+#: src/Jigoshop/Admin/Settings/ProductsTab.php:205
 msgid "Changing any of those settings will affect image sizes on your page. If you have cropping enabled you will need to regenerate thumbnails."
 msgstr ""
 
-#: src/Jigoshop/Admin/Settings/ProductsTab.php:202
+#: src/Jigoshop/Admin/Settings/ProductsTab.php:210
 msgid "Tiny image width"
 msgstr ""
 
-#: src/Jigoshop/Admin/Settings/ProductsTab.php:203, src/Jigoshop/Admin/Settings/ProductsTab.php:210
+#: src/Jigoshop/Admin/Settings/ProductsTab.php:211, src/Jigoshop/Admin/Settings/ProductsTab.php:218
 msgid "Used in cart for product image."
 msgstr ""
 
-#: src/Jigoshop/Admin/Settings/ProductsTab.php:209
+#: src/Jigoshop/Admin/Settings/ProductsTab.php:217
 msgid "Tiny image height"
 msgstr ""
 
-#: src/Jigoshop/Admin/Settings/ProductsTab.php:216
+#: src/Jigoshop/Admin/Settings/ProductsTab.php:224
 msgid "Crop tiny image"
 msgstr ""
 
-#: src/Jigoshop/Admin/Settings/ProductsTab.php:217, src/Jigoshop/Admin/Settings/ProductsTab.php:239, src/Jigoshop/Admin/Settings/ProductsTab.php:261, src/Jigoshop/Admin/Settings/ProductsTab.php:283
+#: src/Jigoshop/Admin/Settings/ProductsTab.php:225, src/Jigoshop/Admin/Settings/ProductsTab.php:247, src/Jigoshop/Admin/Settings/ProductsTab.php:269, src/Jigoshop/Admin/Settings/ProductsTab.php:291
 msgid "Leave disabled to scale images proportionally, enable to do real cropping."
 msgstr ""
 
-#: src/Jigoshop/Admin/Settings/ProductsTab.php:224
+#: src/Jigoshop/Admin/Settings/ProductsTab.php:232
 msgid "Thumbnail image width"
 msgstr ""
 
-#: src/Jigoshop/Admin/Settings/ProductsTab.php:225, src/Jigoshop/Admin/Settings/ProductsTab.php:232
+#: src/Jigoshop/Admin/Settings/ProductsTab.php:233, src/Jigoshop/Admin/Settings/ProductsTab.php:240
 msgid "Used in single product view for other images thumbnails."
 msgstr ""
 
-#: src/Jigoshop/Admin/Settings/ProductsTab.php:231
+#: src/Jigoshop/Admin/Settings/ProductsTab.php:239
 msgid "Thumbnail image height"
 msgstr ""
 
-#: src/Jigoshop/Admin/Settings/ProductsTab.php:238
+#: src/Jigoshop/Admin/Settings/ProductsTab.php:246
 msgid "Crop thumbnail image"
 msgstr ""
 
-#: src/Jigoshop/Admin/Settings/ProductsTab.php:246
+#: src/Jigoshop/Admin/Settings/ProductsTab.php:254
 msgid "Small image width"
 msgstr ""
 
-#: src/Jigoshop/Admin/Settings/ProductsTab.php:247, src/Jigoshop/Admin/Settings/ProductsTab.php:254
+#: src/Jigoshop/Admin/Settings/ProductsTab.php:255, src/Jigoshop/Admin/Settings/ProductsTab.php:262
 msgid "Used in catalog for product thumbnails."
 msgstr ""
 
-#: src/Jigoshop/Admin/Settings/ProductsTab.php:253
+#: src/Jigoshop/Admin/Settings/ProductsTab.php:261
 msgid "Small image height"
 msgstr ""
 
-#: src/Jigoshop/Admin/Settings/ProductsTab.php:260
+#: src/Jigoshop/Admin/Settings/ProductsTab.php:268
 msgid "Crop small image"
 msgstr ""
 
-#: src/Jigoshop/Admin/Settings/ProductsTab.php:268
+#: src/Jigoshop/Admin/Settings/ProductsTab.php:276
 msgid "Large image width"
 msgstr ""
 
-#: src/Jigoshop/Admin/Settings/ProductsTab.php:269, src/Jigoshop/Admin/Settings/ProductsTab.php:276
+#: src/Jigoshop/Admin/Settings/ProductsTab.php:277, src/Jigoshop/Admin/Settings/ProductsTab.php:284
 msgid "Used in single product view for featured image."
 msgstr ""
 
-#: src/Jigoshop/Admin/Settings/ProductsTab.php:275
+#: src/Jigoshop/Admin/Settings/ProductsTab.php:283
 msgid "Large image height"
 msgstr ""
 
-#: src/Jigoshop/Admin/Settings/ProductsTab.php:282
+#: src/Jigoshop/Admin/Settings/ProductsTab.php:290
 msgid "Crop large image"
 msgstr ""
 
-#: src/Jigoshop/Admin/Settings/ProductsTab.php:292
+#: src/Jigoshop/Admin/Settings/ProductsTab.php:300
 msgid "Category attributes"
 msgstr ""
 
-#: src/Jigoshop/Admin/Settings/ProductsTab.php:296
+#: src/Jigoshop/Admin/Settings/ProductsTab.php:304
 msgid "Inheritance enabled by default"
 msgstr ""
 
-#: src/Jigoshop/Admin/Settings/ProductsTab.php:303
+#: src/Jigoshop/Admin/Settings/ProductsTab.php:311
 msgid "Inheritance default mode"
 msgstr ""
 
-#: src/Jigoshop/Admin/Settings/ProductsTab.php:327
+#: src/Jigoshop/Admin/Settings/ProductsTab.php:335
 msgid "Invalid weight unit: \"%s\". Value set to %s."
 msgstr ""
 
-#: src/Jigoshop/Admin/Settings/ProductsTab.php:331
+#: src/Jigoshop/Admin/Settings/ProductsTab.php:339
 msgid "Invalid dimensions unit: \"%s\". Value set to %s."
 msgstr ""
 
-#: src/Jigoshop/Admin/Settings/ProductsTab.php:335
+#: src/Jigoshop/Admin/Settings/ProductsTab.php:343
 msgid "Invalid default stock status: \"%s\". Value set to %s."
 msgstr ""
 
-#: src/Jigoshop/Admin/Settings/ProductsTab.php:347
+#: src/Jigoshop/Admin/Settings/ProductsTab.php:356
 msgid "Invalid low stock threshold: \"%d\". Value set to 2."
 msgstr ""
 
@@ -5465,7 +5473,7 @@ msgstr ""
 msgid "Descending"
 msgstr ""
 
-#: src/Jigoshop/Admin/Settings/ShoppingTab.php:61, templates/shop/list/cart/downloadable.php:9, templates/shop/list/cart/simple.php:9, templates/shop/list/cart/virtual.php:9, templates/shop/product/cart/downloadable.php:10, templates/shop/product/cart/simple.php:13, templates/shop/product/cart/variable.php:33, templates/shop/product/cart/virtual.php:10
+#: src/Jigoshop/Admin/Settings/ShoppingTab.php:61, templates/shop/list/cart/downloadable.php:9, templates/shop/list/cart/simple.php:9, templates/shop/list/cart/virtual.php:9, templates/shop/product/cart/downloadable.php:10, templates/shop/product/cart/simple.php:13, templates/shop/product/cart/variable.php:36, templates/shop/product/cart/virtual.php:10
 msgid "Add to cart"
 msgstr ""
 
@@ -6961,7 +6969,7 @@ msgid "First rule which matches is taken into account."
 msgstr ""
 
 #: templates/admin/settings/payment/processingFeeRules.php:35
-msgid "Alternate mode: Fee is calculated based on final amount of payment, <strong>include the fee</strong>."
+msgid "Alternate mode: Fee is calculated based on final amount of payment, <strong>including the fee</strong>."
 msgstr ""
 
 #: templates/admin/settings/shipping/advanced_flat_rate.php:18
@@ -7033,19 +7041,19 @@ msgstr ""
 msgid "Buy product"
 msgstr ""
 
-#: templates/shop/product/cart/variable.php:13
+#: templates/shop/product/cart/variable.php:15
 msgid "Choose an option"
 msgstr ""
 
-#: templates/shop/product/cart/variable.php:20
+#: templates/shop/product/cart/variable.php:22
 msgid "Please select..."
 msgstr ""
 
-#: templates/shop/product/cart/variable.php:24
+#: templates/shop/product/cart/variable.php:27
 msgid "Current price:"
 msgstr ""
 
-#: templates/shop/product/cart/variable.php:36
+#: templates/shop/product/cart/variable.php:39
 msgid "Selected variation is not available."
 msgstr ""
 
