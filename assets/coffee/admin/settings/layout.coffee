@@ -16,7 +16,6 @@ class LayoutSettings
     ).trigger('change')
 
     jQuery('input.structure').on('change', (event) ->
-      console.log(jQuery(event.target).val())
       if jQuery(event.target).val() == 'only_content'
         jQuery(event.target).closest('tr').next().hide().next().hide().next().hide()
       else
