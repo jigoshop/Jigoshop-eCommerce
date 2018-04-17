@@ -5,8 +5,8 @@ php:
   - 7.1
 
 before_script:
-  composer update
-  bower update
-  gulp dev
+  - composer update
+  - bower update
+  - gulp dev
 
 script: phpunit
