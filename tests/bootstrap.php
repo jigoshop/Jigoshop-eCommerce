@@ -7,8 +7,6 @@ function __($text, $module){
 }
 
 require_once(JIGOSHOP_DIR.'/vendor/autoload.php');
-$loader = new \Symfony\Component\ClassLoader\ClassLoader();
-$loader->addPrefix('WPAL', JIGOSHOP_DIR.'/vendor/megawebmaster/wpal');
-$loader->addPrefix('Jigoshop', JIGOSHOP_DIR.'/src');
+$loader = new \Composer\Autoload\ClassLoader();
 $loader->register();
 require_once('TestCase.php');
