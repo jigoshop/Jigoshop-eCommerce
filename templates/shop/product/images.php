@@ -10,9 +10,9 @@ use Jigoshop\Helper\Product;
  * @var $imageClasses array List of classes to attach to image.
  */
 ?>
-<div class="images">
+<div class="images js-img-product col-sm-4">
 	<?php if (Product::isOnSale($product)): ?>
-		<span class="on-sale"><?= apply_filters('jigoshop\template\product\sale_text', __('Sale!', 'jigoshop'), $product) ?></span>
+		<div class="on-sale"><?= apply_filters('jigoshop\template\product\sale_text', __('Sale!', 'jigoshop'), $product) ?></div>
 	<?php endif; ?>
 	<?php do_action('jigoshop\template\product\before_featured_image', $product); ?>
     <div class="product-gallery">
