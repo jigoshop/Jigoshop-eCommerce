@@ -36,8 +36,8 @@ class EditAddress implements PageInterface
 		$this->messages = $messages;
 
 		Styles::add('jigoshop.vendors.select2', \JigoshopInit::getUrl().'/assets/css/vendors/select2.css');
-		Styles::add('jigoshop.user.account', \JigoshopInit::getUrl().'/assets/css/user/account.css', ['jigoshop.vendors.select2']);
-		Styles::add('jigoshop.user.account.edit_address', \JigoshopInit::getUrl().'/assets/css/user/account/edit_address.css', ['jigoshop.user.account']);
+//		Styles::add('jigoshop.user.account', \JigoshopInit::getUrl().'/assets/css/user/account.css', ['jigoshop.vendors.select2']);
+//		Styles::add('jigoshop.user.account.edit_address', \JigoshopInit::getUrl().'/assets/css/user/account/edit_address.css', ['jigoshop.user.account']);
 
 		Scripts::add('jigoshop.vendors.select2', \JigoshopInit::getUrl().'/assets/js/vendors/select2.js', ['jquery']);
 		Scripts::add('jigoshop.vendors.bs_tab_trans_tooltip_collapse', \JigoshopInit::getUrl().'/assets/js/vendors/bs_tab_trans_tooltip_collapse.js', ['jquery']);
