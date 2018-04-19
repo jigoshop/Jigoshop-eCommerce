@@ -101,7 +101,7 @@ class Product
                                 <del><p>%s</p><p>%s</p></del>
                                 <strong><p>%s <ins>%s</ins></p></strong><p>%s</p>
                                 ', $pricesRegular[0], $pricesRegular[1],
-                                $salePrices[0], sprintf(__('%s off!', 'jigoshop'), $product->getSales()->getPrice()), $salePrices[1]);
+                                $salePrices[0], sprintf(__('%s off!', 'jigoshop-ecommerce'), $product->getSales()->getPrice()), $salePrices[1]);
                         } 
                         else {
                             $result = sprintf('
@@ -113,7 +113,7 @@ class Product
                     }
                     else {
                         if(strpos($product->getSales()->getPrice(), '%') !== false) {
-                            $result = sprintf('<del>%s</del> %s %s', $pricesRegular[0], $salePrices[0], sprintf(__('%s off!', 'jigoshop'), $product->getSales()->getPrice()));
+                            $result = sprintf('<del>%s</del> %s %s', $pricesRegular[0], $salePrices[0], sprintf(__('%s off!', 'jigoshop-ecommerce'), $product->getSales()->getPrice()));
                         } else {
                             $result = sprintf('<del>%s</del> %s', $pricesRegular[0], $salePrices[0]);
                         }
@@ -157,15 +157,15 @@ class Product
 
                 if($price !== '') {
                     if(count($prices) == 2) {
-                        $result = sprintf(__('From: <strong><p>%s</p></strong><p>(%s)</p>', 'jigoshop'), $prices[0], $prices[1]);
+                        $result = sprintf(__('From: <strong><p>%s</p></strong><p>(%s)</p>', 'jigoshop-ecommerce'), $prices[0], $prices[1]);
                     }
                     else {
-                        $result = sprintf(__('From: %s', 'jigoshop'), $prices[0]);
+                        $result = sprintf(__('From: %s', 'jigoshop-ecommerce'), $prices[0]);
                     }
                 }
                 else {
                     if(count($prices) == 2) {
-                        $result = sprintf(__('<strong><p>%s</p></strong><p>(%s)</p>', 'jigoshop'), $prices[0], $prices[1]);
+                        $result = sprintf(__('<strong><p>%s</p></strong><p>(%s)</p>', 'jigoshop-ecommerce'), $prices[0], $prices[1]);
                     }
                     else {
                         $result = $prices[0];
@@ -282,7 +282,7 @@ class Product
     public static function formatPrice($price, $suffix = '')
     {
         if ($price === 0.00) {
-            return __('Free', 'jigoshop');
+            return __('Free', 'jigoshop-ecommerce');
         }
 
         if ($price !== '') {
@@ -293,7 +293,7 @@ class Product
             return $suffix ? sprintf('%s %s', $formatted, $suffix) : $formatted;
         }
 
-        return __('Price not announced.', 'jigoshop');
+        return __('Price not announced.', 'jigoshop-ecommerce');
     }
 
     /**
@@ -327,15 +327,20 @@ class Product
             case Entity\Product\Downloadable::TYPE:
                 /** @var $product Entity\Product\Simple */
                 $stock = $product->getStock()->getStatus() == Entity\Product\Attributes\StockStatus::IN_STOCK ?
-                    _x('In stock', 'product', 'jigoshop') :
-                    '<strong class="attention">' . _x('Out of stock', 'product', 'jigoshop') . '</strong>';
+                _x('In stock', 'product', 'jigoshop-ecommerce') :
+                '<strong class="attention">' . _x('Out of stock', 'product', 'jigoshop-ecommerce') . '</strong>';
 
                 if (!self::$options->get('products.show_stock') || !$product->getStock()->getManage()) {
                     break;
                 }
 
-                $stock = sprintf(_x('%s <strong>(%d available)</strong>', 'product', 'jigoshop'), $stock,
-                    $product->getStock()->getStock());
+                if($product->getStock()->getStock()) {
+                    $stock = sprintf(_x('%s <strong>(%d available)</strong>', 'product', 'jigoshop-ecommerce'), $stock,
+                        $product->getStock()->getStock());
+                } elseif (in_array($product->getStock()->getAllowBackorders(), [Entity\Product\Attributes\StockStatus::BACKORDERS_ALLOW, Entity\Product\Attributes\StockStatus::BACKORDERS_NOTIFY])) {
+                    $stock = sprintf(_x('%s <strong>(Available on request)</strong>', 'product', 'jigoshop-ecommerce'), $stock,
+                        $product->getStock()->getStock());
+                }
                 break;
             default:
                 $stock = apply_filters('jigoshop\helper\product\get_stock', '', $product);
@@ -361,6 +366,18 @@ class Product
                 get_the_post_thumbnail($product->getId(), $size, $attributes), $product, $size);
             if ($thumbnail) {
                 return $thumbnail;
+            }
+        }
+        elseif($product->getType() == 'variable') {
+            $defaultVariationId = $product->getDefaultVariationId();
+            if($product->hasVariation($defaultVariationId)) {
+                $variationProduct = $product->getVariation($defaultVariationId)->getProduct();
+
+                $thumbnail = apply_filters('jigoshop\helper\product\get_featured_image',
+                    get_the_post_thumbnail($variationProduct->getId(), $size, $attributes), $variationProduct, $size);
+                if ($thumbnail) {
+                    return $thumbnail;
+                }                
             }
         }
 
@@ -427,7 +444,7 @@ class Product
             '<a href="#" data-id="%d" class="product-featured"><span class="glyphicon %s" aria-hidden="true"></span> <span class="sr-only">%s</span></a>',
             $product->getId(),
             $product->isFeatured() ? 'glyphicon-star' : 'glyphicon-star-empty',
-            $product->isFeatured() ? __('Yes', 'jigoshop') : __('No', 'jigoshop')
+            $product->isFeatured() ? __('Yes', 'jigoshop-ecommerce') : __('No', 'jigoshop-ecommerce')
         );
     }
 
@@ -479,12 +496,6 @@ class Product
                 Render::output("shop/{$template}/cart/virtual", ['product' => $product]);
                 break;
             case Entity\Product\Variable::TYPE:
-                /** @var $product Entity\Product\Variable */
-                $price = $product->getLowestPrice();
-                if (empty($price)) {
-                    return;
-                }
-
                 Render::output("shop/{$template}/cart/variable", ['product' => $product]);
                 break;
             default:
@@ -572,7 +583,7 @@ class Product
         }
         $star_size = apply_filters('jigoshop_star_rating_size' . $location, 16);
 
-        return '<div class="star-rating" title="' . sprintf(__('Rated %s out of 5', 'jigoshop'),
+        return '<div class="star-rating" title="' . sprintf(__('Rated %s out of 5', 'jigoshop-ecommerce'),
             $rating) . '"><span style="width:' . ($rating * $star_size) . 'px"><span class="rating">' . $rating . '</span> ' . __('out of 5',
             'jigoshop') . '</span></div>';
     }
@@ -633,57 +644,57 @@ class Product
     {
         $fields = array_replace_recursive([
             'first_name' => [
-                'label' => __('First Name', 'jigoshop'),
+                'label' => __('First Name', 'jigoshop-ecommerce'),
                 'type' => 'text',
                 'name' => 'jigoshop_order[billing_address][first_name]',
             ],
             'last_name' => [
-                'label' => __('Last Name', 'jigoshop'),
+                'label' => __('Last Name', 'jigoshop-ecommerce'),
                 'type' => 'text',
                 'name' => 'jigoshop_order[billing_address][last_name]',
             ],
             'company' => [
-                'label' => __('Company', 'jigoshop'),
+                'label' => __('Company', 'jigoshop-ecommerce'),
                 'type' => 'text',
                 'name' => 'jigoshop_order[billing_address][company]',
             ],
             'euvatno' => [
-                'label' => __('EU VAT Number', 'jigoshop'),
+                'label' => __('EU VAT Number', 'jigoshop-ecommerce'),
                 'type' => 'text',
                 'name' => 'jigoshop_order[billing_address][euvatno]',
             ],
             'address' => [
-                'label' => __('Address', 'jigoshop'),
+                'label' => __('Address', 'jigoshop-ecommerce'),
                 'type' => 'text',
                 'name' => 'jigoshop_order[billing_address][address]',
             ],
             'city' => [
-                'label' => __('City', 'jigoshop'),
+                'label' => __('City', 'jigoshop-ecommerce'),
                 'type' => 'text',
                 'name' => 'jigoshop_order[billing_address][city]',
             ],
             'postcode' => [
-                'label' => __('Postcode', 'jigoshop'),
+                'label' => __('Postcode', 'jigoshop-ecommerce'),
                 'type' => 'text',
                 'name' => 'jigoshop_order[billing_address][postcode]',
             ],
             'country' => [
-                'label' => __('Country', 'jigoshop'),
+                'label' => __('Country', 'jigoshop-ecommerce'),
                 'type' => 'select',
                 'name' => 'jigoshop_order[billing_address][country]',
             ],
             'state' => [
-                'label' => __('State/Province', 'jigoshop'),
+                'label' => __('State/Province', 'jigoshop-ecommerce'),
                 'type' => 'select',
                 'name' => 'jigoshop_order[billing_address][state]',
             ],
             'phone' => [
-                'label' => __('Phone', 'jigoshop'),
+                'label' => __('Phone', 'jigoshop-ecommerce'),
                 'type' => 'text',
                 'name' => 'jigoshop_order[billing_address][phone]',
             ],
             'email' => [
-                'label' => __('Email Address', 'jigoshop'),
+                'label' => __('Email Address', 'jigoshop-ecommerce'),
                 'type' => 'text',
                 'name' => 'jigoshop_order[billing_address][email]',
             ],
@@ -708,42 +719,42 @@ class Product
     {
         $fields = array_replace_recursive([
             'first_name' => [
-                'label' => __('First Name', 'jigoshop'),
+                'label' => __('First Name', 'jigoshop-ecommerce'),
                 'type' => 'text',
                 'name' => 'jigoshop_order[shipping_address][first_name]',
             ],
             'last_name' => [
-                'label' => __('Last Name', 'jigoshop'),
+                'label' => __('Last Name', 'jigoshop-ecommerce'),
                 'type' => 'text',
                 'name' => 'jigoshop_order[shipping_address][last_name]',
             ],
             'company' => [
-                'label' => __('Company', 'jigoshop'),
+                'label' => __('Company', 'jigoshop-ecommerce'),
                 'type' => 'text',
                 'name' => 'jigoshop_order[shipping_address][company]',
             ],
             'address' => [
-                'label' => __('Address', 'jigoshop'),
+                'label' => __('Address', 'jigoshop-ecommerce'),
                 'type' => 'text',
                 'name' => 'jigoshop_order[shipping_address][address]',
             ],
             'city' => [
-                'label' => __('City', 'jigoshop'),
+                'label' => __('City', 'jigoshop-ecommerce'),
                 'type' => 'text',
                 'name' => 'jigoshop_order[shipping_address][city]',
             ],
             'postcode' => [
-                'label' => __('Postcode', 'jigoshop'),
+                'label' => __('Postcode', 'jigoshop-ecommerce'),
                 'type' => 'text',
                 'name' => 'jigoshop_order[shipping_address][postcode]',
             ],
             'country' => [
-                'label' => __('Country', 'jigoshop'),
+                'label' => __('Country', 'jigoshop-ecommerce'),
                 'type' => 'select',
                 'name' => 'jigoshop_order[shipping_address][country]',
             ],
             'state' => [
-                'label' => __('State/Province', 'jigoshop'),
+                'label' => __('State/Province', 'jigoshop-ecommerce'),
                 'type' => 'select',
                 'name' => 'jigoshop_order[shipping_address][state]',
             ],
@@ -767,7 +778,7 @@ class Product
         foreach($types as $type) {
             $attachments[$type] = array_values(array_map(function($attachment) use ($uploadDir) {
                 $meta = get_post_meta($attachment['id'], '_wp_attachment_metadata', true);
-                $meta['file'] = $uploadDir . '/' . $meta['file'];
+                $meta['file'] = $uploadDir . '/' . (isset($meta['file']) ? $meta['file'] : '');
                 if(isset($meta['sizes'])) {
                     $meta['sizes'] = array_map(function($size) use ($uploadDir) {
                         $size['file'] = $uploadDir . '/' . $size['file'];

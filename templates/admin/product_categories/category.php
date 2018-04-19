@@ -10,10 +10,10 @@
 
 			$subcategoriesCount = count($category->getChildCategories());
 			if($subcategoriesCount == 1) {
-				echo __(' (1 subcategory)', 'jigoshop');
+				echo __(' (1 subcategory)', 'jigoshop-ecommerce');
 			}
 			elseif($subcategoriesCount > 1) {
-				echo sprintf(__(' (%s subcategories)', 'jigoshop'), $subcategoriesCount);
+				echo sprintf(__(' (%s subcategories)', 'jigoshop-ecommerce'), $subcategoriesCount);
 			}
 			?>
 		</a>	
@@ -23,12 +23,12 @@
 	<td>
 		<a href="<?php echo get_term_link($category->getId(), 'product_category');?>" class="btn btn-default" target="_blank">
 			<span class="glyphicon glyphicon-eye-open"></span>
-			<?php echo __('View', 'jigoshop'); ?>
+			<?php echo __('View', 'jigoshop-ecommerce'); ?>
 		</a>
 	
 		<button type="submit" class="jigoshop-product-categories-edit-button btn btn-default text-left">
 			<span class="glyphicon glyphicon-plus"></span>
-			<?php echo __('Edit', 'jigoshop'); ?>
+			<?php echo __('Edit', 'jigoshop-ecommerce'); ?>
 		</button>
 		<button type="submit" class="jigoshop-product-categories-remove-button btn btn-default text-left">
 			<span class="glyphicon glyphicon-remove"></span>

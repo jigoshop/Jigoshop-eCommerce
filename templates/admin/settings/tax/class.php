@@ -12,7 +12,7 @@ use Jigoshop\Core\Options;
 		'id' => 'tax_class_label_'.$class['class'],
 		'name' => Options::NAME.'[classes][label][]',
 		'value' => $class['label'],
-		'placeholder' => __('Tax class label', 'jigoshop'),
+		'placeholder' => __('Tax class label', 'jigoshop-ecommerce'),
     ]); ?>
 	</td>
 	<td>
@@ -20,10 +20,10 @@ use Jigoshop\Core\Options;
 		'id' => 'tax_class_'.$class['class'],
 		'name' => Options::NAME.'[classes][class][]',
 		'value' => $class['class'],
-		'placeholder' => __('Tax class', 'jigoshop'),
+		'placeholder' => __('Tax class', 'jigoshop-ecommerce'),
     ]); ?>
 	</td>
 	<td class="vert-align">
-		<button type="button" class="remove-tax-class btn btn-default" title="<?php _e('Remove', 'jigoshop'); ?>"><span class="glyphicon glyphicon-remove"></span></button>
+		<button type="button" class="remove-tax-class btn btn-default" title="<?php _e('Remove', 'jigoshop-ecommerce'); ?>"><span class="glyphicon glyphicon-remove"></span></button>
 	</td>
 </tr>

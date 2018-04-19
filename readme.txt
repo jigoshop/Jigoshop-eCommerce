@@ -2,10 +2,9 @@
 Contributors: jigoshop
 Tags: ecommerce, wordpress ecommerce, store, shop, shopping, cart, checkout, widgets, reports, shipping, tax, paypal, jigowatt, shipping, inventory, stock, online, sell, sales, weights, dimensions, configurable, variable, downloadable, external, affiliate, download, virtual, physical
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=7F5FZ5NGJ3XTL
-
 Requires at least: 4.0
-Tested up to: 4.8.2
-Stable tag: 2.1.7
+Tested up to: 4.9.4
+Stable tag: 2.1.12
 
 A feature-packed eCommerce plugin built upon WordPress core functionality ensuring excellent performance, customizability and control - robust Tax Settings, Stock Level Management, Free and Premium Extensions - you name it.
 
@@ -43,7 +42,7 @@ Manage your stock levels and customer orders easily. Jigoshop eCommerce has been
 
 Extend Jigoshop eCommerce with Payment Gateways, Shipping Methods, and various other plugins:
 
-http://www.jigoshop.com/product-category/extensions/
+<a href="https://www.jigoshop.com/product-category/extensions/" title="Extensions">Extensions</a>
 
 To list some important ones:
 
@@ -114,7 +113,7 @@ You can become a part of the Jigoshop eCommerce in a variety of ways - either pa
 
 = Setting up Jigoshop =
 
-Take a look through our <a href="http://forum.jigoshop.com/kb/" title="Jigoshop usage guide">Jigoshop usage guides</a> to help you setup Jigoshop for the first time.
+Take a look through our <a href="https://www.jigoshop.com/getting-started-guide/" title="Jigoshop usage guide">Jigoshop usage guides</a> to help you setup Jigoshop for the first time.
 
 == Frequently Asked Questions ==
 
@@ -126,12 +125,12 @@ If you need a theme built, or have a theme that needs styling, <a href="http://w
 
 = Can I have Jigoshop eCommerce in my language =
 
-Jigoshop eCommerce comes with a .po file and is localisation ready in over 10 languages.
-You can also <a href="http://forum.jigoshop.com/kb/customize-jigoshop/languages">create your own translations</a> for Jigoshop eCommerce.
+Jigoshop eCommerce comes with a .po file and is localisation ready.
+You can also <a href="https://www.jigoshop.com/development/language-translations/">create your own translations</a> for Jigoshop eCommerce.
 
 = Which payment gateways do you have? =
 
-Take a look through <a href="http://forum.jigoshop.com/kb/jigoshop-settings/payment-gateways">our list of payment gateways</a>. There are some free ones that are included with Jigoshop eCommerce, and even more are available <a href="http://www.jigoshop.com/product-category/extensions/">on jigoshop.com</a>.
+Take a look through <a href="https://www.jigoshop.com/product-category/extensions/">our list of payment gateways</a>. There are some free ones that are included with Jigoshop eCommerce, and even more are available <a href="https://www.jigoshop.com/product-category/extensions/">on jigoshop.com</a>.
 
 = Will tax settings work in my country? =
 
@@ -139,8 +138,8 @@ Jigoshop eCommerce has a flexible tax rule system which allows you to define tax
 
 = I need help! =
 
-We have a <a href="http://forum.jigoshop.com" title="Jigoshop support forum">community forum</a> for getting help from other users.
-However, if you want priority, dedicated support from Jigoshop staff, we dp offer <a href="http://www.jigoshop.com/support/" title="Jigoshop Premium Support">premium support packages</a>.
+We have a <a href="https://wordpress.org/support/plugin/jigoshop-ecommerce" title="Jigoshop support forum">community forum</a> for getting help from other users.
+However, if you want priority, dedicated support from Jigoshop staff, we dp offer <a href="https://www.jigoshop.com/support/" title="Jigoshop Premium Support">premium support packages</a>.
 
 == Screenshots ==
 
@@ -151,6 +150,51 @@ However, if you want priority, dedicated support from Jigoshop staff, we dp offe
 
 == Changelog ==
 
+= 2.1.12 - 2018.04.09 =
+* New: Allow to hide out of stock variations.
+* Fix: Properly show product stock status.
+= 2.1.11.2 - 2018.03.20 =
+* Fix: Properly save settings on Payment page with no default gateway selected.
+= 2.1.11.1 - 2018.03.20 =
+* Updated all vendors and removed unused files.
+= 2.1.11 - 2018.03.19 =
+* New: Order processing fee.
+* Fix: Properly show product list, when shop page is set as static front page.
+* Fix: Properly hide/show stock column in admin product list.
+* Fix: Add product review only when rating was posted.
+* Fix: Notices on Thank you page, when order does not have payment method.
+* Fix: Php/wp memory limit, added *G value parsing.
+* Fix: Errors on cart/checkout page when switching shipping location with inproperly configured shipping method present.
+* Fix: Renamed `coffee-script` module to `coffeescript` in gulp.
+* Fix: Hide discount section in My Account Order preview, when discount was not used.
+* Fix: Show information about backorder on product page.
+= 2.1.10 - 2018.01.23 =
+* New: WorldPay gateway.
+* New: Template error handler.
+* Fix: Unify payment and shipping settings tabs.
+* Fix: Update product quantity in cart properly.
+* Fix: `Disable manage stock and set ins stock status for all products` tool now works for all products.
+* Fix: Show exception message when trying to add review without rating.
+* Fix: Changed text domain in places where it was missing or invalid.
+* Fix: Properly remove item from cart via url.
+= 2.1.9 - 2017.11.27 =
+* Fix: Fix readme.txt.
+* Fix: Add Company name and Vat number to thank you page.
+* Fix: Add Vat number variable to order emails.
+* Fix: Added filter to determine proper template for external product types.
+* Fix: Added action before checkout payment methods.
+= 2.1.8 - 2017.10.30 =
+* New: Default variation image will be shown if variable product has no featured image.
+* Fix: Checkout/cart page to allow external product types from plugins.
+* Fix: Product filter widget.
+* Fix: Form controls in payment/shipping methods.
+* Fix: Issues with product category WP editor.
+= 2.1.7 - 2017.09.27 =
+* Fix: Now plugin is available to translate.
+* Fix: Do not add thousand separator to paypal amounts.
+* Fix: Improve product and order search mechanism.
+* Fix: Category description editor.
+* Fix: Selects in payment gateways.
 = 2.1.6.1 - 2017.09.21 =
 * Fix: Added BN code to paypal plugin.
 = 2.1.6 - 2017.09.20 =

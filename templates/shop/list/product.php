@@ -15,7 +15,7 @@ $show_add_to_cart_form = !isset($show_add_to_cart_form) || $show_add_to_cart_for
 	<a class="image" href="<?= $product->getLink(); ?>">
 		<?php do_action('jigoshop\shop\list\product\before_thumbnail', $product); ?>
 		<?php if (Product::isOnSale($product)): ?>
-			<span class="on-sale"><?= apply_filters('jigoshop\shop\list\product\sale_text', __('Sale!', 'jigoshop'), $product) ?></span>
+			<span class="on-sale"><?= apply_filters('jigoshop\shop\list\product\sale_text', __('Sale!', 'jigoshop-ecommerce'), $product) ?></span>
 		<?php endif; ?>
 		<div class="js-product-img">
 		<span class="helper"></span>

@@ -15,10 +15,10 @@
  * @license             GNU General Public License v3
  */
 
-__('pending', 'jigoshop');
-__('failed', 'jigoshop');
-__('on-hold', 'jigoshop');
-__('processing', 'jigoshop');
-__('completed', 'jigoshop');
-__('refunded', 'jigoshop');
-__('cancelled', 'jigoshop');
+__('pending', 'jigoshop-ecommerce');
+__('failed', 'jigoshop-ecommerce');
+__('on-hold', 'jigoshop-ecommerce');
+__('processing', 'jigoshop-ecommerce');
+__('completed', 'jigoshop-ecommerce');
+__('refunded', 'jigoshop-ecommerce');
+__('cancelled', 'jigoshop-ecommerce');

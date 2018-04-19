@@ -16,10 +16,10 @@ use Jigoshop\Helper;
 			<a href="<?= get_edit_post_link($order->getId()); ?>">#<?= $order->getNumber(); ?></a>
 			<span class="order-customer"><?= $order->getCustomer()->getName() ? $order->getCustomer()->getName() : '&nbsp'; ?></span>
 			<?= Helper\Order::getStatus($order); ?>
-			<span class="order-time"><?= get_the_time(_x('M d, Y', 'dashboard', 'jigoshop'), $order->getId()); ?></span>
+			<span class="order-time"><?= get_the_time(_x('M d, Y', 'dashboard', 'jigoshop-ecommerce'), $order->getId()); ?></span>
 			<small>
 				<?= count($order->getItems()); ?> <?= _n('Item', 'Items', count($order->getItems()), 'jigoshop'); ?>,
-				<span	class="total-quantity"><?= __('Total Quantity', 'jigoshop'); ?> <?= $totalItems; ?></span>
+				<span	class="total-quantity"><?= __('Total Quantity', 'jigoshop-ecommerce'); ?> <?= $totalItems; ?></span>
 				<span	class="order-cost"><?= Helper\Product::formatPrice($order->getTotal()); ?></span>
 			</small>
 		</li>

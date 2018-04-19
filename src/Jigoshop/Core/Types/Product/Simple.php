@@ -28,7 +28,7 @@ class Simple implements Type
 	 */
 	public function getName()
 	{
-		return __('Simple', 'jigoshop');
+		return __('Simple', 'jigoshop-ecommerce');
 	}
 
 	/**

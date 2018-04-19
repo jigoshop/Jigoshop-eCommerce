@@ -46,13 +46,13 @@ class Variation implements \JsonSerializable
 	{
 		// TODO: Title changing description in docs
 		if ($this->title === null) {
-			$this->title = sprintf(_x('%s (%s)', 'product_variation', 'jigoshop'), $this->parent->getName(), join(', ', array_filter(array_map(function ($item){
+			$this->title = sprintf(_x('%s (%s)', 'product_variation', 'jigoshop-ecommerce'), $this->parent->getName(), join(', ', array_filter(array_map(function ($item){
 				/** @var $item Attribute */
 				$value = $item->getValue();
 				if (is_numeric($value) && $value > 0) {
-					return sprintf(_x('%s: %s', 'product_variation', 'jigoshop'), $item->getAttribute()->getLabel(), $item->getAttribute()->getOption($value)->getLabel());
+					return sprintf(_x('%s: %s', 'product_variation', 'jigoshop-ecommerce'), $item->getAttribute()->getLabel(), $item->getAttribute()->getOption($value)->getLabel());
 				} else {
-					return sprintf(_x('%s: any', 'product_variation', 'jigoshop'), $item->getAttribute()->getLabel());
+					return sprintf(_x('%s: any', 'product_variation', 'jigoshop-ecommerce'), $item->getAttribute()->getLabel());
 				}
 
 				return '';

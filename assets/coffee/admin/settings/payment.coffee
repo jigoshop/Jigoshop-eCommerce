@@ -1,56 +1,59 @@
 class Payment
+  processingFeeRulesLastId: 0
 
   constructor: ->
-    jQuery('.payment-method-configure').click (e) ->
-      targetMethod = undefined
-      e.preventDefault()
-      targetMethod = jQuery(e.delegateTarget).val()
-      if targetMethod != undefined
-        jQuery.magnificPopup.open
-          mainClass: 'jigoshop'
-          items: src: ''
-          type: 'inline'
-          callbacks:
-            elementParse: (item) ->
-              item.src = jQuery('#payment-method-options-' + targetMethod).html()
-            open: ->
-              jQuery('.mfp-content input[type="checkbox"]').bootstrapSwitch
-                size: 'small'
-                onText: 'Yes'
-                offText: 'No'
-              jQuery('.mfp-content .payment-method-options-save').click (e) ->
-                e.preventDefault()
-                jQuery.magnificPopup.close()
-            close: ->
-              jQuery(@content).find('input[type="checkbox"]').each (index, element) ->
-                jQuery(element).bootstrapSwitch 'destroy'
-              jQuery(@content).find('select').each (index, element) ->
-                jQuery(element).select2 'destroy'
-              jQuery('#payment-method-options-' + targetMethod).html jQuery(@content).get()
-              jQuery('.payment-method-options-save').click()
+    jQuery('.payment-method-enable').on 'switchChange.bootstrapSwitch', @toggleEnable
+    jQuery('.payment-method-testMode').on 'switchChange.bootstrapSwitch', @toggleTestMode
 
-    jQuery('.payment-method-enable').on 'switchChange.bootstrapSwitch', (e, state) ->
-      targetMethod = undefined
-      targetMethod = jQuery(e.target).parents('tr').attr('id')
-      setTimeout (->
-        jQuery.post ajaxurl, {
-          action: 'paymentMethodSaveEnable'
-          method: targetMethod
-          state: state
-        }, ->
-          location.href = document.URL
-      ), 300
-    jQuery('.payment-method-testMode').on 'switchChange.bootstrapSwitch', (e, state) ->
-      targetMethod = undefined
-      targetMethod = jQuery(e.target).parents('tr').attr('id')
-      setTimeout (->
-        jQuery.post ajaxurl, {
-          action: 'paymentMethodSaveTestMode'
-          method: targetMethod
-          state: state
-        }, ->
-          location.href = document.URL
-      ), 300
+    @processingFeeRulesLastId = jQuery('#processing-fee-rules').find('tbody').find('tr').length
+
+    jQuery('#processing-fee-rules').find('tbody').find('select').trigger('change')
+
+    jQuery('#processing-fee-add-rule').click(@addProcessingFeeRule)
+    @bindProcessingFeeRulesControls()
+
+    jQuery('#processing-fee-rules').find('tbody').sortable()
+
+  toggleEnable: (e, state) ->
+    targetMethod = jQuery(e.target).parents('tr').attr('id')
+    setTimeout (->
+      jQuery.post ajaxurl, {
+        action: 'paymentMethodSaveEnable'
+        method: targetMethod
+        state: state
+      }, ->
+        location.href = document.URL
+    ), 300
+
+  toggleTestMode: (e, state) ->
+    targetMethod = jQuery(e.target).parents('tr').attr('id')
+    setTimeout (->
+      jQuery.post ajaxurl, {
+        action: 'paymentMethodSaveTestMode'
+        method: targetMethod
+        state: state
+      }, ->
+        location.href = document.URL
+    ), 300
+
+  bindProcessingFeeRulesControls: ->
+    jQuery('.processing-fee-remove-rule').click(@removeProcessingFeeRule)
+
+  addProcessingFeeRule: =>
+    rule = jigoshop_admin_payment.processingFeeRule.replace(/%RULE_ID%/g, @processingFeeRulesLastId)
+    @processingFeeRulesLastId++
+
+    jQuery('#processing-fee-rules').find('tbody').append(rule)
+    jQuery('#processing-fee-rules').find('tbody').find('tr').last().find('select').select2()
+    jQuery('#processing-fee-rules').find('tbody').find('tr').last().find('input[type="checkbox"].switch-medium').bootstrapSwitch
+      size: 'small'
+      onText: "Yes"
+      offText: "No"
+
+    @bindProcessingFeeRulesControls()
+
+  removeProcessingFeeRule: (e) ->
+    jQuery(e.delegateTarget).parents('tr').remove()
 
 jQuery () ->
   new Payment()

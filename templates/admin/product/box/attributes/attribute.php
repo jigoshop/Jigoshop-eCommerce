@@ -10,24 +10,24 @@ use Jigoshop\Helper\Product;
 <li class="list-group-item" data-id="<?= $attribute->getId(); ?>">
 	<h4 class="list-group-item-heading clearfix">
 		<?= $attribute->getLabel(); ?>
-		<button type="button" class="remove-attribute btn btn-default pull-right" title="<?php _e('Remove', 'jigoshop'); ?>"><span class="glyphicon glyphicon-remove"></span></button>
-		<button type="button" class="show-variation btn btn-default pull-right" title="<?php _e('Expand', 'jigoshop'); ?>"><span class="glyphicon glyphicon-collapse-down"></span></button>
+		<button type="button" class="remove-attribute btn btn-default pull-right" title="<?php _e('Remove', 'jigoshop-ecommerce'); ?>"><span class="glyphicon glyphicon-remove"></span></button>
+		<button type="button" class="show-variation btn btn-default pull-right" title="<?php _e('Expand', 'jigoshop-ecommerce'); ?>"><span class="glyphicon glyphicon-collapse-down"></span></button>
 	</h4>
 	<div class="list-group-item-text row clearfix">
 		<div class="col-md-4 options">
-			<h5><?php _e('Options', 'jigoshop'); ?></h5>
+			<h5><?php _e('Options', 'jigoshop-ecommerce'); ?></h5>
 			<?php Forms::checkbox([
 				'name' => 'product[attributes]['.$attribute->getId().'][display]',
 				'id' => 'product_attributes_'.$attribute->getId().'_display',
 				'classes' => ['attribute-options'],
-				'label' => __('Display on product page?', 'jigoshop'),
+				'label' => __('Display on product page?', 'jigoshop-ecommerce'),
 				'checked' => $attribute->isVisible(),
 				'size' => 6,
             ]); ?>
 			<?php do_action('jigoshop\admin\product\attribute\options', $attribute); ?>
 		</div>
 		<div class="col-md-7 values">
-			<h5><?php _e('Values', 'jigoshop'); ?></h5>
+			<h5><?php _e('Values', 'jigoshop-ecommerce'); ?></h5>
 			<?php switch($attribute->getType()) {
 				case Attribute\Multiselect::TYPE: ?>
 						<?php foreach($attribute->getOptions() as $option): /** @var $option Attribute\Option */?>

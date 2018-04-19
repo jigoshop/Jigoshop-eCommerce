@@ -43,7 +43,7 @@ class CustomerList implements TableInterface
 
 	public function getTitle()
 	{
-		return __('Customer List', 'jigoshop');
+		return __('Customer List', 'jigoshop-ecommerce');
 	}
 
 	public function getColumns()
@@ -53,35 +53,35 @@ class CustomerList implements TableInterface
 		}
 		$this->columns = [
 			'customer_name' => [
-				'name' => __('Name (Last, First)', 'jigoshop'),
+				'name' => __('Name (Last, First)', 'jigoshop-ecommerce'),
 				'size' => 2
             ],
 			'username' => [
-				'name' => __('Username', 'jigoshop'),
+				'name' => __('Username', 'jigoshop-ecommerce'),
 				'size' => 1
             ],
 			'email' => [
-				'name' => __('Email', 'jigoshop'),
+				'name' => __('Email', 'jigoshop-ecommerce'),
 				'size' => 2
             ],
 			'location' => [
-				'name' => __('Location', 'jigoshop'),
+				'name' => __('Location', 'jigoshop-ecommerce'),
 				'size' => 2
             ],
 			'orders' => [
-				'name' => __('Orders', 'jigoshop'),
+				'name' => __('Orders', 'jigoshop-ecommerce'),
 				'size' => 1
             ],
 			'spent' => [
-				'name' => __('Money Spent', 'jigoshop'),
+				'name' => __('Money Spent', 'jigoshop-ecommerce'),
 				'size' => 1
             ],
 			'last_order' => [
-				'name' => __('Last order', 'jigoshop'),
+				'name' => __('Last order', 'jigoshop-ecommerce'),
 				'size' => 2
             ],
 			'user_actions' => [
-				'name' => __('Actions', 'jigoshop'),
+				'name' => __('Actions', 'jigoshop-ecommerce'),
 				'size' => 1
             ]
         ];
@@ -110,7 +110,7 @@ class CustomerList implements TableInterface
 
 	public function noItems()
 	{
-		return __('No customers found.', 'jigoshop');
+		return __('No customers found.', 'jigoshop-ecommerce');
 	}
 
 	public function display()
@@ -122,7 +122,7 @@ class CustomerList implements TableInterface
 			'total_items' => $this->totalItems,
 			'total_pages' => $this->totalPages,
 			'active_page' => $this->activePageNumber,
-			'search_title' => __('Search Customers'),
+			'search_title' => __('Search Customers', 'jigoshop-ecommerce'),
 			'search' => $this->getSearch(),
 			'csv_download_link' => $this->getDownloadLink(),
         ]);
@@ -205,7 +205,7 @@ class CustomerList implements TableInterface
 				$actions = [];
 				$actions['edit'] = [
 					'url' => admin_url('user-edit.php?user_id='.$user->ID),
-					'name' => __('Edit', 'jigoshop'),
+					'name' => __('Edit', 'jigoshop-ecommerce'),
 					'action' => 'edit'
                 ];
 				$actions = $this->wp->applyFilters('jigoshop\admin\reports\table\customer_list\user_actions', $actions, $user);
@@ -283,13 +283,13 @@ class CustomerList implements TableInterface
 	private function getCsvColumns()
 	{
 		return [
-			'username'   => __('Username', 'jigoshop'),
-            'customer_first_name' => __('First Name', 'jigoshop'),
-            'customer_last_name' => __('Last Name', 'jigoshop'),
-			'email'      => __('Email', 'jigoshop'),
-			'orders'     => __('Orders', 'jigoshop'),
-			'spent'      => __('Money Spent', 'jigoshop'),
-			'last_order' => __('Last order', 'jigoshop'),
+			'username'   => __('Username', 'jigoshop-ecommerce'),
+            'customer_first_name' => __('First Name', 'jigoshop-ecommerce'),
+            'customer_last_name' => __('Last Name', 'jigoshop-ecommerce'),
+			'email'      => __('Email', 'jigoshop-ecommerce'),
+			'orders'     => __('Orders', 'jigoshop-ecommerce'),
+			'spent'      => __('Money Spent', 'jigoshop-ecommerce'),
+			'last_order' => __('Last order', 'jigoshop-ecommerce'),
         ];
 	}
 }

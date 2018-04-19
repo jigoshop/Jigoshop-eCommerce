@@ -12,11 +12,11 @@ use Jigoshop\Helper\Forms;
 
 ?>
 <p>
-	<label for="<?= $title_id; ?>"><?php _e('Title:', 'jigoshop'); ?></label>
+	<label for="<?= $title_id; ?>"><?php _e('Title:', 'jigoshop-ecommerce'); ?></label>
 	<input class="widefat" id="<?= $title_id; ?>"  name="<?= $title_name; ?>" type="text" value="<?= $title; ?>" />
 </p>
 <p>
-	<label for="<?= $attribute_id; ?>"><?php _e('Attributes:', 'jigoshop'); ?></label>
+	<label for="<?= $attribute_id; ?>"><?php _e('Attributes:', 'jigoshop-ecommerce'); ?></label>
 	<select id="<?= $attribute_id; ?>"  name="<?= $attribute_name; ?>">
 		<?php foreach ($attributes as $attr): /** @var $attr \Jigoshop\Entity\Product\Attribute */?>
 			<option value="<?= $attr->getId(); ?>" <?php Forms::selected($attr->getId(), $attribute); ?>><?= $attr->getLabel(); ?></option>

@@ -7,15 +7,15 @@
 <div class="jigoshop" data-id="<?= $email->getId(); ?>">
 	<?= \Jigoshop\Admin\Helper\Forms::text([
 		'name' => 'jigoshop_email[subject]',
-		'label' => __('Subject', 'jigoshop'),
+		'label' => __('Subject', 'jigoshop-ecommerce'),
 		'value' => $email->getSubject(),
     ]); ?>
 	<?= \Jigoshop\Admin\Helper\Forms::select([
 		'id' => 'jigoshop_email_actions',
 		'name' => 'jigoshop_email[actions]',
-		'label' => __('Actions', 'jigoshop'),
+		'label' => __('Actions', 'jigoshop-ecommerce'),
 		'multiple' => true,
-		'placeholder' => __('Select action...', 'jigoshop'),
+		'placeholder' => __('Select action...', 'jigoshop-ecommerce'),
 		'options' => $emails,
 		'value' => $email->getActions(),
     ]); ?>

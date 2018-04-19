@@ -1,0 +1,15 @@
+language: php
+php:
+  - 5.6
+before_script:
+  - composer update
+  - npm install
+  - npm install bower
+  - node_modules/bower/bin/bower update
+  - node_modules/gulp/bin/gulp.js dev
+script: phpunit
+notifications:
+  slack:
+    on_failure: always
+    on_success: always
+    secure: WAnMQ6JR5mDBdW2y35+uAISaJRpHWMIitLYyo/sLIaKgXIPOI936lP9rfwvpLQtUQmbOcDprzsGY+3M+2JHTTFqAL2eP1znuwCDTCRP18UdrdwSO7x45uE/Fw8pCpFbU0f6WG4BNEqbpB57dSlq/9t0b25Z9YEcHIg26mKuc6qKT4jlYfkRX2fmPUKGY67CA+HkN81f70IkL7shGtteAEGTgjQlVpY3ZsgHO6dQPDoLJq3UQzh4uecMABp1tFHiaBFYqFCebwjCOk2l1KV4BgzCCCLB36PnUJibMtI/FjvSzjRDHEOfC4+VoUitQfsRc4vu74griJRtPOJu94r1D/I/XuvVV5Ti4S4tMX3de5D18Aa/w5W4BftYRfcHbQAFXROw51d/mgcuPoW3s7WMB0I+YgittYB/AotbJpUkM+Jim0vieAjI73hSmvT9pQRr7ILT6W0wz+2SlYGpPuYmSGV8UZ7w7dYmUtooipNR458Agay0ikqK22I0SBeQC4s8dKlS96CN37G+iZ3c2OJ385zVRO98PZJW7hGqm3dfHl8vB4LOKbjkJEPqXJV7M0ku4y6qHeq5lC+X3fR53af7UxTHM57rBe9BDaEqCeq3L/27Y68zoIUIHW+4SUQb87cojnhV6GX8mA36YAe6PvQvEmN2qTpQGJEByHcbTJFxJfPk=

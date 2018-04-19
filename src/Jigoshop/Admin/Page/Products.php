@@ -88,22 +88,23 @@ class Products
 		$columns = [
 			'cb' => '<input type="checkbox" />',
 			'thumbnail' => null,
-			'title' => _x('Name', 'product', 'jigoshop'),
+			'title' => _x('Name', 'product', 'jigoshop-ecommerce'),
 			'featured' => sprintf(
 				'<span class="glyphicon glyphicon-star" aria-hidden="true"></span> <span class="sr-only">%s</span>',
-				_x('Is featured?', 'product', 'jigoshop')
+				_x('Is featured?', 'product', 'jigoshop-ecommerce')
 			),
-			'type' => _x('Type', 'product', 'jigoshop'),
-			'sku' => _x('SKU', 'product', 'jigoshop'),
-			'stock' => _x('Stock', 'product', 'jigoshop'),
-			'price' => _x('Price', 'product', 'jigoshop'),
-			'creation' => _x('Created at', 'product', 'jigoshop'),
+			'type' => _x('Type', 'product', 'jigoshop-ecommerce'),
+			'sku' => _x('SKU', 'product', 'jigoshop-ecommerce'),
+			'stock' => _x('Stock', 'product', 'jigoshop-ecommerce'),
+			'price' => _x('Price', 'product', 'jigoshop-ecommerce'),
+			'creation' => _x('Created at', 'product', 'jigoshop-ecommerce'),
         ];
 
-		if ($this->options->get('products.enable_sku', 'yes') !== 'yes') {
-			unset($columns['sku']);
-		}
-		if ($this->options->get('products.manage_stock', 'yes') !== 'yes') {
+		// TODO: there is no option to enable/disable sku remove it or consider adding this option
+//		if ($this->options->get('products.enable_sku', '1') !== '1') {
+//			unset($columns['sku']);
+//		}
+		if ($this->options->get('products.manage_stock', '1') !== '1') {
 			unset($columns['stock']);
 		}
 
@@ -146,16 +147,16 @@ class Products
 				echo Formatter::date($timestamp);
 
 				if ($product->isVisible()) {
-					echo '<br /><strong>'.__('Visible in', 'jigoshop').'</strong>: ';
+					echo '<br /><strong>'.__('Visible in', 'jigoshop-ecommerce').'</strong>: ';
 					switch ($product->getVisibility()) {
 						case ProductEntity::VISIBILITY_SEARCH:
-							echo __('Search only', 'jigoshop');
+							echo __('Search only', 'jigoshop-ecommerce');
 							break;
 						case ProductEntity::VISIBILITY_CATALOG:
-							echo __('Catalog only', 'jigoshop');
+							echo __('Catalog only', 'jigoshop-ecommerce');
 							break;
 						case ProductEntity::VISIBILITY_PUBLIC:
-							echo __('Catalog and search', 'jigoshop');
+							echo __('Catalog and search', 'jigoshop-ecommerce');
 							break;
 					}
 				}

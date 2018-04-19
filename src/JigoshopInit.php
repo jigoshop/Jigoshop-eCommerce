@@ -35,6 +35,8 @@ class JigoshopInit
     private $extensions;
     /** @var \Composer\Autoload\ClassLoader */
     private $classLoader;
+    /** @var bool */
+    private static $isTemplateErrorHandlerRegistered;
 
     public function __construct($file)
     {
@@ -58,6 +60,11 @@ class JigoshopInit
         add_filter('admin_footer_text', [$this, 'footer']);
         add_action('admin_bar_menu', [$this, 'toolbar'], 35);
         add_action('jigoshop\extensions\install', [$this, 'installExtension']);
+        add_filter('template', function($template) {
+            self::registerTemplateErrorHandler();
+
+            return $template;
+        });
     }
 
     /**
@@ -165,8 +172,8 @@ class JigoshopInit
      */
     private function loadTextDomain()
     {
-        load_textdomain('jigoshop', WP_LANG_DIR . '/jigoshop/' . get_locale() . '.mo');
-        load_plugin_textdomain('jigoshop', false, basename(self::getDir()) . '/languages/');
+        load_textdomain('jigoshop-ecommerce', WP_LANG_DIR . '/jigoshop/' . get_locale() . '.mo');
+        load_plugin_textdomain('jigoshop-ecommerce', false, basename(self::getDir()) . '/languages/');
     }
 
     /**
@@ -319,12 +326,15 @@ class JigoshopInit
     private function initLoggers()
     {
         $logger = new \Monolog\Logger(self::$logger);
-        $formatter = new Monolog\Formatter\LineFormatter('[%datetime%] %channel%.%level_name%: %message% %context%\n %extra%\n',
+        $formatter = new Monolog\Formatter\LineFormatter('[%datetime%] %channel%.%level_name%: %message% %context% %extra%',
             'Y-m-d H:i:s');
         if (WP_DEBUG) {
             $stream = new \Monolog\Handler\StreamHandler(self::$logDir . '/jigoshop.debug.log', \Monolog\Logger::DEBUG);
             $stream->setFormatter($formatter);
             $logger->pushHandler($stream);
+
+            $browserHandler = new \Monolog\Handler\BrowserConsoleHandler();
+            $logger->pushHandler($browserHandler);
         }
         $stream = new \Monolog\Handler\StreamHandler(self::$logDir . '/jigoshop.log', \Monolog\Logger::WARNING);
         $stream->setFormatter($formatter);
@@ -398,7 +408,7 @@ class JigoshopInit
 
         return sprintf(
             '<a target="_blank" href="https://www.jigoshop.com/support/">%s</a> | %s',
-            __('Contact support', 'jigoshop'),
+            __('Contact support', 'jigoshop-ecommerce'),
             str_replace(
                 ['[stars]', '[link]', '[/link]'],
                 [
@@ -406,7 +416,7 @@ class JigoshopInit
                     '<a target="_blank" href="http://wordpress.org/support/view/plugin-reviews/jigoshop-ecommerce#postform" >',
                     '</a>'
                 ],
-                __('Add your [stars] on [link]wordpress.org[/link] and keep this plugin essentially free.', 'jigoshop')
+                __('Add your [stars] on [link]wordpress.org[/link] and keep this plugin essentially free.', 'jigoshop-ecommerce')
             )
         );
     }
@@ -426,7 +436,7 @@ class JigoshopInit
         if (!is_admin() && ($manage_jigoshop || $manage_products || $manage_orders || $view_reports)) {
             $wp_admin_bar->add_node([
                 'id' => 'jigoshop',
-                'title' => __('Jigoshop', 'jigoshop'),
+                'title' => __('Jigoshop', 'jigoshop-ecommerce'),
                 'href' => $manage_jigoshop ? admin_url('admin.php?page=jigoshop') : '',
                 'parent' => false,
                 'meta' => [
@@ -437,7 +447,7 @@ class JigoshopInit
             if ($manage_jigoshop) {
                 $wp_admin_bar->add_node([
                     'id' => 'jigoshop_dashboard',
-                    'title' => __('Dashboard', 'jigoshop'),
+                    'title' => __('Dashboard', 'jigoshop-ecommerce'),
                     'parent' => 'jigoshop',
                     'href' => admin_url('admin.php?page=jigoshop'),
                 ]);
@@ -446,7 +456,7 @@ class JigoshopInit
             if ($manage_products) {
                 $wp_admin_bar->add_node([
                     'id' => 'jigoshop_products',
-                    'title' => __('Products', 'jigoshop'),
+                    'title' => __('Products', 'jigoshop-ecommerce'),
                     'parent' => 'jigoshop',
                     'href' => admin_url('edit.php?post_type=product'),
                 ]);
@@ -455,7 +465,7 @@ class JigoshopInit
             if ($manage_orders) {
                 $wp_admin_bar->add_node([
                     'id' => 'jigoshop_orders',
-                    'title' => __('Orders', 'jigoshop'),
+                    'title' => __('Orders', 'jigoshop-ecommerce'),
                     'parent' => 'jigoshop',
                     'href' => admin_url('edit.php?post_type=shop_order'),
                 ]);
@@ -464,7 +474,7 @@ class JigoshopInit
             if ($manage_jigoshop) {
                 $wp_admin_bar->add_node([
                     'id' => 'jigoshop_settings',
-                    'title' => __('Settings', 'jigoshop'),
+                    'title' => __('Settings', 'jigoshop-ecommerce'),
                     'parent' => 'jigoshop',
                     'href' => admin_url('admin.php?page=jigoshop_settings'),
                 ]);
@@ -475,9 +485,9 @@ class JigoshopInit
     public function pluginLinks($links)
     {
         return array_merge([
-            '<a href="' . admin_url('admin.php?page=jigoshop_settings') . '">' . __('Settings', 'jigoshop') . '</a>',
-            '<a href="https://www.jigoshop.com/documentation/">' . __('Docs', 'jigoshop') . '</a>',
-            '<a href="https://www.jigoshop.com/support/">' . __('Support', 'jigoshop') . '</a>',
+            '<a href="' . admin_url('admin.php?page=jigoshop_settings') . '">' . __('Settings', 'jigoshop-ecommerce') . '</a>',
+            '<a href="https://www.jigoshop.com/documentation/">' . __('Docs', 'jigoshop-ecommerce') . '</a>',
+            '<a href="https://www.jigoshop.com/support/">' . __('Support', 'jigoshop-ecommerce') . '</a>',
         ], $links);
     }
 
@@ -532,5 +542,50 @@ class JigoshopInit
             $installer->init($this->container);
             $installer->install();
         }
+    }
+
+    /**
+     * Registers an error handler to handle template errors, if it was not registered before.
+     */
+    private static function registerTemplateErrorHandler() {
+        if(self::$isTemplateErrorHandlerRegistered === true) {
+            return;
+        }
+
+        register_shutdown_function(['JigoshopInit', 'templateErrorHandler']);
+
+        self::$isTemplateErrorHandlerRegistered = true;
+    }
+
+    /**
+     * Handles errors caused by themes.
+     */
+    public static function templateErrorHandler() {
+        $error = error_get_last();
+        if(is_array($error)) {
+            if(!preg_match('/wp-content\/themes\//', $error['file'])) {
+                return;
+            }
+
+            if(preg_match('/^Uncaught Error: Call to undefined function (jigoshop_[^\(]*)\(\)/', $error['message'], $regs)) {
+                $invalidEntityTitle = 'Invalid function/method';
+                $invalidEntity = sprintf('%s()', $regs[1]);
+            }
+            elseif(preg_match('/^Uncaught Error: Class \'([^\']*)\' not found/', $error['message'], $regs)) {
+                $invalidEntityTitle = 'Invalid class';
+                $invalidEntity = $regs[1];
+            }
+
+            if(!isset($invalidEntity) || !isset($invalidEntityTitle)) {
+                return;
+            }
+
+            $logFile = sprintf('%s/jigoshop.invalid-references.log', self::getLogDir());
+            $logEntry = sprintf("Date/time: %s\nType: %s\nName: %s\nFile: %s\nLine: %s\nPHP error: %s\n---\n", date('Y-m-d H:i:s'), $invalidEntityTitle, $invalidEntity, $error['file'], $error['line'], $error['message']);
+
+            $result = @file_put_contents($logFile, file_get_contents($logFile) . $logEntry);
+
+            print '<br />' . __('This error was probably caused by reference to old or deprecated function/method/class, not present in current Jigoshop version. Please check your Jigoshop eCommerce log directory for further details.', 'jigoshop-ecommerce');
+        }        
     }
 }

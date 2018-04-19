@@ -24,11 +24,11 @@ class ProductCategories extends \WP_Widget
 	{
 		$options = [
 			'classname' => self::ID,
-			'description' => __('A list or dropdown of product categories', 'jigoshop'),
+			'description' => __('A list or dropdown of product categories', 'jigoshop-ecommerce'),
         ];
 
 		// Create the widget
-		parent::__construct(self::ID, __('Jigoshop: Product Categories', 'jigoshop'), $options);
+		parent::__construct(self::ID, __('Jigoshop: Product Categories', 'jigoshop-ecommerce'), $options);
 
 		// Flush cache after every save
 		add_action('save_post', [$this, 'deleteTransient']);
@@ -78,7 +78,7 @@ class ProductCategories extends \WP_Widget
 		// Set the widget title
 		$title = apply_filters(
 			'widget_title',
-			($instance['title']) ? $instance['title'] : __('Product Categories', 'jigoshop'),
+			($instance['title']) ? $instance['title'] : __('Product Categories', 'jigoshop-ecommerce'),
 			$instance,
 			$this->id_base
 		);

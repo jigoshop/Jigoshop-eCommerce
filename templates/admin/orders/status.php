@@ -13,19 +13,19 @@
     <?php if (!empty($pendingTo)): ?>
         <span class="btn-status glyphicon glyphicon-arrow-right" aria-hidden="true"
               data-order_id="<?= $orderId; ?>"
-              title="<?php _e('Change to &quot;Processing&quot;', 'jigoshop'); ?>"
+              title="<?php _e('Change to &quot;Processing&quot;', 'jigoshop-ecommerce'); ?>"
               data-status_to="<?= $statuses['processing']; ?>"></span>
     <?php endif; ?>
     <?php if (!empty($processingTo)): ?>
         <span class="btn-status glyphicon glyphicon-ok" aria-hidden="true"
               data-order_id="<?= $orderId; ?>"
-              title="<?php _e('Change to &quot;Completed&quot;', 'jigoshop'); ?>"
+              title="<?php _e('Change to &quot;Completed&quot;', 'jigoshop-ecommerce'); ?>"
               data-status_to="<?= $statuses['completed']; ?>"></span>
     <?php endif; ?>
     <?php if (!$hideCancel): ?>
         <span class="btn-status glyphicon glyphicon-remove" aria-hidden="true"
               data-order_id="<?= $orderId; ?>"
-              title="<?php _e('Change to &quot;Cancelled&quot;', 'jigoshop'); ?>"
+              title="<?php _e('Change to &quot;Cancelled&quot;', 'jigoshop-ecommerce'); ?>"
               data-status_to="<?= $statuses['cancelled']; ?>"></span>
     <?php endif; ?>
 </div>

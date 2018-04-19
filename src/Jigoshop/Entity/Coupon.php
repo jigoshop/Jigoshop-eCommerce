@@ -542,19 +542,37 @@ class Coupon implements EntityInterface, \JsonSerializable
 	 */
 	public function productMatchesCoupon($product)
 	{
-		if (!empty($this->products) && in_array($product->getId(), $this->products)) {
-			return true;
-		} else if (!empty($this->excludedProducts) && !in_array($product->getId(), $this->excludedProducts)) {
-			return true;
-		} else if (!empty($this->categories) && in_array($product->getCategories(), $this->categories)) {
-			return true;
-		} else if (!empty($this->excludedCategories) && !in_array($product->getCategories(), $this->excludedCategories)) {
-			return true;
-		} else if (empty($this->products)) {
-			return true;
+		if(!empty($this->products) && !in_array($product->getId(), $this->products)) {
+			return false;
 		}
 
-		return false;
+		if(!empty($this->excludedProducts) && in_array($product->getId(), $this->excludedProducts)) {
+			return false;
+		}
+
+		if(!empty($this->categories)) {
+			$foundCategory = false;
+			foreach($product->getCategories() as $category) {
+				if(in_array($category['id'], $this->categories)) {
+					$foundCategory = true;
+					break;
+				}
+			}
+
+			if(!$foundCategory) {
+				return false;
+			}
+		}
+
+		if(!empty($this->excludedCategories)) {
+			foreach($product->getCategories() as $category) {
+				if(in_array($category['id'], $this->excludedCategories)) {
+					return false;
+				}
+			}
+		}
+
+		return true;
 	}
 
     /**

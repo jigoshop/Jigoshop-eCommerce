@@ -39,7 +39,7 @@ class Cheque implements Method2
 	 */
 	public function getName()
 	{
-		return $this->wp->isAdmin() ? __('Cheque', 'jigoshop') : $this->options['title'];
+		return $this->wp->isAdmin() ? __('Cheque', 'jigoshop-ecommerce') : $this->options['title'];
 	}
 
 	/**
@@ -88,21 +88,21 @@ class Cheque implements Method2
 		return [
 			[
 				'name' => sprintf('[%s][enabled]', self::ID),
-				'title' => __('Is enabled?', 'jigoshop'),
+				'title' => __('Is enabled?', 'jigoshop-ecommerce'),
 				'type' => 'checkbox',
 				'checked' => $this->options['enabled'],
 				'classes' => ['switch-medium'],
             ],
 			[
 				'name' => sprintf('[%s][title]', self::ID),
-				'title' => __('Title', 'jigoshop'),
+				'title' => __('Title', 'jigoshop-ecommerce'),
 				'type' => 'text',
 				'value' => $this->options['title'],
             ],
 			[
 				'name' => sprintf('[%s][description]', self::ID),
-				'title' => __('Description', 'jigoshop'),
-				'tip' => sprintf(__('Allowed HTML tags are: %s', 'jigoshop'), '<p>, <a>, <strong>, <em>, <b>, <i>'),
+				'title' => __('Description', 'jigoshop-ecommerce'),
+				'tip' => sprintf(__('Allowed HTML tags are: %s', 'jigoshop-ecommerce'), '<p>, <a>, <strong>, <em>, <b>, <i>'),
 				'type' => 'text',
 				'value' => $this->options['description'],
             ],
@@ -141,7 +141,7 @@ class Cheque implements Method2
 	 */
 	public function process($order)
 	{
-		$order->setStatus(Order\Status::ON_HOLD, __('Waiting for cheque to arrive.', 'jigoshop'));
+		$order->setStatus(Order\Status::ON_HOLD, __('Waiting for cheque to arrive.', 'jigoshop-ecommerce'));
         $this->orderService->save($order);
 
 		return '';

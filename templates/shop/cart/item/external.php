@@ -38,7 +38,7 @@ else {
 ?>
 <tr data-id="<?= $key; ?>" data-product="<?= $product->getId(); ?>">
     <td class="product-remove">
-        <a href="<?= Order::getRemoveLink($key); ?>" class="remove" title="<?= __('Remove', 'jigoshop'); ?>">&times;</a>
+        <a href="<?= Order::getRemoveLink($key); ?>" class="remove" title="<?= __('Remove', 'jigoshop-ecommerce'); ?>">&times;</a>
     </td>
     <td class="product-thumbnail"><a href="<?= $url; ?>"><?= Product::getFeaturedImage($product, 'shop_tiny'); ?></a></td>
     <td class="product-name">

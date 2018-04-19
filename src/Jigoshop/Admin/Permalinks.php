@@ -30,19 +30,19 @@ class Permalinks
 	public function init()
 	{
 		// Add a section to the permalinks page
-		$this->wp->addSettingsSection('jigoshop-permalink', __('Product permalink base', 'jigoshop'), [$this, 'settings'], 'permalink');
+		$this->wp->addSettingsSection('jigoshop-permalink', __('Product permalink base', 'jigoshop-ecommerce'), [$this, 'settings'], 'permalink');
 
 		// Add our settings
 		$this->wp->addSettingsField(
 			'jigoshop_product_category_slug',
-			__('Product category base', 'jigoshop'),
+			__('Product category base', 'jigoshop-ecommerce'),
 			[$this, 'product_category_slug_input'],
 			'permalink',
 			'optional'
 		);
 		$this->wp->addSettingsField(
 			'jigoshop_product_tag_slug',
-			__('Product tag base', 'jigoshop'),
+			__('Product tag base', 'jigoshop-ecommerce'),
 			[$this, 'product_tag_slug_input'],
 			'permalink',
 			'optional'
@@ -57,7 +57,7 @@ class Permalinks
 		$permalink = $this->options->get('permalinks.category');
 		?>
 		<input name="jigoshop_product_category_slug" type="text" class="regular-text code" value="<?php echo $permalink; ?>"
-		       placeholder="<?php echo _x('product-category', 'slug', 'jigoshop') ?>"/>
+		       placeholder="<?php echo _x('product-category', 'slug', 'jigoshop-ecommerce') ?>"/>
 		<?php
 	}
 
@@ -69,7 +69,7 @@ class Permalinks
 		$permalink = $this->options->get('permalinks.tag');
 		?>
 		<input name="jigoshop_product_tag_slug" type="text" class="regular-text code" value="<?php echo $permalink; ?>"
-		       placeholder="<?php echo _x('product-tag', 'slug', 'jigoshop') ?>"/>
+		       placeholder="<?php echo _x('product-tag', 'slug', 'jigoshop-ecommerce') ?>"/>
 		<?php
 	}
 
@@ -78,7 +78,7 @@ class Permalinks
 	 */
 	public function settings()
 	{
-		echo '<p>'.__('These settings control the permalinks used for products. These settings only apply when <strong>not using "default" permalinks above</strong>.', 'jigoshop').'</p>';
+		echo '<p>'.__('These settings control the permalinks used for products. These settings only apply when <strong>not using "default" permalinks above</strong>.', 'jigoshop-ecommerce').'</p>';
 
 		$helpers = $this->wp->getHelpers();
 		$permalink = $helpers->trailingslashit($this->options->get('permalinks.product'));
@@ -86,8 +86,8 @@ class Permalinks
 
 		// Get shop page
 		$shopPageId = $this->options->getPageId(FrontendPages::SHOP);
-		$base = urldecode(($shopPageId > 0 && $this->wp->getPost($shopPageId)) ? $this->wp->getPageUri($shopPageId) : _x('shop', 'default-slug', 'jigoshop'));
-		$productBase = _x('product', 'default-slug', 'jigoshop');
+		$base = urldecode(($shopPageId > 0 && $this->wp->getPost($shopPageId)) ? $this->wp->getPageUri($shopPageId) : _x('shop', 'default-slug', 'jigoshop-ecommerce'));
+		$productBase = _x('product', 'default-slug', 'jigoshop-ecommerce');
 
 		$structures = [
 			0 => '',
@@ -133,7 +133,7 @@ class Permalinks
 
 				// This is an invalid base structure and breaks pages
 				if ('%'.Types::PRODUCT_CATEGORY.'%' == $product_permalink) {
-					$product_permalink = _x('product', 'slug', 'jigoshop').'/'.$product_permalink;
+					$product_permalink = _x('product', 'slug', 'jigoshop-ecommerce').'/'.$product_permalink;
 				}
 			} elseif (empty($product_permalink)) {
 				$product_permalink = false;
@@ -143,7 +143,7 @@ class Permalinks
 
 			// Shop base may require verbose page rules if nesting pages
 			$shopPageId = $this->options->getPageId(FrontendPages::SHOP);
-			$shop_permalink = urldecode(($shopPageId > 0 && $this->wp->getPost($shopPageId)) ? $this->wp->getPageUri($shopPageId) : _x('shop', 'default-slug', 'jigoshop'));
+			$shop_permalink = urldecode(($shopPageId > 0 && $this->wp->getPost($shopPageId)) ? $this->wp->getPageUri($shopPageId) : _x('shop', 'default-slug', 'jigoshop-ecommerce'));
 			if ($shopPageId && trim($permalinks['product'], '/') === $shop_permalink) {
 				$permalinks['verbose'] = true;
 			}

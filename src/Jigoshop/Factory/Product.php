@@ -38,7 +38,7 @@ class Product implements EntityFactoryInterface
     {
         if (isset($this->types[$type])) {
             if (WP_DEBUG) {
-                throw new Exception(sprintf(__('Product of type "%s" already exists.', 'jigoshop'), $type));
+                throw new Exception(sprintf(__('Product of type "%s" already exists.', 'jigoshop-ecommerce'), $type));
             }
 
             Registry::getInstance(JIGOSHOP_LOGGER)->addWarning(sprintf('Product of type "%s" already exists.', $type));

@@ -18,11 +18,11 @@ class RecentlyViewedProducts extends \WP_Widget
 	{
 		$options = [
 			'classname' => self::ID,
-			'description' => __('A list of your customers most recently viewed products', 'jigoshop')
+			'description' => __('A list of your customers most recently viewed products', 'jigoshop-ecommerce')
         ];
 
 		// Create the widget
-		parent::__construct(self::ID, __('Jigoshop: Recently Viewed', 'jigoshop'), $options);
+		parent::__construct(self::ID, __('Jigoshop: Recently Viewed', 'jigoshop-ecommerce'), $options);
 
 		// Attach the tracker to the product view action
 		add_action('jigoshop\template\product\before', '\Jigoshop\Widget\RecentlyViewedProducts::productViewTracker', 10, 1);
@@ -92,7 +92,7 @@ class RecentlyViewedProducts extends \WP_Widget
 		// Set the widget title
 		$title = apply_filters(
 			'widget_title',
-			($instance['title']) ? $instance['title'] : __('Recently Viewed Products', 'jigoshop'),
+			($instance['title']) ? $instance['title'] : __('Recently Viewed Products', 'jigoshop-ecommerce'),
 			$instance,
 			$this->id_base
 		);

@@ -84,7 +84,7 @@ class Settings implements PageInterface
 	 */
 	public function getTitle()
 	{
-		return __('Settings', 'jigoshop');
+		return __('Settings', 'jigoshop-ecommerce');
 	}
 
 	/** @return string Parent of the page string. */

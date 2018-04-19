@@ -149,7 +149,6 @@ AdminProductCategories = do ->
     @attributesInheritEnabledChange()
     @attributesGetAttributes()
 
-    tinymce.remove()
     tinymce.init(tinyMCEPreInit.mceInit['description'])
     tinyMCE.execCommand('mceAddEditor', false, 'description')
     quicktags({id: 'description'})

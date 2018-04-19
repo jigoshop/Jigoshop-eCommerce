@@ -13,11 +13,11 @@ class ProductTagCloud extends \WP_Widget
 	{
 		$options = [
 			'classname' => self::ID,
-			'description' => __('Your most used product tags in cloud format', 'jigoshop'),
+			'description' => __('Your most used product tags in cloud format', 'jigoshop-ecommerce'),
         ];
 
 		// Create the widget
-		parent::__construct(self::ID, __('Jigoshop: Product Tag Cloud', 'jigoshop'), $options);
+		parent::__construct(self::ID, __('Jigoshop: Product Tag Cloud', 'jigoshop-ecommerce'), $options);
 
 		// Flush cache after every save
 		add_action('save_post', [$this, 'deleteTransient']);
@@ -51,7 +51,7 @@ class ProductTagCloud extends \WP_Widget
 		// Set the widget title
 		$title = apply_filters(
 			'widget_title',
-			($instance['title']) ? $instance['title'] : __('Product Tags', 'jigoshop'),
+			($instance['title']) ? $instance['title'] : __('Product Tags', 'jigoshop-ecommerce'),
 			$instance,
 			$this->id_base
 		);

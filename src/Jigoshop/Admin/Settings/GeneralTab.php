@@ -76,7 +76,7 @@ class GeneralTab implements TabInterface
 	 */
 	public function getTitle()
 	{
-		return __('General', 'jigoshop');
+		return __('General', 'jigoshop-ecommerce');
 	}
 
 	/**
@@ -94,13 +94,13 @@ class GeneralTab implements TabInterface
 	{
 		return [
 			[
-				'title' => __('Main', 'jigoshop'),
+				'title' => __('Main', 'jigoshop-ecommerce'),
 				'id' => 'main',
 				'fields' => [
 					[
 						'id' => 'country',
 						'name' => '[country]',
-						'title' => __('Shop location (country)', 'jigoshop'),
+						'title' => __('Shop location (country)', 'jigoshop-ecommerce'),
 						'type' => 'select',
 						'value' => $this->options['country'],
 						'options' => Country::getAll(),
@@ -108,30 +108,30 @@ class GeneralTab implements TabInterface
 					[
 						'id' => 'state',
 						'name' => '[state]',
-						'title' => __('Shop location (state)', 'jigoshop'),
+						'title' => __('Shop location (state)', 'jigoshop-ecommerce'),
 						'type' => 'text',
 						'value' => $this->options['state'],
                     ],
 					[
 						'name' => '[email]',
-						'title' => __('Administrator e-mail', 'jigoshop'),
+						'title' => __('Administrator e-mail', 'jigoshop-ecommerce'),
 						'type' => 'text',
-						'tip' => __('The email address used to send all Jigoshop related emails, such as order confirmations and notices.', 'jigoshop'),
+						'tip' => __('The email address used to send all Jigoshop related emails, such as order confirmations and notices.', 'jigoshop-ecommerce'),
 						'value' => $this->options['email'],
                     ],
 					[
 						'name' => '[show_message]',
 						'id' => 'show_message',
-						'title' => __('Display custom message?', 'jigoshop'),
+						'title' => __('Display custom message?', 'jigoshop-ecommerce'),
 						'type' => 'checkbox',
 						'checked' => $this->options['show_message'],
-						'tip' => __('Add custom message on top of each page of your website.', 'jigoshop'),
+						'tip' => __('Add custom message on top of each page of your website.', 'jigoshop-ecommerce'),
 						'classes' => ['switch-medium'],
                     ],
 					[
 						'name' => '[message]',
 						'id' => 'custom_message',
-						'title' => __('Message text', 'jigoshop'),
+						'title' => __('Message text', 'jigoshop-ecommerce'),
 						'type' => 'text',
 						'value' => $this->options['message'],
 						'classes' => [$this->options['show_message'] ? '' : 'not-active'],
@@ -139,22 +139,22 @@ class GeneralTab implements TabInterface
 					[
 						'name' => '[demo_store]',
 						'id' => 'demo_store',
-						'title' => __('Demo store', 'jigoshop'),
+						'title' => __('Demo store', 'jigoshop-ecommerce'),
 						'type' => 'checkbox',
 						'checked' => $this->options['demo_store'],
-						'tip' => __('Enable this option to show a banner at the top of every page stating this shop is currently in testing mode.', 'jigoshop'),
+						'tip' => __('Enable this option to show a banner at the top of every page stating this shop is currently in testing mode.', 'jigoshop-ecommerce'),
 						'classes' => ['switch-medium'],
                     ],
                 ],
             ],
 			[
-				'title' => __('Pricing', 'jigoshop'),
+				'title' => __('Pricing', 'jigoshop-ecommerce'),
 				'id' => 'pricing',
 				'fields' => [
 					[
 					    'id' => 'currency',
 						'name' => '[currency]',
-						'title' => __('Currency', 'jigoshop'),
+						'title' => __('Currency', 'jigoshop-ecommerce'),
 						'type' => 'select',
 						'value' => $this->options['currency'],
 						'options' => Currency::countries(),
@@ -162,91 +162,91 @@ class GeneralTab implements TabInterface
 					[
 					    'id' => 'currency_position',
 						'name' => '[currency_position]',
-						'title' => __('Currency position', 'jigoshop'),
+						'title' => __('Currency position', 'jigoshop-ecommerce'),
 						'type' => 'text',
 						'value' => $this->options['currency_position'],
 						//'options' => Currency::positions(),
                     ],
 					[
 						'name' => '[currency_decimals]',
-						'title' => __('Number of decimals', 'jigoshop'),
+						'title' => __('Number of decimals', 'jigoshop-ecommerce'),
 						'type' => 'text',
 						'value' => $this->options['currency_decimals'],
                     ],
 					[
 						'name' => '[currency_thousand_separator]',
-						'title' => __('Thousands separator', 'jigoshop'),
+						'title' => __('Thousands separator', 'jigoshop-ecommerce'),
 						'type' => 'text',
 						'value' => $this->options['currency_thousand_separator'],
                     ],
 					[
 						'name' => '[currency_decimal_separator]',
-						'title' => __('Decimal separator', 'jigoshop'),
+						'title' => __('Decimal separator', 'jigoshop-ecommerce'),
 						'type' => 'text',
 						'value' => $this->options['currency_decimal_separator'],
                     ],
                 ],
             ],
 			[
-				'title' => __('Company details', 'jigoshop'),
-				'description' => __('These details, alongside shop location, will be used for invoicing and emails.', 'jigoshop'),
+				'title' => __('Company details', 'jigoshop-ecommerce'),
+				'description' => __('These details, alongside shop location, will be used for invoicing and emails.', 'jigoshop-ecommerce'),
 				'id' => 'company',
 				'fields' => [
 					[
 						'name' => '[company_name]',
-						'title' => __('Name', 'jigoshop'),
+						'title' => __('Name', 'jigoshop-ecommerce'),
 						'type' => 'text',
 						'value' => $this->options['company_name'],
                     ],
 					[
 						'name' => '[company_address_1]',
-						'title' => __('Address (first line)', 'jigoshop'),
+						'title' => __('Address (first line)', 'jigoshop-ecommerce'),
 						'type' => 'text',
 						'value' => $this->options['company_address_1'],
                     ],
 					[
 						'name' => '[company_address_2]',
-						'title' => __('Address (second line)', 'jigoshop'),
+						'title' => __('Address (second line)', 'jigoshop-ecommerce'),
 						'type' => 'text',
 						'value' => $this->options['company_address_2'],
                     ],
 					[
 						'name' => '[company_tax_number]',
-						'title' => __('Tax number', 'jigoshop'),
-						'description' => __('Add your tax registration label before the registration number and it will be printed as well. eg. <code>VAT Number: 88888888</code>', 'jigoshop'),
+						'title' => __('Tax number', 'jigoshop-ecommerce'),
+						'description' => __('Add your tax registration label before the registration number and it will be printed as well. eg. <code>VAT Number: 88888888</code>', 'jigoshop-ecommerce'),
 						'type' => 'text',
 						'value' => $this->options['company_tax_number'],
                     ],
 					[
 						'name' => '[company_phone]',
-						'title' => __('Phone number', 'jigoshop'),
+						'title' => __('Phone number', 'jigoshop-ecommerce'),
 						'type' => 'text',
 						'value' => $this->options['company_phone'],
                     ],
 					[
 						'name' => '[company_email]',
-						'title' => __('Email', 'jigoshop'),
+						'title' => __('Email', 'jigoshop-ecommerce'),
 						'type' => 'text',
-						'tip' => __('A representative e-mail company - department of orders, customer service, contact.', 'jigoshop'),
+						'tip' => __('A representative e-mail company - department of orders, customer service, contact.', 'jigoshop-ecommerce'),
 						'value' => $this->options['company_email'],
                     ],
                 ],
             ],
 			[
-				'title' => __('Emails', 'jigoshop'),
+				'title' => __('Emails', 'jigoshop-ecommerce'),
 				'id' => 'emails',
 				'fields' => [
 					[
 						'name' => '[emails][from]',
-						'title' => __('From name', 'jigoshop'),
-						'description' => __('Name shown in all Jigoshop emails.', 'jigoshop'),
+						'title' => __('From name', 'jigoshop-ecommerce'),
+						'description' => __('Name shown in all Jigoshop emails.', 'jigoshop-ecommerce'),
 						'type' => 'text',
 						'value' => $this->options['emails']['from'],
                     ],
 					[
 						'name' => '[emails][footer]',
-						'title' => __('Footer', 'jigoshop'),
-						'description' => __('The email footer used in all Jigoshop emails.', 'jigoshop'),
+						'title' => __('Footer', 'jigoshop-ecommerce'),
+						'description' => __('The email footer used in all Jigoshop emails.', 'jigoshop-ecommerce'),
 						'type' => 'textarea',
 						'value' => $this->options['emails']['footer'],
                     ],
@@ -269,7 +269,7 @@ class GeneralTab implements TabInterface
 		$settings['demo_store'] = $settings['demo_store'] == 'on';
 
 		if(!in_array($settings['country'], array_keys(Country::getAll()))) {
-			$this->messages->addError(__('Invalid shop location (country), please select again.', 'jigoshop'));
+			$this->messages->addError(__('Invalid shop location (country), please select again.', 'jigoshop-ecommerce'));
 			$settings['country'] = '';
 		}
 

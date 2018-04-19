@@ -192,7 +192,7 @@ class Api
             return function () use ($container) {
                 return $container['response']->withStatus(404)->withJson([
                     'success' => false,
-                    'error' => __('Resource not found', 'jigoshop')
+                    'error' => __('Resource not found', 'jigoshop-ecommerce')
                 ]);
             };
         };

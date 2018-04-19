@@ -7,6 +7,7 @@ use Jigoshop\Entity\Order\Discount;
 use Jigoshop\Entity\Order\Item;
 use Jigoshop\Entity\Order\Status;
 use Jigoshop\Exception;
+use Jigoshop\Integration;
 use Jigoshop\Payment;
 use Jigoshop\Shipping;
 use Monolog\Registry;
@@ -59,6 +60,8 @@ class Order implements OrderInterface, \JsonSerializable
 	private $totalCombinedTax;
 	/** @var float */
 	private $shippingPrice = 0.0;
+	/**	@var float */
+	private $processingFee = null;
 	/** @var string */
 	private $status = Status::PENDING;
 	/** @var string */
@@ -103,7 +106,7 @@ class Order implements OrderInterface, \JsonSerializable
 	 */
 	public function getTitle()
 	{
-		return sprintf(__('Order %s', 'jigoshop'), $this->getNumber());
+		return sprintf(__('Order %s', 'jigoshop-ecommerce'), $this->getNumber());
 	}
 
 	/**
@@ -306,7 +309,7 @@ class Order implements OrderInterface, \JsonSerializable
 	{
 		if (!isset($this->items[$key])) {
 			if (WP_DEBUG) {
-				throw new Exception(sprintf(__('No item with ID %d in order %d', 'jigoshop'), $key, $this->id));
+				throw new Exception(sprintf(__('No item with ID %d in order %d', 'jigoshop-ecommerce'), $key, $this->id));
 			}
 
 			Registry::getInstance(JIGOSHOP_LOGGER)->addWarning(sprintf('No item with ID %d in order %d', $key, $this->id));
@@ -343,6 +346,7 @@ class Order implements OrderInterface, \JsonSerializable
 		}, $this->tax);
 		$this->totalTax = null;
 		$this->totalCombinedTax = null;
+		$this->processingFee = null;
 	}
 
 	/**
@@ -358,6 +362,7 @@ class Order implements OrderInterface, \JsonSerializable
 			return 0.0;
 		}, $this->shippingTax);
 		$this->totalCombinedTax = null;
+		$this->processingFee = null;
 	}
 
 	/**
@@ -540,7 +545,7 @@ class Order implements OrderInterface, \JsonSerializable
 	public function getTotal()
 	{
         //TODO: calculate it only once
-		return $this->subtotal + $this->getTotalCombinedTax() - $this->getDiscount();
+		return (($this->subtotal + $this->getTotalCombinedTax()) - $this->getDiscount()) + $this->getProcessingFee();
 	}
 
 	/**
@@ -644,17 +649,17 @@ class Order implements OrderInterface, \JsonSerializable
 	public function updateQuantity($key, $quantity)
 	{
 		if (!isset($this->items[$key])) {
-			throw new Exception(__('Item does not exists', 'jigoshop'));
+			throw new Exception(__('Item does not exists', 'jigoshop-ecommerce'));
 		}
 
 		if (!is_numeric($quantity)) {
-			throw new Exception(__('Quantity has to be numeric value', 'jigoshop'));
+			throw new Exception(__('Quantity has to be numeric value', 'jigoshop-ecommerce'));
 		}
 
 		$item = $this->removeItem($key);
 
 		if ($item === null) {
-			throw new Exception(__('Item not found.', 'jigoshop'));
+			throw new Exception(__('Item not found.', 'jigoshop-ecommerce'));
 		}
 
 		if ($quantity <= 0) {
@@ -680,6 +685,7 @@ class Order implements OrderInterface, \JsonSerializable
 			$this->productSubtotal -= $item->getCost();
 			$this->totalTax = null;
 			$this->totalCombinedTax = null;
+			$this->processingFee = null;
 			unset($this->items[$key]);
 
 			return $item;
@@ -699,6 +705,93 @@ class Order implements OrderInterface, \JsonSerializable
 		$this->subtotal += $item->getCost();
 		$this->totalTax = null;
 		$this->totalCombinedTax = null;
+		$this->processingFee = null;
+	}
+
+	/**
+	 * Returns matching processing fee rule.
+	 * 
+	 * @return mixed Processing fee rule or null if none is matching current Order.
+	 */
+	private function getProcessingFeeRule() {
+		$processingFeeRules = Integration::getOptions()->get('payment.processingFeeRules', []);
+		foreach($processingFeeRules as $rule) {
+			if(is_array($rule['methods']) && in_array($this->paymentMethod->getId(), $rule['methods'])) {
+				if($rule['minValue'] > 0 && $orderValue < $rule['minValue']) {
+					continue;
+				}
+
+				if($rule['maxValue'] > 0 && $orderValue > $rule['maxValue']) {
+					continue;
+				}
+
+				return $rule;
+			}
+		}
+	}
+
+	/**
+	 * Returns processing fee value.
+	 * 
+	 * @return float Processing fee.
+	 */
+	public function getProcessingFee() {
+		if($this->paymentMethod === null) {
+			return 0;
+		}
+
+		$orderValue = ($this->subtotal + $this->getTotalCombinedTax()) - $this->getDiscount();
+
+		if($this->processingFee === null) {
+			$rule = $this->getProcessingFeeRule();
+			if($rule === null) {
+				return 0;
+			}
+
+			if(strstr($rule['value'], '%') !== false) {
+				if($rule['alternateMode']) {
+					$percent = str_replace('%', '', $rule['value']) / 100;
+					$percent = 1.00 - $percent;
+					$this->processingFee = ($orderValue / $percent) - $orderValue;
+				}
+				else {
+					$percent = str_replace('%', '', $rule['value']) / 100;
+					$this->processingFee = ($orderValue * $percent);
+				}
+			}
+			else {
+				$this->processingFee = $rule['value'];
+			}
+		}
+
+		return $this->processingFee;
+	}
+
+	/**
+	 * Returns processing fee as percent of Order value.
+	 * 
+	 * @return string Percent.
+	 */
+	public function getProcessingFeeAsPercent() {
+		$fee = $this->getProcessingFee();
+		if($fee == 0) {
+			return '';
+		}
+
+		$orderValue = (($this->subtotal + $this->getTotalCombinedTax()) - $this->getDiscount());
+		
+		if($orderValue == 0) {
+			return '0%';
+		}
+
+		$rule = $this->getProcessingFeeRule();
+		if($rule['alternateMode']) {
+			$orderValue += $fee;
+		}
+
+		$percent = number_format(($fee / $orderValue) * 100, 2);
+
+		return $percent . '%';
 	}
 
 	/**
@@ -732,6 +825,7 @@ class Order implements OrderInterface, \JsonSerializable
 			'payment' => $payment,
 			'customer_note' => $this->customerNote,
 			'subtotal' => $this->subtotal,
+			'processingFee' => $this->getProcessingFee(),
 			'total' => $this->getTotal(),
 			'discount' => $this->getDiscount(),
 			'discounts' => $this->discounts,
@@ -832,6 +926,9 @@ class Order implements OrderInterface, \JsonSerializable
         if (isset($state['price_includes_tax'])) {
             $this->taxIncluded = (bool)$state['price_includes_tax'];
         }
+        if(isset($state['processingFee'])) {
+        	$this->processingFee = ($state['processingFee'] === 0?null:$state['processingFee']);
+        }
 	}
 
     /**
@@ -879,6 +976,7 @@ class Order implements OrderInterface, \JsonSerializable
            ],
            'payment' => $payment,
            'customer_note' => $this->customerNote,
+           'processingFee' => $this->getProcessingFee(),
            'total' => $this->getTotal(),
            'tax' => $this->tax,
            'shipping_tax' => $this->shippingTax,

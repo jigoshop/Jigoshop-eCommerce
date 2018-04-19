@@ -94,7 +94,7 @@ class StockStatus implements \Serializable, \JsonSerializable
 		$this->stock = $stock;
 		if($this->getManage() && $this->stock > 0){
 			$this->setStatus(self::IN_STOCK);
-		} else {
+		} elseif($this->getManage()) {
 			$this->setStatus(self::OUT_STOCK);
 		}
 	}

@@ -55,7 +55,7 @@ class ToolsTab implements TabInterface
 	 */
 	public function getTitle()
 	{
-		return __('Tools', 'jigoshop');
+		return __('Tools', 'jigoshop-ecommerce');
 	}
 
 	/**
@@ -73,14 +73,14 @@ class ToolsTab implements TabInterface
 	{
 		return [
 			[
-				'title' => __('Available Tools', 'jigoshop'),
+				'title' => __('Available Tools', 'jigoshop-ecommerce'),
 				'id' => 'available-tools',
 				'fields' => [
 					[
 						'id' => 'clear-logs',
 						'name' => 'clear-logs',
-						'title' => __('Clear Logs', 'jigoshop'),
-						'description' => __('Clears jigoshop.log and jigoshop.debug.log', 'jigoshop'),
+						'title' => __('Clear Logs', 'jigoshop-ecommerce'),
+						'description' => __('Clears jigoshop.log and jigoshop.debug.log', 'jigoshop-ecommerce'),
 						'tip' => '',
 						'classes' => [],
 						'type' => 'user_defined',
@@ -91,8 +91,8 @@ class ToolsTab implements TabInterface
                     [
                         'id' => 'remove-zombie-variations',
                         'name' => 'remove-zombie-variations',
-                        'title' => __('Remove zombie variations', 'jigoshop'),
-                        'description' => __('Removes variations ', 'jigoshop'),
+                        'title' => __('Remove zombie variations', 'jigoshop-ecommerce'),
+                        'description' => __('Removes variations ', 'jigoshop-ecommerce'),
                         'tip' => '',
                         'classes' => [],
                         'type' => 'user_defined',
@@ -103,8 +103,8 @@ class ToolsTab implements TabInterface
                     [
                         'id' => 'remove-zombie-meta',
                         'name' => 'remove-zombie-meta',
-                        'title' => __('Remove zombie meta', 'jigoshop'),
-                        'description' => __('Removes meta', 'jigoshop'),
+                        'title' => __('Remove zombie meta', 'jigoshop-ecommerce'),
+                        'description' => __('Removes meta', 'jigoshop-ecommerce'),
                         'tip' => '',
                         'classes' => [],
                         'type' => 'user_defined',
@@ -115,8 +115,8 @@ class ToolsTab implements TabInterface
                     [
                         'id' => 'fix-order-items-migration',
                         'name' => 'fix-order-items-migration',
-                        'title' => __('Fix order items migration', 'jigoshop'),
-                        'description' => __('To version 2.1.3 was some issue with order items migration. Use only if you migrated your store from Jigoshop 1.x before version 2.1.3.', 'jigoshop'),
+                        'title' => __('Fix order items migration', 'jigoshop-ecommerce'),
+                        'description' => __('To version 2.1.3 was some issue with order items migration. Use only if you migrated your store from Jigoshop 1.x before version 2.1.3.', 'jigoshop-ecommerce'),
                         'tip' => '',
                         'classes' => [],
                         'type' => 'user_defined',
@@ -127,7 +127,7 @@ class ToolsTab implements TabInterface
                     [
                         'id' => 'disable-manage-stock-and-set-in-stock-status-for-all-products',
                         'name' => 'disable-manage-stock-and-set-in-stock-status-for-all-products',
-                        'title' => __('Disable manage stock and set in stock status for all products', 'jigoshop'),
+                        'title' => __('Disable manage stock and set in stock status for all products', 'jigoshop-ecommerce'),
                         'tip' => '',
                         'classes' => [],
                         'type' => 'user_defined',
@@ -251,7 +251,7 @@ class ToolsTab implements TabInterface
     {
         set_time_limit(0);
         $wpdb = $this->wp->getWPDB();
-        $wpdb->update($wpdb->postmeta, ['meta_value' => 0], ['meta_key' => 'stock_manage']);
-        $wpdb->update($wpdb->postmeta, ['meta_value' => StockStatus::IN_STOCK], ['meta_key' => 'stock_status']);
+        $wpdb->query("UPDATE {$wpdb->postmeta} SET meta_value = 0 WHERE meta_key = 'stock_manage' ");
+        $wpdb->query("UPDATE {$wpdb->postmeta} SET meta_value = 1 WHERE meta_key = 'stock_status' ");
     }
 }

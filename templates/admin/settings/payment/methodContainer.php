@@ -5,11 +5,11 @@ use Jigoshop\Helper\Render;
 <table class="table table-striped table-valign">
 	<thead>
 		<tr>
-			<th scope="col">Name</th>
-			<th scope="col">Enabled</th>
-			<th scope="col">Test Mode</th>
-			<th scope="col">Configure</th>
-			<th scope="col">Status</th>
+			<th scope="col"><?php echo __('Name', 'jigoshop-ecommerce'); ?></th>
+			<th scope="col"><?php echo __('Enabled', 'jigoshop-ecommerce'); ?></th>
+			<th scope="col"><?php echo __('Test Mode', 'jigoshop-ecommerce'); ?></th>
+			<th scope="col"><?php echo __('Configure', 'jigoshop-ecommerce'); ?></th>
+			<th scope="col"><?php echo __('Status', 'jigoshop-ecommerce'); ?></th>
 		</tr>
 	</thead>
 	<tbody>
@@ -30,7 +30,7 @@ use Jigoshop\Helper\Render;
 	</tbody>
 </table>
 
-<div id="payment-methods-container" style="display: none">
+<div id="shipping-payment-methods-container" style="display: none">
 	<?php 
 	foreach($methods as $method) {
 		Render::output('admin/settings/payment/methodOptions', [

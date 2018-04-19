@@ -475,7 +475,7 @@ class Products implements Tool
 			$wpdb->query("ROLLBACK");
 			$wpdb->query("SET AUTOCOMMIT=" . $var_autocommit_sql);
 
-			Migration::saveLog(__('Migration products end with error: ', 'jigoshop') . $e);
+			Migration::saveLog(__('Migration products end with error: ', 'jigoshop-ecommerce') . $e);
 
 			return false;
 		}
@@ -612,7 +612,7 @@ class Products implements Tool
 		try {
 //			1 - if first time ajax request
 			if ($_POST['msgLog'] == 1) {
-				Migration::saveLog(__('Migration products START.', 'jigoshop'), true);
+				Migration::saveLog(__('Migration products START.', 'jigoshop-ecommerce'), true);
 			}
 
 			$wpdb = $this->wp->getWPDB();
@@ -663,12 +663,12 @@ class Products implements Tool
 					$this->wp->updateOption('jigoshop_products_migrate_id', serialize($productsIdsMigration));
 				} else {
 					$ajax_response['success'] = false;
-					Migration::saveLog(__('Migration products end with error.', 'jigoshop'));
+					Migration::saveLog(__('Migration products end with error.', 'jigoshop-ecommerce'));
 				}
 			} elseif ($countRemain == 0) {
 				$this->wp->updateOption('jigoshop_products_migrate_id', serialize($productsIdsMigration));
 				$this->wp->deleteOption('jigoshop_attributes_anti_duplicate');
-				Migration::saveLog(__('Migration products END.', 'jigoshop'));
+				Migration::saveLog(__('Migration products END.', 'jigoshop-ecommerce'));
 			}
 
 			echo json_encode($ajax_response);
@@ -681,7 +681,7 @@ class Products implements Tool
 				'success' => false,
             ]);
 
-			Migration::saveLog(__('Migration products end with error: ', 'jigoshop') . $e);
+			Migration::saveLog(__('Migration products end with error: ', 'jigoshop-ecommerce') . $e);
 		}
 
 		exit;

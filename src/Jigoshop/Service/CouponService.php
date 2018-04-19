@@ -88,7 +88,7 @@ class CouponService implements CouponServiceInterface
             //if object does not exist insert new one
             $id = $this->insertPost($this->wp, $object, Types::COUPON);
             if (!is_int($id) || $id === 0) {
-                throw new Exception(__('Unable to save coupon. Please try again.', 'jigoshop'));
+                throw new Exception(__('Unable to save coupon. Please try again.', 'jigoshop-ecommerce'));
             }
 
             $object->setId($id);
@@ -143,10 +143,10 @@ class CouponService implements CouponServiceInterface
     {
         if ($this->types === null) {
             $this->types = $this->wp->applyFilters('jigoshop\service\coupon\types', [
-                Entity::FIXED_CART => __('Cart Discount', 'jigoshop'),
-                Entity::PERCENT_CART => __('Cart % Discount', 'jigoshop'),
-                Entity::FIXED_PRODUCT => __('Product Discount', 'jigoshop'),
-                Entity::PERCENT_PRODUCT => __('Product % Discount', 'jigoshop')
+                Entity::FIXED_CART => __('Cart Discount', 'jigoshop-ecommerce'),
+                Entity::PERCENT_CART => __('Cart % Discount', 'jigoshop-ecommerce'),
+                Entity::FIXED_PRODUCT => __('Product Discount', 'jigoshop-ecommerce'),
+                Entity::PERCENT_PRODUCT => __('Product % Discount', 'jigoshop-ecommerce')
             ]);
         }
 

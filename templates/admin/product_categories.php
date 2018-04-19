@@ -3,8 +3,8 @@ use Jigoshop\Helper\Forms;
 use Jigoshop\Helper\Render;
 ?>
 <div class="wrap jigoshop">
-	<h1 class="wp-heading-inline"><?php echo __('Jigoshop &raquo; Product &raquo; Categories', 'jigoshop'); ?></h1>
-	<a href="" class="page-title-action" id="jigoshop-product-categories-add-button">Add New</a>
+	<h1 class="wp-heading-inline"><?php echo __('Jigoshop &raquo; Product &raquo; Categories', 'jigoshop-ecommerce'); ?></h1>
+	<a href="" class="page-title-action" id="jigoshop-product-categories-add-button"><?php echo __('Add new', 'jigoshop-ecommerce'); ?></a>
 
 	<?php 
 	Render::output('shop/messages', [
@@ -19,13 +19,13 @@ use Jigoshop\Helper\Render;
 				<thead>
 					<tr>
 						<th>
-							<?php echo __('Name', 'jigoshop'); ?>
+							<?php echo __('Name', 'jigoshop-ecommerce'); ?>
 						</th>
 						<th>
-							<?php echo __('Slug', 'jigoshop'); ?>
+							<?php echo __('Slug', 'jigoshop-ecommerce'); ?>
 						</th>
 						<th>
-							<?php echo __('Count', 'jigoshop'); ?>
+							<?php echo __('Count', 'jigoshop-ecommerce'); ?>
 						</th>
 						<th></th>
 					</tr>
@@ -52,16 +52,16 @@ use Jigoshop\Helper\Render;
 			?>
 
 			<div class="margin-top-bottom-9 col-sm-12">
-				<button type="submit" class="btn btn-primary pull-right margin-left-right-5"><?php echo __('Save changes', 'jigoshop'); ?></button>
+				<button type="submit" class="btn btn-primary pull-right margin-left-right-5"><?php echo __('Save changes', 'jigoshop-ecommerce'); ?></button>
 
 				<a href="" id="jigoshop-product-categories-edit-form-link" target="_blank" class="btn btn-default pull-right margin-left-right-5">
 					<span class="glyphicon glyphicon-eye-open"></span>
-					<?php echo __('View', 'jigoshop'); ?>
+					<?php echo __('View', 'jigoshop-ecommerce'); ?>
 				</a>
 
 				<a href="" id="jigoshop-product-categories-edit-form-close" class="btn btn-default pull-right margin-left-right-5">
 					<span class="glyphicon glyphicon-eject"></span>
-					<?php echo __('Close', 'jigoshop'); ?>
+					<?php echo __('Close', 'jigoshop-ecommerce'); ?>
 				</a>
 			</div>
 
@@ -71,35 +71,35 @@ use Jigoshop\Helper\Render;
 
 	<div id="jigoshop-product-categories-attributes-add-new-container" class="jigoshop tab-content add-new-attribute-container">
 		<form action="" method="" id="jigoshop-product-categories-attributes-add-new-form">
-			<div class="row clearfix"><h2><?php echo __('Add new attribute', 'jigoshop'); ?></h2></div>
+			<div class="row clearfix"><h2><?php echo __('Add new attribute', 'jigoshop-ecommerce'); ?></h2></div>
 
 			<?php 
 			Forms::text([
 				'id' => 'jigoshop-product-categories-attributes-add-new-label',
 				'name' => 'jigoshop-product-categories-attributes-add-new-label',
-				'placeholder' => __('New attribute label', 'jigoshop'),
-				'label' => __('Label', 'jigoshop')
+				'placeholder' => __('New attribute label', 'jigoshop-ecommerce'),
+				'label' => __('Label', 'jigoshop-ecommerce')
 			]);
 
 			Forms::text([
 				'id' => 'jigoshop-product-categories-attributes-add-new-slug',
 				'name' => 'jigoshop-product-categories-attributes-add-new-slug',
-				'placeholder' => __('New attribute slug', 'jigoshop'),
-				'label' => __('Slug', 'jigoshop')
+				'placeholder' => __('New attribute slug', 'jigoshop-ecommerce'),
+				'label' => __('Slug', 'jigoshop-ecommerce')
 			]);
 
 			Forms::select([
 				'id' => 'jigoshop-product-categories-attributes-add-new-type',
 				'name' => 'jigoshop-product-categories-attributes-add-new-type',
 				'options' => $attributesTypes,
-				'label' => __('Type', 'jigoshop')
+				'label' => __('Type', 'jigoshop-ecommerce')
 			]);
 			?>
 
 			<div class="col-sm-12">
 				<button type="submit" class="btn btn-default" id="jigoshop-product-categories-attributes-add-new-configure-button">
 					<span class="glyphicon glyphicon-wrench"></span>
-					<?php echo __('Configure', 'jigoshop'); ?>
+					<?php echo __('Configure', 'jigoshop-ecommerce'); ?>
 				</button>
 			</div>
 
@@ -108,8 +108,8 @@ use Jigoshop\Helper\Render;
 					<thead>
 						<tr>
 							<th></th>
-							<th><?php echo __('Label', 'jigoshop'); ?></th>
-							<th><?php echo __('Value', 'jigoshop'); ?></th>
+							<th><?php echo __('Label', 'jigoshop-ecommerce'); ?></th>
+							<th><?php echo __('Value', 'jigoshop-ecommerce'); ?></th>
 							<th></th>
 						</tr>
 					</thead>
@@ -123,7 +123,7 @@ use Jigoshop\Helper\Render;
 								Forms::text([
 									'id' => 'option-label',
 									'name' => 'option-label',
-									'placeholder' => __('New option label', 'jigoshop')
+									'placeholder' => __('New option label', 'jigoshop-ecommerce')
 								]);
 								?>
 							</td>
@@ -132,14 +132,14 @@ use Jigoshop\Helper\Render;
 								Forms::text([
 									'id' => 'option-value',
 									'name' => 'option-value',
-									'placeholder' => __('New option value', 'jigoshop')
+									'placeholder' => __('New option value', 'jigoshop-ecommerce')
 								]);
 								?>
 							</td>
 							<td>
 								<button type="submit" class="btn btn-default attribute-option-add-button">
 									<span class="glyphicon glyphicon-plus"></span>
-									<?php echo __('Add', 'jigoshop'); ?>
+									<?php echo __('Add', 'jigoshop-ecommerce'); ?>
 								</button>
 
 								<button type="submit" class="btn btn-default attribute-option-remove-button">
@@ -152,11 +152,11 @@ use Jigoshop\Helper\Render;
 			</div>
 
 			<div class="col-sm-12">
-				<button type="submit" class="btn btn-primary pull-right" id="jigoshop-product-categories-attributes-add-new-button"><?php echo __('Add attribute', 'jigoshop'); ?></button>
+				<button type="submit" class="btn btn-primary pull-right" id="jigoshop-product-categories-attributes-add-new-button"><?php echo __('Add attribute', 'jigoshop-ecommerce'); ?></button>
 
 				<button type="submit" class="btn btn-default pull-right" id="jigoshop-product-categories-attributes-add-new-close-button">
 					<span class="glyphicon glyphicon-remove-circle"></span>
-					<?php echo __('Close', 'jigoshop'); ?>
+					<?php echo __('Close', 'jigoshop-ecommerce'); ?>
 				</button>
 			</div>
 

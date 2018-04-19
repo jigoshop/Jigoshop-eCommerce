@@ -339,12 +339,12 @@ class Attributes extends BaseController implements ApiControllerContract
     {
         $errors = [];
         if (!isset($data['label']) || empty($data['label'])) {
-            $errors[] = __('Attribute label is not set.', 'jigoshop');
+            $errors[] = __('Attribute label is not set.', 'jigoshop-ecommerce');
         }
         if (!isset($data['type']) ||
             !(is_numeric($data['type']) && in_array((int)$data['type'], array_keys(Attribute::getTypes()), true))
         ) {
-            throw new Exception(__('Attribute type is not valid.', 'jigoshop'), 422);
+            throw new Exception(__('Attribute type is not valid.', 'jigoshop-ecommerce'), 422);
         }
 
         $attribute = $this->service->createAttribute((int)$data['type']);

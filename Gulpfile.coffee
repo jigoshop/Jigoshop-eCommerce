@@ -5,9 +5,12 @@ concat = require('gulp-concat')
 less = require('gulp-less')
 cssmin = require('gulp-cssmin')
 check = require('gulp-if')
-uglify = require('gulp-uglify')
 rimraf = require('gulp-rimraf')
 replace = require('gulp-replace')
+wpPot = require('gulp-wp-pot')
+uglifyes = require('uglify-es');
+composer = require('gulp-uglify/composer');
+uglify = composer(uglifyes, console);
 minify = true
 # Sources declaration
 
@@ -35,7 +38,7 @@ jsFiles =
 coffeeFiles = []
 
 
-defaultTask = ['scripts', 'styles', 'fonts']
+defaultTask = ['scripts', 'styles', 'fonts', 'refresh-pot-file']
 
 # Processing
 
@@ -85,7 +88,13 @@ gulp.task 'scripts', ['lint'], ->
     'assets/coffee/**/*.coffee',
   ]
     .pipe coffee({bare: true})
-    .pipe check(minify, uglify())
+    .pipe check(minify, uglify({
+      mangle: false,
+      ecma: 6
+    }))
+    .on('error', (err) ->
+      gutil.log(gutil.colors.red('[Error]'), err.toString())
+    )
     .pipe gulp.dest('assets/js')
 
 gulp.task 'lint', ->
@@ -97,6 +106,13 @@ gulp.task 'lint', ->
 gulp.task 'fonts', ->
   gulp.src 'assets/bower/bootstrap/fonts/*'
     .pipe gulp.dest('assets/fonts')
+
+gulp.task 'refresh-pot-file', ->
+  gulp.src  ['/jigoshop.php', 'src/', 'templates/']
+    .pipe wpPot
+      domain: 'jigoshop-ecommerce'
+      package: 'Jigoshop eCommerce'
+    .pipe gulp.dest('languages/jigoshop-ecommerce.pot')
 
 gulp.task 'clean', ->
   gulp.src ['!assets/css/prettyPhoto.css', 'assets/css/*', '!assets/js/flot', '!assets/js/flot/**',

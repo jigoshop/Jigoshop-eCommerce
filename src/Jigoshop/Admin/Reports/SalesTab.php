@@ -35,7 +35,7 @@ class SalesTab implements TabInterface
 	 */
 	public function getTitle()
 	{
-		return __('Sales', 'jigoshop');
+		return __('Sales', 'jigoshop-ecommerce');
 	}
 
 	/**
@@ -61,10 +61,10 @@ class SalesTab implements TabInterface
 	private function getTypes()
 	{
 		return $this->wp->applyFilters('jigoshop\admin\reports\sales\types', [
-			'by_date' => __('By Date', 'jigoshop'),
-			'by_product' => __('By Product', 'jigoshop'),
-			'by_category' => __('By Category', 'jigoshop'),
-			'discount_summary' => __('Discount Summary', 'jigoshop')
+			'by_date' => __('By Date', 'jigoshop-ecommerce'),
+			'by_product' => __('By Product', 'jigoshop-ecommerce'),
+			'by_category' => __('By Category', 'jigoshop-ecommerce'),
+			'discount_summary' => __('Discount Summary', 'jigoshop-ecommerce')
         ]);
 	}
 

@@ -45,7 +45,7 @@ class Options
 			'currency_thousand_separator' => ',',
 			'currency_decimal_separator' => '.',
 			'emails' => [
-				'from' => 'Jigoshop',
+				'from' => '',
 				'footer' => '',
             ],
         ],
@@ -80,6 +80,7 @@ class Options
 			'stock_status' => StockStatus::IN_STOCK,
 			'show_stock' => true,
 			'low_stock_threshold' => 2,
+			'hide_out_of_stock_variations' => false,
 			'notify_low_stock' => false,
 			'notify_out_of_stock' => true,
 			'notify_on_backorders' => false,
@@ -190,6 +191,16 @@ class Options
 				'test_mode' => true,
 				'test_email' => '',
             ],
+			'worldpay' => [
+				'enabled' => false,
+				'title' => 'WorldPay',
+				'description' => "Pay via Worldpay.",
+				'admin_only' => false,
+				'client_key' => '',
+				'service_key' => '',
+				'test_mode' => true,
+				'test_service_key' => '',
+			],
             'bank_transfer' => [
                 'enabled' => false,
                 'title' => 'Bank Transfer',

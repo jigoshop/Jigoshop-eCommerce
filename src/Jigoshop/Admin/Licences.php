@@ -53,7 +53,7 @@ class Licences implements PageInterface
 	 */
 	public function getTitle()
 	{
-		return __('Licences', 'jigoshop');
+		return __('Licences', 'jigoshop-ecommerce');
 	}
 
 	/** @return string Parent of the page string. */
@@ -91,15 +91,15 @@ class Licences implements PageInterface
 
 		?>
 		<div class="wrap">
-			<h2><?php _e('Manage Jigoshop Digital Plugin Licences', 'jigoshop'); ?></h2>
+			<h2><?php _e('Manage Jigoshop Digital Plugin Licences', 'jigoshop-ecommerce'); ?></h2>
 			<?php foreach ($messages as $message) : ?>
 				<div class="<?php echo($message['success'] ? 'updated below-h2' : 'error'); ?>">
 					<p><?php echo $message['message']; ?></p>
 				</div>
 			<?php endforeach; ?>
 			<p>
-				<?php _e('To <em>activate</em> the licence, enter your licence keys and email addresses you used when you ordered the plugins.', 'jigoshop'); ?>
-				<?php _e('<br />To <em>de-activate</em> the licence, remove the licence key, but leave the email address.', 'jigoshop'); ?>
+				<?php _e('To <em>activate</em> the licence, enter your licence keys and email addresses you used when you ordered the plugins.', 'jigoshop-ecommerce'); ?>
+				<?php _e('<br />To <em>de-activate</em> the licence, remove the licence key, but leave the email address.', 'jigoshop-ecommerce'); ?>
 			</p>
 
 			<form name="<?php echo $this->validator_token; ?>-login" id="<?php echo $this->validator_token; ?>-login"
@@ -122,7 +122,7 @@ class Licences implements PageInterface
 									       id="licence_key-<?php echo $plugin_identifier; ?>" value="<?php echo $value; ?>"/>
 								</td>
 								<th scope="row" style="vertical-align: middle;">
-									<label for="licence_key_email-<?php echo $plugin_identifier; ?>"><?php _e('Activation email', 'jigoshop') ?></label>
+									<label for="licence_key_email-<?php echo $plugin_identifier; ?>"><?php _e('Activation email', 'jigoshop-ecommerce') ?></label>
 								</th>
 								<td>
 									<input type="email" class="input-text input-licence regular-text" placeholder="<?php echo $user_email; ?>" value="<?php echo $email; ?>"
@@ -130,7 +130,7 @@ class Licences implements PageInterface
 								</td>
 								<th>
 									<?php if (!isset($keys[$plugin_identifier]['status']) || !$keys[$plugin_identifier]['status']) : ?>
-										<b class="inactive-licence" style="color: #CC0000;"><?php _e('Licence is inactive!', 'jigoshop'); ?></b>
+										<b class="inactive-licence" style="color: #CC0000;"><?php _e('Licence is inactive!', 'jigoshop-ecommerce'); ?></b>
 									<?php endif; ?>
 								</th>
 							</tr>
@@ -142,7 +142,7 @@ class Licences implements PageInterface
 				<fieldset>
 					<p class="submit">
 						<button type="submit" name="<?php echo $this->validator_token; ?>-login" id="<?php echo $this->validator_token; ?>-login" class="button-primary">
-							<?php _e('Save', 'jigoshop'); ?>
+							<?php _e('Save', 'jigoshop-ecommerce'); ?>
 						</button>
 					</p>
 				</fieldset>

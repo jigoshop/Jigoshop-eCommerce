@@ -18,10 +18,10 @@ class UserLogin extends \WP_Widget
 	{
 		$options = [
 			'classname' => self::ID,
-			'description' => __('Displays a handy login form for users', 'jigoshop')
+			'description' => __('Displays a handy login form for users', 'jigoshop-ecommerce')
         ];
 
-		parent::__construct(self::ID, __('Jigoshop: Login', 'jigoshop'), $options);
+		parent::__construct(self::ID, __('Jigoshop: Login', 'jigoshop-ecommerce'), $options);
 	}
 
 	public static function setOptions($options)
@@ -44,12 +44,12 @@ class UserLogin extends \WP_Widget
 		if (is_user_logged_in()) {
 			global $current_user;
 
-			$title = !empty($instance['title_user']) ? $instance['title_user'] : __('Hey %s!', 'jigoshop');
+			$title = !empty($instance['title_user']) ? $instance['title_user'] : __('Hey %s!', 'jigoshop-ecommerce');
 			$links = apply_filters('jigoshop_widget_logout_user_links', [
-				__('My Account', 'jigoshop') => $accountUrl,
-				__('My Orders', 'jigoshop') => Api::getEndpointUrl('orders', '', $accountUrl),
-				__('Change Password', 'jigoshop') => Api::getEndpointUrl('change-password', '', $accountUrl),
-				__('Logout', 'jigoshop') => wp_logout_url(home_url()),
+				__('My Account', 'jigoshop-ecommerce') => $accountUrl,
+				__('My Orders', 'jigoshop-ecommerce') => Api::getEndpointUrl('orders', '', $accountUrl),
+				__('Change Password', 'jigoshop-ecommerce') => Api::getEndpointUrl('change-password', '', $accountUrl),
+				__('Logout', 'jigoshop-ecommerce') => wp_logout_url(home_url()),
             ]);
 
 			/** @noinspection PhpUndefinedFieldInspection */
@@ -59,7 +59,7 @@ class UserLogin extends \WP_Widget
             ]));
 		} else {
 			// Print title
-			$title = ($instance['title_guest']) ? $instance['title_guest'] : __('Login', 'jigoshop');
+			$title = ($instance['title_guest']) ? $instance['title_guest'] : __('Login', 'jigoshop-ecommerce');
 			$links = apply_filters('jigoshop_widget_login_user_links', []);
 			$url = apply_filters('jigoshop_widget_login_redirect', $accountUrl);
 			$loginUrl = wp_login_url($url);

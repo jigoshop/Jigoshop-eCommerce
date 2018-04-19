@@ -34,9 +34,22 @@ class ShippingTab implements TabInterface
 
         $wp->addAction('admin_enqueue_scripts', function () {
             if (isset($_GET['tab']) && $_GET['tab'] == ShippingTab::SLUG) {
-                Scripts::add('jigoshop.admin.settings.shopping', \JigoshopInit::getUrl().'/assets/js/admin/settings/shipping.js',
-                    ['jquery', 'wp-util', 'jquery-ui-sortable'], 
+            	Scripts::add('jigoshop.admin.settings.shipping_payment', \JigoshopInit::getUrl() . '/assets/js/admin/settings/shipping_payment.js', 
+            	    ['jquery', 'wp-util', 'jquery-ui-sortable'], 
                     ['page' => 'jigoshop_page_jigoshop_settings']);
+
+            	Scripts::add('jigoshop.admin.settings.shipping.advanced_flat_rate', \JigoshopInit::getUrl() . '/assets/js/admin/settings/shipping/advanced_flat_rate.js', 
+            	    ['jquery', 'wp-util', 'jquery-ui-sortable'], 
+                    ['page' => 'jigoshop_page_jigoshop_settings']);
+
+            	Scripts::add('jigoshop.admin.settings.shipping.flat_rate', \JigoshopInit::getUrl() . '/assets/js/admin/settings/shipping/flat_rate.js', 
+            	    ['jquery', 'wp-util', 'jquery-ui-sortable'], 
+                    ['page' => 'jigoshop_page_jigoshop_settings']);            	
+
+            	Scripts::add('jigoshop.admin.settings.shipping.free_shipping', \JigoshopInit::getUrl() . '/assets/js/admin/settings/shipping/free_shipping.js', 
+            	    ['jquery', 'wp-util', 'jquery-ui-sortable'], 
+                    ['page' => 'jigoshop_page_jigoshop_settings']);                	
+
                 Scripts::add('jigoshop.magnific-popup', \JigoshopInit::getUrl() . '/assets/js/vendors/magnific_popup.js', ['jquery']);
                 
                 Styles::add('jquery-ui-sortable');
@@ -52,7 +65,7 @@ class ShippingTab implements TabInterface
 	 */
 	public function getTitle()
 	{
-		return __('Shipping', 'jigoshop');
+		return __('Shipping', 'jigoshop-ecommerce');
 	}
 
 	/**
@@ -70,20 +83,20 @@ class ShippingTab implements TabInterface
 	{
 		$options = [
 			[
-				'title' => __('Main', 'jigoshop'),
+				'title' => __('Main', 'jigoshop-ecommerce'),
 				'id' => 'main',
 				'fields' => [
 					[
 						'name' => '[enabled]',
-						'title' => __('Enable shipping', 'jigoshop'),
+						'title' => __('Enable shipping', 'jigoshop-ecommerce'),
 						'type' => 'checkbox',
 						'checked' => $this->settings['enabled'],
 						'classes' => ['switch-medium'],
                     ],
 					[
 						'name' => '[calculator]',
-						'title' => __('Enable shipping calculator', 'jigoshop'),
-						'description' => __('This enables calculator in cart for available shipping methods.', 'jigoshop'),
+						'title' => __('Enable shipping calculator', 'jigoshop-ecommerce'),
+						'description' => __('This enables calculator in cart for available shipping methods.', 'jigoshop-ecommerce'),
 						'type' => 'checkbox',
 						'checked' => $this->settings['calculator'],
 						'classes' => ['switch-medium'],
@@ -91,21 +104,21 @@ class ShippingTab implements TabInterface
                 ],
             ],
 			[
-				'title' => __('Options', 'jigoshop'),
+				'title' => __('Options', 'jigoshop-ecommerce'),
 				'id' => 'options',
 				'fields' => [
 					[
 						'name' => '[only_to_billing]',
-						'title' => __('Ship only to billing address?', 'jigoshop'),
-						'description' => __('This forces customer to use billing address as shipping address.', 'jigoshop'),
+						'title' => __('Ship only to billing address?', 'jigoshop-ecommerce'),
+						'description' => __('This forces customer to use billing address as shipping address.', 'jigoshop-ecommerce'),
 						'type' => 'checkbox',
 						'checked' => $this->settings['only_to_billing'],
 						'classes' => ['switch-medium'],
                     ],
 					[
 						'name' => '[always_show_shipping]',
-						'title' => __('Always show shipping fields', 'jigoshop'),
-						'description' => __('This forces shipping fields to be always visible in checkout.', 'jigoshop'),
+						'title' => __('Always show shipping fields', 'jigoshop-ecommerce'),
+						'description' => __('This forces shipping fields to be always visible in checkout.', 'jigoshop-ecommerce'),
 						'type' => 'checkbox',
 						'checked' => $this->settings['always_show_shipping'],
 						'classes' => ['switch-medium'],
@@ -113,7 +126,7 @@ class ShippingTab implements TabInterface
                 ],
             ],
             [
-            	'title' => __('Shipping methods', 'jigoshop'),
+            	'title' => __('Shipping methods', 'jigoshop-ecommerce'),
             	'id' => 'shippingMethodsSection',
             	'display' => [$this, 'generateShippingMethods']
             ]

@@ -52,6 +52,7 @@ class AdminProductVariable
       .on 'change', 'select.variation-attribute', @updateVariation
       .on 'change', '.list-group-item-text input.form-control' , @updateVariation
       .on 'change', '.list-group-item-text input[type="checkbox"]', @updateVariation
+      .on 'switchChange.bootstrapSwitch', '.list-group-item-text input[type="checkbox"]', @updateVariation
       .on 'change', '.list-group-item-text select.form-control', @updateVariation
       .on 'click', '.set_variation_image', @setImage
       .on 'click', '.remove_variation_image', @removeImage
@@ -82,11 +83,16 @@ class AdminProductVariable
           .val ''
           .trigger 'change'
     jQuery('.set_variation_image').each @connectImage
+    if jQuery('#product-type').val() != 'variable'
+      jQuery('div.is-for-variations').slideUp()
 
   removeParameters: (event) ->
     $item = jQuery(event.target)
     if $item.val() == 'variable'
       jQuery('.product_regular_price_field').slideUp()
+      jQuery('div.is-for-variations').slideDown()
+    else
+      jQuery('div.is-for-variations').slideUp()
   addVariation: (event) ->
     event.preventDefault()
     $parent = jQuery('#product-variations')

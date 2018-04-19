@@ -23,7 +23,7 @@ use Jigoshop\Helper\Tax;
  * @var $termsUrl string Url to terms and conditions page.
  */
 ?>
-<h1><?php _e('Checkout', 'jigoshop'); ?></h1>
+<h1><?php _e('Checkout', 'jigoshop-ecommerce'); ?></h1>
 <?php Render::output('shop/messages', ['messages' => $messages]); ?>
 <?= wpautop(wptexturize($content)); ?>
 <?php if ($showLoginForm): ?>
@@ -33,7 +33,7 @@ use Jigoshop\Helper\Tax;
 	<?php do_action('jigoshop\template\checkout\before', $cart); ?>
 	<div class="panel panel-default">
 		<div class="panel-heading">
-			<h3 class="panel-title"><?php _e('Billing address', 'jigoshop'); ?></h3>
+			<h3 class="panel-title"><?php _e('Billing address', 'jigoshop-ecommerce'); ?></h3>
 			<?php do_action('jigoshop\template\checkout\billing_address\head', $cart); ?>
 		</div>
 		<div class="panel-body">
@@ -50,7 +50,7 @@ use Jigoshop\Helper\Tax;
         <?php if (!$alwaysShowShipping): ?>
             <div class="col-md-6 col-xs-12 pull-right toggle-panels">
                 <?php Forms::checkbox([
-                    'description' => __('Different shipping address', 'jigoshop'),
+                    'description' => __('Different shipping address', 'jigoshop-ecommerce'),
                     'name' => 'jigoshop_order[different_shipping_address]',
                     'id' => 'different_shipping_address',
                     'checked' => $differentShipping,
@@ -67,7 +67,7 @@ use Jigoshop\Helper\Tax;
         <?php endif; ?>
         <div id="shipping-address" class="panel panel-default <?php !$differentShipping && !$alwaysShowShipping and print ' not-active'; ?>">
             <div class="panel-heading">
-                <h3 class="panel-title"><?php _e('Shipping address', 'jigoshop'); ?></h3>
+                <h3 class="panel-title"><?php _e('Shipping address', 'jigoshop-ecommerce'); ?></h3>
                 <?php do_action('jigoshop\template\checkout\shipping_address\head', $cart); ?>
             </div>
             <div class="panel-body">
@@ -88,15 +88,25 @@ use Jigoshop\Helper\Tax;
 	<?php endif; ?>
 	<div class="panel panel-success">
 		<div class="panel-heading">
-			<h3 class="panel-title"><?php _e('Your order', 'jigoshop'); ?></h3>
+			<h3 class="panel-title"><?php _e('Your order', 'jigoshop-ecommerce'); ?></h3>
 		</div>
 		<ul id="checkout-mobile">
 			<?php foreach($cart->getItems() as $key => $item): /** @var \Jigoshop\Entity\Order\Item $item */ ?>
-				<?php Render::output('shop/checkout/mobile/'.$item->getType(), [
-					'cart' => $cart, 
-					'key' => $key, 
-					'item' => $item
-				]); ?>
+				<?php 
+				$template = null;
+				$template = apply_filters('jigoshop\template\shop\checkout\mobile', $template, $cart, $key, $item);
+
+				if($template === null) {
+					Render::output('shop/checkout/mobile/'.$item->getType(), [
+						'cart' => $cart, 
+						'key' => $key, 
+						'item' => $item
+					]); 
+				}
+				else {
+					echo $template;
+				}
+				?>
 			<?php endforeach; ?>
 		</ul>
 		<div class="mobile-coupons-product-subtotal">
@@ -104,7 +114,7 @@ use Jigoshop\Helper\Tax;
 			<?php \Jigoshop\Helper\Forms::text([
 				'id' => 'jigoshop_coupons_mobile',
 				'name' => 'jigoshop_coupons',
-				'placeholder' => __('Enter coupons...', 'jigoshop'),
+				'placeholder' => __('Enter coupons...', 'jigoshop-ecommerce'),
 				'value' => join(',', array_map(function ($coupon){
 					/** @var $coupon \Jigoshop\Entity\Coupon */
 					return $coupon->getCode();
@@ -121,7 +131,7 @@ use Jigoshop\Helper\Tax;
 				$productSubtotalPricesStr = $productSubtotalPrices[0];
 			}
 			?>
-			<div class="pull-left mobile-products-subtotal"><?php _e('Products subtotal', 'jigoshop'); ?></div>
+			<div class="pull-left mobile-products-subtotal"><?php _e('Products subtotal', 'jigoshop-ecommerce'); ?></div>
 			<div class="pull-left product-subtotal" class="pull-right"><?= $productSubtotalPricesStr; ?></div>
 		</div>
 		</div>
@@ -129,21 +139,31 @@ use Jigoshop\Helper\Tax;
 			<thead>
 			<tr>
 				<th class="product-thumbnail"></th>
-				<th class="product-name"><?php _e('Product Name', 'jigoshop'); ?></th>
-				<th class="product-price"><?php _e('Unit Price', 'jigoshop'); ?></th>
-				<th class="product-quantity"><?php _e('Quantity', 'jigoshop'); ?></th>
-				<th class="product-subtotal"><?php _e('Price', 'jigoshop'); ?></th>
+				<th class="product-name"><?php _e('Product Name', 'jigoshop-ecommerce'); ?></th>
+				<th class="product-price"><?php _e('Unit Price', 'jigoshop-ecommerce'); ?></th>
+				<th class="product-quantity"><?php _e('Quantity', 'jigoshop-ecommerce'); ?></th>
+				<th class="product-subtotal"><?php _e('Price', 'jigoshop-ecommerce'); ?></th>
 			</tr>
 			<?php /** @deprecated */ do_action('jigoshop\checkout\table_head', $cart); ?>
 			<?php do_action('jigoshop\template\checkout\table_head', $cart); ?>
 			</thead>
 			<tbody>
 			<?php foreach($cart->getItems() as $key => $item): /** @var \Jigoshop\Entity\Order\Item $item */ ?>
-				<?php Render::output('shop/checkout/item/'.$item->getType(), [
-						'cart' => $cart,
-						'key' => $key,
-						'item' => $item
-					]); ?>
+				<?php 
+				$template = null;
+				$template = apply_filters('jigoshop\template\shop\checkout\item', $template, $cart, $key, $item);
+
+				if($template === null) {
+					Render::output('shop/checkout/item/'.$item->getType(), [
+							'cart' => $cart,
+							'key' => $key,
+							'item' => $item
+					]); 
+				}
+				else {
+					echo $template;
+				}
+				?>
 			<?php endforeach; ?>
 			<?php /** @deprecated  */ do_action('jigoshop\checkout\table_body', $cart); ?>
 			<?php do_action('jigoshop\template\checkout\table_body', $cart); ?>
@@ -154,7 +174,7 @@ use Jigoshop\Helper\Tax;
 					<?php \Jigoshop\Helper\Forms::text([
 						'id' => 'jigoshop_coupons',
 						'name' => 'jigoshop_coupons',
-						'placeholder' => __('Enter coupons...', 'jigoshop'),
+						'placeholder' => __('Enter coupons...', 'jigoshop-ecommerce'),
 						'value' => join(',', array_map(function ($coupon){
 							/** @var $coupon \Jigoshop\Entity\Coupon */
 							return $coupon->getCode();
@@ -170,7 +190,7 @@ use Jigoshop\Helper\Tax;
 					$productSubtotalPricesStr = $productSubtotalPrices[0];
 				}
 				?>
-				<th colspan="2" scope="row" class="text-right"><?php _e('Products subtotal', 'jigoshop'); ?></th>
+				<th colspan="2" scope="row" class="text-right"><?php _e('Products subtotal', 'jigoshop-ecommerce'); ?></th>
 				<td id="product-subtotal"><?= $productSubtotalPricesStr; ?></td>
 			</tr>
             <?php do_action('jigoshop\template\checkout\table_foot', $cart); ?>
@@ -179,7 +199,7 @@ use Jigoshop\Helper\Tax;
 	</div>
 	<div class="panel panel-default">
 		<div class="panel-heading">
-			<h3 class="panel-title"><?php _e('Additional order notes', 'jigoshop'); ?></h3>
+			<h3 class="panel-title"><?php _e('Additional order notes', 'jigoshop-ecommerce'); ?></h3>
 		</div>
 		<div class="panel-body">
 			<?php Forms::textarea([
@@ -193,13 +213,13 @@ use Jigoshop\Helper\Tax;
 	</div>
 	<div class="panel panel-primary" id="totals">
 		<div class="panel-heading">
-			<h3 class="panel-title"><?php _e('Totals', 'jigoshop'); ?></h3>
+			<h3 class="panel-title"><?php _e('Totals', 'jigoshop-ecommerce'); ?></h3>
 		</div>
 		<table class="table">
 			<tbody>
 			<?php if ($cart->isShippingRequired() && count($shippingMethods)): ?>
 				<tr id="shipping-calculator">
-					<th scope="row"><?php _e('Shipping', 'jigoshop'); ?></th>
+					<th scope="row"><?php _e('Shipping', 'jigoshop-ecommerce'); ?></th>
 					<td>
 						<ul class="list-group" id="shipping-methods">
 							<?php foreach($shippingMethods as $method): /** @var $method \Jigoshop\Shipping\Method */ ?>
@@ -214,7 +234,7 @@ use Jigoshop\Helper\Tax;
 				</tr>
 			<?php endif; ?>
 				<tr id="cart-subtotal">
-					<th scope="row"><?php _e('Subtotal', 'jigoshop'); ?></th>
+					<th scope="row"><?php _e('Subtotal', 'jigoshop-ecommerce'); ?></th>
 					<td><?= Product::formatPrice($cart->getSubtotal()); ?></td>
 				</tr>
 			<?php do_action('jigoshop\template\shop\checkout\before_tax'); ?>
@@ -225,21 +245,26 @@ use Jigoshop\Helper\Tax;
 					</tr>
 				<?php endforeach; ?>
 				<tr id="cart-discount"<?php $cart->getDiscount() == 0 and print ' class="not-active"'; ?>>
-					<th scope="row"><?php _e('Discount', 'jigoshop'); ?></th>
+					<th scope="row"><?php _e('Discount', 'jigoshop-ecommerce'); ?></th>
 					<td><?= Product::formatPrice($cart->getDiscount()); ?></td>
 				</tr>
 			<?php do_action('jigoshop\template\shop\checkout\before_total'); ?>
+				<tr id="cart-payment-processing-fee" class="not-active">
+					<th scope="row"></th>
+					<td></td>
+				</tr>
 				<tr id="cart-total" class="info">
-					<th scope="row"><?php _e('Total', 'jigoshop'); ?></th>
+					<th scope="row"><?php _e('Total', 'jigoshop-ecommerce'); ?></th>
 					<td><strong><?= Product::formatPrice($cart->getTotal()); ?></strong></td>
 				</tr>
 			</tbody>
 		</table>
 	</div>
+    <?php do_action('jigoshop\template\checkout\before_payment_methods', $cart); ?>
 	<?php if(count($paymentMethods) > 0): ?>
 	<div class="panel panel-default">
 		<div class="panel-heading">
-			<h3 class="panel-title"><?php _e('Select payment method', 'jigoshop'); ?></h3>
+			<h3 class="panel-title"><?php _e('Select payment method', 'jigoshop-ecommerce'); ?></h3>
 		</div>
 		<ul class="list-group" id="payment-methods">
 			<?php foreach($paymentMethods as $method): /** @var $method \Jigoshop\Payment\Method */ ?>
@@ -279,7 +304,7 @@ use Jigoshop\Helper\Tax;
         ]); ?>
 	<?php endif; ?>
 	<?php do_action('jigoshop\template\checkout\after_panels', $cart); ?>
-	<a class="btn btn-default" href="<?= $cartUrl; ?>"><?php _e('Back to cart', 'jigoshop'); ?></a>
-	<button class="btn btn-success pull-right clearfix" name="action" value="purchase" type="submit"><?php _e('Purchase and pay', 'jigoshop'); ?></button>
+	<a class="btn btn-default" href="<?= $cartUrl; ?>"><?php _e('Back to cart', 'jigoshop-ecommerce'); ?></a>
+	<button class="btn btn-success pull-right clearfix" name="action" value="purchase" type="submit"><?php _e('Purchase and pay', 'jigoshop-ecommerce'); ?></button>
 	<?php do_action('jigoshop\template\checkout\after', $cart); ?>
 </form>

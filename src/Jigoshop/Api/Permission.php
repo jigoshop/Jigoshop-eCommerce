@@ -31,19 +31,19 @@ class Permission
     {
         if(self::$permissions == null) {
             self::$permissions = apply_filters('jigoshop\api\permission\get_permissions', [
-                self::READ_PRODUCTS => __('Read products', 'jigoshop'),
-                self::READ_CART => __('Read cart', 'jigoshop'),
-                self::READ_ORDERS => __('Read orders', 'jigoshop'),
-                self::READ_COUPONS => __('Read coupons', 'jigoshop'),
-                self::READ_CUSTOMERS => __('Read customers', 'jigoshop'),
-                self::READ_REPORTS => __('Read reports', 'jigoshop'),
-                self::READ_EMAILS => __('Read emails', 'jigoshop'),
-                self::MANAGE_PRODUCTS => __('Manage products', 'jigoshop'),
-                self::MANAGE_CART => __('Manage cart', 'jigoshop'),
-                self::MANAGE_ORDERS => __('Manage orders', 'jigoshop'),
-                self::MANAGE_COUPONS => __('Manage coupons', 'jigoshop'),
-                self::MANAGE_CUSTOMERS => __('Manage customers', 'jigoshop'),
-                self::MANAGE_EMAILS => __('Manage emails', 'jigoshop'),
+                self::READ_PRODUCTS => __('Read products', 'jigoshop-ecommerce'),
+                self::READ_CART => __('Read cart', 'jigoshop-ecommerce'),
+                self::READ_ORDERS => __('Read orders', 'jigoshop-ecommerce'),
+                self::READ_COUPONS => __('Read coupons', 'jigoshop-ecommerce'),
+                self::READ_CUSTOMERS => __('Read customers', 'jigoshop-ecommerce'),
+                self::READ_REPORTS => __('Read reports', 'jigoshop-ecommerce'),
+                self::READ_EMAILS => __('Read emails', 'jigoshop-ecommerce'),
+                self::MANAGE_PRODUCTS => __('Manage products', 'jigoshop-ecommerce'),
+                self::MANAGE_CART => __('Manage cart', 'jigoshop-ecommerce'),
+                self::MANAGE_ORDERS => __('Manage orders', 'jigoshop-ecommerce'),
+                self::MANAGE_COUPONS => __('Manage coupons', 'jigoshop-ecommerce'),
+                self::MANAGE_CUSTOMERS => __('Manage customers', 'jigoshop-ecommerce'),
+                self::MANAGE_EMAILS => __('Manage emails', 'jigoshop-ecommerce'),
             ]);
         }
 

@@ -8,20 +8,20 @@ use Jigoshop\Helper\Product;
  */
 ?>
 <div class="table table_content">
-	<p class="sub"><?php _e('Low Stock', 'jigoshop'); ?></p>
+	<p class="sub"><?php _e('Low Stock', 'jigoshop-ecommerce'); ?></p>
 	<?php if (count($lowStock) > 0): ?>
 		<ol>
 			<?php foreach ($lowStock as $item): /** @var $item \Jigoshop\Entity\Product|\Jigoshop\Entity\Product\Purchasable */ ?>
-				<li><a href="<?= get_edit_post_link($item->getId()); ?>"><?= $item->getName(); ?></a> <span><?php printf(__('Stock: %d', 'jigoshop'), Product::getStock($item)); ?></span></li>
+				<li><a href="<?= get_edit_post_link($item->getId()); ?>"><?= $item->getName(); ?></a> <span><?php printf(__('Stock: %d', 'jigoshop-ecommerce'), Product::getStock($item)); ?></span></li>
 			<?php endforeach; ?>
 		</ol>
 	<?php else: ?>
-		<p class="message"><?= __('No products are low in stock.', 'jigoshop'); ?></p>
+		<p class="message"><?= __('No products are low in stock.', 'jigoshop-ecommerce'); ?></p>
 	<?php endif; ?>
 </div>
 <?php if ($notifyOutOfStock): ?>
 	<div class="table table_discussion">
-		<p class="sub"><?php _e('Out of Stock/Backorders', 'jigoshop'); ?></p>
+		<p class="sub"><?php _e('Out of Stock/Backorders', 'jigoshop-ecommerce'); ?></p>
 		<?php if (count($outOfStock) > 0): ?>
 			<ol>
 				<?php foreach ($outOfStock as $item): /** @var $item \Jigoshop\Entity\Product */ ?>
@@ -29,7 +29,7 @@ use Jigoshop\Helper\Product;
 				<?php endforeach; ?>
 			</ol>
 		<?php else: ?>
-			<p class="message"><?= __('No products are out of stock.', 'jigoshop'); ?></p>
+			<p class="message"><?= __('No products are out of stock.', 'jigoshop-ecommerce'); ?></p>
 		<?php endif; ?>
 	</div>
 <?php endif; ?>

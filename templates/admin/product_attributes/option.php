@@ -26,6 +26,6 @@ use Jigoshop\Admin\Helper\Forms;
         ]); ?>
 	</td>
 	<td>
-		<button type="button" class="remove-attribute-option btn btn-default" title="<?php _e('Remove', 'jigoshop'); ?>"><span class="glyphicon glyphicon-remove"></span></button>
+		<button type="button" class="remove-attribute-option btn btn-default" title="<?php _e('Remove', 'jigoshop-ecommerce'); ?>"><span class="glyphicon glyphicon-remove"></span></button>
 	</td>
 </tr>

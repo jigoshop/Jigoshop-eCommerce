@@ -14,9 +14,9 @@
 <div class="stats" id="jigoshop-stats">
 	<p>
 		<?php if ($currentMonth != $selectedMonth) : ?>
-			<a href="admin.php?page=jigoshop&amp;month=<?= $nextMonth; ?>&amp;year=<?= $nextYear; ?>" class="next"><?php _e('Next Month &rarr;', 'jigoshop'); ?></a>
+			<a href="admin.php?page=jigoshop&amp;month=<?= $nextMonth; ?>&amp;year=<?= $nextYear; ?>" class="next"><?php _e('Next Month &rarr;', 'jigoshop-ecommerce'); ?></a>
 		<?php endif; ?>
-		<a href="admin.php?page=jigoshop&amp;month=<?= $previousMonth; ?>&amp;year=<?= $previousYear; ?>" class="previous"><?php _e('&larr; Previous Month', 'jigoshop'); ?></a>
+		<a href="admin.php?page=jigoshop&amp;month=<?= $previousMonth; ?>&amp;year=<?= $previousYear; ?>" class="previous"><?php _e('&larr; Previous Month', 'jigoshop-ecommerce'); ?></a>
 	</p>
 
 	<div class="inside">
@@ -56,8 +56,8 @@
 				$.plot(
 					$plot,
 					[
-						{ label: "<?= __('Number of sales','jigoshop'); ?>", data: d },
-						{ label: "<?=\ __('Sales amount','jigoshop'); ?>", data: d2, yaxis: 2 }
+						{ label: "<?= __('Number of sales','jigoshop-ecommerce'); ?>", data: d },
+						{ label: "<?= __('Sales amount','jigoshop-ecommerce'); ?>", data: d2, yaxis: 2 }
 					],
 					{
 						series: {

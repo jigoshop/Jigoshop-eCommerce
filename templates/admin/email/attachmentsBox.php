@@ -20,7 +20,7 @@
                     <input type="hidden" name="jigoshop_email[attachments][]" value="<?= $id; ?>">
                 </div>
             <?php endforeach; ?>
-            <p class="empty-attachments"><?php _e('This email template does not have attachments.', 'jigoshop'); ?></p>
+            <p class="empty-attachments"><?php _e('This email template does not have attachments.', 'jigoshop-ecommerce'); ?></p>
         </div>
         <div class="clear"></div>
         <a href="#" class="btn btn-default add-email-attachments">Select</a>

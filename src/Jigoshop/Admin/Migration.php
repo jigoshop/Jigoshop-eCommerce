@@ -51,18 +51,18 @@ class Migration implements PageInterface
 
 			Scripts::add('jigoshop.admin.migration', \JigoshopInit::getUrl().'/assets/js/admin/migration.js');
 
-			$migration_title = __('Jigoshop &raquo; Migration Tool &raquo; ', 'jigoshop');
+			$migration_title = __('Jigoshop &raquo; Migration Tool &raquo; ', 'jigoshop-ecommerce');
 			Scripts::localize('jigoshop.admin.migration', 'jigoshop_admin_migration', [
 				'i18n' => [
-					'migration_complete' => __('migration complete', 'jigoshop'),
-					'migration_error' => __('migration error', 'jigoshop'),
-					'alert_msg' => __('A communication error has occured, please reload the page and continue with the migration.', 'jigoshop'),
-					'processing' => __('Processing...', 'jigoshop'),
-					'jigoshop.admin.migration.products' => $migration_title . __('Products', 'jigoshop'),
-					'jigoshop.admin.migration.coupons' => $migration_title . __('Coupons', 'jigoshop'),
-					'jigoshop.admin.migration.emails' => $migration_title . __('Emails', 'jigoshop'),
-					'jigoshop.admin.migration.options' => $migration_title . __('Options', 'jigoshop'),
-					'jigoshop.admin.migration.orders' => $migration_title . __('Orders', 'jigoshop'),
+					'migration_complete' => __('migration complete', 'jigoshop-ecommerce'),
+					'migration_error' => __('migration error', 'jigoshop-ecommerce'),
+					'alert_msg' => __('A communication error has occured, please reload the page and continue with the migration.', 'jigoshop-ecommerce'),
+					'processing' => __('Processing...', 'jigoshop-ecommerce'),
+					'jigoshop.admin.migration.products' => $migration_title . __('Products', 'jigoshop-ecommerce'),
+					'jigoshop.admin.migration.coupons' => $migration_title . __('Coupons', 'jigoshop-ecommerce'),
+					'jigoshop.admin.migration.emails' => $migration_title . __('Emails', 'jigoshop-ecommerce'),
+					'jigoshop.admin.migration.options' => $migration_title . __('Options', 'jigoshop-ecommerce'),
+					'jigoshop.admin.migration.orders' => $migration_title . __('Orders', 'jigoshop-ecommerce'),
                 ],
             ]);
 		});
@@ -81,7 +81,7 @@ class Migration implements PageInterface
 	/** @return string Title of page. */
 	public function getTitle()
 	{
-		return __('Migration tool', 'jigoshop');
+		return __('Migration tool', 'jigoshop-ecommerce');
 	}
 
 	/** @return string Parent of the page string. */
@@ -117,7 +117,7 @@ class Migration implements PageInterface
 			$tool = $this->tools[$id];
 			$this->wp->doAction('jigoshop\admin\migration\before', $tool);
 			$tool->migrate(null);
-			$this->messages->addNotice(__('Migration complete', 'jigoshop'));
+			$this->messages->addNotice(__('Migration complete', 'jigoshop-ecommerce'));
 			$this->wp->wpRedirect($this->wp->adminUrl('admin.php?page='.self::NAME));
 		}
 	}
@@ -142,7 +142,7 @@ class Migration implements PageInterface
 		else
 		{
 			file_put_contents($log_dir, '');
-			$logs = __('Just start migration from "Migrate options"', 'jigoshop');
+			$logs = __('Just start migration from "Migrate options"', 'jigoshop-ecommerce');
 		}
 
 		return $logs;

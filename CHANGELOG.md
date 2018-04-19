@@ -1,6 +1,49 @@
 ## Changelog
-* 2.1.7:
+* 2.1.12 - 2018.04.09
+    * New: Allow to hide out of stock variations.
+    * Fix: Properly show product stock status.
+* 2.1.11.2 - 2018.03.20
+    * Fix: Properly save settings on Payment page with no default gateway selected.
+* 2.1.11.1 - 2018.03.20
+    * Updated all vendors and removed unused files.
+* 2.1.11 - 2018.03.19
+    * New: Order processing fee.
+    * Fix: Properly show product list, when shop page is set as static front page.
+    * Fix: Properly hide/show stock column in admin product list.
+    * Fix: Add product review only when rating was posted.
+    * Fix: Notices on Thank you page, when order does not have payment method.
+    * Fix: Php/wp memory limit, added *G value parsing.
+    * Fix: Errors on cart/checkout page when switching shipping location with inproperly configured shipping method present.
+    * Fix: Renamed `coffee-script` module to `coffeescript` in gulp.
+    * Fix: Hide discount section in My Account Order preview, when discount was not used.
+    * Fix: Show information about backorder on product page.
+* 2.1.10 - 2018.01.23
+    * New: WorldPay gateway.
+    * New: Template error handler.
+    * Fix: Unify payment and shipping settings tabs.
+    * Fix: Update product quantity in cart properly.
+    * Fix: `Disable manage stock and set ins stock status for all products` tool now works for all products.
+    * Fix: Show exception message when trying to add review without rating.
+    * Fix: Changed text domain in places where it was missing or invalid.
+    * Fix: Properly remove item from cart via url.
+* 2.1.9 - 2017.11.27
+    * Fix: Fix readme.txt.
+    * Fix: Add Company name and Vat number to thank you page.
+    * Fix: Add Vat number variable to order emails.
+    * Fix: Added filter to determine proper template for external product types.
+    * Fix: Added action before checkout payment methods.
+* 2.1.8 - 2017.10.30
+    * New: Default variation image will be shown if variable product has no featured image.
+    * Fix: Checkout/cart page to allow external product types from plugins.
+    * Fix: Product filter widget.
+    * Fix: Form controls in payment/shipping methods.
+    * Fix: Issues with product category WP editor.
+* 2.1.7 - 2017.09.27:
+    * Fix: Now plugin is available to translate.
     * Fix: Do not add thousand separator to paypal amounts.
+    * Fix: Improve product and order search mechanism.
+    * Fix: Category description editor.
+    * Fix: Selects in payment gateways.
 * 2.1.6.1 - 2017.09.21:
     * Fix: Added BN code to paypal plugin.
 * 2.1.6 - 2017.09.20:
@@ -29,7 +72,7 @@
 * 2.1.4 - 2017.06.14:
     * New: Email action for order status change for admin.
     * New: Possibility to show prices with and without tax.
-    * New: All Forms now has data parameter.
+    * New: All forms now have data parameter.
     * New: Shipping and Payment interfaces.
     * Fix: Do not allow to add to cart variations with not enough stock.
     * Fix: Show only selected attribute options for specified variable product.
@@ -201,9 +244,9 @@
     * Fix: Typo in reports filter button.
     * Fix: Allow to change order date.
     * Fix: Cart tax calculation for logged users.
-    * Fix: Do not create product when doing an autosave. 
+    * Fix: Do not create product when doing an autosave.
     * Fix: Various fixes for virtual products.
-    * Fix: Properly display price field for every product type. 
+    * Fix: Properly display price field for every product type.
     * Fix: Properly display url field for external product.
 * 2.0.2 - 2016.11.7:
     * Fix: Paypal response url.

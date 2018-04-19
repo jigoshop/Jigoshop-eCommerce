@@ -197,7 +197,7 @@ class ProductService implements ProductServiceInterface
             //if object does not exist insert new one
             $id = $this->insertPost($this->wp, $object, Types::PRODUCT);
             if (!is_int($id) || $id === 0) {
-                throw new Exception(__('Unable to save product. Please try again.', 'jigoshop'));
+                throw new Exception(__('Unable to save product. Please try again.', 'jigoshop-ecommerce'));
             }
             $object->setId($id);
         }
@@ -430,11 +430,9 @@ class ProductService implements ProductServiceInterface
 
     public function saveReview($id, $approvew)
     {
-        if (!isset($_POST['rating'])) {
-            throw new Exception('');
+        if (isset($_POST['rating'])) {
+            update_comment_meta($id, 'rating', (int)$_POST['rating']);
         }
-
-        update_comment_meta($id, 'rating', (int)$_POST['rating']);
     }
 
     /**
@@ -453,10 +451,12 @@ class ProductService implements ProductServiceInterface
 
         foreach ($comments as $comment) {
             $rating = get_comment_meta($comment->comment_ID, 'rating', true);
-            $review = new Product\Review();
-            $review->setRating($rating);
-            $review->setComment($comment);
-            $reviews[] = $review;
+            if($rating) {
+                $review = new Product\Review();
+                $review->setRating($rating);
+                $review->setComment($comment);
+                $reviews[] = $review;
+            }
         }
 
         return $reviews;

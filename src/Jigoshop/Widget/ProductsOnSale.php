@@ -20,11 +20,11 @@ class ProductsOnSale extends \WP_Widget
 	{
 		$options = [
 			'classname' => self::ID,
-			'description' => __('Display a list of products currently on sale', 'jigoshop')
+			'description' => __('Display a list of products currently on sale', 'jigoshop-ecommerce')
         ];
 
 		// Create the widget
-		parent::__construct(self::ID, __('Jigoshop: Products On-Sale', 'jigoshop'), $options);
+		parent::__construct(self::ID, __('Jigoshop: Products On-Sale', 'jigoshop-ecommerce'), $options);
 
 		// Flush cache after every save
 		add_action('save_post', [$this, 'deleteTransient']);
@@ -63,7 +63,7 @@ class ProductsOnSale extends \WP_Widget
 		// Set the widget title
 		$title = apply_filters(
 			'widget_title',
-			($instance['title']) ? $instance['title'] : __('Special Offers', 'jigoshop'),
+			($instance['title']) ? $instance['title'] : __('Special Offers', 'jigoshop-ecommerce'),
 			$instance,
 			$this->id_base
 		);
