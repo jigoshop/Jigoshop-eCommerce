@@ -9,6 +9,7 @@ rimraf = require('gulp-rimraf')
 replace = require('gulp-replace')
 wpPot = require('gulp-wp-pot')
 uglifyes = require('uglify-es');
+babel = require('gulp-babel');
 composer = require('gulp-uglify/composer');
 uglify = composer(uglifyes, console);
 minify = true
@@ -92,6 +93,7 @@ gulp.task 'scripts', ['lint'], ->
       mangle: false,
       ecma: 6
     }))
+    .pipe babel({presets: ['env']})
     .on('error', (err) ->
       gutil.log(gutil.colors.red('[Error]'), err.toString())
     )
