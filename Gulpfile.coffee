@@ -110,7 +110,7 @@ gulp.task 'fonts', ->
     .pipe gulp.dest('assets/fonts')
 
 gulp.task 'refresh-pot-file', ->
-  gulp.src  ['/jigoshop.php', '**/*.php']
+  gulp.src  ['/jigoshop.php', 'src/', 'templates/']
     .pipe wpPot
       domain: 'jigoshop-ecommerce'
       package: 'Jigoshop eCommerce'
