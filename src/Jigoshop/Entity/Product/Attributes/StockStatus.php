@@ -153,7 +153,7 @@ class StockStatus implements \Serializable, \JsonSerializable
 	 */
 	public function getStock()
 	{
-		return $this->stock;
+		return $this->stock > 0 ? $this->stock : 0;
 	}
 
 	/**
