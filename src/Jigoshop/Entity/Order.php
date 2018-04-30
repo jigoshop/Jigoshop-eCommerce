@@ -7,6 +7,7 @@ use Jigoshop\Entity\Order\Discount;
 use Jigoshop\Entity\Order\Item;
 use Jigoshop\Entity\Order\Status;
 use Jigoshop\Exception;
+use Jigoshop\Helper\Currency;
 use Jigoshop\Integration;
 use Jigoshop\Payment;
 use Jigoshop\Shipping;
@@ -62,6 +63,8 @@ class Order implements OrderInterface, \JsonSerializable
 	private $shippingPrice = 0.0;
 	/**	@var float */
 	private $processingFee = null;
+	/** @var string */
+	private $currency = null;
 	/** @var string */
 	private $status = Status::PENDING;
 	/** @var string */
@@ -795,6 +798,28 @@ class Order implements OrderInterface, \JsonSerializable
 	}
 
 	/**
+	 * Returns Order currency.
+	 * 
+	 * @return string Currency code (3 letters).
+	 */
+	public function getCurrency() {
+		if($this->currency === null) {
+			$this->currency = Currency::code();
+		}
+
+		return $this->currency;
+	}
+
+	/**
+	 * Sets Order currency.
+	 * 
+	 * @param string $currency Currency code (3 letters).
+	 */
+	public function setCurrency($currency) {
+		$this->currency = $currency;
+	}
+
+	/**
 	 * @return array List of fields to update with according values.
 	 */
 	public function getStateToSave()
@@ -826,6 +851,7 @@ class Order implements OrderInterface, \JsonSerializable
 			'customer_note' => $this->customerNote,
 			'subtotal' => $this->subtotal,
 			'processingFee' => $this->getProcessingFee(),
+			'currency' => $this->getCurrency(),
 			'total' => $this->getTotal(),
 			'discount' => $this->getDiscount(),
 			'discounts' => $this->discounts,
@@ -929,6 +955,9 @@ class Order implements OrderInterface, \JsonSerializable
         if(isset($state['processingFee'])) {
         	$this->processingFee = ($state['processingFee'] === 0?null:$state['processingFee']);
         }
+        if(isset($state['currency'])) {
+        	$this->currency = $state['currency'];
+        }
 	}
 
     /**
@@ -977,6 +1006,7 @@ class Order implements OrderInterface, \JsonSerializable
            'payment' => $payment,
            'customer_note' => $this->customerNote,
            'processingFee' => $this->getProcessingFee(),
+           'currency' => $this->getCurrency(),
            'total' => $this->getTotal(),
            'tax' => $this->tax,
            'shipping_tax' => $this->shippingTax,
