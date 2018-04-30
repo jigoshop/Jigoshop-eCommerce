@@ -29,8 +29,21 @@ class Currency
 		self::$options = $options;
 	}
 
-	public static function symbol()
+	/**
+	 * Returns symbol of set currency (or the one provided as argument).
+	 * 
+	 * @param string $currencyCode Currency code (overrides currency set in options) (optional).
+	 * 
+	 * @return string Currency symbol.
+	 */
+	public static function symbol($currencyCode = null)
 	{
+		if($currencyCode !== null) {
+			$symbols = Currency::symbols();
+
+			return $symbols[$currencyCode];
+		}
+
 		if (self::$symbol === null) {
 			$symbols = Currency::symbols();
 			self::$symbol = $symbols[self::$options->get('general.currency')];

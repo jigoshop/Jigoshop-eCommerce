@@ -276,10 +276,11 @@ class Product
     /**
      * @param $price float Price to format.
      * @param $suffix string
+     * @param string $currencyCode Currency code to be used for formatting.
      *
      * @return string Formatted price with currency symbol.
      */
-    public static function formatPrice($price, $suffix = '')
+    public static function formatPrice($price, $suffix = '', $currencyCode = null)
     {
         if ($price === 0.00) {
             return __('Free', 'jigoshop-ecommerce');
@@ -288,7 +289,17 @@ class Product
         if ($price !== '') {
             $price = self::formatNumericPrice($price);
 
-            $formatted = sprintf(Currency::format(), Currency::symbol(), Currency::code(), $price);
+            if($currencyCode !== null) {
+                $currencySymbol = Currency::symbol($currencyCode);
+            }
+            else {
+                $currencySymbol = Currency::symbol();
+                $currencyCode = Currency::code();
+            }
+
+            $currencyFormat = Currency::format();
+
+            $formatted = sprintf($currencyFormat, $currencySymbol, $currencyCode, $price);
 
             return $suffix ? sprintf('%s %s', $formatted, $suffix) : $formatted;
         }

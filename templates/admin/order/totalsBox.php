@@ -35,7 +35,7 @@ $orderTax = $order->getTax();
 			'label' => __('Subtotal', 'jigoshop-ecommerce'),
 			'placeholder' => 0.0,
 			'size' => 12,
-			'value' => Product::formatPrice($order->getSubtotal()),
+			'value' => Product::formatPrice($order->getSubtotal(), '', $order->getCurrency()),
         ]); ?>
         <?php if($order->getDiscount() > 0) : ?>
             <?php Forms::constant([
@@ -43,7 +43,7 @@ $orderTax = $order->getTax();
                 'label' => __('Discount', 'jigoshop-ecommerce'),
                 'placeholder' => 0.0,
                 'size' => 12,
-                'value' => Product::formatPrice($order->getDiscount()),
+                'value' => Product::formatPrice($order->getDiscount(), '', $order->getCurrency()),
             ]); ?>
         <?php endif; ?>
 		<?php foreach($tax as $class => $option): ?>
@@ -63,7 +63,7 @@ $orderTax = $order->getTax();
 				'id' => 'processingFee',
 				'label' => sprintf(__('Payment processing fee (%s)', 'jigoshop-ecommerce'), $order->getProcessingFeeAsPercent()),
 				'size' => 12,
-				'value' => Product::formatPrice($order->getProcessingFee())
+				'value' => Product::formatPrice($order->getProcessingFee(), '', $order->getCurrency())
 			]); 
 		}
 		?>
@@ -73,7 +73,7 @@ $orderTax = $order->getTax();
 			'label' => __('Total', 'jigoshop-ecommerce'),
 			'placeholder' => 0.0,
 			'size' => 12,
-			'value' => Product::formatPrice($order->getTotal())
+			'value' => Product::formatPrice($order->getTotal(), '', $order->getCurrency())
         ]); ?>
 		<?php do_action('jigoshop\admin\order\totalsBox\after_total', $order); ?>
 	</div>

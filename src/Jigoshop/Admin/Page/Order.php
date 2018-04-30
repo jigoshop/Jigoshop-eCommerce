@@ -235,7 +235,7 @@ class Order
         foreach ($order->getCombinedTax() as $class => $value) {
             $result[$class] = [
                 'label' => Tax::getLabel($class, $order),
-                'value' => ProductHelper::formatPrice($value),
+                'value' => ProductHelper::formatPrice($value, '', $order->getCurrency()),
             ];
         }
 
