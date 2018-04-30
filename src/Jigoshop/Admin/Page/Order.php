@@ -140,6 +140,7 @@ class Order
 
             $row = Render::get('admin/order/item/' . $item->getType(), [
                 'item' => $item,
+                'order' => $order
             ]);
 
             $result = $this->getAjaxResponse($order);
