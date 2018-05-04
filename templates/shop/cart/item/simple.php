@@ -9,7 +9,6 @@ use Jigoshop\Helper\Product;
  */
 ?>
 <?php
-\Jigoshop\Helper\Debug::d('stop');
 $product = $item->getProduct();
 $url = apply_filters('jigoshop\cart\product_url', get_permalink($product->getId()), $key);
 
