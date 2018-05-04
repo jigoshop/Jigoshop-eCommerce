@@ -85,7 +85,7 @@ use Jigoshop\Helper\Render;
                         <dt><?php _e('Status', 'jigoshop-ecommerce'); ?></dt>
                         <dd><?= Status::getName($order->getStatus()); ?></dd>
                         <dt><?php _e('Total', 'jigoshop-ecommerce'); ?></dt>
-                        <dd><?= Product::formatPrice($order->getTotal()); ?></dd>
+                        <dd><?= Product::formatPrice($order->getTotal(), '', $order->getCurrency()); ?></dd>
                     </dl>
                     <a href="<?= Order::getPayLink($order); ?>" class="btn btn-success pull-right"><?php _e('Pay', 'jigoshop-ecommerce'); ?></a>
                 </li>

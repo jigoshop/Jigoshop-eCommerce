@@ -80,7 +80,7 @@ use Jigoshop\Helper\Render;
 		<tr id="product-subtotal">
 			<?php $productSubtotal = $showWithTax ? $order->getProductSubtotal() + $order->getTotalTax() : $order->getProductSubtotal(); ?>
 			<th scope="row" colspan="4" class="text-right"><?php _e('Products subtotal', 'jigoshop-ecommerce'); ?></th>
-			<td><?= Product::formatPrice($productSubtotal); ?></td>
+			<td><?= Product::formatPrice($productSubtotal, '', $order->getCurrency()); ?></td>
 		</tr>
         <?php /** @deprecated */ do_action('jigoshop\checkout\table_foot', $order); ?>
         <?php do_action('jigoshop\template\checkout\table_foot', $order); ?>
@@ -98,7 +98,7 @@ use Jigoshop\Helper\Render;
 						<?php _e('Shipping', 'jigoshop-ecommerce'); ?>
 					</th>
 					<td>
-						<?= Product::formatPrice($order->getShippingPrice()); ?>
+						<?= Product::formatPrice($order->getShippingPrice(), '', $order->getCurrency()); ?>
 						<p class="method">
 							<small><?= $order->getShippingMethod()->getName(); ?></small>
 						</p>
@@ -107,13 +107,13 @@ use Jigoshop\Helper\Render;
 			<?php endif; ?>
 			<tr id="cart-subtotal">
 				<th scope="row"><?php _e('Subtotal', 'jigoshop-ecommerce'); ?></th>
-				<td><?= Product::formatPrice($order->getSubtotal()); ?></td>
+				<td><?= Product::formatPrice($order->getSubtotal(), '', $order->getCurrency()); ?></td>
 			</tr>
 			<?php foreach ($order->getCombinedTax() as $taxClass => $tax): ?>
 				<?php if ($tax > 0): ?>
 					<tr id="tax-<?= $taxClass; ?>">
 						<th scope="row"><?= $getTaxLabel($taxClass); ?></th>
-						<td><?= Product::formatPrice($tax); ?></td>
+						<td><?= Product::formatPrice($tax, '', $order->getCurrency()); ?></td>
 					</tr>
 				<?php endif; ?>
 			<?php endforeach; ?>
@@ -122,7 +122,7 @@ use Jigoshop\Helper\Render;
 			?>
 			<tr id="cart-discount">
 				<th scope="row"><?php _e('Discount', 'jigoshop-ecommerce'); ?></th>
-				<td><?= Product::formatPrice($order->getDiscount()); ?></td>
+				<td><?= Product::formatPrice($order->getDiscount(), '', $order->getCurrency()); ?></td>
 			</tr>
 			<?php 
 			}
@@ -132,14 +132,14 @@ use Jigoshop\Helper\Render;
 			?>
 			<tr id="cart-payment-processing-fee">
 				<th scope="row"><?php echo strip_tags(sprintf(__('Payment processing fee', 'jigoshop-ecommerce'), $order->getProcessingFeeAsPercent())); ?></th>
-				<td><?php echo Product::formatPrice($order->getProcessingFee()); ?></td>
+				<td><?php echo Product::formatPrice($order->getProcessingFee(), '', $order->getCurrency()); ?></td>
 			</tr>
 			<?php 
 			}
 			?>
 			<tr id="cart-total">
 				<th scope="row"><?php _e('Total', 'jigoshop-ecommerce'); ?></th>
-				<td><?= Product::formatPrice($order->getTotal()); ?></td>
+				<td><?= Product::formatPrice($order->getTotal(), '', $order->getCurrency()); ?></td>
 			</tr>
 			</tbody>
 		</table>
