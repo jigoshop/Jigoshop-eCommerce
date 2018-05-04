@@ -179,7 +179,7 @@ class Product
         return apply_filters('jigoshop\helper\product\get_price_html', $result, $price, $product);
     }
 
-    public static function generatePrices($price, $priceWithTax, $cart = 0) {
+    public static function generatePrices($price, $priceWithTax, $cart = 0, $currencyCode = null) {
         if($cart) {
             $showWithTax = self::$options->get('tax.item_prices', 'excluding_tax');
         }
@@ -202,20 +202,20 @@ class Product
         if($showWithTax == 'both_including_first' || $showWithTax == 'both_excluding_first') {
             if($price == 0.00) {
                 return [
-                    self::formatPrice(0.00)
+                    self::formatPrice(0.00, '', $currencyCode)
                 ];
             }
             else {
                 if($showWithTax == 'both_excluding_first') {                
                     return [
-                        self::formatPrice(round($price, 2), $suffixExcludingTax),
-                        self::formatPrice(round($priceWithTax, 2), $suffixIncludingTax)
+                        self::formatPrice(round($price, 2), $suffixExcludingTax, $currencyCode),
+                        self::formatPrice(round($priceWithTax, 2), $suffixIncludingTax, $currencyCode)
                     ];
                 }
                 else {
                     return [
-                        self::formatPrice(round($priceWithTax, 2), $suffixIncludingTax),
-                        self::formatPrice(round($price, 2), $suffixExcludingTax)
+                        self::formatPrice(round($priceWithTax, 2), $suffixIncludingTax, $currencyCode),
+                        self::formatPrice(round($price, 2), $suffixExcludingTax, $currencyCode)
                     ];                    
                 }
             }
@@ -223,12 +223,12 @@ class Product
         else {
             if($showWithTax == 'excluding_tax') {
                 return [
-                    self::formatPrice(round($price, 2), $suffixExcludingTax)
+                    self::formatPrice(round($price, 2), $suffixExcludingTax, $currencyCode)
                 ];
             }
             elseif($showWithTax == 'including_tax') {
                 return [
-                    self::formatPrice(round($priceWithTax, 2), $suffixIncludingTax)
+                    self::formatPrice(round($priceWithTax, 2), $suffixIncludingTax, $currencyCode)
                 ];
             }
         }

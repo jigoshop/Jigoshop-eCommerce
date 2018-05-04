@@ -15,7 +15,7 @@ $url = apply_filters('jigoshop\cart\product_url', get_permalink($product->getId(
 $price = $item->getPrice();
 $priceWithTax = $item->getPrice() + ($item->getTax() / $item->getQuantity());
 
-$prices = Product::generatePrices($price, $priceWithTax, 1);
+$prices = Product::generatePrices($price, $priceWithTax, 1, $cart->getCurrency());
 if(count($prices) == 2) {
 	$pricesStr = sprintf('%s 
 		(%s)', $prices[0], $prices[1]);
@@ -27,7 +27,7 @@ else {
 $priceTotal = $item->getQuantity() * $price;
 $priceTotalWithTax = $item->getQuantity() * $priceWithTax;
 
-$pricesTotal = Product::generatePrices($priceTotal, $priceTotalWithTax, 1);
+$pricesTotal = Product::generatePrices($priceTotal, $priceTotalWithTax, 1, $cart->getCurrency());
 if(count($pricesTotal) == 2) {
 	$pricesTotalStr = sprintf('%s 
 		(%s)', $pricesTotal[0], $pricesTotal[1]);
