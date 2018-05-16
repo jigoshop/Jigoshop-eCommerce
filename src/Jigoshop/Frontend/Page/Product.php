@@ -45,11 +45,11 @@ class Product implements PageInterface
 //        ]);
         Styles::add('jigoshop.vendors.blueimp', \JigoshopInit::getUrl().'/assets/css/vendors/blueimp.css');
         Styles::add('jigoshop.vendors.select2', \JigoshopInit::getUrl().'/assets/css/vendors/select2.css');
-		Styles::add('jigoshop.shop.product', \JigoshopInit::getUrl().'/assets/css/shop/product.css', [
-//			'jigoshop.shop',
-			'jigoshop.vendors.select2',
-			'jigoshop.vendors.blueimp',
-        ]);
+//		Styles::add('jigoshop.shop.product', \JigoshopInit::getUrl().'/assets/css/shop/product.css', [
+////			'jigoshop.shop',
+//			'jigoshop.vendors.select2',
+//			'jigoshop.vendors.blueimp',
+//        ]);
 
         Scripts::add('jigoshop.vendors.blueimp', \JigoshopInit::getUrl().'/assets/js/vendors/blueimp.js', ['jquery']);
         Scripts::add('jigoshop.vendors.select2', \JigoshopInit::getUrl().'/assets/js/vendors/select2.js', ['jquery']);
