@@ -130,7 +130,7 @@ class Product implements EntityFactoryInterface
                 $product->setName($helpers->sanitizeTitle($data['product']['name']));
             }
             if(isset($data['product']['description'])) {
-                $product->setName($helpers->sanitizeTitle($data['product']['description']));
+                $product->setDescription($helpers->sanitizeTitle($data['product']['description']));
             }
             $this->convertData($data, $id, true);
             $product->restoreState($data['product']);
