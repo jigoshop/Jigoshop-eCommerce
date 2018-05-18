@@ -243,6 +243,13 @@ class Products extends PostController implements ApiControllerContract
     public static function overridePostProductData()
     {
         $_POST['product'] = $_POST['jigoshop_product'];
+        //Backward compatibiity
+        if(isset($_POST['post_title'])) {
+            $_POST['product']['name'] = $_POST['post_title'];
+        }
+        if(isset($_POST['post_excerpt'])) {
+            $_POST['product']['description'] = $_POST['post_excerpt'];
+        }
         unset($_POST['jigoshop_product']);
     }
 
@@ -253,6 +260,13 @@ class Products extends PostController implements ApiControllerContract
     public static function overridePutProductData(array $data)
     {
         $data['product'] = $data['jigoshop_product'];
+        //Backward compatibiity
+        if(isset($data['post_title'])) {
+            $data['product']['name'] = $data['post_title'];
+        }
+        if(isset($data['post_excerpt'])) {
+            $data['product']['description'] = $data['post_excerpt'];
+        }
         unset($data['jigoshop_product']);
         return $data;
     }

@@ -4,6 +4,8 @@ namespace Jigoshop\Api\Routes\V1;
 
 use Jigoshop\Api\Contracts\ApiControllerContract;
 use Slim\App;
+use Slim\Http\Request;
+use Slim\Http\Response;
 
 /**
  * Class Emails
@@ -105,5 +107,48 @@ class Emails extends PostController implements ApiControllerContract
          * @apiPermission manage_emails
          */
         $app->delete('/{id:[0-9]+}', [$this, 'delete']);
+    }
+
+    /**
+     * @param Request $request
+     * @param Response $response
+     * @param $args
+     * @return Response
+     */
+    public function create(Request $request, Response $response, $args)
+    {
+        if(isset($_POST['jigoshop_email']['title'])) {
+            $_POST['post_title'] = $_POST['jigoshop_email']['title'];
+        }
+        if(isset($_POST['jigoshop_email']['content'])) {
+            $_POST['content'] = $_POST['jigoshop_email']['content'];
+        }
+        return parent::create($request, $response, $args);
+    }
+
+    /**
+     * @param Request $request
+     * @param Response $response
+     * @param $args
+     * @return Response
+     */
+    public function update(Request $request, Response $response, $args)
+    {
+        $object = $this->validateObjectFinding($args);
+
+        $factory = $this->app->getContainer()->di->get("jigoshop.factory.$this->entityName");
+        $data = $request->getParsedBody();
+        if(isset($data['jigoshop_email']['title'])) {
+            $data['post_title'] = $data['jigoshop_email']['title'];
+        }
+        $object = $factory->update($object, $data); //updating object with parsed variables
+
+        $service = $this->app->getContainer()->di->get("jigoshop.service.$this->entityName");
+        $service->updateAndSavePost($object);
+
+        return $response->withJson([
+            'success' => true,
+            'data' => $object,
+        ]);
     }
 }
