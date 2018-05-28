@@ -41,6 +41,7 @@ class EditAddress implements PageInterface
 
 		Scripts::add('jigoshop.vendors.select2', \JigoshopInit::getUrl().'/assets/js/vendors/select2.js', ['jquery']);
 		Scripts::add('jigoshop.vendors.bs_tab_trans_tooltip_collapse', \JigoshopInit::getUrl().'/assets/js/vendors/bs_tab_trans_tooltip_collapse.js', ['jquery']);
+		Scripts::add('jigoshop.user.account', \JigoshopInit::getUrl() . '/assets/js/user/account.js', ['jquery', 'jigoshop.helpers']);
 		$this->wp->doAction('jigoshop\account\edit_address\assets', $wp);
 	}
 
