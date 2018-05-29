@@ -8,10 +8,10 @@ check = require('gulp-if')
 rimraf = require('gulp-rimraf')
 replace = require('gulp-replace')
 wpPot = require('gulp-wp-pot')
-uglifyes = require('uglify-es');
-babel = require('gulp-babel');
-composer = require('gulp-uglify/composer');
-uglify = composer(uglifyes, console);
+uglifyes = require('uglify-es')
+babel = require('gulp-babel')
+composer = require('gulp-uglify/composer')
+uglify = composer(uglifyes, console)
 minify = true
 # Sources declaration
 
@@ -110,7 +110,7 @@ gulp.task 'fonts', ->
     .pipe gulp.dest('assets/fonts')
 
 gulp.task 'refresh-pot-file', ->
-  gulp.src  ['/jigoshop.php', 'src/', 'templates/']
+  gulp.src  ['src/**/*.php', 'templates/**/*.php', 'jigoshop.php']
     .pipe wpPot
       domain: 'jigoshop-ecommerce'
       package: 'Jigoshop eCommerce'
