@@ -3,8 +3,8 @@ Contributors: jigoshop
 Tags: ecommerce, wordpress ecommerce, store, shop, shopping, cart, checkout, widgets, reports, shipping, tax, paypal, jigowatt, shipping, inventory, stock, online, sell, sales, weights, dimensions, configurable, variable, downloadable, external, affiliate, download, virtual, physical
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=7F5FZ5NGJ3XTL
 Requires at least: 4.0
-Tested up to: 4.9.4
-Stable tag: 2.1.12
+Tested up to: 4.9.6
+Stable tag: 2.1.13
 
 A feature-packed eCommerce plugin built upon WordPress core functionality ensuring excellent performance, customizability and control - robust Tax Settings, Stock Level Management, Free and Premium Extensions - you name it.
 
@@ -150,6 +150,15 @@ However, if you want priority, dedicated support from Jigoshop staff, we dp offe
 
 == Changelog ==
 
+= 2.1.13 - 2018.05.29 =
+* New: Orders now stores actual currency and order prices in admin area will be shown using this currency.
+* Fix: Situations where order has no shipping.
+* Fix: Removed wordpress fields from REST API.
+* Fix: Invalid postcode validation on editing address.
+* Fix: Properly update states on country change in edit address page.
+* Fix: Fatal error after manually adding items to order.
+* Fix: Avoid stock html input errors.
+* Fix: Add babel framework to add scripts compatibility with older browsers.
 = 2.1.12 - 2018.04.09 =
 * New: Allow to hide out of stock variations.
 * Fix: Properly show product stock status.

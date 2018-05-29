@@ -1,4 +1,13 @@
 ## Changelog
+* 2.1.13 - 2018.05.29
+    * New: Orders now stores actual currency and order prices in admin area will be shown using this currency.
+    * Fix: Situations where order has no shipping.
+    * Fix: Removed wordpress fields from REST API.
+    * Fix: Invalid postcode validation on editing address.
+    * Fix: Properly update states on country change in edit address page.
+    * Fix: Fatal error after manually adding items to order.
+    * Fix: Avoid stock html input errors.
+    * Fix: Add babel framework to add scripts compatibility with older browsers.
 * 2.1.12 - 2018.04.09
     * New: Allow to hide out of stock variations.
     * Fix: Properly show product stock status.
