@@ -15,5 +15,12 @@ use Jigoshop\Helper\Product;
 		<input type="hidden" class="shipping-method-rate" name="jigoshop_order[shipping_method_rate][<?= $method->getId(); ?>]" value="<?= $rate->getId(); ?>" />
 		<?= $rate->getName(); ?>
 	</label>
-	<span class="pull-right"><?= Product::formatPrice($rate->calculate($cart)); ?></span>
+	<span class="pull-right">
+		<?php
+		$price = $rate->calculate($cart);
+		$price = apply_filters('jigoshop\shipping\get_price', $price);
+
+		echo Product::formatPrice($price);
+		?>
+	</span>
 </li>

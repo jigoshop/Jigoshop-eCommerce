@@ -418,6 +418,7 @@ class Order implements OrderInterface, \JsonSerializable
 		if($this->isShippingRequired()) {
             $this->shippingMethod = $method;
             $this->shippingPrice = $method->calculate($this);
+            $this->shippingPrice = apply_filters('jigoshop\shipping\get_price', $this->shippingPrice);
             $this->subtotal += $this->shippingPrice;
             $this->shippingTax = apply_filters('jigoshop\order\shipping_tax', $this->shippingTax, $method, $this);
             $this->totalCombinedTax = null;
