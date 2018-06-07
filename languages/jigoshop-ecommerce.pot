@@ -413,7 +413,11 @@ msgstr ""
 msgid "Select your destination"
 msgstr ""
 
+<<<<<<< Updated upstream
 #: templates/shop/cart.php:167, src/Jigoshop/Helper/Product.php:677, src/Jigoshop/Helper/Product.php:747, templates/user/account/address.php:23, templates/user/account/edit_address.php:50, templates/admin/settings/shipping/advanced_flat_rate/rate.php:71
+=======
+#: templates/shop/cart.php:167, src/Jigoshop/Helper/Product.php:688, src/Jigoshop/Helper/Product.php:758, templates/user/account/address.php:23, templates/user/account/edit_address.php:50, templates/admin/settings/shipping/advanced_flat_rate/rate.php:71
+>>>>>>> Stashed changes
 msgid "Postcode"
 msgstr ""
 
@@ -1215,11 +1219,19 @@ msgstr ""
 msgid "File not found."
 msgstr ""
 
+<<<<<<< Updated upstream
 #: src/Jigoshop/Entity/Cart.php:34, src/Jigoshop/Entity/Order.php:652
 msgid "Item does not exists"
 msgstr ""
 
 #: src/Jigoshop/Entity/Cart.php:38, src/Jigoshop/Entity/Order.php:656
+=======
+#: src/Jigoshop/Entity/Cart.php:34, src/Jigoshop/Entity/Order.php:655
+msgid "Item does not exists"
+msgstr ""
+
+#: src/Jigoshop/Entity/Cart.php:38, src/Jigoshop/Entity/Order.php:659
+>>>>>>> Stashed changes
 msgid "Quantity has to be numeric value"
 msgstr ""
 
@@ -1243,6 +1255,7 @@ msgstr ""
 msgid "Unknown address type: \"%s\"."
 msgstr ""
 
+<<<<<<< Updated upstream
 #: src/Jigoshop/Entity/Order.php:109
 msgid "Order %s"
 msgstr ""
@@ -1252,6 +1265,17 @@ msgid "No item with ID %d in order %d"
 msgstr ""
 
 #: src/Jigoshop/Entity/Order.php:662, src/Jigoshop/Admin/Page/Order.php:265, src/Jigoshop/Frontend/Page/Cart.php:397
+=======
+#: src/Jigoshop/Entity/Order.php:112
+msgid "Order %s"
+msgstr ""
+
+#: src/Jigoshop/Entity/Order.php:315
+msgid "No item with ID %d in order %d"
+msgstr ""
+
+#: src/Jigoshop/Entity/Order.php:665, src/Jigoshop/Admin/Page/Order.php:266, src/Jigoshop/Frontend/Page/Cart.php:397
+>>>>>>> Stashed changes
 msgid "Item not found."
 msgstr ""
 
@@ -1263,6 +1287,7 @@ msgstr ""
 msgid "$item"
 msgstr ""
 
+<<<<<<< Updated upstream
 #: src/Jigoshop/Helper/Currency.php:222
 msgid "United Arab Emirates dirham"
 msgstr ""
@@ -1720,6 +1745,465 @@ msgid "South Africa Rand"
 msgstr ""
 
 #: src/Jigoshop/Helper/Currency.php:337
+=======
+#: src/Jigoshop/Helper/Currency.php:235
+msgid "United Arab Emirates dirham"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:236
+msgid "Afghanistan Afghani"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:237
+msgid "Albania Lek"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:238
+msgid "Netherlands Antilles Guilder"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:239
+msgid "Argentina Peso"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:240
+msgid "Australia Dollar"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:241
+msgid "Aruba Guilder"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:242
+msgid "Azerbaijan New Manat"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:243
+msgid "Bosnia and Herzegovina Convertible Marka"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:244
+msgid "Barbados Dollar"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:245
+msgid "Bulgaria Lev"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:246
+msgid "Bermuda Dollar"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:247
+msgid "Brunei Darussalam Dollar"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:248
+msgid "Bolivia Boliviano"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:249
+msgid "Brazil Real"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:250
+msgid "Bahamas Dollar"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:251
+msgid "Botswana Pula"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:252
+msgid "Belarus Ruble"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:253
+msgid "Belize Dollar"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:254
+msgid "Canada Dollar"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:255
+msgid "Switzerland Franc"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:256
+msgid "Chile Peso"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:257
+msgid "China Yuan Renminbi"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:258
+msgid "Colombia Peso"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:259
+msgid "Costa Rica Colon"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:260
+msgid "Cuba Peso"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:261
+msgid "Czech Republic Koruna"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:262
+msgid "Denmark Krone"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:263
+msgid "Dominican Republic Peso"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:264
+msgid "Estonia Kroon"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:265
+msgid "Egypt Pound"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:266
+msgid "Euro Member Countries"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:267
+msgid "Fiji Dollar"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:268
+msgid "Falkland Islands"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:269
+msgid "United Kingdom Pound"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:270
+msgid "Georgian Lari"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:271
+msgid "Guernsey Pound"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:272
+msgid "Ghana Cedis"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:273
+msgid "Gibraltar Pound"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:274
+msgid "Guatemala Quetzal"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:275
+msgid "Guyana Dollar"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:276
+msgid "Hong Kong Dollar"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:277
+msgid "Honduras Lempira"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:278
+msgid "Croatia Kuna"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:279
+msgid "Hungary Forint"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:280
+msgid "Indonesia Rupiah"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:281
+msgid "Israel Shekel"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:282
+msgid "Isle of Man Pound"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:283
+msgid "India Rupee"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:284
+msgid "Iran Rial"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:285
+msgid "Iceland Krona"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:286
+msgid "Jersey Pound"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:287
+msgid "Jamaica Dollar"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:288
+msgid "Japan Yen"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:289
+msgid "Kyrgyzstan Som"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:290
+msgid "Cambodia Riel"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:291
+msgid "North Korea Won"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:292
+msgid "South Korea Won"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:293
+msgid "Cayman Islands Dollar"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:294
+msgid "Kazakhstan Tenge"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:295
+msgid "Laos Kip"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:296
+msgid "Lebanon Pound"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:297
+msgid "Sri Lanka Rupee"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:298
+msgid "Liberia Dollar"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:299
+msgid "Lithuania Litas"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:300
+msgid "Latvia Lat"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:301
+msgid "Moroccan Dirham"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:302
+msgid "Macedonia Denar"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:303
+msgid "Mongolia Tughrik"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:304
+msgid "Mauritius Rupee"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:305
+msgid "Mexico Peso"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:306
+msgid "Malaysia Ringgit"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:307
+msgid "Mozambique Metical"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:308
+msgid "Namibia Dollar"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:309
+msgid "Nigeria Naira"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:310
+msgid "Nicaragua Cordoba"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:311
+msgid "Norway Krone"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:312
+msgid "Nepal Rupee"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:313
+msgid "New Zealand Dollar"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:314
+msgid "Oman Rial"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:315
+msgid "Panama Balboa"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:316
+msgid "Peru Nuevo Sol"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:317
+msgid "Philippines Peso"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:318
+msgid "Pakistan Rupee"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:319
+msgid "Poland Zloty &#122;&#322;"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:320
+msgid "Paraguay Guarani"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:321
+msgid "Qatar Riyal"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:322
+msgid "Romania New Leu"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:323
+msgid "Serbia Dinar"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:324
+msgid "Russia Ruble"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:325
+msgid "Saudi Arabia Riyal"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:326
+msgid "Solomon Islands Dollar"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:327
+msgid "Seychelles Rupee"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:328
+msgid "Sweden Krona"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:329
+msgid "Singapore Dollar"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:330
+msgid "Saint Helena Pound"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:331
+msgid "Somalia Shilling"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:332
+msgid "Suriname Dollar"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:333
+msgid "El Salvador Colon"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:334
+msgid "Syria Pound"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:335
+msgid "Thailand Baht"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:336, src/Jigoshop/Helper/Currency.php:337
+msgid "Turkey Lira"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:338
+msgid "Trinidad and Tobago Dollar"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:339
+msgid "Tuvalu Dollar"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:340
+msgid "Taiwan New Dollar"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:341
+msgid "Ukraine Hryvna"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:342
+msgid "United States Dollar"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:343
+msgid "Uruguay Peso"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:344
+msgid "Uzbekistan Som"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:345
+msgid "Venezuela Bolivar Fuerte"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:346
+msgid "Viet Nam Dong"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:347
+msgid "East Caribbean Dollar"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:348
+msgid "Yemen Rial"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:349
+msgid "South Africa Rand"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:350
+>>>>>>> Stashed changes
 msgid "Zimbabwe Dollar"
 msgstr ""
 
@@ -1749,6 +2233,7 @@ msgstr ""
 msgid "<strong><p>%s</p></strong><p>(%s)</p>"
 msgstr ""
 
+<<<<<<< Updated upstream
 #: src/Jigoshop/Helper/Product.php:285
 msgid "Free"
 msgstr ""
@@ -1758,25 +2243,49 @@ msgid "Price not announced."
 msgstr ""
 
 #: src/Jigoshop/Helper/Product.php:330
+=======
+#: src/Jigoshop/Helper/Product.php:286
+msgid "Free"
+msgstr ""
+
+#: src/Jigoshop/Helper/Product.php:307
+msgid "Price not announced."
+msgstr ""
+
+#: src/Jigoshop/Helper/Product.php:341
+>>>>>>> Stashed changes
 msgctxt "product"
 msgid "In stock"
 msgstr ""
 
+<<<<<<< Updated upstream
 #: src/Jigoshop/Helper/Product.php:331
+=======
+#: src/Jigoshop/Helper/Product.php:342
+>>>>>>> Stashed changes
 msgctxt "product"
 msgid "Out of stock"
 msgstr ""
 
+<<<<<<< Updated upstream
 #: src/Jigoshop/Helper/Product.php:338
+=======
+#: src/Jigoshop/Helper/Product.php:349
+>>>>>>> Stashed changes
 msgctxt "product"
 msgid "%s <strong>(%d available)</strong>"
 msgstr ""
 
+<<<<<<< Updated upstream
 #: src/Jigoshop/Helper/Product.php:341
+=======
+#: src/Jigoshop/Helper/Product.php:352
+>>>>>>> Stashed changes
 msgctxt "product"
 msgid "%s <strong>(Available on request)</strong>"
 msgstr ""
 
+<<<<<<< Updated upstream
 #: src/Jigoshop/Helper/Product.php:447, src/Jigoshop/Admin/Page/Coupons.php:95, src/Jigoshop/Core/Types/Product/Variable.php:427
 msgid "Yes"
 msgstr ""
@@ -1826,6 +2335,57 @@ msgid "Phone"
 msgstr ""
 
 #: src/Jigoshop/Helper/Product.php:697
+=======
+#: src/Jigoshop/Helper/Product.php:458, src/Jigoshop/Admin/Page/Coupons.php:95, src/Jigoshop/Core/Types/Product/Variable.php:427
+msgid "Yes"
+msgstr ""
+
+#: src/Jigoshop/Helper/Product.php:458, src/Jigoshop/Admin/Page/Coupons.php:95, src/Jigoshop/Core/Types/Product/Variable.php:428
+msgid "No"
+msgstr ""
+
+#: src/Jigoshop/Helper/Product.php:597
+msgid "Rated %s out of 5"
+msgstr ""
+
+#: src/Jigoshop/Helper/Product.php:658, src/Jigoshop/Helper/Product.php:733, src/Jigoshop/Admin/Reports/Table/CustomerList.php:287
+msgid "First Name"
+msgstr ""
+
+#: src/Jigoshop/Helper/Product.php:663, src/Jigoshop/Helper/Product.php:738, src/Jigoshop/Admin/Reports/Table/CustomerList.php:288
+msgid "Last Name"
+msgstr ""
+
+#: src/Jigoshop/Helper/Product.php:668, src/Jigoshop/Helper/Product.php:743, templates/user/account/address.php:10, templates/user/account/edit_address.php:19
+msgid "Company"
+msgstr ""
+
+#: src/Jigoshop/Helper/Product.php:673
+msgid "EU VAT Number"
+msgstr ""
+
+#: src/Jigoshop/Helper/Product.php:678, src/Jigoshop/Helper/Product.php:748, templates/user/account/address.php:19, templates/user/account/edit_address.php:40
+msgid "Address"
+msgstr ""
+
+#: src/Jigoshop/Helper/Product.php:683, src/Jigoshop/Helper/Product.php:753, templates/user/account/address.php:21, templates/user/account/edit_address.php:45
+msgid "City"
+msgstr ""
+
+#: src/Jigoshop/Helper/Product.php:693, src/Jigoshop/Helper/Product.php:763, templates/user/account/address.php:27, templates/user/account/edit_address.php:61, templates/admin/settings/tax/rules.php:28
+msgid "Country"
+msgstr ""
+
+#: src/Jigoshop/Helper/Product.php:698, src/Jigoshop/Helper/Product.php:768
+msgid "State/Province"
+msgstr ""
+
+#: src/Jigoshop/Helper/Product.php:703, templates/user/account/address.php:30, templates/user/account/edit_address.php:67
+msgid "Phone"
+msgstr ""
+
+#: src/Jigoshop/Helper/Product.php:708
+>>>>>>> Stashed changes
 msgid "Email Address"
 msgstr ""
 
@@ -2082,7 +2642,11 @@ msgstr ""
 msgid "Postcode is empty."
 msgstr ""
 
+<<<<<<< Updated upstream
 #: src/Jigoshop/Service/CartService.php:306, src/Jigoshop/Admin/Page/Order.php:492
+=======
+#: src/Jigoshop/Service/CartService.php:306, src/Jigoshop/Admin/Page/Order.php:493
+>>>>>>> Stashed changes
 msgid "Invalid postcode."
 msgstr ""
 
@@ -2090,7 +2654,11 @@ msgstr ""
 msgid "Country \"%s\" does not exist."
 msgstr ""
 
+<<<<<<< Updated upstream
 #: src/Jigoshop/Service/CartService.php:314, src/Jigoshop/Frontend/Page/Account/EditAddress.php:89
+=======
+#: src/Jigoshop/Service/CartService.php:314, src/Jigoshop/Frontend/Page/Account/EditAddress.php:90
+>>>>>>> Stashed changes
 msgid "Country \"%s\" does not have state \"%s\"."
 msgstr ""
 
@@ -3479,7 +4047,11 @@ msgstr ""
 msgid "Order Actions"
 msgstr ""
 
+<<<<<<< Updated upstream
 #: src/Jigoshop/Admin/Page/Order.php:110, src/Jigoshop/Admin/Page/Order.php:259, src/Jigoshop/Admin/Page/Order.php:299, src/Jigoshop/Admin/Page/Order.php:323, src/Jigoshop/Admin/Page/Order.php:389, src/Jigoshop/Admin/Page/Order.php:431, src/Jigoshop/Admin/Page/Order.php:477, src/Jigoshop/Api/Routes/V1/Orders.php:283
+=======
+#: src/Jigoshop/Admin/Page/Order.php:110, src/Jigoshop/Admin/Page/Order.php:260, src/Jigoshop/Admin/Page/Order.php:300, src/Jigoshop/Admin/Page/Order.php:324, src/Jigoshop/Admin/Page/Order.php:390, src/Jigoshop/Admin/Page/Order.php:432, src/Jigoshop/Admin/Page/Order.php:478, src/Jigoshop/Api/Routes/V1/Orders.php:283
+>>>>>>> Stashed changes
 msgid "Order not found."
 msgstr ""
 
@@ -3487,6 +4059,7 @@ msgstr ""
 msgid "Product cannot be added to the order."
 msgstr ""
 
+<<<<<<< Updated upstream
 #: src/Jigoshop/Admin/Page/Order.php:249
 msgid "Invalid quantity value."
 msgstr ""
@@ -3504,6 +4077,25 @@ msgid "Invalid country."
 msgstr ""
 
 #: src/Jigoshop/Admin/Page/Order.php:446
+=======
+#: src/Jigoshop/Admin/Page/Order.php:250
+msgid "Invalid quantity value."
+msgstr ""
+
+#: src/Jigoshop/Admin/Page/Order.php:253
+msgid "Invalid product price."
+msgstr ""
+
+#: src/Jigoshop/Admin/Page/Order.php:331, src/Jigoshop/Frontend/Page/Cart.php:320
+msgid "Method rate is required."
+msgstr ""
+
+#: src/Jigoshop/Admin/Page/Order.php:381
+msgid "Invalid country."
+msgstr ""
+
+#: src/Jigoshop/Admin/Page/Order.php:447
+>>>>>>> Stashed changes
 msgid "Invalid state."
 msgstr ""
 
@@ -5624,7 +6216,11 @@ msgstr ""
 msgid "Loading..."
 msgstr ""
 
+<<<<<<< Updated upstream
 #: src/Jigoshop/Frontend/Page/Cart.php:288, src/Jigoshop/Frontend/Page/Cart.php:511, src/Jigoshop/Frontend/Page/Account/EditAddress.php:75
+=======
+#: src/Jigoshop/Frontend/Page/Cart.php:288, src/Jigoshop/Frontend/Page/Cart.php:511, src/Jigoshop/Frontend/Page/Account/EditAddress.php:83
+>>>>>>> Stashed changes
 msgid "Postcode is not valid!"
 msgstr ""
 
@@ -6511,6 +7107,7 @@ msgstr ""
 msgid "Password changed."
 msgstr ""
 
+<<<<<<< Updated upstream
 #: src/Jigoshop/Frontend/Page/Account/EditAddress.php:82
 msgid "Country \"%s\" does not exists."
 msgstr ""
@@ -6520,6 +7117,17 @@ msgid "Invalid email address"
 msgstr ""
 
 #: src/Jigoshop/Frontend/Page/Account/EditAddress.php:105
+=======
+#: src/Jigoshop/Frontend/Page/Account/EditAddress.php:76
+msgid "Country \"%s\" does not exists."
+msgstr ""
+
+#: src/Jigoshop/Frontend/Page/Account/EditAddress.php:97
+msgid "Invalid email address"
+msgstr ""
+
+#: src/Jigoshop/Frontend/Page/Account/EditAddress.php:106
+>>>>>>> Stashed changes
 msgid "Address saved."
 msgstr ""
 
