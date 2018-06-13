@@ -12,5 +12,15 @@ use Jigoshop\Helper\Product;
 		<input type="radio" name="order[shipping]" value="<?= $method->getId(); ?>" <?= Forms::checked($order->hasShippingMethod($method), true); ?> />
 		<?= $method->getName(); ?>
 	</label>
-	<span class="pull-right"><?= Product::formatPrice($method->calculate($order), '', $order->getCurrency()); ?></span>
+    <?php 
+    try { 
+    	$price = $method->calculate($order);
+
+    	$price = apply_filters('jigoshop\shipping\get_price', $price);
+    	?>
+		<span class="pull-right"><?= Product::formatPrice($price, '', $order->getCurrency()); ?></span>
+    	<?php 
+	} 
+	catch (Exception $e) {} 
+	?>
 </li>
