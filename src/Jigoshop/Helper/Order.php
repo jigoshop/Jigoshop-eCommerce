@@ -63,7 +63,7 @@ class Order
 
 		Render::output('admin/orders/status', [
 			'currentStatusText' => static::getStatus($order),
-			'pendingTo'         => $status['status'] == Status::PENDING ? Status::PENDING : '',
+			'pendingTo'         => $status['status'] == Status::PENDING || $status['status'] == Status::ON_HOLD ? Status::PENDING : '',
 			'processingTo'      => $status['status'] == Status::PROCESSING ? Status::PROCESSING : '',
 			'hideCancel'      => $status['status'] == Status::COMPLETED ? true : ($status['status'] == Status::CANCELLED ? true : false),
 			'orderId'           => $order->getId(),
