@@ -204,9 +204,11 @@ class Products extends PostController implements ApiControllerContract
         /** @var Product $factory */
         $factory = $this->app->getContainer()->di->get('jigoshop.factory.product');
         self::overridePostProductData();
-        $this->saveAttributes($_POST['product']);
-        $product = $factory->createWithAttributes(null);
+        $product = $factory->get(isset($_POST['product']['type']) ? $_POST['product']['type'] : ProductEntity\Simple::TYPE);
+        $state = $this->restoreProductState($product, $_POST['product']);
+        //echo '<pre>'; var_dump($product);exit;
         $this->service->save($product);
+        $product = $this->service->find($product->getId());
 
         return $response->withJson([
             'success' => true,
@@ -271,31 +273,77 @@ class Products extends PostController implements ApiControllerContract
         return $data;
     }
 
-    //todo move to service
     /**
-     * converts attributes in array to updated or created attribute objects
-     * @param array $productData
+     * @param ProductEntity $product
+     * @param array $state
+     * @return array
      */
-    private function saveAttributes(array &$productData)
+    private function restoreProductState($product, $state)
     {
-        if (isset($productData['attributes'])) {
-            $newAttributesArray = [];
-            $factory = $this->app->getContainer()->di->get('jigoshop.factory.product');
-            foreach ($productData['attributes'] as $key => &$attribute) {
-                if (!$dbAttr = $this->service->getAttribute($key)) {
-                    $dbAttr = $this->service->createAttribute($attribute['type']);
-                    $dbAttr = $factory->updateAttribute($attribute, $dbAttr, $key);
-                    $dbAttr->setValue($attribute['value']);
-                } else {
-                    $dbAttr->setExists(true);
-                    $dbAttr->setValue($attribute);
-                }
-                $tempAttribute = $this->service->saveAttribute($dbAttr);
-                $newAttributesArray[$tempAttribute->getId()] = $tempAttribute;
-                unset($productData['attributes'][$key]);
-            }
-            $productData['attributes'] = $newAttributesArray;
+        $state = $this->_parseProductState($state);
+        switch($product->getType()) {
+            case ProductEntity\Simple::TYPE:
+                $state = $this->_parseSimpleProductState($state);
+                break;
+
+            default:
+                $state = apply_filters('jigoshop\api\v1\products\restoreState\\'.$product->getType(), $state, $product);
+                break;
         }
+
+
+        $product->restoreState($state);
     }
 
+    private function _parseProductState($state)
+    {
+        if(isset($state['attributes'])) {
+            $newAttributesArray = [];
+            foreach ($state['attributes'] as $attribute) {
+                if(isset($attribute['id'])) {
+                    /** @var ProductEntity\Attribute $tempAttribute */
+                    $tempAttribute = $this->service->getAttribute((int)$attribute['id']);
+                } else {
+                    $tempAttribute = new ProductEntity\Attribute\Custom();
+                    $tempAttribute->setExists(false);
+                    $tempAttribute->setLabel($attribute['label']);
+                    $tempAttribute->setSlug(sanitize_title($attribute['label']));
+                    $this->service->saveAttribute($tempAttribute);
+                }
+                if($tempAttribute instanceof ProductEntity\Attribute) {
+                    $tempAttribute->setValue($attribute['value']);
+                    if (isset($attribute['visible'])) {
+                        $tempAttribute->setVisible($attribute['visible'] == 1 || $attribute['visible'] == '1');
+                    }
+                    if ($tempAttribute instanceof ProductEntity\Attribute\Multiselect && isset($attribute['is_variable'])) {
+                        $tempAttribute->setVariable($attribute['is_variable'] == 1 || $attribute['is_variable'] == '1');
+                    }
+                    $newAttributesArray[] = clone $tempAttribute;
+                }
+            }
+            $state['attributes'] = $newAttributesArray;
+        }
+
+        if(isset($state['categories'])) {
+            $tempCategories = [];
+            foreach ($state['categories'] as $category) {
+                $tempCategories[] = ['id' => $category];
+            }
+            $state['categories'] = $tempCategories;
+        }
+
+        if(isset($state['tags'])) {
+            $tempTags = [];
+            foreach ($state['tags'] as $tags) {
+                $tempTags[] = ['id' => $tags];
+            }
+            $state['tags'] = $tempTags;
+        }
+
+        return $state;
+    }
+    private function _parseSimpleProductState($state)
+    {
+
+    }
 }

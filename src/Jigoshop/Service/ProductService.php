@@ -243,6 +243,36 @@ class ProductService implements ProductServiceInterface
                 $this->_saveProductAttachment($object->getId(), $attachment);
             }
 
+            unset($fields['attachments']);
+        }
+
+        if (isset($fields['categories'])) {
+		    $categoriesToSave = $this->_removeAllProductTermsExcept($object->getId(), array_map(function ($item) {
+		        return (int)$item['id'];
+            }, $fields['categories']), Types::PRODUCT_CATEGORY);
+
+		    foreach ($categoriesToSave as $category) {
+		        $this->_saveProductTerm($object->getId(), $category, Types::PRODUCT_CATEGORY);
+            }
+
+            unset($fields['categories']);
+        }
+
+        if (isset($fields['tags'])) {
+            $tagsToSave = $this->_removeAllProductTermsExcept($object->getId(), array_map(function ($item) {
+                return (int)$item['id'];
+            }, $fields['tags']), Types::PRODUCT_TAG);
+
+            foreach ($tagsToSave as $tag) {
+                $this->_saveProductTerm($object->getId(), $tag, Types::PRODUCT_TAG);
+            }
+
+            unset($fields['tags']);
+        }
+
+        if (isset($fields['featured_image'])) {
+		    $fields['_thumbnail_id'] = $fields['featured_image'];
+		    unset($fields['featured_image']);
         }
 
         foreach ($fields as $field => $value) {
@@ -353,6 +383,31 @@ class ProductService implements ProductServiceInterface
             'attachment_id' => $attachment['id'],
             'type' => $attachment['type'],
         ]);
+    }
+
+    private function _removeAllProductTermsExcept($productId, $terms, $taxonomy)
+    {
+        $allTerms = $this->wp->getTheTerms($productId, $taxonomy);
+        $alreadySavedTerms = [];
+
+        if($allTerms) {
+            foreach ($allTerms as $term) {
+                if (!in_array($term->term_id, $terms)) {
+                    //TODO add to WPAL
+                    wp_remove_object_terms($productId, $term->term_id, $taxonomy);
+                } else {
+                    $alreadySavedTerms[] = $term->term_id;
+                }
+            }
+        }
+
+        return array_diff($terms, $alreadySavedTerms);
+    }
+
+    private function _saveProductTerm($productId, $term, $taxonomy)
+    {
+        //TODO add to WPAL
+        wp_set_object_terms($productId, $term, $taxonomy, true);
     }
 
 

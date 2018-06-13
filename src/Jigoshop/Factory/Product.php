@@ -202,6 +202,10 @@ class Product implements EntityFactoryInterface
             $state['categories'] = $this->getTerms($post->ID, Types::PRODUCT_CATEGORY);
             $state['tags'] = $this->getTerms($post->ID, Types::PRODUCT_TAG);
 
+            if(isset($state['_thumbnail_id'])) {
+                $state['featured_image'] = $state['_thumbnail_id'];
+            }
+
             if (isset($state['tax_classes'])) {
                 $state['tax_classes'] = unserialize($state['tax_classes']);
             }

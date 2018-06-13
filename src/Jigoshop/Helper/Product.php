@@ -805,6 +805,24 @@ class Product
         return $attachments;
     }
 
+    public static function getFeaturedImageData($imageId)
+    {
+        $uploadDir = wp_upload_dir(null, false);
+        $uploadDir = $uploadDir['baseurl'];
+        $data = get_post_meta($imageId, '_wp_attachment_metadata', true);
+        if($data) {
+            $data['file'] = $uploadDir . '/' . (isset($data['file']) ? $data['file'] : '');
+            if(isset($data['sizes'])) {
+                $data['sizes'] = array_map(function($size) use ($uploadDir) {
+                    $size['file'] = $uploadDir . '/' . $size['file'];
+                    return $size;
+                }, $data['sizes']);
+            }
+        }
+
+        return $data;
+    }
+
     /**
      * @param Entity\Product\Variable $product
      * @param Entity\Product\Variable\Variation $variation

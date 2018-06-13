@@ -36,6 +36,7 @@ abstract class Product implements EntityInterface, Product\Taxable, \JsonSeriali
     /** @var  Attribute[] */
     private $attributes;
     private $attributeOrder;
+    private $featuredImage = 0;
     private $attachments;
     private $crossSells = [];
     private $upSells = [];
@@ -436,6 +437,23 @@ abstract class Product implements EntityInterface, Product\Taxable, \JsonSeriali
     }
 
     /**
+     * @return int
+     */
+    public function getFeaturedImage()
+    {
+        return $this->featuredImage;
+    }
+
+    /**
+     * @param int $image ID of image
+     */
+    public function setFeaturedImage($image)
+    {
+        $this->featuredImage = $image;
+        $this->dirtyFields[] = 'featured_image';
+    }
+
+    /**
      * @return mixed
      */
     public function getAttachments()
@@ -562,6 +580,9 @@ abstract class Product implements EntityInterface, Product\Taxable, \JsonSeriali
                 case 'up_sells':
                     $toSave['up_sells'] = $this->upSells;
                     break;
+                case 'featured_image':
+                    $toSave['featured_image'] = $this->featuredImage;
+                    break;
             }
         }
 
@@ -573,6 +594,8 @@ abstract class Product implements EntityInterface, Product\Taxable, \JsonSeriali
         $toSave['attributes'] = $this->attributes;
         $toSave['attribute_order'] = $this->attributeOrder;
         $toSave['attachments'] = $this->attachments;
+        $toSave['categories'] = $this->categories;
+        $toSave['tags'] = $this->tags;
 
         return $toSave;
     }
@@ -613,6 +636,9 @@ abstract class Product implements EntityInterface, Product\Taxable, \JsonSeriali
         }
         if (isset($state['featured'])) {
             $this->featured = is_numeric($state['featured']) ? (bool)$state['featured'] : $state['featured'] == 'on';
+        }
+        if (isset($state['featured_image'])) {
+            $this->featuredImage = (int)$state['featured_image'];
         }
         if (isset($state['visibility'])) {
             $this->visibility = (int)$state['visibility'];
@@ -695,6 +721,10 @@ abstract class Product implements EntityInterface, Product\Taxable, \JsonSeriali
             'gtin' => $this->gtin,
             'mpn' => $this->mpn,
             'featured' => $this->featured,
+            'featured_image' => [
+                'id' => $this->featuredImage,
+                'image' => \Jigoshop\Helper\Product::getFeaturedImageData($this->featuredImage),
+            ],
             'visibility' => $this->visibility,
             'is_taxable' => $this->taxable,
             'tax_classes' => $this->taxClasses,
