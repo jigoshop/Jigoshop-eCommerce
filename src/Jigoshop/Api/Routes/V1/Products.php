@@ -295,6 +295,10 @@ class Products extends PostController implements ApiControllerContract
         $product->restoreState($state);
     }
 
+    /**
+     * @param array $state
+     * @return array
+     */
     private function _parseProductState($state)
     {
         if(isset($state['attributes'])) {
@@ -342,8 +346,21 @@ class Products extends PostController implements ApiControllerContract
 
         return $state;
     }
+
+    /**
+     * @param array $state
+     * @return array
+     */
     private function _parseSimpleProductState($state)
     {
+        if(isset($state['sales_from'])) {
+            $state['sales_from'] = strtotime($state['sales_from']);
+        }
 
+        if(isset($state['sales_to'])) {
+            $state['sales_to'] = strtotime($state['sales_to']);
+        }
+
+        return $state;
     }
 }
