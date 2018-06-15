@@ -235,7 +235,6 @@ class Virtual extends Product implements Purchasable, Saleable
         $state['regular_price'] = $this->regularPrice;
         $state['sale'] = $this->sales;
         $state['stock'] = $this->stock;
-        $state['url'] = $this->url;
 
         return $state;
     }

@@ -7,6 +7,7 @@ use Jigoshop\Api\Contracts\ApiControllerContract;
 use Jigoshop\Entity\Product as ProductEntity;
 use Jigoshop\Exception;
 use Jigoshop\Factory\Product;
+use Jigoshop\Service\ProductService;
 use Slim\App;
 use Slim\Http\Request;
 use Slim\Http\Response;
@@ -20,6 +21,8 @@ class Products extends PostController implements ApiControllerContract
 {
     /** @var  App */
     protected $app;
+    /** @var ProductService */
+    protected $service;
 
     /**
      * @apiDefine ProductReturnObject
@@ -205,7 +208,7 @@ class Products extends PostController implements ApiControllerContract
         $factory = $this->app->getContainer()->di->get('jigoshop.factory.product');
         self::overridePostProductData();
         $product = $factory->get(isset($_POST['product']['type']) ? $_POST['product']['type'] : ProductEntity\Simple::TYPE);
-        $state = $this->restoreProductState($product, $_POST['product']);
+        $this->restoreProductState($product, $_POST['product']);
         //echo '<pre>'; var_dump($product);exit;
         $this->service->save($product);
         $product = $this->service->find($product->getId());
@@ -276,7 +279,6 @@ class Products extends PostController implements ApiControllerContract
     /**
      * @param ProductEntity $product
      * @param array $state
-     * @return array
      */
     private function restoreProductState($product, $state)
     {
@@ -285,7 +287,14 @@ class Products extends PostController implements ApiControllerContract
             case ProductEntity\Simple::TYPE:
                 $state = $this->_parseSimpleProductState($state);
                 break;
-
+            case ProductEntity\Virtual::TYPE:
+                $state = $this->_parseVirtualProductState($state);
+                break;
+            case ProductEntity\External::TYPE:
+                $state = $this->_parseExternalProductState($state);
+                break;
+            case ProductEntity\Variable::TYPE:
+                $state = $this->_parseVariableProductState($state);
             default:
                 $state = apply_filters('jigoshop\api\v1\products\restoreState\\'.$product->getType(), $state, $product);
                 break;
@@ -362,5 +371,85 @@ class Products extends PostController implements ApiControllerContract
         }
 
         return $state;
+    }
+
+    /**
+     * @param $state
+     * @return array
+     */
+    private function _parseVirtualProductState($state)
+    {
+        if(isset($state['sales_from'])) {
+            $state['sales_from'] = strtotime($state['sales_from']);
+        }
+
+        if(isset($state['sales_to'])) {
+            $state['sales_to'] = strtotime($state['sales_to']);
+        }
+
+        return $state;
+    }
+
+    /**
+     * @param array $state
+     * @return array
+     */
+    private function _parseExternalProductState($state)
+    {
+        if(isset($state['sales_from'])) {
+            $state['sales_from'] = strtotime($state['sales_from']);
+        }
+
+        if(isset($state['sales_to'])) {
+            $state['sales_to'] = strtotime($state['sales_to']);
+        }
+
+        return $state;
+    }
+
+    /**
+     * @param $state
+     * @return array
+     */
+    private function _parseVariableProductState($state)
+    {
+        if(isset($state['variations'])) {
+            foreach($state['variations'] as $variation) {
+                $tempVariation = new ProductEntity\Variable\Variation();
+                if(isset($variation['id'])) {
+                    $tempVariation->setId((int)$variation['id']);
+                }
+                if(isset($variation['attributes'])) {
+                    foreach($variation['attributes'] as $attribute) {
+                        if(isset($attribute['id'])) {
+                            $tempAttribute = $this->service->getAttribute($attribute['id']);
+                            if($tempAttribute instanceof ProductEntity\Attribute) {
+                                $tempVariationAttribute = new ProductEntity\Variable\Attribute(true);
+                                $tempVariationAttribute->setVariation(clone $tempVariation);
+                                $tempVariationAttribute->setAttribute(clone $tempAttribute);
+                                if(isset($attribute['value'])) {
+                                    $tempVariationAttribute->setValue($attribute['value']);
+                                }
+                            }
+                            $tempVariation->addAttribute(clone $tempAttribute);
+                        }
+                    }
+                }
+                if(isset($variation['product'])) {
+                    if(isset($variation['product']['id'])) {
+                        $tempProduct = $this->service->find($variation['product']['id']);
+                    } else {
+                        $factory = $this->app->getContainer()->di->get('jigoshop.factory.product');
+                        $tempProduct = $factory->get(isset($variation['product']['type']) ? $variation['product']['type'] : ProductEntity\Simple::TYPE);
+                    }
+                    if($tempProduct instanceof ProductEntity && !$tempProduct instanceof ProductEntity\Variable) {
+                        $this->restoreProductState($tempProduct, $variation['product']);
+                        $tempVariation->setProduct(clone $tempProduct);
+                    } else {
+                        throw new Exception(__('Invalid Variation product', 'jigoshop-ecommerce'));
+                    }
+                }
+            }
+        }
     }
 }
