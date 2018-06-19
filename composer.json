@@ -35,7 +35,8 @@
 		"tuupola/slim-basic-auth": "^2.2.0",
 		"tuupola/base62": "^0.7.0",
 		"firebase/php-jwt": "*",
-		"worldpay/worldpay-lib-php": "~2.1.2"
+		"worldpay/worldpay-lib-php": "~2.1.2",
+		"wp-cli/wp-cli" : "1.5.1",
 	},
 	"require-dev": {
 		"phpunit/phpunit": "5.*",
