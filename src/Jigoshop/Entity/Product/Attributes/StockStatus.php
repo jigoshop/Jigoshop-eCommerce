@@ -2,13 +2,16 @@
 
 namespace Jigoshop\Entity\Product\Attributes;
 
+use Jigoshop\Container;
+use Jigoshop\Entity\JsonInterface;
+
 /**
  * Product's stock status.
  *
  * @package Jigoshop\Entity\Product\Attributes
  * @author  Amadeusz Starzykiewicz
  */
-class StockStatus implements \Serializable, \JsonSerializable
+class StockStatus implements \Serializable, JsonInterface
 {
 	const OUT_STOCK = 0;
 	const IN_STOCK = 1;
@@ -207,5 +210,29 @@ class StockStatus implements \Serializable, \JsonSerializable
             'allow_backorders' => $this->allowBackorders,
             'stock' => $this->stock,
         ];
+    }
+
+    /**
+     * @param Container $di
+     * @param array $json
+     */
+    public function jsonDeserialize(Container $di, array $json)
+    {
+        if(isset($json['manage'])) {
+            $this->manage = (bool)$json['manage'];
+        }
+        if(isset($json['stock'])) {
+            $this->stock = (int)$json['stock'] < 0 ? (int)$json['stock'] : 0;
+        }
+        if(isset($json['allow_backorders'])) {
+            $this->allowBackorders = $json['allow_backorders'];
+        }
+        if(isset($json['status'])) {
+            if($this->manage) {
+                $this->status = $this->stock > 0;
+            } else {
+                $this->status = (bool)$json['status'];
+            }
+        }
     }
 }

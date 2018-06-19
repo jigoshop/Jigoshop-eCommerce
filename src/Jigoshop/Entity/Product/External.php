@@ -2,6 +2,7 @@
 
 namespace Jigoshop\Entity\Product;
 
+use Jigoshop\Container;
 use Jigoshop\Entity\Product;
 use Jigoshop\Exception;
 
@@ -248,5 +249,24 @@ class External extends Product implements Purchasable, Saleable
         $state['url'] = $this->url;
 
         return $state;
+    }
+
+    /**
+     * @param Container $di
+     * @param array $json
+     */
+    public function jsonDeserialize(Container $di, array $json)
+    {
+        parent::jsonDeserialize($di, $json);
+
+        if(isset($json['regular_price'])) {
+            $this->regularPrice = $json['regular_price'];
+        }
+        if(isset($json['sale'])) {
+            $this->sales->jsonDeserialize($di, $json['sale']);
+        }
+        if(isset($json['url'])) {
+            $this->url = $json['url'];
+        }
     }
 }

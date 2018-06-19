@@ -2,15 +2,18 @@
 
 namespace Jigoshop\Entity\Product\Variable;
 
+use Jigoshop\Container;
+use Jigoshop\Entity\JsonInterface;
 use Jigoshop\Entity\Product;
 use Jigoshop\Entity\Product\Variable;
+use Jigoshop\Service\ProductService;
 
 /**
  * Entity for variation of the product.
  *
  * @package Jigoshop\Entity\Product\Variable
  */
-class Variation implements \JsonSerializable
+class Variation implements JsonInterface
 {
 	/** @var int */
 	private $id;
@@ -150,5 +153,45 @@ class Variation implements \JsonSerializable
             'product' => $this->product,
             'attributes' => array_values($this->attributes),
         ];
+    }
+
+    /**
+     * @param Container $di
+     * @param array $json
+     */
+    public function jsonDeserialize(Container $di, array $json)
+    {
+        if(isset($json['id'])) {
+            $this->id = $json['id'];
+        }
+
+        if(isset($json['product'])) {
+            if(isset($json['product']['id'])) {
+                /** @var ProductService $service */
+                $service = $di->get('jigoshop.service.product');
+                $product = $service->find((int)$json['product']['id']);
+            } else {
+                /** @var \Jigoshop\Factory\Product $factory */
+                $factory = $di->get('jigoshop.factory.product');
+                $product = $factory->get(isset($json['product']['type']) ? $json['product']['type'] : Product\Simple::TYPE);
+            }
+            if(!$product instanceof Product\Variable) {
+                $product->jsonDeserialize($di, $json['product']);
+                $this->setProduct($product);
+            }
+        }
+
+        if(isset($json['attributes'])) {
+            foreach($json['attributes'] as $jsonAttribute) {
+                if(isset($jsonAttribute['attribute'], $jsonAttribute['attribute']['id']) && $this->hasAttribute($jsonAttribute)) {
+                    $attribute = $this->getAttribute($jsonAttribute['attribute']['id']);
+                } else {
+                    $attribute = new Attribute();
+                }
+
+                $attribute->jsonDeserialize($di, $jsonAttribute);
+                $this->addAttribute(clone $attribute);
+            }
+        }
     }
 }

@@ -2,14 +2,17 @@
 
 namespace Jigoshop\Entity\Product\Variable;
 
+use Jigoshop\Container;
+use Jigoshop\Entity\JsonInterface;
 use Jigoshop\Entity\Order\Item;
+use Jigoshop\Service\ProductService;
 
 /**
  * Attribute of variable product.
  *
  * @package Jigoshop\Entity\Product\Variable
  */
-class Attribute implements \JsonSerializable
+class Attribute implements JsonInterface
 {
 	const VARIATION_ATTRIBUTE_EXISTS = true;
 
@@ -127,5 +130,27 @@ class Attribute implements \JsonSerializable
             'attribute' => $this->getAttribute()->getId(),
             'exists' => $this->exists
         ];
+    }
+
+    /**
+     * @param Container $di
+     * @param array $json
+     */
+    public function jsonDeserialize(Container $di, array $json)
+    {
+        if(isset($json['value'])) {
+            $this->value = $json['value'];
+        }
+        if(isset($json['exists'])) {
+            $this->exists = (bool)$json['exists'];
+        }
+        if(isset($json['attribute'], $json['attribute']['id'])) {
+            /** @var ProductService $service */
+            $service = $di->get('jigoshop.product.service');
+            $attribute = $service->getAttribute((int)$json['attribute']['id']);
+            if($attribute) {
+                $this->setAttribute($attribute);
+            }
+        }
     }
 }

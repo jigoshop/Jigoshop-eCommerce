@@ -2,6 +2,8 @@
 
 namespace Jigoshop\Entity\Product;
 
+use Jigoshop\Container;
+use Jigoshop\Entity\JsonInterface;
 use Jigoshop\Entity\Product\Attribute\Multiselect;
 use Jigoshop\Entity\Product\Attribute\Option;
 use Jigoshop\Entity\Product\Attribute\Select;
@@ -13,7 +15,7 @@ use Jigoshop\Entity\Product\Attribute\Text;
  * @package Jigoshop\Entity\Product\Attributes
  * @author  Amadeusz Starzykiewicz
  */
-abstract class Attribute implements \JsonSerializable
+abstract class Attribute implements JsonInterface
 {
 	const PRODUCT_ATTRIBUTE_EXISTS = true;
 
@@ -302,7 +304,37 @@ abstract class Attribute implements \JsonSerializable
         ];
     }
 
-	/**
+    /**
+     * @param Container $di
+     * @param array $json
+     */
+    public function jsonDeserialize(Container $di, array $json)
+    {
+        if(isset($json['id'])) {
+            $this->id = $json['id'];
+        }
+        if(isset($json['local'])) {
+            $this->local = (bool)$json['local'];
+        }
+        if(isset($json['slug'])) {
+            $this->slug = $json['slug'];
+        }
+        if(isset($json['visible'])) {
+            $this->visible->jsonDeserialize($di, $json['visible']);
+        }
+        if(isset($json['options'])) {
+            foreach ($json['options'] as $jsonOption) {
+                $option = new Option();
+                $option->jsonDeserialize($di, $jsonOption);
+                $this->addOption(clone $option);
+            }
+        }
+        if(isset($json['value'])) {
+            $this->value = $json['value'];
+        }
+    }
+
+    /**
 	 * @return int Type of attribute.
 	 */
 	abstract public function getType();

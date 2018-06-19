@@ -2,13 +2,16 @@
 
 namespace Jigoshop\Entity\Product\Attributes;
 
+use Jigoshop\Container;
+use Jigoshop\Entity\JsonInterface;
+
 /**
  * Product size.
  *
  * @package Jigoshop\Entity\Product\Attributes
  * @author  Amadeusz Starzykiewicz
  */
-class Size implements \Serializable, \JsonSerializable
+class Size implements \Serializable, JsonInterface
 {
 	/** @var float */
 	private $width = 0.0;
@@ -128,5 +131,25 @@ class Size implements \Serializable, \JsonSerializable
             'height' => $this->height,
             'length' => $this->length,
         ];
+    }
+
+    /**
+     * @param Container $di
+     * @param array $json
+     */
+    public function jsonDeserialize(Container $di, array $json)
+    {
+        if(isset($json['weight'])) {
+            $this->weight = (float)$json['weight'];
+        }
+        if(isset($json['width'])) {
+            $this->width = (float)$json['width'];
+        }
+        if(isset($json['height'])) {
+            $this->height = (float)$json['height'];
+        }
+        if(isset($json['length'])) {
+            $this->length = (float)$json['length'];
+        }
     }
 }

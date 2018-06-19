@@ -2,6 +2,7 @@
 
 namespace Jigoshop\Entity\Product;
 
+use Jigoshop\Container;
 use Jigoshop\Entity\Product;
 
 class Virtual extends Product implements Purchasable, Saleable
@@ -237,5 +238,24 @@ class Virtual extends Product implements Purchasable, Saleable
         $state['stock'] = $this->stock;
 
         return $state;
+    }
+
+    /**
+     * @param Container $di
+     * @param array $json
+     */
+    public function jsonDeserialize(Container $di, array $json)
+    {
+        parent::jsonDeserialize($di, $json);
+
+        if(isset($json['regular_price'])) {
+            $this->regularPrice = $json['regular_price'];
+        }
+        if(isset($json['sale'])) {
+            $this->sales->jsonDeserialize($di, $json['sale']);
+        }
+        if(isset($json['stock'])) {
+            $this->sales->jsonDeserialize($di, $json['stock']);
+        }
     }
 }

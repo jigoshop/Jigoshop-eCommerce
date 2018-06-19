@@ -2,6 +2,7 @@
 
 namespace Jigoshop\Entity\Product\Attribute;
 
+use Jigoshop\Container;
 use Jigoshop\Entity\Product\Attribute;
 
 class Multiselect extends Attribute implements Variable
@@ -98,4 +99,17 @@ class Multiselect extends Attribute implements Variable
 
         return $state;
 	}
+
+    /**
+     * @param Container $di
+     * @param array $json
+     */
+	public function jsonDeserialize(Container $di, array $json)
+    {
+        parent::jsonDeserialize($di, $json);
+
+        if(isset($json['variable'])) {
+            $this->variable->jsonDeserialize($di, $json['variable']);
+        }
+    }
 }

@@ -2,6 +2,7 @@
 
 namespace Jigoshop\Entity\Product;
 
+use Jigoshop\Container;
 use Jigoshop\Entity\Order\Item;
 use Jigoshop\Entity\Product;
 use Jigoshop\Entity\Product\Attribute;
@@ -298,8 +299,35 @@ class Variable extends Product implements Shippable, Saleable
         $state['lowest_price'] = $this->getLowestPrice();
         $state['highest_price'] = $this->getHighestPrice();
         $state['variations'] = $this->variations;
-        $state['default_variable_attributes_values'] = $this->defaultVariationId;
+        $state['default_variation_id'] = $this->defaultVariationId;
 
         return $state;
+    }
+
+    /**
+     * @param Container $di
+     * @param array $json\
+     */
+    public function jsonDeserialize(Container $di, array $json)
+    {
+        parent::jsonDeserialize($di, $json);
+
+        if(isset($json['sale'])) {
+            $this->sales->jsonDeserialize($di, $json['sale']);
+        }
+        if(isset($json['default_variation_id'])) {
+            $this->defaultVariationId = $json['default_variation_id'];
+        }
+        if(isset($json['variations'])) {
+            foreach ($json['variations'] as $jsonVariation) {
+                if(isset($jsonVariation['id'], $this->variations[$jsonVariation['id']])) {
+                    $variation = $this->variations[$jsonVariation['id']];
+                } else {
+                    $variation = new Product\Variable\Variation();
+                }
+                $variation->jsonDeserialize($di, $jsonVariation);
+                $this->addVariation(clone $variation);
+            }
+        }
     }
 }

@@ -2,9 +2,11 @@
 
 namespace Jigoshop\Entity\Product\Attribute;
 
+use Jigoshop\Container;
+use Jigoshop\Entity\JsonInterface;
 use Jigoshop\Entity\Product\Attribute;
 
-class Option implements \JsonSerializable
+class Option implements JsonInterface
 {
 	/** @var int */
 	private $id;
@@ -91,5 +93,22 @@ class Option implements \JsonSerializable
             'label' => $this->label,
             'value' => $this->value,
         ];
+    }
+
+    /**
+     * @param Container $di
+     * @param array $json
+     */
+    public function jsonDeserialize(Container $di, array $json)
+    {
+        if(isset($json['id'])) {
+            $this->id = $json['id'];
+        }
+        if(isset($json['label'])) {
+            $this->label = $json['label'];
+        }
+        if(isset($json['value'])) {
+            $this->value = $json['value'];
+        }
     }
 }

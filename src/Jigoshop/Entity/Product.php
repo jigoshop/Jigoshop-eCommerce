@@ -2,7 +2,9 @@
 
 namespace Jigoshop\Entity;
 
+use Jigoshop\Container;
 use Jigoshop\Entity\Product\Attribute;
+use Jigoshop\Service\ProductService;
 
 /**
  * Product class.
@@ -10,7 +12,7 @@ use Jigoshop\Entity\Product\Attribute;
  * @package Jigoshop\Entity
  * @author  Amadeusz Starzykiewicz
  */
-abstract class Product implements EntityInterface, Product\Taxable, \JsonSerializable
+abstract class Product implements EntityInterface, Product\Taxable, JsonInterface
 {
     const VISIBILITY_CATALOG = 1;
     const VISIBILITY_SEARCH = 2;
@@ -752,5 +754,78 @@ abstract class Product implements EntityInterface, Product\Taxable, \JsonSeriali
             'cross_sells' => $this->crossSells,
             'up_sells' => $this->upSells
         ];
+    }
+
+    public function jsonDeserialize(Container $di, array $json)
+    {
+        if(isset($json['id'])) {
+            $this->id = $json['id'];
+        }
+        if(isset($json['name'])) {
+            $this->name = $json['name'];
+        }
+        if(isset($json['description'])) {
+            $this->description = $json['description'];
+        }
+        if(isset($json['sku'])) {
+            $this->sku = $json['sku'];
+        }
+        if(isset($json['brand'])) {
+            $this->brand = $json['brand'];
+        }
+        if(isset($json['gtin'])) {
+            $this->gtin = $json['gtin'];
+        }
+        if(isset($json['featured'])) {
+            $this->featured = is_numeric($json['featured']) ? (bool)$json['featured'] : $json['featured'] == 'on';
+        }
+        if(isset($json['featured_image'])) {
+            $this->featuredImage = (int)$json['featured_image']['id'];
+        }
+        if(isset($json['is_taxable'])) {
+            $this->taxable = (bool)$json['is_taxable'];
+        }
+        if(isset($json['tax_classes'])) {
+            $this->taxClasses = $json['tax_classes'];
+        }
+        if(isset($json['size'])) {
+            $this->size->jsonDeserialize($di, $json['size']);
+        }
+        if(isset($json['attributes'])) {
+            foreach ($json['attributes'] as $jsonAttribute) {
+                if(isset($jsonAttribute['id']) && $jsonAttribute['id']) {
+                    if(isset($this->attributes[$jsonAttribute['id']])) {
+                        $attribute = $this->attributes[$jsonAttribute['id']];
+                    } else {
+                        /** @var ProductService $service */
+                        $service = $di->get('jigoshop.product.service');
+                        $attribute = $service->getAttribute($jsonAttribute['id']);
+                    }
+                } else {
+                    $attribute = new Attribute\Custom();
+                    $attribute->setExists(false);
+                }
+                $attribute->jsonDeserialize($di, $jsonAttribute);
+                $this->addAttribute(clone $attribute);
+            }
+        }
+        if(isset($json['attribute_order'])) {
+            $this->attributeOrder = $json['attribute_order'];
+        }
+        if(isset($json['attachments'])) {
+
+        }
+        if(isset($json['categories'])) {
+            $this->categories = $json['categories'];
+        }
+        if(isset($json['tags'])) {
+            $this->tags = $json['tags'];
+        }
+        if(isset($json['cross_sells'])) {
+            $this->crossSells = $json['cross_sells'];
+        }
+        if(isset($json['up_sells'])) {
+            $this->upSells = $json['up_sells'];
+        }
     }
 }

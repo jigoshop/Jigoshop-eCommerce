@@ -208,8 +208,7 @@ class Products extends PostController implements ApiControllerContract
         $factory = $this->app->getContainer()->di->get('jigoshop.factory.product');
         self::overridePostProductData();
         $product = $factory->get(isset($_POST['product']['type']) ? $_POST['product']['type'] : ProductEntity\Simple::TYPE);
-        $this->restoreProductState($product, $_POST['product']);
-        //echo '<pre>'; var_dump($product);exit;
+        $product->jsonDeserialize($this->app->getContainer()->di, $_POST['product']);
         $this->service->save($product);
         $product = $this->service->find($product->getId());
 
@@ -231,14 +230,12 @@ class Products extends PostController implements ApiControllerContract
         $object = $this->validateObjectFinding($args);
 
         $putData = self::overridePutProductData($request->getParsedBody());
-        $factory = $this->app->getContainer()->di->get('jigoshop.factory.product');
-        $this->saveAttributes($putData['product']);
-        $product = $factory->update($object, $putData); //updating object with parsed variables
-        $this->service->updateAndSavePost($product);
+        $object->jsonDeserialize($this->app->getContainer()->di, $putData['product']);
+        $this->service->save($object);
 
         return $response->withJson([
             'success' => true,
-            'data' => $product,
+            'data' => $object,
         ]);
     }
 
@@ -274,182 +271,5 @@ class Products extends PostController implements ApiControllerContract
         }
         unset($data['jigoshop_product']);
         return $data;
-    }
-
-    /**
-     * @param ProductEntity $product
-     * @param array $state
-     */
-    private function restoreProductState($product, $state)
-    {
-        $state = $this->_parseProductState($state);
-        switch($product->getType()) {
-            case ProductEntity\Simple::TYPE:
-                $state = $this->_parseSimpleProductState($state);
-                break;
-            case ProductEntity\Virtual::TYPE:
-                $state = $this->_parseVirtualProductState($state);
-                break;
-            case ProductEntity\External::TYPE:
-                $state = $this->_parseExternalProductState($state);
-                break;
-            case ProductEntity\Variable::TYPE:
-                $state = $this->_parseVariableProductState($state);
-            default:
-                $state = apply_filters('jigoshop\api\v1\products\restoreState\\'.$product->getType(), $state, $product);
-                break;
-        }
-
-
-        $product->restoreState($state);
-    }
-
-    /**
-     * @param array $state
-     * @return array
-     */
-    private function _parseProductState($state)
-    {
-        if(isset($state['attributes'])) {
-            $newAttributesArray = [];
-            foreach ($state['attributes'] as $attribute) {
-                if(isset($attribute['id'])) {
-                    /** @var ProductEntity\Attribute $tempAttribute */
-                    $tempAttribute = $this->service->getAttribute((int)$attribute['id']);
-                } else {
-                    $tempAttribute = new ProductEntity\Attribute\Custom();
-                    $tempAttribute->setExists(false);
-                    $tempAttribute->setLabel($attribute['label']);
-                    $tempAttribute->setSlug(sanitize_title($attribute['label']));
-                    $this->service->saveAttribute($tempAttribute);
-                }
-                if($tempAttribute instanceof ProductEntity\Attribute) {
-                    $tempAttribute->setValue($attribute['value']);
-                    if (isset($attribute['visible'])) {
-                        $tempAttribute->setVisible($attribute['visible'] == 1 || $attribute['visible'] == '1');
-                    }
-                    if ($tempAttribute instanceof ProductEntity\Attribute\Multiselect && isset($attribute['is_variable'])) {
-                        $tempAttribute->setVariable($attribute['is_variable'] == 1 || $attribute['is_variable'] == '1');
-                    }
-                    $newAttributesArray[] = clone $tempAttribute;
-                }
-            }
-            $state['attributes'] = $newAttributesArray;
-        }
-
-        if(isset($state['categories'])) {
-            $tempCategories = [];
-            foreach ($state['categories'] as $category) {
-                $tempCategories[] = ['id' => $category];
-            }
-            $state['categories'] = $tempCategories;
-        }
-
-        if(isset($state['tags'])) {
-            $tempTags = [];
-            foreach ($state['tags'] as $tags) {
-                $tempTags[] = ['id' => $tags];
-            }
-            $state['tags'] = $tempTags;
-        }
-
-        return $state;
-    }
-
-    /**
-     * @param array $state
-     * @return array
-     */
-    private function _parseSimpleProductState($state)
-    {
-        if(isset($state['sales_from'])) {
-            $state['sales_from'] = strtotime($state['sales_from']);
-        }
-
-        if(isset($state['sales_to'])) {
-            $state['sales_to'] = strtotime($state['sales_to']);
-        }
-
-        return $state;
-    }
-
-    /**
-     * @param $state
-     * @return array
-     */
-    private function _parseVirtualProductState($state)
-    {
-        if(isset($state['sales_from'])) {
-            $state['sales_from'] = strtotime($state['sales_from']);
-        }
-
-        if(isset($state['sales_to'])) {
-            $state['sales_to'] = strtotime($state['sales_to']);
-        }
-
-        return $state;
-    }
-
-    /**
-     * @param array $state
-     * @return array
-     */
-    private function _parseExternalProductState($state)
-    {
-        if(isset($state['sales_from'])) {
-            $state['sales_from'] = strtotime($state['sales_from']);
-        }
-
-        if(isset($state['sales_to'])) {
-            $state['sales_to'] = strtotime($state['sales_to']);
-        }
-
-        return $state;
-    }
-
-    /**
-     * @param $state
-     * @return array
-     */
-    private function _parseVariableProductState($state)
-    {
-        if(isset($state['variations'])) {
-            foreach($state['variations'] as $variation) {
-                $tempVariation = new ProductEntity\Variable\Variation();
-                if(isset($variation['id'])) {
-                    $tempVariation->setId((int)$variation['id']);
-                }
-                if(isset($variation['attributes'])) {
-                    foreach($variation['attributes'] as $attribute) {
-                        if(isset($attribute['id'])) {
-                            $tempAttribute = $this->service->getAttribute($attribute['id']);
-                            if($tempAttribute instanceof ProductEntity\Attribute) {
-                                $tempVariationAttribute = new ProductEntity\Variable\Attribute(true);
-                                $tempVariationAttribute->setVariation(clone $tempVariation);
-                                $tempVariationAttribute->setAttribute(clone $tempAttribute);
-                                if(isset($attribute['value'])) {
-                                    $tempVariationAttribute->setValue($attribute['value']);
-                                }
-                            }
-                            $tempVariation->addAttribute(clone $tempAttribute);
-                        }
-                    }
-                }
-                if(isset($variation['product'])) {
-                    if(isset($variation['product']['id'])) {
-                        $tempProduct = $this->service->find($variation['product']['id']);
-                    } else {
-                        $factory = $this->app->getContainer()->di->get('jigoshop.factory.product');
-                        $tempProduct = $factory->get(isset($variation['product']['type']) ? $variation['product']['type'] : ProductEntity\Simple::TYPE);
-                    }
-                    if($tempProduct instanceof ProductEntity && !$tempProduct instanceof ProductEntity\Variable) {
-                        $this->restoreProductState($tempProduct, $variation['product']);
-                        $tempVariation->setProduct(clone $tempProduct);
-                    } else {
-                        throw new Exception(__('Invalid Variation product', 'jigoshop-ecommerce'));
-                    }
-                }
-            }
-        }
     }
 }
