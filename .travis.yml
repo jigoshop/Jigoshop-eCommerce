@@ -9,10 +9,12 @@ before_script:
   - node_modules/gulp/bin/gulp.js dev
   - cd ../
   - Jigoshop-eCommerce/vendor/wp-cli/wp-cli/bin/wp core download --path=wordpress/
-  - Jigoshop-eCommerce/vendor/wp-cli/wp-cli/bin/wp config create --path=wordpress/ --dbname=wp --dbuser=root
-  - Jigoshop-eCommerce/vendor/wp-cli/wp-cli/bin/wp core install --path=wordpress/
-  - cp -r Jigoshop-eCommerce/ wordpress/wp-content/plugins/
-  - Jigoshop-eCommerce/vendor/wp-cli/wp-cli/bin/wp plugin activate Jigoshop-eCommerce
+  - mv Jigoshop-eCommerce/ wordpress/wp-content/plugins/  
+  - wordpress/wp-content/plugins/Jigoshop-eCommerce/vendor/wp-cli/wp-cli/bin/wp config create --path=wordpress/ --dbname=wp --dbuser=root
+  - mysqladmin -u root create wp
+  - wordpress/wp-content/plugins/Jigoshop-eCommerce/vendor/wp-cli/wp-cli/bin/wp core install --path=wordpress/ --url=http://localhost --title=Travis --admin_user=jigoshop --admin_password=jigoshop --admin_email=martin.kowalak@jigoshop.com
+  - wordpress/wp-content/plugins/Jigoshop-eCommerce/vendor/wp-cli/wp-cli/bin/wp plugin activate Jigoshop-eCommerce
+  - cd wordpress/wp-content/plugins/Jigoshop-eCommerce/
 script: phpunit
 notifications:
   slack:
