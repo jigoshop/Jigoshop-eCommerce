@@ -35,14 +35,14 @@
 		"tuupola/slim-basic-auth": "^2.2.0",
 		"tuupola/base62": "^0.7.0",
 		"firebase/php-jwt": "*",
-		"worldpay/worldpay-lib-php": "~2.1.2",
-		"wp-cli/wp-cli" : "1.5.1"
+		"worldpay/worldpay-lib-php": "~2.1.2"
 	},
 	"require-dev": {
 		"phpunit/phpunit": "5.*",
 		"mockery/mockery": "0.9.*",
 		"symfony/var-dumper": "*",
 		"sebastian/phpcpd": "*",
-		"phpmd/phpmd" : "@stable"
+		"phpmd/phpmd": "@stable",
+		"wp-cli/wp-cli": "*"
 	}
 }
