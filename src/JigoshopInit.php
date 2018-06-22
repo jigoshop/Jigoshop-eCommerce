@@ -317,7 +317,13 @@ class JigoshopInit
      */
     private function getClassLoader()
     {
-        return require_once(JIGOSHOP_DIR . '/vendor/autoload.php');
+	   if(defined('WP_CLI')) {
+	       $loader = require(JIGOSHOP_DIR . '/vendor/autoload.php');
+	   } else {
+	       $loader = require_once(JIGOSHOP_DIR . '/vendor/autoload.php');
+	   }
+
+	   return $loader;
     }
 
     /**
