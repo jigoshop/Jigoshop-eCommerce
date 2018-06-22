@@ -9,7 +9,7 @@ before_script:
   - node_modules/gulp/bin/gulp.js dev
   - cd ../
   - Jigoshop-eCommerce/vendor/wp-cli/wp-cli/bin/wp core download --path=wordpress/
-  - Jigoshop-eCommerce/vendor/wp-cli/wp-cli/bin/wp config create --path=wordpress/ --dbane=wp --dbuser=root
+  - Jigoshop-eCommerce/vendor/wp-cli/wp-cli/bin/wp config create --path=wordpress/ --dbname=wp --dbuser=root
   - Jigoshop-eCommerce/vendor/wp-cli/wp-cli/bin/wp core install --path=wordpress/
   - cp -r Jigoshop-eCommerce/ wordpress/wp-content/plugins/
   - Jigoshop-eCommerce/vendor/wp-cli/wp-cli/bin/wp plugin activate Jigoshop-eCommerce
