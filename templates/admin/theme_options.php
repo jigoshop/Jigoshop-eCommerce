@@ -9,7 +9,7 @@ use Jigoshop\Helper\Render;
  */
 ?>
 <div class="wrap jigoshop">
-	<h1><?php _e('Jigoshop &raquo; Settings', 'jigoshop-ecommerce'); ?></h1>
+	<h1><?php _e('Jigoshop &raquo; Theme options', 'jigoshop-ecommerce'); ?></h1>
 	<?php settings_errors(); ?>
 	<?php Render::output('shop/messages', ['messages' => $messages]);
 	$menuContent = '';
