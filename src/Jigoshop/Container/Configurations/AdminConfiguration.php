@@ -78,6 +78,10 @@ class AdminConfiguration implements ConfigurationInterface
 		    'wpal',
             'jigoshop.options',
         ]);
+        $services->setDetails('jigoshop.admin.theme_options', 'Jigoshop\Admin\ThemeOptions', [
+        	'wpal',
+        	'jigoshop.options'
+        ]);
 	}
 
 	/**
@@ -95,6 +99,7 @@ class AdminConfiguration implements ConfigurationInterface
 		$tags->add('jigoshop.admin.page', 'jigoshop.admin.migration');
 		$tags->add('jigoshop.admin.page', 'jigoshop.admin.product.categories');
 		$tags->add('jigoshop.admin.page', 'jigoshop.admin.product.attributes');
+		$tags->add('jigoshop.admin.page', 'jigoshop.admin.theme_options');
 		$tags->add('jigoshop.admin.dashboard', 'jigoshop.admin.setup');
 	}
 
