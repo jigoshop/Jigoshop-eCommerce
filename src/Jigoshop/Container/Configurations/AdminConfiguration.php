@@ -80,7 +80,8 @@ class AdminConfiguration implements ConfigurationInterface
         ]);
         $services->setDetails('jigoshop.admin.theme_options', 'Jigoshop\Admin\ThemeOptions', [
         	'wpal',
-        	'jigoshop.options'
+        	'jigoshop.options',
+        	'jigoshop.messages'
         ]);
 	}
 
