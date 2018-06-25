@@ -31,6 +31,20 @@ class ThemeOptions implements PageInterface {
 	}
 
 	public function display() {
+	}
 
+	/**
+	 * Registers theme object.
+	 * 
+	 * @param \Jigoshop\Admin\ThemeOptions\ThemeInterface $theme Theme object to register.
+	 * 
+	 * @throws \Exception On invalid object specified.
+	 */
+	public static function register($theme) {
+		if(!$theme instanceof ThemeInterface) {
+			throw new \Exception('Specified theme does not implement ThemeInterface.');
+		}
+
+		echo 'registered';exit;
 	}
 }
