@@ -1,4 +1,8 @@
 ## Changelog
+* 2.1.14 - 2018.06.25
+    * New: Allow to change on-hold orders to processing on order list.
+    * New: Added wp-cli to Travis.
+    * Fix: External plugins now can modify shipping costs.
 * 2.1.13 - 2018.05.29
     * New: Orders now stores actual currency and order prices in admin area will be shown using this currency.
     * Fix: Situations where order has no shipping.

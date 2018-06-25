@@ -4,7 +4,7 @@ Tags: ecommerce, wordpress ecommerce, store, shop, shopping, cart, checkout, wid
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=7F5FZ5NGJ3XTL
 Requires at least: 4.0
 Tested up to: 4.9.6
-Stable tag: 2.1.13
+Stable tag: 2.1.14
 
 A feature-packed eCommerce plugin built upon WordPress core functionality ensuring excellent performance, customizability and control - robust Tax Settings, Stock Level Management, Free and Premium Extensions - you name it.
 
@@ -150,6 +150,10 @@ However, if you want priority, dedicated support from Jigoshop staff, we dp offe
 
 == Changelog ==
 
+= 2.1.14 - 2018.06.25 =
+* New: Allow to change on-hold orders to processing on order list.
+* New: Added wp-cli to Travis.
+* Fix: External plugins now can modify shipping costs.
 = 2.1.13 - 2018.05.29 =
 * New: Orders now stores actual currency and order prices in admin area will be shown using this currency.
 * Fix: Situations where order has no shipping.
