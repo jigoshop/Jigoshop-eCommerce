@@ -2,12 +2,16 @@
 namespace Jigoshop\Admin;
 
 use Jigoshop\Admin;
+use Jigoshop\Admin\ThemeOptions\ThemeInterface;
+use Jigoshop\Admin\ThemeOptions\ThemeTabInterface;
 
 class ThemeOptions implements PageInterface {
 	const NAME = 'jigoshop_theme_options';
 
 	private $wp;
 	private $options;
+
+	private static $theme;
 
 	public function __construct($wp, $options) {
 		$this->wp = $wp;
@@ -45,6 +49,12 @@ class ThemeOptions implements PageInterface {
 			throw new \Exception('Specified theme does not implement ThemeInterface.');
 		}
 
-		echo 'registered';exit;
+		foreach($theme->getTabs() as $tab) {
+			if(!$tab instanceof ThemeTabInterface) {
+				throw new \Exception('Specified tab does not implement ThemeTabInterface.');
+			}
+		}
+
+		self::$theme = $theme;
 	}
 }
