@@ -21,6 +21,5 @@ interface ThemeInterface {
 	 * 
 	 * @return array Array of \Jigoshop\Admin\ThemeOptions\ThemeTab objects.
 	 */
-
 	public function getTabs();
 }

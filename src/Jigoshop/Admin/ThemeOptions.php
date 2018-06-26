@@ -252,4 +252,29 @@ class ThemeOptions implements PageInterface {
 
 		self::$theme = $theme;
 	}
+
+	/**
+	 * Returns options based on specified tab slug.
+	 * 
+	 * @param string $slug Tab options.
+	 * 
+	 * @return array Assoc array with tab options.
+	 * 
+	 * @throws \Exception On use before theme registration, or invalid tab.
+	 */
+	public static function getTabOptions($slug) {
+		if(self::$theme === null) {
+			throw new \Exception('No theme registered yet.');
+		}
+
+		$options = Integration::getOptions();
+
+		foreach(self::$theme->getTabs() as $tab) {
+			if($tab->getSlug() == $slug) {
+				return array_merge($tab->getDefaultOptions(), $options->get(sprintf('jigoshop.theme_options.%s.%s', self::$theme->getSlug(), $tab->getSlug()), []));
+			}
+		}
+
+		throw new \Exception('Invalid tab slug specified.');
+	}
 }
