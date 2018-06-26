@@ -9,6 +9,7 @@ use Jigoshop\Core\Options;
 use Jigoshop\Helper\Render;
 use Jigoshop\Helper\Scripts;
 use Jigoshop\Helper\Styles;
+use Jigoshop\Integration;
 
 class ThemeOptions implements PageInterface {
 	const NAME = 'jigoshop_theme_options';
@@ -228,10 +229,15 @@ class ThemeOptions implements PageInterface {
 			throw new \Exception('Specified theme does not implement ThemeInterface.');
 		}
 
+		$options = Integration::getOptions();
+
 		foreach($theme->getTabs() as $tab) {
 			if(!$tab instanceof ThemeTabInterface) {
 				throw new \Exception('Specified tab does not implement ThemeTabInterface.');
 			}
+
+			$tabOptions = array_merge($tab->getDefaultOptions(), $options->get(sprintf('jigoshop.theme_options.%s.%s', $theme->getSlug(), $tab->getSlug()), []));
+			$tab->setOptions($tabOptions);
 		}
 
 		self::$theme = $theme;

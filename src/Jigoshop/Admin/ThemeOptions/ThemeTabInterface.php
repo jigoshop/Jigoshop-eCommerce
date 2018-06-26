@@ -24,6 +24,20 @@ interface ThemeTabInterface {
 	public function getSections();
 
 	/**
+	 * Returns assoc array with default options (names and default values).
+	 * 
+	 * @return array Default tab options.
+	 */
+	public function getDefaultOptions();
+
+	/**
+	 * Called by JSE core to populate ThemeTabInterface with previously saved options merged with default options.
+	 * 
+	 * @param array $options Previously saved tab options.
+	 */
+	public function setOptions($options);
+
+	/**
 	 * Validates and sanitizes theme options.
 	 * 
 	 * @param array $options Options to sanitize/validate.
