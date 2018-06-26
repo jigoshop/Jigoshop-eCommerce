@@ -2,8 +2,10 @@
 namespace Jigoshop\Admin;
 
 use Jigoshop\Admin;
+use Jigoshop\Admin\Helper\Forms;
 use Jigoshop\Admin\ThemeOptions\ThemeInterface;
 use Jigoshop\Admin\ThemeOptions\ThemeTabInterface;
+use Jigoshop\Core\Options;
 use Jigoshop\Helper\Render;
 use Jigoshop\Helper\Scripts;
 use Jigoshop\Helper\Styles;
@@ -65,16 +67,10 @@ class ThemeOptions implements PageInterface {
 			return;
 		}
 
-		$this->wp->registerSetting(self::NAME, self::NAME, [$this, 'validate']);
+		$this->wp->registerSetting(self::NAME, Options::NAME, [$this, 'validate']);
 
 		$tab = $this->getCurrentTab();
-		foreach(self::$theme->getTabs() as $currentTab) {
-			if($currentTab->getSlug() == $tab) {
-				$tab = $currentTab;
-
-				break;
-			}
-		}
+		$tab = $this->getTabBySlug($tab);
 
 		// Workaround for PHP pre-5.4
 		$that = $this;
@@ -97,6 +93,53 @@ class ThemeOptions implements PageInterface {
 		}
 	}
 
+	private function validateField(array $field) {
+		if(!isset($field['id']) || $field['id'] === null) {
+			$field['id'] = Forms::prepareIdFromName($field['name']);
+		}
+		$field['label_for'] = $field['id'];
+
+		// TODO: Think on how to improve this name hacking
+		$field['name'] = sprintf('%s[%s]', Options::NAME, $field['name']);
+
+		return $field;
+	}
+
+	public function displaySection(ThemeTabInterface $tab, array $section) {
+		Render::output('admin/theme_options/section', [
+			'tab' => $tab,
+			'section' => $section,
+        ]);
+	}
+
+	public function displayField(array $field) {
+		switch ($field['type']) {
+			case 'user_defined':
+				Forms::userDefined($field);
+				break;
+			case 'text':
+				Forms::text($field);
+				break;
+			case 'number':
+				Forms::number($field);
+				break;
+			case 'select':
+				Forms::select($field);
+				break;
+			case 'checkbox':
+				Forms::checkbox($field);
+				break;
+			case 'constant':
+				Forms::constant($field);
+				break;
+			case 'textarea':
+				Forms::textarea($field);
+				break;
+			default:
+				$this->wp->doAction('jigoshop\admin\theme_options\form_field\\'.$field['type'], $field);
+		}
+	}			
+
 	public function getTitle() {
 		return __('Theme options', 'jigoshop-ecommerce');
 	}
@@ -113,7 +156,12 @@ class ThemeOptions implements PageInterface {
 		return self::NAME;
 	}
 
-	protected function getCurrentTab() {
+	/**
+	 * Returns current tab slug.
+	 * 
+	 * @return string Tab slug.
+	 */
+	private function getCurrentTab() {
 		if ($this->currentTab === null) {
 			$this->currentTab = self::$theme->getTabs()[0]->getSlug();
 			// Use REQUEST to work with both GET and POST parameters
@@ -125,12 +173,47 @@ class ThemeOptions implements PageInterface {
 		return $this->currentTab;
 	}	
 
+	/**
+	 * Returns TabInterface object based on provided slug.
+	 * 
+	 * @param string $slug Slug of tab to fetch.
+	 * 
+	 * @return \Jigoshop\Admin\ThemeOptions\TabInterface Fetched tab or null if not found.
+	 */
+	private function getTabBySlug($slug) {
+		foreach(self::$theme->getTabs() as $tab) {
+			if($tab->getSlug() == $slug) {
+				return $tab;
+			}
+		}
+
+		return null;
+	}
+
 	public function display() {
 		Render::output('admin/theme_options', [
 			'tabs' => self::$theme->getTabs(),
 			'messages' => $this->messages,
 			'current_tab' => $this->getCurrentTab()
         ]);		
+	}
+
+	public function validate($input) {
+		if($_REQUEST['option_page'] != self::NAME) {
+			return $input;
+		}
+
+		$tab = $this->getTabBySlug($this->getCurrentTab());
+
+		try {
+            $this->options->update(sprintf('jigoshop.theme_options.%s.%s', self::$theme->getSlug(), $tab->getSlug()), $tab->validate($input));
+        } catch(Admin\Settings\ValidationException $e) {
+            $this->messages->addError($e->getMessage(), true);
+            $this->wp->wpSafeRedirect(admin_url(sprintf('admin.php?page=%s&tab=%s', self::NAME, $tab->getSlug())));
+            exit;
+        }
+
+		return $this->options->getAll();		
 	}
 
 	/**

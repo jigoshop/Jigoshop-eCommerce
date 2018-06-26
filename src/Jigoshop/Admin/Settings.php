@@ -250,6 +250,10 @@ class Settings implements PageInterface
 	 */
 	public function validate($input)
 	{
+		if($_REQUEST['option_page'] != self::NAME) {
+			return $input;
+		}
+
 	    try {
             $currentTab = $this->getCurrentTab();
             /** @var TabInterface $tab */
