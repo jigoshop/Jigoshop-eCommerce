@@ -70,6 +70,10 @@ class ThemeOptions implements PageInterface {
 
 		$this->wp->registerSetting(self::NAME, Options::NAME, [$this, 'validate']);
 
+		if(self::$theme === null) {
+			return;
+		}
+
 		$tab = $this->getCurrentTab();
 		$tab = $this->getTabBySlug($tab);
 
@@ -192,6 +196,12 @@ class ThemeOptions implements PageInterface {
 	}
 
 	public function display() {
+		if(self::$theme === null) {
+			Render::output('admin/theme_options/unsupported_theme', []);
+
+			return;
+		}
+
 		Render::output('admin/theme_options', [
 			'tabs' => self::$theme->getTabs(),
 			'messages' => $this->messages,
