@@ -79,7 +79,11 @@ class ThemeOptions implements PageInterface {
 
 		// Workaround for PHP pre-5.4
 		$that = $this;
-		/** @var TabInterface $tab */
+
+		if($tab === null) {
+			return;
+		}
+
 		$sections = $tab->getSections();
 		foreach ($sections as $section) {
 			$this->wp->addSettingsSection($section['id'], $section['title'], function () use ($tab, $section, $that){
