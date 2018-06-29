@@ -432,7 +432,7 @@ abstract class Product implements EntityInterface, Product\Taxable, \JsonSeriali
      */
     public function getTaxClasses()
     {
-        return $this->taxClasses;
+        return is_array($this->taxClasses) ? $this->taxClasses : [];
     }
 
     /**

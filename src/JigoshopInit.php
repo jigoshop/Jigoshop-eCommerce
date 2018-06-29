@@ -130,6 +130,7 @@ class JigoshopInit
         $this->initQueryInterceptor();
         $this->addOptionsToStaticClasses();
         $this->addWpalToStaticClasses();
+        $this->initStaticClassesFilters();
         $this->initCoreServices();
         $this->upgrade();
         $this->container->get('jigoshop.core')->run($this->container);
@@ -275,6 +276,11 @@ class JigoshopInit
         $wp = $this->container->get('wpal');
         Jigoshop\Entity\Order\Status::setWordpress($wp);
         Jigoshop\Entity\Order\Discount\Type::setWordpress($wp);
+    }
+
+    private function initStaticClassesFilters()
+    {
+        \Jigoshop\Helper\Currency::addStaticFilters();
     }
 
     /**

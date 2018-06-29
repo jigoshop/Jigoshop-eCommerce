@@ -360,7 +360,7 @@ class TaxService implements TaxServiceInterface
 			$tax['__compound__'.$class] += $definition['rate'] * $cost / 100;
 		}
 
-		return array_filter($tax);
+		return $this->wp->applyFilters('jigoshop\service\tax\get_tax', array_filter($tax), $price, $taxClasses, $definitions);
 	}
 
 	/**
