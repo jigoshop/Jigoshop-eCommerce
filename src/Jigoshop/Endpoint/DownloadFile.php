@@ -82,7 +82,7 @@ class DownloadFile implements Processable
                         throw new Exception(__('This is not your download link.', 'jigoshop-ecommerce'));
                     }
                 }
-                if($item->getProductId() && $item->getProduct() instanceof Downloadable) {
+                if($item->getProductId() && $item->getProduct() instanceof Downloadable && $item->getProduct()->getUrl()) {
                     $file = $item->getProduct()->getUrl();
                 } else {
                     $file = $item->getMeta('file')->getValue();
