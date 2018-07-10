@@ -7,10 +7,13 @@
   "devDependencies": {
     "apidoc": "^0.17.5",
     "apidoc-markdown2": "^0.3.6",
+    "babel-core": "^6.26.3",
+    "babel-preset-env": "*",
     "blueimp-gallery": "^2.33.0",
     "coffeescript": "^2.2.4",
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^0.0.6",
+    "gulp-babel": "^7.0.1",
     "gulp-cache": "^0.1.1",
     "gulp-coffee": "^3.0.2",
     "gulp-coffeelint": "^0.3.3",
@@ -29,11 +32,11 @@
     "require-dir": "~0.1.0",
     "uglify-es": "^3.3.10",
     "yargs": "^1.2.6",
-    "gulp-babel": "*",
-    "babel-core": "*",
-    "babel-preset-env": "*"
+    "gutil": "^1.6.4",
+    "bower": "^1.8.4",
+    "n": "^2.1.12"
   },
   "engines": {
-    "node": ">=0.10.0"
+    "node": "10.6.0"
   }
 }

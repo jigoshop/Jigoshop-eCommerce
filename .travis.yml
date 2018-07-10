@@ -8,7 +8,6 @@ before_script:
   - cd wordpress/wp-content/plugins/Jigoshop-eCommerce/
   - composer update
   - npm install
-  - npm install bower
   - node_modules/bower/bin/bower update
   - node_modules/gulp/bin/gulp.js dev
   - cd ../../../../
