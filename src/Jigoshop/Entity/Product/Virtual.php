@@ -40,7 +40,6 @@ class Virtual extends Product implements Purchasable, Saleable
 	 */
 	public function getPrice()
 	{
-		// TODO: Improve code to calculate price single time only
 		return apply_filters('jigoshop\product\get_price', $this->calculatePrice(), $this);
 	}
 

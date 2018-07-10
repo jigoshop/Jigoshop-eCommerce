@@ -17,46 +17,6632 @@ msgstr ""
 msgid "<strong>%s</strong>: required Jigoshop version: %s. Current version: %s. Please upgrade."
 msgstr ""
 
-#: src/JigoshopInit.php:411
+#: src/JigoshopInit.php:417
 msgid "Contact support"
 msgstr ""
 
-#: src/JigoshopInit.php:419
+#: src/JigoshopInit.php:425
 msgid "Add your [stars] on [link]wordpress.org[/link] and keep this plugin essentially free."
 msgstr ""
 
-#: src/JigoshopInit.php:439
+#: src/JigoshopInit.php:445, src/Jigoshop/Service/OrderService.php:417, src/Jigoshop/Service/OrderService.php:422
 msgid "Jigoshop"
 msgstr ""
 
-#: src/JigoshopInit.php:450
+#: src/JigoshopInit.php:456, src/Jigoshop/Admin/Dashboard.php:61
 msgid "Dashboard"
 msgstr ""
 
-#: src/JigoshopInit.php:459
+#: src/JigoshopInit.php:465, src/Jigoshop/Admin/Migration.php:61, templates/admin/dashboard/rightNow.php:27, src/Jigoshop/Admin/Settings/ProductsTab.php:54, src/Jigoshop/Core/Types/Product.php:70
 msgid "Products"
 msgstr ""
 
-#: src/JigoshopInit.php:468
+#: src/JigoshopInit.php:474, src/Jigoshop/Admin/Migration.php:65, src/Jigoshop/Core/Types/Order.php:42, src/Jigoshop/Admin/Reports/Table/CustomerList.php:72, src/Jigoshop/Admin/Reports/Table/CustomerList.php:290
 msgid "Orders"
 msgstr ""
 
-#: src/JigoshopInit.php:477, src/JigoshopInit.php:488
+#: src/JigoshopInit.php:483, src/JigoshopInit.php:494, src/Jigoshop/Admin/Settings.php:87, src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:409
 msgid "Settings"
 msgstr ""
 
-#: src/JigoshopInit.php:489
+#: src/JigoshopInit.php:495
 msgid "Docs"
 msgstr ""
 
-#: src/JigoshopInit.php:490
+#: src/JigoshopInit.php:496, templates/admin/dashboard/usefulLinks.php:32
 msgid "Support"
 msgstr ""
 
-#: src/JigoshopInit.php:588
+#: src/JigoshopInit.php:594
 msgid "This error was probably caused by reference to old or deprecated function/method/class, not present in current Jigoshop version. Please check your Jigoshop eCommerce log directory for further details."
 msgstr ""
 
 #: templates/shop.php:14
 msgid "Search Results:"
+msgstr ""
+
+#: src/Jigoshop/Api.php:195
+msgid "Resource not found"
+msgstr ""
+
+#: src/Jigoshop/Core.php:184
+msgid "This is a demo store for testing purposes &mdash; no orders shall be fulfilled."
+msgstr ""
+
+#: src/Jigoshop/Endpoint.php:74
+msgid "Provided Endpoint is not processable."
+msgstr ""
+
+#: src/Jigoshop/Extensions.php:83
+msgid "Required Jigoshop version: %s. Current version: %s. Please upgrade."
+msgstr ""
+
+#: src/Jigoshop/Licence.php:122
+msgid "<b>Key deactivated.</b> License key for <i>%s</i> has been <b>deactivated</b>."
+msgstr ""
+
+#: src/Jigoshop/Licence.php:133
+msgid "%s deactivation: "
+msgstr ""
+
+#: src/Jigoshop/Licence.php:142
+msgid "<b>Key activated.</b> License key for <i>%s</i> has been <b>activated</b>."
+msgstr ""
+
+#: src/Jigoshop/Licence.php:153
+msgid "%s activation: "
+msgstr ""
+
+#: src/Jigoshop/Licence.php:329
+msgid "The License key for <i><b>%s</b></i> is not valid . Please enter your <b>Licence Key</b> on the Jigoshop->Manage Licences Menu with your <b>Order email address</b>.  Until then, the plugin will not be enabled for use."
+msgstr ""
+
+#: src/Jigoshop/Licence.php:413
+msgid "The License key for <i><b>%s</b></i> is outdated. Please renew your license. Until then, the update for this plugin will not be accessible."
+msgstr ""
+
+#: src/Jigoshop/Licence.php:457
+msgid "No update information available."
+msgstr ""
+
+#: src/Jigoshop/Licence.php:473
+msgid "Please enter your license key on the <a href=\"%s\">Manage Licences</a> page to enable automatic updates. You can buy your licence on <a href=\"%s\">Jigoshop.com</a>."
+msgstr ""
+
+#: templates/admin/dashboard.php:8
+msgid "Jigoshop Dashboard"
+msgstr ""
+
+#: templates/admin/dashboard.php:10
+msgid "You are using version:	"
+msgstr ""
+
+#: templates/admin/migration.php:10
+msgid "Jigoshop &raquo; Migration tool"
+msgstr ""
+
+#: templates/admin/migration.php:13
+msgid "This panel allows you to update your old Jigoshop plugin data to new format."
+msgstr ""
+
+#: templates/admin/migration.php:15
+msgid "Your PHP version is below 5.6, you might experience issues while migrating to/using <strong>Jigoshop eCommerce</strong><strong>We strongly recommend updating your PHP version</strong>"
+msgstr ""
+
+#: templates/admin/migration.php:17
+msgid "Migration is a lengthy process and depends on how much items you have in your store. Please keep patient until the process is finished."
+msgstr ""
+
+#: templates/admin/migration.php:18
+msgid "Please create a database backup in case of any error! <a href=\"%s\">Here you can find instruction how to do this</a>"
+msgstr ""
+
+#: templates/admin/migration.php:29
+msgid "Migration information"
+msgstr ""
+
+#: templates/admin/migration.php:35, src/Jigoshop/Admin/Migration.php:54
+msgid "Jigoshop &raquo; Migration Tool &raquo; "
+msgstr ""
+
+#: templates/admin/migration.php:42
+msgid "Migration status"
+msgstr ""
+
+#: templates/admin/migration.php:46
+msgid "Processed"
+msgstr ""
+
+#: templates/admin/migration.php:51
+msgid "Remaining"
+msgstr ""
+
+#: templates/admin/migration.php:56, templates/shop/cart.php:190, templates/shop/checkout.php:257, templates/user/account.php:87, templates/admin/order/totalsBox.php:73, templates/shop/checkout/pay.php:88, templates/shop/checkout/thanks.php:131, templates/user/account/orders.php:38, templates/user/account/orders/single.php:141
+msgid "Total"
+msgstr ""
+
+#: templates/admin/notice.php:10
+msgid "Do not show this message again."
+msgstr ""
+
+#: templates/admin/permalinks.php:17, src/Jigoshop/Admin/Settings/LayoutTab.php:108
+msgid "Default"
+msgstr ""
+
+#: templates/admin/permalinks.php:21, src/Jigoshop/Admin/Settings/LayoutTab.php:128, src/Jigoshop/Core/Types/Product.php:71, src/Jigoshop/Admin/Reports/Table/LowInStock.php:44, src/Jigoshop/Admin/Reports/Table/MostStocked.php:44, src/Jigoshop/Admin/Reports/Table/OutOfStock.php:44
+msgid "Product"
+msgstr ""
+
+#: templates/admin/permalinks.php:26
+msgid "Shop base"
+msgstr ""
+
+#: templates/admin/permalinks.php:30
+msgid "Shop base with category"
+msgstr ""
+
+#: templates/admin/permalinks.php:35
+msgid "Custom Base"
+msgstr ""
+
+#: templates/admin/permalinks.php:38
+msgid "Enter a custom base to use. A base <strong>must</strong> be set or WordPress will use default instead."
+msgstr ""
+
+#: templates/admin/permalinks.php:42
+msgid "With Front"
+msgstr ""
+
+#: templates/admin/permalinks.php:44
+msgid "Prepend product permalink with <code>%s</code>."
+msgstr ""
+
+#: templates/admin/product_attributes.php:12
+msgid "Jigoshop &raquo; Product &raquo; Attributes"
+msgstr ""
+
+#: templates/admin/product_attributes.php:13
+msgid "Every change to attributes is automatically saved."
+msgstr ""
+
+#: templates/admin/product_attributes.php:18
+msgid "<strong>Warning</strong> Attributes panel will not work properly without JavaScript."
+msgstr ""
+
+#: templates/admin/product_attributes.php:25, templates/admin/product_categories.php:81, templates/admin/product_categories.php:111, templates/admin/product_attributes/attribute.php:56, templates/admin/product_categories/form.php:134, templates/admin/settings/tax/classes.php:16, templates/admin/settings/tax/rules.php:18, templates/admin/settings/shipping/advanced_flat_rate/rate.php:32
+msgid "Label"
+msgstr ""
+
+#: templates/admin/product_attributes.php:26, templates/admin/product_categories.php:25, templates/admin/product_categories.php:88, templates/admin/product_categories/form.php:52, templates/admin/product_categories/form.php:135
+msgid "Slug"
+msgstr ""
+
+#: templates/admin/product_attributes.php:27, templates/admin/product_categories.php:95, src/Jigoshop/Shipping/FlatRate.php:132, templates/admin/coupon/box.php:23, templates/admin/product_categories/form.php:136, src/Jigoshop/Core/Types/Product/Variable.php:340, templates/admin/product/box/variations/variation.php:57
+msgid "Type"
+msgstr ""
+
+#: templates/admin/product_attributes.php:42, templates/admin/product_categories.php:80
+msgid "New attribute label"
+msgstr ""
+
+#: templates/admin/product_attributes.php:49, templates/admin/product_categories.php:87
+msgid "New attribute slug"
+msgstr ""
+
+#: templates/admin/product_attributes.php:60, templates/admin/product_categories.php:142, templates/admin/product_attributes/attribute.php:84, templates/admin/product_categories/form.php:170, templates/admin/product/box/attributes.php:20, templates/admin/settings/payment/processingFeeRules.php:39, templates/admin/settings/tax/classes.php:29, templates/admin/settings/tax/rules.php:50
+msgid "Add"
+msgstr ""
+
+#: templates/admin/product_categories.php:6
+msgid "Jigoshop &raquo; Product &raquo; Categories"
+msgstr ""
+
+#: templates/admin/product_categories.php:7, src/Jigoshop/Core/Types/Order.php:45
+msgid "Add new"
+msgstr ""
+
+#: templates/admin/product_categories.php:22, templates/admin/order/itemsBox.php:18, templates/admin/product_categories/form.php:17, templates/user/account/address.php:17, src/Jigoshop/Admin/Settings/GeneralTab.php:197, src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:531, templates/admin/settings/payment/methodContainer.php:8, templates/admin/settings/shipping/methodContainer.php:8
+msgid "Name"
+msgstr ""
+
+#: templates/admin/product_categories.php:28
+msgid "Count"
+msgstr ""
+
+#: templates/admin/product_categories.php:55, templates/admin/settings.php:58
+msgid "Save changes"
+msgstr ""
+
+#: templates/admin/product_categories.php:59, templates/admin/product_categories/category.php:26, templates/user/account/orders.php:31, src/Jigoshop/Admin/Reports/Table/LowInStock.php:153, src/Jigoshop/Admin/Reports/Table/MostStocked.php:158, src/Jigoshop/Admin/Reports/Table/OutOfStock.php:149
+msgid "View"
+msgstr ""
+
+#: templates/admin/product_categories.php:64, templates/admin/product_categories.php:159, templates/shop/cart.php:136, templates/admin/product_attributes/attribute.php:49
+msgid "Close"
+msgstr ""
+
+#: templates/admin/product_categories.php:74, templates/admin/product_categories/form.php:176
+msgid "Add new attribute"
+msgstr ""
+
+#: templates/admin/product_categories.php:102, templates/admin/product_attributes/attribute.php:37, templates/admin/settings/payment/method.php:32, templates/admin/settings/payment/methodBasic.php:12, templates/admin/settings/payment/methodContainer.php:11, templates/admin/settings/shipping/method.php:6, templates/admin/settings/shipping/methodContainer.php:9
+msgid "Configure"
+msgstr ""
+
+#: templates/admin/product_categories.php:112, templates/admin/product_attributes/attribute.php:57
+msgid "Value"
+msgstr ""
+
+#: templates/admin/product_categories.php:126, templates/admin/product_attributes/attribute.php:73
+msgid "New option label"
+msgstr ""
+
+#: templates/admin/product_categories.php:135, templates/admin/product_attributes/attribute.php:80
+msgid "New option value"
+msgstr ""
+
+#: templates/admin/product_categories.php:155
+msgid "Add attribute"
+msgstr ""
+
+#: templates/admin/reports.php:12
+msgid "Jigoshop &raquo; Reports"
+msgstr ""
+
+#: templates/admin/reports.php:51
+msgid "<strong>Warning</strong> Reports panel will not work properly without JavaScript."
+msgstr ""
+
+#: templates/admin/settings.php:12
+msgid "Jigoshop &raquo; Settings"
+msgstr ""
+
+#: templates/admin/settings.php:50
+msgid "<strong>Warning</strong> Options panel will not work properly without JavaScript."
+msgstr ""
+
+#: templates/admin/setup.php:13
+msgid "Jigoshop &raquo; Setup"
+msgstr ""
+
+#: templates/admin/setup.php:32
+msgid "Welcome to the world of Jigoshop!"
+msgstr ""
+
+#: templates/admin/setup.php:33
+msgid "Thank you for choosing Jigoshop (yup, you made the right choice) to give your eCommerce site the power it needs to turn even more profit than it already does!"
+msgstr ""
+
+#: templates/admin/setup.php:34
+msgid "This quick setup wizard will help you configure the basic settings of the platform."
+msgstr ""
+
+#: templates/admin/setup.php:36
+msgid "It's completely optional (but recommended) and it shouldn't take you more than five minutes."
+msgstr ""
+
+#: templates/admin/setup.php:46
+msgid "Your store is ready now!"
+msgstr ""
+
+#: templates/admin/setup.php:47
+msgid "If you're satisfied with this wizard, please consider rating us at %s.<br/>"
+msgstr ""
+
+#: templates/admin/setup.php:48
+msgid "If you have any thoughts or suggestions, feel free to post them at our %s - your feedback is valuable to us."
+msgstr ""
+
+#: templates/admin/setup.php:48
+msgid "support forum"
+msgstr ""
+
+#: templates/admin/setup.php:53, templates/admin/setup.php:57
+msgid "Let's go!"
+msgstr ""
+
+#: templates/admin/setup.php:54
+msgid "Skip"
+msgstr ""
+
+#: templates/admin/setup.php:58
+msgid "No thanks"
+msgstr ""
+
+#: templates/admin/setup.php:61
+msgid "Go to admin page"
+msgstr ""
+
+#: templates/admin/system_info.php:11
+msgid "Jigoshop &raquo; System Information"
+msgstr ""
+
+#: templates/admin/system_info.php:48
+msgid "<strong>Warning</strong> System Info panel will not work properly without JavaScript."
+msgstr ""
+
+#: templates/forms/daterange.php:45, templates/admin/forms/daterange.php:48, templates/admin/reports/widget/custom_range.php:9
+msgid "to"
+msgstr ""
+
+#: templates/shop/cart.php:19, src/Jigoshop/Core/Installer.php:346, src/Jigoshop/Widget/Cart.php:61, src/Jigoshop/Admin/Settings/LayoutTab.php:118, src/Jigoshop/Admin/Settings/ShoppingTab.php:136, src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:485
+msgid "Cart"
+msgstr ""
+
+#: templates/shop/cart.php:35, templates/shop/checkout.php:142, src/Jigoshop/Core/Emails.php:419, templates/shop/checkout/pay.php:27, templates/shop/checkout/thanks.php:52, templates/user/account/orders/single.php:54
+msgid "Product Name"
+msgstr ""
+
+#: templates/shop/cart.php:36, templates/shop/checkout.php:143, templates/shop/checkout/pay.php:28, templates/shop/checkout/thanks.php:53, templates/shop/cart/mobile/downloadable.php:77, templates/shop/cart/mobile/external.php:77, templates/shop/cart/mobile/simple.php:77, templates/shop/cart/mobile/variable.php:79, templates/shop/cart/mobile/virtual.php:77, templates/shop/checkout/mobile/downloadable.php:68, templates/shop/checkout/mobile/external.php:68, templates/shop/checkout/mobile/simple.php:68, templates/shop/checkout/mobile/variable.php:71, templates/shop/checkout/mobile/virtual.php:68, templates/user/account/orders/single.php:55
+msgid "Unit Price"
+msgstr ""
+
+#: templates/shop/cart.php:37, templates/shop/checkout.php:144, templates/admin/order/itemsBox.php:20, templates/shop/checkout/pay.php:29, templates/shop/checkout/thanks.php:54, templates/shop/cart/mobile/downloadable.php:86, templates/shop/cart/mobile/external.php:86, templates/shop/cart/mobile/simple.php:86, templates/shop/cart/mobile/variable.php:88, templates/shop/cart/mobile/virtual.php:86, templates/shop/checkout/mobile/downloadable.php:76, templates/shop/checkout/mobile/external.php:76, templates/shop/checkout/mobile/simple.php:76, templates/shop/checkout/mobile/variable.php:79, templates/shop/checkout/mobile/virtual.php:76, templates/shop/product/cart/simple.php:10, templates/shop/product/cart/variable.php:31, templates/user/account/orders/single.php:56
+msgid "Quantity"
+msgstr ""
+
+#: templates/shop/cart.php:38, templates/shop/checkout.php:145, templates/admin/order/itemsBox.php:21, templates/admin/products/quick_edit.php:15, templates/shop/checkout/pay.php:30, templates/shop/checkout/thanks.php:55, templates/admin/product/box/general.php:15, templates/shop/cart/mobile/downloadable.php:101, templates/shop/cart/mobile/external.php:101, templates/shop/cart/mobile/simple.php:101, templates/shop/cart/mobile/variable.php:103, templates/shop/cart/mobile/virtual.php:101, templates/shop/checkout/mobile/downloadable.php:88, templates/shop/checkout/mobile/external.php:88, templates/shop/checkout/mobile/simple.php:88, templates/shop/checkout/mobile/variable.php:91, templates/shop/checkout/mobile/virtual.php:88, templates/user/account/orders/single.php:57, templates/admin/product/box/variations/variation.php:64
+msgid "Price"
+msgstr ""
+
+#: templates/shop/cart.php:70, templates/shop/checkout.php:117, templates/shop/checkout.php:177
+msgid "Enter coupons..."
+msgstr ""
+
+#: templates/shop/cart.php:86, templates/shop/checkout.php:134, templates/shop/checkout.php:193, templates/shop/checkout/pay.php:45, templates/shop/checkout/thanks.php:79, templates/user/account/orders/single.php:82
+msgid "Products subtotal"
+msgstr ""
+
+#: templates/shop/cart.php:92
+msgid "Update Shopping Cart"
+msgstr ""
+
+#: templates/shop/cart.php:103
+msgid "Cart Totals"
+msgstr ""
+
+#: templates/shop/cart.php:109, templates/shop/checkout.php:222, src/Jigoshop/Admin/Setup.php:105, templates/admin/order/totalsBox.php:18, templates/shop/checkout/pay.php:61, templates/shop/checkout/thanks.php:94, src/Jigoshop/Admin/Settings/ShippingTab.php:68, templates/user/account/orders/single.php:98
+msgid "Shipping"
+msgstr ""
+
+#: templates/shop/cart.php:110
+msgid "Estimated for:<br/><span>%s</span>"
+msgstr ""
+
+#: templates/shop/cart.php:135
+msgid "Select your destination"
+msgstr ""
+
+#: templates/shop/cart.php:167, src/Jigoshop/Helper/Product.php:688, src/Jigoshop/Helper/Product.php:758, templates/user/account/address.php:23, templates/user/account/edit_address.php:50, templates/admin/settings/shipping/advanced_flat_rate/rate.php:71
+msgid "Postcode"
+msgstr ""
+
+#: templates/shop/cart.php:171
+msgid "Change destination"
+msgstr ""
+
+#: templates/shop/cart.php:176, templates/shop/checkout.php:237, src/Jigoshop/Core/Emails.php:341, templates/admin/order/totalsBox.php:35, templates/shop/checkout/pay.php:72, templates/shop/checkout/thanks.php:105, templates/widget/cart/widget.php:38, templates/user/account/orders/single.php:109
+msgid "Subtotal"
+msgstr ""
+
+#: templates/shop/cart.php:186, templates/shop/checkout.php:248, templates/admin/order/totalsBox.php:43, templates/shop/checkout/pay.php:84, templates/shop/checkout/thanks.php:117, templates/user/account/orders/single.php:124
+msgid "Discount"
+msgstr ""
+
+#: templates/shop/cart.php:197
+msgid "&larr; Return to shopping"
+msgstr ""
+
+#: templates/shop/checkout.php:26, src/Jigoshop/Core/Installer.php:349, templates/widget/cart/widget.php:17, src/Jigoshop/Admin/Settings/LayoutTab.php:123, src/Jigoshop/Admin/Settings/ShoppingTab.php:166, src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:493
+msgid "Checkout"
+msgstr ""
+
+#: templates/shop/checkout.php:36, templates/user/account.php:27, templates/admin/order/dataBox.php:20, templates/shop/checkout/thanks.php:30, templates/user/account/orders/single.php:31
+msgid "Billing address"
+msgstr ""
+
+#: templates/shop/checkout.php:53
+msgid "Different shipping address"
+msgstr ""
+
+#: templates/shop/checkout.php:70, templates/user/account.php:36, templates/admin/order/dataBox.php:22, templates/shop/checkout/thanks.php:40, templates/user/account/orders/single.php:41
+msgid "Shipping address"
+msgstr ""
+
+#: templates/shop/checkout.php:91
+msgid "Your order"
+msgstr ""
+
+#: templates/shop/checkout.php:202
+msgid "Additional order notes"
+msgstr ""
+
+#: templates/shop/checkout.php:216
+msgid "Totals"
+msgstr ""
+
+#: templates/shop/checkout.php:267, templates/shop/checkout/pay.php:98
+msgid "Select payment method"
+msgstr ""
+
+#: templates/shop/checkout.php:307
+msgid "Back to cart"
+msgstr ""
+
+#: templates/shop/checkout.php:308
+msgid "Purchase and pay"
+msgstr ""
+
+#: templates/shop/pagination.php:11
+msgid "Next <span class=\"meta-nav\">&rarr;</span>"
+msgstr ""
+
+#: templates/shop/pagination.php:12
+msgid "<span class=\"meta-nav\">&larr;</span> Previous"
+msgstr ""
+
+#: templates/shop/product.php:21, src/Jigoshop/Core/Emails.php:420, templates/admin/order/itemsBox.php:17, templates/admin/products/quick_edit.php:31, templates/admin/product/box/general.php:22, templates/admin/product/box/variations/variation.php:85
+msgid "SKU"
+msgstr ""
+
+#: templates/shop/product.php:24, src/Jigoshop/Admin/Product/Categories.php:83, src/Jigoshop/Core/Types/ProductCategory.php:48
+msgid "Categories"
+msgstr ""
+
+#: templates/shop/product.php:32
+msgid "Tagged as"
+msgstr ""
+
+#: templates/user/account.php:20, src/Jigoshop/Core/Installer.php:355, src/Jigoshop/Admin/Settings/ShoppingTab.php:49, src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:509
+msgid "My account"
+msgstr ""
+
+#: templates/user/account.php:28, templates/user/account.php:37, templates/admin/product_categories/category.php:31, src/Jigoshop/Core/Types/Coupon.php:34, src/Jigoshop/Core/Types/Email.php:34, src/Jigoshop/Core/Types/Order.php:47, src/Jigoshop/Core/Types/Product.php:75, src/Jigoshop/Admin/Reports/Table/CustomerList.php:208, src/Jigoshop/Admin/Reports/Table/LowInStock.php:146, src/Jigoshop/Admin/Reports/Table/MostStocked.php:151, src/Jigoshop/Admin/Reports/Table/OutOfStock.php:142
+msgid "Edit"
+msgstr ""
+
+#: templates/user/account.php:46
+msgid "Your Downloads"
+msgstr ""
+
+#: templates/user/account.php:54
+msgid "Left: %d"
+msgstr ""
+
+#: templates/user/account.php:67
+msgid "Account options"
+msgstr ""
+
+#: templates/user/account.php:70, templates/user/account/change_password.php:33
+msgid "Change password"
+msgstr ""
+
+#: templates/user/account.php:71
+msgid "My orders"
+msgstr ""
+
+#: templates/user/account.php:76
+msgid "Unpaid orders"
+msgstr ""
+
+#: templates/user/account.php:83, templates/user/account/orders.php:34, src/Jigoshop/Admin/Settings/ShoppingTab.php:52, src/Jigoshop/Admin/Reports/Chart/ByCategory.php:248, src/Jigoshop/Admin/Reports/Chart/ByDate.php:501, src/Jigoshop/Admin/Reports/Chart/ByProduct.php:391, src/Jigoshop/Admin/Reports/Chart/CustomersVsGuests.php:283, src/Jigoshop/Admin/Reports/Chart/DiscountSummary.php:334
+msgid "Date"
+msgstr ""
+
+#: templates/user/account.php:84, templates/user/account/orders.php:35, templates/user/account/orders/single.php:23
+msgctxt "account"
+msgid "d.m.Y, H:i"
+msgstr ""
+
+#: templates/user/account.php:85, templates/shop/checkout/thanks.php:24, templates/user/account/orders.php:36, templates/admin/product/box/stock.php:22, templates/admin/settings/payment/methodContainer.php:12, templates/user/account/orders/single.php:24, templates/admin/product/box/variations/variation.php:123
+msgid "Status"
+msgstr ""
+
+#: templates/user/account.php:90, templates/shop/checkout/pay.php:134, templates/user/account/orders.php:29, templates/user/account/orders/single.php:151
+msgid "Pay"
+msgstr ""
+
+#: templates/user/account.php:94
+msgid "See more..."
+msgstr ""
+
+#: templates/user/login.php:1, src/Jigoshop/Widget/UserLogin.php:62, templates/widget/user_login/log_in.php:30, templates/admin/settings/api_users/user.php:16, templates/admin/settings/api_users/user.php:19
+msgid "Login"
+msgstr ""
+
+#: templates/user/login.php:4, templates/shop/checkout/login.php:4, templates/shop/checkout/registration_form.php:25, templates/widget/user_login/log_in.php:24, src/Jigoshop/Admin/Reports/Table/CustomerList.php:60, src/Jigoshop/Admin/Reports/Table/CustomerList.php:286
+msgid "Username"
+msgstr ""
+
+#: templates/user/login.php:5, templates/shop/checkout/login.php:5, templates/shop/checkout/registration_form.php:27
+msgid "Enter username"
+msgstr ""
+
+#: templates/user/login.php:8, templates/shop/checkout/login.php:8, templates/shop/checkout/registration_form.php:30, templates/widget/user_login/log_in.php:27, templates/admin/settings/api_users/user.php:28
+msgid "Password"
+msgstr ""
+
+#: templates/user/login.php:9, templates/shop/checkout/login.php:9, templates/shop/checkout/registration_form.php:33
+msgid "Your password"
+msgstr ""
+
+#: templates/user/login.php:13, templates/shop/checkout/login.php:13
+msgid "Remember me"
+msgstr ""
+
+#: templates/user/login.php:16, templates/user/login.php:16, templates/shop/checkout/login.php:16
+msgid "Log in"
+msgstr ""
+
+#: src/Jigoshop/Admin/Dashboard.php:90, templates/admin/dashboard/rightNow.php:22
+msgid "<span>Shop</span> Content"
+msgstr ""
+
+#: src/Jigoshop/Admin/Dashboard.php:91
+msgid "<span>Recent</span> Orders"
+msgstr ""
+
+#: src/Jigoshop/Admin/Dashboard.php:93
+msgid "<span>Stock</span> Report"
+msgstr ""
+
+#: src/Jigoshop/Admin/Dashboard.php:95
+msgid "<span>Monthly</span> Report"
+msgstr ""
+
+#: src/Jigoshop/Admin/Dashboard.php:96
+msgid "<span>Recent</span> Reviews"
+msgstr ""
+
+#: src/Jigoshop/Admin/Dashboard.php:97
+msgid "<span>Latest</span> News"
+msgstr ""
+
+#: src/Jigoshop/Admin/Dashboard.php:98
+msgid "<span>Useful</span> Links"
+msgstr ""
+
+#: src/Jigoshop/Admin/Dashboard.php:301
+msgid "%s ago"
+msgstr ""
+
+#: src/Jigoshop/Admin/Dashboard.php:301
+msgid "F jS Y"
+msgstr ""
+
+#: src/Jigoshop/Admin/Licences.php:56
+msgid "Licences"
+msgstr ""
+
+#: src/Jigoshop/Admin/Licences.php:94
+msgid "Manage Jigoshop Digital Plugin Licences"
+msgstr ""
+
+#: src/Jigoshop/Admin/Licences.php:101
+msgid "To <em>activate</em> the licence, enter your licence keys and email addresses you used when you ordered the plugins."
+msgstr ""
+
+#: src/Jigoshop/Admin/Licences.php:102
+msgid "<br />To <em>de-activate</em> the licence, remove the licence key, but leave the email address."
+msgstr ""
+
+#: src/Jigoshop/Admin/Licences.php:125
+msgid "Activation email"
+msgstr ""
+
+#: src/Jigoshop/Admin/Licences.php:133
+msgid "Licence is inactive!"
+msgstr ""
+
+#: src/Jigoshop/Admin/Licences.php:145, templates/user/account/edit_address.php:76
+msgid "Save"
+msgstr ""
+
+#: src/Jigoshop/Admin/Migration.php:57
+msgid "migration complete"
+msgstr ""
+
+#: src/Jigoshop/Admin/Migration.php:58
+msgid "migration error"
+msgstr ""
+
+#: src/Jigoshop/Admin/Migration.php:59
+msgid "A communication error has occured, please reload the page and continue with the migration."
+msgstr ""
+
+#: src/Jigoshop/Admin/Migration.php:60
+msgid "Processing..."
+msgstr ""
+
+#: src/Jigoshop/Admin/Migration.php:62, src/Jigoshop/Core/Types/Coupon.php:29, src/Jigoshop/Core/Types/Coupon.php:30
+msgid "Coupons"
+msgstr ""
+
+#: src/Jigoshop/Admin/Migration.php:63, src/Jigoshop/Admin/Settings/GeneralTab.php:236, src/Jigoshop/Core/Types/Email.php:29, src/Jigoshop/Core/Types/Email.php:30, src/Jigoshop/Core/Types/Email.php:31
+msgid "Emails"
+msgstr ""
+
+#: src/Jigoshop/Admin/Migration.php:64, src/Jigoshop/Admin/Settings/ShippingTab.php:107, templates/admin/product/box/attributes/attribute.php:18
+msgid "Options"
+msgstr ""
+
+#: src/Jigoshop/Admin/Migration.php:84
+msgid "Migration tool"
+msgstr ""
+
+#: src/Jigoshop/Admin/Migration.php:120
+msgid "Migration complete"
+msgstr ""
+
+#: src/Jigoshop/Admin/Migration.php:145
+msgid "Just start migration from \"Migrate options\""
+msgstr ""
+
+#: src/Jigoshop/Admin/Permalinks.php:33
+msgid "Product permalink base"
+msgstr ""
+
+#: src/Jigoshop/Admin/Permalinks.php:38
+msgid "Product category base"
+msgstr ""
+
+#: src/Jigoshop/Admin/Permalinks.php:45
+msgid "Product tag base"
+msgstr ""
+
+#: src/Jigoshop/Admin/Permalinks.php:60
+msgctxt "slug"
+msgid "product-category"
+msgstr ""
+
+#: src/Jigoshop/Admin/Permalinks.php:72
+msgctxt "slug"
+msgid "product-tag"
+msgstr ""
+
+#: src/Jigoshop/Admin/Permalinks.php:81
+msgid "These settings control the permalinks used for products. These settings only apply when <strong>not using \"default\" permalinks above</strong>."
+msgstr ""
+
+#: src/Jigoshop/Admin/Permalinks.php:89, src/Jigoshop/Admin/Permalinks.php:146
+msgctxt "default-slug"
+msgid "shop"
+msgstr ""
+
+#: src/Jigoshop/Admin/Permalinks.php:90
+msgctxt "default-slug"
+msgid "product"
+msgstr ""
+
+#: src/Jigoshop/Admin/Permalinks.php:136
+msgctxt "slug"
+msgid "product"
+msgstr ""
+
+#: src/Jigoshop/Admin/Reports.php:71
+msgid "Reports"
+msgstr ""
+
+#: src/Jigoshop/Admin/Setup.php:85
+msgid "Setup"
+msgstr ""
+
+#: src/Jigoshop/Admin/Setup.php:103
+msgid "Page setup"
+msgstr ""
+
+#: src/Jigoshop/Admin/Setup.php:104
+msgid "Store Settings"
+msgstr ""
+
+#: src/Jigoshop/Admin/Setup.php:108
+msgid "Ready!"
+msgstr ""
+
+#: src/Jigoshop/Admin/Setup.php:138, src/Jigoshop/Admin/Product/Categories.php:131, src/Jigoshop/Admin/Settings/AdvancedTab.php:88
+msgid "None"
+msgstr ""
+
+#: src/Jigoshop/Admin/Setup.php:145, src/Jigoshop/Admin/Settings/ProductsTab.php:36
+msgid "Kilograms"
+msgstr ""
+
+#: src/Jigoshop/Admin/Setup.php:146, src/Jigoshop/Admin/Settings/ProductsTab.php:37
+msgid "Pounds"
+msgstr ""
+
+#: src/Jigoshop/Admin/Setup.php:149, src/Jigoshop/Admin/Settings/ProductsTab.php:40
+msgid "Centimeters"
+msgstr ""
+
+#: src/Jigoshop/Admin/Setup.php:150, src/Jigoshop/Admin/Settings/ProductsTab.php:41
+msgid "Inches"
+msgstr ""
+
+#: src/Jigoshop/Admin/Setup.php:153, templates/admin/products/quick_edit.php:41, src/Jigoshop/Admin/Settings/ProductsTab.php:44, templates/admin/product/box/stock.php:25, templates/admin/product/box/variations/variation.php:126
+msgid "In stock"
+msgstr ""
+
+#: src/Jigoshop/Admin/Setup.php:154, templates/admin/products/quick_edit.php:42, src/Jigoshop/Admin/Settings/ProductsTab.php:45, src/Jigoshop/Admin/Settings/ProductsTab.php:187, templates/admin/product/box/stock.php:26, templates/admin/product/box/variations/variation.php:127
+msgid "Out of stock"
+msgstr ""
+
+#: src/Jigoshop/Admin/Setup.php:161, src/Jigoshop/Admin/Settings/AdvancedTab.php:249
+msgid "Shop page"
+msgstr ""
+
+#: src/Jigoshop/Admin/Setup.php:168, src/Jigoshop/Admin/Settings/AdvancedTab.php:256
+msgid "Cart page"
+msgstr ""
+
+#: src/Jigoshop/Admin/Setup.php:175, src/Jigoshop/Admin/Settings/AdvancedTab.php:263
+msgid "Checkout page"
+msgstr ""
+
+#: src/Jigoshop/Admin/Setup.php:182
+msgid "Thank you page"
+msgstr ""
+
+#: src/Jigoshop/Admin/Setup.php:189, src/Jigoshop/Admin/Settings/AdvancedTab.php:277
+msgid "My account page"
+msgstr ""
+
+#: src/Jigoshop/Admin/Setup.php:196, src/Jigoshop/Admin/Settings/AdvancedTab.php:284
+msgid "Terms page"
+msgstr ""
+
+#: src/Jigoshop/Admin/Setup.php:205, src/Jigoshop/Admin/Settings/GeneralTab.php:117
+msgid "Administrator e-mail"
+msgstr ""
+
+#: src/Jigoshop/Admin/Setup.php:207, src/Jigoshop/Admin/Settings/GeneralTab.php:119
+msgid "The email address used to send all Jigoshop related emails, such as order confirmations and notices."
+msgstr ""
+
+#: src/Jigoshop/Admin/Setup.php:213, src/Jigoshop/Admin/Settings/GeneralTab.php:103
+msgid "Shop location (country)"
+msgstr ""
+
+#: src/Jigoshop/Admin/Setup.php:221, src/Jigoshop/Admin/Settings/GeneralTab.php:111
+msgid "Shop location (state)"
+msgstr ""
+
+#: src/Jigoshop/Admin/Setup.php:228, src/Jigoshop/Admin/Settings/GeneralTab.php:157
+msgid "Currency"
+msgstr ""
+
+#: src/Jigoshop/Admin/Setup.php:236, src/Jigoshop/Admin/Settings/GeneralTab.php:165
+msgid "Currency position"
+msgstr ""
+
+#: src/Jigoshop/Admin/Setup.php:243, src/Jigoshop/Admin/Settings/GeneralTab.php:172
+msgid "Number of decimals"
+msgstr ""
+
+#: src/Jigoshop/Admin/Setup.php:249, src/Jigoshop/Admin/Settings/GeneralTab.php:178
+msgid "Thousands separator"
+msgstr ""
+
+#: src/Jigoshop/Admin/Setup.php:255, src/Jigoshop/Admin/Settings/GeneralTab.php:184
+msgid "Decimal separator"
+msgstr ""
+
+#: src/Jigoshop/Admin/Setup.php:263, src/Jigoshop/Admin/Settings/ProductsTab.php:107
+msgid "Weight units"
+msgstr ""
+
+#: src/Jigoshop/Admin/Setup.php:270, src/Jigoshop/Admin/Settings/ProductsTab.php:114
+msgid "Dimensions unit"
+msgstr ""
+
+#: src/Jigoshop/Admin/Setup.php:277, src/Jigoshop/Admin/Settings/ProductsTab.php:135, src/Jigoshop/Admin/Reports/Table/MostStocked.php:56
+msgid "Stock status"
+msgstr ""
+
+#: src/Jigoshop/Admin/Setup.php:278, src/Jigoshop/Admin/Settings/ProductsTab.php:136
+msgid "This option allows you to change default stock status for new products."
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo.php:63
+msgid "System Information"
+msgstr ""
+
+#: src/Jigoshop/Api/Permission.php:34
+msgid "Read products"
+msgstr ""
+
+#: src/Jigoshop/Api/Permission.php:35
+msgid "Read cart"
+msgstr ""
+
+#: src/Jigoshop/Api/Permission.php:36
+msgid "Read orders"
+msgstr ""
+
+#: src/Jigoshop/Api/Permission.php:37
+msgid "Read coupons"
+msgstr ""
+
+#: src/Jigoshop/Api/Permission.php:38
+msgid "Read customers"
+msgstr ""
+
+#: src/Jigoshop/Api/Permission.php:39
+msgid "Read reports"
+msgstr ""
+
+#: src/Jigoshop/Api/Permission.php:40
+msgid "Read emails"
+msgstr ""
+
+#: src/Jigoshop/Api/Permission.php:41
+msgid "Manage products"
+msgstr ""
+
+#: src/Jigoshop/Api/Permission.php:42
+msgid "Manage cart"
+msgstr ""
+
+#: src/Jigoshop/Api/Permission.php:43
+msgid "Manage orders"
+msgstr ""
+
+#: src/Jigoshop/Api/Permission.php:44
+msgid "Manage coupons"
+msgstr ""
+
+#: src/Jigoshop/Api/Permission.php:45
+msgid "Manage customers"
+msgstr ""
+
+#: src/Jigoshop/Api/Permission.php:46
+msgid "Manage emails"
+msgstr ""
+
+#: src/Jigoshop/Core/Cron.php:65
+msgid "Archived due to order being in pending state for a month or longer."
+msgstr ""
+
+#: src/Jigoshop/Core/Cron.php:84
+msgid "Completed due to order being in processing state for a month or longer."
+msgstr ""
+
+#: src/Jigoshop/Core/Emails.php:74, templates/admin/coupon/box.php:29
+msgid "Amount"
+msgstr ""
+
+#: src/Jigoshop/Core/Emails.php:329, src/Jigoshop/Core/Emails.php:411
+msgid "Blog Name"
+msgstr ""
+
+#: src/Jigoshop/Core/Emails.php:330
+msgid "Order Number"
+msgstr ""
+
+#: src/Jigoshop/Core/Emails.php:331
+msgid "Order Status"
+msgstr ""
+
+#: src/Jigoshop/Core/Emails.php:332
+msgid "Order Date"
+msgstr ""
+
+#: src/Jigoshop/Core/Emails.php:333, src/Jigoshop/Core/Emails.php:412
+msgid "Shop Name"
+msgstr ""
+
+#: src/Jigoshop/Core/Emails.php:334, src/Jigoshop/Core/Emails.php:413
+msgid "Shop Address part 1"
+msgstr ""
+
+#: src/Jigoshop/Core/Emails.php:335, src/Jigoshop/Core/Emails.php:414
+msgid "Shop Address part 2"
+msgstr ""
+
+#: src/Jigoshop/Core/Emails.php:336, src/Jigoshop/Core/Emails.php:415
+msgid "Shop TaxNumber"
+msgstr ""
+
+#: src/Jigoshop/Core/Emails.php:337, src/Jigoshop/Core/Emails.php:416
+msgid "Shop_Phone"
+msgstr ""
+
+#: src/Jigoshop/Core/Emails.php:338, src/Jigoshop/Core/Emails.php:417
+msgid "Shop Email"
+msgstr ""
+
+#: src/Jigoshop/Core/Emails.php:339
+msgid "Customer Note"
+msgstr ""
+
+#: src/Jigoshop/Core/Emails.php:340
+msgid "Ordered Items"
+msgstr ""
+
+#: src/Jigoshop/Core/Emails.php:342
+msgid "Shipping Price and Method"
+msgstr ""
+
+#: src/Jigoshop/Core/Emails.php:343
+msgid "Shipping Cost"
+msgstr ""
+
+#: src/Jigoshop/Core/Emails.php:344
+msgid "Raw Shipping Cost"
+msgstr ""
+
+#: src/Jigoshop/Core/Emails.php:345
+msgid "Shipping Method"
+msgstr ""
+
+#: src/Jigoshop/Core/Emails.php:346
+msgid "Discount Price"
+msgstr ""
+
+#: src/Jigoshop/Core/Emails.php:347
+msgid "Total Tax"
+msgstr ""
+
+#: src/Jigoshop/Core/Emails.php:348
+msgid "Processing fee"
+msgstr ""
+
+#: src/Jigoshop/Core/Emails.php:349
+msgid "Total Price"
+msgstr ""
+
+#: src/Jigoshop/Core/Emails.php:350
+msgid "Payment Method Title"
+msgstr ""
+
+#: src/Jigoshop/Core/Emails.php:351, src/Jigoshop/Core/Emails.php:381
+msgid "Is Local Pickup?"
+msgstr ""
+
+#: src/Jigoshop/Core/Emails.php:352
+msgid "If order is pending, show checkout url"
+msgstr ""
+
+#: src/Jigoshop/Core/Emails.php:353
+msgid "Billing First Name"
+msgstr ""
+
+#: src/Jigoshop/Core/Emails.php:354
+msgid "Billing Last Name"
+msgstr ""
+
+#: src/Jigoshop/Core/Emails.php:355
+msgid "Billing Company"
+msgstr ""
+
+#: src/Jigoshop/Core/Emails.php:356
+msgid "Billing Vat Number"
+msgstr ""
+
+#: src/Jigoshop/Core/Emails.php:357
+msgid "Billing Address part 1"
+msgstr ""
+
+#: src/Jigoshop/Core/Emails.php:358
+msgid "Billing Address part 2"
+msgstr ""
+
+#: src/Jigoshop/Core/Emails.php:359
+msgid "Billing Postcode"
+msgstr ""
+
+#: src/Jigoshop/Core/Emails.php:360
+msgid "Billing City"
+msgstr ""
+
+#: src/Jigoshop/Core/Emails.php:361
+msgid "Billing Country"
+msgstr ""
+
+#: src/Jigoshop/Core/Emails.php:362
+msgid "Raw Billing Country"
+msgstr ""
+
+#: src/Jigoshop/Core/Emails.php:363
+msgid "Billing State"
+msgstr ""
+
+#: src/Jigoshop/Core/Emails.php:364
+msgid "Raw Billing State"
+msgstr ""
+
+#: src/Jigoshop/Core/Emails.php:365
+msgid "Billing Email"
+msgstr ""
+
+#: src/Jigoshop/Core/Emails.php:366
+msgid "Billing Phone    "
+msgstr ""
+
+#: src/Jigoshop/Core/Emails.php:367
+msgid "Shipping First Name"
+msgstr ""
+
+#: src/Jigoshop/Core/Emails.php:368
+msgid "Shipping Last Name"
+msgstr ""
+
+#: src/Jigoshop/Core/Emails.php:369
+msgid "Shipping Company"
+msgstr ""
+
+#: src/Jigoshop/Core/Emails.php:370
+msgid "Shipping Address part 1"
+msgstr ""
+
+#: src/Jigoshop/Core/Emails.php:371
+msgid "Shipping_Address part 2"
+msgstr ""
+
+#: src/Jigoshop/Core/Emails.php:372
+msgid "Shipping Postcode"
+msgstr ""
+
+#: src/Jigoshop/Core/Emails.php:373
+msgid "Shipping City"
+msgstr ""
+
+#: src/Jigoshop/Core/Emails.php:374
+msgid "Shipping Country"
+msgstr ""
+
+#: src/Jigoshop/Core/Emails.php:375
+msgid "Raw Shipping Country"
+msgstr ""
+
+#: src/Jigoshop/Core/Emails.php:376
+msgid "Shipping State"
+msgstr ""
+
+#: src/Jigoshop/Core/Emails.php:377
+msgid "Raw Shipping State"
+msgstr ""
+
+#: src/Jigoshop/Core/Emails.php:378
+msgid "Is payment method Bank Transfer?"
+msgstr ""
+
+#: src/Jigoshop/Core/Emails.php:379
+msgid "Is payment method Cash on Delivery?"
+msgstr ""
+
+#: src/Jigoshop/Core/Emails.php:380
+msgid "Is payment method Cheque?"
+msgstr ""
+
+#: src/Jigoshop/Core/Emails.php:382
+msgid "Company bank transfer details"
+msgstr ""
+
+#: src/Jigoshop/Core/Emails.php:383
+msgid "Company cheque details"
+msgstr ""
+
+#: src/Jigoshop/Core/Emails.php:418
+msgid "Product ID"
+msgstr ""
+
+#: src/Jigoshop/Core/Emails.php:455, src/Jigoshop/Payment/BankTransfer.php:103, src/Jigoshop/Payment/BankTransfer.php:188, src/Jigoshop/Payment/Cheque.php:104, src/Jigoshop/Payment/OnDelivery.php:104, src/Jigoshop/Payment/PayPal.php:143, src/Jigoshop/Payment/WorldPay.php:105, templates/admin/product_categories/form.php:26, src/Jigoshop/Frontend/Page/Product.php:231
+msgid "Description"
+msgstr ""
+
+#: src/Jigoshop/Core/Emails.php:456, src/Jigoshop/Payment/BankTransfer.php:110, src/Jigoshop/Payment/BankTransfer.php:189
+msgid "Bank Name"
+msgstr ""
+
+#: src/Jigoshop/Core/Emails.php:457, src/Jigoshop/Payment/BankTransfer.php:122, src/Jigoshop/Payment/BankTransfer.php:191
+msgid "Account Holder"
+msgstr ""
+
+#: src/Jigoshop/Core/Emails.php:458, src/Jigoshop/Payment/BankTransfer.php:116, src/Jigoshop/Payment/BankTransfer.php:190
+msgid "Account Number"
+msgstr ""
+
+#: src/Jigoshop/Core/Emails.php:459, src/Jigoshop/Payment/BankTransfer.php:129, src/Jigoshop/Payment/BankTransfer.php:192
+msgid "Sort Code"
+msgstr ""
+
+#: src/Jigoshop/Core/Emails.php:460, src/Jigoshop/Payment/BankTransfer.php:136, src/Jigoshop/Payment/BankTransfer.php:193
+msgid "IBAN"
+msgstr ""
+
+#: src/Jigoshop/Core/Emails.php:461, src/Jigoshop/Payment/BankTransfer.php:143, src/Jigoshop/Payment/BankTransfer.php:194
+msgid "BIC Code"
+msgstr ""
+
+#: src/Jigoshop/Core/Emails.php:462, src/Jigoshop/Payment/BankTransfer.php:150, src/Jigoshop/Payment/BankTransfer.php:195
+msgid "Additional Info"
+msgstr ""
+
+#: src/Jigoshop/Core/Installer.php:102
+msgid "We haven't been able to change the engine of the table \"posts\" to InnoDB. This is a required option. Ask your server provider if this is possible."
+msgstr ""
+
+#: src/Jigoshop/Core/Installer.php:118, src/Jigoshop/Core/Installer.php:136, src/Jigoshop/Core/Installer.php:153, src/Jigoshop/Core/Installer.php:168, src/Jigoshop/Core/Installer.php:191, src/Jigoshop/Core/Installer.php:206, src/Jigoshop/Core/Installer.php:223, src/Jigoshop/Core/Installer.php:239, src/Jigoshop/Core/Installer.php:256, src/Jigoshop/Core/Installer.php:272, src/Jigoshop/Core/Installer.php:289, src/Jigoshop/Core/Installer.php:305, src/Jigoshop/Core/Installer.php:322, src/Jigoshop/Core/Installer/Product/Variable.php:37
+msgid "Unable to create Jigoshop tables."
+msgstr ""
+
+#: src/Jigoshop/Core/Installer.php:343
+msgid "Shop"
+msgstr ""
+
+#: src/Jigoshop/Core/Installer.php:352
+msgid "Checkout - thank you"
+msgstr ""
+
+#: src/Jigoshop/Endpoint/DownloadFile.php:53
+msgid "Invalid download key. Unable to download file."
+msgstr ""
+
+#: src/Jigoshop/Endpoint/DownloadFile.php:59
+msgid "Invalid order id. Unable to download file."
+msgstr ""
+
+#: src/Jigoshop/Endpoint/DownloadFile.php:62
+msgid "Invalid security key. Unable to download file."
+msgstr ""
+
+#: src/Jigoshop/Endpoint/DownloadFile.php:65
+msgid "Invalid order."
+msgstr ""
+
+#: src/Jigoshop/Endpoint/DownloadFile.php:69, src/Jigoshop/Admin/Page/Order.php:125, src/Jigoshop/Api/Routes/V1/Orders.php:417
+msgid "Product not found."
+msgstr ""
+
+#: src/Jigoshop/Endpoint/DownloadFile.php:72
+msgid "Invalid file to download."
+msgstr ""
+
+#: src/Jigoshop/Endpoint/DownloadFile.php:76
+msgid "Sorry, you have reached your download limit for this file."
+msgstr ""
+
+#: src/Jigoshop/Endpoint/DownloadFile.php:80
+msgid "You have to log in before you can download a file."
+msgstr ""
+
+#: src/Jigoshop/Endpoint/DownloadFile.php:82
+msgid "This is not your download link."
+msgstr ""
+
+#: src/Jigoshop/Endpoint/DownloadFile.php:87, src/Jigoshop/Endpoint/DownloadFile.php:176
+msgid "File not found."
+msgstr ""
+
+#: src/Jigoshop/Entity/Cart.php:34, src/Jigoshop/Entity/Order.php:656
+msgid "Item does not exists"
+msgstr ""
+
+#: src/Jigoshop/Entity/Cart.php:38, src/Jigoshop/Entity/Order.php:660
+msgid "Quantity has to be numeric value"
+msgstr ""
+
+#: src/Jigoshop/Entity/Cart.php:53, src/Jigoshop/Entity/Cart.php:82
+msgid "Product not found"
+msgstr ""
+
+#: src/Jigoshop/Entity/Cart.php:86
+msgid "Quantity has to be positive number"
+msgstr ""
+
+#: src/Jigoshop/Entity/Cart.php:107
+msgid "Could not add to cart."
+msgstr ""
+
+#: src/Jigoshop/Entity/Cart.php:204
+msgid "Cannot apply coupon \"%s\". The usage limit was reached."
+msgstr ""
+
+#: src/Jigoshop/Entity/Customer.php:128
+msgid "Unknown address type: \"%s\"."
+msgstr ""
+
+#: src/Jigoshop/Entity/Order.php:112
+msgid "Order %s"
+msgstr ""
+
+#: src/Jigoshop/Entity/Order.php:315
+msgid "No item with ID %d in order %d"
+msgstr ""
+
+#: src/Jigoshop/Entity/Order.php:666, src/Jigoshop/Admin/Page/Order.php:266, src/Jigoshop/Frontend/Page/Cart.php:397
+msgid "Item not found."
+msgstr ""
+
+#: src/Jigoshop/Factory/Product.php:41
+msgid "Product of type \"%s\" already exists."
+msgstr ""
+
+#: src/Jigoshop/Helper/Country.php:1457, src/Jigoshop/Helper/Country.php:1493
+msgid "$item"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:235
+msgid "United Arab Emirates dirham"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:236
+msgid "Afghanistan Afghani"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:237
+msgid "Albania Lek"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:238
+msgid "Netherlands Antilles Guilder"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:239
+msgid "Argentina Peso"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:240
+msgid "Australia Dollar"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:241
+msgid "Aruba Guilder"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:242
+msgid "Azerbaijan New Manat"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:243
+msgid "Bosnia and Herzegovina Convertible Marka"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:244
+msgid "Barbados Dollar"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:245
+msgid "Bulgaria Lev"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:246
+msgid "Bermuda Dollar"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:247
+msgid "Brunei Darussalam Dollar"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:248
+msgid "Bolivia Boliviano"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:249
+msgid "Brazil Real"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:250
+msgid "Bahamas Dollar"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:251
+msgid "Botswana Pula"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:252
+msgid "Belarus Ruble"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:253
+msgid "Belize Dollar"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:254
+msgid "Canada Dollar"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:255
+msgid "Switzerland Franc"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:256
+msgid "Chile Peso"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:257
+msgid "China Yuan Renminbi"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:258
+msgid "Colombia Peso"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:259
+msgid "Costa Rica Colon"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:260
+msgid "Cuba Peso"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:261
+msgid "Czech Republic Koruna"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:262
+msgid "Denmark Krone"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:263
+msgid "Dominican Republic Peso"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:264
+msgid "Estonia Kroon"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:265
+msgid "Egypt Pound"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:266
+msgid "Euro Member Countries"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:267
+msgid "Fiji Dollar"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:268
+msgid "Falkland Islands"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:269
+msgid "United Kingdom Pound"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:270
+msgid "Georgian Lari"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:271
+msgid "Guernsey Pound"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:272
+msgid "Ghana Cedis"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:273
+msgid "Gibraltar Pound"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:274
+msgid "Guatemala Quetzal"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:275
+msgid "Guyana Dollar"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:276
+msgid "Hong Kong Dollar"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:277
+msgid "Honduras Lempira"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:278
+msgid "Croatia Kuna"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:279
+msgid "Hungary Forint"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:280
+msgid "Indonesia Rupiah"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:281
+msgid "Israel Shekel"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:282
+msgid "Isle of Man Pound"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:283
+msgid "India Rupee"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:284
+msgid "Iran Rial"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:285
+msgid "Iceland Krona"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:286
+msgid "Jersey Pound"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:287
+msgid "Jamaica Dollar"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:288
+msgid "Japan Yen"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:289
+msgid "Kyrgyzstan Som"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:290
+msgid "Cambodia Riel"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:291
+msgid "North Korea Won"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:292
+msgid "South Korea Won"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:293
+msgid "Cayman Islands Dollar"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:294
+msgid "Kazakhstan Tenge"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:295
+msgid "Laos Kip"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:296
+msgid "Lebanon Pound"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:297
+msgid "Sri Lanka Rupee"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:298
+msgid "Liberia Dollar"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:299
+msgid "Lithuania Litas"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:300
+msgid "Latvia Lat"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:301
+msgid "Moroccan Dirham"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:302
+msgid "Macedonia Denar"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:303
+msgid "Mongolia Tughrik"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:304
+msgid "Mauritius Rupee"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:305
+msgid "Mexico Peso"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:306
+msgid "Malaysia Ringgit"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:307
+msgid "Mozambique Metical"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:308
+msgid "Namibia Dollar"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:309
+msgid "Nigeria Naira"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:310
+msgid "Nicaragua Cordoba"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:311
+msgid "Norway Krone"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:312
+msgid "Nepal Rupee"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:313
+msgid "New Zealand Dollar"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:314
+msgid "Oman Rial"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:315
+msgid "Panama Balboa"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:316
+msgid "Peru Nuevo Sol"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:317
+msgid "Philippines Peso"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:318
+msgid "Pakistan Rupee"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:319
+msgid "Poland Zloty &#122;&#322;"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:320
+msgid "Paraguay Guarani"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:321
+msgid "Qatar Riyal"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:322
+msgid "Romania New Leu"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:323
+msgid "Serbia Dinar"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:324
+msgid "Russia Ruble"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:325
+msgid "Saudi Arabia Riyal"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:326
+msgid "Solomon Islands Dollar"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:327
+msgid "Seychelles Rupee"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:328
+msgid "Sweden Krona"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:329
+msgid "Singapore Dollar"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:330
+msgid "Saint Helena Pound"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:331
+msgid "Somalia Shilling"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:332
+msgid "Suriname Dollar"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:333
+msgid "El Salvador Colon"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:334
+msgid "Syria Pound"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:335
+msgid "Thailand Baht"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:336, src/Jigoshop/Helper/Currency.php:337
+msgid "Turkey Lira"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:338
+msgid "Trinidad and Tobago Dollar"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:339
+msgid "Tuvalu Dollar"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:340
+msgid "Taiwan New Dollar"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:341
+msgid "Ukraine Hryvna"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:342
+msgid "United States Dollar"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:343
+msgid "Uruguay Peso"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:344
+msgid "Uzbekistan Som"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:345
+msgid "Venezuela Bolivar Fuerte"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:346
+msgid "Viet Nam Dong"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:347
+msgid "East Caribbean Dollar"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:348
+msgid "Yemen Rial"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:349
+msgid "South Africa Rand"
+msgstr ""
+
+#: src/Jigoshop/Helper/Currency.php:350
+msgid "Zimbabwe Dollar"
+msgstr ""
+
+#: src/Jigoshop/Helper/Formatter.php:41, src/Jigoshop/Admin/Page/Orders.php:167
+msgctxt "time"
+msgid "Y/m/d g:i:s A"
+msgstr ""
+
+#: src/Jigoshop/Helper/Formatter.php:42, src/Jigoshop/Admin/Page/Orders.php:168
+msgctxt "time"
+msgid "Y/m/d"
+msgstr ""
+
+#: src/Jigoshop/Helper/Product.php:104, src/Jigoshop/Helper/Product.php:116
+msgid "%s off!"
+msgstr ""
+
+#: src/Jigoshop/Helper/Product.php:160
+msgid "From: <strong><p>%s</p></strong><p>(%s)</p>"
+msgstr ""
+
+#: src/Jigoshop/Helper/Product.php:163
+msgid "From: %s"
+msgstr ""
+
+#: src/Jigoshop/Helper/Product.php:168
+msgid "<strong><p>%s</p></strong><p>(%s)</p>"
+msgstr ""
+
+#: src/Jigoshop/Helper/Product.php:286
+msgid "Free"
+msgstr ""
+
+#: src/Jigoshop/Helper/Product.php:307
+msgid "Price not announced."
+msgstr ""
+
+#: src/Jigoshop/Helper/Product.php:341
+msgctxt "product"
+msgid "In stock"
+msgstr ""
+
+#: src/Jigoshop/Helper/Product.php:342
+msgctxt "product"
+msgid "Out of stock"
+msgstr ""
+
+#: src/Jigoshop/Helper/Product.php:349
+msgctxt "product"
+msgid "%s <strong>(%d available)</strong>"
+msgstr ""
+
+#: src/Jigoshop/Helper/Product.php:352
+msgctxt "product"
+msgid "%s <strong>(Available on request)</strong>"
+msgstr ""
+
+#: src/Jigoshop/Helper/Product.php:458, src/Jigoshop/Admin/Page/Coupons.php:95, src/Jigoshop/Core/Types/Product/Variable.php:427
+msgid "Yes"
+msgstr ""
+
+#: src/Jigoshop/Helper/Product.php:458, src/Jigoshop/Admin/Page/Coupons.php:95, src/Jigoshop/Core/Types/Product/Variable.php:428
+msgid "No"
+msgstr ""
+
+#: src/Jigoshop/Helper/Product.php:597
+msgid "Rated %s out of 5"
+msgstr ""
+
+#: src/Jigoshop/Helper/Product.php:658, src/Jigoshop/Helper/Product.php:733, src/Jigoshop/Admin/Reports/Table/CustomerList.php:287
+msgid "First Name"
+msgstr ""
+
+#: src/Jigoshop/Helper/Product.php:663, src/Jigoshop/Helper/Product.php:738, src/Jigoshop/Admin/Reports/Table/CustomerList.php:288
+msgid "Last Name"
+msgstr ""
+
+#: src/Jigoshop/Helper/Product.php:668, src/Jigoshop/Helper/Product.php:743, templates/user/account/address.php:10, templates/user/account/edit_address.php:19
+msgid "Company"
+msgstr ""
+
+#: src/Jigoshop/Helper/Product.php:673
+msgid "EU VAT Number"
+msgstr ""
+
+#: src/Jigoshop/Helper/Product.php:678, src/Jigoshop/Helper/Product.php:748, templates/user/account/address.php:19, templates/user/account/edit_address.php:40
+msgid "Address"
+msgstr ""
+
+#: src/Jigoshop/Helper/Product.php:683, src/Jigoshop/Helper/Product.php:753, templates/user/account/address.php:21, templates/user/account/edit_address.php:45
+msgid "City"
+msgstr ""
+
+#: src/Jigoshop/Helper/Product.php:693, src/Jigoshop/Helper/Product.php:763, templates/user/account/address.php:27, templates/user/account/edit_address.php:61, templates/admin/settings/tax/rules.php:28
+msgid "Country"
+msgstr ""
+
+#: src/Jigoshop/Helper/Product.php:698, src/Jigoshop/Helper/Product.php:768
+msgid "State/Province"
+msgstr ""
+
+#: src/Jigoshop/Helper/Product.php:703, templates/user/account/address.php:30, templates/user/account/edit_address.php:67
+msgid "Phone"
+msgstr ""
+
+#: src/Jigoshop/Helper/Product.php:708
+msgid "Email Address"
+msgstr ""
+
+#: src/Jigoshop/Integration/Render.php:26
+msgid "The key [%s] already exists."
+msgstr ""
+
+#: src/Jigoshop/Integration/Render.php:75
+msgid "The key [%s] does not exist."
+msgstr ""
+
+#: src/Jigoshop/Payment/BankTransfer.php:41
+msgid "Bank Transfer"
+msgstr ""
+
+#: src/Jigoshop/Payment/BankTransfer.php:90, src/Jigoshop/Payment/Cheque.php:91, src/Jigoshop/Payment/OnDelivery.php:91, src/Jigoshop/Payment/PayPal.php:130, src/Jigoshop/Payment/WorldPay.php:92, src/Jigoshop/Shipping/FlatRate.php:119, src/Jigoshop/Shipping/FreeShipping.php:127, src/Jigoshop/Shipping/LocalPickup.php:86, src/Jigoshop/Admin/Settings/LayoutTab.php:279
+msgid "Is enabled?"
+msgstr ""
+
+#: src/Jigoshop/Payment/BankTransfer.php:97, src/Jigoshop/Payment/Cheque.php:98, src/Jigoshop/Payment/OnDelivery.php:98, src/Jigoshop/Payment/PayPal.php:137, src/Jigoshop/Payment/WorldPay.php:99, src/Jigoshop/Shipping/AdvancedFlatRate.php:116
+msgid "Title"
+msgstr ""
+
+#: src/Jigoshop/Payment/BankTransfer.php:104, src/Jigoshop/Payment/Cheque.php:105, src/Jigoshop/Payment/OnDelivery.php:105, src/Jigoshop/Payment/PayPal.php:144, src/Jigoshop/Payment/WorldPay.php:106
+msgid "Allowed HTML tags are: %s"
+msgstr ""
+
+#: src/Jigoshop/Payment/BankTransfer.php:123
+msgid "The account name your account is registered to."
+msgstr ""
+
+#: src/Jigoshop/Payment/BankTransfer.php:151
+msgid "Additional information you want to display to your customer. Allowed HTML tags are: %s"
+msgstr ""
+
+#: src/Jigoshop/Payment/BankTransfer.php:208
+msgid "Waiting for the confirmation of the bank transfer."
+msgstr ""
+
+#: src/Jigoshop/Payment/Cheque.php:42
+msgid "Cheque"
+msgstr ""
+
+#: src/Jigoshop/Payment/Cheque.php:144
+msgid "Waiting for cheque to arrive."
+msgstr ""
+
+#: src/Jigoshop/Payment/Dummy.php:104
+msgid "Payment gateway \"%s\" does not exist in the system. This should never happen, please contact Jigoshop support."
+msgstr ""
+
+#: src/Jigoshop/Payment/OnDelivery.php:42
+msgid "On delivery"
+msgstr ""
+
+#: src/Jigoshop/Payment/OnDelivery.php:144
+msgid "Payment on delivery."
+msgstr ""
+
+#: src/Jigoshop/Payment/PayPal.php:63
+msgid "PayPal"
+msgstr ""
+
+#: src/Jigoshop/Payment/PayPal.php:150
+msgid "PayPal email address"
+msgstr ""
+
+#: src/Jigoshop/Payment/PayPal.php:151
+msgid "Please enter your PayPal email address; this is needed in order to take payment!"
+msgstr ""
+
+#: src/Jigoshop/Payment/PayPal.php:157
+msgid "Send shipping details to PayPal"
+msgstr ""
+
+#: src/Jigoshop/Payment/PayPal.php:158
+msgid "If your checkout page does not ask for shipping details, or if you do not want to send shipping information to PayPal, set this option to no. If you enable this option PayPal may restrict where things can be sent, and will prevent some orders going through for your protection."
+msgstr ""
+
+#: src/Jigoshop/Payment/PayPal.php:165
+msgid "Force payment"
+msgstr ""
+
+#: src/Jigoshop/Payment/PayPal.php:166
+msgid "If product totals are free and shipping is also free (excluding taxes), this will force 0.01 to allow paypal to process payment. Shop owner is responsible for refunding customer."
+msgstr ""
+
+#: src/Jigoshop/Payment/PayPal.php:173
+msgid "Enable Sandbox"
+msgstr ""
+
+#: src/Jigoshop/Payment/PayPal.php:180
+msgid "PayPal test email address"
+msgstr ""
+
+#: src/Jigoshop/Payment/PayPal.php:181
+msgid "Please enter your test PayPal email address; this is needed for testing purposes and used when test mode is enabled."
+msgstr ""
+
+#: src/Jigoshop/Payment/PayPal.php:204
+msgid "Email address is not valid."
+msgstr ""
+
+#: src/Jigoshop/Payment/PayPal.php:215
+msgid "Test email address is not valid."
+msgstr ""
+
+#: src/Jigoshop/Payment/PayPal.php:340, src/Jigoshop/Entity/Product/Variable/Variation.php:53
+msgctxt "product_variation"
+msgid "%s: %s"
+msgstr ""
+
+#: src/Jigoshop/Payment/PayPal.php:355
+msgid "Shipping cost"
+msgstr ""
+
+#: src/Jigoshop/Payment/PayPal.php:365
+msgid "Force payment on free orders"
+msgstr ""
+
+#: src/Jigoshop/Payment/PayPal.php:373, templates/user/account/orders/single.php:134
+msgid "Payment processing fee"
+msgstr ""
+
+#: src/Jigoshop/Payment/PayPal.php:379
+msgid "Waiting for PayPal payment."
+msgstr ""
+
+#: src/Jigoshop/Payment/PayPal.php:408
+msgid "PayPal Validation Error: Unknown \"txn_type\" of \"%s\" for Order ID: %s."
+msgstr ""
+
+#: src/Jigoshop/Payment/PayPal.php:414
+msgid "PayPal Validation Error: Order Invoice Number does NOT match PayPal posted invoice (%s) for Order ID: ."
+msgstr ""
+
+#: src/Jigoshop/Payment/PayPal.php:422
+msgid "PayPal Validation Error: Payment amounts do not match initial order (gross %s)."
+msgstr ""
+
+#: src/Jigoshop/Payment/PayPal.php:429
+msgid "PayPal Validation Error: Payment Merchant email received does not match PayPal Gateway settings. (%s)"
+msgstr ""
+
+#: src/Jigoshop/Payment/PayPal.php:436
+msgid "PayPal Validation Error: Payment currency received (%s) does not match Shop currency."
+msgstr ""
+
+#: src/Jigoshop/Payment/PayPal.php:441
+msgid "PayPal payment completed"
+msgstr ""
+
+#: src/Jigoshop/Payment/PayPal.php:448, src/Jigoshop/Payment/PayPal.php:454
+msgid "Payment %s via PayPal."
+msgstr ""
+
+#: src/Jigoshop/Payment/WorldPay.php:64
+msgid "WorldPay"
+msgstr ""
+
+#: src/Jigoshop/Payment/WorldPay.php:112
+msgid "Admin only?"
+msgstr ""
+
+#: src/Jigoshop/Payment/WorldPay.php:114
+msgid "Set this if payment has to be available only for admins."
+msgstr ""
+
+#: src/Jigoshop/Payment/WorldPay.php:120
+msgid "Client key"
+msgstr ""
+
+#: src/Jigoshop/Payment/WorldPay.php:127
+msgid "Api key"
+msgstr ""
+
+#: src/Jigoshop/Payment/WorldPay.php:128
+msgid "Please enter your valid api key; this is needed in order to take payment!"
+msgstr ""
+
+#: src/Jigoshop/Payment/WorldPay.php:134
+msgid "Enable testing mode"
+msgstr ""
+
+#: src/Jigoshop/Payment/WorldPay.php:141
+msgid "Test api key"
+msgstr ""
+
+#: src/Jigoshop/Payment/WorldPay.php:142
+msgid "Please enter your test api key; this is needed for testing purposes and used when test mode is enabled."
+msgstr ""
+
+#: src/Jigoshop/Payment/WorldPay.php:165
+msgid "Please enter Api key."
+msgstr ""
+
+#: src/Jigoshop/Payment/WorldPay.php:167
+msgid "Please enter test Api key."
+msgstr ""
+
+#: src/Jigoshop/Payment/WorldPay.php:238
+msgid "Payment completed, Worldpay order code [%s]"
+msgstr ""
+
+#: src/Jigoshop/Payment/WorldPay.php:243
+msgid "Payment error, Worldpay payment status reason [%s]"
+msgstr ""
+
+#: src/Jigoshop/Service/CartService.php:238
+msgid "Email address is empty."
+msgstr ""
+
+#: src/Jigoshop/Service/CartService.php:241
+msgid "Phone is empty."
+msgstr ""
+
+#: src/Jigoshop/Service/CartService.php:245
+msgid "Email address is invalid."
+msgstr ""
+
+#: src/Jigoshop/Service/CartService.php:264
+msgid "Billing address is not valid."
+msgstr ""
+
+#: src/Jigoshop/Service/CartService.php:267
+msgid "Shipping address is not valid."
+msgstr ""
+
+#: src/Jigoshop/Service/CartService.php:285
+msgid "First name is empty."
+msgstr ""
+
+#: src/Jigoshop/Service/CartService.php:288
+msgid "Last name is empty."
+msgstr ""
+
+#: src/Jigoshop/Service/CartService.php:291
+msgid "Address is empty."
+msgstr ""
+
+#: src/Jigoshop/Service/CartService.php:294
+msgid "Country is not selected."
+msgstr ""
+
+#: src/Jigoshop/Service/CartService.php:297
+msgid "State or province is not selected."
+msgstr ""
+
+#: src/Jigoshop/Service/CartService.php:300
+msgid "City is empty."
+msgstr ""
+
+#: src/Jigoshop/Service/CartService.php:303
+msgid "Postcode is empty."
+msgstr ""
+
+#: src/Jigoshop/Service/CartService.php:306, src/Jigoshop/Admin/Page/Order.php:493
+msgid "Invalid postcode."
+msgstr ""
+
+#: src/Jigoshop/Service/CartService.php:311
+msgid "Country \"%s\" does not exist."
+msgstr ""
+
+#: src/Jigoshop/Service/CartService.php:314, src/Jigoshop/Frontend/Page/Account/EditAddress.php:90
+msgid "Country \"%s\" does not have state \"%s\"."
+msgstr ""
+
+#: src/Jigoshop/Service/CouponService.php:91
+msgid "Unable to save coupon. Please try again."
+msgstr ""
+
+#: src/Jigoshop/Service/CouponService.php:146
+msgid "Cart Discount"
+msgstr ""
+
+#: src/Jigoshop/Service/CouponService.php:147
+msgid "Cart % Discount"
+msgstr ""
+
+#: src/Jigoshop/Service/CouponService.php:148
+msgid "Product Discount"
+msgstr ""
+
+#: src/Jigoshop/Service/CouponService.php:149
+msgid "Product % Discount"
+msgstr ""
+
+#: src/Jigoshop/Service/EmailService.php:127
+msgid "Unable to save email. Please try again."
+msgstr ""
+
+#: src/Jigoshop/Service/OrderService.php:151, src/Jigoshop/Api/Routes/V1/Orders.php:469
+msgid "Unable to save order. Please try again."
+msgstr ""
+
+#: src/Jigoshop/Service/OrderService.php:184
+msgid "%sOrder status changed from %s to %s."
+msgstr ""
+
+#: src/Jigoshop/Service/PaymentService.php:40
+msgid "Payment gateway \"%s\" does not exists"
+msgstr ""
+
+#: src/Jigoshop/Service/ProductService.php:200
+msgid "Unable to save product. Please try again."
+msgstr ""
+
+#: src/Jigoshop/Service/TaxService.php:427, src/Jigoshop/Service/TaxService.php:449
+msgid "No tax class: %s"
+msgstr ""
+
+#: src/Jigoshop/Shipping/AdvancedFlatRate.php:60
+msgid "Advanced flat rate"
+msgstr ""
+
+#: src/Jigoshop/Shipping/AdvancedFlatRate.php:109, src/Jigoshop/Admin/Settings/AdvancedTab.php:205
+msgid "Enable"
+msgstr ""
+
+#: src/Jigoshop/Shipping/AdvancedFlatRate.php:122, src/Jigoshop/Shipping/FlatRate.php:139, src/Jigoshop/Admin/Settings/TaxesTab.php:228, templates/admin/product/box/advanced.php:15
+msgid "Is taxable?"
+msgstr ""
+
+#: src/Jigoshop/Shipping/AdvancedFlatRate.php:129, templates/admin/settings/payment/processingFeeRules.php:12
+msgid "Fee"
+msgstr ""
+
+#: src/Jigoshop/Shipping/AdvancedFlatRate.php:135, src/Jigoshop/Shipping/FlatRate.php:159, src/Jigoshop/Shipping/FreeShipping.php:148
+msgid "Available for"
+msgstr ""
+
+#: src/Jigoshop/Shipping/AdvancedFlatRate.php:139, src/Jigoshop/Shipping/FlatRate.php:44, src/Jigoshop/Shipping/FreeShipping.php:43
+msgid "All allowed countries"
+msgstr ""
+
+#: src/Jigoshop/Shipping/AdvancedFlatRate.php:140, src/Jigoshop/Shipping/FlatRate.php:45, src/Jigoshop/Shipping/FreeShipping.php:44
+msgid "Selected countries"
+msgstr ""
+
+#: src/Jigoshop/Shipping/AdvancedFlatRate.php:146, src/Jigoshop/Shipping/FlatRate.php:167, src/Jigoshop/Shipping/FreeShipping.php:156
+msgid "Select countries"
+msgstr ""
+
+#: src/Jigoshop/Shipping/AdvancedFlatRate.php:155
+msgid "Show multiple rates"
+msgstr ""
+
+#: src/Jigoshop/Shipping/AdvancedFlatRate.php:165
+msgid "Rates"
+msgstr ""
+
+#: src/Jigoshop/Shipping/AdvancedFlatRate.php:220, src/Jigoshop/Shipping/FlatRate.php:213
+msgid "Fee was below 0 - value is left unchanged."
+msgstr ""
+
+#: src/Jigoshop/Shipping/Dummy.php:92
+msgid "Shipping method \"%s\" does not exist in the system. This should never happen, please contact Jigoshop support."
+msgstr ""
+
+#: src/Jigoshop/Shipping/FlatRate.php:40
+msgid "Per order"
+msgstr ""
+
+#: src/Jigoshop/Shipping/FlatRate.php:41
+msgid "Per item"
+msgstr ""
+
+#: src/Jigoshop/Shipping/FlatRate.php:75
+msgid "Flat rate"
+msgstr ""
+
+#: src/Jigoshop/Shipping/FlatRate.php:126, src/Jigoshop/Shipping/FreeShipping.php:134, src/Jigoshop/Shipping/LocalPickup.php:93
+msgid "Method title"
+msgstr ""
+
+#: src/Jigoshop/Shipping/FlatRate.php:146, templates/admin/settings/shipping/advanced_flat_rate/rate.php:38
+msgid "Cost"
+msgstr ""
+
+#: src/Jigoshop/Shipping/FlatRate.php:152
+msgid "Handling fee"
+msgstr ""
+
+#: src/Jigoshop/Shipping/FlatRate.php:191
+msgid "Type is invalid - value is left unchanged."
+msgstr ""
+
+#: src/Jigoshop/Shipping/FlatRate.php:196
+msgid "Cost was invalid - value is left unchanged."
+msgstr ""
+
+#: src/Jigoshop/Shipping/FlatRate.php:202
+msgid "Cost was below 0 - value is left unchanged."
+msgstr ""
+
+#: src/Jigoshop/Shipping/FlatRate.php:207
+msgid "Fee was invalid - value is left unchanged."
+msgstr ""
+
+#: src/Jigoshop/Shipping/FlatRate.php:218, src/Jigoshop/Shipping/FreeShipping.php:191
+msgid "Availability is invalid - value is left unchanged."
+msgstr ""
+
+#: src/Jigoshop/Shipping/FreeShipping.php:74, templates/admin/coupon/box.php:72
+msgid "Free shipping"
+msgstr ""
+
+#: src/Jigoshop/Shipping/FreeShipping.php:140
+msgid "Minimum cart value"
+msgstr ""
+
+#: src/Jigoshop/Shipping/FreeShipping.php:141
+msgid "Minimum cart value above which the Free Shipping method should be available."
+msgstr ""
+
+#: src/Jigoshop/Shipping/FreeShipping.php:179
+msgid "Minimum cart value was invalid - value is left unchanged."
+msgstr ""
+
+#: src/Jigoshop/Shipping/FreeShipping.php:186
+msgid "Minimum cart value was below 0 - value is left unchanged."
+msgstr ""
+
+#: src/Jigoshop/Shipping/LocalPickup.php:37
+msgid "Local pickup"
+msgstr ""
+
+#: src/Jigoshop/Shipping/LocalPickup.php:99
+msgid "Handling Fee"
+msgstr ""
+
+#: src/Jigoshop/Shipping/Rate.php:45
+msgctxt "shipping"
+msgid "%s - %s"
+msgstr ""
+
+#: src/Jigoshop/Shipping/Rate.php:47
+msgctxt "shipping"
+msgid "%s"
+msgstr ""
+
+#: src/Jigoshop/Widget/BestSellers.php:23
+msgid "Lists the best selling products"
+msgstr ""
+
+#: src/Jigoshop/Widget/BestSellers.php:27
+msgid "Jigoshop: Best Sellers"
+msgstr ""
+
+#: src/Jigoshop/Widget/BestSellers.php:66
+msgid "Best Sellers"
+msgstr ""
+
+#: src/Jigoshop/Widget/Cart.php:23
+msgid "Shopping Cart for the sidebar"
+msgstr ""
+
+#: src/Jigoshop/Widget/Cart.php:26
+msgid "Jigoshop: Cart"
+msgstr ""
+
+#: src/Jigoshop/Widget/FeaturedProducts.php:23
+msgid "Featured products on your site"
+msgstr ""
+
+#: src/Jigoshop/Widget/FeaturedProducts.php:27
+msgid "Jigoshop: Featured Products"
+msgstr ""
+
+#: src/Jigoshop/Widget/FeaturedProducts.php:50
+msgid "Featured Products"
+msgstr ""
+
+#: src/Jigoshop/Widget/LayeredNav.php:28
+msgid "Shows a custom attribute in a widget which lets you narrow down the list of shown products in categories."
+msgstr ""
+
+#: src/Jigoshop/Widget/LayeredNav.php:32
+msgid "Jigoshop: Layered Nav"
+msgstr ""
+
+#: src/Jigoshop/Widget/LayeredNav.php:117
+msgid "Filter by Attributes"
+msgstr ""
+
+#: src/Jigoshop/Widget/PriceFilter.php:26
+msgid "Outputs a price filter slider"
+msgstr ""
+
+#: src/Jigoshop/Widget/PriceFilter.php:30
+msgid "Jigoshop: Price Filter"
+msgstr ""
+
+#: src/Jigoshop/Widget/PriceFilter.php:81
+msgid "Filter by Price"
+msgstr ""
+
+#: src/Jigoshop/Widget/ProductCategories.php:27
+msgid "A list or dropdown of product categories"
+msgstr ""
+
+#: src/Jigoshop/Widget/ProductCategories.php:31
+msgid "Jigoshop: Product Categories"
+msgstr ""
+
+#: src/Jigoshop/Widget/ProductCategories.php:81, templates/admin/dashboard/rightNow.php:31, src/Jigoshop/Core/Types/ProductCategory.php:49
+msgid "Product Categories"
+msgstr ""
+
+#: src/Jigoshop/Widget/ProductSearch.php:15
+msgid "A search form for your products"
+msgstr ""
+
+#: src/Jigoshop/Widget/ProductSearch.php:19
+msgid "Jigoshop: Product Search"
+msgstr ""
+
+#: src/Jigoshop/Widget/ProductSearch.php:50
+msgid "Product Search"
+msgstr ""
+
+#: src/Jigoshop/Widget/ProductsOnSale.php:23
+msgid "Display a list of products currently on sale"
+msgstr ""
+
+#: src/Jigoshop/Widget/ProductsOnSale.php:27
+msgid "Jigoshop: Products On-Sale"
+msgstr ""
+
+#: src/Jigoshop/Widget/ProductsOnSale.php:66
+msgid "Special Offers"
+msgstr ""
+
+#: src/Jigoshop/Widget/ProductTagCloud.php:16
+msgid "Your most used product tags in cloud format"
+msgstr ""
+
+#: src/Jigoshop/Widget/ProductTagCloud.php:20
+msgid "Jigoshop: Product Tag Cloud"
+msgstr ""
+
+#: src/Jigoshop/Widget/ProductTagCloud.php:54, src/Jigoshop/Core/Types/ProductTag.php:49
+msgid "Product Tags"
+msgstr ""
+
+#: src/Jigoshop/Widget/RandomProducts.php:23
+msgid "Lists a random selection of products on your site."
+msgstr ""
+
+#: src/Jigoshop/Widget/RandomProducts.php:27
+msgid "Jigoshop: Random Products"
+msgstr ""
+
+#: src/Jigoshop/Widget/RandomProducts.php:50
+msgid "Random Products"
+msgstr ""
+
+#: src/Jigoshop/Widget/RecentlyViewedProducts.php:21
+msgid "A list of your customers most recently viewed products"
+msgstr ""
+
+#: src/Jigoshop/Widget/RecentlyViewedProducts.php:25
+msgid "Jigoshop: Recently Viewed"
+msgstr ""
+
+#: src/Jigoshop/Widget/RecentlyViewedProducts.php:95
+msgid "Recently Viewed Products"
+msgstr ""
+
+#: src/Jigoshop/Widget/RecentProducts.php:23
+msgid "The most recent products on your site"
+msgstr ""
+
+#: src/Jigoshop/Widget/RecentProducts.php:27
+msgid "Jigoshop: New Products"
+msgstr ""
+
+#: src/Jigoshop/Widget/RecentProducts.php:66
+msgid "New Products"
+msgstr ""
+
+#: src/Jigoshop/Widget/RecentReviews.php:33
+msgid "Display a list of your most recent product reviews"
+msgstr ""
+
+#: src/Jigoshop/Widget/RecentReviews.php:36
+msgid "Jigoshop: Recent Reviews"
+msgstr ""
+
+#: src/Jigoshop/Widget/RecentReviews.php:75
+msgid "Recent Reviews"
+msgstr ""
+
+#: src/Jigoshop/Widget/TopRated.php:23
+msgid "The best of the best on your site"
+msgstr ""
+
+#: src/Jigoshop/Widget/TopRated.php:27
+msgid "Jigoshop: Top Rated Products"
+msgstr ""
+
+#: src/Jigoshop/Widget/TopRated.php:66
+msgid "Top Rated Products"
+msgstr ""
+
+#: src/Jigoshop/Widget/UserLogin.php:21
+msgid "Displays a handy login form for users"
+msgstr ""
+
+#: src/Jigoshop/Widget/UserLogin.php:24
+msgid "Jigoshop: Login"
+msgstr ""
+
+#: src/Jigoshop/Widget/UserLogin.php:47
+msgid "Hey %s!"
+msgstr ""
+
+#: src/Jigoshop/Widget/UserLogin.php:49
+msgid "My Account"
+msgstr ""
+
+#: src/Jigoshop/Widget/UserLogin.php:50
+msgid "My Orders"
+msgstr ""
+
+#: src/Jigoshop/Widget/UserLogin.php:51
+msgid "Change Password"
+msgstr ""
+
+#: src/Jigoshop/Widget/UserLogin.php:52
+msgid "Logout"
+msgstr ""
+
+#: templates/admin/coupon/box.php:14
+msgid "Code"
+msgstr ""
+
+#: templates/admin/coupon/box.php:15
+msgid "Will not appear until coupon is saved.  This is the front end code for use on the Cart."
+msgstr ""
+
+#: templates/admin/coupon/box.php:31
+msgid "Enter an amount e.g. 9.99."
+msgstr ""
+
+#: templates/admin/coupon/box.php:32
+msgid "Amount this coupon is worth. If it is a percentage, just include the number without the percentage sign."
+msgstr ""
+
+#: templates/admin/coupon/box.php:44
+msgid "Coupon date"
+msgstr ""
+
+#: templates/admin/coupon/box.php:45
+msgid "Choose between which dates this coupon is enabled.  Leave empty for any date."
+msgstr ""
+
+#: templates/admin/coupon/box.php:46
+msgid "Any date"
+msgstr ""
+
+#: templates/admin/coupon/box.php:57
+msgid "Usage limit"
+msgstr ""
+
+#: templates/admin/coupon/box.php:59
+msgid "Times used: %s"
+msgstr ""
+
+#: templates/admin/coupon/box.php:60
+msgid "Control how many times this coupon may be used."
+msgstr ""
+
+#: templates/admin/coupon/box.php:66
+msgid "Individual use"
+msgstr ""
+
+#: templates/admin/coupon/box.php:67
+msgid "Prevent other coupons from being used while this one is applied to the Cart."
+msgstr ""
+
+#: templates/admin/coupon/box.php:73
+msgid "Show the Free Shipping method on the Checkout with this enabled."
+msgstr ""
+
+#: templates/admin/coupon/box.php:80
+msgid "Order total minimum"
+msgstr ""
+
+#: templates/admin/coupon/box.php:82
+msgid "Set the required minimum subtotal for this coupon to be valid on an order."
+msgstr ""
+
+#: templates/admin/coupon/box.php:83
+msgid "No minimum"
+msgstr ""
+
+#: templates/admin/coupon/box.php:88
+msgid "Order total maximum"
+msgstr ""
+
+#: templates/admin/coupon/box.php:90
+msgid "Set the required maximum subtotal for this coupon to be valid on an order."
+msgstr ""
+
+#: templates/admin/coupon/box.php:91
+msgid "No maximum"
+msgstr ""
+
+#: templates/admin/coupon/box.php:99
+msgid "Include products"
+msgstr ""
+
+#: templates/admin/coupon/box.php:100
+msgid "Control which products this coupon can apply to. If this is left blank it will have effect on all of the products."
+msgstr ""
+
+#: templates/admin/coupon/box.php:105
+msgid "Excluded products"
+msgstr ""
+
+#: templates/admin/coupon/box.php:106
+msgid "Control which products this coupon cannot be applied to."
+msgstr ""
+
+#: templates/admin/coupon/box.php:113
+msgid "Include categories"
+msgstr ""
+
+#: templates/admin/coupon/box.php:114
+msgid "Control which categories this coupon can apply to. If this is left blank it will have effect on all of the products."
+msgstr ""
+
+#: templates/admin/coupon/box.php:119
+msgid "Excluded categories"
+msgstr ""
+
+#: templates/admin/coupon/box.php:120
+msgid "Control which categories this coupon cannot be applied to."
+msgstr ""
+
+#: templates/admin/coupon/box.php:128, src/Jigoshop/Admin/Settings/PaymentTab.php:112
+msgid "Payment methods"
+msgstr ""
+
+#: templates/admin/coupon/box.php:129
+msgid "Control which payment methods are allowed for this coupon to be effective."
+msgstr ""
+
+#: templates/admin/dashboard/latestNews.php:13
+msgid "No items found."
+msgstr ""
+
+#: templates/admin/dashboard/monthlyReport.php:17
+msgid "Next Month &rarr;"
+msgstr ""
+
+#: templates/admin/dashboard/monthlyReport.php:19
+msgid "&larr; Previous Month"
+msgstr ""
+
+#: templates/admin/dashboard/monthlyReport.php:59
+msgid "Number of sales"
+msgstr ""
+
+#: templates/admin/dashboard/monthlyReport.php:60, src/Jigoshop/Admin/Reports/Chart/ByProduct.php:437
+msgid "Sales amount"
+msgstr ""
+
+#: templates/admin/dashboard/recentOrders.php:19
+msgctxt "dashboard"
+msgid "M d, Y"
+msgstr ""
+
+#: templates/admin/dashboard/recentOrders.php:22
+msgid "Total Quantity"
+msgstr ""
+
+#: templates/admin/dashboard/recentReviews.php:13
+msgid "out of 5"
+msgstr ""
+
+#: templates/admin/dashboard/recentReviews.php:16
+msgid " reviewed by "
+msgstr ""
+
+#: templates/admin/dashboard/recentReviews.php:23
+msgid "There are no product reviews yet."
+msgstr ""
+
+#: templates/admin/dashboard/rightNow.php:35, src/Jigoshop/Admin/Settings/LayoutTab.php:138, src/Jigoshop/Core/Types/ProductTag.php:50
+msgid "Product Tag"
+msgstr ""
+
+#: templates/admin/dashboard/rightNow.php:39
+msgid "Product attributes"
+msgstr ""
+
+#: templates/admin/dashboard/rightNow.php:51, src/Jigoshop/Entity/Order/Status.php:59
+msgid "Pending"
+msgstr ""
+
+#: templates/admin/dashboard/rightNow.php:55, src/Jigoshop/Entity/Order/Status.php:60
+msgid "On-Hold"
+msgstr ""
+
+#: templates/admin/dashboard/rightNow.php:59, src/Jigoshop/Entity/Order/Status.php:61
+msgid "Processing"
+msgstr ""
+
+#: templates/admin/dashboard/rightNow.php:63, src/Jigoshop/Entity/Order/Status.php:62
+msgid "Completed"
+msgstr ""
+
+#: templates/admin/dashboard/stockReport.php:11
+msgid "Low Stock"
+msgstr ""
+
+#: templates/admin/dashboard/stockReport.php:15
+msgid "Stock: %d"
+msgstr ""
+
+#: templates/admin/dashboard/stockReport.php:19
+msgid "No products are low in stock."
+msgstr ""
+
+#: templates/admin/dashboard/stockReport.php:24
+msgid "Out of Stock/Backorders"
+msgstr ""
+
+#: templates/admin/dashboard/stockReport.php:32
+msgid "No products are out of stock."
+msgstr ""
+
+#: templates/admin/dashboard/usefulLinks.php:4
+msgid "Extensions"
+msgstr ""
+
+#: templates/admin/dashboard/usefulLinks.php:4
+msgid "Extend Jigoshop with extra plugins and modules."
+msgstr ""
+
+#: templates/admin/dashboard/usefulLinks.php:5
+msgid "Themes"
+msgstr ""
+
+#: templates/admin/dashboard/usefulLinks.php:5
+msgid "Extend Jigoshop with themes."
+msgstr ""
+
+#: templates/admin/dashboard/usefulLinks.php:6
+msgid "@Jigoshop"
+msgstr ""
+
+#: templates/admin/dashboard/usefulLinks.php:6
+msgid "Follow us on Twitter."
+msgstr ""
+
+#: templates/admin/dashboard/usefulLinks.php:7
+msgid "Jigoshop eCommerce on Github"
+msgstr ""
+
+#: templates/admin/dashboard/usefulLinks.php:7
+msgid "Help extend Jigoshop."
+msgstr ""
+
+#: templates/admin/dashboard/usefulLinks.php:8
+msgid "Jigoshop eCommerce on WordPress.org"
+msgstr ""
+
+#: templates/admin/dashboard/usefulLinks.php:8
+msgid "Leave us a rating!"
+msgstr ""
+
+#: templates/admin/dashboard/usefulLinks.php:16
+msgid "Jigoshop Project"
+msgstr ""
+
+#: templates/admin/dashboard/usefulLinks.php:17
+msgid "Our team is available to help you with implementation of additional requirements or to provide you with custom development. Please contact our sales team to obtain a quote"
+msgstr ""
+
+#: templates/admin/dashboard/usefulLinks.php:19
+msgid "Join our growing developer community today, contribute to the jigoshop project via GitHub."
+msgstr ""
+
+#: templates/admin/dashboard/usefulLinks.php:21
+msgid "Jigoshop Social"
+msgstr ""
+
+#: templates/admin/dashboard/usefulLinks.php:31
+msgid "Stuck? Read the plugin's documentation."
+msgstr ""
+
+#: templates/admin/email/attachmentsBox.php:23
+msgid "This email template does not have attachments."
+msgstr ""
+
+#: templates/admin/email/box.php:10
+msgid "Subject"
+msgstr ""
+
+#: templates/admin/email/box.php:16, src/Jigoshop/Admin/Reports/Table/CustomerList.php:84, src/Jigoshop/Admin/Reports/Table/LowInStock.php:56, src/Jigoshop/Admin/Reports/Table/MostStocked.php:60, src/Jigoshop/Admin/Reports/Table/OutOfStock.php:52
+msgid "Actions"
+msgstr ""
+
+#: templates/admin/email/box.php:18, templates/admin/product/box/variations.php:15
+msgid "Select action..."
+msgstr ""
+
+#: templates/admin/email/variables.php:21
+msgid "Selected actions have not common variables"
+msgstr ""
+
+#: templates/admin/email/variables.php:30
+msgid "Select email action to see available variables"
+msgstr ""
+
+#: templates/admin/migration/coupons.php:2
+msgid "Migrate coupons"
+msgstr ""
+
+#: templates/admin/migration/coupons.php:2, templates/admin/migration/emails.php:2, templates/admin/migration/options.php:2, templates/admin/migration/orders.php:2, templates/admin/migration/products.php:2
+msgid " - %d/%d"
+msgstr ""
+
+#: templates/admin/migration/coupons.php:2, templates/admin/migration/emails.php:2, templates/admin/migration/options.php:2, templates/admin/migration/orders.php:2, templates/admin/migration/products.php:2
+msgid " - done"
+msgstr ""
+
+#: templates/admin/migration/emails.php:2
+msgid "Migrate emails"
+msgstr ""
+
+#: templates/admin/migration/options.php:2
+msgid "Migrate options"
+msgstr ""
+
+#: templates/admin/migration/orders.php:2
+msgid "Migrate orders"
+msgstr ""
+
+#: templates/admin/migration/products.php:2
+msgid "Migrate products"
+msgstr ""
+
+#: templates/admin/notice/thanks_for_using_jigoshop.php:6
+msgid "Thank you for using Jigoshop eCommerce"
+msgstr ""
+
+#: templates/admin/notice/thanks_for_using_jigoshop.php:7
+msgid "If you enjoy using <b>Jigoshop eCommerce</b> please leave us a <span class=\"glyphicon glyphicon-star\"></span><span class=\"glyphicon glyphicon-star\"></span><span class=\"glyphicon glyphicon-star\"></span><span class=\"glyphicon glyphicon-star\"></span><span class=\"glyphicon glyphicon-star\"></span> review. Reviews like yours help us improve the plugin."
+msgstr ""
+
+#: templates/admin/notice/thanks_for_using_jigoshop.php:10
+msgid "Leave a Review"
+msgstr ""
+
+#: templates/admin/order/actionsBox.php:9
+msgid "Save Order"
+msgstr ""
+
+#: templates/admin/order/actionsBox.php:9
+msgid "- Save/update the order."
+msgstr ""
+
+#: templates/admin/order/actionsBox.php:10
+msgid "Reduce stock"
+msgstr ""
+
+#: templates/admin/order/actionsBox.php:10
+msgid "- Reduces stock for each item in the order; useful after manually creating an order or manually marking an order as complete/processing after payment."
+msgstr ""
+
+#: templates/admin/order/actionsBox.php:11
+msgid "Restore stock"
+msgstr ""
+
+#: templates/admin/order/actionsBox.php:11
+msgid "- Restores stock for each item in the order; useful after refunding or canceling the entire order."
+msgstr ""
+
+#: templates/admin/order/actionsBox.php:12
+msgid "Recalculate Tax"
+msgstr ""
+
+#: templates/admin/order/actionsBox.php:12
+msgid "- Recalculates for each item in the order using CURRENT tax rules."
+msgstr ""
+
+#: templates/admin/order/dataBox.php:19, src/Jigoshop/Core/Types/Order.php:43
+msgid "Order"
+msgstr ""
+
+#: templates/admin/order/dataBox.php:27
+msgid "<strong>Warning</strong> Order panel will not work properly without JavaScript."
+msgstr ""
+
+#: templates/admin/order/dataBox.php:33, src/Jigoshop/Admin/Migration/Orders.php:129
+msgid "Order status"
+msgstr ""
+
+#: templates/admin/order/dataBox.php:39, src/Jigoshop/Core/Installer/Roles.php:34
+msgid "Customer"
+msgstr ""
+
+#: templates/admin/order/dataBox.php:45
+msgid "Customer's note"
+msgstr ""
+
+#: templates/admin/order/itemsBox.php:16
+msgid "ID"
+msgstr ""
+
+#: templates/admin/order/itemsBox.php:19
+msgid "Unit price (%s)"
+msgstr ""
+
+#: templates/admin/order/itemsBox.php:41
+msgid "Search for products..."
+msgstr ""
+
+#: templates/admin/order/itemsBox.php:42
+msgid "Add item"
+msgstr ""
+
+#: templates/admin/order/itemsBox.php:43
+msgid "Product subtotal:"
+msgstr ""
+
+#: templates/admin/order/totalsBox.php:64, templates/shop/checkout/thanks.php:124, src/Jigoshop/Frontend/Page/Checkout.php:343
+msgid "Payment processing fee (%s)"
+msgstr ""
+
+#: templates/admin/orders/billingAddress.php:13, templates/admin/orders/shippingAddress.php:14
+msgid "Map"
+msgstr ""
+
+#: templates/admin/orders/shippingPayment.php:11, templates/admin/orders/totals.php:17
+msgid "Shipping%s"
+msgstr ""
+
+#: templates/admin/orders/shippingPayment.php:17
+msgid "Payment%s"
+msgstr ""
+
+#: templates/admin/orders/status.php:16
+msgid "Change to &quot;Processing&quot;"
+msgstr ""
+
+#: templates/admin/orders/status.php:22
+msgid "Change to &quot;Completed&quot;"
+msgstr ""
+
+#: templates/admin/orders/status.php:28
+msgid "Change to &quot;Cancelled&quot;"
+msgstr ""
+
+#: templates/admin/orders/totals.php:12
+msgid "Product subtotal%s"
+msgstr ""
+
+#: templates/admin/orders/totals.php:29
+msgid "Total%s"
+msgstr ""
+
+#: templates/admin/product/box.php:28
+msgid "Product type"
+msgstr ""
+
+#: templates/admin/products/categoryFilter.php:20, templates/widget/product_categories/dropdown.php:26
+msgid "View all categories"
+msgstr ""
+
+#: templates/admin/products/featuredFilter.php:6
+msgid "Only featured?"
+msgstr ""
+
+#: templates/admin/products/quick_edit.php:20
+msgid "Sale"
+msgstr ""
+
+#: templates/admin/products/quick_edit.php:37
+msgid "In stock?"
+msgstr ""
+
+#: templates/admin/products/quick_edit.php:53
+msgid "Backorders?"
+msgstr ""
+
+#: templates/admin/products/quick_edit.php:55, templates/admin/product/box/stock.php:47, templates/admin/product/box/variations/variation.php:148
+msgid "Do not allow"
+msgstr ""
+
+#: templates/admin/products/quick_edit.php:56, templates/admin/product/box/stock.php:48, templates/admin/product/box/variations/variation.php:149
+msgid "Allow, but notify customer"
+msgstr ""
+
+#: templates/admin/products/quick_edit.php:57, templates/admin/product/box/stock.php:49, templates/admin/product/box/variations/variation.php:150
+msgid "Allow"
+msgstr ""
+
+#: templates/admin/products/quick_edit.php:63
+msgid "Visibility?"
+msgstr ""
+
+#: templates/admin/products/quick_edit.php:66, templates/admin/product/box/general.php:75
+msgid "Catalog & Search"
+msgstr ""
+
+#: templates/admin/products/quick_edit.php:67, templates/admin/product/box/general.php:76
+msgid "Catalog Only"
+msgstr ""
+
+#: templates/admin/products/quick_edit.php:68, templates/admin/product/box/general.php:77
+msgid "Search Only"
+msgstr ""
+
+#: templates/admin/products/quick_edit.php:69, templates/admin/product/box/general.php:78
+msgid "Hidden"
+msgstr ""
+
+#: templates/admin/products/typeFilter.php:10
+msgid "Show all types"
+msgstr ""
+
+#: templates/admin/product_attributes/attribute.php:39, templates/admin/product_attributes/option.php:29, templates/admin/product_categories/form.php:139, templates/admin/order/item/downloadable.php:20, templates/admin/order/item/simple.php:20, templates/admin/order/item/variable.php:25, templates/admin/order/item/virtual.php:20, templates/admin/settings/api_users/user.php:9, templates/admin/settings/tax/class.php:27, templates/admin/settings/tax/rule.php:73, templates/shop/cart/item/downloadable.php:41, templates/shop/cart/item/external.php:41, templates/shop/cart/item/simple.php:41, templates/shop/cart/item/variable.php:42, templates/shop/cart/item/virtual.php:41, templates/shop/cart/mobile/downloadable.php:44, templates/shop/cart/mobile/external.php:44, templates/shop/cart/mobile/simple.php:44, templates/shop/cart/mobile/variable.php:45, templates/shop/cart/mobile/virtual.php:44, templates/admin/product/box/attributes/attribute.php:13, templates/admin/product/box/variations/variation.php:18, templates/admin/settings/shipping/advanced_flat_rate/rate.php:20
+msgid "Remove"
+msgstr ""
+
+#: templates/admin/product_attributes/attribute.php:48
+msgid "Attribute options"
+msgstr ""
+
+#: templates/admin/product_categories/category.php:13
+msgid " (1 subcategory)"
+msgstr ""
+
+#: templates/admin/product_categories/category.php:16
+msgid " (%s subcategories)"
+msgstr ""
+
+#: templates/admin/product_categories/form.php:18
+msgid "The name is how it appears on your site."
+msgstr ""
+
+#: templates/admin/product_categories/form.php:53
+msgid "The “slug” is the URL-friendly version of the name. It is usually all lowercase and containonly letters, numbers, and hyphens."
+msgstr ""
+
+#: templates/admin/product_categories/form.php:62
+msgid "Parent category"
+msgstr ""
+
+#: templates/admin/product_categories/form.php:77, templates/admin/product_tags/thumbnail.php:9
+msgid "Thumbnail"
+msgstr ""
+
+#: templates/admin/product_categories/form.php:87, templates/admin/product_tags/thumbnail.php:18
+msgid "Choose thumbnail image"
+msgstr ""
+
+#: templates/admin/product_categories/form.php:87, templates/admin/product_tags/thumbnail.php:19
+msgid "Set as thumbnail"
+msgstr ""
+
+#: templates/admin/product_categories/form.php:87, templates/admin/product_tags/thumbnail.php:19
+msgid "Change image"
+msgstr ""
+
+#: templates/admin/product_categories/form.php:89, templates/admin/product_tags/thumbnail.php:21, templates/admin/product/box/variations/variation.php:49
+msgid "Remove image"
+msgstr ""
+
+#: templates/admin/product_categories/form.php:103
+msgid "Enable inherited attributes"
+msgstr ""
+
+#: templates/admin/product_categories/form.php:115
+msgid "Inherit attributes from"
+msgstr ""
+
+#: templates/admin/product_categories/form.php:117, src/Jigoshop/Admin/Settings/ProductsTab.php:314
+msgid "All parent categories"
+msgstr ""
+
+#: templates/admin/product_categories/form.php:118, src/Jigoshop/Admin/Settings/ProductsTab.php:315
+msgid "Direct parent category"
+msgstr ""
+
+#: templates/admin/product_categories/form.php:137
+msgid "Inherited from"
+msgstr ""
+
+#: templates/admin/product_categories/form.php:138, src/Jigoshop/Admin/Settings/PaymentTab.php:160, templates/admin/settings/payment/methodContainer.php:9
+msgid "Enabled"
+msgstr ""
+
+#: templates/admin/product_categories/form.php:154
+msgid "Existing attr."
+msgstr ""
+
+#: templates/admin/reports/chart.php:22, templates/admin/reports/table.php:18
+msgid "Export CSV"
+msgstr ""
+
+#: templates/admin/reports/chart.php:46
+msgid "Filter Report"
+msgstr ""
+
+#: templates/admin/reports/table.php:14, templates/widget/product_search/widget.php:23, src/Jigoshop/Core/Types/Order.php:52
+msgid "Search"
+msgstr ""
+
+#: templates/admin/reports/table.php:54
+msgid "Items"
+msgstr ""
+
+#: templates/admin/settings/api_key.php:12, templates/admin/settings/api_users/user.php:23
+msgid "Generate"
+msgstr ""
+
+#: templates/admin/settings/api_users.php:35
+msgid "Add User"
+msgstr ""
+
+#: templates/admin/settings/create_emails.php:5
+msgid "Create"
+msgstr ""
+
+#: templates/shop/cart/cross_sells.php:8
+msgid "You may be interested in&hellip;"
+msgstr ""
+
+#: templates/shop/cart/empty.php:7
+msgid "Your cart is empty."
+msgstr ""
+
+#: templates/shop/cart/empty.php:8
+msgid "Return to shop"
+msgstr ""
+
+#: templates/shop/checkout/login.php:1
+msgid "Already registered?"
+msgstr ""
+
+#: templates/shop/checkout/login.php:1
+msgid "Click here to login."
+msgstr ""
+
+#: templates/shop/checkout/pay.php:19
+msgid "Checkout &raquo; Pay &raquo; %s"
+msgstr ""
+
+#: templates/shop/checkout/pay.php:22, templates/shop/checkout/thanks.php:47, templates/user/account/orders/single.php:49
+msgid "Order details"
+msgstr ""
+
+#: templates/shop/checkout/pay.php:55, templates/shop/checkout/thanks.php:88, src/Jigoshop/Admin/Page/Order.php:93, templates/user/account/orders/single.php:92
+msgid "Order Totals"
+msgstr ""
+
+#: templates/shop/checkout/pay.php:132, templates/user/account/change_password.php:32, templates/user/account/edit_address.php:75, templates/user/account/orders.php:45, templates/user/account/orders/single.php:148
+msgid "Go back to My account"
+msgstr ""
+
+#: templates/shop/checkout/pay.php:133
+msgid "Go back to My orders"
+msgstr ""
+
+#: templates/shop/checkout/payment.php:13
+msgid "Checkout &raquo; Payment &raquo; %s"
+msgstr ""
+
+#: templates/shop/checkout/registration_form.php:11
+msgid "Would you like to create an account?"
+msgstr ""
+
+#: templates/shop/checkout/registration_form.php:20
+msgid "Registration"
+msgstr ""
+
+#: templates/shop/checkout/registration_form.php:36
+msgid "Re-type password"
+msgstr ""
+
+#: templates/shop/checkout/registration_form.php:39
+msgid "Re-type your password"
+msgstr ""
+
+#: templates/shop/checkout/registration_form.php:43
+msgid "I agree to account creation"
+msgstr ""
+
+#: templates/shop/checkout/thanks.php:18
+msgid "Thank you for your order"
+msgstr ""
+
+#: templates/shop/checkout/thanks.php:22
+msgid "Order number"
+msgstr ""
+
+#: templates/shop/checkout/thanks.php:139
+msgid "Cancel this order"
+msgstr ""
+
+#: templates/shop/checkout/thanks.php:141
+msgid "Continue shopping"
+msgstr ""
+
+#: templates/shop/list/product.php:16, templates/shop/product/images.php:15
+msgid "Sale!"
+msgstr ""
+
+#: templates/shop/product/related.php:7, src/Jigoshop/Admin/Settings/ProductsTab.php:77
+msgid "Related products"
+msgstr ""
+
+#: templates/shop/product/up_sells.php:8
+msgid "You may also like&hellip;"
+msgstr ""
+
+#: templates/user/account/address.php:13, templates/user/account/edit_address.php:24
+msgid "VAT number"
+msgstr ""
+
+#: templates/user/account/address.php:25, templates/user/account/edit_address.php:55
+msgid "State/province"
+msgstr ""
+
+#: templates/user/account/address.php:34, templates/user/account/edit_address.php:72, src/Jigoshop/Admin/Settings/GeneralTab.php:228, src/Jigoshop/Admin/Reports/Table/CustomerList.php:64, src/Jigoshop/Admin/Reports/Table/CustomerList.php:289
+msgid "Email"
+msgstr ""
+
+#: templates/user/account/change_password.php:11
+msgid "My account &raquo; Change password"
+msgstr ""
+
+#: templates/user/account/change_password.php:17
+msgid "Current password"
+msgstr ""
+
+#: templates/user/account/change_password.php:23
+msgid "New password"
+msgstr ""
+
+#: templates/user/account/change_password.php:29
+msgid "Re-type new password"
+msgstr ""
+
+#: templates/user/account/edit_address.php:13
+msgid "My account &raquo; Edit address"
+msgstr ""
+
+#: templates/user/account/edit_address.php:30
+msgid "First name"
+msgstr ""
+
+#: templates/user/account/edit_address.php:35
+msgid "Last name"
+msgstr ""
+
+#: templates/user/account/orders.php:16
+msgid "My account &raquo; Orders"
+msgstr ""
+
+#: templates/user/account/orders.php:20
+msgid "Orders list"
+msgstr ""
+
+#: templates/widget/best_sellers/form.php:12, templates/widget/cart/form.php:15, templates/widget/featured_products/form.php:12, templates/widget/layered_nav/form.php:15, templates/widget/price_filter/form.php:9, templates/widget/products_on_sale/form.php:12, templates/widget/product_categories/form.php:23, templates/widget/product_search/form.php:9, templates/widget/product_tag_cloud/form.php:9, templates/widget/random_products/form.php:12, templates/widget/recently_viewed_products/form.php:12, templates/widget/recent_products/form.php:12, templates/widget/recent_reviews/form.php:12, templates/widget/top_rated/form.php:12
+msgid "Title:"
+msgstr ""
+
+#: templates/widget/best_sellers/form.php:16, templates/widget/featured_products/form.php:16, templates/widget/products_on_sale/form.php:16, templates/widget/random_products/form.php:16, templates/widget/recently_viewed_products/form.php:16, templates/widget/recent_products/form.php:16, templates/widget/recent_reviews/form.php:16, templates/widget/top_rated/form.php:16
+msgid "Number of products to show:"
+msgstr ""
+
+#: templates/widget/cart/form.php:19
+msgid "View cart button:"
+msgstr ""
+
+#: templates/widget/cart/form.php:23
+msgid "Checkout button:"
+msgstr ""
+
+#: templates/widget/cart/widget.php:16
+msgid "View Cart"
+msgstr ""
+
+#: templates/widget/cart/widget.php:47
+msgid "No products in the cart."
+msgstr ""
+
+#: templates/widget/layered_nav/form.php:19
+msgid "Attributes:"
+msgstr ""
+
+#: templates/widget/layered_nav/widget.php:21
+msgid "Clear"
+msgstr ""
+
+#: templates/widget/price_filter/widget.php:22
+msgid "Filter"
+msgstr ""
+
+#: templates/widget/price_filter/widget.php:23
+msgid "Price: "
+msgstr ""
+
+#: templates/widget/product_categories/form.php:29
+msgid "Show as dropdown"
+msgstr ""
+
+#: templates/widget/product_categories/form.php:34
+msgid "Show product counts"
+msgstr ""
+
+#: templates/widget/product_categories/form.php:39
+msgid "Show hierarchy"
+msgstr ""
+
+#: templates/widget/product_categories/form.php:44
+msgid "One level only"
+msgstr ""
+
+#: templates/widget/product_search/widget.php:21
+msgid "Search for:"
+msgstr ""
+
+#: templates/widget/product_search/widget.php:22
+msgid "Search for products"
+msgstr ""
+
+#: templates/widget/recent_reviews/widget.php:30
+msgctxt "author"
+msgid "by %1$s"
+msgstr ""
+
+#: templates/widget/user_login/form.php:12
+msgid "Title (Logged Out):"
+msgstr ""
+
+#: templates/widget/user_login/form.php:16
+msgid "Title (Logged In):"
+msgstr ""
+
+#: templates/widget/user_login/logged_in.php:23, templates/widget/user_login/log_in.php:45
+msgid "Go to %s"
+msgstr ""
+
+#: templates/widget/user_login/log_in.php:33
+msgid "Remind password"
+msgstr ""
+
+#: templates/widget/user_login/log_in.php:37
+msgid "New user?"
+msgstr ""
+
+#: src/Jigoshop/Admin/Migration/Coupons.php:129, src/Jigoshop/Admin/Migration/Coupons.php:261
+msgid "Migration coupons end with error: "
+msgstr ""
+
+#: src/Jigoshop/Admin/Migration/Coupons.php:186
+msgid "Migration coupons START."
+msgstr ""
+
+#: src/Jigoshop/Admin/Migration/Coupons.php:241, src/Jigoshop/Admin/Migration/Options.php:413
+msgid "Migration coupons end with error."
+msgstr ""
+
+#: src/Jigoshop/Admin/Migration/Coupons.php:247, src/Jigoshop/Admin/Migration/Options.php:416
+msgid "Migration coupons END."
+msgstr ""
+
+#: src/Jigoshop/Admin/Migration/Emails.php:129, src/Jigoshop/Admin/Migration/Emails.php:253
+msgid "Migration emails end with error: "
+msgstr ""
+
+#: src/Jigoshop/Admin/Migration/Emails.php:178
+msgid "Migration emails START."
+msgstr ""
+
+#: src/Jigoshop/Admin/Migration/Emails.php:233
+msgid "Migration emails end with error."
+msgstr ""
+
+#: src/Jigoshop/Admin/Migration/Emails.php:239
+msgid "Migration emails END."
+msgstr ""
+
+#: src/Jigoshop/Admin/Migration/Options.php:121
+msgid "Tax"
+msgstr ""
+
+#: src/Jigoshop/Admin/Migration/Options.php:163, src/Jigoshop/Admin/Migration/Options.php:429
+msgid "Migration options end with error: "
+msgstr ""
+
+#: src/Jigoshop/Admin/Migration/Options.php:388
+msgid "Migration options START."
+msgstr ""
+
+#: src/Jigoshop/Admin/Migration/Orders.php:128
+msgid "Order statuses"
+msgstr ""
+
+#: src/Jigoshop/Admin/Migration/Orders.php:130
+msgid "Search Order statuses"
+msgstr ""
+
+#: src/Jigoshop/Admin/Migration/Orders.php:131
+msgid "All  Order statuses"
+msgstr ""
+
+#: src/Jigoshop/Admin/Migration/Orders.php:132
+msgid "Parent Order status"
+msgstr ""
+
+#: src/Jigoshop/Admin/Migration/Orders.php:133
+msgid "Parent Order status:"
+msgstr ""
+
+#: src/Jigoshop/Admin/Migration/Orders.php:134
+msgid "Edit Order status"
+msgstr ""
+
+#: src/Jigoshop/Admin/Migration/Orders.php:135
+msgid "Update Order status"
+msgstr ""
+
+#: src/Jigoshop/Admin/Migration/Orders.php:136
+msgid "Add New Order status"
+msgstr ""
+
+#: src/Jigoshop/Admin/Migration/Orders.php:137
+msgid "New Order status Name"
+msgstr ""
+
+#: src/Jigoshop/Admin/Migration/Orders.php:444, src/Jigoshop/Admin/Migration/Orders.php:446
+msgid "Standard"
+msgstr ""
+
+#: src/Jigoshop/Admin/Migration/Orders.php:471, src/Jigoshop/Admin/Migration/Orders.php:657
+msgid "Migration orders end with error: "
+msgstr ""
+
+#: src/Jigoshop/Admin/Migration/Orders.php:587
+msgid "Migration orders START."
+msgstr ""
+
+#: src/Jigoshop/Admin/Migration/Orders.php:640
+msgid "Migration orders end with error."
+msgstr ""
+
+#: src/Jigoshop/Admin/Migration/Orders.php:644
+msgid "Migration orders END."
+msgstr ""
+
+#: src/Jigoshop/Admin/Migration/Products.php:478, src/Jigoshop/Admin/Migration/Products.php:684
+msgid "Migration products end with error: "
+msgstr ""
+
+#: src/Jigoshop/Admin/Migration/Products.php:615
+msgid "Migration products START."
+msgstr ""
+
+#: src/Jigoshop/Admin/Migration/Products.php:666
+msgid "Migration products end with error."
+msgstr ""
+
+#: src/Jigoshop/Admin/Migration/Products.php:671
+msgid "Migration products END."
+msgstr ""
+
+#: src/Jigoshop/Admin/Page/Coupon.php:40
+msgid "Coupon Data"
+msgstr ""
+
+#: src/Jigoshop/Admin/Page/Coupon.php:82
+msgid "Neither query nor value is provided to find categories."
+msgstr ""
+
+#: src/Jigoshop/Admin/Page/Coupons.php:42
+msgctxt "coupon"
+msgid "Title"
+msgstr ""
+
+#: src/Jigoshop/Admin/Page/Coupons.php:43
+msgctxt "coupon"
+msgid "Code"
+msgstr ""
+
+#: src/Jigoshop/Admin/Page/Coupons.php:44
+msgctxt "coupon"
+msgid "Type"
+msgstr ""
+
+#: src/Jigoshop/Admin/Page/Coupons.php:45
+msgctxt "coupon"
+msgid "Amount"
+msgstr ""
+
+#: src/Jigoshop/Admin/Page/Coupons.php:46
+msgctxt "coupon"
+msgid "Usage limit"
+msgstr ""
+
+#: src/Jigoshop/Admin/Page/Coupons.php:47
+msgctxt "coupon"
+msgid "Used"
+msgstr ""
+
+#: src/Jigoshop/Admin/Page/Coupons.php:48
+msgctxt "coupon"
+msgid "From"
+msgstr ""
+
+#: src/Jigoshop/Admin/Page/Coupons.php:49
+msgctxt "coupon"
+msgid "To"
+msgstr ""
+
+#: src/Jigoshop/Admin/Page/Coupons.php:50
+msgctxt "coupon"
+msgid "For individual use?"
+msgstr ""
+
+#: src/Jigoshop/Admin/Page/Email.php:33
+msgid "Email Data"
+msgstr ""
+
+#: src/Jigoshop/Admin/Page/Email.php:34
+msgid "Email Variables"
+msgstr ""
+
+#: src/Jigoshop/Admin/Page/Email.php:35
+msgid "Email Attachments"
+msgstr ""
+
+#: src/Jigoshop/Admin/Page/Email.php:64
+msgid "Email not found."
+msgstr ""
+
+#: src/Jigoshop/Admin/Page/Order.php:91
+msgid "Order Items"
+msgstr ""
+
+#: src/Jigoshop/Admin/Page/Order.php:98
+msgid "Order Actions"
+msgstr ""
+
+#: src/Jigoshop/Admin/Page/Order.php:110, src/Jigoshop/Admin/Page/Order.php:260, src/Jigoshop/Admin/Page/Order.php:300, src/Jigoshop/Admin/Page/Order.php:324, src/Jigoshop/Admin/Page/Order.php:390, src/Jigoshop/Admin/Page/Order.php:432, src/Jigoshop/Admin/Page/Order.php:478, src/Jigoshop/Api/Routes/V1/Orders.php:283
+msgid "Order not found."
+msgstr ""
+
+#: src/Jigoshop/Admin/Page/Order.php:132, src/Jigoshop/Api/Routes/V1/Orders.php:424
+msgid "Product cannot be added to the order."
+msgstr ""
+
+#: src/Jigoshop/Admin/Page/Order.php:250
+msgid "Invalid quantity value."
+msgstr ""
+
+#: src/Jigoshop/Admin/Page/Order.php:253
+msgid "Invalid product price."
+msgstr ""
+
+#: src/Jigoshop/Admin/Page/Order.php:331, src/Jigoshop/Frontend/Page/Cart.php:320
+msgid "Method rate is required."
+msgstr ""
+
+#: src/Jigoshop/Admin/Page/Order.php:381
+msgid "Invalid country."
+msgstr ""
+
+#: src/Jigoshop/Admin/Page/Order.php:447
+msgid "Invalid state."
+msgstr ""
+
+#: src/Jigoshop/Admin/Page/Orders.php:66
+msgctxt "order"
+msgid "Status"
+msgstr ""
+
+#: src/Jigoshop/Admin/Page/Orders.php:67
+msgctxt "order"
+msgid "Order"
+msgstr ""
+
+#: src/Jigoshop/Admin/Page/Orders.php:68
+msgctxt "order"
+msgid "Customer"
+msgstr ""
+
+#: src/Jigoshop/Admin/Page/Orders.php:69
+msgctxt "order"
+msgid "Billing address"
+msgstr ""
+
+#: src/Jigoshop/Admin/Page/Orders.php:70
+msgctxt "order"
+msgid "Shipping address"
+msgstr ""
+
+#: src/Jigoshop/Admin/Page/Orders.php:71
+msgctxt "order"
+msgid "Shipping &amp; Payment"
+msgstr ""
+
+#: src/Jigoshop/Admin/Page/Orders.php:72
+msgctxt "order"
+msgid "Total"
+msgstr ""
+
+#: src/Jigoshop/Admin/Page/Orders.php:73
+msgctxt "order"
+msgid "Products"
+msgstr ""
+
+#: src/Jigoshop/Admin/Page/Orders.php:153
+msgid "Order #%s"
+msgstr ""
+
+#: src/Jigoshop/Admin/Page/Product.php:51
+msgid "Product Data"
+msgstr ""
+
+#: src/Jigoshop/Admin/Page/Product.php:52
+msgid "Attachments"
+msgstr ""
+
+#: src/Jigoshop/Admin/Page/Product.php:57, src/Jigoshop/Admin/Settings/GeneralTab.php:79
+msgid "General"
+msgstr ""
+
+#: src/Jigoshop/Admin/Page/Product.php:58, src/Jigoshop/Admin/Settings/AdvancedTab.php:70
+msgid "Advanced"
+msgstr ""
+
+#: src/Jigoshop/Admin/Page/Product.php:59, src/Jigoshop/Admin/Product/Attributes.php:226
+msgid "Attributes"
+msgstr ""
+
+#: src/Jigoshop/Admin/Page/Product.php:60, src/Jigoshop/Admin/Reports/StockTab.php:31
+msgid "Stock"
+msgstr ""
+
+#: src/Jigoshop/Admin/Page/Product.php:61, src/Jigoshop/Admin/Reports/SalesTab.php:38
+msgid "Sales"
+msgstr ""
+
+#: src/Jigoshop/Admin/Page/Product.php:81, src/Jigoshop/Admin/Product/Attributes.php:58
+msgid "Changes saved."
+msgstr ""
+
+#: src/Jigoshop/Admin/Page/Product.php:82
+msgid "Attribute successfully removed."
+msgstr ""
+
+#: src/Jigoshop/Admin/Page/Product.php:83, src/Jigoshop/Admin/Product/Attributes.php:61, src/Jigoshop/Core/Types/Product/Variable.php:413
+msgid "Are you sure?"
+msgstr ""
+
+#: src/Jigoshop/Admin/Page/Product.php:84
+msgid "Invalid attribute, please select another one."
+msgstr ""
+
+#: src/Jigoshop/Admin/Page/Product.php:85
+msgid "Please provide attribute label."
+msgstr ""
+
+#: src/Jigoshop/Admin/Page/Product.php:122
+msgid "Custom attribute"
+msgstr ""
+
+#: src/Jigoshop/Admin/Page/Product.php:162
+msgid "Gallery"
+msgstr ""
+
+#: src/Jigoshop/Admin/Page/Product.php:163, src/Jigoshop/Core/Types/Product/Downloadable.php:218, src/Jigoshop/Core/Types/Product/Variable.php:374
+msgid "Downloads"
+msgstr ""
+
+#: src/Jigoshop/Admin/Page/Product.php:183, src/Jigoshop/Admin/Page/Product.php:223, src/Jigoshop/Admin/Page/Product.php:302, src/Jigoshop/Core/Types/Product/Variable.php:480, src/Jigoshop/Core/Types/Product/Variable.php:536, src/Jigoshop/Core/Types/Product/Variable.php:592, src/Jigoshop/Core/Types/Product/Variable.php:716, src/Jigoshop/Core/Types/Product/Variable.php:806, src/Jigoshop/Core/Types/Product/Variable.php:848
+msgid "Product was not specified."
+msgstr ""
+
+#: src/Jigoshop/Admin/Page/Product.php:186, src/Jigoshop/Admin/Page/Product.php:226, src/Jigoshop/Admin/Page/Product.php:305, src/Jigoshop/Core/Types/Product/Variable.php:483, src/Jigoshop/Core/Types/Product/Variable.php:539, src/Jigoshop/Core/Types/Product/Variable.php:595, src/Jigoshop/Core/Types/Product/Variable.php:719, src/Jigoshop/Core/Types/Product/Variable.php:809, src/Jigoshop/Core/Types/Product/Variable.php:851
+msgid "Invalid product ID."
+msgstr ""
+
+#: src/Jigoshop/Admin/Page/Product.php:189
+msgid "Product type was not specified."
+msgstr ""
+
+#: src/Jigoshop/Admin/Page/Product.php:229, src/Jigoshop/Admin/Page/Product.php:308
+msgid "Attribute was not specified."
+msgstr ""
+
+#: src/Jigoshop/Admin/Page/Product.php:232, src/Jigoshop/Admin/Page/Product.php:311
+msgid "Invalid attribute ID."
+msgstr ""
+
+#: src/Jigoshop/Admin/Page/Product.php:239, src/Jigoshop/Admin/Page/Product.php:318, src/Jigoshop/Core/Types/Product/Variable.php:489, src/Jigoshop/Core/Types/Product/Variable.php:555, src/Jigoshop/Core/Types/Product/Variable.php:735, src/Jigoshop/Core/Types/Product/Variable.php:821, src/Jigoshop/Core/Types/Product/Variable.php:855
+msgid "Product does not exists."
+msgstr ""
+
+#: src/Jigoshop/Admin/Page/Product.php:251, src/Jigoshop/Api/Routes/V1/Product/Attributes.php:212
+msgid "Custom attribute requires label to be set."
+msgstr ""
+
+#: src/Jigoshop/Admin/Page/Product.php:264, src/Jigoshop/Api/Routes/V1/Product/Attributes.php:221, src/Jigoshop/Api/Routes/V1/Product/Attributes.php:258
+msgid "Attribute does not exists."
+msgstr ""
+
+#: src/Jigoshop/Admin/Page/Product.php:270, src/Jigoshop/Api/Routes/V1/Product/Attributes.php:367
+msgid "Attribute \"%s\" already exists."
+msgstr ""
+
+#: src/Jigoshop/Admin/Page/Product.php:352
+msgid "Neither query nor value is provided to find products."
+msgstr ""
+
+#: src/Jigoshop/Admin/Page/Product.php:377
+msgid "No categories specified."
+msgstr ""
+
+#: src/Jigoshop/Admin/Page/Products.php:91
+msgctxt "product"
+msgid "Name"
+msgstr ""
+
+#: src/Jigoshop/Admin/Page/Products.php:94
+msgctxt "product"
+msgid "Is featured?"
+msgstr ""
+
+#: src/Jigoshop/Admin/Page/Products.php:96
+msgctxt "product"
+msgid "Type"
+msgstr ""
+
+#: src/Jigoshop/Admin/Page/Products.php:97
+msgctxt "product"
+msgid "SKU"
+msgstr ""
+
+#: src/Jigoshop/Admin/Page/Products.php:98
+msgctxt "product"
+msgid "Stock"
+msgstr ""
+
+#: src/Jigoshop/Admin/Page/Products.php:99
+msgctxt "product"
+msgid "Price"
+msgstr ""
+
+#: src/Jigoshop/Admin/Page/Products.php:100
+msgctxt "product"
+msgid "Created at"
+msgstr ""
+
+#: src/Jigoshop/Admin/Page/Products.php:150
+msgid "Visible in"
+msgstr ""
+
+#: src/Jigoshop/Admin/Page/Products.php:153
+msgid "Search only"
+msgstr ""
+
+#: src/Jigoshop/Admin/Page/Products.php:156
+msgid "Catalog only"
+msgstr ""
+
+#: src/Jigoshop/Admin/Page/Products.php:159
+msgid "Catalog and search"
+msgstr ""
+
+#: src/Jigoshop/Admin/Product/Attributes.php:59
+msgid "Attribute has been successfully removed."
+msgstr ""
+
+#: src/Jigoshop/Admin/Product/Attributes.php:60
+msgid "Attribute option has been successfully removed."
+msgstr ""
+
+#: src/Jigoshop/Admin/Product/Attributes.php:77, src/Jigoshop/Api/Routes/V1/Attributes.php:342
+msgid "Attribute label is not set."
+msgstr ""
+
+#: src/Jigoshop/Admin/Product/Attributes.php:80, src/Jigoshop/Api/Routes/V1/Attributes.php:347
+msgid "Attribute type is not valid."
+msgstr ""
+
+#: src/Jigoshop/Admin/Product/Attributes.php:131
+msgid "Attribute does not exist."
+msgstr ""
+
+#: src/Jigoshop/Admin/Product/Attributes.php:154, src/Jigoshop/Admin/Product/Attributes.php:197
+msgid "Respective attribute is not set."
+msgstr ""
+
+#: src/Jigoshop/Admin/Product/Attributes.php:157
+msgid "Option label is not set."
+msgstr ""
+
+#: src/Jigoshop/Admin/Product/Attributes.php:200
+msgid "Option does not exist."
+msgstr ""
+
+#: src/Jigoshop/Admin/Product/Categories.php:61
+msgid "Do you really want to remove this category?"
+msgstr ""
+
+#: src/Jigoshop/Admin/Product/Categories.php:212
+msgid "Category updated."
+msgstr ""
+
+#: src/Jigoshop/Admin/Product/Categories.php:215
+msgid "Category added successfully."
+msgstr ""
+
+#: src/Jigoshop/Admin/Product/Categories.php:263
+msgid "Category removed successfully."
+msgstr ""
+
+#: src/Jigoshop/Admin/Reports/CustomersTab.php:36
+msgid "Customers"
+msgstr ""
+
+#: src/Jigoshop/Admin/Reports/CustomersTab.php:62
+msgid "Customers vs Guests"
+msgstr ""
+
+#: src/Jigoshop/Admin/Reports/CustomersTab.php:63, src/Jigoshop/Admin/Reports/Table/CustomerList.php:46
+msgid "Customer List"
+msgstr ""
+
+#: src/Jigoshop/Admin/Reports/SalesTab.php:64
+msgid "By Date"
+msgstr ""
+
+#: src/Jigoshop/Admin/Reports/SalesTab.php:65
+msgid "By Product"
+msgstr ""
+
+#: src/Jigoshop/Admin/Reports/SalesTab.php:66
+msgid "By Category"
+msgstr ""
+
+#: src/Jigoshop/Admin/Reports/SalesTab.php:67
+msgid "Discount Summary"
+msgstr ""
+
+#: src/Jigoshop/Admin/Reports/StockTab.php:57
+msgid "Low in Stock"
+msgstr ""
+
+#: src/Jigoshop/Admin/Reports/StockTab.php:58
+msgid "Out of Stock"
+msgstr ""
+
+#: src/Jigoshop/Admin/Reports/StockTab.php:59, src/Jigoshop/Admin/Reports/Table/MostStocked.php:34
+msgid "Most Stocked"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/AdvancedTab.php:48
+msgctxt "cache"
+msgid "Simple"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/AdvancedTab.php:49
+msgctxt "cache"
+msgid "Php Fast Cache - Use this option only if your database is responding slowly. "
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/AdvancedTab.php:52
+msgid "Php session"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/AdvancedTab.php:53
+msgid "Wordpress transient"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/AdvancedTab.php:92
+msgid "Cron jobs"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/AdvancedTab.php:97
+msgid "Complete processing orders"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/AdvancedTab.php:98
+msgid "Change all 'Processing' orders older than one month to 'Completed'"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/AdvancedTab.php:100
+msgid "For orders that have been completed but the status is still set to 'processing'.  This will move them to a 'completed' status without sending an email out to all the customers."
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/AdvancedTab.php:108
+msgid "Reset pending orders"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/AdvancedTab.php:109
+msgid "Change all 'Pending' orders older than one month to 'On Hold'"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/AdvancedTab.php:111
+msgid "For customers that have not completed the Checkout process or haven't paid for an order after a period of time, this will reset the Order to On Hold allowing the Shop owner to take action.  WARNING: For the first use on an existing Shop this setting <em>can</em> generate a <strong>lot</strong> of email!"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/AdvancedTab.php:120
+msgid "Integration"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/AdvancedTab.php:134
+msgid "Google Analytics ID"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/AdvancedTab.php:135
+msgid "Log into your Google Analytics account to find your ID. e.g. <code>UA-XXXXXXX-X</code>"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/AdvancedTab.php:143
+msgid "Products list"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/AdvancedTab.php:148
+msgid "Show variation's SKU and stock"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/AdvancedTab.php:149
+msgid "Show all variation's SKU and stock on admin products list page."
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/AdvancedTab.php:158
+msgid "Others"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/AdvancedTab.php:163
+msgid "Caching mechanism"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/AdvancedTab.php:164
+msgid "Decides which mechanism for caching is used on the page."
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/AdvancedTab.php:171
+msgid "Session mechanism"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/AdvancedTab.php:172
+msgid "Decides which mechanism for session is used on the page."
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/AdvancedTab.php:179
+msgid "Ignore meta queries on product list"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/AdvancedTab.php:180
+msgid ""
+"Ignores products' visibility to enhance the loading time.\n"
+"Warning : This will result in showing \"out of stock\" products on the catalog page, as well as making all products visible in the catalog and search pages."
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/AdvancedTab.php:189
+msgid "Create default emails"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/AdvancedTab.php:190
+msgid "Creates default emails for Jigoshop email system."
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/AdvancedTab.php:199
+msgid "API"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/AdvancedTab.php:201, src/Jigoshop/Admin/Settings/AdvancedTab.php:215, templates/admin/settings/shipping/advanced_flat_rate/rate.php:82
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/AdvancedTab.php:212
+msgid "Secret key"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/AdvancedTab.php:226
+msgid "Users"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/AdvancedTab.php:242
+msgid "Pages"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/AdvancedTab.php:244
+msgid "This section allows you to change content source page for each part of Jigoshop. It will not change the main behaviour though."
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/AdvancedTab.php:270
+msgid "Thanks page"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/AdvancedTab.php:325
+msgid "Emails created."
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/AdvancedTab.php:333
+msgid "Invalid cache mechanism: \"%s\". Value set to %s."
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/AdvancedTab.php:344
+msgid "Invalid shop page, please select again."
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/AdvancedTab.php:350
+msgid "Invalid cart page, please select again."
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/AdvancedTab.php:356
+msgid "Invalid checkout page, please select again."
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/AdvancedTab.php:362
+msgid "Invalid thank you page, please select again."
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/AdvancedTab.php:368
+msgid "Invalid My account page, please select again."
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/AdvancedTab.php:375
+msgid "Invalid terms page, please select again."
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/GeneralTab.php:97, src/Jigoshop/Admin/Settings/LayoutTab.php:72, src/Jigoshop/Admin/Settings/ShippingTab.php:86, src/Jigoshop/Admin/Settings/TaxesTab.php:101
+msgid "Main"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/GeneralTab.php:125
+msgid "Display custom message?"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/GeneralTab.php:128
+msgid "Add custom message on top of each page of your website."
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/GeneralTab.php:134
+msgid "Message text"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/GeneralTab.php:142
+msgid "Demo store"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/GeneralTab.php:145
+msgid "Enable this option to show a banner at the top of every page stating this shop is currently in testing mode."
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/GeneralTab.php:151, src/Jigoshop/Core/Types/Product/Variable.php:344
+msgid "Pricing"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/GeneralTab.php:191
+msgid "Company details"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/GeneralTab.php:192
+msgid "These details, alongside shop location, will be used for invoicing and emails."
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/GeneralTab.php:203
+msgid "Address (first line)"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/GeneralTab.php:209
+msgid "Address (second line)"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/GeneralTab.php:215
+msgid "Tax number"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/GeneralTab.php:216
+msgid "Add your tax registration label before the registration number and it will be printed as well. eg. <code>VAT Number: 88888888</code>"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/GeneralTab.php:222
+msgid "Phone number"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/GeneralTab.php:230
+msgid "A representative e-mail company - department of orders, customer service, contact."
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/GeneralTab.php:241
+msgid "From name"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/GeneralTab.php:242
+msgid "Name shown in all Jigoshop emails."
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/GeneralTab.php:248
+msgid "Footer"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/GeneralTab.php:249
+msgid "The email footer used in all Jigoshop emails."
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/GeneralTab.php:272
+msgid "Invalid shop location (country), please select again."
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/LayoutTab.php:54
+msgid "Layout"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/LayoutTab.php:77
+msgid "Enable custom layout"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/LayoutTab.php:84
+msgid "Page width"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/LayoutTab.php:94
+msgid "Custom global CSS"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/LayoutTab.php:113
+msgid "Product List"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/LayoutTab.php:133, src/Jigoshop/Core/Types/ProductCategory.php:50
+msgid "Product Category"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/LayoutTab.php:143
+msgid "Account"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/LayoutTab.php:148, src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:501
+msgid "Thank You"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/LayoutTab.php:187
+msgid "Structure"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/LayoutTab.php:200
+msgid "Sidebar"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/LayoutTab.php:204
+msgid "Jigoshop Sidebar 1"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/LayoutTab.php:205
+msgid "Jigoshop Sidebar 2"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/LayoutTab.php:206
+msgid "Jigoshop Sidebar 3"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/LayoutTab.php:207
+msgid "Jigoshop Sidebar 4"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/LayoutTab.php:208
+msgid "Jigoshop Sidebar 5"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/LayoutTab.php:209
+msgid "Jigoshop Sidebar 6"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/LayoutTab.php:210
+msgid "Jigoshop Sidebar 7"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/LayoutTab.php:211
+msgid "Jigoshop Sidebar 8"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/LayoutTab.php:212
+msgid "Jigoshop Sidebar 9"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/LayoutTab.php:217
+msgid "Proportions"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/LayoutTab.php:224
+msgid "Custom"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/LayoutTab.php:229
+msgid "Custom Proportions"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/LayoutTab.php:242
+msgid "Custom CSS"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/LayoutTab.php:280
+msgid "Override default settings for this page."
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/PaymentTab.php:81
+msgid "Payment"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/PaymentTab.php:99
+msgid "Default Gateway"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/PaymentTab.php:104
+msgid "Set default gataway"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/PaymentTab.php:117
+msgid "Processing fee rules"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/PaymentTab.php:129
+msgid "Please select a gateway"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/PaymentTab.php:136
+msgid "All gateways are disabled. Please turn on a gateway."
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/PaymentTab.php:149
+msgid "Disabled"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/PaymentTab.php:153
+msgid "Disabled; Not configured"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/PaymentTab.php:157
+msgid "Enabled in test mode"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/PaymentTab.php:280
+msgid "%s was not enabled, as it isn't configured properly."
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/PaymentTab.php:287
+msgid "%s enabled."
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/PaymentTab.php:292
+msgid "%s disabled."
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/PaymentTab.php:311
+msgid "%s test mode enabled."
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/PaymentTab.php:316
+msgid "%s test mode disabled."
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/ProductsTab.php:72
+msgid "Products options"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/ProductsTab.php:79
+msgid "Show or hide the related products section on a single product page based on the same category."
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/ProductsTab.php:85, src/Jigoshop/Frontend/Page/Product.php:242
+msgid "Reviews"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/ProductsTab.php:87
+msgid "Show or hide the product reviews tab on a product page."
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/ProductsTab.php:93
+msgid "Number of up sell products to display"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/ProductsTab.php:94
+msgid "Enter the number of products to limit the items displayed in Product page"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/ProductsTab.php:102
+msgid "Units"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/ProductsTab.php:122
+msgid "Stock management"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/ProductsTab.php:127
+msgid "Enable for all items"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/ProductsTab.php:128
+msgid "You can always disable management per item, it's just default value."
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/ProductsTab.php:143
+msgid "Show stock amounts"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/ProductsTab.php:144
+msgid "This option allows you to show available amounts on product page."
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/ProductsTab.php:151
+msgid "Low stock threshold"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/ProductsTab.php:165
+msgid "Hide out of stock variations"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/ProductsTab.php:166
+msgid "This option allows you to hide product variations which are out of stock."
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/ProductsTab.php:174
+msgid "Stock notifications"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/ProductsTab.php:179
+msgid "Low stock"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/ProductsTab.php:180
+msgid "Notify when product reaches low stock"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/ProductsTab.php:188
+msgid "Notify when product becomes out of stock"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/ProductsTab.php:204
+msgid "Images"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/ProductsTab.php:205
+msgid "Changing any of those settings will affect image sizes on your page. If you have cropping enabled you will need to regenerate thumbnails."
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/ProductsTab.php:210
+msgid "Tiny image width"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/ProductsTab.php:211, src/Jigoshop/Admin/Settings/ProductsTab.php:218
+msgid "Used in cart for product image."
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/ProductsTab.php:217
+msgid "Tiny image height"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/ProductsTab.php:224
+msgid "Crop tiny image"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/ProductsTab.php:225, src/Jigoshop/Admin/Settings/ProductsTab.php:247, src/Jigoshop/Admin/Settings/ProductsTab.php:269, src/Jigoshop/Admin/Settings/ProductsTab.php:291
+msgid "Leave disabled to scale images proportionally, enable to do real cropping."
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/ProductsTab.php:232
+msgid "Thumbnail image width"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/ProductsTab.php:233, src/Jigoshop/Admin/Settings/ProductsTab.php:240
+msgid "Used in single product view for other images thumbnails."
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/ProductsTab.php:239
+msgid "Thumbnail image height"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/ProductsTab.php:246
+msgid "Crop thumbnail image"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/ProductsTab.php:254
+msgid "Small image width"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/ProductsTab.php:255, src/Jigoshop/Admin/Settings/ProductsTab.php:262
+msgid "Used in catalog for product thumbnails."
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/ProductsTab.php:261
+msgid "Small image height"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/ProductsTab.php:268
+msgid "Crop small image"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/ProductsTab.php:276
+msgid "Large image width"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/ProductsTab.php:277, src/Jigoshop/Admin/Settings/ProductsTab.php:284
+msgid "Used in single product view for featured image."
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/ProductsTab.php:283
+msgid "Large image height"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/ProductsTab.php:290
+msgid "Crop large image"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/ProductsTab.php:300
+msgid "Category attributes"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/ProductsTab.php:304
+msgid "Inheritance enabled by default"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/ProductsTab.php:311
+msgid "Inheritance default mode"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/ProductsTab.php:335
+msgid "Invalid weight unit: \"%s\". Value set to %s."
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/ProductsTab.php:339
+msgid "Invalid dimensions unit: \"%s\". Value set to %s."
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/ProductsTab.php:343
+msgid "Invalid default stock status: \"%s\". Value set to %s."
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/ProductsTab.php:356
+msgid "Invalid low stock threshold: \"%d\". Value set to 2."
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/ShippingTab.php:91
+msgid "Enable shipping"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/ShippingTab.php:98
+msgid "Enable shipping calculator"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/ShippingTab.php:99
+msgid "This enables calculator in cart for available shipping methods."
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/ShippingTab.php:112
+msgid "Ship only to billing address?"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/ShippingTab.php:113
+msgid "This forces customer to use billing address as shipping address."
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/ShippingTab.php:120
+msgid "Always show shipping fields"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/ShippingTab.php:121
+msgid "This forces shipping fields to be always visible in checkout."
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/ShippingTab.php:129
+msgid "Shipping methods"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/ShoppingTab.php:41
+msgid "Stay on the same page"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/ShoppingTab.php:42
+msgid "Redirect to product page"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/ShoppingTab.php:43
+msgid "Redirect to cart"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/ShoppingTab.php:44
+msgid "Redirect to checkout"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/ShoppingTab.php:45
+msgid "Redirect to product list"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/ShoppingTab.php:48
+msgid "Product list"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/ShoppingTab.php:53
+msgid "Product name"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/ShoppingTab.php:54
+msgid "Product post order"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/ShoppingTab.php:57
+msgid "Ascending"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/ShoppingTab.php:58
+msgid "Descending"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/ShoppingTab.php:61, templates/shop/list/cart/downloadable.php:9, templates/shop/list/cart/simple.php:9, templates/shop/list/cart/virtual.php:9, templates/shop/product/cart/downloadable.php:10, templates/shop/product/cart/simple.php:13, templates/shop/product/cart/variable.php:36, templates/shop/product/cart/virtual.php:10
+msgid "Add to cart"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/ShoppingTab.php:62, src/Jigoshop/Core/Types/Product.php:78, src/Jigoshop/Core/Types/Product.php:79, templates/shop/list/cart/default.php:7
+msgid "View Product"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/ShoppingTab.php:63
+msgid "No button"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/ShoppingTab.php:78
+msgid "Shopping"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/ShoppingTab.php:96
+msgid "Catalog"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/ShoppingTab.php:101
+msgid "Items per page"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/ShoppingTab.php:107
+msgid "Order by"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/ShoppingTab.php:114
+msgid "Ordering"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/ShoppingTab.php:121
+msgid "Product button type"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/ShoppingTab.php:128
+msgid "Hide out of stock items"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/ShoppingTab.php:141
+msgid "After adding to cart"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/ShoppingTab.php:148
+msgid "Coming back to shop"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/ShoppingTab.php:149
+msgid "This will point users to the page you set for buttons like 'Return to shop' or 'Continue Shopping'."
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/ShoppingTab.php:156
+msgid "Number of cross sell products to display"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/ShoppingTab.php:168
+msgid "This section allows you to modify checkout requirements for being signed in."
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/ShoppingTab.php:172
+msgid "Validate postcode"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/ShoppingTab.php:180
+msgid "Restrict selling locations?"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/ShoppingTab.php:181
+msgid "This option allows you to select what countries you want to sell to."
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/ShoppingTab.php:189
+msgid "Selling locations"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/ShoppingTab.php:199
+msgid "Enable verification message"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/ShoppingTab.php:200
+msgid "Enabling this setting will display a message at the bottom of the Checkout asking customers to verify all their informatioin is correctly entered before placing their Order.  This is useful in particular for Countries that have states to ensure the correct shipping state is selected."
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/ShoppingTab.php:208
+msgid "Verification message"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/ShoppingTab.php:216
+msgid "Allow guest purchases"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/ShoppingTab.php:223
+msgid "Show login form"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/ShoppingTab.php:224
+msgid "Add login form on checkout page."
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/ShoppingTab.php:231
+msgid "Allow registration"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/ShoppingTab.php:232
+msgid "Add registration form on checkout page."
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/ShoppingTab.php:239
+msgid "Require login for downloads"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/ShoppingTab.php:240
+msgid "Forces user to log in before they could download files."
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/ShoppingTab.php:247
+msgid "Number of unpaid orders in My Account"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/ShoppingTab.php:253
+msgid "Force SSL on checkout"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/ShoppingTab.php:254
+msgid "Enforces WordPress to use SSL on checkout pages."
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/ShoppingTab.php:276
+msgid "Invalid products per page value: \"%d\". Value set to 12."
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/ShoppingTab.php:280
+msgid "Invalid products sorting: \"%s\". Value set to %s."
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/ShoppingTab.php:284
+msgid "Invalid products sorting orientation: \"%s\". Value set to %s."
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/ShoppingTab.php:305
+msgid "Invalid add to cart redirection: \"%s\". Value set to %s."
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/ShoppingTab.php:309
+msgid "Invalid continue shopping redirection: \"%s\". Value set to %s."
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/TaxesTab.php:46
+msgctxt "admin_taxing"
+msgid "All states"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/TaxesTab.php:54, src/Jigoshop/Admin/Settings/TaxesTab.php:261
+msgid "All countries"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/TaxesTab.php:78
+msgid "Taxes"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/TaxesTab.php:128
+msgid "Taxes based on shipping country?"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/TaxesTab.php:130
+msgid "By default, taxes based on billing country."
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/TaxesTab.php:137
+msgid "Prices"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/TaxesTab.php:142
+msgid "Entered prices tax status"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/TaxesTab.php:146
+msgid "I will enter prices without tax"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/TaxesTab.php:147
+msgid "I will enter prices with tax included"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/TaxesTab.php:152
+msgid "Show prices in cart and checkout"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/TaxesTab.php:156, src/Jigoshop/Admin/Settings/TaxesTab.php:168
+msgid "Including tax"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/TaxesTab.php:157, src/Jigoshop/Admin/Settings/TaxesTab.php:169
+msgid "Excluding tax"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/TaxesTab.php:158, src/Jigoshop/Admin/Settings/TaxesTab.php:170
+msgid "Both (including tax first)"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/TaxesTab.php:159, src/Jigoshop/Admin/Settings/TaxesTab.php:171
+msgid "Both (excluding tax first)"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/TaxesTab.php:164
+msgid "Show product prices"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/TaxesTab.php:176
+msgid "Show tax suffix"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/TaxesTab.php:180
+msgid "In cart totals"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/TaxesTab.php:181
+msgid "Everywhere"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/TaxesTab.php:186
+msgid "Suffix for prices with tax included"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/TaxesTab.php:192
+msgid "Suffix for prices without tax"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/TaxesTab.php:199
+msgid "Classes"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/TaxesTab.php:211
+msgid "Rules"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/TaxesTab.php:223
+msgid "New products"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/TaxesTab.php:224
+msgid "This section defines default tax settings for new products."
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/TaxesTab.php:235, templates/admin/product/box/advanced.php:21, templates/admin/product/box/variations/variation.php:72
+msgid "Tax classes"
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/LogsTab.php:20, src/Jigoshop/Admin/SystemInfo/LogsTab.php:44
+msgid "Logs"
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/LogsTab.php:38
+msgid "Available Logs"
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/LogsTab.php:46
+msgid "If logs are empty, please make shure that log directory is writable."
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/LogsTab.php:53
+msgid "Debug Logs"
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/LogsTab.php:55
+msgid "Debug logs requires WP_DEBUG set to true in wp-config.php."
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/LogsTab.php:62
+msgid "Invalid references logs"
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/LogsTab.php:64
+msgid "Contains invalid or deprecated references in theme files to functions/methods/classes not present in current version of Jigoshop eCommerce."
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/LogsTab.php:97
+msgid "Logs are empty."
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/LogsTab.php:100
+msgid "Log file does not exists."
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:59
+msgid "System Status"
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:78
+msgid "Get System Information"
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:80
+msgid "Please copy and paste this information in your ticket when contacting support"
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:87
+msgid "Generate Report"
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:96
+msgid "WordPress Environment"
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:102
+msgid "Home URL"
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:103
+msgid "The URL of your site's homepage."
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:110
+msgid "Site URL"
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:111
+msgid "The root URL of your site."
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:118
+msgid "Jigoshop Version"
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:119
+msgid "The version of Jigoshop installed on your site."
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:126
+msgid "Jigoshop Database Version"
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:127
+msgid "The version of jigoshop that the database is formatted for. This should be the same as your jigoshop Version."
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:134
+msgid "Log Directory Writable"
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:135
+msgid "Several Jigoshop extensions can write logs which makes debugging problems easier. The directory must be writable for this to happen."
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:136
+msgid "To allow logging, make <code>%s</code> writable or define a custom <code>JIGOSHOP_LOG_DIR</code>."
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:143
+msgid "WP Version"
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:144
+msgid "The version of WordPress installed on your site."
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:151
+msgid "WP Multisite"
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:152, src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:160
+msgid "The maximum amount of memory (RAM) that your site can use at one time."
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:159
+msgid "WP Memory Limit"
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:167
+msgid "WP Debug Mode"
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:168
+msgid "Displays whether or not WordPress is in Debug Mode."
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:175
+msgid "Language"
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:176
+msgid "The current language used by WordPress. Default = English."
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:183
+msgid "Server Environment"
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:189
+msgid "Server Info"
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:190
+msgid "Information about the web server that is currently hosting your site."
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:197
+msgid "PHP Version"
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:198
+msgid "The version of PHP installed on your hosting server."
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:205
+msgid "PHP Post Max Size"
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:206
+msgid "The largest filesize that can be contained in one post."
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:213
+msgid "PHP Time Limit"
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:214
+msgid "The amount of time (in seconds) that your site will spend on a single operation before timing out (to avoid server lockups)."
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:221
+msgid "PHP Max Input Vars"
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:222
+msgid "The maximum number of variables your server can use for a single function to avoid overloads."
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:229
+msgid "SUHOSIN Installed"
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:230
+msgid "Suhosin is an advanced protection system for PHP installations. It was designed to protect your servers on the one hand against a number of well known problems in PHP applications and on the other hand against potential unknown vulnerabilities within these applications or the PHP core itself. If enabled on your server, Suhosin may need to be configured to increase its data submission limits."
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:237
+msgid "eAccelerator"
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:239
+msgid "eAccelerator is deprecated and causes problems with Jigoshop."
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:246
+msgid "APC"
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:247
+msgid "APC is deprecated and causes problems with Jigoshop."
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:254
+msgid "OpCache"
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:255
+msgid "OpCache is new PHP optimizer and it is recommended to use with Jigoshop."
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:262
+msgid "Short Open Tag"
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:263
+msgid "Whether short tags are enabled, they are used by some older extensions."
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:270
+msgid "Allow URL fopen"
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:271, src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:279
+msgid "Whether fetching remote files is allowed. This option is used by many Jigoshop extensions."
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:278
+msgid "Session"
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:286
+msgid "Cookie Path"
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:287
+msgid "Path for which cookies are saved. This is important for sessions and session security."
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:294
+msgid "Save Path"
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:295
+msgid "Path where sessions are stored on the server. This is sometimes cause of login/logout problems."
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:302
+msgid "Use Cookies"
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:303
+msgid "Whether cookies are used to store PHP session on user's computer. Recommended."
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:310
+msgid "Use Only Cookies"
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:311
+msgid "Whether PHP uses only cookies to handle user sessions. This is important for security reasons."
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:318
+msgid "Max Upload Size"
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:319
+msgid "The largest filesize that can be uploaded to your WordPress installation."
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:326
+msgid "Default Timezone"
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:327
+msgid "The default timezone for your server. We recommend to set it as UTC."
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:334
+msgid "fsockopen/cURL"
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:335
+msgid "Payment gateways can use cURL to communicate with remote servers to authorize payments, other plugins may also use it when communicating with remote services."
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:342
+msgid "SoapClient"
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:343
+msgid "Some webservices like shipping use SOAP to get information from remote servers, for example, live shipping quotes from FedEx require SOAP to be installed."
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:350
+msgid "Remote Post"
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:351
+msgid "PayPal uses this method of communicating when sending back transaction information."
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:358
+msgid "Remote Get"
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:359
+msgid "PayJigoshop plugins may use this method of communication when checking for plugin updates."
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:366
+msgid "Server Locale"
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:372
+msgid "Decimal Point"
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:373
+msgid "The character used for decimal points."
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:380
+msgid "Thousands Separator"
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:381
+msgid "The character used for a thousands separator."
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:388
+msgid "Monetary Decimal Point"
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:389
+msgid "The character used for decimal points in monetary values."
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:396
+msgid "Monetary Thousands Separator"
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:397
+msgid "The character used for a thousands separator in monetary values."
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:404
+msgid "Active Plugins (%s)"
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:415
+msgid "Force SSL"
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:416
+msgid "Does your site force a SSL Certificate for transactions?"
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:423, src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:431
+msgid "Shipping Enabled"
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:424
+msgid "Does your site have shipping enabled?"
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:432
+msgid "What currency prices are listed at in the catalog and which currency gateways will take payments in?"
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:439
+msgid "Currency Position"
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:440
+msgid "The position of the currency symbol."
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:447
+msgid "Thousand Separator"
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:448
+msgid "The thousand separator of displayed prices."
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:455
+msgid "Decimal Separator"
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:456
+msgid "The decimal separator of displayed prices."
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:463
+msgid "Number of Decimals"
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:464
+msgid "The number of decimal points shown in displayed prices."
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:471
+msgid "Jigoshop Pages"
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:477
+msgid "Shop Base"
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:478
+msgid "The ID of your Jigoshop shop's homepage."
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:486
+msgid "The ID of your Jigoshop shop's cart page."
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:494
+msgid "The ID of your Jigoshop shop's checkout page."
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:502
+msgid "The ID of your Jigoshop shop's thank you page."
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:510
+msgid "The ID of your Jigoshop shop's my account page."
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:517
+msgid "Terms"
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:518
+msgid "The ID of your Jigoshop shop's terms page."
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:525
+msgid "Theme"
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:532
+msgid "The name of the current active theme."
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:539
+msgid "Version"
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:540
+msgid "The installed version of the current active theme."
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:547
+msgid "Author URL"
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:548
+msgid "The theme developers URL."
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:555
+msgid "Child Theme"
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:556
+msgid "Displays whether or not the current theme is a child theme"
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:557
+msgid "If you're modifying Jigoshop or a parent theme you didn't build personally we recommend using a child theme. See: <a href=\"%s\" target=\"-blank\">How to create a child theme</a>"
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:564
+msgid "Parent Theme Name"
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:565
+msgid "The name of the parent theme."
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:572
+msgid "Parent Theme Version"
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:573, src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:581
+msgid "The installed version of the parent theme."
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:580
+msgid "Parent Theme Author URL"
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:588
+msgid "Templates"
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:590
+msgid "This section shows any files that are overriding the default jigoshop template pages"
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:654
+msgid "%s - We recommend setting memory to at least %dMB. See: <a href=\"%s\" target=\"_blank\">Increasing memory allocated to PHP</a>"
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:669
+msgid "%s - We recommend a minimum PHP version of %s. See: <a href=\"%s\" target=\"_blank\">How to update your PHP version</a>"
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:792
+msgid "Visit plugin homepage"
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:801
+msgctxt "by author"
+msgid "by %s"
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:846
+msgid "<code>%s</code> version %s is out of date."
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:860
+msgid "%s Overrides"
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:870
+msgid "No Overrides"
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/ToolsTab.php:58
+msgid "Tools"
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/ToolsTab.php:76
+msgid "Available Tools"
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/ToolsTab.php:82
+msgid "Clear Logs"
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/ToolsTab.php:83
+msgid "Clears jigoshop.log and jigoshop.debug.log"
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/ToolsTab.php:94
+msgid "Remove zombie variations"
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/ToolsTab.php:95
+msgid "Removes variations "
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/ToolsTab.php:106
+msgid "Remove zombie meta"
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/ToolsTab.php:107
+msgid "Removes meta"
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/ToolsTab.php:118
+msgid "Fix order items migration"
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/ToolsTab.php:119
+msgid "To version 2.1.3 was some issue with order items migration. Use only if you migrated your store from Jigoshop 1.x before version 2.1.3."
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/ToolsTab.php:130
+msgid "Disable manage stock and set in stock status for all products"
+msgstr ""
+
+#: src/Jigoshop/Core/Installer/Roles.php:41
+msgid "Shop Manager"
+msgstr ""
+
+#: src/Jigoshop/Core/Types/Coupon.php:31, src/Jigoshop/Entity/Order/Discount/Type.php:50
+msgid "Coupon"
+msgstr ""
+
+#: src/Jigoshop/Core/Types/Coupon.php:32
+msgid "Add Coupon"
+msgstr ""
+
+#: src/Jigoshop/Core/Types/Coupon.php:33
+msgid "Add New Coupon"
+msgstr ""
+
+#: src/Jigoshop/Core/Types/Coupon.php:35
+msgid "Edit Coupon"
+msgstr ""
+
+#: src/Jigoshop/Core/Types/Coupon.php:36
+msgid "New Coupon"
+msgstr ""
+
+#: src/Jigoshop/Core/Types/Coupon.php:37
+msgid "View Coupons"
+msgstr ""
+
+#: src/Jigoshop/Core/Types/Coupon.php:38
+msgid "View Coupon"
+msgstr ""
+
+#: src/Jigoshop/Core/Types/Coupon.php:39
+msgid "Search Coupons"
+msgstr ""
+
+#: src/Jigoshop/Core/Types/Coupon.php:40
+msgid "No Coupons found"
+msgstr ""
+
+#: src/Jigoshop/Core/Types/Coupon.php:41
+msgid "No Coupons found in trash"
+msgstr ""
+
+#: src/Jigoshop/Core/Types/Coupon.php:42
+msgid "Parent Coupon"
+msgstr ""
+
+#: src/Jigoshop/Core/Types/Coupon.php:44
+msgid "This is where you can add new coupons that customers can use in your store."
+msgstr ""
+
+#: src/Jigoshop/Core/Types/Email.php:32
+msgid "Add Email"
+msgstr ""
+
+#: src/Jigoshop/Core/Types/Email.php:33
+msgid "Add New Email"
+msgstr ""
+
+#: src/Jigoshop/Core/Types/Email.php:35
+msgid "Edit Email"
+msgstr ""
+
+#: src/Jigoshop/Core/Types/Email.php:36
+msgid "New Email"
+msgstr ""
+
+#: src/Jigoshop/Core/Types/Email.php:37, src/Jigoshop/Core/Types/Email.php:38
+msgid "View Email"
+msgstr ""
+
+#: src/Jigoshop/Core/Types/Email.php:39
+msgid "Search Email"
+msgstr ""
+
+#: src/Jigoshop/Core/Types/Email.php:40
+msgid "No Emils found"
+msgstr ""
+
+#: src/Jigoshop/Core/Types/Email.php:41
+msgid "No Emails found in trash"
+msgstr ""
+
+#: src/Jigoshop/Core/Types/Email.php:42
+msgid "Parent Email"
+msgstr ""
+
+#: src/Jigoshop/Core/Types/Email.php:44
+msgid "This is where you can add new emails that customers can receive in your store."
+msgstr ""
+
+#: src/Jigoshop/Core/Types/Order.php:44
+msgid "All orders"
+msgstr ""
+
+#: src/Jigoshop/Core/Types/Order.php:46, src/Jigoshop/Core/Types/Order.php:49
+msgid "New order"
+msgstr ""
+
+#: src/Jigoshop/Core/Types/Order.php:48
+msgid "Edit order"
+msgstr ""
+
+#: src/Jigoshop/Core/Types/Order.php:50, src/Jigoshop/Core/Types/Order.php:51
+msgid "View order"
+msgstr ""
+
+#: src/Jigoshop/Core/Types/Order.php:53
+msgid "No orders found"
+msgstr ""
+
+#: src/Jigoshop/Core/Types/Order.php:54
+msgid "No orders found in trash"
+msgstr ""
+
+#: src/Jigoshop/Core/Types/Order.php:55
+msgid "Parent orders"
+msgstr ""
+
+#: src/Jigoshop/Core/Types/Order.php:57
+msgid "This is where store orders are stored."
+msgstr ""
+
+#: src/Jigoshop/Core/Types/Order.php:93, src/Jigoshop/Core/Types/Order.php:94, src/Jigoshop/Core/Types/Order.php:95
+msgid "Order updated."
+msgstr ""
+
+#: src/Jigoshop/Core/Types/Order.php:97
+msgid "Order submitted."
+msgstr ""
+
+#: src/Jigoshop/Core/Types/Order.php:98
+msgid "Order draft updated."
+msgstr ""
+
+#: src/Jigoshop/Core/Types/Product.php:37
+msgid "Invalid type definition! Offending class: \"%s\"."
+msgstr ""
+
+#: src/Jigoshop/Core/Types/Product.php:72
+msgid "All Products"
+msgstr ""
+
+#: src/Jigoshop/Core/Types/Product.php:73
+msgid "Add New"
+msgstr ""
+
+#: src/Jigoshop/Core/Types/Product.php:74
+msgid "Add New Product"
+msgstr ""
+
+#: src/Jigoshop/Core/Types/Product.php:76
+msgid "Edit Product"
+msgstr ""
+
+#: src/Jigoshop/Core/Types/Product.php:77
+msgid "New Product"
+msgstr ""
+
+#: src/Jigoshop/Core/Types/Product.php:80
+msgid "Search Products"
+msgstr ""
+
+#: src/Jigoshop/Core/Types/Product.php:81
+msgid "No Products found"
+msgstr ""
+
+#: src/Jigoshop/Core/Types/Product.php:82
+msgid "No Products found in trash"
+msgstr ""
+
+#: src/Jigoshop/Core/Types/Product.php:83
+msgid "Parent Product"
+msgstr ""
+
+#: src/Jigoshop/Core/Types/Product.php:85
+msgid "This is where you can add new products to your store."
+msgstr ""
+
+#: src/Jigoshop/Core/Types/Product.php:126
+msgid "Unknown type: \"%s\"."
+msgstr ""
+
+#: src/Jigoshop/Core/Types/ProductCategory.php:51
+msgid "Search Product Categories"
+msgstr ""
+
+#: src/Jigoshop/Core/Types/ProductCategory.php:52
+msgid "All Product Categories"
+msgstr ""
+
+#: src/Jigoshop/Core/Types/ProductCategory.php:53
+msgid "Parent Product Category"
+msgstr ""
+
+#: src/Jigoshop/Core/Types/ProductCategory.php:54
+msgid "Parent Product Category:"
+msgstr ""
+
+#: src/Jigoshop/Core/Types/ProductCategory.php:55
+msgid "Edit Product Category"
+msgstr ""
+
+#: src/Jigoshop/Core/Types/ProductCategory.php:56
+msgid "Update Product Category"
+msgstr ""
+
+#: src/Jigoshop/Core/Types/ProductCategory.php:57
+msgid "Add New Product Category"
+msgstr ""
+
+#: src/Jigoshop/Core/Types/ProductCategory.php:58
+msgid "New Product Category Name"
+msgstr ""
+
+#: src/Jigoshop/Core/Types/ProductTag.php:48
+msgid "Tags"
+msgstr ""
+
+#: src/Jigoshop/Core/Types/ProductTag.php:51
+msgid "Search Product Tags"
+msgstr ""
+
+#: src/Jigoshop/Core/Types/ProductTag.php:52
+msgid "All Product Tags"
+msgstr ""
+
+#: src/Jigoshop/Core/Types/ProductTag.php:53
+msgid "Parent Product Tag"
+msgstr ""
+
+#: src/Jigoshop/Core/Types/ProductTag.php:54
+msgid "Parent Product Tag:"
+msgstr ""
+
+#: src/Jigoshop/Core/Types/ProductTag.php:55
+msgid "Edit Product Tag"
+msgstr ""
+
+#: src/Jigoshop/Core/Types/ProductTag.php:56
+msgid "Update Product Tag"
+msgstr ""
+
+#: src/Jigoshop/Core/Types/ProductTag.php:57
+msgid "Add New Product Tag"
+msgstr ""
+
+#: src/Jigoshop/Core/Types/ProductTag.php:58
+msgid "New Product Tag Name"
+msgstr ""
+
+#: src/Jigoshop/Core/Upgrade/AddZonesToAdvancedFlatRate.php:38, templates/admin/settings/shipping/advanced_flat_rate.php:27
+msgid "New rate"
+msgstr ""
+
+#: src/Jigoshop/Entity/Customer/Address.php:251
+msgctxt "order-address"
+msgid "<strong>%1$s</strong><br/>%2$s, %3$s, %4$s<br/>%5$s, %6$s"
+msgstr ""
+
+#: src/Jigoshop/Entity/Customer/Address.php:258, src/Jigoshop/Entity/Customer/CompanyAddress.php:81
+msgctxt "order-address"
+msgid "<br/>Phone: %s"
+msgstr ""
+
+#: src/Jigoshop/Entity/Customer/Address.php:261, src/Jigoshop/Entity/Customer/CompanyAddress.php:85
+msgctxt "order-address"
+msgid "<br/>Email: <a href=\"mailto: %1$s\">%1$s</a>"
+msgstr ""
+
+#: src/Jigoshop/Entity/Customer/Address.php:285
+msgctxt "customer"
+msgid "%1$s, %2$s"
+msgstr ""
+
+#: src/Jigoshop/Entity/Customer/CompanyAddress.php:73
+msgctxt "order-address"
+msgid "<strong>%1$s</strong>, %2$s<br/>%3$s, %4$s, %5$s<br/>%6$s, %7$s"
+msgstr ""
+
+#: src/Jigoshop/Entity/Customer/Guest.php:19, src/Jigoshop/Entity/Customer/Guest.php:33, src/Jigoshop/Entity/Customer/Guest.php:42
+msgid "Guest customer cannot be updated!"
+msgstr ""
+
+#: src/Jigoshop/Entity/Customer/Guest.php:55
+msgid "Guest"
+msgstr ""
+
+#: src/Jigoshop/Entity/Order/Item.php:108
+msgid "Item quantity cannot be below 0"
+msgstr ""
+
+#: src/Jigoshop/Entity/Order/Item.php:357
+msgid "Items do not have stock."
+msgstr ""
+
+#: src/Jigoshop/Entity/Order/Status.php:63
+msgid "Cancelled"
+msgstr ""
+
+#: src/Jigoshop/Entity/Order/Status.php:64
+msgid "Refunded"
+msgstr ""
+
+#: src/Jigoshop/Entity/Product/Attribute.php:50
+msgid "Multiselect"
+msgstr ""
+
+#: src/Jigoshop/Entity/Product/Attribute.php:51, templates/shop/list/cart/variable.php:7
+msgid "Select"
+msgstr ""
+
+#: src/Jigoshop/Entity/Product/Attribute.php:52
+msgid "Text"
+msgstr ""
+
+#: src/Jigoshop/Entity/Product/External.php:57
+msgid "External product does not support stock management."
+msgstr ""
+
+#: src/Jigoshop/Frontend/Page/AbstractProductList.php:68, src/Jigoshop/Frontend/Page/Dummy.php:71, src/Jigoshop/Frontend/Page/Product.php:122
+msgid "Unable to add product to the cart."
+msgstr ""
+
+#: src/Jigoshop/Frontend/Page/AbstractProductList.php:89, src/Jigoshop/Frontend/Page/Dummy.php:97, src/Jigoshop/Frontend/Page/Product.php:148
+msgid "View cart"
+msgstr ""
+
+#: src/Jigoshop/Frontend/Page/AbstractProductList.php:92, src/Jigoshop/Frontend/Page/Dummy.php:100, src/Jigoshop/Frontend/Page/Product.php:151
+msgid "%s successfully added to your cart. %s"
+msgstr ""
+
+#: src/Jigoshop/Frontend/Page/AbstractProductList.php:100, src/Jigoshop/Frontend/Page/Dummy.php:107, src/Jigoshop/Frontend/Page/Product.php:158
+msgid "Sorry, we do not have \"%s\" in stock."
+msgstr ""
+
+#: src/Jigoshop/Frontend/Page/AbstractProductList.php:102, src/Jigoshop/Frontend/Page/Dummy.php:109, src/Jigoshop/Frontend/Page/Product.php:160
+msgid "Sorry, we do not have enough \"%s\" in stock to fulfill your order. We only have %d available at this time. Please edit your cart and try again. We apologize for any inconvenience caused."
+msgstr ""
+
+#: src/Jigoshop/Frontend/Page/AbstractProductList.php:104, src/Jigoshop/Frontend/Page/Dummy.php:111, src/Jigoshop/Frontend/Page/Product.php:162
+msgid "Sorry, we do not have enough \"%s\" in stock to fulfill your order. Please edit your cart and try again. We apologize for any inconvenience caused."
+msgstr ""
+
+#: src/Jigoshop/Frontend/Page/AbstractProductList.php:109, src/Jigoshop/Frontend/Page/Dummy.php:116, src/Jigoshop/Frontend/Page/Product.php:167
+msgid "A problem ocurred when adding to cart: %s"
+msgstr ""
+
+#: src/Jigoshop/Frontend/Page/Cart.php:89, src/Jigoshop/Frontend/Page/Checkout.php:87
+msgid "Loading..."
+msgstr ""
+
+#: src/Jigoshop/Frontend/Page/Cart.php:288, src/Jigoshop/Frontend/Page/Cart.php:511, src/Jigoshop/Frontend/Page/Account/EditAddress.php:83
+msgid "Postcode is not valid!"
+msgstr ""
+
+#: src/Jigoshop/Frontend/Page/Cart.php:434
+msgid "Sorry, we do not have enough units in stock. We have got only %s in stock"
+msgstr ""
+
+#: src/Jigoshop/Frontend/Page/Cart.php:463
+msgid "Invalid order key."
+msgstr ""
+
+#: src/Jigoshop/Frontend/Page/Cart.php:469
+msgid "Unable to cancel order."
+msgstr ""
+
+#: src/Jigoshop/Frontend/Page/Cart.php:478
+msgid "The order has been cancelled"
+msgstr ""
+
+#: src/Jigoshop/Frontend/Page/Cart.php:505
+msgid "Previous shipping method is unavailable. Please select different one."
+msgstr ""
+
+#: src/Jigoshop/Frontend/Page/Cart.php:521, src/Jigoshop/Frontend/Page/Cart.php:532
+msgid "Error occurred while updating cart: %s"
+msgstr ""
+
+#: src/Jigoshop/Frontend/Page/Cart.php:530
+msgid "Successfully updated the cart."
+msgstr ""
+
+#: src/Jigoshop/Frontend/Page/Cart.php:542
+msgid "Successfully removed item from cart."
+msgstr ""
+
+#: src/Jigoshop/Frontend/Page/Checkout.php:292
+msgid "Shipping postcode is not valid!"
+msgstr ""
+
+#: src/Jigoshop/Frontend/Page/Checkout.php:306
+msgid "Billing postcode is not valid!"
+msgstr ""
+
+#: src/Jigoshop/Frontend/Page/Checkout.php:367
+msgid "Your cart is empty, please add products before proceeding."
+msgstr ""
+
+#: src/Jigoshop/Frontend/Page/Checkout.php:372
+msgid "You need to log in before processing to checkout."
+msgstr ""
+
+#: src/Jigoshop/Frontend/Page/Checkout.php:385
+msgid "You need either to log in or create account to purchase."
+msgstr ""
+
+#: src/Jigoshop/Frontend/Page/Checkout.php:388
+msgid "You need to log in before purchasing."
+msgstr ""
+
+#: src/Jigoshop/Frontend/Page/Checkout.php:392, src/Jigoshop/Frontend/Page/Checkout/Pay.php:64
+msgid "You need to accept terms &amp; conditions!"
+msgstr ""
+
+#: src/Jigoshop/Frontend/Page/Checkout.php:407
+msgid "Shipping is required for this order. Please select shipping method."
+msgstr ""
+
+#: src/Jigoshop/Frontend/Page/Checkout.php:414
+msgid "Payment is required for this order. Please select payment method."
+msgstr ""
+
+#: src/Jigoshop/Frontend/Page/Checkout.php:488
+msgid "You need to fill username and password fields."
+msgstr ""
+
+#: src/Jigoshop/Frontend/Page/Checkout.php:492, src/Jigoshop/Frontend/Page/Account/ChangePassword.php:54
+msgid "Passwords do not match."
+msgstr ""
+
+#: src/Jigoshop/Frontend/Page/Checkout.php:499
+msgid "<strong>Error</strong> Couldn't register an account for you. Please contact the <a href=\"mailto:%s\">administrator</a>."
+msgstr ""
+
+#: src/Jigoshop/Frontend/Page/Checkout.php:506
+msgid "<strong>Error</strong> Account creation failed: %s"
+msgstr ""
+
+#: src/Jigoshop/Frontend/Page/Product.php:234
+msgid "Additional information"
+msgstr ""
+
+#: src/Jigoshop/Frontend/Page/Product.php:239
+msgid "Files to download"
+msgstr ""
+
+#: src/Jigoshop/Frontend/Page/ProductCategoryList.php:24
+msgid "Products in category \"%s\""
+msgstr ""
+
+#: src/Jigoshop/Frontend/Page/ProductList.php:32
+msgid "All products"
+msgstr ""
+
+#: src/Jigoshop/Frontend/Page/ProductTagList.php:24
+msgid "Products tagged with \"%s\""
+msgstr ""
+
+#: templates/admin/product/box/attributes.php:13
+msgid "Select attribute..."
+msgstr ""
+
+#: templates/admin/product/box/attributes.php:22
+msgid "Enter attribute name..."
+msgstr ""
+
+#: templates/admin/product/box/attributes.php:33
+msgid "Add inherited attributes"
+msgstr ""
+
+#: templates/admin/product/box/download.php:13, templates/admin/product/box/variations/variation/downloadable.php:15
+msgid "File path"
+msgstr ""
+
+#: templates/admin/product/box/download.php:15, templates/admin/product/box/variations/variation/downloadable.php:17
+msgid "Enter file URL..."
+msgstr ""
+
+#: templates/admin/product/box/download.php:23, templates/admin/product/box/variations/variation/downloadable.php:26
+msgid "Downloads limit"
+msgstr ""
+
+#: templates/admin/product/box/download.php:24, templates/admin/product/box/variations/variation/downloadable.php:27
+msgid "Leave empty for unlimited downloads."
+msgstr ""
+
+#: templates/admin/product/box/files.php:10
+msgid "File Path"
+msgstr ""
+
+#: templates/admin/product/box/files.php:13
+msgid "Upload a file"
+msgstr ""
+
+#: templates/admin/product/box/files.php:19
+msgid "Download Limit"
+msgstr ""
+
+#: templates/admin/product/box/files.php:21
+msgid "Leave blank for unlimited re-downloads"
+msgstr ""
+
+#: templates/admin/product/box/general.php:16, templates/admin/product/box/variations/variation.php:65
+msgid "Price not announced"
+msgstr ""
+
+#: templates/admin/product/box/general.php:28, templates/admin/product/box/variations/variation.php:92
+msgid "Brand"
+msgstr ""
+
+#: templates/admin/product/box/general.php:33, templates/admin/product/box/variations/variation.php:98
+msgid "GTIN"
+msgstr ""
+
+#: templates/admin/product/box/general.php:39, templates/admin/product/box/variations/variation.php:105
+msgid "MPN"
+msgstr ""
+
+#: templates/admin/product/box/general.php:49, templates/admin/product/box/variations/variation/simple.php:16
+msgid "Weight"
+msgstr ""
+
+#: templates/admin/product/box/general.php:54, templates/admin/product/box/variations/variation/simple.php:23
+msgid "Length"
+msgstr ""
+
+#: templates/admin/product/box/general.php:59, templates/admin/product/box/variations/variation/simple.php:30
+msgid "Width"
+msgstr ""
+
+#: templates/admin/product/box/general.php:64, templates/admin/product/box/variations/variation/simple.php:37
+msgid "Height"
+msgstr ""
+
+#: templates/admin/product/box/general.php:73
+msgid "Visibility"
+msgstr ""
+
+#: templates/admin/product/box/general.php:84
+msgid "Featured?"
+msgstr ""
+
+#: templates/admin/product/box/general.php:86
+msgid "Enable this option to feature this product"
+msgstr ""
+
+#: templates/admin/product/box/general.php:94
+msgid "Cross Sells"
+msgstr ""
+
+#: templates/admin/product/box/general.php:99
+msgid "Up Sells"
+msgstr ""
+
+#: templates/admin/product/box/grouped.php:37
+msgid "Product Group"
+msgstr ""
+
+#: templates/admin/product/box/grouped.php:47
+msgid "Sort Order"
+msgstr ""
+
+#: templates/admin/product/box/sales.php:41
+msgid "Put product on sale?"
+msgstr ""
+
+#: templates/admin/product/box/sales.php:42
+msgid "To enable sale please set up actual sale dates"
+msgstr ""
+
+#: templates/admin/product/box/sales.php:48, templates/admin/product/box/variations/variation.php:167
+msgid "Schedule"
+msgstr ""
+
+#: templates/admin/product/box/sales.php:52, templates/admin/product/box/variations/variation.php:161
+msgid "Sale price"
+msgstr ""
+
+#: templates/admin/product/box/sales.php:54
+msgid "15% or 19.99"
+msgstr ""
+
+#: templates/admin/product/box/sales.php:63, templates/admin/product/box/variations/variation.php:176
+msgid "Sale date"
+msgstr ""
+
+#: templates/admin/product/box/sales.php:68
+msgid "The above sale period will be set for all the product variations. If you need to set different sale time frame for individual variation, please use the sale setting on the variation edit pane."
+msgstr ""
+
+#: templates/admin/product/box/stock.php:16, templates/admin/product/box/variations/variation.php:117
+msgid "Manage stock?"
+msgstr ""
+
+#: templates/admin/product/box/stock.php:36, templates/admin/product/box/variations/variation.php:137
+msgid "Items in stock"
+msgstr ""
+
+#: templates/admin/product/box/stock.php:44, templates/admin/product/box/variations/variation.php:145
+msgid "Allow backorders?"
+msgstr ""
+
+#: templates/admin/product/box/variations.php:22
+msgid "Go"
+msgstr ""
+
+#: templates/admin/settings/api_users/user.php:10, templates/shop/cart/mobile/downloadable.php:50, templates/shop/cart/mobile/external.php:50, templates/shop/cart/mobile/simple.php:50, templates/shop/cart/mobile/variable.php:51, templates/shop/cart/mobile/virtual.php:50, templates/shop/checkout/mobile/downloadable.php:42, templates/shop/checkout/mobile/external.php:42, templates/shop/checkout/mobile/simple.php:42, templates/shop/checkout/mobile/variable.php:44, templates/shop/checkout/mobile/virtual.php:42, templates/admin/product/box/attributes/attribute.php:14, templates/admin/product/box/variations/variation.php:19, templates/admin/settings/shipping/advanced_flat_rate/rate.php:24
+msgid "Expand"
+msgstr ""
+
+#: templates/admin/settings/api_users/user.php:31
+msgid "Key"
+msgstr ""
+
+#: templates/admin/settings/api_users/user.php:35
+msgid "Permissions"
+msgstr ""
+
+#: templates/admin/settings/api_users/user.php:39
+msgid "Leave all to set all permissions."
+msgstr ""
+
+#: templates/admin/settings/layout/structure.php:22
+msgid "Sidebar on left"
+msgstr ""
+
+#: templates/admin/settings/layout/structure.php:30
+msgid "Only content"
+msgstr ""
+
+#: templates/admin/settings/layout/structure.php:38
+msgid "Sidebar on right"
+msgstr ""
+
+#: templates/admin/settings/payment/methodContainer.php:10
+msgid "Test Mode"
+msgstr ""
+
+#: templates/admin/settings/payment/methodOptions.php:29, templates/admin/settings/shipping/methodOptions.php:23
+msgid "Close & save changes"
+msgstr ""
+
+#: templates/admin/settings/payment/methodOptions.php:33, templates/admin/settings/shipping/methodOptions.php:27
+msgid "Close & discard changes"
+msgstr ""
+
+#: templates/admin/settings/payment/processingFeeRules.php:9
+msgid "Methods"
+msgstr ""
+
+#: templates/admin/settings/payment/processingFeeRules.php:10
+msgid "Min order value"
+msgstr ""
+
+#: templates/admin/settings/payment/processingFeeRules.php:11
+msgid "Max order value"
+msgstr ""
+
+#: templates/admin/settings/payment/processingFeeRules.php:13
+msgid "Alternate mode"
+msgstr ""
+
+#: templates/admin/settings/payment/processingFeeRules.php:34
+msgid "First rule which matches is taken into account."
+msgstr ""
+
+#: templates/admin/settings/payment/processingFeeRules.php:35
+msgid "Alternate mode: Fee is calculated based on final amount of payment, <strong>including the fee</strong>."
+msgstr ""
+
+#: templates/admin/settings/shipping/advanced_flat_rate.php:18
+msgid "Add Rate"
+msgstr ""
+
+#: templates/admin/settings/tax/class.php:15
+msgid "Tax class label"
+msgstr ""
+
+#: templates/admin/settings/tax/class.php:23, templates/admin/settings/tax/rule.php:26
+msgid "Tax class"
+msgstr ""
+
+#: templates/admin/settings/tax/classes.php:17
+msgid "Internal class name"
+msgstr ""
+
+#: templates/admin/settings/tax/rule.php:17
+msgid "Rule label"
+msgstr ""
+
+#: templates/admin/settings/tax/rule.php:41
+msgid "Tax rate"
+msgstr ""
+
+#: templates/admin/settings/tax/rule.php:58
+msgctxt "admin_taxing"
+msgid "Write the state"
+msgstr ""
+
+#: templates/admin/settings/tax/rule.php:68, templates/admin/settings/tax/rules.php:34
+msgid "Postcodes"
+msgstr ""
+
+#: templates/admin/settings/tax/rules.php:20
+msgid "Class"
+msgstr ""
+
+#: templates/admin/settings/tax/rules.php:21
+msgid "Tax classes needs to be saved first before updating rules."
+msgstr ""
+
+#: templates/admin/settings/tax/rules.php:24
+msgid "Is compound?"
+msgstr ""
+
+#: templates/admin/settings/tax/rules.php:25
+msgid "A compound tax, is calculated on top of a primary tax."
+msgstr ""
+
+#: templates/admin/settings/tax/rules.php:27
+msgid "Rate"
+msgstr ""
+
+#: templates/admin/settings/tax/rules.php:30
+msgid "State"
+msgstr ""
+
+#: templates/admin/settings/tax/rules.php:31
+msgid "You can enter more states separating them with comma."
+msgstr ""
+
+#: templates/admin/settings/tax/rules.php:35
+msgid "Enter list of postcodes, separating with comma."
+msgstr ""
+
+#: templates/shop/list/cart/external.php:8, templates/shop/product/cart/external.php:7
+msgid "Buy product"
+msgstr ""
+
+#: templates/shop/product/cart/variable.php:15
+msgid "Choose an option"
+msgstr ""
+
+#: templates/shop/product/cart/variable.php:22
+msgid "Please select..."
+msgstr ""
+
+#: templates/shop/product/cart/variable.php:27
+msgid "Current price:"
+msgstr ""
+
+#: templates/shop/product/cart/variable.php:39
+msgid "Selected variation is not available."
+msgstr ""
+
+#: templates/user/account/orders/single.php:19
+msgid "My account &raquo; Orders &raquo; %s"
+msgstr ""
+
+#: templates/user/account/orders/single.php:22
+msgid "Made on"
+msgstr ""
+
+#: templates/user/account/orders/single.php:149
+msgid "Go back to orders list"
+msgstr ""
+
+#: src/Jigoshop/Admin/Reports/Chart/ByCategory.php:91
+msgid "%s sales in %s"
+msgstr ""
+
+#: src/Jigoshop/Admin/Reports/Chart/ByCategory.php:203, src/Jigoshop/Admin/Reports/Chart/ByDate.php:455, src/Jigoshop/Admin/Reports/Chart/ByProduct.php:202, src/Jigoshop/Admin/Reports/Chart/CustomersVsGuests.php:256, src/Jigoshop/Admin/Reports/Chart/DiscountSummary.php:106
+msgid "All Time"
+msgstr ""
+
+#: src/Jigoshop/Admin/Reports/Chart/ByCategory.php:204, src/Jigoshop/Admin/Reports/Chart/ByDate.php:456, src/Jigoshop/Admin/Reports/Chart/ByProduct.php:203, src/Jigoshop/Admin/Reports/Chart/CustomersVsGuests.php:257, src/Jigoshop/Admin/Reports/Chart/DiscountSummary.php:107
+msgid "Year"
+msgstr ""
+
+#: src/Jigoshop/Admin/Reports/Chart/ByCategory.php:205, src/Jigoshop/Admin/Reports/Chart/ByDate.php:457, src/Jigoshop/Admin/Reports/Chart/ByProduct.php:204, src/Jigoshop/Admin/Reports/Chart/CustomersVsGuests.php:258, src/Jigoshop/Admin/Reports/Chart/DiscountSummary.php:108
+msgid "Last Month"
+msgstr ""
+
+#: src/Jigoshop/Admin/Reports/Chart/ByCategory.php:206, src/Jigoshop/Admin/Reports/Chart/ByDate.php:458, src/Jigoshop/Admin/Reports/Chart/ByProduct.php:205, src/Jigoshop/Admin/Reports/Chart/CustomersVsGuests.php:259, src/Jigoshop/Admin/Reports/Chart/DiscountSummary.php:109
+msgid "This Month"
+msgstr ""
+
+#: src/Jigoshop/Admin/Reports/Chart/ByCategory.php:207, src/Jigoshop/Admin/Reports/Chart/ByDate.php:459, src/Jigoshop/Admin/Reports/Chart/ByProduct.php:206, src/Jigoshop/Admin/Reports/Chart/CustomersVsGuests.php:260, src/Jigoshop/Admin/Reports/Chart/DiscountSummary.php:110
+msgid "Last 30 Days"
+msgstr ""
+
+#: src/Jigoshop/Admin/Reports/Chart/ByCategory.php:208, src/Jigoshop/Admin/Reports/Chart/ByDate.php:460, src/Jigoshop/Admin/Reports/Chart/ByProduct.php:207, src/Jigoshop/Admin/Reports/Chart/CustomersVsGuests.php:261, src/Jigoshop/Admin/Reports/Chart/DiscountSummary.php:111
+msgid "Last 7 Days"
+msgstr ""
+
+#: src/Jigoshop/Admin/Reports/Chart/ByCategory.php:209, src/Jigoshop/Admin/Reports/Chart/ByDate.php:461, src/Jigoshop/Admin/Reports/Chart/ByProduct.php:208, src/Jigoshop/Admin/Reports/Chart/CustomersVsGuests.php:262, src/Jigoshop/Admin/Reports/Chart/DiscountSummary.php:112
+msgid "Today"
+msgstr ""
+
+#: src/Jigoshop/Admin/Reports/Chart/ByCategory.php:236
+msgid "All categories"
+msgstr ""
+
+#: src/Jigoshop/Admin/Reports/Chart/ByDate.php:57
+msgid "%s average sales per hour"
+msgstr ""
+
+#: src/Jigoshop/Admin/Reports/Chart/ByDate.php:62
+msgid "%s average daily sales"
+msgstr ""
+
+#: src/Jigoshop/Admin/Reports/Chart/ByDate.php:68
+msgid "%s average monthly sales"
+msgstr ""
+
+#: src/Jigoshop/Admin/Reports/Chart/ByDate.php:75
+msgid "%s gross sales in this period"
+msgstr ""
+
+#: src/Jigoshop/Admin/Reports/Chart/ByDate.php:77
+msgid "This is the sum of the order totals including shipping and taxes."
+msgstr ""
+
+#: src/Jigoshop/Admin/Reports/Chart/ByDate.php:83
+msgid "%s net sales in this period"
+msgstr ""
+
+#: src/Jigoshop/Admin/Reports/Chart/ByDate.php:85
+msgid "This is the sum of the order totals excluding shipping and taxes."
+msgstr ""
+
+#: src/Jigoshop/Admin/Reports/Chart/ByDate.php:96
+msgid "%s orders placed"
+msgstr ""
+
+#: src/Jigoshop/Admin/Reports/Chart/ByDate.php:104
+msgid "%s items purchased"
+msgstr ""
+
+#: src/Jigoshop/Admin/Reports/Chart/ByDate.php:112
+msgid "%s charged for shipping"
+msgstr ""
+
+#: src/Jigoshop/Admin/Reports/Chart/ByDate.php:119
+msgid "%s worth of coupons used"
+msgstr ""
+
+#: src/Jigoshop/Admin/Reports/Chart/ByDate.php:539
+msgid "Number of items sold"
+msgstr ""
+
+#: src/Jigoshop/Admin/Reports/Chart/ByDate.php:554
+msgid "Number of orders"
+msgstr ""
+
+#: src/Jigoshop/Admin/Reports/Chart/ByDate.php:569
+msgid "Average sales amount"
+msgstr ""
+
+#: src/Jigoshop/Admin/Reports/Chart/ByDate.php:586
+msgid "Coupon amount"
+msgstr ""
+
+#: src/Jigoshop/Admin/Reports/Chart/ByDate.php:606
+msgid "Shipping amount"
+msgstr ""
+
+#: src/Jigoshop/Admin/Reports/Chart/ByDate.php:626
+msgid "Gross Sales amount"
+msgstr ""
+
+#: src/Jigoshop/Admin/Reports/Chart/ByDate.php:646
+msgid "Net Sales amount"
+msgstr ""
+
+#: src/Jigoshop/Admin/Reports/Chart/ByProduct.php:81
+msgid "%s sales for the selected items"
+msgstr ""
+
+#: src/Jigoshop/Admin/Reports/Chart/ByProduct.php:87
+msgid "%s purchases for the selected items"
+msgstr ""
+
+#: src/Jigoshop/Admin/Reports/Chart/ByProduct.php:93
+msgid "%s purchased quantity"
+msgstr ""
+
+#: src/Jigoshop/Admin/Reports/Chart/ByProduct.php:407
+msgid "Sold quantity"
+msgstr ""
+
+#: src/Jigoshop/Admin/Reports/Chart/ByProduct.php:422
+msgid "Number of purchases"
+msgstr ""
+
+#: src/Jigoshop/Admin/Reports/Chart/CustomersVsGuests.php:49
+msgid "%s customer orders in this period"
+msgstr ""
+
+#: src/Jigoshop/Admin/Reports/Chart/CustomersVsGuests.php:54
+msgid "%s guest orders in this period"
+msgstr ""
+
+#: src/Jigoshop/Admin/Reports/Chart/CustomersVsGuests.php:59
+msgid "%s signups in this period"
+msgstr ""
+
+#: src/Jigoshop/Admin/Reports/Chart/CustomersVsGuests.php:298
+msgid "Customer Orders"
+msgstr ""
+
+#: src/Jigoshop/Admin/Reports/Chart/CustomersVsGuests.php:311
+msgid "customer orders"
+msgstr ""
+
+#: src/Jigoshop/Admin/Reports/Chart/CustomersVsGuests.php:315
+msgid "Guest Orders"
+msgstr ""
+
+#: src/Jigoshop/Admin/Reports/Chart/CustomersVsGuests.php:328
+msgid "guest orders"
+msgstr ""
+
+#: src/Jigoshop/Admin/Reports/Chart/CustomersVsGuests.php:332
+msgid "Signups"
+msgstr ""
+
+#: src/Jigoshop/Admin/Reports/Chart/CustomersVsGuests.php:349
+msgid "new users"
+msgstr ""
+
+#: src/Jigoshop/Admin/Reports/Chart/DiscountSummary.php:84
+msgid "%s %s discounts in total"
+msgstr ""
+
+#: src/Jigoshop/Admin/Reports/Chart/DiscountSummary.php:89
+msgid "%s %s discounts used in total"
+msgstr ""
+
+#: src/Jigoshop/Admin/Reports/Chart/DiscountSummary.php:355
+msgid "%s discounts in total"
+msgstr ""
+
+#: src/Jigoshop/Admin/Reports/Chart/DiscountSummary.php:380
+msgid "%s discounts used in total"
+msgstr ""
+
+#: src/Jigoshop/Admin/Reports/Chart/DiscountSummary.php:400
+msgid "No discounts for selected period."
+msgstr ""
+
+#: src/Jigoshop/Admin/Reports/Table/CustomerList.php:56
+msgid "Name (Last, First)"
+msgstr ""
+
+#: src/Jigoshop/Admin/Reports/Table/CustomerList.php:68
+msgid "Location"
+msgstr ""
+
+#: src/Jigoshop/Admin/Reports/Table/CustomerList.php:76, src/Jigoshop/Admin/Reports/Table/CustomerList.php:291
+msgid "Money Spent"
+msgstr ""
+
+#: src/Jigoshop/Admin/Reports/Table/CustomerList.php:80, src/Jigoshop/Admin/Reports/Table/CustomerList.php:292
+msgid "Last order"
+msgstr ""
+
+#: src/Jigoshop/Admin/Reports/Table/CustomerList.php:113
+msgid "No customers found."
+msgstr ""
+
+#: src/Jigoshop/Admin/Reports/Table/CustomerList.php:125
+msgid "Search Customers"
+msgstr ""
+
+#: src/Jigoshop/Admin/Reports/Table/LowInStock.php:34
+msgid "Low In Stock"
+msgstr ""
+
+#: src/Jigoshop/Admin/Reports/Table/LowInStock.php:48, src/Jigoshop/Admin/Reports/Table/MostStocked.php:48, src/Jigoshop/Admin/Reports/Table/OutOfStock.php:48
+msgid "Parent"
+msgstr ""
+
+#: src/Jigoshop/Admin/Reports/Table/LowInStock.php:52, src/Jigoshop/Admin/Reports/Table/MostStocked.php:52
+msgid "Units in stock"
+msgstr ""
+
+#: src/Jigoshop/Admin/Reports/Table/LowInStock.php:85
+msgid "No low in stock products found."
+msgstr ""
+
+#: src/Jigoshop/Admin/Reports/Table/MostStocked.php:89
+msgid "No products found."
+msgstr ""
+
+#: src/Jigoshop/Admin/Reports/Table/OutOfStock.php:34
+msgid "Out Of Stock"
+msgstr ""
+
+#: src/Jigoshop/Admin/Reports/Table/OutOfStock.php:81
+msgid "No out of stock products found."
+msgstr ""
+
+#: src/Jigoshop/Api/Routes/V1/Orders.php:276
+msgid "Order ID was not provided"
+msgstr ""
+
+#: src/Jigoshop/Core/Types/Product/Downloadable.php:50
+msgid "Downloadable"
+msgstr ""
+
+#: src/Jigoshop/Core/Types/Product/Downloadable.php:119
+msgid "Complete downloadable only order."
+msgstr ""
+
+#: src/Jigoshop/Core/Types/Product/Downloadable.php:194
+msgid "Your download link for this file is:"
+msgstr ""
+
+#: src/Jigoshop/Core/Types/Product/External.php:32
+msgid "External / Affiliate"
+msgstr ""
+
+#: src/Jigoshop/Core/Types/Product/External.php:101
+msgid "The external product cannot be added to cart"
+msgstr ""
+
+#: src/Jigoshop/Core/Types/Product/Simple.php:31
+msgid "Simple"
+msgstr ""
+
+#: src/Jigoshop/Core/Types/Product/Variable.php:67
+msgid "Variable"
+msgstr ""
+
+#: src/Jigoshop/Core/Types/Product/Variable.php:291
+msgid "Is for variations?"
+msgstr ""
+
+#: src/Jigoshop/Core/Types/Product/Variable.php:308
+msgid "Variations"
+msgstr ""
+
+#: src/Jigoshop/Core/Types/Product/Variable.php:336
+msgid "Add Variation"
+msgstr ""
+
+#: src/Jigoshop/Core/Types/Product/Variable.php:337
+msgid "Create variations from all attributes"
+msgstr ""
+
+#: src/Jigoshop/Core/Types/Product/Variable.php:338
+msgid "Remove all variations"
+msgstr ""
+
+#: src/Jigoshop/Core/Types/Product/Variable.php:346
+msgid "Set regular price"
+msgstr ""
+
+#: src/Jigoshop/Core/Types/Product/Variable.php:347
+msgid "Increase regular price"
+msgstr ""
+
+#: src/Jigoshop/Core/Types/Product/Variable.php:348
+msgid "Decrease regular price"
+msgstr ""
+
+#: src/Jigoshop/Core/Types/Product/Variable.php:349
+msgid "Set sale prices"
+msgstr ""
+
+#: src/Jigoshop/Core/Types/Product/Variable.php:350
+msgid "Increase sale prices"
+msgstr ""
+
+#: src/Jigoshop/Core/Types/Product/Variable.php:351
+msgid "Decrease sale prices"
+msgstr ""
+
+#: src/Jigoshop/Core/Types/Product/Variable.php:352
+msgid "Set scheduled sale dates"
+msgstr ""
+
+#: src/Jigoshop/Core/Types/Product/Variable.php:356
+msgid "Inventory"
+msgstr ""
+
+#: src/Jigoshop/Core/Types/Product/Variable.php:358
+msgid "Toggle manage stock"
+msgstr ""
+
+#: src/Jigoshop/Core/Types/Product/Variable.php:359
+msgid "Set stock"
+msgstr ""
+
+#: src/Jigoshop/Core/Types/Product/Variable.php:360
+msgid "Increase stock"
+msgstr ""
+
+#: src/Jigoshop/Core/Types/Product/Variable.php:361
+msgid "Decrease stock"
+msgstr ""
+
+#: src/Jigoshop/Core/Types/Product/Variable.php:365
+msgid "Dimensions"
+msgstr ""
+
+#: src/Jigoshop/Core/Types/Product/Variable.php:367
+msgid "Set length"
+msgstr ""
+
+#: src/Jigoshop/Core/Types/Product/Variable.php:368
+msgid "Set width"
+msgstr ""
+
+#: src/Jigoshop/Core/Types/Product/Variable.php:369
+msgid "Set height"
+msgstr ""
+
+#: src/Jigoshop/Core/Types/Product/Variable.php:370
+msgid "Set weight"
+msgstr ""
+
+#: src/Jigoshop/Core/Types/Product/Variable.php:376
+msgid "Set download limit"
+msgstr ""
+
+#: src/Jigoshop/Core/Types/Product/Variable.php:383
+msgid "Set \"%s\""
+msgstr ""
+
+#: src/Jigoshop/Core/Types/Product/Variable.php:414
+msgid "Variation successfully removed."
+msgstr ""
+
+#: src/Jigoshop/Core/Types/Product/Variable.php:415
+msgid "Variation saved."
+msgstr ""
+
+#: src/Jigoshop/Core/Types/Product/Variable.php:416
+msgid "Are you sure you want to create all variations? It will take some time."
+msgstr ""
+
+#: src/Jigoshop/Core/Types/Product/Variable.php:417
+msgid "Are you sure you want to remove all variations? This cannot be undone."
+msgstr ""
+
+#: src/Jigoshop/Core/Types/Product/Variable.php:418
+msgid "Enter a value"
+msgstr ""
+
+#: src/Jigoshop/Core/Types/Product/Variable.php:419
+msgid "Enter a value (fixed or %)"
+msgstr ""
+
+#: src/Jigoshop/Core/Types/Product/Variable.php:420
+msgid "Sale start date (MM/DD/YYYY format or leave blank)"
+msgstr ""
+
+#: src/Jigoshop/Core/Types/Product/Variable.php:421
+msgid "Sale end date (MM/DD/YYYY format or leave blank)"
+msgstr ""
+
+#: src/Jigoshop/Core/Types/Product/Variable.php:423
+msgid "Done!"
+msgstr ""
+
+#: src/Jigoshop/Core/Types/Product/Variable.php:424
+msgid "Cancel"
+msgstr ""
+
+#: src/Jigoshop/Core/Types/Product/Variable.php:425
+msgid "Next"
+msgstr ""
+
+#: src/Jigoshop/Core/Types/Product/Variable.php:426
+msgid "Back"
+msgstr ""
+
+#: src/Jigoshop/Core/Types/Product/Variable.php:493, src/Jigoshop/Core/Types/Product/Variable.php:559, src/Jigoshop/Core/Types/Product/Variable.php:739, src/Jigoshop/Core/Types/Product/Variable.php:825, src/Jigoshop/Core/Types/Product/Variable.php:858
+msgid "Product is not variable - unable to add variation."
+msgstr ""
+
+#: src/Jigoshop/Core/Types/Product/Variable.php:542, src/Jigoshop/Core/Types/Product/Variable.php:722, src/Jigoshop/Core/Types/Product/Variable.php:812
+msgid "Variation was not specified."
+msgstr ""
+
+#: src/Jigoshop/Core/Types/Product/Variable.php:545, src/Jigoshop/Core/Types/Product/Variable.php:725, src/Jigoshop/Core/Types/Product/Variable.php:815
+msgid "Invalid variation ID."
+msgstr ""
+
+#: src/Jigoshop/Core/Types/Product/Variable.php:549
+msgid "Image is not not specified."
+msgstr ""
+
+#: src/Jigoshop/Core/Types/Product/Variable.php:563, src/Jigoshop/Core/Types/Product/Variable.php:743
+msgid "Variation does not exists."
+msgstr ""
+
+#: src/Jigoshop/Core/Types/Product/Variable.php:600
+msgid "Invalid product type."
+msgstr ""
+
+#: src/Jigoshop/Core/Types/Product/Variable.php:729
+msgid "Attribute values are not specified."
+msgstr ""
+
+#: src/Jigoshop/Core/Types/Product/Virtual.php:30
+msgid "Virtual"
+msgstr ""
+
+#: src/Jigoshop/Entity/Order/Discount/Type.php:51
+msgid "User Defined"
+msgstr ""
+
+#: src/Jigoshop/Entity/Product/Variable/Variation.php:49
+msgctxt "product_variation"
+msgid "%s (%s)"
+msgstr ""
+
+#: src/Jigoshop/Entity/Product/Variable/Variation.php:55
+msgctxt "product_variation"
+msgid "%s: any"
+msgstr ""
+
+#: src/Jigoshop/Frontend/Page/Account/ChangePassword.php:48
+msgid "Current password is invalid."
+msgstr ""
+
+#: src/Jigoshop/Frontend/Page/Account/ChangePassword.php:52
+msgid "Please enter new password."
+msgstr ""
+
+#: src/Jigoshop/Frontend/Page/Account/ChangePassword.php:61
+msgid "Password changed."
+msgstr ""
+
+#: src/Jigoshop/Frontend/Page/Account/EditAddress.php:76
+msgid "Country \"%s\" does not exists."
+msgstr ""
+
+#: src/Jigoshop/Frontend/Page/Account/EditAddress.php:97
+msgid "Invalid email address"
+msgstr ""
+
+#: src/Jigoshop/Frontend/Page/Account/EditAddress.php:106
+msgid "Address saved."
+msgstr ""
+
+#: src/Jigoshop/Frontend/Page/Checkout/Pay.php:57
+msgid "Invalid security key. Unable to process order."
+msgstr ""
+
+#: src/Jigoshop/Frontend/Page/Checkout/Pay.php:68
+msgid "Please select one of available payment methods."
+msgstr ""
+
+#: src/Jigoshop/Frontend/Page/Checkout/Pay.php:75
+msgid "Selected payment method is not available. Please select another one."
+msgstr ""
+
+#: src/Jigoshop/Frontend/Page/Checkout/ThankYou.php:105
+msgid "No order to display."
+msgstr ""
+
+#: src/Jigoshop/Frontend/Page/Checkout/ThankYou.php:116
+msgid "Invalid security key. The order was processed."
+msgstr ""
+
+#: templates/admin/product/box/attributes/attribute.php:23
+msgid "Display on product page?"
+msgstr ""
+
+#: templates/admin/product/box/attributes/attribute.php:30
+msgid "Values"
+msgstr ""
+
+#: templates/admin/product/box/general/external.php:13, templates/admin/product/box/variations/variation/external.php:15
+msgid "Product URL"
+msgstr ""
+
+#: templates/admin/product/box/general/external.php:15, templates/admin/product/box/variations/variation/external.php:17
+msgid "Enter external product URL..."
+msgstr ""
+
+#: templates/admin/product/box/variations/variation.php:40
+msgid "Any of %s"
+msgstr ""
+
+#: templates/admin/product/box/variations/variation.php:48
+msgid "Set image"
+msgstr ""
+
+#: templates/admin/product/box/variations/variation.php:168
+msgid "Cancel schedule"
+msgstr ""
+
+#: templates/admin/settings/payment/processingFeeRules/processingFeeRule.php:23, templates/admin/settings/payment/processingFeeRules/processingFeeRule.php:32
+msgid "Leave blank for unlimited."
+msgstr ""
+
+#: templates/admin/settings/payment/processingFeeRules/processingFeeRule.php:41
+msgid "Absolute value or percentage of order value."
+msgstr ""
+
+#: templates/admin/settings/shipping/advanced_flat_rate/rate.php:46
+msgid "Continents"
+msgstr ""
+
+#: templates/admin/settings/shipping/advanced_flat_rate/rate.php:54
+msgid "Countries"
+msgstr ""
+
+#: templates/admin/settings/shipping/advanced_flat_rate/rate.php:62
+msgid "States"
+msgstr ""
+
+#: templates/admin/settings/shipping/advanced_flat_rate/rate.php:67
+msgid "All states"
+msgstr ""
+
+#: templates/admin/settings/shipping/advanced_flat_rate/rate.php:73
+msgid "All postcodes"
+msgstr ""
+
+#: templates/admin/settings/shipping/advanced_flat_rate/rate.php:74
+msgid "123* means all postcodes which begin with 123"
+msgstr ""
+
+#: templates/admin/settings/shipping/advanced_flat_rate/rate.php:80
+msgid "Rest of the world"
+msgstr ""
+
+#: src/Jigoshop/Admin/Reports/Chart/Widget/CustomRange.php:24
+msgid "Custom Range"
+msgstr ""
+
+#: src/Jigoshop/Admin/Reports/Chart/Widget/MostDiscount.php:29
+msgid "Most Discount %s Codes"
+msgstr ""
+
+#: src/Jigoshop/Admin/Reports/Chart/Widget/MostPopular.php:28
+msgid "Most Popular %s Codes"
+msgstr ""
+
+#: src/Jigoshop/Admin/Reports/Chart/Widget/OrderStatusFilter.php:25
+msgid "Order Status Filter"
+msgstr ""
+
+#: src/Jigoshop/Admin/Reports/Chart/Widget/ProductSearch.php:25
+msgid "Search for Products"
+msgstr ""
+
+#: src/Jigoshop/Admin/Reports/Chart/Widget/SelectCategories.php:28
+msgid "Select Categories"
+msgstr ""
+
+#: src/Jigoshop/Admin/Reports/Chart/Widget/SelectCodes.php:32
+msgid "Select %s codes"
+msgstr ""
+
+#: src/Jigoshop/Admin/Reports/Chart/Widget/TopEarners.php:26
+msgid "Top Earners"
+msgstr ""
+
+#: src/Jigoshop/Admin/Reports/Chart/Widget/TopFreebies.php:25
+msgid "Top Freebies"
+msgstr ""
+
+#: src/Jigoshop/Admin/Reports/Chart/Widget/TopSellers.php:25
+msgid "Top Sellers"
 msgstr ""
