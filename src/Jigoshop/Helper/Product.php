@@ -123,7 +123,14 @@ class Product
                 }    
 
                 $price = ($taxAlreadyIncluded == 'with_tax'?Tax::getPriceWithoutTax($price, $product->getTaxClasses()):$price);
-                $priceWithTax = $price + Tax::getForProduct($price, $product);
+
+                if($price !== '') {
+                    $priceWithTax = $price + Tax::getForProduct($price, $product);
+                }
+                else {
+                    $priceWithTax = '';
+                }
+                
                 $prices = self::generatePrices($price, $priceWithTax);
 
                 if(count($prices) == 2) {
