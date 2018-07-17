@@ -200,6 +200,8 @@ class AdminProductVariable
         .done (data) ->
           if !data.success? or !data.success
             jigoshop.addMessage('danger', data.error, 6000)
+          else
+            $thumbnail.prop('srcset', '')
       library:
         type: 'image'
     )
