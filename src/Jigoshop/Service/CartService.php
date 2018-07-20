@@ -390,8 +390,7 @@ class CartService implements CartServiceInterface
 		foreach ($order->getItems() as $item) {
 			/** @var $item Order\Item */
 			$item = clone $item;
-			$item->setId(false);
-			$item->setKey(false);
+			$item->setId(null);
 			$cart->addItem($item);
 		}
 

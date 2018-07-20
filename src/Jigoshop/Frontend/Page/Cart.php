@@ -472,8 +472,8 @@ class Cart implements PageInterface
 						}
 
 						$order->setStatus(Status::CANCELLED);
+                        $this->orderService->save($order);
 						$cart = $this->cartService->createFromOrder($this->cartService->getCartIdForCurrentUser(), $order);
-						$this->orderService->save($order);
 						$this->cartService->save($cart);
 						$this->messages->addNotice(__('The order has been cancelled', 'jigoshop-ecommerce'));
 					}
