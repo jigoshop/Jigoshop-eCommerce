@@ -17,43 +17,43 @@ msgstr ""
 msgid "<strong>%s</strong>: required Jigoshop version: %s. Current version: %s. Please upgrade."
 msgstr ""
 
-#: src/JigoshopInit.php:417
+#: src/JigoshopInit.php:423
 msgid "Contact support"
 msgstr ""
 
-#: src/JigoshopInit.php:425
+#: src/JigoshopInit.php:431
 msgid "Add your [stars] on [link]wordpress.org[/link] and keep this plugin essentially free."
 msgstr ""
 
-#: src/JigoshopInit.php:445, src/Jigoshop/Service/OrderService.php:417, src/Jigoshop/Service/OrderService.php:422
+#: src/JigoshopInit.php:451, src/Jigoshop/Service/OrderService.php:417, src/Jigoshop/Service/OrderService.php:422
 msgid "Jigoshop"
 msgstr ""
 
-#: src/JigoshopInit.php:456, src/Jigoshop/Admin/Dashboard.php:61
+#: src/JigoshopInit.php:462, src/Jigoshop/Admin/Dashboard.php:61
 msgid "Dashboard"
 msgstr ""
 
-#: src/JigoshopInit.php:465, src/Jigoshop/Admin/Migration.php:61, templates/admin/dashboard/rightNow.php:27, src/Jigoshop/Admin/Settings/ProductsTab.php:54, src/Jigoshop/Core/Types/Product.php:70
+#: src/JigoshopInit.php:471, src/Jigoshop/Admin/Migration.php:61, templates/admin/dashboard/rightNow.php:27, src/Jigoshop/Admin/Settings/ProductsTab.php:54, src/Jigoshop/Core/Types/Product.php:70
 msgid "Products"
 msgstr ""
 
-#: src/JigoshopInit.php:474, src/Jigoshop/Admin/Migration.php:65, src/Jigoshop/Core/Types/Order.php:42, src/Jigoshop/Admin/Reports/Table/CustomerList.php:72, src/Jigoshop/Admin/Reports/Table/CustomerList.php:290
+#: src/JigoshopInit.php:480, src/Jigoshop/Admin/Migration.php:65, src/Jigoshop/Core/Types/Order.php:42, src/Jigoshop/Admin/Reports/Table/CustomerList.php:72, src/Jigoshop/Admin/Reports/Table/CustomerList.php:290
 msgid "Orders"
 msgstr ""
 
-#: src/JigoshopInit.php:483, src/JigoshopInit.php:494, src/Jigoshop/Admin/Settings.php:87, src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:409
+#: src/JigoshopInit.php:489, src/JigoshopInit.php:500, src/Jigoshop/Admin/Settings.php:87, src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:409
 msgid "Settings"
 msgstr ""
 
-#: src/JigoshopInit.php:495
+#: src/JigoshopInit.php:501
 msgid "Docs"
 msgstr ""
 
-#: src/JigoshopInit.php:496, templates/admin/dashboard/usefulLinks.php:32
+#: src/JigoshopInit.php:502, templates/admin/dashboard/usefulLinks.php:32
 msgid "Support"
 msgstr ""
 
-#: src/JigoshopInit.php:594
+#: src/JigoshopInit.php:600
 msgid "This error was probably caused by reference to old or deprecated function/method/class, not present in current Jigoshop version. Please check your Jigoshop eCommerce log directory for further details."
 msgstr ""
 
@@ -413,7 +413,7 @@ msgstr ""
 msgid "Select your destination"
 msgstr ""
 
-#: templates/shop/cart.php:167, src/Jigoshop/Helper/Product.php:688, src/Jigoshop/Helper/Product.php:758, templates/user/account/address.php:23, templates/user/account/edit_address.php:50, templates/admin/settings/shipping/advanced_flat_rate/rate.php:71
+#: templates/shop/cart.php:167, src/Jigoshop/Helper/Product.php:695, src/Jigoshop/Helper/Product.php:765, templates/user/account/address.php:23, templates/user/account/edit_address.php:50, templates/admin/settings/shipping/advanced_flat_rate/rate.php:71
 msgid "Postcode"
 msgstr ""
 
@@ -1211,7 +1211,7 @@ msgstr ""
 msgid "This is not your download link."
 msgstr ""
 
-#: src/Jigoshop/Endpoint/DownloadFile.php:87, src/Jigoshop/Endpoint/DownloadFile.php:176
+#: src/Jigoshop/Endpoint/DownloadFile.php:91, src/Jigoshop/Endpoint/DownloadFile.php:180
 msgid "File not found."
 msgstr ""
 
@@ -1737,95 +1737,95 @@ msgstr ""
 msgid "%s off!"
 msgstr ""
 
-#: src/Jigoshop/Helper/Product.php:160
+#: src/Jigoshop/Helper/Product.php:167
 msgid "From: <strong><p>%s</p></strong><p>(%s)</p>"
 msgstr ""
 
-#: src/Jigoshop/Helper/Product.php:163
+#: src/Jigoshop/Helper/Product.php:170
 msgid "From: %s"
 msgstr ""
 
-#: src/Jigoshop/Helper/Product.php:168
+#: src/Jigoshop/Helper/Product.php:175
 msgid "<strong><p>%s</p></strong><p>(%s)</p>"
 msgstr ""
 
-#: src/Jigoshop/Helper/Product.php:286
+#: src/Jigoshop/Helper/Product.php:293
 msgid "Free"
 msgstr ""
 
-#: src/Jigoshop/Helper/Product.php:307
+#: src/Jigoshop/Helper/Product.php:314
 msgid "Price not announced."
 msgstr ""
 
-#: src/Jigoshop/Helper/Product.php:341
+#: src/Jigoshop/Helper/Product.php:348
 msgctxt "product"
 msgid "In stock"
 msgstr ""
 
-#: src/Jigoshop/Helper/Product.php:342
+#: src/Jigoshop/Helper/Product.php:349
 msgctxt "product"
 msgid "Out of stock"
 msgstr ""
 
-#: src/Jigoshop/Helper/Product.php:349
+#: src/Jigoshop/Helper/Product.php:356
 msgctxt "product"
 msgid "%s <strong>(%d available)</strong>"
 msgstr ""
 
-#: src/Jigoshop/Helper/Product.php:352
+#: src/Jigoshop/Helper/Product.php:359
 msgctxt "product"
 msgid "%s <strong>(Available on request)</strong>"
 msgstr ""
 
-#: src/Jigoshop/Helper/Product.php:458, src/Jigoshop/Admin/Page/Coupons.php:95, src/Jigoshop/Core/Types/Product/Variable.php:427
+#: src/Jigoshop/Helper/Product.php:465, src/Jigoshop/Admin/Page/Coupons.php:95, src/Jigoshop/Core/Types/Product/Variable.php:427
 msgid "Yes"
 msgstr ""
 
-#: src/Jigoshop/Helper/Product.php:458, src/Jigoshop/Admin/Page/Coupons.php:95, src/Jigoshop/Core/Types/Product/Variable.php:428
+#: src/Jigoshop/Helper/Product.php:465, src/Jigoshop/Admin/Page/Coupons.php:95, src/Jigoshop/Core/Types/Product/Variable.php:428
 msgid "No"
 msgstr ""
 
-#: src/Jigoshop/Helper/Product.php:597
+#: src/Jigoshop/Helper/Product.php:604
 msgid "Rated %s out of 5"
 msgstr ""
 
-#: src/Jigoshop/Helper/Product.php:658, src/Jigoshop/Helper/Product.php:733, src/Jigoshop/Admin/Reports/Table/CustomerList.php:287
+#: src/Jigoshop/Helper/Product.php:665, src/Jigoshop/Helper/Product.php:740, src/Jigoshop/Admin/Reports/Table/CustomerList.php:287
 msgid "First Name"
 msgstr ""
 
-#: src/Jigoshop/Helper/Product.php:663, src/Jigoshop/Helper/Product.php:738, src/Jigoshop/Admin/Reports/Table/CustomerList.php:288
+#: src/Jigoshop/Helper/Product.php:670, src/Jigoshop/Helper/Product.php:745, src/Jigoshop/Admin/Reports/Table/CustomerList.php:288
 msgid "Last Name"
 msgstr ""
 
-#: src/Jigoshop/Helper/Product.php:668, src/Jigoshop/Helper/Product.php:743, templates/user/account/address.php:10, templates/user/account/edit_address.php:19
+#: src/Jigoshop/Helper/Product.php:675, src/Jigoshop/Helper/Product.php:750, templates/user/account/address.php:10, templates/user/account/edit_address.php:19
 msgid "Company"
 msgstr ""
 
-#: src/Jigoshop/Helper/Product.php:673
+#: src/Jigoshop/Helper/Product.php:680
 msgid "EU VAT Number"
 msgstr ""
 
-#: src/Jigoshop/Helper/Product.php:678, src/Jigoshop/Helper/Product.php:748, templates/user/account/address.php:19, templates/user/account/edit_address.php:40
+#: src/Jigoshop/Helper/Product.php:685, src/Jigoshop/Helper/Product.php:755, templates/user/account/address.php:19, templates/user/account/edit_address.php:40
 msgid "Address"
 msgstr ""
 
-#: src/Jigoshop/Helper/Product.php:683, src/Jigoshop/Helper/Product.php:753, templates/user/account/address.php:21, templates/user/account/edit_address.php:45
+#: src/Jigoshop/Helper/Product.php:690, src/Jigoshop/Helper/Product.php:760, templates/user/account/address.php:21, templates/user/account/edit_address.php:45
 msgid "City"
 msgstr ""
 
-#: src/Jigoshop/Helper/Product.php:693, src/Jigoshop/Helper/Product.php:763, templates/user/account/address.php:27, templates/user/account/edit_address.php:61, templates/admin/settings/tax/rules.php:28
+#: src/Jigoshop/Helper/Product.php:700, src/Jigoshop/Helper/Product.php:770, templates/user/account/address.php:27, templates/user/account/edit_address.php:61, templates/admin/settings/tax/rules.php:28
 msgid "Country"
 msgstr ""
 
-#: src/Jigoshop/Helper/Product.php:698, src/Jigoshop/Helper/Product.php:768
+#: src/Jigoshop/Helper/Product.php:705, src/Jigoshop/Helper/Product.php:775
 msgid "State/Province"
 msgstr ""
 
-#: src/Jigoshop/Helper/Product.php:703, templates/user/account/address.php:30, templates/user/account/edit_address.php:67
+#: src/Jigoshop/Helper/Product.php:710, templates/user/account/address.php:30, templates/user/account/edit_address.php:67
 msgid "Phone"
 msgstr ""
 
-#: src/Jigoshop/Helper/Product.php:708
+#: src/Jigoshop/Helper/Product.php:715
 msgid "Email Address"
 msgstr ""
 
@@ -2134,7 +2134,7 @@ msgstr ""
 msgid "Unable to save product. Please try again."
 msgstr ""
 
-#: src/Jigoshop/Service/TaxService.php:427, src/Jigoshop/Service/TaxService.php:449
+#: src/Jigoshop/Service/TaxService.php:431, src/Jigoshop/Service/TaxService.php:453
 msgid "No tax class: %s"
 msgstr ""
 
@@ -3611,11 +3611,11 @@ msgstr ""
 msgid "Downloads"
 msgstr ""
 
-#: src/Jigoshop/Admin/Page/Product.php:183, src/Jigoshop/Admin/Page/Product.php:223, src/Jigoshop/Admin/Page/Product.php:302, src/Jigoshop/Core/Types/Product/Variable.php:480, src/Jigoshop/Core/Types/Product/Variable.php:536, src/Jigoshop/Core/Types/Product/Variable.php:592, src/Jigoshop/Core/Types/Product/Variable.php:716, src/Jigoshop/Core/Types/Product/Variable.php:806, src/Jigoshop/Core/Types/Product/Variable.php:848
+#: src/Jigoshop/Admin/Page/Product.php:183, src/Jigoshop/Admin/Page/Product.php:223, src/Jigoshop/Admin/Page/Product.php:302, src/Jigoshop/Core/Types/Product/Variable.php:480, src/Jigoshop/Core/Types/Product/Variable.php:536, src/Jigoshop/Core/Types/Product/Variable.php:594, src/Jigoshop/Core/Types/Product/Variable.php:718, src/Jigoshop/Core/Types/Product/Variable.php:808, src/Jigoshop/Core/Types/Product/Variable.php:850
 msgid "Product was not specified."
 msgstr ""
 
-#: src/Jigoshop/Admin/Page/Product.php:186, src/Jigoshop/Admin/Page/Product.php:226, src/Jigoshop/Admin/Page/Product.php:305, src/Jigoshop/Core/Types/Product/Variable.php:483, src/Jigoshop/Core/Types/Product/Variable.php:539, src/Jigoshop/Core/Types/Product/Variable.php:595, src/Jigoshop/Core/Types/Product/Variable.php:719, src/Jigoshop/Core/Types/Product/Variable.php:809, src/Jigoshop/Core/Types/Product/Variable.php:851
+#: src/Jigoshop/Admin/Page/Product.php:186, src/Jigoshop/Admin/Page/Product.php:226, src/Jigoshop/Admin/Page/Product.php:305, src/Jigoshop/Core/Types/Product/Variable.php:483, src/Jigoshop/Core/Types/Product/Variable.php:539, src/Jigoshop/Core/Types/Product/Variable.php:597, src/Jigoshop/Core/Types/Product/Variable.php:721, src/Jigoshop/Core/Types/Product/Variable.php:811, src/Jigoshop/Core/Types/Product/Variable.php:853
 msgid "Invalid product ID."
 msgstr ""
 
@@ -3631,7 +3631,7 @@ msgstr ""
 msgid "Invalid attribute ID."
 msgstr ""
 
-#: src/Jigoshop/Admin/Page/Product.php:239, src/Jigoshop/Admin/Page/Product.php:318, src/Jigoshop/Core/Types/Product/Variable.php:489, src/Jigoshop/Core/Types/Product/Variable.php:555, src/Jigoshop/Core/Types/Product/Variable.php:735, src/Jigoshop/Core/Types/Product/Variable.php:821, src/Jigoshop/Core/Types/Product/Variable.php:855
+#: src/Jigoshop/Admin/Page/Product.php:239, src/Jigoshop/Admin/Page/Product.php:318, src/Jigoshop/Core/Types/Product/Variable.php:489, src/Jigoshop/Core/Types/Product/Variable.php:555, src/Jigoshop/Core/Types/Product/Variable.php:737, src/Jigoshop/Core/Types/Product/Variable.php:823, src/Jigoshop/Core/Types/Product/Variable.php:857
 msgid "Product does not exists."
 msgstr ""
 
@@ -5588,7 +5588,7 @@ msgstr ""
 msgid "Text"
 msgstr ""
 
-#: src/Jigoshop/Entity/Product/External.php:57
+#: src/Jigoshop/Entity/Product/External.php:56
 msgid "External product does not support stock management."
 msgstr ""
 
@@ -6453,15 +6453,15 @@ msgstr ""
 msgid "Back"
 msgstr ""
 
-#: src/Jigoshop/Core/Types/Product/Variable.php:493, src/Jigoshop/Core/Types/Product/Variable.php:559, src/Jigoshop/Core/Types/Product/Variable.php:739, src/Jigoshop/Core/Types/Product/Variable.php:825, src/Jigoshop/Core/Types/Product/Variable.php:858
+#: src/Jigoshop/Core/Types/Product/Variable.php:493, src/Jigoshop/Core/Types/Product/Variable.php:559, src/Jigoshop/Core/Types/Product/Variable.php:741, src/Jigoshop/Core/Types/Product/Variable.php:827, src/Jigoshop/Core/Types/Product/Variable.php:860
 msgid "Product is not variable - unable to add variation."
 msgstr ""
 
-#: src/Jigoshop/Core/Types/Product/Variable.php:542, src/Jigoshop/Core/Types/Product/Variable.php:722, src/Jigoshop/Core/Types/Product/Variable.php:812
+#: src/Jigoshop/Core/Types/Product/Variable.php:542, src/Jigoshop/Core/Types/Product/Variable.php:724, src/Jigoshop/Core/Types/Product/Variable.php:814
 msgid "Variation was not specified."
 msgstr ""
 
-#: src/Jigoshop/Core/Types/Product/Variable.php:545, src/Jigoshop/Core/Types/Product/Variable.php:725, src/Jigoshop/Core/Types/Product/Variable.php:815
+#: src/Jigoshop/Core/Types/Product/Variable.php:545, src/Jigoshop/Core/Types/Product/Variable.php:727, src/Jigoshop/Core/Types/Product/Variable.php:817
 msgid "Invalid variation ID."
 msgstr ""
 
@@ -6469,15 +6469,15 @@ msgstr ""
 msgid "Image is not not specified."
 msgstr ""
 
-#: src/Jigoshop/Core/Types/Product/Variable.php:563, src/Jigoshop/Core/Types/Product/Variable.php:743
+#: src/Jigoshop/Core/Types/Product/Variable.php:563, src/Jigoshop/Core/Types/Product/Variable.php:745
 msgid "Variation does not exists."
 msgstr ""
 
-#: src/Jigoshop/Core/Types/Product/Variable.php:600
+#: src/Jigoshop/Core/Types/Product/Variable.php:602
 msgid "Invalid product type."
 msgstr ""
 
-#: src/Jigoshop/Core/Types/Product/Variable.php:729
+#: src/Jigoshop/Core/Types/Product/Variable.php:731
 msgid "Attribute values are not specified."
 msgstr ""
 

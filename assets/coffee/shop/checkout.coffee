@@ -46,6 +46,8 @@ class Checkout
         tokenSeparators: [',']
         multiple: true
         formatNoMatches: ''
+    if (jQuery('#shipping-calculator input[type=radio]').length == 1)
+      jQuery('#shipping-calculator input[type=radio]').trigger "click"
 
   # TODO: Copy shipping_address changing etc. here from Cart
     # TODO: Refactor Cart and Checkout (for sure) to create one place for many shared parameters and functions
