@@ -53,6 +53,11 @@ class Pay implements PageInterface
 		/** @var Order $order */
 		$order = $this->orderService->find((int)$this->wp->getQueryParameter('pay'));
 
+		if(!$order instanceof Order) {
+            $this->messages->addError(__('Invalid order ID. Unable to process order.', 'jigoshop-ecommerce'));
+            $this->wp->redirectTo($this->options->getPageId(Pages::ACCOUNT));
+        }
+
 		if ($order->getKey() !== $_GET['key']) {
 			$this->messages->addError(__('Invalid security key. Unable to process order.', 'jigoshop-ecommerce'));
 			$this->wp->redirectTo($this->options->getPageId(Pages::ACCOUNT));
