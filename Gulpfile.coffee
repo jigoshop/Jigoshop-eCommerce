@@ -61,7 +61,7 @@ jsTasks.forEach (taskName) ->
   defaultTask.push(taskName + 'js')
   gulp.task taskName + 'js', ->
     gulp.src(jsFiles[taskName])
-    .pipe check(minify, uglify())
+    .pipe check(minify && taskName != 'blueimp', uglify())
     .pipe concat(taskName + '.js')
     .pipe gulp.dest('assets/js/vendors')
 
