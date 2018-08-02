@@ -361,6 +361,12 @@ class TaxesTab implements TabInterface
 
         		$this->messages->addError(__('Shop location is set outside of European Union. EU VAT functionality will remain disabled.', 'jigoshop-ecommerce'));
         	}
+
+        	if(!function_exists('curl_init')) {
+        		$settings['euVat']['enabled'] = false;
+
+        		$this->messages->addError(__('EU VAT validation requires cURL PHP extension to work properly. Please make sure that cURL is installed on your server.', 'jigoshop-ecommerce'));
+        	}
         }
 
 		if (!isset($settings['rules'])) {
