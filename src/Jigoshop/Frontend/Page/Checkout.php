@@ -644,6 +644,11 @@ class Checkout implements PageInterface
 			$fields['euvatno']['disabled'] = true;
 		}
 
+		$euVatNumberFieldDescription = $this->options->get('tax.euVat.fieldDescription', '');
+		if(strlen($euVatNumberFieldDescription) > 0) {
+			$fields['euvatno']['tip'] = $euVatNumberFieldDescription;
+		}
+
 		return $fields;
 	}
 
