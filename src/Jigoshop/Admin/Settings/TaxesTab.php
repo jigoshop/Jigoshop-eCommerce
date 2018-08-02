@@ -7,6 +7,7 @@ use Jigoshop\Core\Messages;
 use Jigoshop\Helper\Country;
 use Jigoshop\Helper\Render;
 use Jigoshop\Helper\Scripts;
+use Jigoshop\Integration;
 use Jigoshop\Service\TaxServiceInterface;
 use WPAL\Wordpress;
 
@@ -23,11 +24,14 @@ class TaxesTab implements TabInterface
 	private $options;
 	/** @var TaxServiceInterface */
 	private $taxService;
+	/** @var \Jigoshop\Core\Messages */
+	private $messages;
 
 	public function __construct(Wordpress $wp, Options $options, TaxServiceInterface $taxService, Messages $messages)
 	{
 		$this->options = $options->get(self::SLUG);
 		$this->taxService = $taxService;
+		$this->messages = $messages;
 		$options = $this->options;
 
 		$wp->addAction('admin_enqueue_scripts', function () use ($options){
@@ -350,6 +354,14 @@ class TaxesTab implements TabInterface
         $settings['euVat']['enabled'] = $settings['euVat']['enabled'] == 'on';
         $settings['euVat']['removeVatIfCustomerIsLocatedInShopCountry'] = $settings['euVat']['removeVatIfCustomerIsLocatedInShopCountry'] == 'on';
         $settings['euVat']['forceB2BTransactions'] = $settings['euVat']['forceB2BTransactions'] == 'on';
+
+        if($settings['euVat']['enabled']) {
+        	if(!Country::isEU(Integration::getOptions()->get('general')['country'])) {
+        		$settings['euVat']['enabled'] = false;
+
+        		$this->messages->addError(__('Shop location is set outside of European Union. EU VAT functionality will remain disabled.', 'jigoshop-ecommerce'));
+        	}
+        }
 
 		if (!isset($settings['rules'])) {
 			$settings['rules'] = ['id' => []];
