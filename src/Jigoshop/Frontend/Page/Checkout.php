@@ -403,6 +403,22 @@ class Checkout implements PageInterface
 					throw new Exception(sprintf(__('This location is not supported, we sell only to %s.'), join(', ', $locations)));
 				}
 
+				if(Country::isEU($cart->getCustomer()->getBillingAddress()->getCountry()) && $this->options->get('tax.euVat.enabled')) {
+					$euVatNumber = $cart->getCustomer()->getBillingAddress()->getVatNumber();
+
+					if($this->options->get('tax.euVat.forceB2BTransactions', false) && !$euVatNumber) {
+						throw new Exception(__('EU VAT number is required for this order.', 'jigoshop-ecommerce'));
+					}
+
+					if(strlen($euVatNumber) > 0) {
+						$euVatNumberVerificationResult = Tax::validateEUVatNumber($euVatNumber);
+
+						if($euVatNumberVerificationResult) {
+
+						}
+					}
+				}
+
 				$shipping = $cart->getShippingMethod();
 				if ($this->isShippingRequired($cart) && (!$shipping || !$shipping->isEnabled())) {
 					throw new Exception(__('Shipping is required for this order. Please select shipping method.', 'jigoshop-ecommerce'));

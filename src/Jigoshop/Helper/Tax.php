@@ -4,6 +4,8 @@ namespace Jigoshop\Helper;
 
 use Jigoshop\Entity\OrderInterface;
 use Jigoshop\Entity\Product as ProductEntity;
+use Jigoshop\Exception;
+use Jigoshop\Helper\Country;
 use Jigoshop\Service\CartServiceInterface;
 use Jigoshop\Service\TaxServiceInterface;
 
@@ -121,4 +123,91 @@ class Tax
 
         return 0;
 	}
+
+    /**
+     * Checks if supplied EU VAT number is valid.
+     * 
+     * @param string $euVatNumber EU VAT number to verify.
+     * 
+     * @throws \Jigoshop\Exception If invalid VAT number was specified, or there was problem with VIES.
+     * 
+     * @return boolean true if VAT number is valid.
+     */
+    public static function validateEUVatNumber($euVatNumber) {
+        if(strlen($euVatNumber) < 2) {
+            throw new Exception(__('EU VAT number is invalid (too short).', 'jigoshop-ecommerce'));
+        }
+
+        $euVatNumber = strtoupper($euVatNumber);
+
+        $memberCountry = substr($euVatNumber, 0, 2);
+        if(!Country::isEU($memberCountry)) {
+            throw new Exception(__('EU VAT number is invalid (invalid member state code).', 'jigoshop-ecommerce'));
+        }
+
+        $cache = get_transient('jigoshop_euvat');
+        if(!is_array($cache)) {
+            $cache = [];
+        }
+
+        if(isset($cache[$euVatNumber]) && $cache[$euVatNumber] >= time()) {
+            return true;
+        }
+
+        $vatNumber = substr($euVatNumber, 2, strlen($euVatNumber) - 2);
+
+        if(!function_exists('curl_init')) {
+            throw new Exception(__('Unable to verify EU VAT number (invalid server configuration).', 'jigoshop-ecommerce'));
+        }
+
+        $postArguments = [
+            'action' => 'check',
+            'check' => 'Verify',
+            'memberStateCode' => $memberCountry,
+            'number' => $vatNumber,
+            'requestedMemberStateCode' => '',
+            'requestedNumber' => '',
+            'traderCity' => '',
+            'traderName' => '',
+            'traderPostalCode' => '',
+            'traderStreet' => ''
+        ];
+
+        $c = curl_init();
+
+        curl_setopt($c, CURLOPT_URL, 'http://ec.europa.eu/taxation_customs/vies/vatResponse.html?locale=en');
+        curl_setopt($c, CURLOPT_POST, true);
+        curl_setopt($c, CURLOPT_POSTFIELDS, http_build_query($postArguments));
+        curl_setopt($c, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($c, CURLOPT_SSL_VERIFYHOST, false);
+        curl_setopt($c, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($c, CURLOPT_TIMEOUT, 30);
+        curl_setopt($c, CURLOPT_CONNECTTIMEOUT, 15);
+        curl_setopt($c, CURLOPT_FOLLOWLOCATION, true);
+
+        $content = curl_exec($c);
+
+        curl_close($c);
+        if($content === false) {
+            throw new Exception(__('Unable to verify EU VAT number (invalid response from verification authority).', 'jigoshop-ecommerce'));
+        }
+
+        if(preg_match('/<b><span class="validStyle">/ism', $content)) {
+            $cache[$euVatNumber] = (time() + 604800);
+            $cache = array_filter($cache, function($expiresAt) {
+                if($expiresAt >= time()) {
+                    return true;
+                }
+            });
+
+            set_transient('jigoshop_euvat', $cache, 604800);
+
+            return true;
+        }
+        elseif(preg_match('/<b><span class="invalidStyle">/ism', $content)) {
+            throw new Exception(__('Invalid EU VAT number.', 'jigoshop-ecommerce'));
+        }
+
+        throw new Exception(__('Invalid EU VAT number or incorrect verification authority response.', 'jigoshop-ecommerce'));
+    }
 }
