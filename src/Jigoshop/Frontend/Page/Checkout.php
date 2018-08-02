@@ -173,6 +173,7 @@ class Checkout implements PageInterface
 		// Add some additional fields
 		$response['has_states'] = Country::hasStates($address->getCountry());
 		$response['states'] = Country::getStates($address->getCountry());
+		$response['isEU'] = Country::isEU($address->getCountry());
 		$response['html']['estimation'] = $address->getLocation();
 
 		return $response;
@@ -593,6 +594,15 @@ class Checkout implements PageInterface
 		$shippingFields = $this->getShippingFields($cart->getCustomer()->getShippingAddress());
         $billingOnly = $this->options->get('shipping.only_to_billing');
 
+        if($this->options->get('tax.euVat.enabled')) {
+        	// Shop country is outside EU - disable EU VAT.
+        	if(!Country::isEU($this->options->get('general.country'))) {
+        		$this->options->update('tax.euVat.enabled', false);
+
+        		$this->options->saveOptions();
+        	}
+        }
+
 		$termsUrl = '';
 		$termsPage = $this->options->get('advanced.pages.terms');
 		if ($termsPage > 0) {
@@ -628,6 +638,10 @@ class Checkout implements PageInterface
 
 		if (!Country::isEU($this->options->get('general.country'))) {
 			unset($fields['euvatno']);
+		}
+
+		if(!Country::isEU($address->getCountry())) {
+			$fields['euvatno']['disabled'] = true;
 		}
 
 		return $fields;

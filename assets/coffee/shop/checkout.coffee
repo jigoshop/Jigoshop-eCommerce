@@ -144,6 +144,7 @@ class Checkout
         @_updateDiscount(result)
         @_updateTaxes(result.tax, result.html.tax)
         @_updateShipping(result.shipping, result.html.shipping)
+        @_toggleEUVatField(result.isEU)
         stateClass = '#' + jQuery(event.target).attr('id').replace(/country/, 'state')
 
         if result.has_states
@@ -268,5 +269,10 @@ class Checkout
       else
         $tax.hide()
 
+  _toggleEUVatField: (isEU) ->
+    if isEU
+      jQuery('#jigoshop_order_billing_address_euvatno').prop('disabled', false)
+    else
+      jQuery('#jigoshop_order_billing_address_euvatno').prop('disabled', true)
 jQuery ->
   new Checkout(jigoshop_checkout)
