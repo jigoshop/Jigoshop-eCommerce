@@ -21,6 +21,9 @@ use Monolog\Registry;
  */
 class Order implements OrderInterface, \JsonSerializable
 {
+	const EU_VAT_VALIDATON_STATUS_INVALID = 'invalid';
+	const EU_VAT_VALIDATON_STATUS_VALID = 'valid';
+
 	/** @var int */
 	private $id;
 	/** @var string */
@@ -55,6 +58,12 @@ class Order implements OrderInterface, \JsonSerializable
 	private $taxDefinitions = [];
 	/** @var boolean */
 	private $removeTaxes = false;
+	/** @var string */
+	private $euVatValidationStatus = self::EU_VAT_VALIDATON_STATUS_INVALID;
+	/** @var string */
+	private $ipAddress = '';
+	/** @var string */
+	private $ipAddressCountry = '';
 	/** @var array */
 	private $shippingTax = [];
 	/** @var float */
@@ -602,6 +611,60 @@ class Order implements OrderInterface, \JsonSerializable
 	 */
 	public function setTaxRemovalState($state) {
 		$this->removeTaxes = $state;
+	}
+
+	/**
+	 * Returns EU VAT validation status.
+	 * 
+	 * @return string EU VAT validation status.
+	 */
+	public function getEUVatValidationStatus() {
+		return $this->euVatValidationStatus;
+	}
+
+	/**
+	 * Sets EU VAT validation status.
+	 * 
+	 * @param string $euVatValidationStatus EU VAT validation status.
+	 */
+	public function setEUVatValidationStatus($euVatValidationStatus) {
+		$this->euVatValidationStatus = $euVatValidationStatus;
+	}
+
+	/**
+	 * Returns IP address used when order was placed.
+	 * 
+	 * @return string IP address.
+	 */
+	public function getIPAddress() {
+		return $this->ipAddress;
+	}
+
+	/**
+	 * Sets IP address used when order was placed.
+	 * 
+	 * @param string $ipAddress IP address to set.
+	 */
+	public function setIPAddress($ipAddress) {
+		$this->ipAddress = $ipAddress;
+	}
+
+	/**
+	 * Returns country code of IP address when order was placed.
+	 *
+	 * @return string Country code.
+	 */
+	public function getIPAddressCountry() {
+		return $this->ipAddressCountry;
+	}
+
+	/**
+	 * Sets country code of IP address when order was placed.
+	 * 
+	 * @param string $ipAddressCountry Country code.
+	 */
+	public function setIPAddressCountry($ipAddressCountry) {
+		$this->ipAddressCountry = $ipAddressCountry;
 	}
 
 	/**

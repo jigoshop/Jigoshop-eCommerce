@@ -140,6 +140,9 @@ class Checkout
     )
     .done (result) =>
       if result.success? and result.success
+        if result.euVatError? and result.euVatError
+          jigoshop.addMessage('danger', result.euVatError, 6000)
+
         @_updateTotals(result.html.total, result.html.subtotal)
         @_updateDiscount(result)
         @_updateTaxes(result.tax, result.html.tax)
@@ -164,6 +167,9 @@ class Checkout
     )
     .done (result) =>
       if result.success? and result.success
+        if result.euVatError? and result.euVatError
+          jigoshop.addMessage('danger', result.euVatError, 6000)
+
         @_updateTotals(result.html.total, result.html.subtotal)
         @_updateDiscount(result)
         @_updateTaxes(result.tax, result.html.tax)
