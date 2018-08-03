@@ -92,6 +92,8 @@ class Checkout implements PageInterface
 			$wp->addAction('template_redirect', [$this, 'redirectToSsl'], 100, 0);
 		}
 
+		$wp->addAction('wp_ajax_jigoshop_checkout_change_euVatNumber', [$this, 'ajaxChangeEUVatNumber']);
+		$wp->addAction('wp_ajax_nopriv_jigoshop_checkout_change_euVatNumber', [$this, 'ajaxChangeEUVatNumber']);
 		$wp->addAction('wp_ajax_jigoshop_checkout_change_country', [$this, 'ajaxChangeCountry']);
 		$wp->addAction('wp_ajax_nopriv_jigoshop_checkout_change_country', [$this, 'ajaxChangeCountry']);
 		$wp->addAction('wp_ajax_jigoshop_checkout_change_state', [$this, 'ajaxChangeState']);
@@ -110,6 +112,28 @@ class Checkout implements PageInterface
 		$page = $this->options->getPageId(Pages::CHECKOUT);
 		$url = str_replace('http:', 'https:', $this->wp->getPermalink($page));
 		$this->wp->wpSafeRedirect($url, 301);
+		exit;
+	}
+
+	/**
+	 * Ajax action for changing country.
+	 */
+	public function ajaxChangeEUVatNumber()
+	{
+		$cart = $this->cartService->getCurrent();
+		$cart->getCustomer()->getBillingAddress()->setVatNumber($_POST['value']);
+
+		// Suppress all EU VAT Exceptions.
+		try {
+			$this->processEUVatNumber();
+		}
+		catch(Exception $e) {}
+
+		$this->cartService->save($cart);
+
+		$response = $this->getAjaxLocationResponse($this->customerService->getCurrent(), $cart);
+
+		echo json_encode($response);
 		exit;
 	}
 
@@ -145,6 +169,12 @@ class Checkout implements PageInterface
 				}
 				break;
 		}
+
+		// Suppress all EU VAT Exceptions.
+		try {
+			$this->processEUVatNumber();
+		}
+		catch(Exception $e) {}
 
 		$this->customerService->save($customer);
 		$cart = $this->cartService->getCurrent();
@@ -403,23 +433,7 @@ class Checkout implements PageInterface
 					throw new Exception(sprintf(__('This location is not supported, we sell only to %s.'), join(', ', $locations)));
 				}
 
-				if(Country::isEU($cart->getCustomer()->getBillingAddress()->getCountry()) && $this->options->get('tax.euVat.enabled')) {
-					$euVatNumber = $cart->getCustomer()->getBillingAddress()->getVatNumber();
-
-					if($this->options->get('tax.euVat.forceB2BTransactions', false) && !$euVatNumber) {
-						throw new Exception(__('EU VAT number is required for this order.', 'jigoshop-ecommerce'));
-					}
-
-					if(strlen($euVatNumber) > 0) {
-						$euVatNumberVerificationResult = Tax::validateEUVatNumber($euVatNumber, $cart->getCustomer()->getBillingAddress()->getCountry());
-
-						if($euVatNumberVerificationResult) {
-							/**
-							 * @todo implement actual tax removal here
-							 */
-						}
-					}
-				}
+				$this->processEUVatNumber();
 
 				$shipping = $cart->getShippingMethod();
 				if ($this->isShippingRequired($cart) && (!$shipping || !$shipping->isEnabled())) {
@@ -781,5 +795,32 @@ class Checkout implements PageInterface
 				'columnSize' => 6,
             ],
         ]);
+	}
+
+	private function processEUVatNumber() {
+		$cart = $this->cartService->getCurrent();
+
+		try {
+			if(Country::isEU($cart->getCustomer()->getBillingAddress()->getCountry()) && $this->options->get('tax.euVat.enabled')) {
+				$euVatNumber = $cart->getCustomer()->getBillingAddress()->getVatNumber();
+
+				if($this->options->get('tax.euVat.forceB2BTransactions', false) && !$euVatNumber) {
+					throw new Exception(__('EU VAT number is required for this order.', 'jigoshop-ecommerce'));
+				}
+
+				if(strlen($euVatNumber) > 0) {
+					$euVatNumberVerificationResult = Tax::validateEUVatNumber($euVatNumber, $cart->getCustomer()->getBillingAddress()->getCountry());
+
+					if($euVatNumberVerificationResult) {
+						$cart->setTaxRemovalState(true);
+
+						return;
+					}
+				}
+			}
+		}
+		catch(Exception $e) {}
+
+		$cart->setTaxRemovalState(false);
 	}
 }

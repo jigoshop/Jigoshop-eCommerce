@@ -53,6 +53,8 @@ class Order implements OrderInterface, \JsonSerializable
 	private $tax = [];
 	/** @var array */
 	private $taxDefinitions = [];
+	/** @var boolean */
+	private $removeTaxes = false;
 	/** @var array */
 	private $shippingTax = [];
 	/** @var float */
@@ -585,6 +587,24 @@ class Order implements OrderInterface, \JsonSerializable
 	}
 
 	/**
+	 * Returns whether Order has it's taxes removed.
+	 * 
+	 * @return boolean Taxes removed from Order.
+	 */
+	public function getTaxRemovalState() {
+		return $this->removeTaxes;
+	}
+
+	/**
+	 * Sets "removeTaxes" flag value.
+	 * 
+	 * @param boolean $state RemoveTaxes flag state.
+	 */
+	public function setTaxRemovalState($state) {
+		$this->removeTaxes = $state;
+	}
+
+	/**
 	 * @return array List of applied tax classes for shipping with it's values.
 	 */
 	public function getShippingTax()
@@ -637,6 +657,12 @@ class Order implements OrderInterface, \JsonSerializable
 			}
 
 			$tax[$class] += $value;
+		}
+
+		if($this->removeTaxes) {
+			foreach($tax as $class => $value) {
+				$tax[$class] = 0.0;
+			}		
 		}
 
 		return $tax;
@@ -859,7 +885,8 @@ class Order implements OrderInterface, \JsonSerializable
 			'shipping_tax' => $this->shippingTax,
 			'status' => $this->getStatus(),
 			'update_messages' => $this->updateMessages,
-            'tax_included' => $this->taxIncluded
+            'tax_included' => $this->taxIncluded,
+            'removeTaxes' => $this->removeTaxes
         ];
 	}
 
@@ -958,6 +985,9 @@ class Order implements OrderInterface, \JsonSerializable
         }
         if(isset($state['currency'])) {
         	$this->currency = $state['currency'];
+        }
+        if(isset($state['removeTaxes'])) {
+        	$this->removeTaxes = $state['removeTaxes'];
         }
 	}
 

@@ -27,6 +27,8 @@ class Checkout
     jQuery('#payment-methods').on 'change', 'li input[type=radio]', @selectPayment
     jQuery('#shipping-calculator')
       .on 'click', 'input[type=radio]', @selectShipping
+    jQuery('#jigoshop_order_billing_address_euvatno').on 'change', (event) =>
+      @updateEUVatNumber(event)
     jQuery('#jigoshop_order_billing_address_country').on 'change', (event) =>
       @updateCountry('billing_address', event)
     jQuery('#jigoshop_order_shipping_address_country').on 'change', (event) =>
@@ -124,6 +126,28 @@ class Checkout
           jQuery('#cart-payment-processing-fee').removeClass('not-active')
 
         jQuery('#cart-total').find('td').find('strong').html(result.total)
+
+  updateEUVatNumber: (event) =>
+    @block()
+    jQuery('.noscript_state_field').remove()
+    jQuery.ajax(
+      url: jigoshop.getAjaxUrl()
+      type: 'post'
+      dataType: 'json'
+      data:
+        action: 'jigoshop_checkout_change_euVatNumber'
+        value: jQuery(event.target).val()
+    )
+    .done (result) =>
+      if result.success? and result.success
+        @_updateTotals(result.html.total, result.html.subtotal)
+        @_updateDiscount(result)
+        @_updateTaxes(result.tax, result.html.tax)
+        @_updateShipping(result.shipping, result.html.shipping)
+        @_toggleEUVatField(result.isEU)
+      else
+        jigoshop.addMessage('danger', result.error, 6000)
+      @unblock()
 
   updateCountry: (field, event) =>
     @block()
