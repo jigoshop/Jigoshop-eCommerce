@@ -411,10 +411,12 @@ class Checkout implements PageInterface
 					}
 
 					if(strlen($euVatNumber) > 0) {
-						$euVatNumberVerificationResult = Tax::validateEUVatNumber($euVatNumber);
+						$euVatNumberVerificationResult = Tax::validateEUVatNumber($euVatNumber, $cart->getCustomer()->getBillingAddress()->getCountry());
 
 						if($euVatNumberVerificationResult) {
-
+							/**
+							 * @todo implement actual tax removal here
+							 */
 						}
 					}
 				}

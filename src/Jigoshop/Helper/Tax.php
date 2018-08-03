@@ -128,12 +128,13 @@ class Tax
      * Checks if supplied EU VAT number is valid.
      * 
      * @param string $euVatNumber EU VAT number to verify.
+     * @param string $billingCountryCode Country code of billing address country.
      * 
      * @throws \Jigoshop\Exception If invalid VAT number was specified, or there was problem with VIES.
      * 
      * @return boolean true if VAT number is valid.
      */
-    public static function validateEUVatNumber($euVatNumber) {
+    public static function validateEUVatNumber($euVatNumber, $billingCountryCode) {
         if(strlen($euVatNumber) < 2) {
             throw new Exception(__('EU VAT number is invalid (too short).', 'jigoshop-ecommerce'));
         }
@@ -143,6 +144,10 @@ class Tax
         $memberCountry = substr($euVatNumber, 0, 2);
         if(!Country::isEU($memberCountry)) {
             throw new Exception(__('EU VAT number is invalid (invalid member state code).', 'jigoshop-ecommerce'));
+        }
+
+        if($memberCountry != $billingCountryCode) {
+            throw new Exception(__('Billing country does not match EU VAT number.', 'jigoshop-ecommerce'));
         }
 
         $cache = get_transient('jigoshop_euvat');
