@@ -486,6 +486,7 @@ class Checkout implements PageInterface
 				}
 
 				if($this->options->get('tax.euVat.enabled')) {
+					$euVatNumberValidationResult = Tax::EU_VAT_VALIDATION_RESULT_INVALID;
 					$euVatNumber = $cart->getCustomer()->getBillingAddress()->getVatNumber();
 
 					if($this->options->get('tax.euVat.forceB2BTransactions', false) && !$euVatNumber) {
@@ -518,6 +519,13 @@ class Checkout implements PageInterface
 							}
 						}
 					}
+
+					/**
+					 * @todo Implement geolocating customer country by external means.
+					 */
+
+					$cart->setIPAddress($_SERVER['REMOTE_ADDR']);
+					$cart->setEUVatValidationStatus($euVatNumberValidationResult);
 				}
 
 				$shipping = $cart->getShippingMethod();

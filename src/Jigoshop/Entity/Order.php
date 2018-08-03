@@ -949,7 +949,10 @@ class Order implements OrderInterface, \JsonSerializable
 			'status' => $this->getStatus(),
 			'update_messages' => $this->updateMessages,
             'tax_included' => $this->taxIncluded,
-            'removeTaxes' => $this->removeTaxes
+            'removeTaxes' => $this->removeTaxes,
+            'euVatValidationStatus' => $this->euVatValidationStatus,
+            'ipAddress' => $this->ipAddress,
+            'ipAddressCountry' => $this->ipAddressCountry
         ];
 	}
 
@@ -1051,6 +1054,15 @@ class Order implements OrderInterface, \JsonSerializable
         }
         if(isset($state['removeTaxes'])) {
         	$this->removeTaxes = $state['removeTaxes'];
+        }
+        if(isset($state['euVatValidationStatus'])) {
+        	$this->euVatValidationStatus = $state['euVatValidationStatus'];
+        }
+        if(isset($state['ipAddress'])) {
+        	$this->ipAddress = $state['ipAddress'];
+        }
+        if(isset($state['ipAddressCountry'])) {
+        	$this->ipAddressCountry = $state['ipAddressCountry'];
         }
 	}
 
