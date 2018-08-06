@@ -59,7 +59,7 @@ class Order implements OrderInterface, \JsonSerializable
 	/** @var boolean */
 	private $removeTaxes = false;
 	/** @var string */
-	private $euVatValidationStatus = self::EU_VAT_VALIDATON_STATUS_INVALID;
+	private $euVatValidationStatus = '';
 	/** @var string */
 	private $ipAddress = '';
 	/** @var string */

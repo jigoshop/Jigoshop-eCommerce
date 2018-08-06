@@ -9,7 +9,10 @@ use Jigoshop\Entity\Customer as CustomerEntity;
 use Jigoshop\Entity\Order as Entity;
 use Jigoshop\Entity\OrderInterface;
 use Jigoshop\Entity\Product as ProductEntity;
+use Jigoshop\Helper\Country;
+use Jigoshop\Helper\Geolocation;
 use Jigoshop\Helper\Product as ProductHelper;
+use Jigoshop\Helper\Tax;
 use Jigoshop\Shipping\Method as ShippingMethod;
 use Jigoshop\Payment\Method as PaymentMethod;
 use Jigoshop\Service\CouponServiceInterface;
@@ -341,6 +344,37 @@ class Order implements EntityFactoryInterface
         }
 
         $order->restoreState($data);
+
+        // Process tax removal for new orders if we have Vat number.
+        if($this->options->get('tax.euVat.enabled') && Country::isEU($order->getCustomer()->getBillingAddress()->getCountry())) {
+            if($order->getCustomer()->getBillingAddress()->getVatNumber() && $order->getEuVatValidationStatus() === '') {
+                $euVatNumberValidationResult = Tax::validateEUVatNumber($order->getCustomer()->getBillingAddress()->getVatNumber(), $order->getCustomer()->getBillingAddress()->getCountry());
+
+                $order->setTaxRemovalState(false);
+                if($euVatNumberValidationResult == Tax::EU_VAT_VALIDATION_RESULT_VALID) {
+                    /**
+                     * @todo Implement behavior if customer country matches shop country.
+                     */
+                    $order->setTaxRemovalState(true);
+                }
+                elseif($euVatNumberValidationResult == Tax::EU_VAT_VALIDATION_RESULT_INVALID || $euVatNumberValidationResult == Tax::EU_VAT_VALIDATION_RESULT_ERROR) {
+                    if($this->options->get('tax.euVat.failedValidationHandling') == 'acceptRemoveVat') {
+                        $order->setTaxRemovalState(true);
+                    }
+                }
+
+                $order->setIPAddress($_SERVER['REMOTE_ADDR']);
+                $order->setEUVatValidationStatus($euVatNumberValidationResult);
+
+                try {
+                    $ipAddressCountry = Geolocation::getCountryOfIP($_SERVER['REMOTE_ADDR']);
+                    if($ipAddressCountry !== null) {
+                        $order->setIPAddressCountry($ipAddressCountry);
+                    }
+                }
+                catch(Exception $e) {}                
+            }
+        }
 
         return $this->wp->applyFilters('jigoshop\factory\order\fill', $order);
     }
