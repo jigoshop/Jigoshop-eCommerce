@@ -15,6 +15,7 @@ use Jigoshop\Entity\Product\Simple;
 use Jigoshop\Exception;
 use Jigoshop\Frontend\Pages;
 use Jigoshop\Helper\Country;
+use Jigoshop\Helper\Geolocation;
 use Jigoshop\Helper\Product as ProductHelper;
 use Jigoshop\Helper\Render;
 use Jigoshop\Helper\Scripts;
@@ -520,12 +521,16 @@ class Checkout implements PageInterface
 						}
 					}
 
-					/**
-					 * @todo Implement geolocating customer country by external means.
-					 */
-
 					$cart->setIPAddress($_SERVER['REMOTE_ADDR']);
 					$cart->setEUVatValidationStatus($euVatNumberValidationResult);
+
+					try {
+						$ipAddressCountry = Geolocation::getCountryOfIP($_SERVER['REMOTE_ADDR']);
+						if($ipAddressCountry !== null) {
+							$cart->setIPAddressCountry($ipAddressCountry);
+						}
+					}
+					catch(Exception $e) {}
 				}
 
 				$shipping = $cart->getShippingMethod();
