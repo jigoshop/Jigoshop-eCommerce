@@ -352,10 +352,14 @@ class Order implements EntityFactoryInterface
 
                 $order->setTaxRemovalState(false);
                 if($euVatNumberValidationResult == Tax::EU_VAT_VALIDATION_RESULT_VALID) {
-                    /**
-                     * @todo Implement behavior if customer country matches shop country.
-                     */
-                    $order->setTaxRemovalState(true);
+                    if($this->options->get('general.country') == $order->getCustomer()->getBillingAddress()->getCountry()) {
+                        if($this->options->get('tax.euVat.removeVatIfCustomerIsLocatedInShopCountry')) {
+                            $order->setTaxRemovalState(true);
+                        }
+                    }
+                    else {
+                        $order->setTaxRemovalState(true);
+                    }
                 }
                 elseif($euVatNumberValidationResult == Tax::EU_VAT_VALIDATION_RESULT_INVALID || $euVatNumberValidationResult == Tax::EU_VAT_VALIDATION_RESULT_ERROR) {
                     if($this->options->get('tax.euVat.failedValidationHandling') == 'acceptRemoveVat') {

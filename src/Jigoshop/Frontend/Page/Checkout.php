@@ -200,10 +200,14 @@ class Checkout implements PageInterface
 				$euVatNumberValidationResult = Tax::validateEUVatNumber($euVatNumber, $cart->getCustomer()->getBillingAddress()->getCountry());
 
 				if($euVatNumberValidationResult == Tax::EU_VAT_VALIDATION_RESULT_VALID) {
-					/**
-					 * @todo Implement behavior if customer country matches shop country.
-					 */
-					$cart->setTaxRemovalState(true);
+                    if($this->options->get('general.country') == $cart->getCustomer()->getBillingAddress()->getCountry()) {
+                        if($this->options->get('tax.euVat.removeVatIfCustomerIsLocatedInShopCountry')) {
+                            $cart->setTaxRemovalState(true);
+                        }
+                    }
+                    else {
+                        $cart->setTaxRemovalState(true);
+                    }
 				}
 				elseif($euVatNumberValidationResult == Tax::EU_VAT_VALIDATION_RESULT_INVALID || $euVatNumberValidationResult == Tax::EU_VAT_VALIDATION_RESULT_ERROR) {
 					if($this->options->get('tax.euVat.failedValidationHandling') == 'reject') {
@@ -498,10 +502,17 @@ class Checkout implements PageInterface
 						$euVatNumberValidationResult = Tax::validateEUVatNumber($euVatNumber, $cart->getCustomer()->getBillingAddress()->getCountry());
 
 						if($euVatNumberValidationResult == Tax::EU_VAT_VALIDATION_RESULT_VALID) {
-							/**
-							 * @todo Implement behavior if customer country matches shop country.
-							 */
-							$cart->setTaxRemovalState(true);
+		                    if($this->options->get('general.country') == $cart->getCustomer()->getBillingAddress()->getCountry()) {
+		                        if($this->options->get('tax.euVat.removeVatIfCustomerIsLocatedInShopCountry')) {
+		                            $cart->setTaxRemovalState(true);
+		                        }
+		                        else {
+		                        	$cart->setTaxRemovalState(false);
+		                        }
+		                    }
+		                    else {
+		                        $cart->setTaxRemovalState(true);
+		                    }
 						}
 						elseif($euVatNumberValidationResult == Tax::EU_VAT_VALIDATION_RESULT_INVALID || $euVatNumberValidationResult == Tax::EU_VAT_VALIDATION_RESULT_ERROR) {
 							if($this->options->get('tax.euVat.failedValidationHandling') == 'reject') {
