@@ -118,39 +118,46 @@ class Checkout implements PageInterface
 	 */
 	public function ajaxChangeCountry()
 	{
-		$customer = $this->customerService->getCurrent();
+	    try {
+            $customer = $this->customerService->getCurrent();
 
-		if ($this->options->get('shopping.restrict_selling_locations') && !in_array($_POST['value'], $this->options->get('shopping.selling_locations'))) {
-			$locations = array_map(function ($location){
-				return Country::getName($location);
-			}, $this->options->get('shopping.selling_locations'));
-			echo json_encode([
-				'success' => false,
-				'error' => sprintf(__('This location is not supported, we sell only to %s.'), join(', ', $locations)),
-            ]);
-			exit;
-		}
+            if ($this->options->get('shopping.restrict_selling_locations') && !in_array($_POST['value'], $this->options->get('shopping.selling_locations'))) {
+                $locations = array_map(function ($location){
+                    return Country::getName($location);
+                }, $this->options->get('shopping.selling_locations'));
+                echo json_encode([
+                    'success' => false,
+                    'error' => sprintf(__('This location is not supported, we sell only to %s.'), join(', ', $locations)),
+                ]);
+                exit;
+            }
 
-		switch ($_POST['field']) {
-			case 'shipping_address':
-				$customer->getShippingAddress()->setCountry($_POST['value']);
-				if ($customer->getBillingAddress()->getCountry() == null) {
-					$customer->getBillingAddress()->setCountry($_POST['value']);
-				}
-				break;
-			case 'billing_address':
-				$customer->getBillingAddress()->setCountry($_POST['value']);
-				if ($_POST['differentShipping'] === 'false') {
-					$customer->getShippingAddress()->setCountry($_POST['value']);
-				}
-				break;
-		}
+            switch ($_POST['field']) {
+                case 'shipping_address':
+                    $customer->getShippingAddress()->setCountry($_POST['value']);
+                    if ($customer->getBillingAddress()->getCountry() == null) {
+                        $customer->getBillingAddress()->setCountry($_POST['value']);
+                    }
+                    break;
+                case 'billing_address':
+                    $customer->getBillingAddress()->setCountry($_POST['value']);
+                    if ($_POST['differentShipping'] === 'false') {
+                        $customer->getShippingAddress()->setCountry($_POST['value']);
+                    }
+                    break;
+            }
 
-		$this->customerService->save($customer);
-		$cart = $this->cartService->getCurrent();
-		$cart->setCustomer($customer);
+            $this->customerService->save($customer);
+            $cart = $this->cartService->getCurrent();
+            $cart->setCustomer($customer);
 
-		$response = $this->getAjaxLocationResponse($customer, $cart);
+            $response = $this->getAjaxLocationResponse($customer, $cart);
+        } catch (Exception $e) {
+            $response = [
+                'success' => false,
+                'error' => $e->getMessage(),
+            ];
+        }
 
 		echo json_encode($response);
 		exit;
@@ -250,28 +257,35 @@ class Checkout implements PageInterface
 	 */
 	public function ajaxChangeState()
 	{
-		$customer = $this->customerService->getCurrent();
+	    try {
+            $customer = $this->customerService->getCurrent();
 
-		switch ($_POST['field']) {
-			case 'shipping_address':
-				$customer->getShippingAddress()->setState($_POST['value']);
-				if ($customer->getBillingAddress()->getState() == null) {
-					$customer->getBillingAddress()->setState($_POST['value']);
-				}
-				break;
-			case 'billing_address':
-				$customer->getBillingAddress()->setState($_POST['value']);
-				if ($_POST['differentShipping'] === 'false') {
-					$customer->getShippingAddress()->setState($_POST['value']);
-				}
-				break;
-		}
+            switch ($_POST['field']) {
+                case 'shipping_address':
+                    $customer->getShippingAddress()->setState($_POST['value']);
+                    if ($customer->getBillingAddress()->getState() == null) {
+                        $customer->getBillingAddress()->setState($_POST['value']);
+                    }
+                    break;
+                case 'billing_address':
+                    $customer->getBillingAddress()->setState($_POST['value']);
+                    if ($_POST['differentShipping'] === 'false') {
+                        $customer->getShippingAddress()->setState($_POST['value']);
+                    }
+                    break;
+            }
 
-		$this->customerService->save($customer);
-		$cart = $this->cartService->getCurrent();
-		$cart->setCustomer($customer);
+            $this->customerService->save($customer);
+            $cart = $this->cartService->getCurrent();
+            $cart->setCustomer($customer);
 
-		$response = $this->getAjaxLocationResponse($customer, $cart);
+            $response = $this->getAjaxLocationResponse($customer, $cart);
+        } catch (Exception $e) {
+            $response = [
+                'success' => false,
+                'error' => $e->getMessage(),
+            ];
+        }
 
 		echo json_encode($response);
 		exit;
@@ -282,44 +296,53 @@ class Checkout implements PageInterface
 	 */
 	public function ajaxChangePostcode()
 	{
-		$customer = $this->customerService->getCurrent();
+	    try {
+            $customer = $this->customerService->getCurrent();
 
-		switch ($_POST['field']) {
-			case 'shipping_address':
-				if ($this->options->get('shopping.validate_zip') && !Validation::isPostcode($_POST['value'], $customer->getShippingAddress()->getCountry())) {
-					echo json_encode([
-						'success' => false,
-						'error' => __('Shipping postcode is not valid!', 'jigoshop-ecommerce'),
-                    ]);
-					exit;
-				}
+            switch ($_POST['field']) {
+                case 'shipping_address':
+                    if ($this->options->get('shopping.validate_zip') && !Validation::isPostcode($_POST['value'],
+                            $customer->getShippingAddress()->getCountry())) {
+                        echo json_encode([
+                            'success' => false,
+                            'error' => __('Shipping postcode is not valid!', 'jigoshop-ecommerce'),
+                        ]);
+                        exit;
+                    }
 
-				$customer->getShippingAddress()->setPostcode($_POST['value']);
-				if ($customer->getBillingAddress()->getPostcode() == null) {
-					$customer->getBillingAddress()->setPostcode($_POST['value']);
-				}
-				break;
-			case 'billing_address':
-				if ($this->options->get('shopping.validate_zip') && !Validation::isPostcode($_POST['value'], $customer->getBillingAddress()->getCountry())) {
-					echo json_encode([
-						'success' => false,
-						'error' => __('Billing postcode is not valid!', 'jigoshop-ecommerce'),
-                    ]);
-					exit;
-				}
+                    $customer->getShippingAddress()->setPostcode($_POST['value']);
+                    if ($customer->getBillingAddress()->getPostcode() == null) {
+                        $customer->getBillingAddress()->setPostcode($_POST['value']);
+                    }
+                    break;
+                case 'billing_address':
+                    if ($this->options->get('shopping.validate_zip') && !Validation::isPostcode($_POST['value'],
+                            $customer->getBillingAddress()->getCountry())) {
+                        echo json_encode([
+                            'success' => false,
+                            'error' => __('Billing postcode is not valid!', 'jigoshop-ecommerce'),
+                        ]);
+                        exit;
+                    }
 
-				$customer->getBillingAddress()->setPostcode($_POST['value']);
-				if ($_POST['differentShipping'] === 'false') {
-					$customer->getShippingAddress()->setPostcode($_POST['value']);
-				}
-				break;
-		}
+                    $customer->getBillingAddress()->setPostcode($_POST['value']);
+                    if ($_POST['differentShipping'] === 'false') {
+                        $customer->getShippingAddress()->setPostcode($_POST['value']);
+                    }
+                    break;
+            }
 
-		$this->customerService->save($customer);
-		$cart = $this->cartService->getCurrent();
-		$cart->setCustomer($customer);
+            $this->customerService->save($customer);
+            $cart = $this->cartService->getCurrent();
+            $cart->setCustomer($customer);
 
-		$response = $this->getAjaxLocationResponse($customer, $cart);
+            $response = $this->getAjaxLocationResponse($customer, $cart);
+        } catch (Exception $e) {
+            $response = [
+                'success' => false,
+                'error' => $e->getMessage(),
+            ];
+        }
 
 		echo json_encode($response);
 		exit;
