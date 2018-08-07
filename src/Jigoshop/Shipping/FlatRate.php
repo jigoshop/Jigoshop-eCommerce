@@ -13,7 +13,7 @@ use Jigoshop\Helper\Scripts;
 use Jigoshop\Service\CartServiceInterface;
 use WPAL\Wordpress;
 
-class FlatRate implements Method
+class FlatRate implements Method3
 {
 	const NAME = 'flat_rate';
 
@@ -153,6 +153,14 @@ class FlatRate implements Method
 				'type' => 'text',
 				'value' => $this->options['fee'],
             ],
+            [
+                'title' => __('Enable Only for Admin', 'jigoshop-ecommerce'),
+                'description' => __('Enable this if you would like to test it only for Site Admin', 'jigoshop-ecommerce'),
+                'name' => sprintf('[%s][adminOnly]', self::ID),
+                'type' => 'checkbox',
+                'checked' => $this->settings['adminOnly'],
+                'classes' => ['switch-medium'],
+            ],
 			[
 				'name' => sprintf('[%s][available_for]', self::NAME),
 				'id' => 'flat_rate_available_for',
@@ -185,8 +193,9 @@ class FlatRate implements Method
 	{
 		$settings['enabled'] = $settings['enabled'] == 'on';
 		$settings['is_taxable'] = $settings['is_taxable'] == 'on';
+        $settings['adminOnly'] = $settings['adminOnly'] == 'on';
 
-		if (!in_array($settings['type'], array_keys($this->types))) {
+        if (!in_array($settings['type'], array_keys($this->types))) {
 			$settings['type'] = $this->options['type'];
 			$this->messages->addWarning(__('Type is invalid - value is left unchanged.', 'jigoshop-ecommerce'));
 		}
@@ -294,4 +303,105 @@ class FlatRate implements Method
 	{
 		return $method->getId() == $this->getId();
 	}
+
+
+    /**
+     * Whenever method was enabled by the user.
+     *
+     * @return boolean Method enable state.
+     */
+    public function isActive()
+    {
+        return isset($this->settings['enabled']) && $this->settings['enabled'];
+    }
+
+    /**
+     * Set method enable state.
+     *
+     * @param boolean $state Method enable state.
+     *
+     * @return array Method current settings (after enable state change).
+     */
+    public function setActive($state)
+    {
+        $this->settings['enabled'] = $state;
+
+        return $this->settings;
+    }
+
+    /**
+     * Whenever method was configured by the user (all required data was filled for current scenario).
+     *
+     * @return boolean Method config state.
+     */
+    public function isConfigured()
+    {
+        return true;
+    }
+
+    /**
+     * Whenever method has some sort of test mode.
+     *
+     * @return boolean Method test mode presence.
+     */
+    public function hasTestMode()
+    {
+        return false;
+    }
+
+    /**
+     * Whenever method test mode was enabled by the user.
+     *
+     * @return boolean Method test mode state.
+     */
+    public function isTestModeEnabled()
+    {
+        return false;
+    }
+
+    /**
+     * Set Method test mode state.
+     *
+     * @param boolean $state Method test mode state.
+     *
+     * @return array Method current settings (after test mode state change).
+     */
+    public function setTestMode($state)
+    {
+        return $this->settings;
+    }
+
+    /**
+     * Whenever method requires SSL to be enabled to function properly.
+     *
+     * @return boolean Method SSL requirment.
+     */
+    public function isSSLRequired()
+    {
+        return false;
+    }
+
+    /**
+     * Whenever method is set to enabled for admin only.
+     *
+     * @return boolean Method admin only state.
+     */
+    public function isAdminOnly()
+    {
+        return isset($this->settings['adminOnly']) && $this->settings['adminOnly'];
+    }
+
+    /**
+     * Sets admin only state for the method and returns complete method options.
+     *
+     * @param boolean $state Method admin only state.
+     *
+     * @return array Complete method options after change was applied.
+     */
+    public function setAdminOnly($state)
+    {
+        $this->settings['adminOnly'] = $state;
+
+        return $this->settings;
+    }
 }
