@@ -346,7 +346,7 @@ class Order implements EntityFactoryInterface
         $order->restoreState($data);
 
         // Process tax removal for new orders if we have Vat number.
-        if($this->options->get('tax.euVat.enabled') && Country::isEU($order->getCustomer()->getBillingAddress()->getCountry())) {
+        if($order instanceof CompanyAddress && $this->options->get('tax.euVat.enabled') && Country::isEU($order->getCustomer()->getBillingAddress()->getCountry())) {
             if($order->getCustomer()->getBillingAddress()->getVatNumber() && $order->getEuVatValidationStatus() === '') {
                 $euVatNumberValidationResult = Tax::validateEUVatNumber($order->getCustomer()->getBillingAddress()->getVatNumber(), $order->getCustomer()->getBillingAddress()->getCountry());
 
