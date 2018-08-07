@@ -97,6 +97,10 @@ class Order
             $wp->addMetaBox('commentsdiv', __('Comments'), 'post_comment_meta_box', null, 'normal', 'core');
             $wp->addMetaBox('submitdiv', __('Order Actions', 'jigoshop-ecommerce'), [$that, 'actionsBox'], Types::ORDER,
                 'side', 'default');
+
+            if($order->getCustomer()->getBillingAddress()->getVatNumber() && Country::isEU($order->getCustomer()->getBillingAddress()->getCountry())) {
+                $wp->addMetaBox('euvatno', __('EU Vat', 'jigoshop-ecommerce'), [$that, 'euVatNumberBox'], Types::ORDER, 'side', 'default');
+            }
         });
     }
 
@@ -644,6 +648,34 @@ class Order
         Render::output('admin/order/actionsBox', [
             'order' => $order,
             'delete_text' => $delete_text,
+        ]);
+    }
+
+    public function euVatNumberBox() {
+        $post = $this->wp->getGlobalPost();
+        $order = $this->orderService->findForPost($post);
+
+        if($order->getEuVatValidationStatus() == Tax::EU_VAT_VALIDATION_RESULT_VALID) {
+            $euVatNumberValidationStatus = __('Valid', 'jigoshop-ecommerce');
+        }
+        elseif($order->getEuVatValidationStatus() == Tax::EU_VAT_VALIDATION_RESULT_INVALID) {
+            $euVatNumberValidationStatus = __('Invalid', 'jigoshop-ecommerce');
+        }
+        elseif($order->getEuVatValidationStatus() == Tax::EU_VAT_VALIDATION_RESULT_ERROR) {
+            $euVatNumberValidationStatus = __('Error', 'jigoshop-ecommerce');
+        }
+
+        if($order->getIpAddressCountry()) {
+            $ipAddressCountry = Country::getName($order->getIpAddressCountry());
+        }
+        else {
+            $ipAddressCountry = 'unknown';
+        }
+
+        Render::output('admin/order/euVatNumberBox', [
+            'euVatNumberValidationStatus' => $euVatNumberValidationStatus,
+            'ipAddress' => $order->getIpAddress(),
+            'ipAddressCountry' => $ipAddressCountry
         ]);
     }
 
