@@ -143,6 +143,8 @@ class Order implements EntityFactoryInterface
                 // Customer must be unserialized twice "thanks" to WordPress second serialization.
                 /** @var CustomerEntity */
                 $state['customer'] = unserialize(unserialize($state['customer']));
+                /*
+                This code seems unecessary and was causing issues with PDF invoices.
                 if ($state['customer'] instanceof CustomerEntity &&
                     !($state['customer'] instanceof CustomerEntity\Guest) &&
                     $state['customer_id'] > 0
@@ -152,6 +154,7 @@ class Order implements EntityFactoryInterface
                     $customer->setShippingAddress($state['customer']->getShippingAddress());
                     $state['customer'] = $customer;
                 }
+                */
             }
             $state['customer_note'] = $post->post_excerpt;
             $state['status'] = $post->post_status;
