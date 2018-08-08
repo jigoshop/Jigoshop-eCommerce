@@ -145,9 +145,9 @@ class FreeShipping implements Method3
             [
                 'title' => __('Enable Only for Admin', 'jigoshop-ecommerce'),
                 'description' => __('Enable this if you would like to test it only for Site Admin', 'jigoshop-ecommerce'),
-                'name' => sprintf('[%s][adminOnly]', self::ID),
+                'name' => sprintf('[%s][adminOnly]', self::NAME),
                 'type' => 'checkbox',
-                'checked' => $this->settings['adminOnly'],
+                'checked' => $this->options['adminOnly'],
                 'classes' => ['switch-medium'],
             ],
 			[
@@ -277,7 +277,7 @@ class FreeShipping implements Method3
      */
     public function isActive()
     {
-        return isset($this->settings['enabled']) && $this->settings['enabled'];
+        return isset($this->options['enabled']) && $this->options['enabled'];
     }
 
     /**
@@ -289,9 +289,9 @@ class FreeShipping implements Method3
      */
     public function setActive($state)
     {
-        $this->settings['enabled'] = $state;
+        $this->options['enabled'] = $state;
 
-        return $this->settings;
+        return $this->options;
     }
 
     /**
@@ -333,7 +333,7 @@ class FreeShipping implements Method3
      */
     public function setTestMode($state)
     {
-        return $this->settings;
+        return $this->options;
     }
 
     /**
@@ -353,7 +353,7 @@ class FreeShipping implements Method3
      */
     public function isAdminOnly()
     {
-        return isset($this->settings['adminOnly']) && $this->settings['adminOnly'];
+        return isset($this->options['adminOnly']) && $this->options['adminOnly'];
     }
 
     /**
@@ -365,8 +365,8 @@ class FreeShipping implements Method3
      */
     public function setAdminOnly($state)
     {
-        $this->settings['adminOnly'] = $state;
+        $this->options['adminOnly'] = $state;
 
-        return $this->settings;
+        return $this->options;
     }
 }
