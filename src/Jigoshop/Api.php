@@ -26,6 +26,8 @@ class Api
     const QUERY_URI = 'jigoshop_rest_uri';
     const QUERY_VERSION = 'jigoshop_rest_version';
     const URL_PATTERN = 'api/v([0-9])([0-9a-zA-Z\-_/]+)';
+    /** @var bool */
+    private static $isApi = false;
 
     /** @var Wordpress */
     private $wp;
@@ -34,6 +36,21 @@ class Api
     /** @var Container */
     private $di;
 
+    /**
+     * @param bool $api
+     */
+    public static function setApi($api)
+    {
+        self::$isApi = $api;
+    }
+
+    /**
+     * @return bool
+     */
+    public static function isApi()
+    {
+        return self::$isApi;
+    }
     /**
      * Api constructor.
      * @param Wordpress $wp
@@ -91,6 +108,7 @@ class Api
             $query->query_vars[self::QUERY_URI]) : null;
 
         if ($version && $uri) {
+            self::setApi(true);
             $app = new App($this->getSlimContainer($uri));
             $this->addMiddlewares($app);
             $this->addRoutes($app, $version);
@@ -198,6 +216,7 @@ class Api
         };
         $container['errorHandler'] = function ($container) {
             return function ($request, $response, $exception) use ($container) {
+                var_dump($exception);exit;
                 return $container['response']->withStatus($exception->getCode())->withJson([
                     'success' => false,
                     'error' => $exception->getMessage()

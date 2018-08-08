@@ -2,6 +2,7 @@
 
 namespace Jigoshop\Service\Product;
 
+use Jigoshop\Api;
 use Jigoshop\Core\Types\Product\Variable;
 use Jigoshop\Entity\EntityInterface;
 use Jigoshop\Entity\Product;
@@ -23,9 +24,7 @@ class VariableService implements VariableServiceInterface
 		$this->wp = $wp;
 		$this->factory = $factory;
 		$this->productService = $productService;
-		if(defined('DOING_AJAX') && DOING_AJAX) {
-			$wp->addAction('jigoshop\service\product\save', [$this, 'save']);
-		}
+		$wp->addAction('jigoshop\service\product\save', [$this, 'save']);
 	}
 
 	/**
@@ -44,8 +43,12 @@ class VariableService implements VariableServiceInterface
 	public function save(EntityInterface $object)
 	{
 		// TODO: Do we want to save variations via update button?
+        if(!(defined('DOING_AJAX') && DOING_AJAX) && !Api::isApi()) {
+            return;
+        }
+
 		if ($object instanceof Product\Variable) {
-			$wpdb = $this->wp->getWPDB();
+		    $wpdb = $this->wp->getWPDB();
 			$this->removeAllVariationsExcept($object->getId(), array_map(function ($item){
 				/** @var Product\Variable\Variation $item */
 				return $item->getId();

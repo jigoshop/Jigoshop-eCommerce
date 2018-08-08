@@ -6,6 +6,7 @@ use Jigoshop\Container;
 use Jigoshop\Entity\JsonInterface;
 use Jigoshop\Entity\Product;
 use Jigoshop\Entity\Product\Variable;
+use Jigoshop\Factory\Product\VariableService;
 use Jigoshop\Service\ProductService;
 
 /**
@@ -166,18 +167,19 @@ class Variation implements JsonInterface
         }
 
         if(isset($json['product'])) {
+            /** @var \Jigoshop\Service\Product\VariableService $service */
+            $service = $di->get('jigoshop.service.product.variable');
             if(isset($json['product']['id'])) {
-                /** @var ProductService $service */
-                $service = $di->get('jigoshop.service.product');
-                $product = $service->find((int)$json['product']['id']);
+                var_dump($this->getProduct());exit;
+                $variation = $service->find($this->parent, (int)$json['product']['id']);
+                $product = $variation->getProduct();
             } else {
-                /** @var \Jigoshop\Factory\Product $factory */
-                $factory = $di->get('jigoshop.factory.product');
-                $product = $factory->get(isset($json['product']['type']) ? $json['product']['type'] : Product\Simple::TYPE);
+                $product = $service->createVariableProduct($this, $this->parent, isset($json['product']['type']) ? $json['product']['type'] : Product\Simple::TYPE);
             }
             if(!$product instanceof Product\Variable) {
                 $product->jsonDeserialize($di, $json['product']);
                 $this->setProduct($product);
+                $this->setId($product->getId());
             }
         }
 

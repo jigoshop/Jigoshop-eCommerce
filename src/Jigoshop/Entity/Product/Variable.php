@@ -8,6 +8,7 @@ use Jigoshop\Entity\Product;
 use Jigoshop\Entity\Product\Attribute;
 use Jigoshop\Entity\Product\Attributes\StockStatus;
 use Jigoshop\Integration;
+use Jigoshop\Service\Product\VariableService;
 
 class Variable extends Product implements Shippable, Saleable
 {
@@ -323,9 +324,12 @@ class Variable extends Product implements Shippable, Saleable
                 if(isset($jsonVariation['id'], $this->variations[$jsonVariation['id']])) {
                     $variation = $this->variations[$jsonVariation['id']];
                 } else {
-                    $variation = new Product\Variable\Variation();
+                    /** @var \Jigoshop\Factory\Product\Variable $factory */
+                    $factory = $di->get('jigoshop.factory.product.variable');
+                    $variation = $factory->createVariation($this);
                 }
                 $variation->jsonDeserialize($di, $jsonVariation);
+
                 $this->addVariation(clone $variation);
             }
         }

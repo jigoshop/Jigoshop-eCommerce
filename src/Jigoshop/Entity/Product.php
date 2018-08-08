@@ -598,6 +598,7 @@ abstract class Product implements EntityInterface, Product\Taxable, JsonInterfac
         $toSave['attachments'] = $this->attachments;
         $toSave['categories'] = $this->categories;
         $toSave['tags'] = $this->tags;
+        $toSave['type'] = $this->getType();
 
         return $toSave;
     }
@@ -649,7 +650,7 @@ abstract class Product implements EntityInterface, Product\Taxable, JsonInterfac
             $this->taxable = is_numeric($state['is_taxable']) ? (bool)$state['is_taxable'] : $state['is_taxable'] == 'on';
         }
         if (isset($state['tax_classes'])) {
-            $this->taxClasses = $state['tax_classes'];
+            $this->taxClasses = $state['tax_classes'] == null ? [] : $state['tax_classes'];
         }
         if (isset($state['size_weight'])) {
             $this->size->setWeight($state['size_weight']);
@@ -798,7 +799,7 @@ abstract class Product implements EntityInterface, Product\Taxable, JsonInterfac
                         $attribute = $this->attributes[$jsonAttribute['id']];
                     } else {
                         /** @var ProductService $service */
-                        $service = $di->get('jigoshop.product.service');
+                        $service = $di->get('jigoshop.service.product');
                         $attribute = $service->getAttribute($jsonAttribute['id']);
                     }
                 } else {

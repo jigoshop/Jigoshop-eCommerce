@@ -109,7 +109,7 @@ class Multiselect extends Attribute implements Variable
         parent::jsonDeserialize($di, $json);
 
         if(isset($json['variable'])) {
-            $this->variable->jsonDeserialize($di, $json['variable']);
+            $this->variable->setValue((int)$json['variable']);
         }
     }
 }

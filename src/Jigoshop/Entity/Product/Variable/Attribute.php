@@ -146,7 +146,7 @@ class Attribute implements JsonInterface
         }
         if(isset($json['attribute'], $json['attribute']['id'])) {
             /** @var ProductService $service */
-            $service = $di->get('jigoshop.product.service');
+            $service = $di->get('jigoshop.service.product');
             $attribute = $service->getAttribute((int)$json['attribute']['id']);
             if($attribute) {
                 $this->setAttribute($attribute);
