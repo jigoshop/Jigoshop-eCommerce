@@ -144,6 +144,7 @@ class Options
 				'fee' => 0,
 				'available_for' => 'all',
 				'countries' => [],
+				'adminOnly' => false
             ],
 			'free_shipping' => [
 				'enabled' => false,
@@ -151,11 +152,13 @@ class Options
 				'minimum' => 0,
 				'available_for' => 'all',
 				'countries' => [],
+				'adminOnly' => false
             ],
 			'local_pickup' => [
 				'enabled' => false,
 				'title' => 'Local pickup',
 				'fee' => 0,
+				'adminOnly' => false
             ],
             'advanced_flat_rate' => [
                 'enabled' => false,
@@ -167,6 +170,7 @@ class Options
                 'multiple_rates' => false,
                 'rates' => [],
                 'rates_order' => [],
+                'adminOnly' => false
             ],
         ],
 		'payment' => [
