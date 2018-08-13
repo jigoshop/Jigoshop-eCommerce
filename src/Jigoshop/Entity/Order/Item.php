@@ -377,4 +377,14 @@ class Item implements Product\Purchasable, Product\Taxable, \Serializable, \Json
             'meta' => array_values($this->meta),
         ];
     }
+
+    /**
+     * Called by var_dump();
+     *
+     * @return array
+     */
+    public function __debugInfo()
+    {
+        return $this->jsonSerialize();
+    }
 }

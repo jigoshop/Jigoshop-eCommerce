@@ -311,4 +311,14 @@ class Downloadable extends Product  implements Purchasable, Saleable
             $this->limit = $json['download_limit'];
         }
     }
+
+    /**
+     * Called by var_dump();
+     *
+     * @return array
+     */
+    public function __debugInfo()
+    {
+        return $this->jsonSerialize();
+    }
 }

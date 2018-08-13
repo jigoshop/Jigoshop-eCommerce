@@ -269,4 +269,14 @@ class External extends Product implements Purchasable, Saleable
             $this->url = $json['url'];
         }
     }
+
+    /**
+     * Called by var_dump();
+     *
+     * @return array
+     */
+    public function __debugInfo()
+    {
+        return $this->jsonSerialize();
+    }
 }

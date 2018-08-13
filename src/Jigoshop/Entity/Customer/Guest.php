@@ -77,4 +77,14 @@ class Guest extends Customer
 
         return $state;
     }
+
+    /**
+     * Called by var_dump();
+     *
+     * @return array
+     */
+    public function __debugInfo()
+    {
+        return $this->jsonSerialize();
+    }
 }

@@ -313,6 +313,14 @@ abstract class Attribute implements JsonInterface
         if(isset($json['id'])) {
             $this->id = $json['id'];
         }
+        if(isset($json['label'])) {
+            $this->label = $json['label'];
+        }
+        if(isset($json['slug'])) {
+            $this->slug = $json['slug'];
+        } else {
+            $this->slug = sanitize_title($this->label);
+        }
         if(isset($json['local'])) {
             $this->local = (bool)$json['local'];
         }
@@ -332,6 +340,16 @@ abstract class Attribute implements JsonInterface
         if(isset($json['value'])) {
             $this->value = $json['value'];
         }
+    }
+
+    /**
+     * Called by var_dump();
+     *
+     * @return array
+     */
+    public function __debugInfo()
+    {
+        return $this->jsonSerialize();
     }
 
     /**

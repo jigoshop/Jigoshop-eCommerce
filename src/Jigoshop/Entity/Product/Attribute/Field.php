@@ -117,4 +117,14 @@ class Field implements JsonInterface
             $this->key = $json['value'];
         }
     }
+
+    /**
+     * Called by var_dump();
+     *
+     * @return array
+     */
+    public function __debugInfo()
+    {
+        return $this->jsonSerialize();
+    }
 }

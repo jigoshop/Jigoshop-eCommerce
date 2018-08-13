@@ -157,4 +157,14 @@ class Session implements EntityInterface
             $this->sessionService->addSessionToSave($this);
         }
     }
+
+    /**
+     * Called by var_dump();
+     *
+     * @return array
+     */
+    public function __debugInfo()
+    {
+        return $this->getStateToSave();
+    }
 }

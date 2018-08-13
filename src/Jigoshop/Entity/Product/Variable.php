@@ -334,4 +334,14 @@ class Variable extends Product implements Shippable, Saleable
             }
         }
     }
+
+    /**
+     * Called by var_dump();
+     *
+     * @return array
+     */
+    public function __debugInfo()
+    {
+        return $this->jsonSerialize();
+    }
 }

@@ -610,4 +610,14 @@ class Coupon implements EntityInterface, \JsonSerializable
             'payment_methods' => $this->paymentMethods,
         ];
     }
+
+    /**
+     * Called by var_dump();
+     *
+     * @return array
+     */
+    public function __debugInfo()
+    {
+        return $this->jsonSerialize();
+    }
 }

@@ -1019,4 +1019,14 @@ class Order implements OrderInterface, \JsonSerializable
            'update_messages' => $this->updateMessages,
        ];
     }
+
+    /**
+     * Called by var_dump();
+     *
+     * @return array
+     */
+    public function __debugInfo()
+    {
+        return $this->jsonSerialize();
+    }
 }

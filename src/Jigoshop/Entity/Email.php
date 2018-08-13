@@ -172,4 +172,14 @@ class Email implements EntityInterface, \JsonSerializable
             'attachments' => $this->attachments,
         ];
     }
+
+    /**
+     * Called by var_dump();
+     *
+     * @return array
+     */
+    public function __debugInfo()
+    {
+        return $this->jsonSerialize();
+    }
 }

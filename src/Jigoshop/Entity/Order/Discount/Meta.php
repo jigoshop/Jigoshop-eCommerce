@@ -117,4 +117,14 @@ class Meta implements \Serializable, \JsonSerializable
             'value' => $this->value,
         ];
     }
+
+    /**
+     * Called by var_dump();
+     *
+     * @return array
+     */
+    public function __debugInfo()
+    {
+        return $this->jsonSerialize();
+    }
 }

@@ -230,6 +230,10 @@ class ProductService implements ProductServiceInterface
             }, $fields['attributes']));
 
             foreach ($fields['attributes'] as $attribute) {
+                if($attribute->getId() == null) {
+                    $this->saveAttribute($attribute);
+                    $attribute->setExists(false);
+                }
                 $this->_saveProductAttribute($object, $attribute);
             }
 

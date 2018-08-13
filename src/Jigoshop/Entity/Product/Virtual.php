@@ -258,4 +258,14 @@ class Virtual extends Product implements Purchasable, Saleable
             $this->sales->jsonDeserialize($di, $json['stock']);
         }
     }
+
+    /**
+     * Called by var_dump();
+     *
+     * @return array
+     */
+    public function __debugInfo()
+    {
+        return $this->jsonSerialize();
+    }
 }

@@ -239,4 +239,14 @@ class Customer implements EntityInterface, \JsonSerializable
             'taxAddres' => $this->taxAddress
         ];
     }
+
+    /**
+     * Called by var_dump();
+     *
+     * @return array
+     */
+    public function __debugInfo()
+    {
+        return $this->jsonSerialize();
+    }
 }

@@ -112,7 +112,7 @@ class Api
             $app = new App($this->getSlimContainer($uri));
             $this->addMiddlewares($app);
             $this->addRoutes($app, $version);
-
+            error_reporting(0);
             $app->run();
             exit;
         }

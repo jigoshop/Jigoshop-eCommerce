@@ -55,6 +55,7 @@ class VariableService implements VariableServiceInterface
 			}, $object->getVariations()));
 
 			foreach ($object->getVariations() as $variation) {
+			    var_dump($variation);exit;
 				/** @var Product\Variable\Variation $variation */
 				if ($variation->getProduct() === null) {
                     $variation->setProduct($this->createVariableProduct($variation, $object));

@@ -137,4 +137,14 @@ class CompanyAddress extends Address
             'parent' => parent::jsonSerialize(),
         ];
 	}
+
+    /**
+     * Called by var_dump();
+     *
+     * @return array
+     */
+    public function __debugInfo()
+    {
+        return $this->jsonSerialize();
+    }
 }

@@ -829,4 +829,14 @@ abstract class Product implements EntityInterface, Product\Taxable, JsonInterfac
             $this->upSells = $json['up_sells'];
         }
     }
+
+    /**
+     * Called by var_dump();
+     *
+     * @return array
+     */
+    public function __debugInfo()
+    {
+        return $this->jsonSerialize();
+    }
 }
