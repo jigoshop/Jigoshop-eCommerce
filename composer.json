@@ -43,6 +43,6 @@
 		"symfony/var-dumper": "*",
 		"sebastian/phpcpd": "*",
 		"phpmd/phpmd": "@stable",
-		"wp-cli/wp-cli": "*"
+		"wp-cli/wp-cli": "1.5.1"
 	}
 }
