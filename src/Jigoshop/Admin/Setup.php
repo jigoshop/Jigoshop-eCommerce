@@ -283,6 +283,10 @@ class Setup implements DashboardInterface
             ],
         ];
 
+        if(!is_array($options[$this->getCurrentStep()])) {
+            return [];
+        }
+
         return $options[$this->getCurrentStep()];
     }
 
