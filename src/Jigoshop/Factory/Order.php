@@ -6,6 +6,7 @@ use Jigoshop\Core\Messages;
 use Jigoshop\Core\Options;
 use Jigoshop\Core\Types;
 use Jigoshop\Entity\Customer as CustomerEntity;
+use Jigoshop\Entity\Customer\CompanyAddress;
 use Jigoshop\Entity\Order as Entity;
 use Jigoshop\Entity\OrderInterface;
 use Jigoshop\Entity\Product as ProductEntity;
@@ -346,7 +347,7 @@ class Order implements EntityFactoryInterface
         $order->restoreState($data);
 
         // Process tax removal for new orders if we have Vat number.
-        if($order instanceof CompanyAddress && $this->options->get('tax.euVat.enabled') && Country::isEU($order->getCustomer()->getBillingAddress()->getCountry())) {
+        if($order->getCustomer()->getBillingAddress() instanceof CompanyAddress && $this->options->get('tax.euVat.enabled') && Country::isEU($order->getCustomer()->getBillingAddress()->getCountry())) {
             if($order->getCustomer()->getBillingAddress()->getVatNumber() && $order->getEuVatValidationStatus() === '') {
                 $euVatNumberValidationResult = Tax::validateEUVatNumber($order->getCustomer()->getBillingAddress()->getVatNumber(), $order->getCustomer()->getBillingAddress()->getCountry());
 
