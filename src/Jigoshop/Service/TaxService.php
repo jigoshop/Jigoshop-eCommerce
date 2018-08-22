@@ -337,6 +337,10 @@ class TaxService implements TaxServiceInterface
 		$standard = [];
 		$compound = [];
 
+		if($cost === '') {
+			return [];
+		}
+
 		foreach ($taxClasses as $class) {
 			if (!isset($definitions[$class])) {
 				Registry::getInstance(JIGOSHOP_LOGGER)->addInfo(sprintf('No tax class: %s', $class));
@@ -355,12 +359,12 @@ class TaxService implements TaxServiceInterface
 			$tax[$class] = $definition['rate'] * $cost / 100;
 		}
 
-		$cost += array_sum($tax);
+		$cost += array_sum($tax); 
 		foreach ($compound as $class => $definition) {
 			$tax['__compound__'.$class] += $definition['rate'] * $cost / 100;
 		}
 
-		return array_filter($tax);
+		return $this->wp->applyFilters('jigoshop\service\tax\get_tax', array_filter($tax), $price, $taxClasses, $definitions);
 	}
 
 	/**

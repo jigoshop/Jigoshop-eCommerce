@@ -563,11 +563,13 @@ class Variable implements Type
 				throw new Exception(__('Variation does not exists.', 'jigoshop-ecommerce'));
 			}
 
-			$this->wp->setPostThumbnail($_POST['variation_id'], $_POST['image_id']);
-
 			if ($_POST['image_id'] > 0) {
+				$this->wp->setPostThumbnail($_POST['variation_id'], $_POST['image_id']);
+
 				$url = $this->wp->wpGetAttachmentImageSrc($_POST['image_id'], Options::IMAGE_SMALL);
 			} else {
+				delete_post_thumbnail($_POST['variation_id']);
+
 				$url = \JigoshopInit::getUrl().'/assets/images/placeholder.png';
 			}
 

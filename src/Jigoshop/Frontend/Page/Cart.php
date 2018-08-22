@@ -111,30 +111,37 @@ class Cart implements PageInterface
 	 */
 	public function ajaxChangeCountry()
 	{
-		$customer = $this->customerService->getCurrent();
+	    try {
+            $customer = $this->customerService->getCurrent();
 
-		if (!Country::isAllowed($_POST['value'])) {
-			$locations = array_map(function ($location){
-				return Country::getName($location);
-			}, $this->options->get('shopping.selling_locations'));
-			echo json_encode([
-				'success' => false,
-				'error' => sprintf(__('This location is not supported, we sell only to %s.'), join(', ', $locations)),
-            ]);
-			exit;
-		}
+            if (!Country::isAllowed($_POST['value'])) {
+                $locations = array_map(function ($location){
+                    return Country::getName($location);
+                }, $this->options->get('shopping.selling_locations'));
+                echo json_encode([
+                    'success' => false,
+                    'error' => sprintf(__('This location is not supported, we sell only to %s.'), join(', ', $locations)),
+                ]);
+                exit;
+            }
 
-		if ($customer->hasMatchingAddresses()) {
-			$customer->getBillingAddress()->setCountry($_POST['value']);
-		}
-		$customer->getShippingAddress()->setCountry($_POST['value']);
+            if ($customer->hasMatchingAddresses()) {
+                $customer->getBillingAddress()->setCountry($_POST['value']);
+            }
+            $customer->getShippingAddress()->setCountry($_POST['value']);
 
-		$this->customerService->save($customer);
-		$cart = $this->cartService->getCurrent();
-		$cart->setCustomer($customer);
-		$this->cartService->save($cart);
+            $this->customerService->save($customer);
+            $cart = $this->cartService->getCurrent();
+            $cart->setCustomer($customer);
+            $this->cartService->save($cart);
 
-		$response = $this->getAjaxLocationResponse($customer, $cart);
+            $response = $this->getAjaxLocationResponse($customer, $cart);
+        } catch (Exception $e) {
+            $response = [
+                'success' => false,
+                'error' => $e->getMessage(),
+            ];
+        }
 
 		echo json_encode($response);
 		exit;
@@ -259,17 +266,24 @@ class Cart implements PageInterface
 	 */
 	public function ajaxChangeState()
 	{
-		$customer = $this->customerService->getCurrent();
-		if ($customer->hasMatchingAddresses()) {
-			$customer->getBillingAddress()->setState($_POST['value']);
-		}
-		$customer->getShippingAddress()->setState($_POST['value']);
-		$this->customerService->save($customer);
-		$cart = $this->cartService->getCurrent();
-		$cart->setCustomer($customer);
-		$this->cartService->save($cart);
+	    try {
+            $customer = $this->customerService->getCurrent();
+            if ($customer->hasMatchingAddresses()) {
+                $customer->getBillingAddress()->setState($_POST['value']);
+            }
+            $customer->getShippingAddress()->setState($_POST['value']);
+            $this->customerService->save($customer);
+            $cart = $this->cartService->getCurrent();
+            $cart->setCustomer($customer);
+            $this->cartService->save($cart);
 
-		$response = $this->getAjaxLocationResponse($customer, $cart);
+            $response = $this->getAjaxLocationResponse($customer, $cart);
+        } catch (Exception $e) {
+            $response = [
+                'success' => false,
+                'error' => $e->getMessage(),
+            ];
+        }
 
 		echo json_encode($response);
 		exit;
@@ -280,27 +294,34 @@ class Cart implements PageInterface
 	 */
 	public function ajaxChangePostcode()
 	{
-		$customer = $this->customerService->getCurrent();
+	    try {
+            $customer = $this->customerService->getCurrent();
 
-		if ($this->options->get('shopping.validate_zip') && !Validation::isPostcode($_POST['value'], $customer->getShippingAddress()->getCountry())) {
-			echo json_encode([
-				'success' => false,
-				'error' => __('Postcode is not valid!', 'jigoshop-ecommerce'),
-            ]);
-			exit;
-		}
+            if ($this->options->get('shopping.validate_zip') && !Validation::isPostcode($_POST['value'], $customer->getShippingAddress()->getCountry())) {
+                echo json_encode([
+                    'success' => false,
+                    'error' => __('Postcode is not valid!', 'jigoshop-ecommerce'),
+                ]);
+                exit;
+            }
 
-		if ($customer->hasMatchingAddresses()) {
-			$customer->getBillingAddress()->setPostcode($_POST['value']);
-		}
+            if ($customer->hasMatchingAddresses()) {
+                $customer->getBillingAddress()->setPostcode($_POST['value']);
+            }
 
-		$customer->getShippingAddress()->setPostcode($_POST['value']);
-		$this->customerService->save($customer);
-		$cart = $this->cartService->getCurrent();
-		$cart->setCustomer($customer);
-		$this->cartService->save($cart);
+            $customer->getShippingAddress()->setPostcode($_POST['value']);
+            $this->customerService->save($customer);
+            $cart = $this->cartService->getCurrent();
+            $cart->setCustomer($customer);
+            $this->cartService->save($cart);
 
-		$response = $this->getAjaxLocationResponse($customer, $cart);
+            $response = $this->getAjaxLocationResponse($customer, $cart);
+        } catch(Exception $e) {
+            $response = [
+                'success' => false,
+                'error' => $e->getMessage(),
+            ];
+        }
 
 		echo json_encode($response);
 		exit;
@@ -472,8 +493,8 @@ class Cart implements PageInterface
 						}
 
 						$order->setStatus(Status::CANCELLED);
+                        $this->orderService->save($order);
 						$cart = $this->cartService->createFromOrder($this->cartService->getCartIdForCurrentUser(), $order);
-						$this->orderService->save($order);
 						$this->cartService->save($cart);
 						$this->messages->addNotice(__('The order has been cancelled', 'jigoshop-ecommerce'));
 					}

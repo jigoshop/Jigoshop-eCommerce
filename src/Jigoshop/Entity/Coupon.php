@@ -532,7 +532,7 @@ class Coupon implements EntityInterface, \JsonSerializable
 		$discount->addMeta(new Discount\Meta('coupon_data', json_encode($this)));
 		$discount->addMeta(new Discount\Meta('free_shipping', $this->freeShipping ? 1 : 0));
 
-		return $discount;
+		return apply_filters('jigoshop\entity\coupon\get_discount', $discount, $this);
 	}
 
 	/**

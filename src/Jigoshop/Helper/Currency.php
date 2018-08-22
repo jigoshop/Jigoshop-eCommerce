@@ -400,4 +400,25 @@ class Currency
 			'%2$s %3$s %1$s' => sprintf('%3$s 0%2$s00 %1$s', $symbol, $separator, $code),// code.' 0'.separator.'00 '.symbol
         ];
 	}
+
+    public static function addStaticFilters()
+    {
+        if(self::code() == 'CZK') {
+            $round = function($price) {
+                return round($price);
+            };
+            add_filter('jigoshop\product\get_price', $round, 99);
+            add_filter('jigoshop\shipping\get_price', $round, 99);
+            add_filter('jigoshop\service\tax\get_tax', function($tax) {
+                return array_map(function($item) {
+                    return round($item);
+                }, $tax);
+            }, 99);
+            add_filter('jigoshop\entity\coupon\get_discount', function($discount) /** @var $discount Discount */{
+                $discount->setAmount(round($discount->getAmount()));
+
+                return $discount;
+            }, 99);
+        }
+	}
 }

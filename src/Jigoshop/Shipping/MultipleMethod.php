@@ -4,7 +4,7 @@ namespace Jigoshop\Shipping;
 
 use Jigoshop\Entity\OrderInterface;
 
-interface MultipleMethod extends Method
+interface MultipleMethod extends Method3
 {
 	/**
 	 * Returns list of available shipping rates.

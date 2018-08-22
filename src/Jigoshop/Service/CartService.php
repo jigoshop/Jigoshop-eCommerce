@@ -187,7 +187,7 @@ class CartService implements CartServiceInterface
 		$state['customer_note'] = $_POST['jigoshop_order']['customer_note'];
 		$state['billing_address'] = $_POST['jigoshop_order']['billing_address'];
 
-		if ($this->options->get('shipping.only_to_billing') == true && $_POST['jigoshop_order']['different_shipping_address'] == 'on') {
+		if ($this->options->get('shipping.only_to_billing') == false && $_POST['jigoshop_order']['different_shipping_address'] == 'on') {
 			$state['shipping_address'] = $_POST['jigoshop_order']['shipping_address'];
 		} else {
 			$state['shipping_address'] = $state['billing_address'];
@@ -390,8 +390,7 @@ class CartService implements CartServiceInterface
 		foreach ($order->getItems() as $item) {
 			/** @var $item Order\Item */
 			$item = clone $item;
-			$item->setId(false);
-			$item->setKey(false);
+			$item->setId(null);
 			$cart->addItem($item);
 		}
 

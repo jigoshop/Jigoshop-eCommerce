@@ -101,10 +101,14 @@ class Product implements EntityFactoryInterface
             return $product;
         }
 
-        if (!empty($_POST) && isset($_POST['post_title'])) {
+        if (!empty($_POST) && isset($_POST['product'])) {
             $helpers = $this->wp->getHelpers();
-            $product->setName(stripslashes_deep($_POST['post_title'])       );
-            $product->setDescription($helpers->parsePostBody(stripslashes_deep($_POST['post_content'])));
+            if(isset($_POST['post_title'])) {
+                $product->setName(stripslashes_deep($_POST['post_title']));
+            }
+            if(isset($_POST['post_content'])) {
+                $product->setDescription($helpers->parsePostBody(stripslashes_deep($_POST['post_content'])));
+            }
             $this->convertData($_POST, $id);
             $product->restoreState($_POST['product']);
             $product->markAsDirty($_POST['product']);

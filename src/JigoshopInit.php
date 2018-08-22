@@ -130,6 +130,7 @@ class JigoshopInit
         $this->initQueryInterceptor();
         $this->addOptionsToStaticClasses();
         $this->addWpalToStaticClasses();
+        $this->initStaticClassesFilters();
         $this->initCoreServices();
         $this->upgrade();
         $this->container->get('jigoshop.core')->run($this->container);
@@ -277,6 +278,11 @@ class JigoshopInit
         Jigoshop\Entity\Order\Discount\Type::setWordpress($wp);
     }
 
+    private function initStaticClassesFilters()
+    {
+        \Jigoshop\Helper\Currency::addStaticFilters();
+    }
+
     /**
      *
      */
@@ -317,7 +323,13 @@ class JigoshopInit
      */
     private function getClassLoader()
     {
-        return require_once(JIGOSHOP_DIR . '/vendor/autoload.php');
+	   if(defined('WP_CLI')) {
+	       $loader = require(JIGOSHOP_DIR . '/vendor/autoload.php');
+	   } else {
+	       $loader = require_once(JIGOSHOP_DIR . '/vendor/autoload.php');
+	   }
+
+	   return $loader;
     }
 
     /**
