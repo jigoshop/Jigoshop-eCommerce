@@ -14,6 +14,7 @@ use Jigoshop\Entity\OrderInterface;
 use Jigoshop\Entity\Product\Simple;
 use Jigoshop\Exception;
 use Jigoshop\Frontend\Pages;
+use Jigoshop\Helper\Address as AddressHelper;
 use Jigoshop\Helper\Country;
 use Jigoshop\Helper\Geolocation;
 use Jigoshop\Helper\Product as ProductHelper;
@@ -122,8 +123,14 @@ class Checkout implements PageInterface
 	public function ajaxChangeEUVatNumber()
 	{
 		$customer = $this->customerService->getCurrent();
-		$customer->getBillingAddress()->setVatNumber($_POST['value']);
+		$customerAddress = $customer->getBillingAddress();
+		if(!$customerAddress instanceof CompanyAddress) {
+			$customerAddress = AddressHelper::convertToCompanyAddress($customerAddress);
+		}		
 
+		$customerAddress->setVatNumber($_POST['value']);
+
+		$customer->setBillingAddress($customerAddress);
 		$this->customerService->save($customer);
 		$cart = $this->cartService->getCurrent();
 		$cart->setCustomer($customer);

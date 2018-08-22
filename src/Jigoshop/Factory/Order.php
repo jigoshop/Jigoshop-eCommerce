@@ -417,9 +417,11 @@ class Order implements EntityFactoryInterface
 
     private function createAddress($data)
     {
-        if (!empty($data['company'])) {
+        if (!empty($data['company']) || !empty($data['euvatno'])) {
             $address = new CustomerEntity\CompanyAddress();
-            $address->setCompany($data['company']);
+            if(isset($data['company'])) {
+                $address->setCompany($data['company']);
+            }
             if (isset($data['euvatno'])) {
                 $address->setVatNumber($data['euvatno']);
             }
