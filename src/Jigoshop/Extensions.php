@@ -34,7 +34,15 @@ class Extensions
      */
     public static function register(Extension $extension)
     {
-        self::$extensions[] = $extension;
+        self::$extensions[get_class($extension)] = $extension;
+    }
+
+    /**
+     * @return Extension[]
+     */
+    public static function getExtensions()
+    {
+        return self::$extensions;
     }
 
     /**
@@ -43,14 +51,6 @@ class Extensions
     public static function install(Extension $extension)
     {
         do_action('jigoshop\extensions\install', $extension);
-    }
-
-    /**
-     * @return Extension[]
-     */
-    public function getExtensions()
-    {
-        return self::$extensions;
     }
 
     /**
