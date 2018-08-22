@@ -36,7 +36,7 @@ use Jigoshop\Helper\Render;
 		<?php foreach($order->getItems() as $key => $item): /** @var $item \Jigoshop\Entity\Order\Item */ ?>
             <?php
             $template = null;
-            $template = apply_filters('jigoshop\template\shop\checkout\pay\item', $template, $cart, $key, $item, $showWithTax, $suffix);
+            $template = apply_filters('jigoshop\template\shop\checkout\pay\item', $template, $order, $key, $item, $showWithTax, $suffix);
 
             if($template === null) {
                 Render::output('shop/checkout/item/'.$item->getType(), [

@@ -5,6 +5,7 @@ namespace Jigoshop\Extensions;
 use Jigoshop\Api\Routing\ControllerInterface;
 use Jigoshop\Container\Configurations\Configuration;
 use Jigoshop\Container\Configurations\ConfigurationInterface;
+use Jigoshop\Exception;
 use Jigoshop\Extensions;
 
 /**
@@ -20,15 +21,23 @@ abstract class Extension
     private $plugin;
     /** @var  \ReflectionClass */
     private $reflection;
+    /** @var Extensions\Extension\Render */
+    private $render;
 
     /**
      * Extension constructor.
+     *
+     * @throws \ReflectionException
+     *
      * @param string $fileName
      */
     public function __construct($fileName)
     {
         $this->plugin = new Extensions\Extension\Plugin($fileName);
         $this->reflection = new \ReflectionClass($this);
+        if($this->plugin->getTemplateDir()) {
+            $this->render = new Extensions\Extension\Render($this->plugin->getTemplateDir());
+        }
     }
 
     /**
@@ -48,6 +57,20 @@ abstract class Extension
     }
 
     /**
+     * @throws Exception
+     *
+     * @return Extensions\Extension\Render
+     */
+    public static function getRender()
+    {
+        if(!self::getInstance()->_getRender() instanceof Extensions\Extension\Render) {
+            throw new Exception(__('Template dir was not specified', 'jigoshop-ecommerce'));
+        }
+
+        return self::getInstance()->_getRender();
+    }
+
+    /**
      * @return Extension\Plugin
      */
     public function getPlugin()
@@ -58,7 +81,7 @@ abstract class Extension
     /**
      * @return Extension\Render
      */
-    public function getRender()
+    public function _getRender()
     {
         return $this->render;
     }
