@@ -10,14 +10,17 @@ namespace Jigoshop\Extensions\Extension;
 class Render
 {
     private $location;
+    private $templateDir;
 
     /**
      * Render constructor.
      * @param $location
+     * @param $templateDir
      */
-    public function __construct($location)
+    public function __construct($location, $templateDir)
     {
         $this->location = $location;
+        $this->templateDir = $templateDir;
     }
 
     /**
@@ -59,9 +62,9 @@ class Render
      */
     public function locateTemplate($template)
     {
-        $file = locate_template(['jigoshop/'.$template.'.php'], false, false);
+        $file = locate_template(['jigoshop/'.$this->templateDir.'/'.$template.'.php'], false, false);
         if (empty($file)) {
-            $file = \JigoshopInit::getDir().'/templates/'.$template.'.php';
+            $file = $this->location.'/templates/'.$template.'.php';
         }
 
         return $file;

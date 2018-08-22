@@ -15,8 +15,6 @@ use Jigoshop\Extensions;
  */
 abstract class Extension
 {
-    /** @var  Extension[]  */
-    private static $instance = [];
     /** @var  Extensions\Extension\Plugin  */
     private $plugin;
     /** @var  \ReflectionClass */
@@ -36,7 +34,7 @@ abstract class Extension
         $this->plugin = new Extensions\Extension\Plugin($fileName);
         $this->reflection = new \ReflectionClass($this);
         if($this->plugin->getTemplateDir()) {
-            $this->render = new Extensions\Extension\Render($this->plugin->getTemplateDir());
+            $this->render = new Extensions\Extension\Render($this->plugin->getDir(), $this->plugin->getTemplateDir());
         }
 
         //Register extension automatically
