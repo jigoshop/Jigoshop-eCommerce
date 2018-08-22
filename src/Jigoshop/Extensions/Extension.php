@@ -48,8 +48,7 @@ abstract class Extension
      */
     public static function getInstance()
     {
-        var_dump(get_called_class());exit;
-        return self::$instance;
+        return Extensions::getExtensions()[get_called_class()];
     }
 
     /**
