@@ -86,7 +86,7 @@ class Extensions
             }
             if ($extension->getPlugin()->getId() && $this->isLicenseEnabled($extension->getPlugin()->getId()) == false) {
                 $errors[] = __('The License is not valid. Please enter your <b>Licence Key</b> on the Jigoshop->Manage Licences Menu with your <b>Order email address</b>.  Until then, the plugin will not be enabled for use.',
-                    'jigoshop');
+                    'jigoshop-ecommerce');
             }
             if (!empty($errors)) {
                 throw new Exception(join('</li><li>', $errors));

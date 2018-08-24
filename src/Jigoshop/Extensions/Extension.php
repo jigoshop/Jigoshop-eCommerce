@@ -27,11 +27,11 @@ abstract class Extension
      *
      * @throws \ReflectionException
      *
-     * @param string $fileName
+     * @param array $plugin
      */
-    public function __construct($fileName)
+    public function __construct(array $plugin)
     {
-        $this->plugin = new Extensions\Extension\Plugin($fileName);
+        $this->plugin = new Extensions\Extension\Plugin($plugin);
         $this->reflection = new \ReflectionClass($this);
         if($this->plugin->getTemplateDir()) {
             $this->render = new Extensions\Extension\Render($this->plugin->getDir(), $this->plugin->getTemplateDir());

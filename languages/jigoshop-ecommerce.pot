@@ -61,7 +61,7 @@ msgstr ""
 msgid "Search Results:"
 msgstr ""
 
-#: src/Jigoshop/Api.php:195
+#: src/Jigoshop/Api.php:192
 msgid "Resource not found"
 msgstr ""
 
@@ -1255,7 +1255,7 @@ msgstr ""
 msgid "Item not found."
 msgstr ""
 
-#: src/Jigoshop/Extensions/Extension.php:67
+#: src/Jigoshop/Extensions/Extension.php:60
 msgid "Template dir was not specified"
 msgstr ""
 
