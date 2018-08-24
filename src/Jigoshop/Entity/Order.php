@@ -299,6 +299,10 @@ class Order implements OrderInterface, \JsonSerializable
 	 */
 	public function getTaxDefinitions()
 	{
+		if($this->removeTaxes) {
+			return [];
+		}
+		
 		return $this->taxDefinitions;
 	}
 
