@@ -39,6 +39,14 @@ $hasLabel = !empty($label);
                            class="form-control <?= join(' ', $classes); ?>"
                            placeholder="<?= $placeholder; ?>"
                            value="<?= $value; ?>"<?= Forms::disabled($disabled); ?>
+                    <?php
+                    if($type == 'number') {
+                        if(!isset($step)) {
+                            $step = 0.01;
+                        }
+                        echo sprintf(' step="%s"', $step);
+                    }
+                    ?>                            
                     <?php 
                     if(isset($data) && is_array($data)) {
                         foreach($data as $dataKey => $dataValue) {
