@@ -14,7 +14,9 @@ use Jigoshop\Entity\OrderInterface;
 use Jigoshop\Entity\Product\Simple;
 use Jigoshop\Exception;
 use Jigoshop\Frontend\Pages;
+use Jigoshop\Helper\Address as AddressHelper;
 use Jigoshop\Helper\Country;
+use Jigoshop\Helper\Geolocation;
 use Jigoshop\Helper\Product as ProductHelper;
 use Jigoshop\Helper\Render;
 use Jigoshop\Helper\Scripts;
@@ -92,6 +94,8 @@ class Checkout implements PageInterface
 			$wp->addAction('template_redirect', [$this, 'redirectToSsl'], 100, 0);
 		}
 
+		$wp->addAction('wp_ajax_jigoshop_checkout_change_euVatNumber', [$this, 'ajaxChangeEUVatNumber']);
+		$wp->addAction('wp_ajax_nopriv_jigoshop_checkout_change_euVatNumber', [$this, 'ajaxChangeEUVatNumber']);
 		$wp->addAction('wp_ajax_jigoshop_checkout_change_country', [$this, 'ajaxChangeCountry']);
 		$wp->addAction('wp_ajax_nopriv_jigoshop_checkout_change_country', [$this, 'ajaxChangeCountry']);
 		$wp->addAction('wp_ajax_jigoshop_checkout_change_state', [$this, 'ajaxChangeState']);
@@ -116,51 +120,151 @@ class Checkout implements PageInterface
 	/**
 	 * Ajax action for changing country.
 	 */
+	public function ajaxChangeEUVatNumber()
+	{
+		$customer = $this->customerService->getCurrent();
+		$customerAddress = $customer->getBillingAddress();
+		if(!$customerAddress instanceof CompanyAddress) {
+			$customerAddress = AddressHelper::convertToCompanyAddress($customerAddress);
+		}		
+
+		$customerAddress->setVatNumber($_POST['value']);
+
+		$customer->setBillingAddress($customerAddress);
+		$this->customerService->save($customer);
+		$cart = $this->cartService->getCurrent();
+		$cart->setCustomer($customer);
+
+		$euVatResponse = $this->processEUVatCountryChange();		
+
+		$response = $this->getAjaxLocationResponse($this->customerService->getCurrent(), $cart);
+		$response = array_merge($response, $euVatResponse);
+
+		echo json_encode($response);
+		exit;
+	}
+
+	/**
+	 * Ajax action for changing country.
+	 */
 	public function ajaxChangeCountry()
 	{
-	    try {
-            $customer = $this->customerService->getCurrent();
+		try {
+			$customer = $this->customerService->getCurrent();
 
-            if ($this->options->get('shopping.restrict_selling_locations') && !in_array($_POST['value'], $this->options->get('shopping.selling_locations'))) {
-                $locations = array_map(function ($location){
-                    return Country::getName($location);
-                }, $this->options->get('shopping.selling_locations'));
-                echo json_encode([
-                    'success' => false,
-                    'error' => sprintf(__('This location is not supported, we sell only to %s.'), join(', ', $locations)),
-                ]);
-                exit;
-            }
+			if ($this->options->get('shopping.restrict_selling_locations') && !in_array($_POST['value'], $this->options->get('shopping.selling_locations'))) {
+				$locations = array_map(function ($location){
+					return Country::getName($location);
+				}, $this->options->get('shopping.selling_locations'));
+				echo json_encode([
+					'success' => false,
+					'error' => sprintf(__('This location is not supported, we sell only to %s.'), join(', ', $locations)),
+	            ]);
+				exit;
+			}
 
-            switch ($_POST['field']) {
-                case 'shipping_address':
-                    $customer->getShippingAddress()->setCountry($_POST['value']);
-                    if ($customer->getBillingAddress()->getCountry() == null) {
-                        $customer->getBillingAddress()->setCountry($_POST['value']);
-                    }
-                    break;
-                case 'billing_address':
-                    $customer->getBillingAddress()->setCountry($_POST['value']);
-                    if ($_POST['differentShipping'] === 'false') {
-                        $customer->getShippingAddress()->setCountry($_POST['value']);
-                    }
-                    break;
-            }
+			switch ($_POST['field']) {
+				case 'shipping_address':
+					$customer->getShippingAddress()->setCountry($_POST['value']);
+					if ($customer->getBillingAddress()->getCountry() == null) {
+						$customer->getBillingAddress()->setCountry($_POST['value']);
+					}
+					break;
+				case 'billing_address':
+					$customer->getBillingAddress()->setCountry($_POST['value']);
+					if ($_POST['differentShipping'] === 'false') {
+						$customer->getShippingAddress()->setCountry($_POST['value']);
+					}
+					break;
+			}
 
-            $this->customerService->save($customer);
-            $cart = $this->cartService->getCurrent();
-            $cart->setCustomer($customer);
+			$this->customerService->save($customer);
+			$cart = $this->cartService->getCurrent();
+			$cart->setCustomer($customer);
 
-            $response = $this->getAjaxLocationResponse($customer, $cart);
-        } catch (Exception $e) {
+			$euVatResponse = $this->processEUVatCountryChange();
+
+			$response = $this->getAjaxLocationResponse($customer, $cart);
+			$response = array_merge($response, $euVatResponse);
+		}
+		catch (Exception $e) {
             $response = [
                 'success' => false,
                 'error' => $e->getMessage(),
             ];
-        }
+        }		
 
 		echo json_encode($response);
 		exit;
+	}
+
+	private function processEUVatCountryChange() {
+		$cart = $this->cartService->getCurrent();
+
+		$cart->setTaxRemovalState(false);
+
+		$errorMessage = '';	
+		if($this->options->get('tax.euVat.enabled') && Country::isEU($cart->getCustomer()->getBillingAddress()->getCountry())) {
+			$customerBillingAddress = $cart->getCustomer()->getBillingAddress();
+
+			if(!$customerBillingAddress instanceof CompanyAddress) {
+				$customerBillingAddress = AddressHelper::convertToCompanyAddress($customerBillingAddress);
+
+				$cart->getCustomer()->setBillingAddress($customerBillingAddress);
+				$this->customerService->save($cart->getCustomer());
+			}
+
+			$euVatNumber = $customerBillingAddress->getVatNumber();
+
+			if($this->options->get('tax.euVat.forceB2BTransactions', false) && !$euVatNumber) {
+				$errorMessage = __('EU VAT number is required for this order.', 'jigoshop-ecommerce');
+			}
+
+			if($euVatNumber) {
+				$euVatNumberValidationResult = Tax::validateEUVatNumber($euVatNumber, $customerBillingAddress);
+
+				if($euVatNumberValidationResult == Tax::EU_VAT_VALIDATION_RESULT_VALID) {
+                    if($this->options->get('general.country') == $customerBillingAddress) {
+                        if($this->options->get('tax.euVat.removeVatIfCustomerIsLocatedInShopCountry')) {
+                            $cart->setTaxRemovalState(true);
+                        }
+                    }
+                    else {
+                        $cart->setTaxRemovalState(true);
+                    }
+				}
+				elseif($euVatNumberValidationResult == Tax::EU_VAT_VALIDATION_RESULT_INVALID || $euVatNumberValidationResult == Tax::EU_VAT_VALIDATION_RESULT_ERROR) {
+					if($this->options->get('tax.euVat.failedValidationHandling') == 'reject') {
+						if($euVatNumberValidationResult == Tax::EU_VAT_VALIDATION_RESULT_INVALID) {
+							$errorMessage = __('EU VAT number is invalid.', 'jigoshop-ecommerce');
+						}
+						elseif($euVatNumberValidationResult == Tax::EU_VAT_VALIDATION_RESULT_ERROR) {
+							$errorMessage = __('Unable to validate EU VAT number. Please try again later.', 'jigoshop-ecommerce');
+						}
+					}
+					elseif($this->options->get('tax.euVat.failedValidationHandling') == 'accept') {
+						if($euVatNumberValidationResult == Tax::EU_VAT_VALIDATION_RESULT_INVALID) {
+							$errorMessage = __('EU VAT number is invalid. No taxes will be removed if you continue with your order.', 'jigoshop-ecommerce');
+						}
+						elseif($euVatNumberValidationResult == Tax::EU_VAT_VALIDATION_RESULT_ERROR) {
+							$errorMessage = __('Unable to validate EU VAT number. No taxes will be removed if you continue with your order.', 'jigoshop-ecommerce');
+						}
+					}
+					elseif($this->options->get('tax.euVat.failedValidationHandling') == 'acceptRemoveVat') {
+						$cart->setTaxRemovalState(true);
+					}
+				}
+			}
+		}
+
+		$this->cartService->save($cart);
+
+		$result = [];
+		if($errorMessage) {
+			$result['euVatError'] = $errorMessage;
+		}
+
+		return $result;
 	}
 
 	/**
@@ -180,6 +284,7 @@ class Checkout implements PageInterface
 		// Add some additional fields
 		$response['has_states'] = Country::hasStates($address->getCountry());
 		$response['states'] = Country::getStates($address->getCountry());
+		$response['isEU'] = Country::isEU($address->getCountry());
 		$response['html']['estimation'] = $address->getLocation();
 
 		return $response;
@@ -425,6 +530,60 @@ class Checkout implements PageInterface
 					throw new Exception(sprintf(__('This location is not supported, we sell only to %s.'), join(', ', $locations)));
 				}
 
+				if($this->options->get('tax.euVat.enabled')) {
+					$euVatNumberValidationResult = Tax::EU_VAT_VALIDATION_RESULT_INVALID;
+					$euVatNumber = $cart->getCustomer()->getBillingAddress()->getVatNumber();
+
+					if($this->options->get('tax.euVat.forceB2BTransactions', false) && !$euVatNumber) {
+						throw new Exception(__('EU VAT number is required for this order.', 'jigoshop-ecommerce'));
+					}
+
+					if($euVatNumber) {
+						$euVatNumberValidationResult = Tax::validateEUVatNumber($euVatNumber, $cart->getCustomer()->getBillingAddress()->getCountry());
+
+						if($euVatNumberValidationResult == Tax::EU_VAT_VALIDATION_RESULT_VALID) {
+		                    if($this->options->get('general.country') == $cart->getCustomer()->getBillingAddress()->getCountry()) {
+		                        if($this->options->get('tax.euVat.removeVatIfCustomerIsLocatedInShopCountry')) {
+		                            $cart->setTaxRemovalState(true);
+		                        }
+		                        else {
+		                        	$cart->setTaxRemovalState(false);
+		                        }
+		                    }
+		                    else {
+		                        $cart->setTaxRemovalState(true);
+		                    }
+						}
+						elseif($euVatNumberValidationResult == Tax::EU_VAT_VALIDATION_RESULT_INVALID || $euVatNumberValidationResult == Tax::EU_VAT_VALIDATION_RESULT_ERROR) {
+							if($this->options->get('tax.euVat.failedValidationHandling') == 'reject') {
+								if($euVatNumberValidationResult == Tax::EU_VAT_VALIDATION_RESULT_INVALID) {
+									throw new Exception(__('Invalid EU VAT number.', 'jigoshop-ecommerce'));
+								}
+								elseif($euVatNumberValidationResult == Tax::EU_VAT_VALIDATION_RESULT_ERROR) {
+									throw new Exception(__('Unable to validate EU VAT number. Please try again later.', 'jigoshop-ecommerce'));
+								}
+							}
+							elseif($this->options->get('tax.euVat.failedValidationHandling') == 'accept') {
+								$cart->setTaxRemovalState(false);
+							}
+							elseif($this->options->get('tax.euVat.failedValidationHandling') == 'acceptRemoveVat') {
+								$cart->setTaxRemovalState(true);
+							}
+						}
+					}
+
+					$cart->setIPAddress($_SERVER['REMOTE_ADDR']);
+					$cart->setEUVatValidationStatus($euVatNumberValidationResult);
+
+					try {
+						$ipAddressCountry = Geolocation::getCountryOfIP($_SERVER['REMOTE_ADDR']);
+						if($ipAddressCountry !== null) {
+							$cart->setIPAddressCountry($ipAddressCountry);
+						}
+					}
+					catch(Exception $e) {}
+				}
+
 				$shipping = $cart->getShippingMethod();
 				if ($this->isShippingRequired($cart) && (!$shipping || !$shipping->isEnabled())) {
 					throw new Exception(__('Shipping is required for this order. Please select shipping method.', 'jigoshop-ecommerce'));
@@ -616,6 +775,15 @@ class Checkout implements PageInterface
 		$shippingFields = $this->getShippingFields($cart->getCustomer()->getShippingAddress());
         $billingOnly = $this->options->get('shipping.only_to_billing');
 
+        if($this->options->get('tax.euVat.enabled')) {
+        	// Shop country is outside EU - disable EU VAT.
+        	if(!Country::isEU($this->options->get('general.country'))) {
+        		$this->options->update('tax.euVat.enabled', false);
+
+        		$this->options->saveOptions();
+        	}
+        }
+
 		$termsUrl = '';
 		$termsPage = $this->options->get('advanced.pages.terms');
 		if ($termsPage > 0) {
@@ -651,6 +819,15 @@ class Checkout implements PageInterface
 
 		if (!Country::isEU($this->options->get('general.country'))) {
 			unset($fields['euvatno']);
+		}
+
+		if(!Country::isEU($address->getCountry())) {
+			$fields['euvatno']['disabled'] = true;
+		}
+
+		$euVatNumberFieldDescription = $this->options->get('tax.euVat.fieldDescription', '');
+		if(strlen($euVatNumberFieldDescription) > 0) {
+			$fields['euvatno']['tip'] = $euVatNumberFieldDescription;
 		}
 
 		return $fields;

@@ -129,6 +129,13 @@ class Options
 				'taxable' => true,
 				'classes' => ['standard'],
             ],
+            'euVat' => [
+            	'enabled' => false,
+            	'fieldDescription' => '',
+            	'removeVatIfCustomerIsLocatedInShopCountry' => false,
+            	'failedValidationHandling' => 'reject',
+            	'forceB2BTransactions' => false
+            ]
         ],
 		'shipping' => [
 			'enabled' => true,

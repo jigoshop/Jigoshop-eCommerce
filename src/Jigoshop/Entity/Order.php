@@ -21,6 +21,9 @@ use Monolog\Registry;
  */
 class Order implements OrderInterface, \JsonSerializable
 {
+	const EU_VAT_VALIDATON_STATUS_INVALID = 'invalid';
+	const EU_VAT_VALIDATON_STATUS_VALID = 'valid';
+
 	/** @var int */
 	private $id;
 	/** @var string */
@@ -53,6 +56,14 @@ class Order implements OrderInterface, \JsonSerializable
 	private $tax = [];
 	/** @var array */
 	private $taxDefinitions = [];
+	/** @var boolean */
+	private $removeTaxes = false;
+	/** @var string */
+	private $euVatValidationStatus = '';
+	/** @var string */
+	private $ipAddress = '';
+	/** @var string */
+	private $ipAddressCountry = '';
 	/** @var array */
 	private $shippingTax = [];
 	/** @var float */
@@ -288,6 +299,10 @@ class Order implements OrderInterface, \JsonSerializable
 	 */
 	public function getTaxDefinitions()
 	{
+		if($this->removeTaxes) {
+			return [];
+		}
+		
 		return $this->taxDefinitions;
 	}
 
@@ -585,6 +600,78 @@ class Order implements OrderInterface, \JsonSerializable
 	}
 
 	/**
+	 * Returns whether Order has it's taxes removed.
+	 * 
+	 * @return boolean Taxes removed from Order.
+	 */
+	public function getTaxRemovalState() {
+		return $this->removeTaxes;
+	}
+
+	/**
+	 * Sets "removeTaxes" flag value.
+	 * 
+	 * @param boolean $state RemoveTaxes flag state.
+	 */
+	public function setTaxRemovalState($state) {
+		$this->removeTaxes = $state;
+	}
+
+	/**
+	 * Returns EU VAT validation status.
+	 * 
+	 * @return string EU VAT validation status.
+	 */
+	public function getEUVatValidationStatus() {
+		return $this->euVatValidationStatus;
+	}
+
+	/**
+	 * Sets EU VAT validation status.
+	 * 
+	 * @param string $euVatValidationStatus EU VAT validation status.
+	 */
+	public function setEUVatValidationStatus($euVatValidationStatus) {
+		$this->euVatValidationStatus = $euVatValidationStatus;
+	}
+
+	/**
+	 * Returns IP address used when order was placed.
+	 * 
+	 * @return string IP address.
+	 */
+	public function getIPAddress() {
+		return $this->ipAddress;
+	}
+
+	/**
+	 * Sets IP address used when order was placed.
+	 * 
+	 * @param string $ipAddress IP address to set.
+	 */
+	public function setIPAddress($ipAddress) {
+		$this->ipAddress = $ipAddress;
+	}
+
+	/**
+	 * Returns country code of IP address when order was placed.
+	 *
+	 * @return string Country code.
+	 */
+	public function getIPAddressCountry() {
+		return $this->ipAddressCountry;
+	}
+
+	/**
+	 * Sets country code of IP address when order was placed.
+	 * 
+	 * @param string $ipAddressCountry Country code.
+	 */
+	public function setIPAddressCountry($ipAddressCountry) {
+		$this->ipAddressCountry = $ipAddressCountry;
+	}
+
+	/**
 	 * @return array List of applied tax classes for shipping with it's values.
 	 */
 	public function getShippingTax()
@@ -637,6 +724,12 @@ class Order implements OrderInterface, \JsonSerializable
 			}
 
 			$tax[$class] += $value;
+		}
+
+		if($this->removeTaxes) {
+			foreach($tax as $class => $value) {
+				$tax[$class] = 0.0;
+			}		
 		}
 
 		return $tax;
@@ -859,7 +952,11 @@ class Order implements OrderInterface, \JsonSerializable
 			'shipping_tax' => $this->shippingTax,
 			'status' => $this->getStatus(),
 			'update_messages' => $this->updateMessages,
-            'tax_included' => $this->taxIncluded
+            'tax_included' => $this->taxIncluded,
+            'removeTaxes' => $this->removeTaxes,
+            'euVatValidationStatus' => $this->euVatValidationStatus,
+            'ipAddress' => $this->ipAddress,
+            'ipAddressCountry' => $this->ipAddressCountry
         ];
 	}
 
@@ -958,6 +1055,18 @@ class Order implements OrderInterface, \JsonSerializable
         }
         if(isset($state['currency'])) {
         	$this->currency = $state['currency'];
+        }
+        if(isset($state['removeTaxes'])) {
+        	$this->removeTaxes = $state['removeTaxes'];
+        }
+        if(isset($state['euVatValidationStatus'])) {
+        	$this->euVatValidationStatus = $state['euVatValidationStatus'];
+        }
+        if(isset($state['ipAddress'])) {
+        	$this->ipAddress = $state['ipAddress'];
+        }
+        if(isset($state['ipAddressCountry'])) {
+        	$this->ipAddressCountry = $state['ipAddressCountry'];
         }
 	}
 

@@ -7,6 +7,7 @@ use Jigoshop\Core\Messages;
 use Jigoshop\Helper\Country;
 use Jigoshop\Helper\Render;
 use Jigoshop\Helper\Scripts;
+use Jigoshop\Integration;
 use Jigoshop\Service\TaxServiceInterface;
 use WPAL\Wordpress;
 
@@ -23,11 +24,14 @@ class TaxesTab implements TabInterface
 	private $options;
 	/** @var TaxServiceInterface */
 	private $taxService;
+	/** @var \Jigoshop\Core\Messages */
+	private $messages;
 
 	public function __construct(Wordpress $wp, Options $options, TaxServiceInterface $taxService, Messages $messages)
 	{
 		$this->options = $options->get(self::SLUG);
 		$this->taxService = $taxService;
+		$this->messages = $messages;
 		$options = $this->options;
 
 		$wp->addAction('admin_enqueue_scripts', function () use ($options){
@@ -241,6 +245,55 @@ class TaxesTab implements TabInterface
                     ],
                 ],
             ],
+            [
+            	'title' => __('EU VAT', 'jigoshop-ecommerce'),
+            	'id' => 'euVat',
+            	'fields' => [
+            		[
+            			'title' => __('Enable', 'jigoshop-ecommerce'),
+            			'description' => __('Enables EU VAT handling. Shop location must be set within borders of European Union.', 'jigoshop-ecommerce'),
+            			'name' => '[euVat][enabled]',
+            			'type' => 'checkbox',
+            			'classes' => ['switch-medium'],
+            			'checked' => $this->options['euVat']['enabled']
+            		],
+            		[
+            			'title' => __('Field description', 'jigoshop-ecommerce'),
+            			'description' => __('Field description that is shown below VAT Number field.', 'jigoshop-ecommerce'),
+            			'name' => '[euVat][fieldDescription]',
+            			'type' => 'text',
+            			'value' => $this->options['euVat']['fieldDescription']
+            		],
+            		[
+            			'title' => __('Businesses located in Shop country', 'jigoshop-ecommerce'),
+            			'description' => __('When this option is enabled, VAT will be removed for customers based in the same country as Shop.', 'jigoshop-ecommerce'),
+            			'name' => '[euVat][removeVatIfCustomerIsLocatedInShopCountry]',
+            			'type' => 'checkbox',
+            			'classes' => ['switch-medium'],
+            			'checked' => $this->options['euVat']['removeVatIfCustomerIsLocatedInShopCountry']
+            		],
+            		[
+            			'title' => __('Failed validation handling', 'jigoshop-ecommerce'),
+            			'description' => __('This field controls what will happen if customer supplied VAT number fails VIES validation.', 'jigoshop-ecommerce'),
+            			'name' => '[euVat][failedValidationHandling]',
+            			'type' => 'select',
+            			'options' => [
+            				'reject' => __('Reject order and show error message.', 'jigoshop-ecommerce'),
+            				'accept' => __('Accept the order, but do not remove VAT.', 'jigoshop-ecommerce'),
+            				'acceptRemoveVat' => __('Accept the order and remove VAT.', 'jigoshop-ecommerce')
+            			],
+            			'value' => $this->options['euVat']['failedValidationHandling']
+            		],
+            		[
+            			'title' => __('Force B2B transactions', 'jigoshop-ecommerce'),
+            			'description' => __('When this option is enabled, VAT number will be mandatory when placing order.', 'jigoshop-ecommerce'),
+            			'name' => '[euVat][forceB2BTransactions]',
+            			'type' => 'checkbox',
+            			'classes' => ['switch-medium'],
+            			'checked' => $this->options['euVat']['forceB2BTransactions']
+            		]
+            	]
+            ]
         ];
 	}
 
@@ -296,6 +349,24 @@ class TaxesTab implements TabInterface
                 });
         } else {
             $settings['defaults']['classes'] = [];
+        }
+
+        $settings['euVat']['enabled'] = $settings['euVat']['enabled'] == 'on';
+        $settings['euVat']['removeVatIfCustomerIsLocatedInShopCountry'] = $settings['euVat']['removeVatIfCustomerIsLocatedInShopCountry'] == 'on';
+        $settings['euVat']['forceB2BTransactions'] = $settings['euVat']['forceB2BTransactions'] == 'on';
+
+        if($settings['euVat']['enabled']) {
+        	if(!Country::isEU(Integration::getOptions()->get('general')['country'])) {
+        		$settings['euVat']['enabled'] = false;
+
+        		$this->messages->addError(__('Shop location is set outside of European Union. EU VAT functionality will remain disabled.', 'jigoshop-ecommerce'));
+        	}
+
+        	if(!function_exists('curl_init')) {
+        		$settings['euVat']['enabled'] = false;
+
+        		$this->messages->addError(__('EU VAT validation requires cURL PHP extension to work properly. Please make sure that cURL is installed on your server.', 'jigoshop-ecommerce'));
+        	}
         }
 
 		if (!isset($settings['rules'])) {

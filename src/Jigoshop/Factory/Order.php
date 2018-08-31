@@ -6,10 +6,14 @@ use Jigoshop\Core\Messages;
 use Jigoshop\Core\Options;
 use Jigoshop\Core\Types;
 use Jigoshop\Entity\Customer as CustomerEntity;
+use Jigoshop\Entity\Customer\CompanyAddress;
 use Jigoshop\Entity\Order as Entity;
 use Jigoshop\Entity\OrderInterface;
 use Jigoshop\Entity\Product as ProductEntity;
+use Jigoshop\Helper\Country;
+use Jigoshop\Helper\Geolocation;
 use Jigoshop\Helper\Product as ProductHelper;
+use Jigoshop\Helper\Tax;
 use Jigoshop\Shipping\Method as ShippingMethod;
 use Jigoshop\Payment\Method as PaymentMethod;
 use Jigoshop\Service\CouponServiceInterface;
@@ -345,6 +349,41 @@ class Order implements EntityFactoryInterface
 
         $order->restoreState($data);
 
+        // Process tax removal for new orders if we have Vat number.
+        if($order->getCustomer()->getBillingAddress() instanceof CompanyAddress && $this->options->get('tax.euVat.enabled') && Country::isEU($order->getCustomer()->getBillingAddress()->getCountry())) {
+            if($order->getCustomer()->getBillingAddress()->getVatNumber() && $order->getEuVatValidationStatus() === '') {
+                $euVatNumberValidationResult = Tax::validateEUVatNumber($order->getCustomer()->getBillingAddress()->getVatNumber(), $order->getCustomer()->getBillingAddress()->getCountry());
+
+                $order->setTaxRemovalState(false);
+                if($euVatNumberValidationResult == Tax::EU_VAT_VALIDATION_RESULT_VALID) {
+                    if($this->options->get('general.country') == $order->getCustomer()->getBillingAddress()->getCountry()) {
+                        if($this->options->get('tax.euVat.removeVatIfCustomerIsLocatedInShopCountry')) {
+                            $order->setTaxRemovalState(true);
+                        }
+                    }
+                    else {
+                        $order->setTaxRemovalState(true);
+                    }
+                }
+                elseif($euVatNumberValidationResult == Tax::EU_VAT_VALIDATION_RESULT_INVALID || $euVatNumberValidationResult == Tax::EU_VAT_VALIDATION_RESULT_ERROR) {
+                    if($this->options->get('tax.euVat.failedValidationHandling') == 'acceptRemoveVat') {
+                        $order->setTaxRemovalState(true);
+                    }
+                }
+
+                $order->setIPAddress($_SERVER['REMOTE_ADDR']);
+                $order->setEUVatValidationStatus($euVatNumberValidationResult);
+
+                try {
+                    $ipAddressCountry = Geolocation::getCountryOfIP($_SERVER['REMOTE_ADDR']);
+                    if($ipAddressCountry !== null) {
+                        $order->setIPAddressCountry($ipAddressCountry);
+                    }
+                }
+                catch(Exception $e) {}                
+            }
+        }
+
         return $this->wp->applyFilters('jigoshop\factory\order\fill', $order);
     }
 
@@ -381,9 +420,11 @@ class Order implements EntityFactoryInterface
 
     private function createAddress($data)
     {
-        if (!empty($data['company'])) {
+        if (!empty($data['company']) || !empty($data['euvatno'])) {
             $address = new CustomerEntity\CompanyAddress();
-            $address->setCompany($data['company']);
+            if(isset($data['company'])) {
+                $address->setCompany($data['company']);
+            }
             if (isset($data['euvatno'])) {
                 $address->setVatNumber($data['euvatno']);
             }
