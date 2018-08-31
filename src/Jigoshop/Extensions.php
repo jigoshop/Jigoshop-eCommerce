@@ -34,7 +34,15 @@ class Extensions
      */
     public static function register(Extension $extension)
     {
-        self::$extensions[] = $extension;
+        self::$extensions[get_class($extension)] = $extension;
+    }
+
+    /**
+     * @return Extension[]
+     */
+    public static function getExtensions()
+    {
+        return self::$extensions;
     }
 
     /**
@@ -43,14 +51,6 @@ class Extensions
     public static function install(Extension $extension)
     {
         do_action('jigoshop\extensions\install', $extension);
-    }
-
-    /**
-     * @return Extension[]
-     */
-    public function getExtensions()
-    {
-        return self::$extensions;
     }
 
     /**
@@ -86,7 +86,7 @@ class Extensions
             }
             if ($extension->getPlugin()->getId() && $this->isLicenseEnabled($extension->getPlugin()->getId()) == false) {
                 $errors[] = __('The License is not valid. Please enter your <b>Licence Key</b> on the Jigoshop->Manage Licences Menu with your <b>Order email address</b>.  Until then, the plugin will not be enabled for use.',
-                    'jigoshop');
+                    'jigoshop-ecommerce');
             }
             if (!empty($errors)) {
                 throw new Exception(join('</li><li>', $errors));

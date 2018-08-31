@@ -61,7 +61,7 @@ msgstr ""
 msgid "Search Results:"
 msgstr ""
 
-#: src/Jigoshop/Api.php:195
+#: src/Jigoshop/Api.php:192
 msgid "Resource not found"
 msgstr ""
 
@@ -157,7 +157,7 @@ msgstr ""
 msgid "Remaining"
 msgstr ""
 
-#: templates/admin/migration.php:56, templates/shop/cart.php:190, templates/shop/checkout.php:257, templates/user/account.php:87, templates/admin/order/totalsBox.php:73, templates/shop/checkout/pay.php:88, templates/shop/checkout/thanks.php:131, templates/user/account/orders.php:38, templates/user/account/orders/single.php:141
+#: templates/admin/migration.php:56, templates/shop/cart.php:190, templates/shop/checkout.php:257, templates/user/account.php:87, templates/admin/order/totalsBox.php:73, templates/shop/checkout/pay.php:104, templates/shop/checkout/thanks.php:131, templates/user/account/orders.php:38, templates/user/account/orders/single.php:141
 msgid "Total"
 msgstr ""
 
@@ -389,7 +389,7 @@ msgstr ""
 msgid "Enter coupons..."
 msgstr ""
 
-#: templates/shop/cart.php:86, templates/shop/checkout.php:134, templates/shop/checkout.php:193, templates/shop/checkout/pay.php:45, templates/shop/checkout/thanks.php:79, templates/user/account/orders/single.php:82
+#: templates/shop/cart.php:86, templates/shop/checkout.php:134, templates/shop/checkout.php:193, templates/shop/checkout/pay.php:61, templates/shop/checkout/thanks.php:79, templates/user/account/orders/single.php:82
 msgid "Products subtotal"
 msgstr ""
 
@@ -401,7 +401,7 @@ msgstr ""
 msgid "Cart Totals"
 msgstr ""
 
-#: templates/shop/cart.php:109, templates/shop/checkout.php:222, src/Jigoshop/Admin/Setup.php:105, templates/admin/order/totalsBox.php:18, templates/shop/checkout/pay.php:61, templates/shop/checkout/thanks.php:94, src/Jigoshop/Admin/Settings/ShippingTab.php:68, templates/user/account/orders/single.php:98
+#: templates/shop/cart.php:109, templates/shop/checkout.php:222, src/Jigoshop/Admin/Setup.php:105, templates/admin/order/totalsBox.php:18, templates/shop/checkout/pay.php:77, templates/shop/checkout/thanks.php:94, src/Jigoshop/Admin/Settings/ShippingTab.php:68, templates/user/account/orders/single.php:98
 msgid "Shipping"
 msgstr ""
 
@@ -421,11 +421,11 @@ msgstr ""
 msgid "Change destination"
 msgstr ""
 
-#: templates/shop/cart.php:176, templates/shop/checkout.php:237, src/Jigoshop/Core/Emails.php:341, templates/admin/order/totalsBox.php:35, templates/shop/checkout/pay.php:72, templates/shop/checkout/thanks.php:105, templates/widget/cart/widget.php:38, templates/user/account/orders/single.php:109
+#: templates/shop/cart.php:176, templates/shop/checkout.php:237, src/Jigoshop/Core/Emails.php:341, templates/admin/order/totalsBox.php:35, templates/shop/checkout/pay.php:88, templates/shop/checkout/thanks.php:105, templates/widget/cart/widget.php:38, templates/user/account/orders/single.php:109
 msgid "Subtotal"
 msgstr ""
 
-#: templates/shop/cart.php:186, templates/shop/checkout.php:248, templates/admin/order/totalsBox.php:43, templates/shop/checkout/pay.php:84, templates/shop/checkout/thanks.php:117, templates/user/account/orders/single.php:124
+#: templates/shop/cart.php:186, templates/shop/checkout.php:248, templates/admin/order/totalsBox.php:43, templates/shop/checkout/pay.php:100, templates/shop/checkout/thanks.php:117, templates/user/account/orders/single.php:124
 msgid "Discount"
 msgstr ""
 
@@ -461,7 +461,7 @@ msgstr ""
 msgid "Totals"
 msgstr ""
 
-#: templates/shop/checkout.php:267, templates/shop/checkout/pay.php:98
+#: templates/shop/checkout.php:267, templates/shop/checkout/pay.php:114
 msgid "Select payment method"
 msgstr ""
 
@@ -538,7 +538,7 @@ msgstr ""
 msgid "Status"
 msgstr ""
 
-#: templates/user/account.php:90, templates/shop/checkout/pay.php:134, templates/user/account/orders.php:29, templates/user/account/orders/single.php:151
+#: templates/user/account.php:90, templates/shop/checkout/pay.php:150, templates/user/account/orders.php:29, templates/user/account/orders/single.php:151
 msgid "Pay"
 msgstr ""
 
@@ -1251,8 +1251,12 @@ msgstr ""
 msgid "No item with ID %d in order %d"
 msgstr ""
 
-#: src/Jigoshop/Entity/Order.php:666, src/Jigoshop/Admin/Page/Order.php:266, src/Jigoshop/Frontend/Page/Cart.php:397
+#: src/Jigoshop/Entity/Order.php:666, src/Jigoshop/Admin/Page/Order.php:266, src/Jigoshop/Frontend/Page/Cart.php:418
 msgid "Item not found."
+msgstr ""
+
+#: src/Jigoshop/Extensions/Extension.php:60
+msgid "Template dir was not specified"
 msgstr ""
 
 #: src/Jigoshop/Factory/Product.php:41
@@ -2146,39 +2150,47 @@ msgstr ""
 msgid "Enable"
 msgstr ""
 
-#: src/Jigoshop/Shipping/AdvancedFlatRate.php:122, src/Jigoshop/Shipping/FlatRate.php:139, src/Jigoshop/Admin/Settings/TaxesTab.php:228, templates/admin/product/box/advanced.php:15
+#: src/Jigoshop/Shipping/AdvancedFlatRate.php:120, src/Jigoshop/Shipping/FlatRate.php:157, src/Jigoshop/Shipping/FreeShipping.php:146, src/Jigoshop/Shipping/LocalPickup.php:104
+msgid "Enable Only for Admin"
+msgstr ""
+
+#: src/Jigoshop/Shipping/AdvancedFlatRate.php:121, src/Jigoshop/Shipping/FlatRate.php:158, src/Jigoshop/Shipping/FreeShipping.php:147, src/Jigoshop/Shipping/LocalPickup.php:105
+msgid "Enable this if you would like to test it only for Site Admin"
+msgstr ""
+
+#: src/Jigoshop/Shipping/AdvancedFlatRate.php:130, src/Jigoshop/Shipping/FlatRate.php:139, src/Jigoshop/Admin/Settings/TaxesTab.php:228, templates/admin/product/box/advanced.php:15
 msgid "Is taxable?"
 msgstr ""
 
-#: src/Jigoshop/Shipping/AdvancedFlatRate.php:129, templates/admin/settings/payment/processingFeeRules.php:12
+#: src/Jigoshop/Shipping/AdvancedFlatRate.php:137, templates/admin/settings/payment/processingFeeRules.php:12
 msgid "Fee"
 msgstr ""
 
-#: src/Jigoshop/Shipping/AdvancedFlatRate.php:135, src/Jigoshop/Shipping/FlatRate.php:159, src/Jigoshop/Shipping/FreeShipping.php:148
+#: src/Jigoshop/Shipping/AdvancedFlatRate.php:143, src/Jigoshop/Shipping/FlatRate.php:167, src/Jigoshop/Shipping/FreeShipping.php:156
 msgid "Available for"
 msgstr ""
 
-#: src/Jigoshop/Shipping/AdvancedFlatRate.php:139, src/Jigoshop/Shipping/FlatRate.php:44, src/Jigoshop/Shipping/FreeShipping.php:43
+#: src/Jigoshop/Shipping/AdvancedFlatRate.php:147, src/Jigoshop/Shipping/FlatRate.php:44, src/Jigoshop/Shipping/FreeShipping.php:43
 msgid "All allowed countries"
 msgstr ""
 
-#: src/Jigoshop/Shipping/AdvancedFlatRate.php:140, src/Jigoshop/Shipping/FlatRate.php:45, src/Jigoshop/Shipping/FreeShipping.php:44
+#: src/Jigoshop/Shipping/AdvancedFlatRate.php:148, src/Jigoshop/Shipping/FlatRate.php:45, src/Jigoshop/Shipping/FreeShipping.php:44
 msgid "Selected countries"
 msgstr ""
 
-#: src/Jigoshop/Shipping/AdvancedFlatRate.php:146, src/Jigoshop/Shipping/FlatRate.php:167, src/Jigoshop/Shipping/FreeShipping.php:156
+#: src/Jigoshop/Shipping/AdvancedFlatRate.php:154, src/Jigoshop/Shipping/FlatRate.php:175, src/Jigoshop/Shipping/FreeShipping.php:164
 msgid "Select countries"
 msgstr ""
 
-#: src/Jigoshop/Shipping/AdvancedFlatRate.php:155
+#: src/Jigoshop/Shipping/AdvancedFlatRate.php:163
 msgid "Show multiple rates"
 msgstr ""
 
-#: src/Jigoshop/Shipping/AdvancedFlatRate.php:165
+#: src/Jigoshop/Shipping/AdvancedFlatRate.php:173
 msgid "Rates"
 msgstr ""
 
-#: src/Jigoshop/Shipping/AdvancedFlatRate.php:220, src/Jigoshop/Shipping/FlatRate.php:213
+#: src/Jigoshop/Shipping/AdvancedFlatRate.php:229, src/Jigoshop/Shipping/FlatRate.php:222
 msgid "Fee was below 0 - value is left unchanged."
 msgstr ""
 
@@ -2210,23 +2222,23 @@ msgstr ""
 msgid "Handling fee"
 msgstr ""
 
-#: src/Jigoshop/Shipping/FlatRate.php:191
+#: src/Jigoshop/Shipping/FlatRate.php:200
 msgid "Type is invalid - value is left unchanged."
 msgstr ""
 
-#: src/Jigoshop/Shipping/FlatRate.php:196
+#: src/Jigoshop/Shipping/FlatRate.php:205
 msgid "Cost was invalid - value is left unchanged."
 msgstr ""
 
-#: src/Jigoshop/Shipping/FlatRate.php:202
+#: src/Jigoshop/Shipping/FlatRate.php:211
 msgid "Cost was below 0 - value is left unchanged."
 msgstr ""
 
-#: src/Jigoshop/Shipping/FlatRate.php:207
+#: src/Jigoshop/Shipping/FlatRate.php:216
 msgid "Fee was invalid - value is left unchanged."
 msgstr ""
 
-#: src/Jigoshop/Shipping/FlatRate.php:218, src/Jigoshop/Shipping/FreeShipping.php:191
+#: src/Jigoshop/Shipping/FlatRate.php:227, src/Jigoshop/Shipping/FreeShipping.php:200
 msgid "Availability is invalid - value is left unchanged."
 msgstr ""
 
@@ -2242,11 +2254,11 @@ msgstr ""
 msgid "Minimum cart value above which the Free Shipping method should be available."
 msgstr ""
 
-#: src/Jigoshop/Shipping/FreeShipping.php:179
+#: src/Jigoshop/Shipping/FreeShipping.php:188
 msgid "Minimum cart value was invalid - value is left unchanged."
 msgstr ""
 
-#: src/Jigoshop/Shipping/FreeShipping.php:186
+#: src/Jigoshop/Shipping/FreeShipping.php:195
 msgid "Minimum cart value was below 0 - value is left unchanged."
 msgstr ""
 
@@ -2857,7 +2869,7 @@ msgstr ""
 msgid "Product subtotal:"
 msgstr ""
 
-#: templates/admin/order/totalsBox.php:64, templates/shop/checkout/thanks.php:124, src/Jigoshop/Frontend/Page/Checkout.php:343
+#: templates/admin/order/totalsBox.php:64, templates/shop/checkout/thanks.php:124, src/Jigoshop/Frontend/Page/Checkout.php:366
 msgid "Payment processing fee (%s)"
 msgstr ""
 
@@ -3085,15 +3097,15 @@ msgstr ""
 msgid "Order details"
 msgstr ""
 
-#: templates/shop/checkout/pay.php:55, templates/shop/checkout/thanks.php:88, src/Jigoshop/Admin/Page/Order.php:93, templates/user/account/orders/single.php:92
+#: templates/shop/checkout/pay.php:71, templates/shop/checkout/thanks.php:88, src/Jigoshop/Admin/Page/Order.php:93, templates/user/account/orders/single.php:92
 msgid "Order Totals"
 msgstr ""
 
-#: templates/shop/checkout/pay.php:132, templates/user/account/change_password.php:32, templates/user/account/edit_address.php:75, templates/user/account/orders.php:45, templates/user/account/orders/single.php:148
+#: templates/shop/checkout/pay.php:148, templates/user/account/change_password.php:32, templates/user/account/edit_address.php:75, templates/user/account/orders.php:45, templates/user/account/orders/single.php:148
 msgid "Go back to My account"
 msgstr ""
 
-#: templates/shop/checkout/pay.php:133
+#: templates/shop/checkout/pay.php:149
 msgid "Go back to My orders"
 msgstr ""
 
@@ -3139,6 +3151,22 @@ msgstr ""
 
 #: templates/shop/list/product.php:16, templates/shop/product/images.php:15
 msgid "Sale!"
+msgstr ""
+
+#: templates/shop/product/attributes.php:11, templates/admin/product/box/general.php:64, templates/admin/product/box/variations/variation/simple.php:37
+msgid "Height"
+msgstr ""
+
+#: templates/shop/product/attributes.php:15, templates/admin/product/box/general.php:59, templates/admin/product/box/variations/variation/simple.php:30
+msgid "Width"
+msgstr ""
+
+#: templates/shop/product/attributes.php:19, templates/admin/product/box/general.php:54, templates/admin/product/box/variations/variation/simple.php:23
+msgid "Length"
+msgstr ""
+
+#: templates/shop/product/attributes.php:23, templates/admin/product/box/general.php:49, templates/admin/product/box/variations/variation/simple.php:16
+msgid "Weight"
 msgstr ""
 
 #: templates/shop/product/related.php:7, src/Jigoshop/Admin/Settings/ProductsTab.php:77
@@ -3495,7 +3523,7 @@ msgstr ""
 msgid "Invalid product price."
 msgstr ""
 
-#: src/Jigoshop/Admin/Page/Order.php:331, src/Jigoshop/Frontend/Page/Cart.php:320
+#: src/Jigoshop/Admin/Page/Order.php:331, src/Jigoshop/Frontend/Page/Cart.php:341
 msgid "Method rate is required."
 msgstr ""
 
@@ -5451,7 +5479,7 @@ msgstr ""
 msgid "This is where you can add new products to your store."
 msgstr ""
 
-#: src/Jigoshop/Core/Types/Product.php:126
+#: src/Jigoshop/Core/Types/Product.php:129
 msgid "Unknown type: \"%s\"."
 msgstr ""
 
@@ -5624,91 +5652,91 @@ msgstr ""
 msgid "Loading..."
 msgstr ""
 
-#: src/Jigoshop/Frontend/Page/Cart.php:288, src/Jigoshop/Frontend/Page/Cart.php:511, src/Jigoshop/Frontend/Page/Account/EditAddress.php:83
+#: src/Jigoshop/Frontend/Page/Cart.php:303, src/Jigoshop/Frontend/Page/Cart.php:532, src/Jigoshop/Frontend/Page/Account/EditAddress.php:83
 msgid "Postcode is not valid!"
 msgstr ""
 
-#: src/Jigoshop/Frontend/Page/Cart.php:434
+#: src/Jigoshop/Frontend/Page/Cart.php:455
 msgid "Sorry, we do not have enough units in stock. We have got only %s in stock"
 msgstr ""
 
-#: src/Jigoshop/Frontend/Page/Cart.php:463
+#: src/Jigoshop/Frontend/Page/Cart.php:484
 msgid "Invalid order key."
 msgstr ""
 
-#: src/Jigoshop/Frontend/Page/Cart.php:469
+#: src/Jigoshop/Frontend/Page/Cart.php:490
 msgid "Unable to cancel order."
 msgstr ""
 
-#: src/Jigoshop/Frontend/Page/Cart.php:478
+#: src/Jigoshop/Frontend/Page/Cart.php:499
 msgid "The order has been cancelled"
 msgstr ""
 
-#: src/Jigoshop/Frontend/Page/Cart.php:505
+#: src/Jigoshop/Frontend/Page/Cart.php:526
 msgid "Previous shipping method is unavailable. Please select different one."
 msgstr ""
 
-#: src/Jigoshop/Frontend/Page/Cart.php:521, src/Jigoshop/Frontend/Page/Cart.php:532
+#: src/Jigoshop/Frontend/Page/Cart.php:542, src/Jigoshop/Frontend/Page/Cart.php:553
 msgid "Error occurred while updating cart: %s"
 msgstr ""
 
-#: src/Jigoshop/Frontend/Page/Cart.php:530
+#: src/Jigoshop/Frontend/Page/Cart.php:551
 msgid "Successfully updated the cart."
 msgstr ""
 
-#: src/Jigoshop/Frontend/Page/Cart.php:542
+#: src/Jigoshop/Frontend/Page/Cart.php:563
 msgid "Successfully removed item from cart."
 msgstr ""
 
-#: src/Jigoshop/Frontend/Page/Checkout.php:292
+#: src/Jigoshop/Frontend/Page/Checkout.php:308
 msgid "Shipping postcode is not valid!"
 msgstr ""
 
-#: src/Jigoshop/Frontend/Page/Checkout.php:306
+#: src/Jigoshop/Frontend/Page/Checkout.php:323
 msgid "Billing postcode is not valid!"
 msgstr ""
 
-#: src/Jigoshop/Frontend/Page/Checkout.php:367
+#: src/Jigoshop/Frontend/Page/Checkout.php:390
 msgid "Your cart is empty, please add products before proceeding."
 msgstr ""
 
-#: src/Jigoshop/Frontend/Page/Checkout.php:372
+#: src/Jigoshop/Frontend/Page/Checkout.php:395
 msgid "You need to log in before processing to checkout."
 msgstr ""
 
-#: src/Jigoshop/Frontend/Page/Checkout.php:385
+#: src/Jigoshop/Frontend/Page/Checkout.php:408
 msgid "You need either to log in or create account to purchase."
 msgstr ""
 
-#: src/Jigoshop/Frontend/Page/Checkout.php:388
+#: src/Jigoshop/Frontend/Page/Checkout.php:411
 msgid "You need to log in before purchasing."
 msgstr ""
 
-#: src/Jigoshop/Frontend/Page/Checkout.php:392, src/Jigoshop/Frontend/Page/Checkout/Pay.php:64
+#: src/Jigoshop/Frontend/Page/Checkout.php:415, src/Jigoshop/Frontend/Page/Checkout/Pay.php:69
 msgid "You need to accept terms &amp; conditions!"
 msgstr ""
 
-#: src/Jigoshop/Frontend/Page/Checkout.php:407
+#: src/Jigoshop/Frontend/Page/Checkout.php:430
 msgid "Shipping is required for this order. Please select shipping method."
 msgstr ""
 
-#: src/Jigoshop/Frontend/Page/Checkout.php:414
+#: src/Jigoshop/Frontend/Page/Checkout.php:437
 msgid "Payment is required for this order. Please select payment method."
 msgstr ""
 
-#: src/Jigoshop/Frontend/Page/Checkout.php:488
+#: src/Jigoshop/Frontend/Page/Checkout.php:511
 msgid "You need to fill username and password fields."
 msgstr ""
 
-#: src/Jigoshop/Frontend/Page/Checkout.php:492, src/Jigoshop/Frontend/Page/Account/ChangePassword.php:54
+#: src/Jigoshop/Frontend/Page/Checkout.php:515, src/Jigoshop/Frontend/Page/Account/ChangePassword.php:54
 msgid "Passwords do not match."
 msgstr ""
 
-#: src/Jigoshop/Frontend/Page/Checkout.php:499
+#: src/Jigoshop/Frontend/Page/Checkout.php:522
 msgid "<strong>Error</strong> Couldn't register an account for you. Please contact the <a href=\"mailto:%s\">administrator</a>."
 msgstr ""
 
-#: src/Jigoshop/Frontend/Page/Checkout.php:506
+#: src/Jigoshop/Frontend/Page/Checkout.php:529
 msgid "<strong>Error</strong> Account creation failed: %s"
 msgstr ""
 
@@ -5790,22 +5818,6 @@ msgstr ""
 
 #: templates/admin/product/box/general.php:39, templates/admin/product/box/variations/variation.php:105
 msgid "MPN"
-msgstr ""
-
-#: templates/admin/product/box/general.php:49, templates/admin/product/box/variations/variation/simple.php:16
-msgid "Weight"
-msgstr ""
-
-#: templates/admin/product/box/general.php:54, templates/admin/product/box/variations/variation/simple.php:23
-msgid "Length"
-msgstr ""
-
-#: templates/admin/product/box/general.php:59, templates/admin/product/box/variations/variation/simple.php:30
-msgid "Width"
-msgstr ""
-
-#: templates/admin/product/box/general.php:64, templates/admin/product/box/variations/variation/simple.php:37
-msgid "Height"
 msgstr ""
 
 #: templates/admin/product/box/general.php:73
@@ -6524,14 +6536,18 @@ msgid "Address saved."
 msgstr ""
 
 #: src/Jigoshop/Frontend/Page/Checkout/Pay.php:57
+msgid "Invalid order ID. Unable to process order."
+msgstr ""
+
+#: src/Jigoshop/Frontend/Page/Checkout/Pay.php:62
 msgid "Invalid security key. Unable to process order."
 msgstr ""
 
-#: src/Jigoshop/Frontend/Page/Checkout/Pay.php:68
+#: src/Jigoshop/Frontend/Page/Checkout/Pay.php:73
 msgid "Please select one of available payment methods."
 msgstr ""
 
-#: src/Jigoshop/Frontend/Page/Checkout/Pay.php:75
+#: src/Jigoshop/Frontend/Page/Checkout/Pay.php:80
 msgid "Selected payment method is not available. Please select another one."
 msgstr ""
 

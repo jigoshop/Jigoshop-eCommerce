@@ -39,14 +39,44 @@ class Plugin
 
     /**
      * Plugin constructor.
-     * @param $filename
+     * @param $data
      */
-    public function __construct($filename)
+    public function __construct($data)
     {
-        $this->dir = dirname($filename);
-        $this->url = plugins_url('', $filename);
-        $this->basename = plugin_basename($filename);
-        $this->data = $this->getDataFromPluginDatafile();
+        $this->validateData($data);
+        $this->fetch($data);
+    }
+
+    /**
+     * @param array $data
+     */
+    private function validateData($data)
+    {
+        if(!isset($data['name'])) {
+            throw new Exception(__('Plugin name was not specified', 'jigoshop-ecommerce'));
+        }
+
+        if(!isset($data['pluginFile'])) {
+            throw new Exception(sprintf(__('Plugin file path was not specified in %s', 'jigoshop-ecommerce'), $data['name']));
+        }
+    }
+
+    private function fetch($data)
+    {
+        $this->data = array_merge([
+            'id' => '',
+            'name' => '',
+            'description' => '',
+            'requiredVersion' => '',
+            'author' => '',
+            'authorUrl' => '',
+            'pluginFile' => '',
+            'templateDir' => '',
+        ], $data);
+
+        $this->dir = dirname($this->data['pluginFile']);
+        $this->url = plugins_url('', $this->data['pluginFile']);
+        $this->basename = plugin_basename($this->data['pluginFile']);
 
         $this->id = $this->data['id'];
         $this->name = $this->data['name'];
@@ -57,28 +87,6 @@ class Plugin
         $this->authorUrl = $this->data['authorUrl'];
         $this->templateDir = $this->data['templateDir'];
     }
-
-    private function getDataFromPluginDatafile()
-    {
-        $file = $this->dir.'/plugin.json';
-        if(file_exists($file)) {
-            $defaults = [
-                'id' => '',
-                'name' => '',
-                'description' => '',
-                'requiredVersion' => Core::VERSION,
-                'version' => '1.0',
-                'author' => 'Jigoshop ltd',
-                'authorUrl' => 'https://www.jigoshop.com/',
-                'templateDir' => ''
-            ];
-            $data = json_decode(file_get_contents($file), true);
-
-            return array_merge($defaults, $data);
-        }
-        throw new Exception(sprintf('Plugin datafile [%s] does not exist', $file));
-    }
-
     /**
      * @return string
      */

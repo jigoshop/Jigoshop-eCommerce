@@ -5,6 +5,7 @@ namespace Jigoshop\Extensions;
 use Jigoshop\Api\Routing\ControllerInterface;
 use Jigoshop\Container\Configurations\Configuration;
 use Jigoshop\Container\Configurations\ConfigurationInterface;
+use Jigoshop\Exception;
 use Jigoshop\Extensions;
 
 /**
@@ -14,29 +15,30 @@ use Jigoshop\Extensions;
  */
 abstract class Extension
 {
-    /** @var  Extension  */
-    private static $instance;
     /** @var  Extensions\Extension\Plugin  */
     private $plugin;
     /** @var  \ReflectionClass */
     private $reflection;
+    /** @var Extensions\Extension\Render */
+    private $render;
 
     /**
      * Extension constructor.
-     * @param string $fileName
+     *
+     * @throws \ReflectionException
+     *
+     * @param array $plugin
      */
-    public function __construct($fileName)
+    public function __construct(array $plugin)
     {
-        $this->plugin = new Extensions\Extension\Plugin($fileName);
+        $this->plugin = new Extensions\Extension\Plugin($plugin);
         $this->reflection = new \ReflectionClass($this);
-    }
+        if($this->plugin->getTemplateDir()) {
+            $this->render = new Extensions\Extension\Render($this->plugin->getDir(), $this->plugin->getTemplateDir());
+        }
 
-    /**
-     * @param Extension $extension
-     */
-    public static function setInstance(Extension $extension)
-    {
-        self::$instance = $extension;
+        //Register extension automatically
+        Extensions::register($this);
     }
 
     /**
@@ -44,7 +46,21 @@ abstract class Extension
      */
     public static function getInstance()
     {
-        return self::$instance;
+        return Extensions::getExtensions()[get_called_class()];
+    }
+
+    /**
+     * @throws Exception
+     *
+     * @return Extensions\Extension\Render
+     */
+    public static function getRender()
+    {
+        if(!self::getInstance()->_getRender() instanceof Extensions\Extension\Render) {
+            throw new Exception(__('Template dir was not specified', 'jigoshop-ecommerce'));
+        }
+
+        return self::getInstance()->_getRender();
     }
 
     /**
@@ -58,7 +74,7 @@ abstract class Extension
     /**
      * @return Extension\Render
      */
-    public function getRender()
+    public function _getRender()
     {
         return $this->render;
     }

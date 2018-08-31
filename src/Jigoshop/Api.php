@@ -6,7 +6,6 @@ use Firebase\JWT\JWT;
 use Jigoshop\Admin\Dashboard;
 use Jigoshop\Api\Routes;
 use Jigoshop\Core\Options;
-use Jigoshop\Extensions\Extension;
 use Jigoshop\Middleware\ApiPermissionMiddleware;
 use Monolog\Logger;
 use Monolog\Registry;
@@ -172,14 +171,12 @@ class Api
      */
     private function addRoutes(App $app, $version)
     {
-        /** @var Extensions $extensions */
-        $extensions = $this->di->get('jigoshop.extensions');
         $this->initDefaultHandlers($app);
         (new Routes($this->options))->init($app, $version);
 
         array_map(function (Extension $extension) use ($app, $version) {
             $extension->getApi()->init($app, $version);
-        }, $extensions->getExtensions());
+        }, Extensions::getExtensions());
     }
 
     /**

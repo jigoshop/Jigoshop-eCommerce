@@ -31,6 +31,7 @@ use Jigoshop\Helper\Currency;
             <span class="title"><?= __('SKU', 'jigoshop-ecommerce'); ?></span>
             <span class="input-text-wrap"><input type="text" name="product[sku]" class="sku" value=""></span>
         </label>
+        <?php if($product instanceof Product\Purchasable): ?>
         <div class="toggle">
             <div class="inline-edit-group wp-clearfix">
                 <label class="alignleft">
@@ -58,6 +59,7 @@ use Jigoshop\Helper\Currency;
                 </select>
             </label>
         </div>
+        <?php endif; ?>
         <div class="inline-edit-group wp-clearfix">
             <label class="alignleft">
                 <span class="title"><?= __('Visibility?', 'jigoshop-ecommerce'); ?></span>
