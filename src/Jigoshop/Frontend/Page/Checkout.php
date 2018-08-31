@@ -206,7 +206,7 @@ class Checkout implements PageInterface
 				$this->customerService->save($cart->getCustomer());
 			}
 
-			$euVatNumber = $customerBillingAddress;
+			$euVatNumber = $customerBillingAddress->getVatNumber();
 
 			if($this->options->get('tax.euVat.forceB2BTransactions', false) && !$euVatNumber) {
 				$errorMessage = __('EU VAT number is required for this order.', 'jigoshop-ecommerce');
