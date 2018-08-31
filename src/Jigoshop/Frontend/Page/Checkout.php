@@ -197,17 +197,26 @@ class Checkout implements PageInterface
 
 		$errorMessage = '';	
 		if($this->options->get('tax.euVat.enabled') && Country::isEU($cart->getCustomer()->getBillingAddress()->getCountry())) {
-			$euVatNumber = $cart->getCustomer()->getBillingAddress()->getVatNumber();
+			$customerBillingAddress = $cart->getCustomer()->getBillingAddress();
+
+			if(!$customerBillingAddress instanceof CompanyAddress) {
+				$customerBillingAddress = AddressHelper::convertToCompanyAddress($customerBillingAddress);
+
+				$cart->getCustomer()->setBillingAddress($customerBillingAddress);
+				$this->customerService->save($cart->getCustomer());
+			}
+
+			$euVatNumber = $customerBillingAddress;
 
 			if($this->options->get('tax.euVat.forceB2BTransactions', false) && !$euVatNumber) {
 				$errorMessage = __('EU VAT number is required for this order.', 'jigoshop-ecommerce');
 			}
 
 			if($euVatNumber) {
-				$euVatNumberValidationResult = Tax::validateEUVatNumber($euVatNumber, $cart->getCustomer()->getBillingAddress()->getCountry());
+				$euVatNumberValidationResult = Tax::validateEUVatNumber($euVatNumber, $customerBillingAddress);
 
 				if($euVatNumberValidationResult == Tax::EU_VAT_VALIDATION_RESULT_VALID) {
-                    if($this->options->get('general.country') == $cart->getCustomer()->getBillingAddress()->getCountry()) {
+                    if($this->options->get('general.country') == $customerBillingAddress) {
                         if($this->options->get('tax.euVat.removeVatIfCustomerIsLocatedInShopCountry')) {
                             $cart->setTaxRemovalState(true);
                         }
