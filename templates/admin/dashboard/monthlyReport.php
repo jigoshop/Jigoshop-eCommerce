@@ -89,6 +89,7 @@
 					}
 				);
 				function showTooltip(x, y, contents){
+					contents = contents.replace(' - ', ': ');
 					jQuery('<div id="tooltip">' + contents + '</div>').css({
 						position: 'absolute',
 						display: 'none',
