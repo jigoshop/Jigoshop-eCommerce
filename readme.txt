@@ -3,8 +3,8 @@ Contributors: jigoshop
 Tags: ecommerce, wordpress ecommerce, store, shop, shopping, cart, checkout, widgets, reports, shipping, tax, paypal, jigowatt, shipping, inventory, stock, online, sell, sales, weights, dimensions, configurable, variable, downloadable, external, affiliate, download, virtual, physical
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=7F5FZ5NGJ3XTL
 Requires at least: 4.0
-Tested up to: 4.9.7
-Stable tag: 2.1.15
+Tested up to: 4.9.8
+Stable tag: 2.1.16
 
 A feature-packed eCommerce plugin built upon WordPress core functionality ensuring excellent performance, customizability and control - robust Tax Settings, Stock Level Management, Free and Premium Extensions - you name it.
 
@@ -150,6 +150,19 @@ However, if you want priority, dedicated support from Jigoshop staff, we dp offe
 
 == Changelog ==
 
+= 2.1.16 - 2018.09.05 =
+* New: EU Vat validation.
+* New: Support for guttenberg.
+* Fix: jQuery flot error.
+* Fix: Do not show stock fields in quick edit for variable products.
+* Fix: Glyph icons in admin panel.
+* Fix: Improved extensions interface.
+* Fix: Notice on first page of setup wizard.
+* Fix: All shipping methods now use Method3 interface.
+* Fix: Handle shipping exceptions.
+* Fix: Show product sizes on product page.
+* Fix: Blueimp minification.
+* Fix: Fatal error on Pay page, about invalid order ID.
 = 2.1.15 - 2018.07.23 =
 * New: For downloads use url from product, if it still exists, otherwise use url from item meta.
 * New: Round prices for CZK currency.

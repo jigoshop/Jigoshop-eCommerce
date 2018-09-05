@@ -1,4 +1,17 @@
 ## Changelog
+* 2.1.16 - 2018.09.05
+    * New: EU Vat validation.
+    * New: Support for guttenberg.
+    * Fix: jQuery flot error.
+    * Fix: Do not show stock fields in quick edit for variable products.
+    * Fix: Glyph icons in admin panel.
+    * Fix: Improved extensions interface.
+    * Fix: Notice on first page of setup wizard.
+    * Fix: All shipping methods now use Method3 interface.
+    * Fix: Handle shipping exceptions.
+    * Fix: Show product sizes on product page.
+    * Fix: Blueimp minification.
+    * Fix: Fatal error on Pay page, about invalid order ID.
 * 2.1.15 - 2018.07.23
     * New: For downloads use url from product, if it still exists, otherwise use url from item meta.
     * New: Round prices for CZK currency.
