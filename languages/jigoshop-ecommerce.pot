@@ -77,6 +77,10 @@ msgstr ""
 msgid "Required Jigoshop version: %s. Current version: %s. Please upgrade."
 msgstr ""
 
+#: src/Jigoshop/Extensions.php:88
+msgid "The License is not valid. Please enter your <b>Licence Key</b> on the Jigoshop->Manage Licences Menu with your <b>Order email address</b>.  Until then, the plugin will not be enabled for use."
+msgstr ""
+
 #: src/Jigoshop/Licence.php:122
 msgid "<b>Key deactivated.</b> License key for <i>%s</i> has been <b>deactivated</b>."
 msgstr ""
@@ -759,11 +763,11 @@ msgstr ""
 msgid "Inches"
 msgstr ""
 
-#: src/Jigoshop/Admin/Setup.php:153, templates/admin/products/quick_edit.php:41, src/Jigoshop/Admin/Settings/ProductsTab.php:44, templates/admin/product/box/stock.php:25, templates/admin/product/box/variations/variation.php:126
+#: src/Jigoshop/Admin/Setup.php:153, templates/admin/products/quick_edit.php:42, src/Jigoshop/Admin/Settings/ProductsTab.php:44, templates/admin/product/box/stock.php:25, templates/admin/product/box/variations/variation.php:126
 msgid "In stock"
 msgstr ""
 
-#: src/Jigoshop/Admin/Setup.php:154, templates/admin/products/quick_edit.php:42, src/Jigoshop/Admin/Settings/ProductsTab.php:45, src/Jigoshop/Admin/Settings/ProductsTab.php:187, templates/admin/product/box/stock.php:26, templates/admin/product/box/variations/variation.php:127
+#: src/Jigoshop/Admin/Setup.php:154, templates/admin/products/quick_edit.php:43, src/Jigoshop/Admin/Settings/ProductsTab.php:45, src/Jigoshop/Admin/Settings/ProductsTab.php:187, templates/admin/product/box/stock.php:26, templates/admin/product/box/variations/variation.php:127
 msgid "Out of stock"
 msgstr ""
 
@@ -1191,7 +1195,7 @@ msgstr ""
 msgid "Invalid order."
 msgstr ""
 
-#: src/Jigoshop/Endpoint/DownloadFile.php:69, src/Jigoshop/Admin/Page/Order.php:125, src/Jigoshop/Api/Routes/V1/Orders.php:417
+#: src/Jigoshop/Endpoint/DownloadFile.php:69, src/Jigoshop/Admin/Page/Order.php:129, src/Jigoshop/Api/Routes/V1/Orders.php:417
 msgid "Product not found."
 msgstr ""
 
@@ -1215,11 +1219,11 @@ msgstr ""
 msgid "File not found."
 msgstr ""
 
-#: src/Jigoshop/Entity/Cart.php:34, src/Jigoshop/Entity/Order.php:656
+#: src/Jigoshop/Entity/Cart.php:34, src/Jigoshop/Entity/Order.php:749
 msgid "Item does not exists"
 msgstr ""
 
-#: src/Jigoshop/Entity/Cart.php:38, src/Jigoshop/Entity/Order.php:660
+#: src/Jigoshop/Entity/Cart.php:38, src/Jigoshop/Entity/Order.php:753
 msgid "Quantity has to be numeric value"
 msgstr ""
 
@@ -1243,15 +1247,15 @@ msgstr ""
 msgid "Unknown address type: \"%s\"."
 msgstr ""
 
-#: src/Jigoshop/Entity/Order.php:112
+#: src/Jigoshop/Entity/Order.php:123
 msgid "Order %s"
 msgstr ""
 
-#: src/Jigoshop/Entity/Order.php:315
+#: src/Jigoshop/Entity/Order.php:330
 msgid "No item with ID %d in order %d"
 msgstr ""
 
-#: src/Jigoshop/Entity/Order.php:666, src/Jigoshop/Admin/Page/Order.php:266, src/Jigoshop/Frontend/Page/Cart.php:418
+#: src/Jigoshop/Entity/Order.php:759, src/Jigoshop/Admin/Page/Order.php:270, src/Jigoshop/Frontend/Page/Cart.php:418
 msgid "Item not found."
 msgstr ""
 
@@ -1737,6 +1741,14 @@ msgctxt "time"
 msgid "Y/m/d"
 msgstr ""
 
+#: src/Jigoshop/Helper/Geolocation.php:21
+msgid "Unable to read geolocation database."
+msgstr ""
+
+#: src/Jigoshop/Helper/Geolocation.php:67
+msgid "Invalid IP address specified."
+msgstr ""
+
 #: src/Jigoshop/Helper/Product.php:104, src/Jigoshop/Helper/Product.php:116
 msgid "%s off!"
 msgstr ""
@@ -2086,7 +2098,7 @@ msgstr ""
 msgid "Postcode is empty."
 msgstr ""
 
-#: src/Jigoshop/Service/CartService.php:306, src/Jigoshop/Admin/Page/Order.php:493
+#: src/Jigoshop/Service/CartService.php:306, src/Jigoshop/Admin/Page/Order.php:497
 msgid "Invalid postcode."
 msgstr ""
 
@@ -2146,7 +2158,7 @@ msgstr ""
 msgid "Advanced flat rate"
 msgstr ""
 
-#: src/Jigoshop/Shipping/AdvancedFlatRate.php:109, src/Jigoshop/Admin/Settings/AdvancedTab.php:205
+#: src/Jigoshop/Shipping/AdvancedFlatRate.php:109, src/Jigoshop/Admin/Settings/AdvancedTab.php:205, src/Jigoshop/Admin/Settings/TaxesTab.php:253
 msgid "Enable"
 msgstr ""
 
@@ -2158,7 +2170,7 @@ msgstr ""
 msgid "Enable this if you would like to test it only for Site Admin"
 msgstr ""
 
-#: src/Jigoshop/Shipping/AdvancedFlatRate.php:130, src/Jigoshop/Shipping/FlatRate.php:139, src/Jigoshop/Admin/Settings/TaxesTab.php:228, templates/admin/product/box/advanced.php:15
+#: src/Jigoshop/Shipping/AdvancedFlatRate.php:130, src/Jigoshop/Shipping/FlatRate.php:139, src/Jigoshop/Admin/Settings/TaxesTab.php:232, templates/admin/product/box/advanced.php:15
 msgid "Is taxable?"
 msgstr ""
 
@@ -2869,7 +2881,7 @@ msgstr ""
 msgid "Product subtotal:"
 msgstr ""
 
-#: templates/admin/order/totalsBox.php:64, templates/shop/checkout/thanks.php:124, src/Jigoshop/Frontend/Page/Checkout.php:366
+#: templates/admin/order/totalsBox.php:64, templates/shop/checkout/thanks.php:124, src/Jigoshop/Frontend/Page/Checkout.php:471
 msgid "Payment processing fee (%s)"
 msgstr ""
 
@@ -2921,43 +2933,43 @@ msgstr ""
 msgid "Sale"
 msgstr ""
 
-#: templates/admin/products/quick_edit.php:37
+#: templates/admin/products/quick_edit.php:38
 msgid "In stock?"
 msgstr ""
 
-#: templates/admin/products/quick_edit.php:53
+#: templates/admin/products/quick_edit.php:54
 msgid "Backorders?"
 msgstr ""
 
-#: templates/admin/products/quick_edit.php:55, templates/admin/product/box/stock.php:47, templates/admin/product/box/variations/variation.php:148
+#: templates/admin/products/quick_edit.php:56, templates/admin/product/box/stock.php:47, templates/admin/product/box/variations/variation.php:148
 msgid "Do not allow"
 msgstr ""
 
-#: templates/admin/products/quick_edit.php:56, templates/admin/product/box/stock.php:48, templates/admin/product/box/variations/variation.php:149
+#: templates/admin/products/quick_edit.php:57, templates/admin/product/box/stock.php:48, templates/admin/product/box/variations/variation.php:149
 msgid "Allow, but notify customer"
 msgstr ""
 
-#: templates/admin/products/quick_edit.php:57, templates/admin/product/box/stock.php:49, templates/admin/product/box/variations/variation.php:150
+#: templates/admin/products/quick_edit.php:58, templates/admin/product/box/stock.php:49, templates/admin/product/box/variations/variation.php:150
 msgid "Allow"
 msgstr ""
 
-#: templates/admin/products/quick_edit.php:63
+#: templates/admin/products/quick_edit.php:65
 msgid "Visibility?"
 msgstr ""
 
-#: templates/admin/products/quick_edit.php:66, templates/admin/product/box/general.php:75
+#: templates/admin/products/quick_edit.php:68, templates/admin/product/box/general.php:75
 msgid "Catalog & Search"
 msgstr ""
 
-#: templates/admin/products/quick_edit.php:67, templates/admin/product/box/general.php:76
+#: templates/admin/products/quick_edit.php:69, templates/admin/product/box/general.php:76
 msgid "Catalog Only"
 msgstr ""
 
-#: templates/admin/products/quick_edit.php:68, templates/admin/product/box/general.php:77
+#: templates/admin/products/quick_edit.php:70, templates/admin/product/box/general.php:77
 msgid "Search Only"
 msgstr ""
 
-#: templates/admin/products/quick_edit.php:69, templates/admin/product/box/general.php:78
+#: templates/admin/products/quick_edit.php:71, templates/admin/product/box/general.php:78
 msgid "Hidden"
 msgstr ""
 
@@ -3507,32 +3519,48 @@ msgstr ""
 msgid "Order Actions"
 msgstr ""
 
-#: src/Jigoshop/Admin/Page/Order.php:110, src/Jigoshop/Admin/Page/Order.php:260, src/Jigoshop/Admin/Page/Order.php:300, src/Jigoshop/Admin/Page/Order.php:324, src/Jigoshop/Admin/Page/Order.php:390, src/Jigoshop/Admin/Page/Order.php:432, src/Jigoshop/Admin/Page/Order.php:478, src/Jigoshop/Api/Routes/V1/Orders.php:283
+#: src/Jigoshop/Admin/Page/Order.php:102
+msgid "EU Vat"
+msgstr ""
+
+#: src/Jigoshop/Admin/Page/Order.php:114, src/Jigoshop/Admin/Page/Order.php:264, src/Jigoshop/Admin/Page/Order.php:304, src/Jigoshop/Admin/Page/Order.php:328, src/Jigoshop/Admin/Page/Order.php:394, src/Jigoshop/Admin/Page/Order.php:436, src/Jigoshop/Admin/Page/Order.php:482, src/Jigoshop/Api/Routes/V1/Orders.php:283
 msgid "Order not found."
 msgstr ""
 
-#: src/Jigoshop/Admin/Page/Order.php:132, src/Jigoshop/Api/Routes/V1/Orders.php:424
+#: src/Jigoshop/Admin/Page/Order.php:136, src/Jigoshop/Api/Routes/V1/Orders.php:424
 msgid "Product cannot be added to the order."
 msgstr ""
 
-#: src/Jigoshop/Admin/Page/Order.php:250
+#: src/Jigoshop/Admin/Page/Order.php:254
 msgid "Invalid quantity value."
 msgstr ""
 
-#: src/Jigoshop/Admin/Page/Order.php:253
+#: src/Jigoshop/Admin/Page/Order.php:257
 msgid "Invalid product price."
 msgstr ""
 
-#: src/Jigoshop/Admin/Page/Order.php:331, src/Jigoshop/Frontend/Page/Cart.php:341
+#: src/Jigoshop/Admin/Page/Order.php:335, src/Jigoshop/Frontend/Page/Cart.php:341
 msgid "Method rate is required."
 msgstr ""
 
-#: src/Jigoshop/Admin/Page/Order.php:381
+#: src/Jigoshop/Admin/Page/Order.php:385
 msgid "Invalid country."
 msgstr ""
 
-#: src/Jigoshop/Admin/Page/Order.php:447
+#: src/Jigoshop/Admin/Page/Order.php:451
 msgid "Invalid state."
+msgstr ""
+
+#: src/Jigoshop/Admin/Page/Order.php:659
+msgid "Valid"
+msgstr ""
+
+#: src/Jigoshop/Admin/Page/Order.php:662
+msgid "Invalid"
+msgstr ""
+
+#: src/Jigoshop/Admin/Page/Order.php:665
+msgid "Error"
 msgstr ""
 
 #: src/Jigoshop/Admin/Page/Orders.php:66
@@ -3989,7 +4017,7 @@ msgstr ""
 msgid "Invalid terms page, please select again."
 msgstr ""
 
-#: src/Jigoshop/Admin/Settings/GeneralTab.php:97, src/Jigoshop/Admin/Settings/LayoutTab.php:72, src/Jigoshop/Admin/Settings/ShippingTab.php:86, src/Jigoshop/Admin/Settings/TaxesTab.php:101
+#: src/Jigoshop/Admin/Settings/GeneralTab.php:97, src/Jigoshop/Admin/Settings/LayoutTab.php:72, src/Jigoshop/Admin/Settings/ShippingTab.php:86, src/Jigoshop/Admin/Settings/TaxesTab.php:105
 msgid "Main"
 msgstr ""
 
@@ -4621,105 +4649,165 @@ msgstr ""
 msgid "Invalid continue shopping redirection: \"%s\". Value set to %s."
 msgstr ""
 
-#: src/Jigoshop/Admin/Settings/TaxesTab.php:46
+#: src/Jigoshop/Admin/Settings/TaxesTab.php:50
 msgctxt "admin_taxing"
 msgid "All states"
 msgstr ""
 
-#: src/Jigoshop/Admin/Settings/TaxesTab.php:54, src/Jigoshop/Admin/Settings/TaxesTab.php:261
+#: src/Jigoshop/Admin/Settings/TaxesTab.php:58, src/Jigoshop/Admin/Settings/TaxesTab.php:314
 msgid "All countries"
 msgstr ""
 
-#: src/Jigoshop/Admin/Settings/TaxesTab.php:78
+#: src/Jigoshop/Admin/Settings/TaxesTab.php:82
 msgid "Taxes"
 msgstr ""
 
-#: src/Jigoshop/Admin/Settings/TaxesTab.php:128
+#: src/Jigoshop/Admin/Settings/TaxesTab.php:132
 msgid "Taxes based on shipping country?"
 msgstr ""
 
-#: src/Jigoshop/Admin/Settings/TaxesTab.php:130
+#: src/Jigoshop/Admin/Settings/TaxesTab.php:134
 msgid "By default, taxes based on billing country."
 msgstr ""
 
-#: src/Jigoshop/Admin/Settings/TaxesTab.php:137
+#: src/Jigoshop/Admin/Settings/TaxesTab.php:141
 msgid "Prices"
 msgstr ""
 
-#: src/Jigoshop/Admin/Settings/TaxesTab.php:142
+#: src/Jigoshop/Admin/Settings/TaxesTab.php:146
 msgid "Entered prices tax status"
 msgstr ""
 
-#: src/Jigoshop/Admin/Settings/TaxesTab.php:146
+#: src/Jigoshop/Admin/Settings/TaxesTab.php:150
 msgid "I will enter prices without tax"
 msgstr ""
 
-#: src/Jigoshop/Admin/Settings/TaxesTab.php:147
+#: src/Jigoshop/Admin/Settings/TaxesTab.php:151
 msgid "I will enter prices with tax included"
 msgstr ""
 
-#: src/Jigoshop/Admin/Settings/TaxesTab.php:152
+#: src/Jigoshop/Admin/Settings/TaxesTab.php:156
 msgid "Show prices in cart and checkout"
 msgstr ""
 
-#: src/Jigoshop/Admin/Settings/TaxesTab.php:156, src/Jigoshop/Admin/Settings/TaxesTab.php:168
+#: src/Jigoshop/Admin/Settings/TaxesTab.php:160, src/Jigoshop/Admin/Settings/TaxesTab.php:172
 msgid "Including tax"
 msgstr ""
 
-#: src/Jigoshop/Admin/Settings/TaxesTab.php:157, src/Jigoshop/Admin/Settings/TaxesTab.php:169
+#: src/Jigoshop/Admin/Settings/TaxesTab.php:161, src/Jigoshop/Admin/Settings/TaxesTab.php:173
 msgid "Excluding tax"
 msgstr ""
 
-#: src/Jigoshop/Admin/Settings/TaxesTab.php:158, src/Jigoshop/Admin/Settings/TaxesTab.php:170
+#: src/Jigoshop/Admin/Settings/TaxesTab.php:162, src/Jigoshop/Admin/Settings/TaxesTab.php:174
 msgid "Both (including tax first)"
 msgstr ""
 
-#: src/Jigoshop/Admin/Settings/TaxesTab.php:159, src/Jigoshop/Admin/Settings/TaxesTab.php:171
+#: src/Jigoshop/Admin/Settings/TaxesTab.php:163, src/Jigoshop/Admin/Settings/TaxesTab.php:175
 msgid "Both (excluding tax first)"
 msgstr ""
 
-#: src/Jigoshop/Admin/Settings/TaxesTab.php:164
+#: src/Jigoshop/Admin/Settings/TaxesTab.php:168
 msgid "Show product prices"
 msgstr ""
 
-#: src/Jigoshop/Admin/Settings/TaxesTab.php:176
+#: src/Jigoshop/Admin/Settings/TaxesTab.php:180
 msgid "Show tax suffix"
 msgstr ""
 
-#: src/Jigoshop/Admin/Settings/TaxesTab.php:180
+#: src/Jigoshop/Admin/Settings/TaxesTab.php:184
 msgid "In cart totals"
 msgstr ""
 
-#: src/Jigoshop/Admin/Settings/TaxesTab.php:181
+#: src/Jigoshop/Admin/Settings/TaxesTab.php:185
 msgid "Everywhere"
 msgstr ""
 
-#: src/Jigoshop/Admin/Settings/TaxesTab.php:186
+#: src/Jigoshop/Admin/Settings/TaxesTab.php:190
 msgid "Suffix for prices with tax included"
 msgstr ""
 
-#: src/Jigoshop/Admin/Settings/TaxesTab.php:192
+#: src/Jigoshop/Admin/Settings/TaxesTab.php:196
 msgid "Suffix for prices without tax"
 msgstr ""
 
-#: src/Jigoshop/Admin/Settings/TaxesTab.php:199
+#: src/Jigoshop/Admin/Settings/TaxesTab.php:203
 msgid "Classes"
 msgstr ""
 
-#: src/Jigoshop/Admin/Settings/TaxesTab.php:211
+#: src/Jigoshop/Admin/Settings/TaxesTab.php:215
 msgid "Rules"
 msgstr ""
 
-#: src/Jigoshop/Admin/Settings/TaxesTab.php:223
+#: src/Jigoshop/Admin/Settings/TaxesTab.php:227
 msgid "New products"
 msgstr ""
 
-#: src/Jigoshop/Admin/Settings/TaxesTab.php:224
+#: src/Jigoshop/Admin/Settings/TaxesTab.php:228
 msgid "This section defines default tax settings for new products."
 msgstr ""
 
-#: src/Jigoshop/Admin/Settings/TaxesTab.php:235, templates/admin/product/box/advanced.php:21, templates/admin/product/box/variations/variation.php:72
+#: src/Jigoshop/Admin/Settings/TaxesTab.php:239, templates/admin/product/box/advanced.php:21, templates/admin/product/box/variations/variation.php:72
 msgid "Tax classes"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/TaxesTab.php:249
+msgid "EU VAT"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/TaxesTab.php:254
+msgid "Enables EU VAT handling. Shop location must be set within borders of European Union."
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/TaxesTab.php:261
+msgid "Field description"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/TaxesTab.php:262
+msgid "Field description that is shown below VAT Number field."
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/TaxesTab.php:268
+msgid "Businesses located in Shop country"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/TaxesTab.php:269
+msgid "When this option is enabled, VAT will be removed for customers based in the same country as Shop."
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/TaxesTab.php:276
+msgid "Failed validation handling"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/TaxesTab.php:277
+msgid "This field controls what will happen if customer supplied VAT number fails VIES validation."
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/TaxesTab.php:281
+msgid "Reject order and show error message."
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/TaxesTab.php:282
+msgid "Accept the order, but do not remove VAT."
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/TaxesTab.php:283
+msgid "Accept the order and remove VAT."
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/TaxesTab.php:288
+msgid "Force B2B transactions"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/TaxesTab.php:289
+msgid "When this option is enabled, VAT number will be mandatory when placing order."
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/TaxesTab.php:362
+msgid "Shop location is set outside of European Union. EU VAT functionality will remain disabled."
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings/TaxesTab.php:368
+msgid "EU VAT validation requires cURL PHP extension to work properly. Please make sure that cURL is installed on your server."
 msgstr ""
 
 #: src/Jigoshop/Admin/SystemInfo/LogsTab.php:20, src/Jigoshop/Admin/SystemInfo/LogsTab.php:44
@@ -5620,6 +5708,14 @@ msgstr ""
 msgid "External product does not support stock management."
 msgstr ""
 
+#: src/Jigoshop/Extensions/Extension/Plugin.php:56
+msgid "Plugin name was not specified"
+msgstr ""
+
+#: src/Jigoshop/Extensions/Extension/Plugin.php:60
+msgid "Plugin file path was not specified in %s"
+msgstr ""
+
 #: src/Jigoshop/Frontend/Page/AbstractProductList.php:68, src/Jigoshop/Frontend/Page/Dummy.php:71, src/Jigoshop/Frontend/Page/Product.php:122
 msgid "Unable to add product to the cart."
 msgstr ""
@@ -5648,7 +5744,7 @@ msgstr ""
 msgid "A problem ocurred when adding to cart: %s"
 msgstr ""
 
-#: src/Jigoshop/Frontend/Page/Cart.php:89, src/Jigoshop/Frontend/Page/Checkout.php:87
+#: src/Jigoshop/Frontend/Page/Cart.php:89, src/Jigoshop/Frontend/Page/Checkout.php:89
 msgid "Loading..."
 msgstr ""
 
@@ -5688,55 +5784,79 @@ msgstr ""
 msgid "Successfully removed item from cart."
 msgstr ""
 
-#: src/Jigoshop/Frontend/Page/Checkout.php:308
+#: src/Jigoshop/Frontend/Page/Checkout.php:220, src/Jigoshop/Frontend/Page/Checkout.php:538
+msgid "EU VAT number is required for this order."
+msgstr ""
+
+#: src/Jigoshop/Frontend/Page/Checkout.php:239
+msgid "EU VAT number is invalid."
+msgstr ""
+
+#: src/Jigoshop/Frontend/Page/Checkout.php:242, src/Jigoshop/Frontend/Page/Checkout.php:563
+msgid "Unable to validate EU VAT number. Please try again later."
+msgstr ""
+
+#: src/Jigoshop/Frontend/Page/Checkout.php:247
+msgid "EU VAT number is invalid. No taxes will be removed if you continue with your order."
+msgstr ""
+
+#: src/Jigoshop/Frontend/Page/Checkout.php:250
+msgid "Unable to validate EU VAT number. No taxes will be removed if you continue with your order."
+msgstr ""
+
+#: src/Jigoshop/Frontend/Page/Checkout.php:413
 msgid "Shipping postcode is not valid!"
 msgstr ""
 
-#: src/Jigoshop/Frontend/Page/Checkout.php:323
+#: src/Jigoshop/Frontend/Page/Checkout.php:428
 msgid "Billing postcode is not valid!"
 msgstr ""
 
-#: src/Jigoshop/Frontend/Page/Checkout.php:390
+#: src/Jigoshop/Frontend/Page/Checkout.php:495
 msgid "Your cart is empty, please add products before proceeding."
 msgstr ""
 
-#: src/Jigoshop/Frontend/Page/Checkout.php:395
+#: src/Jigoshop/Frontend/Page/Checkout.php:500
 msgid "You need to log in before processing to checkout."
 msgstr ""
 
-#: src/Jigoshop/Frontend/Page/Checkout.php:408
+#: src/Jigoshop/Frontend/Page/Checkout.php:513
 msgid "You need either to log in or create account to purchase."
 msgstr ""
 
-#: src/Jigoshop/Frontend/Page/Checkout.php:411
+#: src/Jigoshop/Frontend/Page/Checkout.php:516
 msgid "You need to log in before purchasing."
 msgstr ""
 
-#: src/Jigoshop/Frontend/Page/Checkout.php:415, src/Jigoshop/Frontend/Page/Checkout/Pay.php:69
+#: src/Jigoshop/Frontend/Page/Checkout.php:520, src/Jigoshop/Frontend/Page/Checkout/Pay.php:69
 msgid "You need to accept terms &amp; conditions!"
 msgstr ""
 
-#: src/Jigoshop/Frontend/Page/Checkout.php:430
+#: src/Jigoshop/Frontend/Page/Checkout.php:560
+msgid "Invalid EU VAT number."
+msgstr ""
+
+#: src/Jigoshop/Frontend/Page/Checkout.php:589
 msgid "Shipping is required for this order. Please select shipping method."
 msgstr ""
 
-#: src/Jigoshop/Frontend/Page/Checkout.php:437
+#: src/Jigoshop/Frontend/Page/Checkout.php:596
 msgid "Payment is required for this order. Please select payment method."
 msgstr ""
 
-#: src/Jigoshop/Frontend/Page/Checkout.php:511
+#: src/Jigoshop/Frontend/Page/Checkout.php:670
 msgid "You need to fill username and password fields."
 msgstr ""
 
-#: src/Jigoshop/Frontend/Page/Checkout.php:515, src/Jigoshop/Frontend/Page/Account/ChangePassword.php:54
+#: src/Jigoshop/Frontend/Page/Checkout.php:674, src/Jigoshop/Frontend/Page/Account/ChangePassword.php:54
 msgid "Passwords do not match."
 msgstr ""
 
-#: src/Jigoshop/Frontend/Page/Checkout.php:522
+#: src/Jigoshop/Frontend/Page/Checkout.php:681
 msgid "<strong>Error</strong> Couldn't register an account for you. Please contact the <a href=\"mailto:%s\">administrator</a>."
 msgstr ""
 
-#: src/Jigoshop/Frontend/Page/Checkout.php:529
+#: src/Jigoshop/Frontend/Page/Checkout.php:688
 msgid "<strong>Error</strong> Account creation failed: %s"
 msgstr ""
 

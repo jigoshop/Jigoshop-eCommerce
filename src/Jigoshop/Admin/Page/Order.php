@@ -98,7 +98,7 @@ class Order
             $wp->addMetaBox('submitdiv', __('Order Actions', 'jigoshop-ecommerce'), [$that, 'actionsBox'], Types::ORDER,
                 'side', 'default');
 
-            if($order->getCustomer()->getBillingAddress()->getVatNumber() && Country::isEU($order->getCustomer()->getBillingAddress()->getCountry())) {
+            if($order->getCustomer()->getBillingAddress() instanceof Customer\CompanyAddress && $order->getCustomer()->getBillingAddress()->getVatNumber() && Country::isEU($order->getCustomer()->getBillingAddress()->getCountry())) {
                 $wp->addMetaBox('euvatno', __('EU Vat', 'jigoshop-ecommerce'), [$that, 'euVatNumberBox'], Types::ORDER, 'side', 'default');
             }
         });
