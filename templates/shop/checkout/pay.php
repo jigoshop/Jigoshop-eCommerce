@@ -51,7 +51,7 @@ use Jigoshop\Helper\Render;
         </tfoot>
 	</table>
 	<div id="cart-collaterals">
-		<div id="cart-totals" class="panel panel-primary pull-right">
+		<div id="cart-totals" class="panel panel-primary">
 			<div class="panel-heading"><h2 class="panel-title"><?php _e('Order Totals', 'jigoshop-ecommerce'); ?></h2></div>
 			<table class="table">
 				<tbody>

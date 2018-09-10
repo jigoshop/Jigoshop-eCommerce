@@ -33,7 +33,7 @@ $defaultAttributesValues = Product::getVariationAttributes($product, $product->g
 			'min' => 1,
         ]); ?>
 		<input type="hidden" name="variation_id" id="variation-id" value="" />
-		<button class="btn btn-primary" type="submit"><?php _e('Add to cart', 'jigoshop-ecommerce'); ?></button>
+		<button class="btn btn-primary" type="submit"><i class="fas fa-shopping-cart"></i></button>
 	</div>
 	<div id="add-to-cart-messages">
 		<div class="alert alert-warning"><?php _e('Selected variation is not available.', 'jigoshop-ecommerce'); ?></div>

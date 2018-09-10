@@ -99,7 +99,7 @@ use Jigoshop\Helper\Tax;
 		<div id="cart-collaterals">
 			<?php do_action('cart-collaterals', $cart); ?>
 			<?php do_action('jigoshop\template\cart\collaterals', $cart); ?>
-			<div id="cart-totals" class="panel panel-primary pull-right">
+			<div id="cart-totals" class="panel-primary pull-right">
 				<div class="panel-heading"><h2 class="panel-title"><?php _e('Cart Totals', 'jigoshop-ecommerce'); ?></h2></div>
 				<table class="table">
 					<tbody>
