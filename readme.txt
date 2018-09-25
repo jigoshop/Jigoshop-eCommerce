@@ -4,7 +4,7 @@ Tags: ecommerce, wordpress ecommerce, store, shop, shopping, cart, checkout, wid
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=7F5FZ5NGJ3XTL
 Requires at least: 4.0
 Tested up to: 4.9.8
-Stable tag: 2.1.16
+Stable tag: 2.1.17
 
 A feature-packed eCommerce plugin built upon WordPress core functionality ensuring excellent performance, customizability and control - robust Tax Settings, Stock Level Management, Free and Premium Extensions - you name it.
 
@@ -149,7 +149,10 @@ However, if you want priority, dedicated support from Jigoshop staff, we dp offe
 4. Standard customer checkout screen
 
 == Changelog ==
-
+= 2.1.17 - 2018.09.25 =
+* New: Possibility to change product list style in all widgets.
+* Fix: Rewrote all frontend css files.
+* Fix: Fix fatal error on order Page.
 = 2.1.16 - 2018.09.05 =
 * New: EU Vat validation.
 * New: Support for guttenberg.

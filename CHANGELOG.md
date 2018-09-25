@@ -1,4 +1,8 @@
 ## Changelog
+* 2.1.17 - 2018.09.25
+    * New: Possibility to change product list style in all widgets.
+    * Fix: Rewrote all frontend css files.
+    * Fix: Fix fatal error on order Page.
 * 2.1.16 - 2018.09.05
     * New: EU Vat validation.
     * New: Support for guttenberg.
