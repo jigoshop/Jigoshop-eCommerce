@@ -65,7 +65,7 @@ msgstr ""
 msgid "Resource not found"
 msgstr ""
 
-#: src/Jigoshop/Core.php:184
+#: src/Jigoshop/Core.php:183
 msgid "This is a demo store for testing purposes &mdash; no orders shall be fulfilled."
 msgstr ""
 
@@ -161,7 +161,7 @@ msgstr ""
 msgid "Remaining"
 msgstr ""
 
-#: templates/admin/migration.php:56, templates/shop/cart.php:190, templates/shop/checkout.php:257, templates/user/account.php:87, templates/admin/order/totalsBox.php:73, templates/shop/checkout/pay.php:104, templates/shop/checkout/thanks.php:131, templates/user/account/orders.php:38, templates/user/account/orders/single.php:141
+#: templates/admin/migration.php:56, templates/shop/cart.php:190, templates/shop/checkout.php:257, templates/user/account.php:87, templates/admin/order/totalsBox.php:73, templates/shop/checkout/pay.php:104, templates/shop/checkout/thanks.php:133, templates/user/account/orders.php:38, templates/user/account/orders/single.php:141
 msgid "Total"
 msgstr ""
 
@@ -373,19 +373,19 @@ msgstr ""
 msgid "Cart"
 msgstr ""
 
-#: templates/shop/cart.php:35, templates/shop/checkout.php:142, src/Jigoshop/Core/Emails.php:419, templates/shop/checkout/pay.php:27, templates/shop/checkout/thanks.php:52, templates/user/account/orders/single.php:54
+#: templates/shop/cart.php:35, templates/shop/checkout.php:142, src/Jigoshop/Core/Emails.php:419, templates/shop/checkout/pay.php:27, templates/shop/checkout/thanks.php:54, templates/user/account/orders/single.php:54
 msgid "Product Name"
 msgstr ""
 
-#: templates/shop/cart.php:36, templates/shop/checkout.php:143, templates/shop/checkout/pay.php:28, templates/shop/checkout/thanks.php:53, templates/shop/cart/mobile/downloadable.php:77, templates/shop/cart/mobile/external.php:77, templates/shop/cart/mobile/simple.php:77, templates/shop/cart/mobile/variable.php:79, templates/shop/cart/mobile/virtual.php:77, templates/shop/checkout/mobile/downloadable.php:68, templates/shop/checkout/mobile/external.php:68, templates/shop/checkout/mobile/simple.php:68, templates/shop/checkout/mobile/variable.php:71, templates/shop/checkout/mobile/virtual.php:68, templates/user/account/orders/single.php:55
+#: templates/shop/cart.php:36, templates/shop/checkout.php:143, templates/shop/checkout/pay.php:28, templates/shop/checkout/thanks.php:55, templates/shop/cart/mobile/downloadable.php:77, templates/shop/cart/mobile/external.php:77, templates/shop/cart/mobile/simple.php:77, templates/shop/cart/mobile/variable.php:79, templates/shop/cart/mobile/virtual.php:77, templates/shop/checkout/mobile/downloadable.php:68, templates/shop/checkout/mobile/external.php:68, templates/shop/checkout/mobile/simple.php:68, templates/shop/checkout/mobile/variable.php:71, templates/shop/checkout/mobile/virtual.php:68, templates/user/account/orders/single.php:55
 msgid "Unit Price"
 msgstr ""
 
-#: templates/shop/cart.php:37, templates/shop/checkout.php:144, templates/admin/order/itemsBox.php:20, templates/shop/checkout/pay.php:29, templates/shop/checkout/thanks.php:54, templates/shop/cart/mobile/downloadable.php:86, templates/shop/cart/mobile/external.php:86, templates/shop/cart/mobile/simple.php:86, templates/shop/cart/mobile/variable.php:88, templates/shop/cart/mobile/virtual.php:86, templates/shop/checkout/mobile/downloadable.php:76, templates/shop/checkout/mobile/external.php:76, templates/shop/checkout/mobile/simple.php:76, templates/shop/checkout/mobile/variable.php:79, templates/shop/checkout/mobile/virtual.php:76, templates/shop/product/cart/simple.php:10, templates/shop/product/cart/variable.php:31, templates/user/account/orders/single.php:56
+#: templates/shop/cart.php:37, templates/shop/checkout.php:144, templates/admin/order/itemsBox.php:20, templates/shop/checkout/pay.php:29, templates/shop/checkout/thanks.php:56, templates/shop/cart/mobile/downloadable.php:86, templates/shop/cart/mobile/external.php:86, templates/shop/cart/mobile/simple.php:86, templates/shop/cart/mobile/variable.php:88, templates/shop/cart/mobile/virtual.php:86, templates/shop/checkout/mobile/downloadable.php:76, templates/shop/checkout/mobile/external.php:76, templates/shop/checkout/mobile/simple.php:76, templates/shop/checkout/mobile/variable.php:79, templates/shop/checkout/mobile/virtual.php:76, templates/shop/product/cart/variable.php:31, templates/user/account/orders/single.php:56
 msgid "Quantity"
 msgstr ""
 
-#: templates/shop/cart.php:38, templates/shop/checkout.php:145, templates/admin/order/itemsBox.php:21, templates/admin/products/quick_edit.php:15, templates/shop/checkout/pay.php:30, templates/shop/checkout/thanks.php:55, templates/admin/product/box/general.php:15, templates/shop/cart/mobile/downloadable.php:101, templates/shop/cart/mobile/external.php:101, templates/shop/cart/mobile/simple.php:101, templates/shop/cart/mobile/variable.php:103, templates/shop/cart/mobile/virtual.php:101, templates/shop/checkout/mobile/downloadable.php:88, templates/shop/checkout/mobile/external.php:88, templates/shop/checkout/mobile/simple.php:88, templates/shop/checkout/mobile/variable.php:91, templates/shop/checkout/mobile/virtual.php:88, templates/user/account/orders/single.php:57, templates/admin/product/box/variations/variation.php:64
+#: templates/shop/cart.php:38, templates/shop/checkout.php:145, templates/admin/order/itemsBox.php:21, templates/admin/products/quick_edit.php:15, templates/shop/checkout/pay.php:30, templates/shop/checkout/thanks.php:57, templates/admin/product/box/general.php:15, templates/shop/cart/mobile/downloadable.php:101, templates/shop/cart/mobile/external.php:101, templates/shop/cart/mobile/simple.php:101, templates/shop/cart/mobile/variable.php:103, templates/shop/cart/mobile/virtual.php:101, templates/shop/checkout/mobile/downloadable.php:88, templates/shop/checkout/mobile/external.php:88, templates/shop/checkout/mobile/simple.php:88, templates/shop/checkout/mobile/variable.php:91, templates/shop/checkout/mobile/virtual.php:88, templates/user/account/orders/single.php:57, templates/admin/product/box/variations/variation.php:64
 msgid "Price"
 msgstr ""
 
@@ -393,7 +393,7 @@ msgstr ""
 msgid "Enter coupons..."
 msgstr ""
 
-#: templates/shop/cart.php:86, templates/shop/checkout.php:134, templates/shop/checkout.php:193, templates/shop/checkout/pay.php:61, templates/shop/checkout/thanks.php:79, templates/user/account/orders/single.php:82
+#: templates/shop/cart.php:86, templates/shop/checkout.php:134, templates/shop/checkout.php:193, templates/shop/checkout/pay.php:61, templates/shop/checkout/thanks.php:81, templates/user/account/orders/single.php:82
 msgid "Products subtotal"
 msgstr ""
 
@@ -405,7 +405,7 @@ msgstr ""
 msgid "Cart Totals"
 msgstr ""
 
-#: templates/shop/cart.php:109, templates/shop/checkout.php:222, src/Jigoshop/Admin/Setup.php:105, templates/admin/order/totalsBox.php:18, templates/shop/checkout/pay.php:77, templates/shop/checkout/thanks.php:94, src/Jigoshop/Admin/Settings/ShippingTab.php:68, templates/user/account/orders/single.php:98
+#: templates/shop/cart.php:109, templates/shop/checkout.php:222, src/Jigoshop/Admin/Setup.php:105, templates/admin/order/totalsBox.php:18, templates/shop/checkout/pay.php:77, templates/shop/checkout/thanks.php:96, src/Jigoshop/Admin/Settings/ShippingTab.php:68, templates/user/account/orders/single.php:98
 msgid "Shipping"
 msgstr ""
 
@@ -425,11 +425,11 @@ msgstr ""
 msgid "Change destination"
 msgstr ""
 
-#: templates/shop/cart.php:176, templates/shop/checkout.php:237, src/Jigoshop/Core/Emails.php:341, templates/admin/order/totalsBox.php:35, templates/shop/checkout/pay.php:88, templates/shop/checkout/thanks.php:105, templates/widget/cart/widget.php:38, templates/user/account/orders/single.php:109
+#: templates/shop/cart.php:176, templates/shop/checkout.php:237, src/Jigoshop/Core/Emails.php:341, templates/admin/order/totalsBox.php:35, templates/shop/checkout/pay.php:88, templates/shop/checkout/thanks.php:107, templates/widget/cart/widget.php:38, templates/user/account/orders/single.php:109
 msgid "Subtotal"
 msgstr ""
 
-#: templates/shop/cart.php:186, templates/shop/checkout.php:248, templates/admin/order/totalsBox.php:43, templates/shop/checkout/pay.php:100, templates/shop/checkout/thanks.php:117, templates/user/account/orders/single.php:124
+#: templates/shop/cart.php:186, templates/shop/checkout.php:248, templates/admin/order/totalsBox.php:43, templates/shop/checkout/pay.php:100, templates/shop/checkout/thanks.php:119, templates/user/account/orders/single.php:124
 msgid "Discount"
 msgstr ""
 
@@ -441,7 +441,7 @@ msgstr ""
 msgid "Checkout"
 msgstr ""
 
-#: templates/shop/checkout.php:36, templates/user/account.php:27, templates/admin/order/dataBox.php:20, templates/shop/checkout/thanks.php:30, templates/user/account/orders/single.php:31
+#: templates/shop/checkout.php:36, templates/user/account.php:27, templates/admin/order/dataBox.php:20, templates/shop/checkout/thanks.php:31, templates/user/account/orders/single.php:31
 msgid "Billing address"
 msgstr ""
 
@@ -449,7 +449,7 @@ msgstr ""
 msgid "Different shipping address"
 msgstr ""
 
-#: templates/shop/checkout.php:70, templates/user/account.php:36, templates/admin/order/dataBox.php:22, templates/shop/checkout/thanks.php:40, templates/user/account/orders/single.php:41
+#: templates/shop/checkout.php:70, templates/user/account.php:36, templates/admin/order/dataBox.php:22, templates/shop/checkout/thanks.php:41, templates/user/account/orders/single.php:41
 msgid "Shipping address"
 msgstr ""
 
@@ -477,24 +477,16 @@ msgstr ""
 msgid "Purchase and pay"
 msgstr ""
 
-#: templates/shop/pagination.php:11
-msgid "Next <span class=\"meta-nav\">&rarr;</span>"
-msgstr ""
-
 #: templates/shop/pagination.php:12
 msgid "<span class=\"meta-nav\">&larr;</span> Previous"
 msgstr ""
 
-#: templates/shop/product.php:21, src/Jigoshop/Core/Emails.php:420, templates/admin/order/itemsBox.php:17, templates/admin/products/quick_edit.php:31, templates/admin/product/box/general.php:22, templates/admin/product/box/variations/variation.php:85
-msgid "SKU"
+#: templates/shop/pagination.php:13
+msgid "Next <span class=\"meta-nav\">&rarr;</span>"
 msgstr ""
 
-#: templates/shop/product.php:24, src/Jigoshop/Admin/Product/Categories.php:83, src/Jigoshop/Core/Types/ProductCategory.php:48
-msgid "Categories"
-msgstr ""
-
-#: templates/shop/product.php:32
-msgid "Tagged as"
+#: templates/shop/pagination.php:14
+msgid "Page"
 msgstr ""
 
 #: templates/user/account.php:20, src/Jigoshop/Core/Installer.php:355, src/Jigoshop/Admin/Settings/ShoppingTab.php:49, src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:509
@@ -1129,6 +1121,10 @@ msgstr ""
 
 #: src/Jigoshop/Core/Emails.php:418
 msgid "Product ID"
+msgstr ""
+
+#: src/Jigoshop/Core/Emails.php:420, templates/admin/order/itemsBox.php:17, templates/admin/products/quick_edit.php:31, templates/admin/product/box/general.php:22, templates/admin/product/box/variations/variation.php:85
+msgid "SKU"
 msgstr ""
 
 #: src/Jigoshop/Core/Emails.php:455, src/Jigoshop/Payment/BankTransfer.php:103, src/Jigoshop/Payment/BankTransfer.php:188, src/Jigoshop/Payment/Cheque.php:104, src/Jigoshop/Payment/OnDelivery.php:104, src/Jigoshop/Payment/PayPal.php:143, src/Jigoshop/Payment/WorldPay.php:105, templates/admin/product_categories/form.php:26, src/Jigoshop/Frontend/Page/Product.php:231
@@ -2881,7 +2877,7 @@ msgstr ""
 msgid "Product subtotal:"
 msgstr ""
 
-#: templates/admin/order/totalsBox.php:64, templates/shop/checkout/thanks.php:124, src/Jigoshop/Frontend/Page/Checkout.php:471
+#: templates/admin/order/totalsBox.php:64, templates/shop/checkout/thanks.php:126, src/Jigoshop/Frontend/Page/Checkout.php:471
 msgid "Payment processing fee (%s)"
 msgstr ""
 
@@ -3105,11 +3101,11 @@ msgstr ""
 msgid "Checkout &raquo; Pay &raquo; %s"
 msgstr ""
 
-#: templates/shop/checkout/pay.php:22, templates/shop/checkout/thanks.php:47, templates/user/account/orders/single.php:49
+#: templates/shop/checkout/pay.php:22, templates/shop/checkout/thanks.php:49, templates/user/account/orders/single.php:49
 msgid "Order details"
 msgstr ""
 
-#: templates/shop/checkout/pay.php:71, templates/shop/checkout/thanks.php:88, src/Jigoshop/Admin/Page/Order.php:93, templates/user/account/orders/single.php:92
+#: templates/shop/checkout/pay.php:71, templates/shop/checkout/thanks.php:90, src/Jigoshop/Admin/Page/Order.php:93, templates/user/account/orders/single.php:92
 msgid "Order Totals"
 msgstr ""
 
@@ -3153,15 +3149,15 @@ msgstr ""
 msgid "Order number"
 msgstr ""
 
-#: templates/shop/checkout/thanks.php:139
+#: templates/shop/checkout/thanks.php:141
 msgid "Cancel this order"
 msgstr ""
 
-#: templates/shop/checkout/thanks.php:141
+#: templates/shop/checkout/thanks.php:143
 msgid "Continue shopping"
 msgstr ""
 
-#: templates/shop/list/product.php:16, templates/shop/product/images.php:15
+#: templates/shop/list/product.php:18
 msgid "Sale!"
 msgstr ""
 
@@ -3237,12 +3233,24 @@ msgstr ""
 msgid "Orders list"
 msgstr ""
 
-#: templates/widget/best_sellers/form.php:12, templates/widget/cart/form.php:15, templates/widget/featured_products/form.php:12, templates/widget/layered_nav/form.php:15, templates/widget/price_filter/form.php:9, templates/widget/products_on_sale/form.php:12, templates/widget/product_categories/form.php:23, templates/widget/product_search/form.php:9, templates/widget/product_tag_cloud/form.php:9, templates/widget/random_products/form.php:12, templates/widget/recently_viewed_products/form.php:12, templates/widget/recent_products/form.php:12, templates/widget/recent_reviews/form.php:12, templates/widget/top_rated/form.php:12
+#: templates/widget/best_sellers/form.php:14, templates/widget/cart/form.php:15, templates/widget/featured_products/form.php:12, templates/widget/layered_nav/form.php:15, templates/widget/price_filter/form.php:9, templates/widget/products_on_sale/form.php:12, templates/widget/product_categories/form.php:23, templates/widget/product_search/form.php:9, templates/widget/product_tag_cloud/form.php:9, templates/widget/random_products/form.php:12, templates/widget/recently_viewed_products/form.php:12, templates/widget/recent_products/form.php:12, templates/widget/recent_reviews/form.php:12, templates/widget/top_rated/form.php:12
 msgid "Title:"
 msgstr ""
 
-#: templates/widget/best_sellers/form.php:16, templates/widget/featured_products/form.php:16, templates/widget/products_on_sale/form.php:16, templates/widget/random_products/form.php:16, templates/widget/recently_viewed_products/form.php:16, templates/widget/recent_products/form.php:16, templates/widget/recent_reviews/form.php:16, templates/widget/top_rated/form.php:16
+#: templates/widget/best_sellers/form.php:18, templates/widget/featured_products/form.php:16, templates/widget/products_on_sale/form.php:16, templates/widget/random_products/form.php:16, templates/widget/recently_viewed_products/form.php:16, templates/widget/recent_products/form.php:16, templates/widget/recent_reviews/form.php:16, templates/widget/top_rated/form.php:16
 msgid "Number of products to show:"
+msgstr ""
+
+#: templates/widget/best_sellers/form.php:22
+msgid "Style:"
+msgstr ""
+
+#: templates/widget/best_sellers/form.php:24
+msgid "Compact"
+msgstr ""
+
+#: templates/widget/best_sellers/form.php:25
+msgid "Full"
 msgstr ""
 
 #: templates/widget/cart/form.php:19
@@ -3667,11 +3675,11 @@ msgstr ""
 msgid "Downloads"
 msgstr ""
 
-#: src/Jigoshop/Admin/Page/Product.php:183, src/Jigoshop/Admin/Page/Product.php:223, src/Jigoshop/Admin/Page/Product.php:302, src/Jigoshop/Core/Types/Product/Variable.php:480, src/Jigoshop/Core/Types/Product/Variable.php:536, src/Jigoshop/Core/Types/Product/Variable.php:594, src/Jigoshop/Core/Types/Product/Variable.php:718, src/Jigoshop/Core/Types/Product/Variable.php:808, src/Jigoshop/Core/Types/Product/Variable.php:850
+#: src/Jigoshop/Admin/Page/Product.php:183, src/Jigoshop/Admin/Page/Product.php:223, src/Jigoshop/Admin/Page/Product.php:302, src/Jigoshop/Core/Types/Product/Variable.php:479, src/Jigoshop/Core/Types/Product/Variable.php:535, src/Jigoshop/Core/Types/Product/Variable.php:593, src/Jigoshop/Core/Types/Product/Variable.php:717, src/Jigoshop/Core/Types/Product/Variable.php:807, src/Jigoshop/Core/Types/Product/Variable.php:849
 msgid "Product was not specified."
 msgstr ""
 
-#: src/Jigoshop/Admin/Page/Product.php:186, src/Jigoshop/Admin/Page/Product.php:226, src/Jigoshop/Admin/Page/Product.php:305, src/Jigoshop/Core/Types/Product/Variable.php:483, src/Jigoshop/Core/Types/Product/Variable.php:539, src/Jigoshop/Core/Types/Product/Variable.php:597, src/Jigoshop/Core/Types/Product/Variable.php:721, src/Jigoshop/Core/Types/Product/Variable.php:811, src/Jigoshop/Core/Types/Product/Variable.php:853
+#: src/Jigoshop/Admin/Page/Product.php:186, src/Jigoshop/Admin/Page/Product.php:226, src/Jigoshop/Admin/Page/Product.php:305, src/Jigoshop/Core/Types/Product/Variable.php:482, src/Jigoshop/Core/Types/Product/Variable.php:538, src/Jigoshop/Core/Types/Product/Variable.php:596, src/Jigoshop/Core/Types/Product/Variable.php:720, src/Jigoshop/Core/Types/Product/Variable.php:810, src/Jigoshop/Core/Types/Product/Variable.php:852
 msgid "Invalid product ID."
 msgstr ""
 
@@ -3687,7 +3695,7 @@ msgstr ""
 msgid "Invalid attribute ID."
 msgstr ""
 
-#: src/Jigoshop/Admin/Page/Product.php:239, src/Jigoshop/Admin/Page/Product.php:318, src/Jigoshop/Core/Types/Product/Variable.php:489, src/Jigoshop/Core/Types/Product/Variable.php:555, src/Jigoshop/Core/Types/Product/Variable.php:737, src/Jigoshop/Core/Types/Product/Variable.php:823, src/Jigoshop/Core/Types/Product/Variable.php:857
+#: src/Jigoshop/Admin/Page/Product.php:239, src/Jigoshop/Admin/Page/Product.php:318, src/Jigoshop/Core/Types/Product/Variable.php:488, src/Jigoshop/Core/Types/Product/Variable.php:554, src/Jigoshop/Core/Types/Product/Variable.php:736, src/Jigoshop/Core/Types/Product/Variable.php:822, src/Jigoshop/Core/Types/Product/Variable.php:856
 msgid "Product does not exists."
 msgstr ""
 
@@ -3796,6 +3804,10 @@ msgstr ""
 
 #: src/Jigoshop/Admin/Product/Categories.php:61
 msgid "Do you really want to remove this category?"
+msgstr ""
+
+#: src/Jigoshop/Admin/Product/Categories.php:83, src/Jigoshop/Core/Types/ProductCategory.php:48
+msgid "Categories"
 msgstr ""
 
 #: src/Jigoshop/Admin/Product/Categories.php:212
@@ -4501,7 +4513,7 @@ msgstr ""
 msgid "Descending"
 msgstr ""
 
-#: src/Jigoshop/Admin/Settings/ShoppingTab.php:61, templates/shop/list/cart/downloadable.php:9, templates/shop/list/cart/simple.php:9, templates/shop/list/cart/virtual.php:9, templates/shop/product/cart/downloadable.php:10, templates/shop/product/cart/simple.php:13, templates/shop/product/cart/variable.php:36, templates/shop/product/cart/virtual.php:10
+#: src/Jigoshop/Admin/Settings/ShoppingTab.php:61, templates/shop/list/cart/downloadable.php:9, templates/shop/list/cart/virtual.php:9
 msgid "Add to cart"
 msgstr ""
 
@@ -6141,7 +6153,7 @@ msgstr ""
 msgid "Enter list of postcodes, separating with comma."
 msgstr ""
 
-#: templates/shop/list/cart/external.php:8, templates/shop/product/cart/external.php:7
+#: templates/shop/list/cart/external.php:8
 msgid "Buy product"
 msgstr ""
 
@@ -6585,31 +6597,31 @@ msgstr ""
 msgid "Back"
 msgstr ""
 
-#: src/Jigoshop/Core/Types/Product/Variable.php:493, src/Jigoshop/Core/Types/Product/Variable.php:559, src/Jigoshop/Core/Types/Product/Variable.php:741, src/Jigoshop/Core/Types/Product/Variable.php:827, src/Jigoshop/Core/Types/Product/Variable.php:860
+#: src/Jigoshop/Core/Types/Product/Variable.php:492, src/Jigoshop/Core/Types/Product/Variable.php:558, src/Jigoshop/Core/Types/Product/Variable.php:740, src/Jigoshop/Core/Types/Product/Variable.php:826, src/Jigoshop/Core/Types/Product/Variable.php:859
 msgid "Product is not variable - unable to add variation."
 msgstr ""
 
-#: src/Jigoshop/Core/Types/Product/Variable.php:542, src/Jigoshop/Core/Types/Product/Variable.php:724, src/Jigoshop/Core/Types/Product/Variable.php:814
+#: src/Jigoshop/Core/Types/Product/Variable.php:541, src/Jigoshop/Core/Types/Product/Variable.php:723, src/Jigoshop/Core/Types/Product/Variable.php:813
 msgid "Variation was not specified."
 msgstr ""
 
-#: src/Jigoshop/Core/Types/Product/Variable.php:545, src/Jigoshop/Core/Types/Product/Variable.php:727, src/Jigoshop/Core/Types/Product/Variable.php:817
+#: src/Jigoshop/Core/Types/Product/Variable.php:544, src/Jigoshop/Core/Types/Product/Variable.php:726, src/Jigoshop/Core/Types/Product/Variable.php:816
 msgid "Invalid variation ID."
 msgstr ""
 
-#: src/Jigoshop/Core/Types/Product/Variable.php:549
+#: src/Jigoshop/Core/Types/Product/Variable.php:548
 msgid "Image is not not specified."
 msgstr ""
 
-#: src/Jigoshop/Core/Types/Product/Variable.php:563, src/Jigoshop/Core/Types/Product/Variable.php:745
+#: src/Jigoshop/Core/Types/Product/Variable.php:562, src/Jigoshop/Core/Types/Product/Variable.php:744
 msgid "Variation does not exists."
 msgstr ""
 
-#: src/Jigoshop/Core/Types/Product/Variable.php:602
+#: src/Jigoshop/Core/Types/Product/Variable.php:601
 msgid "Invalid product type."
 msgstr ""
 
-#: src/Jigoshop/Core/Types/Product/Variable.php:731
+#: src/Jigoshop/Core/Types/Product/Variable.php:730
 msgid "Attribute values are not specified."
 msgstr ""
 

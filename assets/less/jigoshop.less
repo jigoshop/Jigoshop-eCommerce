@@ -561,6 +561,11 @@
     -ms-user-select: none;
     user-select: none;
   }
+  .btn-default {
+    color: #333333;
+    background-color: #ffffff;
+    border-color: #cccccc;
+  }
   .product div.images {
     vertical-align: top;
     display: inline-block;
@@ -637,5 +642,54 @@
     dd {
       margin-bottom: 0;
     }
+  }
+
+  /*PRODUCT PAGINATION */
+  .prev.page-numbers{
+    position: absolute;
+    float: left;
+    left: 5%;
+    border-radius: 5px;
+    background: lightgrey;
+    padding: 5px;
+    font-weight: 500;
+    color: #000;
+    text-align: right;
+    font-size: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  .nav-links {
+    position: relative;
+  }
+  .page-numbers.current {
+    background: #428bca;
+    color: white;
+    font-weight: 600;
+    padding: 8px;
+  }
+  .page-numbers {
+    border-radius: 5px;
+    background: lightgrey;
+    padding: 5px;
+    text-align: right;
+    transition: 1s all;
+  }
+  .next.page-numbers {
+    position: absolute;
+    float: right;
+    right: 5%;
+    border-radius: 5px;
+    background: lightgrey;
+    padding: 5px;
+    font-weight: 500;
+    color: #000;
+    text-align: right;
+    font-size: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  #jigoshop_order_customer_note {
+    min-height: 80px;
   }
 }
