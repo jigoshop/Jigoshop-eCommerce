@@ -64,11 +64,11 @@ class Cart implements PageInterface
 		$this->orderService = $orderService;
 		$this->couponService = $couponService;
 
-		Styles::add('jigoshop.shop.cart', \JigoshopInit::getUrl().'/assets/css/shop/cart.css', [
-			'jigoshop.shop',
-        ]);
+//		Styles::add('jigoshop.shop.cart', \JigoshopInit::getUrl().'/assets/css/shop/cart.css', [
+//			'jigoshop.shop',
+//        ]);
 		Styles::add('jigoshop.vendors.select2', \JigoshopInit::getUrl().'/assets/css/vendors/select2.css', [
-			'jigoshop.shop',
+			'jigoshop',
         ]);
 
 		Scripts::add('jigoshop.vendors.select2', \JigoshopInit::getUrl().'/assets/js/vendors/select2.js', ['jquery']);

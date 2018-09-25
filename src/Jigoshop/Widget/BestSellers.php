@@ -99,6 +99,7 @@ class BestSellers extends \WP_Widget
 			Render::output('widget/best_sellers/widget', array_merge($args, [
 				'title' => $title,
 				'products' => $products,
+                'style' => isset($instance['style']) ? $instance['style'] : 'compact',
             ]));
 		}
 
@@ -123,6 +124,7 @@ class BestSellers extends \WP_Widget
 		// Save the new values
 		$instance['title'] = trim(strip_tags($new_instance['title']));
 		$instance['number'] = absint($new_instance['number']);
+		$instance['style'] = $new_instance['style'];
 
 		// Flush the cache
 		$this->deleteTransient();
@@ -147,6 +149,7 @@ class BestSellers extends \WP_Widget
 		// Get instance data
 		$title = isset($instance['title']) ? esc_attr($instance['title']) : null;
 		$number = isset($instance['number']) ? absint($instance['number']) : 5;
+		$style = isset($instance['style']) ? $instance['style'] : 'compact';
 
 		Render::output('widget/best_sellers/form', [
 			'title_id' => $this->get_field_id('title'),
@@ -155,6 +158,9 @@ class BestSellers extends \WP_Widget
 			'number_id' => $this->get_field_id('number'),
 			'number_name' => $this->get_field_name('number'),
 			'number' => $number,
+            'style_id' => $this->get_field_id('style'),
+            'style_name' => $this->get_field_name('style'),
+            'style' => $style
         ]);
 	}
 }

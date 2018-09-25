@@ -69,10 +69,10 @@ class Checkout implements PageInterface
 		$this->orderService = $orderService;
 
 		Styles::add('jigoshop.vendors.select2', \JigoshopInit::getUrl().'/assets/css/vendors/select2.css');
-		Styles::add('jigoshop.checkout', \JigoshopInit::getUrl().'/assets/css/shop/checkout.css', [
-			'jigoshop.shop',
-			'jigoshop.vendors.select2'
-        ]);
+//		Styles::add('jigoshop.checkout', \JigoshopInit::getUrl().'/assets/css/shop/checkout.css', [
+//			'jigoshop.shop',
+//			'jigoshop.vendors.select2'
+//        ]);
 
 		Scripts::add('jigoshop.vendors.select2', \JigoshopInit::getUrl().'/assets/js/vendors/select2.js', ['jquery']);
 		Scripts::add('jigoshop.vendors.bs_tab_trans_tooltip_collapse', \JigoshopInit::getUrl().'/assets/js/vendors/bs_tab_trans_tooltip_collapse.js', ['jquery']);

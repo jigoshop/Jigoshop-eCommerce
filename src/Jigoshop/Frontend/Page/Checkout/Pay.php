@@ -39,7 +39,7 @@ class Pay implements PageInterface
 		$this->orderService = $orderService;
 		$this->paymentService = $paymentService;
 
-		Styles::add('jigoshop.checkout.pay', \JigoshopInit::getUrl().'/assets/css/shop/checkout/pay.css', ['jigoshop.shop']);
+//		Styles::add('jigoshop.checkout.pay', \JigoshopInit::getUrl().'/assets/css/shop/checkout/pay.css', ['jigoshop.shop']);
 		Scripts::add('jigoshop.checkout.pay', \JigoshopInit::getUrl().'/assets/js/shop/checkout/pay.js', [
 			'jquery',
 			'jigoshop.helpers.payment',

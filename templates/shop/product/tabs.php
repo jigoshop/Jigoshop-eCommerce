@@ -5,7 +5,7 @@
  */
 ?>
 <?php if (!empty($tabs)): ?>
-<div id="tabs">
+<div id="tabs" class="col-sm-12">
 	<ul class="nav nav-tabs tabs" role="tablist">
 		<?php foreach($tabs as $tab => $label): ?>
 			<li<?php $tab == $currentTab and print ' class="active"'; ?>><a href="#tab-<?= $tab; ?>" role="tab" data-toggle="tab"><?= $label; ?></a></li>
