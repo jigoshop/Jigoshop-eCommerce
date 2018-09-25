@@ -465,7 +465,6 @@ class Variable implements Type
 				}
 			}
 
-			Styles::add('jigoshop.product.variable', \JigoshopInit::getUrl().'/assets/css/shop/product/variable.css');
 			Scripts::add('jigoshop.product.variable', \JigoshopInit::getUrl().'/assets/js/shop/product/variable.js', ['jquery']);
 			Scripts::localize('jigoshop.product.variable', 'jigoshop_product_variable', [
 				'variations' => $variations,

@@ -14,9 +14,9 @@ class Frontend
     public function __construct()
     {
         add_action('wp_enqueue_scripts', function () {
-           Styles::add('jigoshop', \JigoshopInit::getUrl().'/assets/css/jigoshop.css');
-           Styles::add('fontawesome', 'https://use.fontawesome.com/releases/v5.0.12/css/all.css');
-           Styles::add('bootstrap', 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css');
-        });
+            Styles::add('fontawesome', 'https://use.fontawesome.com/releases/v5.0.12/css/all.css');
+            Styles::add('bootstrap', \JigoshopInit::getUrl().'/assets/css/vendors/bootstrap.css');
+            Styles::add('jigoshop', \JigoshopInit::getUrl().'/assets/css/jigoshop.css', ['bootstrap', 'fontawesome']);
+        }, 0);
     }
 }

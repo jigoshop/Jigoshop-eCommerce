@@ -38,7 +38,6 @@ class Core
 
 		// Register main Jigoshop scripts
 		$wp->wpEnqueueScript('jquery');
-		Styles::register('jigoshop.shop', \JigoshopInit::getUrl().'/assets/css/shop.css');
 		Styles::register('prettyphoto', \JigoshopInit::getUrl().'/assets/css/prettyPhoto.css');
 		Styles::register('tokenfield', \JigoshopInit::getUrl().'/assets/css/vendors/tokenfield.css');
 		Styles::register('impromptu', \JigoshopInit::getUrl().'/assets/css/vendors/impromptu.css');

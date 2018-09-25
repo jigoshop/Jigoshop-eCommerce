@@ -8,8 +8,11 @@
 		<?php if (function_exists('wp_pagenavi')) : ?>
 			<?php wp_pagenavi(); ?>
 		<?php else: ?>
-			<div class="nav-next"><?php next_posts_link(__('Next <span class="meta-nav">&rarr;</span>', 'jigoshop-ecommerce'), $product_count); ?></div>
-			<div class="nav-previous"><?php previous_posts_link(__('<span class="meta-nav">&larr;</span> Previous', 'jigoshop-ecommerce')); ?></div>
+            <?php the_posts_pagination( [
+                'prev_text' =>  __('<span class="meta-nav">&larr;</span> Previous', 'jigoshop-ecommerce'),
+                'next_text' => __('Next <span class="meta-nav">&rarr;</span>', 'jigoshop-ecommerce'),
+                'before_page_number' => '<span class="meta-nav screen-reader-text">' . __( 'Page', 'jigoshop-ecommerce' ) . ' </span>',
+            ]); ?>
 		<?php endif; ?>
 	</div>
 <?php endif; ?>

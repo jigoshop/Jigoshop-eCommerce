@@ -65,87 +65,87 @@ use Jigoshop\Helper\Render;
         <?php do_action('jigoshop\template\checkout\table_foot', $order); ?>
 
         </tfoot>
-    </table>
-    <div id="cart-collaterals">
-        <div id="cart-totals" class="panel panel-primary pull-right">
-            <div class="panel-heading"><h2 class="panel-title"><?php _e('Order Totals', 'jigoshop-ecommerce'); ?></h2></div>
-            <table class="table">
-                <tbody>
-                <?php if ($order->getShippingMethod()): ?>
-                    <tr id="shipping-calculator">
-                        <th scope="row">
-                            <?php _e('Shipping', 'jigoshop-ecommerce'); ?>
-                        </th>
-                        <td>
-                            <?= Product::formatPrice($order->getShippingPrice()); ?>
-                            <p class="method">
-                                <small><?= $order->getShippingMethod()->getName(); ?></small>
-                            </p>
-                        </td>
-                    </tr>
-                <?php endif; ?>
-                <tr id="cart-subtotal">
-                    <th scope="row"><?php _e('Subtotal', 'jigoshop-ecommerce'); ?></th>
-                    <td><?= Product::formatPrice($order->getSubtotal()); ?></td>
-                </tr>
-                <?php foreach ($order->getCombinedTax() as $taxClass => $tax): //TODO: Fix showing tax after registering ?>
-                    <?php if ($tax > 0): ?>
-                        <tr id="tax-<?= $taxClass; ?>">
-                            <th scope="row"><?= $getTaxLabel($taxClass); ?></th>
-                            <td><?= Product::formatPrice($tax); ?></td>
-                        </tr>
-                    <?php endif; ?>
-                <?php endforeach; ?>
-                <tr id="cart-discount"<?php $order->getDiscount() == 0 and print ' class="not-active"'; ?>>
-                    <th scope="row"><?php _e('Discount', 'jigoshop-ecommerce'); ?></th>
-                    <td><?= Product::formatPrice($order->getDiscount()); ?></td>
-                </tr>
-                <tr id="cart-total">
-                    <th scope="row"><?php _e('Total', 'jigoshop-ecommerce'); ?></th>
-                    <td><?= Product::formatPrice($order->getTotal()); ?></td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-    <?php if(count($paymentMethods) > 0): ?>
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title"><?php _e('Select payment method', 'jigoshop-ecommerce'); ?></h3>
-            </div>
-            <ul class="list-group" id="payment-methods">
-                <?php foreach($paymentMethods as $method): /** @var $method \Jigoshop\Payment\Method */ ?>
-                    <li class="list-group-item" id="payment-<?= $method->getId(); ?>">
-                        <label>
-                            <input type="radio" name="payment_method" value="<?= $method->getId(); ?>" />
-                            <?= $method->getName(); ?>
-                        </label>
-                        <div class="well well-sm">
-                            <?php $method->render(); ?>
-                        </div>
-                    </li>
-                <?php endforeach; ?>
-            </ul>
-            <noscript>
-                <style type="text/css">
-                    .jigoshop form #payment-methods li > div {
-                        display: block;
-                    }
-                </style>
-            </noscript>
-        </div>
-    <?php endif; ?>
-    <?php if (!empty($termsUrl)): ?>
-        <div class="col-md-6 col-xs-12 pull-right toggle-panels">
-            <?php Forms::checkbox([
-                'name' => 'terms',
-                'description' => sprintf(__('I accept the <a href="%s">Terms &amp; Conditions</a>'), $termsUrl),
-                'checked' => false,
-            ]); ?>
-        </div>
-        <div class="clear"></div>
-    <?php endif; ?>
-    <a class="btn btn-default" href="<?= $myAccountUrl; ?>"><?php _e('Go back to My account', 'jigoshop-ecommerce'); ?></a>
-    <a class="btn btn-default" href="<?= $myOrdersUrl; ?>"><?php _e('Go back to My orders', 'jigoshop-ecommerce'); ?></a>
-    <button class="btn btn-success pull-right clearfix" name="action" value="purchase" type="submit"><?php _e('Pay', 'jigoshop-ecommerce'); ?></button>
+	</table>
+	<div id="cart-collaterals">
+		<div id="cart-totals" class="panel panel-primary">
+			<div class="panel-heading"><h2 class="panel-title"><?php _e('Order Totals', 'jigoshop-ecommerce'); ?></h2></div>
+			<table class="table">
+				<tbody>
+				<?php if ($order->getShippingMethod()): ?>
+					<tr id="shipping-calculator">
+						<th scope="row">
+							<?php _e('Shipping', 'jigoshop-ecommerce'); ?>
+						</th>
+						<td>
+							<?= Product::formatPrice($order->getShippingPrice()); ?>
+							<p class="method">
+								<small><?= $order->getShippingMethod()->getName(); ?></small>
+							</p>
+						</td>
+					</tr>
+				<?php endif; ?>
+				<tr id="cart-subtotal">
+					<th scope="row"><?php _e('Subtotal', 'jigoshop-ecommerce'); ?></th>
+					<td><?= Product::formatPrice($order->getSubtotal()); ?></td>
+				</tr>
+				<?php foreach ($order->getCombinedTax() as $taxClass => $tax): //TODO: Fix showing tax after registering ?>
+					<?php if ($tax > 0): ?>
+						<tr id="tax-<?= $taxClass; ?>">
+							<th scope="row"><?= $getTaxLabel($taxClass); ?></th>
+							<td><?= Product::formatPrice($tax); ?></td>
+						</tr>
+					<?php endif; ?>
+				<?php endforeach; ?>
+				<tr id="cart-discount"<?php $order->getDiscount() == 0 and print ' class="not-active"'; ?>>
+					<th scope="row"><?php _e('Discount', 'jigoshop-ecommerce'); ?></th>
+					<td><?= Product::formatPrice($order->getDiscount()); ?></td>
+				</tr>
+				<tr id="cart-total">
+					<th scope="row"><?php _e('Total', 'jigoshop-ecommerce'); ?></th>
+					<td><?= Product::formatPrice($order->getTotal()); ?></td>
+				</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<?php if(count($paymentMethods) > 0): ?>
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h3 class="panel-title"><?php _e('Select payment method', 'jigoshop-ecommerce'); ?></h3>
+		</div>
+		<ul class="list-group" id="payment-methods">
+			<?php foreach($paymentMethods as $method): /** @var $method \Jigoshop\Payment\Method */ ?>
+				<li class="list-group-item" id="payment-<?= $method->getId(); ?>">
+					<label>
+						<input type="radio" name="payment_method" value="<?= $method->getId(); ?>" />
+						<?= $method->getName(); ?>
+					</label>
+					<div class="well well-sm">
+						<?php $method->render(); ?>
+					</div>
+				</li>
+			<?php endforeach; ?>
+		</ul>
+		<noscript>
+			<style type="text/css">
+				.jigoshop form #payment-methods li > div {
+					display: block;
+				}
+			</style>
+		</noscript>
+	</div>
+	<?php endif; ?>
+	<?php if (!empty($termsUrl)): ?>
+	<div class="col-md-6 col-xs-12 pull-right toggle-panels">
+		<?php Forms::checkbox([
+			'name' => 'terms',
+			'description' => sprintf(__('I accept the <a href="%s">Terms &amp; Conditions</a>'), $termsUrl),
+			'checked' => false,
+        ]); ?>
+	</div>
+		<div class="clear"></div>
+	<?php endif; ?>
+	<a class="btn btn-default" href="<?= $myAccountUrl; ?>"><?php _e('Go back to My account', 'jigoshop-ecommerce'); ?></a>
+	<a class="btn btn-default" href="<?= $myOrdersUrl; ?>"><?php _e('Go back to My orders', 'jigoshop-ecommerce'); ?></a>
+	<button class="btn btn-success pull-right clearfix" name="action" value="purchase" type="submit"><?php _e('Pay', 'jigoshop-ecommerce'); ?></button>
 </form>

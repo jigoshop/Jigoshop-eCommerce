@@ -24,25 +24,27 @@ use Jigoshop\Helper\Render;
 	<dt><?php _e('Status', 'jigoshop-ecommerce'); ?></dt>
 	<dd><?= Status::getName($order->getStatus()); ?></dd>
 </dl>
-<div class="col-md-6">
-	<div class="panel panel-default">
-		<div class="panel-heading">
-			<h3 class="panel-title"><?php _e('Billing address', 'jigoshop-ecommerce'); ?></h3>
-		</div>
-		<div class="panel-body clearfix">
-			<?php Render::output('user/account/address', ['address' => $order->getCustomer()->getBillingAddress()]); ?>
-		</div>
-	</div>
-</div>
-<div class="col-md-6">
-	<div class="panel panel-default">
-		<div class="panel-heading">
-			<h3 class="panel-title"><?php _e('Shipping address', 'jigoshop-ecommerce'); ?></h3>
-		</div>
-		<div class="panel-body">
-			<?php Render::output('user/account/address', ['address' => $order->getCustomer()->getShippingAddress()]); ?>
-		</div>
-	</div>
+<div class="row">
+    <div class="col-md-6">
+        <div class="panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title"><?php _e('Billing address', 'jigoshop-ecommerce'); ?></h3>
+            </div>
+            <div class="panel-body clearfix">
+                <?php Render::output('user/account/address', ['address' => $order->getCustomer()->getBillingAddress()]); ?>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title"><?php _e('Shipping address', 'jigoshop-ecommerce'); ?></h3>
+            </div>
+            <div class="panel-body">
+                <?php Render::output('user/account/address', ['address' => $order->getCustomer()->getShippingAddress()]); ?>
+            </div>
+        </div>
+    </div>
 </div>
 <h3><?php _e('Order details', 'jigoshop-ecommerce'); ?></h3>
 <table class="table table-hover">
