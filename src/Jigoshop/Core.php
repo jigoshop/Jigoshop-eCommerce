@@ -93,6 +93,11 @@ class Core
 
 		$container->get('jigoshop.permalinks');
 
+        /** @var \Jigoshop\Service\TaxServiceInterface $tax */
+        $tax = $container->get('jigoshop.service.tax');
+        $tax->register();
+        Tax::setTaxService($tax);
+
 		/** @var \Jigoshop\Endpoint $api */
 		$endpoint = $container->get('jigoshop.endpoint');
 		$endpoint->run();
@@ -107,11 +112,6 @@ class Core
 		    $ajax = $container->get('jigoshop.ajax');
 		    $ajax->run();
         }
-
-		/** @var \Jigoshop\Service\TaxServiceInterface $tax */
-		$tax = $container->get('jigoshop.service.tax');
-		$tax->register();
-		Tax::setTaxService($tax);
 
 		$container->get('jigoshop.emails');
 
