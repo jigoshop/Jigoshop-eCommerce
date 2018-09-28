@@ -532,7 +532,7 @@ class Checkout implements PageInterface
 
 				if($this->options->get('tax.euVat.enabled')) {
 					$euVatNumberValidationResult = Tax::EU_VAT_VALIDATION_RESULT_INVALID;
-					$euVatNumber = $cart->getCustomer()->getBillingAddress()->getVatNumber();
+					$euVatNumber = AddressHelper::convertToCompanyAddress($cart->getCustomer()->getBillingAddress())->getVatNumber();
 
 					if($this->options->get('tax.euVat.forceB2BTransactions', false) && !$euVatNumber) {
 						throw new Exception(__('EU VAT number is required for this order.', 'jigoshop-ecommerce'));
