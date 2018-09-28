@@ -78,7 +78,7 @@ class Extensions
     {
         $errors = [];
         try {
-            if ($extension->getPlugin()->getVersion() && $this->isMinimumVersion($extension->getPlugin()->getVersion()) == false) {
+            if ($extension->getPlugin()->getRequiredVersion() && $this->isMinimumVersion($extension->getPlugin()->getRequiredVersion()) == false) {
                 $errors[] = sprintf(
                     __('Required Jigoshop version: %s. Current version: %s. Please upgrade.', 'jigoshop-ecommerce'),
                     $extension->getPlugin()->getVersion(),
