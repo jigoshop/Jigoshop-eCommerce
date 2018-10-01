@@ -18,29 +18,29 @@ use Jigoshop\Admin\Helper\Forms;
 	</td>
 	<td>
 		<?php
-		Forms::text([
+		Forms::number([
 			'name' => sprintf('processingFeeRules[%s][minValue]', $id),
 			'placeholder' => __('Leave blank for unlimited.', 'jigoshop-ecommerce'),
 			'value' => isset($minValue)?$minValue:''
-		]);
+		], "float");
 		?>
 	</td>
 	<td>
 		<?php
-		Forms::text([
+		Forms::number([
 			'name' => sprintf('processingFeeRules[%s][maxValue]', $id),
 			'placeholder' => __('Leave blank for unlimited.', 'jigoshop-ecommerce'),
 			'value' => isset($maxValue)?$maxValue:''
-		]);
+		], "float");
 		?>
 	</td>		
 	<td>
 		<?php
-		Forms::text([
+		Forms::number([
 			'name' => sprintf('processingFeeRules[%s][value]', $id),
 			'placeholder' => __('Absolute value or percentage of order value.', 'jigoshop-ecommerce'),
 			'value' => isset($value)?$value:''
-		]);
+		],"float");
 		?>
 	</td>
 	<td>

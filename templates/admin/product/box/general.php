@@ -10,13 +10,13 @@ use Jigoshop\Helper\Product as ProductHelper;
 ?>
 <fieldset>
 	<?php
-	Forms::text([
+	Forms::number([
 		'name' => 'product[regular_price]',
 		'label' => __('Price', 'jigoshop-ecommerce').' ('.Currency::symbol().')',
 		'placeholder' => __('Price not announced', 'jigoshop-ecommerce'),
 		'classes' => ['product-simple', $product instanceof Product\Purchasable ? '' : 'not-active'],
 		'value' => $product instanceof Product\Purchasable ? $product->getRegularPrice() : 0,
-    ]);
+    ], "currency");
 	Forms::text([
 		'name' => 'product[sku]',
 		'label' => __('SKU', 'jigoshop-ecommerce'),
@@ -44,26 +44,26 @@ use Jigoshop\Helper\Product as ProductHelper;
 </fieldset>
 <fieldset>
 	<?php
-	Forms::text([
+	Forms::number([
 		'name' => 'product[size_weight]',
 		'label' => __('Weight', 'jigoshop-ecommerce').' ('.ProductHelper::weightUnit().')',
 		'value' => $product->getSize()->getWeight(),
-    ]);
-	Forms::text([
+    ], "float");
+	Forms::number([
 		'name' => 'product[size_length]',
 		'label' => __('Length', 'jigoshop-ecommerce').' ('.ProductHelper::dimensionsUnit().')',
 		'value' => $product->getSize()->getLength(),
-    ]);
-	Forms::text([
+    ], "float");
+	Forms::number([
 		'name' => 'product[size_width]',
 		'label' => __('Width', 'jigoshop-ecommerce').' ('.ProductHelper::dimensionsUnit().')',
 		'value' => $product->getSize()->getWidth(),
-    ]);
-	Forms::text([
+    ], "float");
+	Forms::number([
 		'name' => 'product[size_height]',
 		'label' => __('Height', 'jigoshop-ecommerce').' ('.ProductHelper::dimensionsUnit().')',
 		'value' => $product->getSize()->getHeight(),
-    ]);
+    ], "float");
 	?>
 </fieldset>
 <fieldset>

@@ -39,8 +39,8 @@ class ShippingAdvancedFlatRate
     jQuery('.mfp-content').find('input[type="checkbox"]').each (index, element) ->
       jQuery(element).bootstrapSwitch
         size: 'small'
-        onText: 'Yes'
-        offText: 'No'
+        onText: jigoshop_settings.i18n.yes
+        offText: jigoshop_settings.i18n.no
 
   toggleSpecificCountires: (event) ->
     if jQuery(event.target).val() == 'specific'

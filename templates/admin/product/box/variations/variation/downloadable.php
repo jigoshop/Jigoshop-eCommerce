@@ -20,7 +20,7 @@ use Jigoshop\Entity\Product;
     ]);
     ?>
     <?php
-    Forms::text([
+    Forms::number([
         'name' => 'product[variation][' . $variation->getId() . '][product][limit]',
         'type' => 'number',
         'label' => __('Downloads limit', 'jigoshop-ecommerce'),

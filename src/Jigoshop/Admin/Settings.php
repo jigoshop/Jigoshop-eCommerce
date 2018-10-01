@@ -50,8 +50,7 @@ class Settings implements PageInterface
 			if (!in_array($screen->base, ['jigoshop_page_'.Settings::NAME, 'options'])) {
 				return;
 			}
-
-			Styles::add('jigoshop.admin.settings', \JigoshopInit::getUrl().'/assets/css/admin/settings.css', ['jigoshop.admin']);
+            Styles::add('jigoshop.admin.settings', \JigoshopInit::getUrl().'/assets/css/admin/settings.css', ['jigoshop.admin']);
 			Styles::add('jigoshop.vendors.select2', \JigoshopInit::getUrl().'/assets/css/vendors/select2.css', ['jigoshop.admin']);
 			Styles::add('jigoshop.vendors.datepicker', \JigoshopInit::getUrl().'/assets/css/vendors/datepicker.css', ['jigoshop.admin']);
 			Styles::add('jigoshop.vendors.bs_switch', \JigoshopInit::getUrl().'/assets/css/vendors/bs_switch.css', ['jigoshop.admin']);
@@ -66,6 +65,12 @@ class Settings implements PageInterface
 			Scripts::add('jigoshop.vendors.bs_switch', \JigoshopInit::getUrl() . '/assets/js/vendors/bs_switch.js', [
 				'jigoshop.admin.settings',
             ], ['page' => 'jigoshop_page_jigoshop_settings', 'in_footer' => true]);
+            Scripts::localize('jigoshop.admin.settings', 'jigoshop_settings', [
+                'i18n' => [
+                    'yes' => __('Yes', 'jigoshop-ecommerce'),
+                    'no' => __('No', 'jigoshop-ecommerce'),
+                ],
+            ]);
 		});
 	}
 

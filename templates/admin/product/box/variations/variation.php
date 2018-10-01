@@ -59,14 +59,14 @@ $stock = $product instanceof Product\Purchasable ? $product->getStock() : new St
 				'options' => $allowedSubtypes,
 				'size' => 11,
             ]);
-			Forms::text([
+			Forms::number([
 				'name' => 'product[variation]['.$variation->getId().'][product][regular_price]',
 				'label' => __('Price', 'jigoshop-ecommerce'),
 				'placeholder' => __('Price not announced', 'jigoshop-ecommerce'),
 				'value' => $product->getRegularPrice(),
 				'size' => 11,
                 'classes' => ['regular-price']
-            ]);
+            ], "currency");
 			Forms::select([
 				'name' => 'product[variation]['.$variation->getId().'][product][tax_classes]',
 				'label' => __('Tax classes', 'jigoshop-ecommerce'),
@@ -156,7 +156,7 @@ $stock = $product instanceof Product\Purchasable ? $product->getStock() : new St
             </fieldset>
 			<fieldset id="variation-<?= $variation->getId(); ?>-sales">
 			<?php
-			Forms::text([
+			Forms::number([
 				'name' => 'product[variation]['.$variation->getId().'][product][sales_price]',
 				'label' => __('Sale price', 'jigoshop-ecommerce'),
 				'value' => $product->getSales()->getPrice(),
@@ -166,7 +166,7 @@ $stock = $product instanceof Product\Purchasable ? $product->getStock() : new St
                 'description' =>
                     '<a href="#" class="schedule'.($product->getSales()->getTo()->getTimestamp() ? ' not-active' : '').'">'.__('Schedule', 'jigoshop-ecommerce').'</a>'.
                     '<a href="#" class="cancel-schedule'.($product->getSales()->getTo()->getTimestamp() == 0 ? ' not-active' : '').'">'.__('Cancel schedule', 'jigoshop-ecommerce').'</a>',
-            ]);
+            ], "float");
 			Forms::daterange([
 				'id' => 'product_variation_'.$variation->getId().'_product_sales_date',
 				'name' => [

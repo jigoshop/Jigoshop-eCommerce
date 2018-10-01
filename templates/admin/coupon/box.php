@@ -24,7 +24,7 @@ use Jigoshop\Admin\Helper\Forms;
 			'options' => $types,
 			'value' => $coupon->getType(),
         ]); ?>
-		<?php Forms::text([
+		<?php Forms::number([
 			'name' => 'jigoshop_coupon[amount]',
 			'label' => __('Amount', 'jigoshop-ecommerce'),
 			'type' => 'number',
@@ -32,7 +32,7 @@ use Jigoshop\Admin\Helper\Forms;
 			'tip' => __('Amount this coupon is worth. If it is a percentage, just include the number without the percentage sign.', 'jigoshop-ecommerce'),
 			'placeholder' => \Jigoshop\Helper\Product::formatNumericPrice(0),
 			'value' => $coupon->getAmount(),
-        ]); ?>
+        ], "float"); ?>
 	</fieldset>
 	<fieldset>
 		<?php Forms::daterange([
@@ -52,7 +52,7 @@ use Jigoshop\Admin\Helper\Forms;
 		?>
 	</fieldset>
 	<fieldset>
-		<?php Forms::text([
+		<?php Forms::number([
 			'name' => 'jigoshop_coupon[usage_limit]',
 			'label' => __('Usage limit', 'jigoshop-ecommerce'),
 			'type' => 'number',
@@ -75,22 +75,22 @@ use Jigoshop\Admin\Helper\Forms;
         ]); ?>
 	</fieldset>
 	<fieldset>
-		<?php Forms::text([
+		<?php Forms::number([
 			'name' => 'jigoshop_coupon[order_total_minimum]',
 			'label' => __('Order total minimum', 'jigoshop-ecommerce'),
 			'type' => 'number',
 			'description' => __('Set the required minimum subtotal for this coupon to be valid on an order.','jigoshop-ecommerce'),
 			'placeholder' => __('No minimum', 'jigoshop-ecommerce'),
 			'value' => $coupon->getOrderTotalMinimum(),
-        ]); ?>
-		<?php Forms::text([
+        ], "currency"); ?>
+		<?php Forms::number([
 			'name' => 'jigoshop_coupon[order_total_maximum]',
 			'label' => __('Order total maximum', 'jigoshop-ecommerce'),
 			'type' => 'number',
 			'description' => __('Set the required maximum subtotal for this coupon to be valid on an order.','jigoshop-ecommerce'),
 			'placeholder' => __('No maximum', 'jigoshop-ecommerce'),
 			'value' => $coupon->getOrderTotalMaximum(),
-        ]); ?>
+        ], "currency"); ?>
 	</fieldset>
 	<div id="jigoshop_coupon_type_product">
 		<fieldset>
