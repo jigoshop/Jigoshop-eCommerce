@@ -40,6 +40,7 @@ class Categories implements PageInterface {
 			}
 
 			$wp->wpEnqueueMedia();
+
             Styles::add('jigoshop.vendors.select2', \JigoshopInit::getUrl().'/assets/css/vendors/select2.css', ['jigoshop.admin.product']);
             Styles::add('jigoshop.vendors.bs-switch', \JigoshopInit::getUrl() . '/assets/css/vendors/bs_switch.css');
 			Styles::add('jigoshop.admin.product_categories', \JigoshopInit::getUrl().'/assets/css/admin/product_categories.css');
@@ -53,6 +54,12 @@ class Categories implements PageInterface {
             Scripts::add('jigoshop.admin.product_categories', \JigoshopInit::getUrl() . '/assets/js/admin/product_categories.js', [
             	'jquery',
             	'jquery-ui-sortable'
+            ]);
+            Scripts::localize('jigoshop.admin.product_categories', 'jigoshop_categories', [
+                'i18n' => [
+                    'yes' => __('Yes', 'jigoshop-ecommerce'),
+                    'no' => __('No', 'jigoshop-ecommerce'),
+                ],
             ]);
 
             $localization = [

@@ -36,7 +36,7 @@ $stock = $product instanceof Product\Purchasable ? $product->getStock() : new St
 		'label' => __('Items in stock', 'jigoshop-ecommerce'),
 		'value' => $stock->getStock(),
 		'min' => 0,
-    ]);
+    ], "int");
 	?>
 	<?php
 	Forms::select([

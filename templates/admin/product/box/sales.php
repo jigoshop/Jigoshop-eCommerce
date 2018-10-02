@@ -47,12 +47,12 @@ if ($product instanceof Product\Saleable) {
 <fieldset class="schedule" style="<?php !$enabled and print 'display: none;'; ?>">
 	<h3><?php _e('Schedule', 'jigoshop-ecommerce'); ?></h3>
 	<?php
-	Forms::text([
+	Forms::number([
 		'name' => 'product[sales_price]',
 		'label' => __('Sale price', 'jigoshop-ecommerce'),
 		'value' => $price,
 		'placeholder' => __('15% or 19.99', 'jigoshop-ecommerce'),
-    ]);
+    ], "float");
 	Forms::daterange([
 		'id' => 'product_sales_date',
 		'name' => [

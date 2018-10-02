@@ -47,8 +47,8 @@ class Payment
     jQuery('#processing-fee-rules').find('tbody').find('tr').last().find('select').select2()
     jQuery('#processing-fee-rules').find('tbody').find('tr').last().find('input[type="checkbox"].switch-medium').bootstrapSwitch
       size: 'small'
-      onText: "Yes"
-      offText: "No"
+      onText: jigoshop_settings.i18n.yes
+      offText: jigoshop_settings.i18n.no
 
     @bindProcessingFeeRulesControls()
 

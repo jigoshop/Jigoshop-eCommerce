@@ -10,9 +10,10 @@
                 <input type="hidden" name="product[attachments][image][]" value="{{{ data.id }}}">
             </div>
         </script>
-        <p class="empty-gallery"><?php _e('For this product, gallery has not been created yet.', 'jigoshop' ); ?></p>
+        <p class="empty-gallery"><?php _e('For this product, gallery has not been created yet.', 'jigoshop-ecommerce'); ?></p>
     </div>
     <div class="clear"></div>
-    <a href="#" class="btn btn-default add-product-attachments" data-type="image">Select</a>
+    <a href="#" class="btn btn-default add-product-attachments"
+       data-type="image"><?php __('Select', 'jigoshop-ecommerce'); ?></a>
 </div>
 <div class="clear"></div>

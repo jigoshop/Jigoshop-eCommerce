@@ -18,8 +18,8 @@ $product = $variation ? $variation->getProduct() : $product;
 	<td class="id"><?php Forms::constant(['name' => 'order[items]['.$id.'][id]', 'value' => $product->getId()]); ?></td>
 	<td class="sku"><?php Forms::constant(['name' => 'order[items]['.$id.'][sku]', 'value' => $product->getSku()]); ?></td>
 	<td class="name"><?php Forms::constant(['name' => 'order[items]['.$id.'][name]', 'value' => apply_filters('jigoshop\template\admin\order\item_title', $item->getName(), $item->getProduct(), $item)]); ?></td>
-	<td class="price"><?php Forms::text(['name' => 'order[items]['.$id.'][price]', 'value' => Product::formatNumericPrice($item->getPrice())]); ?></td>
-	<td class="quantity"><?php Forms::text(['name' => 'quantity['.$id.']', 'value' => $item->getQuantity()]); ?></td>
+	<td class="price"><?php Forms::number(['name' => 'order[items]['.$id.'][price]', 'value' => Product::formatNumericPrice($item->getPrice())], "currency"); ?></td>
+	<td class="quantity"><?php Forms::number(['name' => 'quantity['.$id.']', 'value' => $item->getQuantity()]); ?></td>
 	<td class="total"><?php Forms::constant(['name' => 'order[items]['.$id.'][total]', 'value' => Product::formatPrice($item->getCost(), '', $order->getCurrency())]); ?></td>
 	<td class="actions">
 		<a href="" class="close remove"><span aria-hidden="true">&times;</span><span class="sr-only"><?php _e('Remove', 'jigoshop-ecommerce'); ?></span></a>

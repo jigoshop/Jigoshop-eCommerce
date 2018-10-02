@@ -176,8 +176,8 @@ AdminProductCategories = do ->
     jQuery('.jigoshop-product-categories-edit-form').find('input[type="checkbox"]').each (index, element) ->
       jQuery(element).bootstrapSwitch
         size: 'small'
-        onText: 'Yes'
-        offText: 'No'
+        onText: jigoshop_categories.i18n.yes
+        offText: jigoshop_categories.i18n.no
       return
 
     jQuery('#parentId, #attributesInheritMode, #attributesNewSelector').select2
@@ -271,8 +271,8 @@ AdminProductCategories = do ->
         jQuery('#jigoshop-product-categories-attributes').find('input[type="checkbox"]').each (index, element) ->
           jQuery(element).bootstrapSwitch
             size: 'small'
-            onText: 'Yes'
-            offText: 'No'
+            onText: jigoshop_categories.i18n.yes
+            offText: jigoshop_categories.i18n.no
           return
         jQuery('.attributeRemoveButton').click (e) ->
           e.preventDefault()

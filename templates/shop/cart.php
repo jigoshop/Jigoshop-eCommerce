@@ -195,7 +195,7 @@ use Jigoshop\Helper\Tax;
 			</div>
 		</div>
 		<a href="<?= $shopUrl; ?>" class="btn btn-default pull-left"><?php _e('&larr; Return to shopping', 'jigoshop-ecommerce'); ?></a>
-		<button class="btn btn-primary pull-right" name="action" value="checkout"><?php _e('Proceed to checkout &rarr;', 'jigoshopp'); ?></button>
+		<button class="btn btn-primary pull-right" name="action" value="checkout"><?php _e('Proceed to checkout &rarr;', 'jigoshop-ecommerce'); ?></button>
 		<div class="clear"></div>
 	</form>
     <?php do_action('jigoshop\template\cart\form\after'); ?>

@@ -18,8 +18,8 @@ class ShippingPayment
           open: =>
             jQuery('.mfp-content input[type="checkbox"]').bootstrapSwitch
               size: 'small'
-              onText: 'Yes'
-              offText: 'No'
+              onText: jigoshop_settings.i18n.yes
+              offText: jigoshop_settings.i18n.no
             jQuery('.mfp-content select').each (index, element) ->
               jQuery(element).siblings().remove()
               jQuery(element).select2('destroy')

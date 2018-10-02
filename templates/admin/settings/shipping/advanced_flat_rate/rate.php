@@ -33,12 +33,12 @@ foreach (\Jigoshop\Helper\Country::getAll() as $countryCode => $countryName) {
                 'value' => $value['label'],
                 'classes' => ['input-label']
             ]); ?>
-            <?php \Jigoshop\Helper\Forms::text([
+            <?php \Jigoshop\Helper\Forms::number([
                 'name' => sprintf('%s[%s][cost]', $name, $id),
                 'label' => __('Cost', 'jigoshop-ecommerce'),
                 'value' => $value['cost'],
                 'classes' => ['input-cost']
-            ]); ?>
+            ],"currency"); ?>
         </div>
         <div class="col-sm-6">
             <?php \Jigoshop\Helper\Forms::select([

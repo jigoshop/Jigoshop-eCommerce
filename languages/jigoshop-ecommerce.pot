@@ -3975,6 +3975,7 @@ msgid "API"
 msgstr ""
 
 #: src/Jigoshop/Admin/Settings/AdvancedTab.php:201, src/Jigoshop/Admin/Settings/AdvancedTab.php:215, templates/admin/settings/shipping/advanced_flat_rate/rate.php:82
+msgid ""
 msgstr ""
 
 #: src/Jigoshop/Admin/Settings/AdvancedTab.php:212
