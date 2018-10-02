@@ -655,6 +655,7 @@ class Order
         $post = $this->wp->getGlobalPost();
         $order = $this->orderService->findForPost($post);
 
+        $euVatNumberValidationStatus = '-';
         if($order->getEuVatValidationStatus() == Tax::EU_VAT_VALIDATION_RESULT_VALID) {
             $euVatNumberValidationStatus = __('Valid', 'jigoshop-ecommerce');
         }
