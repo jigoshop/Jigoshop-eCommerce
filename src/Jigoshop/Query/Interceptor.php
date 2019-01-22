@@ -4,6 +4,7 @@ namespace Jigoshop\Query;
 
 use Jigoshop\Core\Options;
 use Jigoshop\Core\Types;
+use Jigoshop\Entity\Order;
 use Jigoshop\Entity\Product;
 use Jigoshop\Frontend\Pages;
 use WPAL\Wordpress;
@@ -262,6 +263,8 @@ class Interceptor
 
     private function getAdminOrderListQuery($request)
     {
+        $request['post_status'] = array_keys(Order\Status::getStatuses());
+
         return $request;
     }
 
