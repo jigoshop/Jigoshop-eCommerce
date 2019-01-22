@@ -63,6 +63,7 @@ class ProductTag implements Taxonomy
 				'delete_terms' => 'delete_product_terms',
 				'assign_terms' => 'assign_product_terms',
             ],
+            'show_in_rest' => true,
 			'hierarchical' => false,
 			'show_ui' => true,
 			'query_var' => true,

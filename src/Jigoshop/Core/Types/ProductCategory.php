@@ -63,6 +63,7 @@ class ProductCategory implements Taxonomy
 				'delete_terms' => 'delete_product_terms',
 				'assign_terms' => 'assign_product_terms',
             ],
+            'show_in_rest' => true,
 			'hierarchical' => true,
 			'show_ui' => true,
 			'show_in_menu' => false,
