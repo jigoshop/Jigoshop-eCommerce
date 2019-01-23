@@ -1,4 +1,13 @@
 ## Changelog
+* 2.1.18 - 2019.01.23
+    * New: Subscriptions interface, now core is compatible with subscriptions plugin.
+    * Fix: Css issues on product page.
+    * Fix: Not visible categories and tags in gutenberg editor.
+    * Fix: Translations.
+    * Fix: Possible notice on Order edit page.
+    * Fix: Extensions Interface.
+    * Fix: Init tax service before endpoints.
+    * Fix: Possible fatal error on checkout page.
 * 2.1.17 - 2018.09.25
     * New: Possibility to change product list style in all widgets.
     * Fix: Rewrote all frontend css files.

@@ -1,4 +1,4 @@
-# Copyright (C) 2018 Jigoshop eCommerce
+# Copyright (C) 2019 Jigoshop eCommerce
 # This file is distributed under the same license as the Jigoshop eCommerce package.
 msgid ""
 msgstr ""
@@ -41,7 +41,7 @@ msgstr ""
 msgid "Orders"
 msgstr ""
 
-#: src/JigoshopInit.php:489, src/JigoshopInit.php:500, src/Jigoshop/Admin/Settings.php:87, src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:409
+#: src/JigoshopInit.php:489, src/JigoshopInit.php:500, src/Jigoshop/Admin/Settings.php:92, src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:409
 msgid "Settings"
 msgstr ""
 
@@ -437,6 +437,10 @@ msgstr ""
 msgid "&larr; Return to shopping"
 msgstr ""
 
+#: templates/shop/cart.php:198
+msgid "Proceed to checkout &rarr;"
+msgstr ""
+
 #: templates/shop/checkout.php:26, src/Jigoshop/Core/Installer.php:349, templates/widget/cart/widget.php:17, src/Jigoshop/Admin/Settings/LayoutTab.php:123, src/Jigoshop/Admin/Settings/ShoppingTab.php:166, src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:493
 msgid "Checkout"
 msgstr ""
@@ -719,6 +723,14 @@ msgstr ""
 msgid "Reports"
 msgstr ""
 
+#: src/Jigoshop/Admin/Settings.php:70, src/Jigoshop/Helper/Product.php:465, src/Jigoshop/Admin/Page/Coupons.php:95, src/Jigoshop/Admin/Product/Categories.php:60, src/Jigoshop/Core/Types/Product/Variable.php:427
+msgid "Yes"
+msgstr ""
+
+#: src/Jigoshop/Admin/Settings.php:71, src/Jigoshop/Helper/Product.php:465, src/Jigoshop/Admin/Page/Coupons.php:95, src/Jigoshop/Admin/Product/Categories.php:61, src/Jigoshop/Core/Types/Product/Variable.php:428
+msgid "No"
+msgstr ""
+
 #: src/Jigoshop/Admin/Setup.php:85
 msgid "Setup"
 msgstr ""
@@ -735,7 +747,7 @@ msgstr ""
 msgid "Ready!"
 msgstr ""
 
-#: src/Jigoshop/Admin/Setup.php:138, src/Jigoshop/Admin/Product/Categories.php:131, src/Jigoshop/Admin/Settings/AdvancedTab.php:88
+#: src/Jigoshop/Admin/Setup.php:138, src/Jigoshop/Admin/Product/Categories.php:138, src/Jigoshop/Admin/Settings/AdvancedTab.php:88
 msgid "None"
 msgstr ""
 
@@ -1127,7 +1139,7 @@ msgstr ""
 msgid "SKU"
 msgstr ""
 
-#: src/Jigoshop/Core/Emails.php:455, src/Jigoshop/Payment/BankTransfer.php:103, src/Jigoshop/Payment/BankTransfer.php:188, src/Jigoshop/Payment/Cheque.php:104, src/Jigoshop/Payment/OnDelivery.php:104, src/Jigoshop/Payment/PayPal.php:143, src/Jigoshop/Payment/WorldPay.php:105, templates/admin/product_categories/form.php:26, src/Jigoshop/Frontend/Page/Product.php:231
+#: src/Jigoshop/Core/Emails.php:455, src/Jigoshop/Payment/BankTransfer.php:103, src/Jigoshop/Payment/BankTransfer.php:188, src/Jigoshop/Payment/Cheque.php:104, src/Jigoshop/Payment/OnDelivery.php:104, src/Jigoshop/Payment/PayPal.php:147, src/Jigoshop/Payment/WorldPay.php:105, templates/admin/product_categories/form.php:26, src/Jigoshop/Frontend/Page/Product.php:231
 msgid "Description"
 msgstr ""
 
@@ -1789,14 +1801,6 @@ msgctxt "product"
 msgid "%s <strong>(Available on request)</strong>"
 msgstr ""
 
-#: src/Jigoshop/Helper/Product.php:465, src/Jigoshop/Admin/Page/Coupons.php:95, src/Jigoshop/Core/Types/Product/Variable.php:427
-msgid "Yes"
-msgstr ""
-
-#: src/Jigoshop/Helper/Product.php:465, src/Jigoshop/Admin/Page/Coupons.php:95, src/Jigoshop/Core/Types/Product/Variable.php:428
-msgid "No"
-msgstr ""
-
 #: src/Jigoshop/Helper/Product.php:604
 msgid "Rated %s out of 5"
 msgstr ""
@@ -1853,15 +1857,15 @@ msgstr ""
 msgid "Bank Transfer"
 msgstr ""
 
-#: src/Jigoshop/Payment/BankTransfer.php:90, src/Jigoshop/Payment/Cheque.php:91, src/Jigoshop/Payment/OnDelivery.php:91, src/Jigoshop/Payment/PayPal.php:130, src/Jigoshop/Payment/WorldPay.php:92, src/Jigoshop/Shipping/FlatRate.php:119, src/Jigoshop/Shipping/FreeShipping.php:127, src/Jigoshop/Shipping/LocalPickup.php:86, src/Jigoshop/Admin/Settings/LayoutTab.php:279
+#: src/Jigoshop/Payment/BankTransfer.php:90, src/Jigoshop/Payment/Cheque.php:91, src/Jigoshop/Payment/OnDelivery.php:91, src/Jigoshop/Payment/PayPal.php:134, src/Jigoshop/Payment/WorldPay.php:92, src/Jigoshop/Shipping/FlatRate.php:119, src/Jigoshop/Shipping/FreeShipping.php:127, src/Jigoshop/Shipping/LocalPickup.php:86, src/Jigoshop/Admin/Settings/LayoutTab.php:279
 msgid "Is enabled?"
 msgstr ""
 
-#: src/Jigoshop/Payment/BankTransfer.php:97, src/Jigoshop/Payment/Cheque.php:98, src/Jigoshop/Payment/OnDelivery.php:98, src/Jigoshop/Payment/PayPal.php:137, src/Jigoshop/Payment/WorldPay.php:99, src/Jigoshop/Shipping/AdvancedFlatRate.php:116
+#: src/Jigoshop/Payment/BankTransfer.php:97, src/Jigoshop/Payment/Cheque.php:98, src/Jigoshop/Payment/OnDelivery.php:98, src/Jigoshop/Payment/PayPal.php:141, src/Jigoshop/Payment/WorldPay.php:99, src/Jigoshop/Shipping/AdvancedFlatRate.php:116
 msgid "Title"
 msgstr ""
 
-#: src/Jigoshop/Payment/BankTransfer.php:104, src/Jigoshop/Payment/Cheque.php:105, src/Jigoshop/Payment/OnDelivery.php:105, src/Jigoshop/Payment/PayPal.php:144, src/Jigoshop/Payment/WorldPay.php:106
+#: src/Jigoshop/Payment/BankTransfer.php:104, src/Jigoshop/Payment/Cheque.php:105, src/Jigoshop/Payment/OnDelivery.php:105, src/Jigoshop/Payment/PayPal.php:148, src/Jigoshop/Payment/WorldPay.php:106
 msgid "Allowed HTML tags are: %s"
 msgstr ""
 
@@ -1897,101 +1901,117 @@ msgstr ""
 msgid "Payment on delivery."
 msgstr ""
 
-#: src/Jigoshop/Payment/PayPal.php:63
+#: src/Jigoshop/Payment/PayPal.php:67
 msgid "PayPal"
 msgstr ""
 
-#: src/Jigoshop/Payment/PayPal.php:150
+#: src/Jigoshop/Payment/PayPal.php:154
 msgid "PayPal email address"
 msgstr ""
 
-#: src/Jigoshop/Payment/PayPal.php:151
+#: src/Jigoshop/Payment/PayPal.php:155
 msgid "Please enter your PayPal email address; this is needed in order to take payment!"
 msgstr ""
 
-#: src/Jigoshop/Payment/PayPal.php:157
+#: src/Jigoshop/Payment/PayPal.php:161
 msgid "Send shipping details to PayPal"
 msgstr ""
 
-#: src/Jigoshop/Payment/PayPal.php:158
+#: src/Jigoshop/Payment/PayPal.php:162
 msgid "If your checkout page does not ask for shipping details, or if you do not want to send shipping information to PayPal, set this option to no. If you enable this option PayPal may restrict where things can be sent, and will prevent some orders going through for your protection."
 msgstr ""
 
-#: src/Jigoshop/Payment/PayPal.php:165
+#: src/Jigoshop/Payment/PayPal.php:169
 msgid "Force payment"
 msgstr ""
 
-#: src/Jigoshop/Payment/PayPal.php:166
+#: src/Jigoshop/Payment/PayPal.php:170
 msgid "If product totals are free and shipping is also free (excluding taxes), this will force 0.01 to allow paypal to process payment. Shop owner is responsible for refunding customer."
 msgstr ""
 
-#: src/Jigoshop/Payment/PayPal.php:173
+#: src/Jigoshop/Payment/PayPal.php:177
 msgid "Enable Sandbox"
 msgstr ""
 
-#: src/Jigoshop/Payment/PayPal.php:180
+#: src/Jigoshop/Payment/PayPal.php:184
 msgid "PayPal test email address"
 msgstr ""
 
-#: src/Jigoshop/Payment/PayPal.php:181
+#: src/Jigoshop/Payment/PayPal.php:185
 msgid "Please enter your test PayPal email address; this is needed for testing purposes and used when test mode is enabled."
 msgstr ""
 
-#: src/Jigoshop/Payment/PayPal.php:204
+#: src/Jigoshop/Payment/PayPal.php:208
 msgid "Email address is not valid."
 msgstr ""
 
-#: src/Jigoshop/Payment/PayPal.php:215
+#: src/Jigoshop/Payment/PayPal.php:219
 msgid "Test email address is not valid."
 msgstr ""
 
-#: src/Jigoshop/Payment/PayPal.php:340, src/Jigoshop/Entity/Product/Variable/Variation.php:53
+#: src/Jigoshop/Payment/PayPal.php:344, src/Jigoshop/Entity/Product/Variable/Variation.php:53
 msgctxt "product_variation"
 msgid "%s: %s"
 msgstr ""
 
-#: src/Jigoshop/Payment/PayPal.php:355
+#: src/Jigoshop/Payment/PayPal.php:359
 msgid "Shipping cost"
 msgstr ""
 
-#: src/Jigoshop/Payment/PayPal.php:365
+#: src/Jigoshop/Payment/PayPal.php:369
 msgid "Force payment on free orders"
 msgstr ""
 
-#: src/Jigoshop/Payment/PayPal.php:373, templates/user/account/orders/single.php:134
+#: src/Jigoshop/Payment/PayPal.php:377, templates/user/account/orders/single.php:134
 msgid "Payment processing fee"
 msgstr ""
 
-#: src/Jigoshop/Payment/PayPal.php:379
+#: src/Jigoshop/Payment/PayPal.php:383, src/Jigoshop/Payment/PayPal.php:470
 msgid "Waiting for PayPal payment."
 msgstr ""
 
-#: src/Jigoshop/Payment/PayPal.php:408
-msgid "PayPal Validation Error: Unknown \"txn_type\" of \"%s\" for Order ID: %s."
-msgstr ""
-
-#: src/Jigoshop/Payment/PayPal.php:414
+#: src/Jigoshop/Payment/PayPal.php:555, src/Jigoshop/Payment/PayPal.php:636
 msgid "PayPal Validation Error: Order Invoice Number does NOT match PayPal posted invoice (%s) for Order ID: ."
 msgstr ""
 
-#: src/Jigoshop/Payment/PayPal.php:422
+#: src/Jigoshop/Payment/PayPal.php:563, src/Jigoshop/Payment/PayPal.php:644
 msgid "PayPal Validation Error: Payment amounts do not match initial order (gross %s)."
 msgstr ""
 
-#: src/Jigoshop/Payment/PayPal.php:429
+#: src/Jigoshop/Payment/PayPal.php:570, src/Jigoshop/Payment/PayPal.php:651
 msgid "PayPal Validation Error: Payment Merchant email received does not match PayPal Gateway settings. (%s)"
 msgstr ""
 
-#: src/Jigoshop/Payment/PayPal.php:436
+#: src/Jigoshop/Payment/PayPal.php:577, src/Jigoshop/Payment/PayPal.php:658
 msgid "PayPal Validation Error: Payment currency received (%s) does not match Shop currency."
 msgstr ""
 
-#: src/Jigoshop/Payment/PayPal.php:441
+#: src/Jigoshop/Payment/PayPal.php:582
 msgid "PayPal payment completed"
 msgstr ""
 
-#: src/Jigoshop/Payment/PayPal.php:448, src/Jigoshop/Payment/PayPal.php:454
+#: src/Jigoshop/Payment/PayPal.php:589, src/Jigoshop/Payment/PayPal.php:595, src/Jigoshop/Payment/PayPal.php:712
 msgid "Payment %s via PayPal."
+msgstr ""
+
+#: src/Jigoshop/Payment/PayPal.php:618
+msgid "Subscriptions plugin is not active, cannot handle subscription payment."
+msgstr ""
+
+#: src/Jigoshop/Payment/PayPal.php:629
+msgid "There is no subscription with ID(#%s)."
+msgstr ""
+
+#: src/Jigoshop/Payment/PayPal.php:672, src/Jigoshop/Payment/PayPal.php:678
+msgid "PayPal payment completed, with txn_id (%s)"
+msgstr ""
+
+#: src/Jigoshop/Payment/PayPal.php:684
+msgid "Subscription was cancelled by a customer."
+msgstr ""
+
+#: src/Jigoshop/Payment/PayPal.php:687
+msgid "Subscription has expired."
 msgstr ""
 
 #: src/Jigoshop/Payment/WorldPay.php:64
@@ -3559,15 +3579,15 @@ msgstr ""
 msgid "Invalid state."
 msgstr ""
 
-#: src/Jigoshop/Admin/Page/Order.php:659
+#: src/Jigoshop/Admin/Page/Order.php:660
 msgid "Valid"
 msgstr ""
 
-#: src/Jigoshop/Admin/Page/Order.php:662
+#: src/Jigoshop/Admin/Page/Order.php:663
 msgid "Invalid"
 msgstr ""
 
-#: src/Jigoshop/Admin/Page/Order.php:665
+#: src/Jigoshop/Admin/Page/Order.php:666
 msgid "Error"
 msgstr ""
 
@@ -3802,23 +3822,23 @@ msgstr ""
 msgid "Option does not exist."
 msgstr ""
 
-#: src/Jigoshop/Admin/Product/Categories.php:61
+#: src/Jigoshop/Admin/Product/Categories.php:68
 msgid "Do you really want to remove this category?"
 msgstr ""
 
-#: src/Jigoshop/Admin/Product/Categories.php:83, src/Jigoshop/Core/Types/ProductCategory.php:48
+#: src/Jigoshop/Admin/Product/Categories.php:90, src/Jigoshop/Core/Types/ProductCategory.php:48
 msgid "Categories"
 msgstr ""
 
-#: src/Jigoshop/Admin/Product/Categories.php:212
+#: src/Jigoshop/Admin/Product/Categories.php:219
 msgid "Category updated."
 msgstr ""
 
-#: src/Jigoshop/Admin/Product/Categories.php:215
+#: src/Jigoshop/Admin/Product/Categories.php:222
 msgid "Category added successfully."
 msgstr ""
 
-#: src/Jigoshop/Admin/Product/Categories.php:263
+#: src/Jigoshop/Admin/Product/Categories.php:270
 msgid "Category removed successfully."
 msgstr ""
 
@@ -3975,7 +3995,6 @@ msgid "API"
 msgstr ""
 
 #: src/Jigoshop/Admin/Settings/AdvancedTab.php:201, src/Jigoshop/Admin/Settings/AdvancedTab.php:215, templates/admin/settings/shipping/advanced_flat_rate/rate.php:82
-msgid ""
 msgstr ""
 
 #: src/Jigoshop/Admin/Settings/AdvancedTab.php:212
@@ -4935,12 +4954,16 @@ msgstr ""
 msgid "WP Multisite"
 msgstr ""
 
-#: src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:152, src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:160
-msgid "The maximum amount of memory (RAM) that your site can use at one time."
+#: src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:152
+msgid "Whether or not you have WordPress Multisite enabled."
 msgstr ""
 
 #: src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:159
 msgid "WP Memory Limit"
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:160
+msgid "The maximum amount of memory (RAM) that your site can use at one time."
 msgstr ""
 
 #: src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:167
@@ -5047,12 +5070,16 @@ msgstr ""
 msgid "Allow URL fopen"
 msgstr ""
 
-#: src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:271, src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:279
+#: src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:271
 msgid "Whether fetching remote files is allowed. This option is used by many Jigoshop extensions."
 msgstr ""
 
 #: src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:278
 msgid "Session"
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:279
+msgid "Whether PHP sessions are working properly."
 msgstr ""
 
 #: src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:286
@@ -5311,12 +5338,16 @@ msgstr ""
 msgid "Parent Theme Version"
 msgstr ""
 
-#: src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:573, src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:581
+#: src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:573
 msgid "The installed version of the parent theme."
 msgstr ""
 
 #: src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:580
 msgid "Parent Theme Author URL"
+msgstr ""
+
+#: src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:581
+msgid "The parent theme developers URL."
 msgstr ""
 
 #: src/Jigoshop/Admin/SystemInfo/SystemStatusTab.php:588
@@ -5709,7 +5740,7 @@ msgstr ""
 msgid "Multiselect"
 msgstr ""
 
-#: src/Jigoshop/Entity/Product/Attribute.php:51, templates/shop/list/cart/variable.php:7
+#: src/Jigoshop/Entity/Product/Attribute.php:51, templates/admin/product/attachments/gallery.php:17, templates/shop/list/cart/variable.php:7
 msgid "Select"
 msgstr ""
 
@@ -5891,6 +5922,10 @@ msgstr ""
 
 #: src/Jigoshop/Frontend/Page/ProductTagList.php:24
 msgid "Products tagged with \"%s\""
+msgstr ""
+
+#: templates/admin/product/attachments/gallery.php:13
+msgid "For this product, gallery has not been created yet."
 msgstr ""
 
 #: templates/admin/product/box/attributes.php:13
