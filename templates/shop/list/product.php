@@ -38,7 +38,7 @@ $show_add_to_cart_form = !isset($show_add_to_cart_form) || $show_add_to_cart_for
                 <?php Product::printAddToCartForm($product, 'list'); ?>
             <?php endif; ?>
             <a class="js-details-link btn" href="<?= $product->getLink(); ?>"><i
-                        class="fas fa-bars"></i> <?php _("Details", "jigoshop-ecommerce"); ?></a>
+                        class="fas fa-bars"></i> <?php __("Details", "jigoshop-ecommerce"); ?></a>
             <?php do_action('jigoshop\shop\list\product\after', $product); ?>
         </div>
     </div>
