@@ -1,4 +1,7 @@
 ## Changelog
+* 2.1.18.1 - 2019.02.04
+    * Fix: Notice warrning on product page.
+    * Fix: Notice on payment settings tab.
 * 2.1.18 - 2019.01.23
     * New: Subscriptions interface, now core is compatible with subscriptions plugin.
     * Fix: Css issues on product page.

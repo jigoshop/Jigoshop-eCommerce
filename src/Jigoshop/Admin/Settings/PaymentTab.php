@@ -235,38 +235,39 @@ class PaymentTab implements TabInterface
 		}
 
 		$settings['processingFeeRules'] = [];
-		foreach($_POST['processingFeeRules'] as $index => $processingFeeRule) {
-			$processingFeeRule['value'] = str_replace(',', '.', $processingFeeRule['value']);
-			if(!preg_match('/^[\d\.]*%?$/', $processingFeeRule['value']) || $processingFeeRule['value'] < 0) {
-				$processingFeeRule['value'] = 0;
-			}
+		if(isset($_POST['processingFeeRules'])) {
+            foreach ($_POST['processingFeeRules'] as $index => $processingFeeRule) {
+                $processingFeeRule['value'] = str_replace(',', '.', $processingFeeRule['value']);
+                if (!preg_match('/^[\d\.]*%?$/', $processingFeeRule['value']) || $processingFeeRule['value'] < 0) {
+                    $processingFeeRule['value'] = 0;
+                }
 
-			$processingFeeRule['minValue'] = str_replace(',', '.', $processingFeeRule['minValue']);
-			if(!preg_match('/^[\d\.]*$/', $processingFeeRule['minValue']) || $processingFeeRule['minValue'] < 0) {
-				$processingFeeRule['minValue'] = '';
-			}
+                $processingFeeRule['minValue'] = str_replace(',', '.', $processingFeeRule['minValue']);
+                if (!preg_match('/^[\d\.]*$/', $processingFeeRule['minValue']) || $processingFeeRule['minValue'] < 0) {
+                    $processingFeeRule['minValue'] = '';
+                }
 
-			$processingFeeRule['maxValue'] = str_replace(',', '.', $processingFeeRule['maxValue']);
-			if(!preg_match('/^[\d\.]*$/', $processingFeeRule['maxValue']) || $processingFeeRule['maxValue'] < 0) {
-				$processingFeeRule['maxValue'] = '';
-			}
+                $processingFeeRule['maxValue'] = str_replace(',', '.', $processingFeeRule['maxValue']);
+                if (!preg_match('/^[\d\.]*$/', $processingFeeRule['maxValue']) || $processingFeeRule['maxValue'] < 0) {
+                    $processingFeeRule['maxValue'] = '';
+                }
 
-			if($processingFeeRule['alternateMode'] === 'on') {
-				$processingFeeRule['alternateMode'] = true;
-			}			
-			else {
-				$processingFeeRule['alternateMode'] = false;
-			}
+                if ($processingFeeRule['alternateMode'] === 'on') {
+                    $processingFeeRule['alternateMode'] = true;
+                } else {
+                    $processingFeeRule['alternateMode'] = false;
+                }
 
-			$settings['processingFeeRules'][] = [
-				'id' => count($settings['processingFeeRules']),
-				'methods' => $processingFeeRule['methods'],
-				'minValue' => $processingFeeRule['minValue'],
-				'maxValue' => $processingFeeRule['maxValue'],
-				'value' => $processingFeeRule['value'],
-				'alternateMode' => $processingFeeRule['alternateMode']
-			];
-		}
+                $settings['processingFeeRules'][] = [
+                    'id' => count($settings['processingFeeRules']),
+                    'methods' => $processingFeeRule['methods'],
+                    'minValue' => $processingFeeRule['minValue'],
+                    'maxValue' => $processingFeeRule['maxValue'],
+                    'value' => $processingFeeRule['value'],
+                    'alternateMode' => $processingFeeRule['alternateMode']
+                ];
+            }
+        }
 
 		return $settings;
 	}

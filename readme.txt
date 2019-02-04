@@ -4,7 +4,7 @@ Tags: ecommerce, wordpress ecommerce, store, shop, shopping, cart, checkout, wid
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=7F5FZ5NGJ3XTL
 Requires at least: 4.0
 Tested up to: 5.0.3
-Stable tag: 2.1.18
+Stable tag: 2.1.18.1
 
 A feature-packed eCommerce plugin built upon WordPress core functionality ensuring excellent performance, customizability and control - robust Tax Settings, Stock Level Management, Free and Premium Extensions - you name it.
 
@@ -149,6 +149,9 @@ However, if you want priority, dedicated support from Jigoshop staff, we dp offe
 4. Standard customer checkout screen
 
 == Changelog ==
+= 2.1.18.1 - 2019.02.04 =
+* Fix: Notice on product page.
+* Fix: Notice on payment settings tab.
 = 2.1.18 - 2019.01.23 =
 * New: Subscriptions interface, now core is compatible with subscriptions plugin.
 * Fix: Css issues on product page.
